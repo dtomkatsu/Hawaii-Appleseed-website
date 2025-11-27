@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wealth Taxes - HI Tax Fairness Coalition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #1a202c;
+            background: linear-gradient(135deg, #243551 0%, #1a2639 100%);
+            min-height: 100vh;
+            font-size: 16px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #1a202c;
+            margin: 0 0 12px 0;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+        
+        .header p {
+            color: #4a5568;
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin: 0;
+        }
+        
+        .summary-section {
+            margin-bottom: 40px;
+        }
+        
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .summary-card {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e1e7ef 100%);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(36, 53, 81, 0.1);
+            border: 1px solid rgba(36, 53, 81, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .summary-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        
+        .summary-card h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+        
+        .summary-card .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a202c;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        
+        .summary-card .label {
+            font-size: 1rem;
+            color: #718096;
+            font-weight: 500;
+        }
+        
+        .search-section {
+            background-color: #fff;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .search-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .search-row {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .search-input-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 16px 24px 16px 48px;
+            font-size: 1.125rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            background-color: #f8fafc;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #243551;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(36, 53, 81, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+            font-size: 1.25rem;
+        }
+        
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+        
+        .dept-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f4f6f9 100%);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(36, 53, 81, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(36, 53, 81, 0.15);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dept-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
+        }
+        
+        .dept-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+        
+        .read-more-btn {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 12px 24px;
+            background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
+            color: #fff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        
+        .read-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(36, 53, 81, 0.3);
+            text-decoration: none;
+        }
+        
+        .dept-name {
+            font-size: 1.375rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 12px;
+            line-height: 1.3;
+            letter-spacing: -0.025em;
+        }
+        
+        .dept-code {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #243551;
+            background: linear-gradient(135deg, #eef2f7 0%, #dfe6f0 100%);
+            padding: 6px 12px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .dept-budget {
+            color: #38a169;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.025em;
+            margin-bottom: 16px;
+        }
+        
+        .dept-description {
+            font-size: 1rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .dept-breakdown {
+            display: flex;
+            gap: 16px;
+            margin-top: auto;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 16px;
+        }
+        
+        .breakdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex: 1;
+        }
+        
+        .breakdown-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+        
+        .breakdown-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding: 32px;
+            background-color: #fff;
+            border-radius: 16px;
+            text-align: center;
+            color: #4a5568;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.25rem;
+            }
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+            .departments-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Tax Fairness Proposals</h1>
+        <p>Revenue Options to Fund Our Future</p>
+    </div>
+    
+    <div class="summary-section">
+        <div class="summary-cards">
+            <div class="summary-card">
+                <h3>Total Potential Revenue</h3>
+                <div class="value">$270M+</div>
+                <div class="label">Annual Estimated Impact</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="departments-grid" id="departmentsGrid">
+        
+        <!-- Adjusting Income Tax Cuts -->
+        <div class="dept-card">
+            <div class="dept-name">Adjusting Income Tax Cuts</div>
+            <div class="dept-code">INCOME TAX</div>
+            <div class="dept-budget">$100M+ Revenue</div>
+            <div class="dept-description">
+                Hawaiʻi passed huge tax breaks with Act 46 in 2024, and the top 1% of taxpayers will benefit the most.
+            </div>
+            <a href="https://www.hitaxfairness.org/act-46" class="read-more-btn" target="_blank">Read More</a>
+        </div>
+
+        <!-- Closing the Capital Gains Loophole -->
+        <div class="dept-card">
+            <div class="dept-name">Closing the Capital Gains Loophole</div>
+            <div class="dept-code">WEALTH TAX</div>
+            <div class="dept-budget">$84M Revenue</div>
+            <div class="dept-description">
+                Income from investments should not be taxed lower rates than income from regular work.
+            </div>
+            <a href="https://www.hitaxfairness.org/capital-gains" class="read-more-btn" target="_blank">Read More</a>
+        </div>
+
+        <!-- Conveyance Tax Reform -->
+        <div class="dept-card">
+            <div class="dept-name">Conveyance Tax Reform</div>
+            <div class="dept-code">PROPERTY</div>
+            <div class="dept-budget">$50M+ Revenue</div>
+            <div class="dept-description">
+                Luxury homes and second homes should be taxed at higher rates when they're sold.
+            </div>
+            <a href="https://www.hitaxfairness.org/conveyance-tax" class="read-more-btn" target="_blank">Read More</a>
+        </div>
+
+        <!-- Taxing Real Estate Investment Trusts -->
+        <div class="dept-card">
+            <div class="dept-name">Taxing Real Estate Investment Trusts</div>
+            <div class="dept-code">CORPORATE TAX</div>
+            <div class="dept-budget">$36M - $60M Revenue</div>
+            <div class="dept-description">
+                REITs make millions of dollars off Hawaiʻi real estate but pay no corporate income tax to our state.
+            </div>
+            <a href="https://www.hitaxfairness.org/real-estate-investment-trust-reform" class="read-more-btn" target="_blank">Read More</a>
+        </div>
+
+        <!-- Increase Income Tax on High-Earners -->
+        <div class="dept-card">
+            <div class="dept-name">Increase Income Tax on High-Earners</div>
+            <div class="dept-code">INCOME TAX</div>
+            <div class="dept-budget">Revenue Unknown</div>
+            <div class="dept-description">
+                Hawaiʻi's top 1 percent can afford to pay more to help secure our state's future.
+            </div>
+            <a href="https://www.hitaxfairness.org/income-tax" class="read-more-btn" target="_blank">Read More</a>
+        </div>
+
+    </div>
+    
+    <div class="footer">
+        <p>Data source: Hawaiʻi Tax Fairness Coalition (hitaxfairness.org)</p>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const departmentsGrid = document.getElementById('departmentsGrid');
+            
+            const noResultsMsg = document.createElement('div');
+            noResultsMsg.id = 'noResultsMsg';
+            noResultsMsg.style.cssText = `
+                text-align: center;
+                padding: 2rem;
+                font-size: 1.1rem;
+                color: #666;
+                display: none;
+            `;
+            noResultsMsg.textContent = 'No proposals found matching your search.';
+            departmentsGrid.parentNode.insertBefore(noResultsMsg, departmentsGrid.nextSibling);
+            
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const cards = departmentsGrid.querySelectorAll('.dept-card');
+                let hasVisibleCards = false;
+                
+                cards.forEach(card => {
+                    const name = card.querySelector('.dept-name').textContent.toLowerCase();
+                    const code = card.querySelector('.dept-code').textContent.toLowerCase();
+                    const desc = card.querySelector('.dept-description').textContent.toLowerCase();
+                    
+                    if (searchTerm === '' || name.includes(searchTerm) || code.includes(searchTerm) || desc.includes(searchTerm)) {
+                        card.style.display = 'flex';
+                        hasVisibleCards = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                noResultsMsg.style.display = (searchTerm !== '' && !hasVisibleCards) ? 'block' : 'none';
+            }
+            
+            searchInput.addEventListener('input', performSearch);
+            
+            // Focus search on Cmd+K
+            document.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
