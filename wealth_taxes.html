@@ -49,23 +49,25 @@
         }
         
         .summary-section {
-            margin-bottom: 40px;
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: center;
         }
         
         .summary-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 32px;
+            display: flex;
+            justify-content: center;
         }
         
         .summary-card {
             background: linear-gradient(135deg, #f0f4f8 0%, #e1e7ef 100%);
             border-radius: 16px;
-            padding: 32px;
-            box-shadow: 0 4px 20px rgba(36, 53, 81, 0.1);
-            border: 1px solid rgba(36, 53, 81, 0.1);
+            padding: 24px 28px;
+            box-shadow: 0 4px 16px rgba(36, 53, 81, 0.12);
+            border: 1px solid rgba(36, 53, 81, 0.12);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            max-width: 360px;
+            width: 100%;
         }
         
         .summary-card:hover {
