@@ -1,0 +1,621 @@
+<meta charset="UTF-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+
+.tfc-home-container {
+    font-family: 'Open Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #1a202c;
+    line-height: 1.6;
+    background: transparent; /* Ensure transparent background */
+}
+
+/* Text Glow Animation Class */
+.tfc-glow-text {
+    transition: text-shadow 0.3s ease;
+}
+
+.tfc-glow-container:hover .tfc-glow-text {
+    text-shadow: 0 0 20px rgba(36, 53, 81, 0.6); /* Stronger glow */
+}
+
+/* Hero Section */
+.tfc-hero {
+    text-align: center;
+    padding: 60px 20px;
+    border-radius: 24px;
+    color: #243551;
+    margin-bottom: 60px;
+    background: transparent;
+}
+
+.tfc-hero h1 {
+    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+    color: #243551;
+    text-shadow: 0 2px 10px rgba(36, 53, 81, 0.15);
+    transition: text-shadow 0.3s ease;
+    display: inline-block; /* Allows individual hover */
+}
+
+.tfc-hero h1:hover {
+    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
+}
+
+.tfc-hero p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 32px;
+    opacity: 0.9;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #4a5568;
+    text-shadow: 0 2px 8px rgba(36, 53, 81, 0.1);
+    transition: text-shadow 0.3s ease;
+}
+
+.tfc-hero p:hover {
+    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
+}
+
+/* Purpose Section */
+.tfc-section {
+    margin-bottom: 80px;
+    text-align: center;
+    background: transparent;
+    padding: 40px;
+    border-radius: 24px;
+}
+
+.tfc-section h2 {
+    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-size: 2.25rem;
+    color: #243551;
+    margin-bottom: 24px;
+    font-weight: 700;
+    transition: text-shadow 0.3s ease;
+    display: inline-block; /* Allows individual hover */
+}
+
+.tfc-section h2:hover {
+    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
+}
+
+.tfc-text-block p {
+    transition: text-shadow 0.3s ease;
+}
+
+.tfc-text-block p:hover {
+    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
+}
+
+/* Icons Grid Section */
+.tfc-grid-title {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    border-radius: 24px;
+}
+
+.tfc-grid-title h3 {
+    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-size: 1.75rem;
+    color: #243551;
+    margin-bottom: 16px;
+    transition: text-shadow 0.3s ease;
+}
+
+.tfc-grid-title p {
+    color: #718096;
+    font-size: 1.1rem;
+    font-family: 'Open Sans', sans-serif;
+    transition: text-shadow 0.3s ease;
+}
+
+.tfc-grid-title:hover h3, .tfc-grid-title:hover p {
+    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
+}
+
+.tfc-btn {
+    display: inline-block;
+    background-color: white; /* White background */
+    color: #1a202c !important; /* Black text */
+    padding: 16px 32px;
+    border-radius: 50px;
+    text-decoration: none !important;
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #e2e8f0; /* Subtle border for visibility */
+}
+
+.tfc-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color: #f7fafc;
+}
+
+.tfc-text-block {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.25rem;
+    color: #4a5568;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.tfc-grid-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.tfc-grid-title h3 {
+    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-size: 1.75rem;
+    color: #243551;
+    margin-bottom: 16px;
+}
+
+.tfc-grid-title p {
+    color: #718096;
+    font-size: 1.1rem;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.tfc-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.tfc-icon-card {
+    text-align: center;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent card bg */
+    border-radius: 16px;
+    backdrop-filter: blur(4px);
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tfc-icon-card:hover {
+    transform: translate(-4px, -4px); /* Diagonal lift */
+    background-color: rgba(255, 255, 255, 0.7); /* Slightly darker/more transparent feel */
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Animation for Symbols */
+.tfc-symbol {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px auto;
+    background-color: #eef2f7; /* Placeholder bg */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0; /* Start hidden */
+    transform: scale(0.5); /* Start smaller */
+    transition: opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tfc-symbol.animate {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.tfc-symbol img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.tfc-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #243551;
+    margin-bottom: 8px;
+    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+}
+
+.tfc-card-cost {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #38a169;
+    margin-bottom: 12px;
+    font-family: 'Open Sans', sans-serif;
+    text-shadow: 0 0 8px rgba(56, 161, 105, 0.3); /* Subtle glowing effect */
+}
+
+.tfc-card-desc {
+    color: #4a5568;
+    font-size: 1rem;
+    background: #f7fafc;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-top: 12px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Floating Navigation */
+.tfc-nav {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 14px;
+    background: rgba(255, 255, 255, 0.15); /* More transparent */
+    backdrop-filter: blur(4px);
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    transition: all 0.3s ease;
+    width: 120px; /* Wide enough to show text */
+    overflow: hidden;
+}
+
+.tfc-nav:hover {
+    width: 140px;
+    background: rgba(255, 255, 255, 0.85); /* More opaque on hover */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.tfc-nav-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #4a5568;
+    white-space: nowrap;
+    transition: color 0.2s;
+}
+
+.tfc-nav-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #cbd5e0;
+    border-radius: 50%;
+    margin-right: 16px;
+    flex-shrink: 0;
+    transition: all 0.3s;
+    margin-left: 4px;
+}
+
+.tfc-nav-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0.6; /* Visible slightly */
+    transform: translateX(0);
+    transition: all 0.3s;
+}
+
+.tfc-nav:hover .tfc-nav-label {
+    opacity: 1;
+}
+
+.tfc-nav-item.active .tfc-nav-dot {
+    background-color: #243551;
+    transform: scale(1.2);
+}
+
+.tfc-nav-item.active .tfc-nav-label {
+    color: #243551;
+    font-weight: 600;
+    opacity: 1;
+}
+
+.tfc-nav-item:hover .tfc-nav-dot {
+    background-color: #4a5568;
+}
+
+/* Floating Effect Classes */
+.tfc-floating {
+    background: white;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 16px 40px rgba(36, 53, 81, 0.12); /* Enhanced shadow */
+    border: 1px solid rgba(36, 53, 81, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 60px;
+}
+
+.tfc-floating:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 48px rgba(36, 53, 81, 0.15);
+}
+
+/* Scroll Indicator Arrow */
+.tfc-scroll-arrow {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    background: rgba(36, 53, 81, 0.8);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 99;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.tfc-scroll-arrow:hover {
+    transform: translateY(2px);
+    opacity: 1;
+    background: rgba(36, 53, 81, 1);
+}
+
+.tfc-scroll-arrow.rotate {
+    transform: rotate(180deg);
+}
+
+/* HR1 Alert Box Sizing */
+.tfc-alert {
+    background-color: #fff5f5;
+    border: 2px solid #feb2b2;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    text-align: left;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Protection Statement Box */
+.tfc-protection-box {
+    background: linear-gradient(135deg, #243551 0%, #1a2639 100%);
+    color: white;
+    padding: 32px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 80px auto;
+    box-shadow: 0 10px 25px rgba(36, 53, 81, 0.2);
+}
+
+.tfc-protection-box p {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Footer Callout */
+.tfc-footer-callout {
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    padding: 60px 20px;
+    border-radius: 24px;
+    text-align: center;
+}
+
+.tfc-secondary-btn {
+    display: inline-block;
+    background-color: #243551;
+    color: white !important;
+    padding: 16px 32px;
+    border-radius: 8px;
+    text-decoration: none !important;
+    font-weight: 600;
+    margin-top: 24px;
+    transition: background-color 0.2s;
+}
+
+.tfc-secondary-btn:hover {
+    background-color: #2d4a77;
+}
+
+@media (max-width: 768px) {
+    .tfc-hero h1 { font-size: 2.25rem; }
+    .tfc-hero p { font-size: 1.25rem; }
+    .tfc-icon-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="tfc-home-container">
+
+    <!-- Floating Navigation -->
+    <nav class="tfc-nav">
+        <a href="#purpose" class="tfc-nav-item active">
+            <div class="tfc-nav-dot"></div>
+            <span class="tfc-nav-label">Purpose</span>
+        </a>
+        <a href="#taxes" class="tfc-nav-item">
+            <div class="tfc-nav-dot"></div>
+            <span class="tfc-nav-label">Taxes</span>
+        </a>
+        <a href="#hr1" class="tfc-nav-item">
+            <div class="tfc-nav-dot"></div>
+            <span class="tfc-nav-label">HR1 Alert</span>
+        </a>
+        <a href="#fairness" class="tfc-nav-item">
+            <div class="tfc-nav-dot"></div>
+            <span class="tfc-nav-label">Priorities</span>
+        </a>
+    </nav>
+
+    <!-- Scroll Arrow -->
+    <a href="#" class="tfc-scroll-arrow" id="scrollArrow">
+        ↓
+    </a>
+
+    <!-- Hero -->
+    <div id="hero" class="tfc-hero">
+        <h1>Hawaiʻi Tax Fairness Coalition</h1>
+        <p>For a tax system that supports working families.</p>
+        <a href="/contact-your-legislator" class="tfc-btn">Contact Your Legislator</a>
+    </div>
+
+    <!-- Purpose -->
+    <div id="purpose" class="tfc-section">
+        <h2>Our Purpose</h2>
+        <div class="tfc-text-block">
+            <p>Hawaiʻi’s low- and middle-income families are struggling with the rising cost of living. We believe that these families should owe less taxes, and the top 1% should pay higher taxes to support the programs and services that we all benefit from.</p>
+        </div>
+    </div>
+
+    <!-- What Taxes Pay For -->
+    <div id="taxes" class="tfc-grid-title">
+        <h3>What Taxes Pay For</h3>
+        <p>Our $10.8+ billion in tax revenue goes to schools, hospitals, roads, affordable housing, and many other priorities.</p>
+    </div>
+
+    <div class="tfc-icon-grid">
+        
+        <!-- Healthcare -->
+        <div class="tfc-icon-card">
+            <!-- REPLACE SRC WITH YOUR SQUARESPACE IMAGE URL -->
+            <div class="tfc-symbol">
+                <img src="https://placehold.co/64x64/243551/white?text=H" alt="Healthcare Icon">
+            </div>
+            <div class="tfc-card-title">Healthcare</div>
+            <div class="tfc-card-cost">$1.83 billion</div>
+            <div class="tfc-card-desc">Health coverage for 441,000 children and adults</div>
+        </div>
+
+        <!-- Affordable Housing -->
+        <div class="tfc-icon-card">
+            <div class="tfc-symbol">
+                <img src="https://placehold.co/64x64/243551/white?text=A" alt="Housing Icon">
+            </div>
+            <div class="tfc-card-title">Affordable Housing</div>
+            <div class="tfc-card-cost">$305+ million</div>
+            <div class="tfc-card-desc">Building affordable units, rental assistance, and homelessness programs</div>
+        </div>
+
+        <!-- Education -->
+        <div class="tfc-icon-card">
+            <div class="tfc-symbol">
+                <img src="https://placehold.co/64x64/243551/white?text=E" alt="Education Icon">
+            </div>
+            <div class="tfc-card-title">Public K-12 Schools</div>
+            <div class="tfc-card-cost">$1.76 billion</div>
+            <div class="tfc-card-desc">Education for 165,000+ students across 296 schools</div>
+        </div>
+
+        <!-- Food Security -->
+        <div class="tfc-icon-card">
+            <div class="tfc-symbol">
+                <img src="https://placehold.co/64x64/243551/white?text=F" alt="Food Security Icon">
+            </div>
+            <div class="tfc-card-title">Food Security</div>
+            <div class="tfc-card-cost">$30+ million</div>
+            <div class="tfc-card-desc">School meals and SNAP administration</div>
+        </div>
+
+    </div>
+
+    <!-- HR1 Alert -->
+    <div id="hr1" class="tfc-alert">
+        <h3>HR1 (“One Big Beautiful Bill”) risks federal funding</h3>
+        <p>It could take millions of federal dollars away from Hawaiʻi:</p>
+        <ul>
+            <li>Adding $36 to $109 million in costs for SNAP—food benefits for low-income households</li>
+            <li>108,000 Hawaiʻi residents will be at risk of losing Medicaid coverage</li>
+        </ul>
+    </div>
+
+    <!-- Protection Statement -->
+    <div class="tfc-protection-box">
+        <p>To protect our programs and services, Hawaiʻi must raise taxes on the wealthy.</p>
+    </div>
+
+    <!-- Fairer Tax System -->
+    <div id="fairness" class="tfc-footer-callout">
+        <h2 style="font-size: 2.25rem;">Creating a Fairer Tax System</h2>
+        <div class="tfc-text-block">
+            <p>In Hawaiʻi, the wealthy—including many part-time residents—can take advantage of special tax breaks and loopholes. We need to balance the tax code by raising taxes on the top 1%, out-of-state investors, and corporations.</p>
+        </div>
+        <a href="/wealth-taxes" class="tfc-secondary-btn">View Our Priorities</a>
+    </div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const symbols = document.querySelectorAll('.tfc-symbol');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Add a slight staggered delay for each item
+                setTimeout(() => {
+                    entry.target.classList.add('animate');
+                }, 100); 
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 }); // Lower threshold to trigger earlier
+
+    symbols.forEach(symbol => {
+        observer.observe(symbol);
+    });
+
+    // Scroll Arrow Logic
+    const scrollArrow = document.getElementById('scrollArrow');
+    const navItems = document.querySelectorAll('.tfc-nav-item');
+    
+    // Handle scroll arrow click
+    scrollArrow.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (this.classList.contains('rotate')) {
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            // Scroll to bottom
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+    });
+
+    // Check scroll position
+    window.addEventListener('scroll', function() {
+        const scrollPos = window.scrollY + window.innerHeight;
+        const docHeight = document.body.scrollHeight;
+
+        if (scrollPos >= docHeight - 50) {
+            scrollArrow.classList.add('rotate');
+            scrollArrow.textContent = '↑';
+        } else {
+            scrollArrow.classList.remove('rotate');
+            scrollArrow.textContent = '↓';
+        }
+
+        // Update active nav item
+        let current = '';
+        const sections = ['hero', 'purpose', 'taxes', 'hr1', 'fairness'];
+        
+        sections.forEach(sectionId => {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = sectionId;
+                }
+            }
+        });
+
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('href').substring(1) === current) {
+                item.classList.add('active');
+            }
+        });
+    });
+});
+</script>
