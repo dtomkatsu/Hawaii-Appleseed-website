@@ -75,7 +75,7 @@
     top: 0;
     text-align: center;
     opacity: 0;
-    animation: textCycle 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation: textCycle 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .tfc-hero-subtitle-text:nth-child(1) {
@@ -83,29 +83,34 @@
 }
 
 .tfc-hero-subtitle-text:nth-child(2) {
-    animation-delay: 4s;
+    animation-delay: 6s;
 }
 
 @keyframes textCycle {
-    0%, 45% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    50% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    51% {
-        opacity: 0;
-        transform: translateY(20px); /* Reset to bottom */
-    }
-    95% {
+    /* Enter from bottom (0-5% = ~0.6s) */
+    0% {
         opacity: 0;
         transform: translateY(20px);
     }
-    100% {
+    /* Fully visible */
+    5% {
         opacity: 1;
         transform: translateY(0);
+    }
+    /* Stay visible until 50% (~5.4s) */
+    50% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    /* Exit to top (50-55% = ~0.6s) */
+    55% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    /* Stay hidden */
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
     }
 }
 
@@ -633,8 +638,8 @@
     <div id="hero" class="tfc-hero">
         <h1>Hawaiʻi Tax Fairness Coalition</h1>
         <div class="tfc-hero-subtitle-wrapper">
-            <div class="tfc-hero-subtitle-text">For a tax system that supports working families.</div>
-            <div class="tfc-hero-subtitle-text">Taxing the ultra-wealthy</div>
+            <div class="tfc-hero-subtitle-text">For a tax system that lifts up working families.</div>
+            <div class="tfc-hero-subtitle-text">Through taxing the ultra-wealthy</div>
         </div>
         <a href="/contact-your-legislator" class="tfc-btn tfc-hero-btn">Contact Your Legislator</a>
     </div>
@@ -650,7 +655,7 @@
     <!-- What Taxes Pay For -->
     <div id="taxes" class="tfc-grid-title">
         <h3>What Taxes Pay For</h3>
-        <p>Our $10.8+ billion in tax revenue goes to schools, hospitals, roads, affordable housing, and many other priorities.</p>
+        <p>Our $10.8+ billion in tax revenue goes to schools, hospitals, roads, affordable housing, and many other priorities. Here are some of the major program costs that Hawaiʻi covered in FY 2025—not counting federal funding.</p>
     </div>
 
     <div class="tfc-icon-grid">
