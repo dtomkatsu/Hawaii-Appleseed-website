@@ -52,17 +52,51 @@
     font-size: 1.5rem;
     font-weight: 300;
     margin-bottom: 32px;
-    opacity: 0.9;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
     color: #4a5568;
     text-shadow: 0 2px 8px rgba(36, 53, 81, 0.1);
-    transition: text-shadow 0.3s ease;
+    transition: text-shadow 0.3s ease, transform 0.3s ease;
+    position: relative; /* Allow top animation */
+    /* Slide-in animation */
+    opacity: 0;
+    top: -20px;
+    animation: slideInFromTitle 0.6s ease 0.3s forwards;
 }
 
 .tfc-hero p:hover {
-    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
+    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35);
+    transform: scale(1.05); /* Slight size increase on hover */
+}
+
+/* Hero slide-in animation */
+@keyframes slideInFromTitle {
+    from {
+        opacity: 0;
+        top: -20px;
+    }
+    to {
+        opacity: 0.9;
+        top: 0;
+    }
+}
+
+.tfc-hero .tfc-btn {
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: slideInBtn 0.6s ease 0.5s forwards;
+}
+
+@keyframes slideInBtn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Purpose Section */
@@ -83,6 +117,21 @@
     transition: text-shadow 0.3s ease;
     display: inline-block;
     position: relative;
+    /* Slide-up animation */
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUpIntoView 0.6s ease 0.6s forwards;
+}
+
+@keyframes slideUpIntoView {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .tfc-section h2::after {
@@ -104,6 +153,18 @@
     width: 100%;
 }
 
+.tfc-text-block {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.25rem;
+    color: #4a5568;
+    font-family: 'Open Sans', sans-serif;
+    /* Slide-up animation moved to container */
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUpIntoView 0.6s ease 0.8s forwards;
+}
+
 .tfc-text-block p {
     transition: text-shadow 0.3s ease, transform 0.3s ease;
     display: inline-block; /* Allow transform */
@@ -111,7 +172,7 @@
 
 .tfc-text-block p:hover {
     text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
-    transform: scale(1.02); /* Slight size increase */
+    transform: scale(1.05); /* Slightly stronger size increase */
 }
 
 .tfc-btn {
@@ -240,12 +301,17 @@
     opacity: 0; /* Start hidden */
     transform: scale(0.5); /* Start smaller */
     transition: opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                transform 0.3s ease;
 }
 
 .tfc-symbol.animate {
     opacity: 1;
     transform: scale(1);
+}
+
+/* Icon pops out when card is hovered */
+.tfc-icon-card:hover .tfc-symbol.animate {
+    transform: scale(1.15); /* Slightly larger on hover */
 }
 
 .tfc-symbol img {
@@ -525,7 +591,7 @@
     <div id="hero" class="tfc-hero">
         <h1>Hawaiʻi Tax Fairness Coalition</h1>
         <p>For a tax system that supports working families.</p>
-        <a href="/contact-your-legislator" class="tfc-btn">Contact Your Legislator</a>
+        <a href="/contact-your-legislator" class="tfc-btn tfc-hero-btn">Contact Your Legislator</a>
     </div>
 
     <!-- Purpose -->
