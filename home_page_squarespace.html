@@ -81,65 +81,73 @@
     margin-bottom: 24px;
     font-weight: 700;
     transition: text-shadow 0.3s ease;
-    display: inline-block; /* Allows individual hover */
+    display: inline-block;
+    position: relative;
+}
+
+.tfc-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: #243551;
+    transition: width 0.4s ease;
 }
 
 .tfc-section h2:hover {
-    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
+    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35);
+}
+
+.tfc-section h2:hover::after {
+    width: 100%;
 }
 
 .tfc-text-block p {
-    transition: text-shadow 0.3s ease;
+    transition: text-shadow 0.3s ease, transform 0.3s ease;
+    display: inline-block; /* Allow transform */
 }
 
 .tfc-text-block p:hover {
     text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
-}
-
-/* Icons Grid Section */
-.tfc-grid-title {
-    text-align: center;
-    margin-bottom: 40px;
-    padding: 20px;
-    border-radius: 24px;
-}
-
-.tfc-grid-title h3 {
-    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
-    font-size: 1.75rem;
-    color: #243551;
-    margin-bottom: 16px;
-    transition: text-shadow 0.3s ease;
-}
-
-.tfc-grid-title p {
-    color: #718096;
-    font-size: 1.1rem;
-    font-family: 'Open Sans', sans-serif;
-    transition: text-shadow 0.3s ease;
-}
-
-.tfc-grid-title:hover h3, .tfc-grid-title:hover p {
-    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
+    transform: scale(1.02); /* Slight size increase */
 }
 
 .tfc-btn {
     display: inline-block;
-    background-color: white; /* White background */
-    color: #1a202c !important; /* Black text */
+    background-color: white;
+    color: #1a202c !important;
     padding: 16px 32px;
     border-radius: 50px;
     text-decoration: none !important;
     font-weight: 600;
     font-size: 1.125rem;
     transition: transform 0.2s, box-shadow 0.2s;
-    border: 1px solid #e2e8f0; /* Subtle border for visibility */
+    border: 1px solid #e2e8f0;
+    position: relative;
+    overflow: hidden;
+}
+
+.tfc-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+    width: 0;
+    height: 2px;
+    background: #243551;
+    transition: width 0.4s ease;
 }
 
 .tfc-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     background-color: #f7fafc;
+}
+
+.tfc-btn:hover::after {
+    width: calc(100% - 32px);
 }
 
 .tfc-text-block {
@@ -150,22 +158,51 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+/* Icons Grid Section */
 .tfc-grid-title {
     text-align: center;
     margin-bottom: 40px;
+    display: flex;
+    flex-direction: column; /* Stack heading and text vertically */
+    align-items: center;
 }
 
 .tfc-grid-title h3 {
     font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
-    font-size: 1.75rem;
+    font-size: 2.25rem;
     color: #243551;
     margin-bottom: 16px;
+    display: inline-block;
+    position: relative;
+}
+
+.tfc-grid-title h3::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: #243551;
+    transition: width 0.4s ease;
+}
+
+.tfc-grid-title h3:hover::after {
+    width: 100%;
 }
 
 .tfc-grid-title p {
     color: #718096;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     font-family: 'Open Sans', sans-serif;
+    transition: transform 0.3s ease;
+    display: block; /* Ensure it's on its own line */
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.tfc-grid-title p:hover {
+    transform: scale(1.02);
 }
 
 .tfc-icon-grid {
@@ -376,6 +413,11 @@
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    transition: transform 0.3s ease;
+}
+
+.tfc-alert:hover {
+    transform: scale(1.02);
 }
 
 /* Protection Statement Box */
@@ -402,6 +444,31 @@
     padding: 60px 20px;
     border-radius: 24px;
     text-align: center;
+}
+
+.tfc-footer-callout h2 {
+    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-size: 2.25rem;
+    color: #243551;
+    font-weight: 700;
+    display: inline-block;
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.tfc-footer-callout h2::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: #243551;
+    transition: width 0.4s ease;
+}
+
+.tfc-footer-callout h2:hover::after {
+    width: 100%;
 }
 
 .tfc-secondary-btn {
@@ -537,7 +604,7 @@
 
     <!-- Fairer Tax System -->
     <div id="fairness" class="tfc-footer-callout">
-        <h2 style="font-size: 2.25rem;">Creating a Fairer Tax System</h2>
+        <h2>Creating a Fairer Tax System</h2>
         <div class="tfc-text-block">
             <p>In Hawaiʻi, the wealthy—including many part-time residents—can take advantage of special tax breaks and loopholes. We need to balance the tax code by raising taxes on the top 1%, out-of-state investors, and corporations.</p>
         </div>
