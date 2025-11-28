@@ -2,14 +2,44 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
 
+/* Dark blue-grey page background */
+body {
+    background: #2a3a4d;
+    cursor: none;
+}
+
 .tfc-home-container {
     font-family: 'Open Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    color: #1a202c;
+    color: #ffffff;
     line-height: 1.6;
-    background: transparent; /* Ensure transparent background */
+    background: transparent;
+    cursor: none;
+}
+
+/* Hide default cursor on all elements */
+* {
+    cursor: none !important;
+}
+
+/* Custom cursor - light grey */
+.tfc-cursor {
+    width: 20px;
+    height: 20px;
+    background: rgba(220, 220, 220, 0.7);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, background 0.2s ease;
+}
+
+.tfc-cursor.hover {
+    transform: translate(-50%, -50%) scale(1.3);
+    background: rgba(240, 240, 240, 0.8);
 }
 
 /* Text Glow Animation Class */
@@ -26,7 +56,7 @@
     text-align: center;
     padding: 60px 20px;
     border-radius: 24px;
-    color: #243551;
+    color: #ffffff;
     margin-bottom: 60px;
     background: transparent;
 }
@@ -37,14 +67,14 @@
     font-weight: 700;
     margin-bottom: 16px;
     letter-spacing: -0.02em;
-    color: #243551;
-    text-shadow: 0 2px 10px rgba(36, 53, 81, 0.15);
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     transition: text-shadow 0.3s ease;
     display: inline-block; /* Allows individual hover */
 }
 
 .tfc-hero h1:hover {
-    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* Subtle glow */
 }
 
 /* Hero Subtitle Wrapper & Animation */
@@ -67,8 +97,8 @@
     font-family: 'Open Sans', sans-serif;
     font-size: 1.5rem;
     font-weight: 300;
-    color: #4a5568;
-    text-shadow: 0 2px 8px rgba(36, 53, 81, 0.1);
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     position: absolute;
     width: 100%;
     left: 0;
@@ -155,16 +185,17 @@
 .tfc-section h2 {
     font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
     font-size: 2.25rem;
-    color: #243551;
+    color: #ffffff;
     margin-bottom: 24px;
     font-weight: 700;
-    transition: text-shadow 0.3s ease;
+    transition: transform 0.15s ease-out, opacity 0.6s ease;
     display: inline-block;
     position: relative;
-    /* Slide-up animation */
     opacity: 0;
-    transform: translateY(30px);
-    animation: slideUpIntoView 0.6s ease 0.6s forwards;
+}
+
+.tfc-section h2.animated {
+    opacity: 1;
 }
 
 @keyframes slideUpIntoView {
@@ -178,30 +209,18 @@
     }
 }
 
-.tfc-section h2::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: #243551;
-    transition: width 0.4s ease;
-}
-
-.tfc-section h2:hover {
-    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35);
-}
-
-.tfc-section h2:hover::after {
-    width: 100%;
+/* Nudge effect headings */
+.tfc-nudge-text {
+    display: inline-block;
+    transition: transform 0.15s ease-out !important;
+    cursor: none;
 }
 
 .tfc-text-block {
     max-width: 800px;
     margin: 0 auto;
     font-size: 1.25rem;
-    color: #4a5568;
+    color: rgba(255, 255, 255, 0.85);
     font-family: 'Open Sans', sans-serif;
     /* Slide-up animation moved to container */
     opacity: 0;
@@ -215,7 +234,7 @@
 }
 
 .tfc-text-block p:hover {
-    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3); /* Subtle glow */
     transform: scale(1.03); /* Less dramatic size increase */
 }
 
@@ -224,6 +243,7 @@
     background-color: white;
     color: #1a202c !important;
     padding: 16px 32px;
+    padding-right: 48px; /* Extra space for arrow */
     border-radius: 50px;
     text-decoration: none !important;
     font-weight: 600;
@@ -231,18 +251,19 @@
     transition: transform 0.2s, box-shadow 0.2s;
     border: 1px solid #e2e8f0;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .tfc-btn::after {
-    content: '';
+    content: '↗';
     position: absolute;
-    bottom: 8px;
-    left: 16px;
-    width: 0;
-    height: 2px;
-    background: #243551;
-    transition: width 0.4s ease;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%) scale(0) rotate(-20deg);
+    opacity: 0;
+    font-size: 1.2rem;
+    color: #1a202c;
+    transition: all 0.3s ease;
 }
 
 .tfc-btn:hover {
@@ -252,14 +273,15 @@
 }
 
 .tfc-btn:hover::after {
-    width: calc(100% - 32px);
+    transform: translateY(-50%) scale(1) rotate(0deg);
+    opacity: 1;
 }
 
 .tfc-text-block {
     max-width: 800px;
     margin: 0 auto;
     font-size: 1.25rem;
-    color: #4a5568;
+    color: rgba(255, 255, 255, 0.85);
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -275,29 +297,15 @@
 .tfc-grid-title h3 {
     font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
     font-size: 2.25rem;
-    color: #243551;
+    color: #ffffff;
     margin-bottom: 16px;
     display: inline-block;
     position: relative;
 }
 
-.tfc-grid-title h3::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: #243551;
-    transition: width 0.4s ease;
-}
-
-.tfc-grid-title h3:hover::after {
-    width: 100%;
-}
 
 .tfc-grid-title p {
-    color: #718096;
+    color: rgba(255, 255, 255, 0.75);
     font-size: 1.25rem;
     font-family: 'Open Sans', sans-serif;
     transition: transform 0.3s ease;
@@ -515,10 +523,10 @@
     transform: rotate(180deg);
 }
 
-/* HR1 Alert Box Sizing */
+/* HR1 Alert Box Sizing - hidden until hover */
 .tfc-alert {
-    background-color: #fff5f5;
-    border: 2px solid #feb2b2;
+    background-color: transparent;
+    border: 2px solid transparent;
     border-radius: 16px;
     padding: 32px;
     margin-bottom: 32px;
@@ -526,34 +534,46 @@
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    color: #ffffff;
 }
 
 .tfc-alert:hover {
+    background-color: rgba(254, 178, 178, 0.15);
+    border-color: #feb2b2;
     transform: scale(1.02);
+}
+
+.tfc-alert h3 {
+    color: #ffffff;
+}
+
+.tfc-alert p, .tfc-alert li {
+    color: rgba(255, 255, 255, 0.85);
 }
 
 /* Protection Statement Box */
 .tfc-protection-box {
-    background: linear-gradient(135deg, #243551 0%, #1a2639 100%);
+    background: linear-gradient(135deg, rgba(36, 53, 81, 0.6) 0%, rgba(26, 38, 57, 0.6) 100%);
     color: white;
     padding: 32px;
     border-radius: 16px;
     text-align: center;
     max-width: 800px;
     margin: 0 auto 80px auto;
-    box-shadow: 0 10px 25px rgba(36, 53, 81, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 .tfc-protection-box p {
     font-size: 1.25rem;
     font-weight: 600;
     margin: 0;
+    display: inline-block;
 }
 
 /* Footer Callout */
 .tfc-footer-callout {
-    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    background: linear-gradient(135deg, rgba(50, 65, 85, 0.5) 0%, rgba(40, 55, 75, 0.5) 100%);
     padding: 60px 20px;
     border-radius: 24px;
     text-align: center;
@@ -562,31 +582,21 @@
 .tfc-footer-callout h2 {
     font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
     font-size: 2.25rem;
-    color: #243551;
+    color: #ffffff;
     font-weight: 700;
     display: inline-block;
     position: relative;
     margin-bottom: 24px;
 }
 
-.tfc-footer-callout h2::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: #243551;
-    transition: width 0.4s ease;
+.tfc-footer-callout .tfc-text-block {
+    color: rgba(255, 255, 255, 0.85);
 }
 
-.tfc-footer-callout h2:hover::after {
-    width: 100%;
-}
 
 .tfc-secondary-btn {
     display: inline-block;
-    background-color: #243551;
+    background-color: rgba(255, 255, 255, 0.15);
     color: white !important;
     padding: 16px 32px;
     border-radius: 8px;
@@ -594,10 +604,11 @@
     font-weight: 600;
     margin-top: 24px;
     transition: background-color 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .tfc-secondary-btn:hover {
-    background-color: #2d4a77;
+    background-color: rgba(255, 255, 255, 0.25);
 }
 
 @media (max-width: 768px) {
@@ -731,6 +742,64 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Create custom cursor
+    const cursor = document.createElement('div');
+    cursor.className = 'tfc-cursor';
+    document.body.appendChild(cursor);
+    
+    // Track cursor position
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+    
+    // Hide cursor when leaving window
+    document.addEventListener('mouseleave', () => {
+        cursor.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+        cursor.style.opacity = '1';
+    });
+    
+    // Animate section h2 on load (after delay)
+    const sectionH2 = document.querySelector('.tfc-section h2');
+    if (sectionH2) {
+        setTimeout(() => {
+            sectionH2.classList.add('animated');
+        }, 600);
+    }
+    
+    // Localized nudge/wave effect for headings and protection text
+    const nudgeElements = document.querySelectorAll('.tfc-section h2, .tfc-grid-title h3, .tfc-footer-callout h2, .tfc-protection-box p');
+    
+    nudgeElements.forEach(el => {
+        el.classList.add('tfc-nudge-text');
+        
+        el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const width = rect.width;
+            
+            // Calculate position as percentage (0 to 1)
+            const posX = x / width;
+            
+            // Create a localized wave effect - stronger near cursor, fades at edges
+            // Use CSS filter for a subtle wave distortion
+            const waveIntensity = 3;
+            const skewAmount = Math.sin((posX - 0.5) * Math.PI) * waveIntensity;
+            const translateY = Math.sin((posX) * Math.PI) * 2;
+            
+            // Apply localized transform using transform-origin based on cursor position
+            el.style.transformOrigin = `${posX * 100}% center`;
+            el.style.transform = `skewY(${skewAmount}deg) translateY(${translateY}px)`;
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            el.style.transform = 'skewY(0deg) translateY(0)';
+            el.style.transformOrigin = 'center center';
+        });
+    });
+
     const symbols = document.querySelectorAll('.tfc-symbol');
     
     const observer = new IntersectionObserver((entries) => {
@@ -765,6 +834,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Get hero section for fade effect
+    const heroSection = document.getElementById('hero');
+    
     // Check scroll position
     window.addEventListener('scroll', function() {
         const scrollPos = window.scrollY + window.innerHeight;
@@ -776,6 +848,22 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             scrollArrow.classList.remove('rotate');
             scrollArrow.textContent = '↓';
+        }
+
+        // Fade hero section based on scroll position
+        if (heroSection) {
+            const fadeStart = 0; // Start fading immediately
+            const fadeEnd = 350; // Fully faded by 400px scroll
+            const scrollY = window.scrollY;
+            
+            if (scrollY <= fadeStart) {
+                heroSection.style.opacity = 1;
+            } else if (scrollY >= fadeEnd) {
+                heroSection.style.opacity = 0;
+            } else {
+                const opacity = 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart);
+                heroSection.style.opacity = opacity;
+            }
         }
 
         // Update active nav item
