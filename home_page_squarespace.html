@@ -47,27 +47,66 @@
     text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
 }
 
-.tfc-hero p {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 300;
+/* Hero Subtitle Wrapper & Animation */
+.tfc-hero-subtitle-wrapper {
+    height: 2.5rem; /* Space for text */
     margin-bottom: 32px;
+    position: relative;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    color: #4a5568;
-    text-shadow: 0 2px 8px rgba(36, 53, 81, 0.1);
-    transition: text-shadow 0.3s ease, transform 0.3s ease;
-    position: relative; /* Allow top animation */
-    /* Slide-in animation */
+    overflow: hidden;
+    
+    /* Entrance Animation for the whole block */
     opacity: 0;
     top: -20px;
     animation: slideInFromTitle 0.6s ease 0.3s forwards;
 }
 
-.tfc-hero p:hover {
-    text-shadow: 0 0 12px rgba(36, 53, 81, 0.35);
-    transform: scale(1.05); /* Slight size increase on hover */
+.tfc-hero-subtitle-text {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #4a5568;
+    text-shadow: 0 2px 8px rgba(36, 53, 81, 0.1);
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    opacity: 0;
+    animation: textCycle 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.tfc-hero-subtitle-text:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.tfc-hero-subtitle-text:nth-child(2) {
+    animation-delay: 4s;
+}
+
+@keyframes textCycle {
+    0%, 45% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    51% {
+        opacity: 0;
+        transform: translateY(20px); /* Reset to bottom */
+    }
+    95% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Hero slide-in animation */
@@ -172,7 +211,7 @@
 
 .tfc-text-block p:hover {
     text-shadow: 0 0 12px rgba(36, 53, 81, 0.35); /* Subtle glow */
-    transform: scale(1.05); /* Slightly stronger size increase */
+    transform: scale(1.03); /* Less dramatic size increase */
 }
 
 .tfc-btn {
@@ -268,9 +307,12 @@
 
 .tfc-icon-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
     gap: 40px;
     margin-bottom: 60px;
+    max-width: 1000px; /* constrain width so 2 columns look good */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .tfc-icon-card {
@@ -590,7 +632,10 @@
     <!-- Hero -->
     <div id="hero" class="tfc-hero">
         <h1>Hawaiʻi Tax Fairness Coalition</h1>
-        <p>For a tax system that supports working families.</p>
+        <div class="tfc-hero-subtitle-wrapper">
+            <div class="tfc-hero-subtitle-text">For a tax system that supports working families.</div>
+            <div class="tfc-hero-subtitle-text">Taxing the ultra-wealthy</div>
+        </div>
         <a href="/contact-your-legislator" class="tfc-btn tfc-hero-btn">Contact Your Legislator</a>
     </div>
 
