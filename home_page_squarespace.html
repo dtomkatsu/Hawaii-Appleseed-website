@@ -489,7 +489,7 @@ body {
     flex-direction: column;
     gap: 16px;
     padding: 16px 14px;
-    background: rgba(255, 255, 255, 0.15); /* More transparent */
+    background: rgba(255, 255, 255, 0.08); /* More transparent */
     backdrop-filter: blur(4px);
     border-radius: 30px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.03);
@@ -500,7 +500,7 @@ body {
 
 .tfc-nav:hover {
     width: 140px;
-    background: rgba(255, 255, 255, 0.25); /* Less white on hover */
+    background: rgba(255, 255, 255, 0.15); /* Less white on hover */
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
@@ -902,6 +902,165 @@ body {
     100% { font-weight: 900; letter-spacing: 0.02em; }
 }
 
+/* Bobbing arrow above "must raise taxes" */
+.tfc-bobbing-arrow {
+    display: block;
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.7);
+    animation: bobbing 1.5s ease-in-out infinite;
+}
+
+@keyframes bobbing {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+/* Tax Burden Treemaps */
+.tfc-treemap-section {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.tfc-treemap-title {
+    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-size: 1.75rem;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.tfc-treemap-subtitle {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.tfc-treemap-container {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+}
+
+.tfc-treemap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tfc-treemap-label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 8px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.tfc-treemap-income {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 12px;
+}
+
+.tfc-treemap-box {
+    position: relative;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    /* Box represents total income (100%) */
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.tfc-treemap-section.animate .tfc-treemap-box {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 0.3s;
+}
+
+.tfc-treemap-box-lowest {
+    width: 180px;
+    height: 180px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.tfc-treemap-box-top {
+    width: 180px;
+    height: 180px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.tfc-treemap-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Tax share fill - pops in first */
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.tfc-treemap-section.animate .tfc-treemap-fill {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 0s;
+}
+
+.tfc-treemap-fill-lowest {
+    /* 14.1% of income - shown as proportion of box */
+    width: 67.6%;  /* sqrt(14.1/30.9) to make area proportional */
+    height: 67.6%;
+    background: linear-gradient(135deg, #e57373 0%, #c62828 100%);
+}
+
+.tfc-treemap-fill-top {
+    /* 10.1% of income - shown as proportion of box */
+    width: 57.2%;  /* sqrt(10.1/30.9) to make area proportional */
+    height: 57.2%;
+    background: linear-gradient(135deg, #8fbfaa 0%, #5a9a7a 100%);
+}
+
+.tfc-treemap-percent {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.tfc-treemap-box-label {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.tfc-treemap-caption {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 12px;
+    text-align: center;
+    max-width: 180px;
+}
+
 /* Footer Callout */
 .tfc-footer-callout {
     background: linear-gradient(135deg, rgba(50, 65, 85, 0.5) 0%, rgba(40, 55, 75, 0.5) 100%);
@@ -994,6 +1153,36 @@ body {
         </div>
     </div>
 
+    <!-- Tax Burden Treemaps -->
+    <div class="tfc-treemap-section" id="treemap-section">
+        <div class="tfc-treemap-title">Who Pays More in Taxes?</div>
+        <div class="tfc-treemap-subtitle">Share of family income spent on state and local taxes</div>
+        <div class="tfc-treemap-container">
+            <div class="tfc-treemap">
+                <div class="tfc-treemap-label">Lowest 20%</div>
+                <div class="tfc-treemap-income">Earning less than $21,900</div>
+                <div class="tfc-treemap-box tfc-treemap-box-lowest">
+                    <span class="tfc-treemap-box-label">Total Income</span>
+                    <div class="tfc-treemap-fill tfc-treemap-fill-lowest">
+                        <span class="tfc-treemap-percent">14.1%</span>
+                    </div>
+                </div>
+                <div class="tfc-treemap-caption">Low-income families pay a larger share of their income</div>
+            </div>
+            <div class="tfc-treemap">
+                <div class="tfc-treemap-label">Top 1%</div>
+                <div class="tfc-treemap-income">Earning over $594,000</div>
+                <div class="tfc-treemap-box tfc-treemap-box-top">
+                    <span class="tfc-treemap-box-label">Total Income</span>
+                    <div class="tfc-treemap-fill tfc-treemap-fill-top">
+                        <span class="tfc-treemap-percent">10.1%</span>
+                    </div>
+                </div>
+                <div class="tfc-treemap-caption">The wealthy pay a smaller share despite higher incomes</div>
+            </div>
+        </div>
+    </div>
+
     <!-- What Taxes Pay For -->
     <div id="taxes" class="tfc-grid-title">
         <h3>What Taxes Pay For</h3>
@@ -1082,6 +1271,7 @@ body {
 
     <!-- Protection Statement -->
     <div class="tfc-protection-box" id="protection-box">
+        <span class="tfc-bobbing-arrow">↑</span>
         <p>To protect our programs and services, Hawaiʻi <span class="tfc-bold-animate" id="must-raise-taxes">must raise taxes</span> on the wealthy.</p>
     </div>
 
@@ -1123,6 +1313,21 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             sectionH2.classList.add('animated');
         }, 600);
+    }
+    
+    // Treemap animation - triggers when section comes into view
+    const treemapSection = document.getElementById('treemap-section');
+    if (treemapSection) {
+        const treemapObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    treemapSection.classList.add('animate');
+                    treemapObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        treemapObserver.observe(treemapSection);
     }
     
     // Localized nudge/wave effect for headings and protection text
