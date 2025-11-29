@@ -309,9 +309,58 @@ body {
     font-size: 1.25rem;
     font-family: 'Open Sans', sans-serif;
     transition: transform 0.3s ease;
-    display: block; /* Ensure it's on its own line */
+    display: block;
     max-width: 800px;
     margin: 0 auto;
+}
+
+/* Odometer box for $10.8+ billion */
+.tfc-odometer-box {
+    display: inline-flex;
+    align-items: baseline;
+    background: rgba(143, 191, 170, 0.15);
+    border: 1px solid rgba(143, 191, 170, 0.4);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-weight: 700;
+    color: #8fbfaa;
+    overflow: hidden;
+    vertical-align: baseline;
+    line-height: 1;
+}
+
+.tfc-odometer-digit {
+    display: inline-block;
+    position: relative;
+    height: 1.2em;
+    overflow: hidden;
+    vertical-align: baseline;
+    line-height: 1.2;
+}
+
+.tfc-odometer-digit span {
+    display: block;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
+}
+
+.tfc-odometer-digit.animate span {
+    transform: translateY(0);
+}
+
+.tfc-odometer-static {
+    display: inline;
+    vertical-align: baseline;
+    line-height: 1.2;
+}
+
+.tfc-odometer-billion {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.tfc-odometer-billion.show {
+    opacity: 1;
 }
 
 .tfc-grid-title p:hover {
@@ -376,22 +425,22 @@ body {
 }
 
 .tfc-card-title {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
 }
 
 .tfc-card-cost {
     font-size: 1.5rem;
     font-weight: 800;
-    color: #6b9e8a; /* Muted teal-green matching color scheme */
+    color: #8fbfaa; /* Lighter teal-green */
     margin-bottom: 12px;
     font-family: 'Open Sans', sans-serif;
-    text-shadow: 0 0 8px rgba(107, 158, 138, 0.3);
-    display: inline-block;
-    position: relative;
+    text-shadow: 0 0 8px rgba(143, 191, 170, 0.3);
+    display: block;
+    text-align: center;
 }
 
 /* "in 2025" text that appears on hover */
@@ -690,7 +739,7 @@ body {
     <!-- What Taxes Pay For -->
     <div id="taxes" class="tfc-grid-title">
         <h3>What Taxes Pay For</h3>
-        <p>Our $10.8+ billion in tax revenue goes to schools, hospitals, roads, affordable housing, and many other priorities. Here are some of the major program costs that Hawaiʻi covers not counting federal funding.</p>
+        <p>Our <span class="tfc-odometer-box" id="odometer-billion"><span class="tfc-odometer-digit" data-target="$"><span>$</span></span><span class="tfc-odometer-digit" data-target="1"><span>1</span></span><span class="tfc-odometer-digit" data-target="0"><span>0</span></span><span class="tfc-odometer-static">.</span><span class="tfc-odometer-digit" data-target="8"><span>8</span></span><span class="tfc-odometer-digit" data-target="+"><span>+</span></span><span class="tfc-odometer-billion"> billion</span></span> in tax revenue goes to schools, hospitals, roads, affordable housing, and many other priorities. Here are some of the major program costs that Hawaiʻi covers not counting federal funding.</p>
     </div>
 
     <div class="tfc-icon-grid">
@@ -841,6 +890,71 @@ document.addEventListener('DOMContentLoaded', function() {
     symbols.forEach(symbol => {
         observer.observe(symbol);
     });
+    
+    // Odometer effect for $10.8+ billion
+    const odometerBox = document.getElementById('odometer-billion');
+    if (odometerBox) {
+        const odometerDigits = odometerBox.querySelectorAll('.tfc-odometer-digit');
+        const billionText = odometerBox.querySelector('.tfc-odometer-billion');
+        let odometerTriggered = false;
+        
+        const odometerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !odometerTriggered) {
+                    odometerTriggered = true;
+                    
+                    // Sequential animation - each digit completes before next starts
+                    const totalDuration = 5000; // 5 seconds total
+                    const digitCount = odometerDigits.length;
+                    const timePerDigit = totalDuration / digitCount;
+                    
+                    odometerDigits.forEach((digit, index) => {
+                        const innerSpan = digit.querySelector('span');
+                        const targetChar = digit.dataset.target;
+                        const isNumber = !isNaN(parseInt(targetChar));
+                        const targetNum = isNumber ? parseInt(targetChar) : 0;
+                        
+                        // Start this digit after previous ones complete
+                        const startDelay = index * timePerDigit;
+                        
+                        setTimeout(() => {
+                            // Show the digit sliding up
+                            digit.classList.add('animate');
+                            
+                            if (isNumber) {
+                                // Roll through 0-9 sequentially, then to target
+                                let currentNum = 0;
+                                const rollDuration = timePerDigit * 0.8;
+                                const steps = 10 + targetNum; // Roll through all digits then land on target
+                                const stepInterval = rollDuration / steps;
+                                
+                                const rollInterval = setInterval(() => {
+                                    innerSpan.textContent = currentNum % 10;
+                                    currentNum++;
+                                    if (currentNum > 9 + targetNum) {
+                                        clearInterval(rollInterval);
+                                        innerSpan.textContent = targetChar;
+                                    }
+                                }, stepInterval);
+                            } else {
+                                // For $ and +, just show immediately
+                                innerSpan.textContent = targetChar;
+                            }
+                        }, startDelay);
+                    });
+                    
+                    // Show "billion" after all digits complete
+                    setTimeout(() => {
+                        billionText.classList.add('show');
+                    }, totalDuration + 200);
+                    
+                    odometerObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        odometerObserver.observe(odometerBox);
+    }
 
     // Scroll Arrow Logic
     const scrollArrow = document.getElementById('scrollArrow');
