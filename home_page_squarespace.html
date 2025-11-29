@@ -434,9 +434,10 @@ body {
 }
 
 .tfc-card-cost-wrapper {
-    display: flex;
-    justify-content: center;
+    display: block;
+    text-align: center;
     margin-bottom: 12px;
+    width: 100%;
 }
 
 .tfc-card-cost {
@@ -445,6 +446,7 @@ body {
     color: #8fbfaa; /* Lighter teal-green */
     font-family: 'Open Sans', sans-serif;
     text-shadow: 0 0 8px rgba(143, 191, 170, 0.3);
+    display: inline-block;
 }
 
 /* "in 2025" text that appears on hover */
@@ -555,7 +557,7 @@ body {
 
 /* Stacked Bar Chart */
 .tfc-bar-chart {
-    max-width: 800px;
+    max-width: 950px;
     margin: 0 auto 40px auto;
     padding: 24px;
     padding-bottom: 60px; /* Space for labels */
@@ -700,19 +702,20 @@ body {
     color: #8fbfaa;
     white-space: nowrap;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    display: inline-block;
 }
 
 .tfc-bar-chart.animate .tfc-bar-total {
     opacity: 1;
-    animation: gentleBounce 0.6s ease 1.6s;
+    animation: gentleBounce 0.6s ease 1.6s forwards;
 }
 
 @keyframes gentleBounce {
-    0% { transform: translateX(0); }
-    30% { transform: translateX(8px); }
-    60% { transform: translateX(-3px); }
-    100% { transform: translateX(0); }
+    0% { transform: translateX(0); opacity: 1; }
+    30% { transform: translateX(12px); opacity: 1; }
+    50% { transform: translateX(-4px); opacity: 1; }
+    70% { transform: translateX(6px); opacity: 1; }
+    100% { transform: translateX(0); opacity: 1; }
 }
 
 /* Tooltip description on hover */
@@ -755,10 +758,17 @@ body {
     transform: translateX(-50%) translateY(0);
 }
 
-/* Liquid displacement effect on bar hover */
+/* Liquid warp displacement effect on bar hover */
 .tfc-bar-segment {
     --liquid-x: 50%;
     --liquid-y: 50%;
+    --warp-x: 0;
+    --warp-y: 0;
+}
+
+.tfc-bar-segment:hover {
+    transform: perspective(500px) rotateX(calc(var(--warp-y) * 1deg)) rotateY(calc(var(--warp-x) * 1deg));
+    transition: transform 0.1s ease-out, filter 0.3s ease;
 }
 
 .tfc-bar-segment::before {
@@ -768,11 +778,12 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at var(--liquid-x) var(--liquid-y), 
-        rgba(255, 255, 255, 0.2) 0%, 
-        transparent 50%);
+    background: radial-gradient(ellipse 80px 40px at var(--liquid-x) var(--liquid-y), 
+        rgba(255, 255, 255, 0.35) 0%, 
+        rgba(255, 255, 255, 0.1) 40%,
+        transparent 70%);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.2s ease;
     pointer-events: none;
     border-radius: inherit;
 }
@@ -878,12 +889,17 @@ body {
 
 /* Bold animation for "must raise taxes" */
 .tfc-bold-animate {
+    font-variation-settings: 'wght' 600;
     font-weight: 600;
-    transition: font-weight 2s ease;
 }
 
 .tfc-bold-animate.animating {
-    font-weight: 900;
+    animation: boldUp 2s ease forwards;
+}
+
+@keyframes boldUp {
+    0% { font-weight: 600; letter-spacing: 0; }
+    100% { font-weight: 900; letter-spacing: 0.02em; }
 }
 
 /* Footer Callout */
@@ -1162,15 +1178,32 @@ document.addEventListener('DOMContentLoaded', function() {
         barChartObserver.observe(hr1Alert);
     }
     
-    // Liquid displacement effect on bar segments
+    // Liquid warp displacement effect on bar segments
     const barSegments = document.querySelectorAll('.tfc-bar-segment');
     barSegments.forEach(segment => {
         segment.addEventListener('mousemove', (e) => {
             const rect = segment.getBoundingClientRect();
             const x = ((e.clientX - rect.left) / rect.width) * 100;
             const y = ((e.clientY - rect.top) / rect.height) * 100;
+            
+            // Calculate warp based on cursor position relative to center
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const offsetX = (e.clientX - rect.left - centerX) / centerX;
+            const offsetY = (e.clientY - rect.top - centerY) / centerY;
+            
+            // Apply liquid highlight position
             segment.style.setProperty('--liquid-x', `${x}%`);
             segment.style.setProperty('--liquid-y', `${y}%`);
+            
+            // Apply 3D warp rotation (inverted for natural feel)
+            segment.style.setProperty('--warp-x', offsetX * 4);
+            segment.style.setProperty('--warp-y', -offsetY * 3);
+        });
+        
+        segment.addEventListener('mouseleave', () => {
+            segment.style.setProperty('--warp-x', 0);
+            segment.style.setProperty('--warp-y', 0);
         });
     });
     
