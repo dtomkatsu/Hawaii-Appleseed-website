@@ -375,6 +375,30 @@ body {
     max-width: 1000px; /* constrain width so 2 columns look good */
     margin-left: auto;
     margin-right: auto;
+    /* Hidden by default until More is clicked */
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.8s ease, opacity 0.5s ease, margin 0.5s ease;
+}
+
+.tfc-icon-grid.expanded {
+    max-height: 2000px;
+    opacity: 1;
+}
+
+.tfc-icon-grid.expanded .tfc-icon-card {
+    animation: cascadeIn 0.5s ease forwards;
+}
+
+.tfc-icon-grid.expanded .tfc-icon-card:nth-child(1) { animation-delay: 0s; }
+.tfc-icon-grid.expanded .tfc-icon-card:nth-child(2) { animation-delay: 0.1s; }
+.tfc-icon-grid.expanded .tfc-icon-card:nth-child(3) { animation-delay: 0.2s; }
+.tfc-icon-grid.expanded .tfc-icon-card:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes cascadeIn {
+    0% { opacity: 0; transform: translateY(-30px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 .tfc-icon-card {
@@ -384,6 +408,56 @@ body {
     border-radius: 16px;
     backdrop-filter: blur(4px);
     transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(-30px);
+}
+
+/* More button to expand cards */
+.tfc-more-toggle {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 8px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.tfc-more-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.tfc-more-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+
+.tfc-more-btn .tfc-more-text {
+    transition: opacity 0.3s ease;
+}
+
+.tfc-more-btn.expanded .tfc-more-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+.tfc-more-arrow {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.tfc-more-btn.expanded .tfc-more-arrow {
+    transform: rotate(180deg);
 }
 
 .tfc-icon-card:hover {
@@ -489,7 +563,7 @@ body {
     flex-direction: column;
     gap: 16px;
     padding: 16px 14px;
-    background: rgba(255, 255, 255, 0.08); /* More transparent */
+    background: rgba(255, 255, 255, 0.04); /* Even more transparent */
     backdrop-filter: blur(4px);
     border-radius: 30px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.03);
@@ -500,7 +574,7 @@ body {
 
 .tfc-nav:hover {
     width: 140px;
-    background: rgba(255, 255, 255, 0.15); /* Less white on hover */
+    background: rgba(255, 255, 255, 0.1); /* Less white on hover */
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
@@ -902,14 +976,14 @@ body {
     100% { font-weight: 900; letter-spacing: 0.02em; }
 }
 
-/* Bobbing arrow above "must raise taxes" */
+/* Bobbing arrow after "must raise taxes" */
 .tfc-bobbing-arrow {
-    display: block;
-    text-align: center;
-    margin-bottom: 8px;
-    font-size: 1.5rem;
+    display: inline-block;
+    font-size: 1.2rem;
     color: rgba(255, 255, 255, 0.7);
     animation: bobbing 1.5s ease-in-out infinite;
+    margin-left: 4px;
+    vertical-align: middle;
 }
 
 @keyframes bobbing {
@@ -931,6 +1005,7 @@ body {
     text-align: center;
     margin-bottom: 12px;
     font-weight: 700;
+    transition: transform 0.2s ease, transform-origin 0s;
 }
 
 .tfc-treemap-subtitle {
@@ -978,13 +1053,22 @@ body {
     /* Box represents total income (100%) */
     opacity: 0;
     transform: scale(0.8);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition: opacity 0.5s ease, transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
 }
 
 .tfc-treemap-section.animate .tfc-treemap-box {
     opacity: 1;
     transform: scale(1);
     transition-delay: 0.3s;
+}
+
+/* Highlight effect on box hover (Total Income area) */
+.tfc-treemap-section.animate .tfc-treemap-box:hover {
+    transform: scale(1) translateY(-4px);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.25);
+    transition-delay: 0s;
 }
 
 .tfc-treemap-box-lowest {
@@ -1012,13 +1096,21 @@ body {
     /* Tax share fill - pops in first */
     opacity: 0;
     transform: scale(0.5);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: opacity 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
 }
 
 .tfc-treemap-section.animate .tfc-treemap-fill {
     opacity: 1;
     transform: scale(1);
     transition-delay: 0s;
+}
+
+/* Highlight effect on fill hover (percentage area) */
+.tfc-treemap-section.animate .tfc-treemap-fill:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    filter: brightness(1.15);
 }
 
 .tfc-treemap-fill-lowest {
@@ -1186,10 +1278,10 @@ body {
     <!-- What Taxes Pay For -->
     <div id="taxes" class="tfc-grid-title">
         <h3>What Taxes Pay For</h3>
-        <p>Our <span class="tfc-odometer-box" id="odometer-billion"><span class="tfc-odometer-digit" data-target="$"><span>$</span></span><span class="tfc-odometer-digit" data-target="1"><span>1</span></span><span class="tfc-odometer-digit" data-target="0"><span>0</span></span><span class="tfc-odometer-static">.</span><span class="tfc-odometer-digit" data-target="8"><span>8</span></span><span class="tfc-odometer-digit" data-target="+"><span>+</span></span><span class="tfc-odometer-billion">&nbsp;billion</span></span> in tax revenue goes to schools, hospitals, roads, affordable housing, and many other priorities. Here are some of the major program costs that Hawaiʻi covers not counting federal funding.</p>
+        <p>Our <span class="tfc-odometer-box" id="odometer-billion"><span class="tfc-odometer-digit" data-target="$"><span>$</span></span><span class="tfc-odometer-digit" data-target="1"><span>1</span></span><span class="tfc-odometer-digit" data-target="0"><span>0</span></span><span class="tfc-odometer-static">.</span><span class="tfc-odometer-digit" data-target="8"><span>8</span></span><span class="tfc-odometer-digit" data-target="+"><span>+</span></span><span class="tfc-odometer-billion">&nbsp;billion</span></span> in tax revenue goes to schools, hospitals, roads, affordable housing, and many other priorities. Here are some of the major program costs that Hawaiʻi covers not counting federal funding.<span class="tfc-more-toggle"><span class="tfc-more-btn" id="more-toggle-btn"><span class="tfc-more-text">More</span><span class="tfc-more-arrow">↓</span></span></span></p>
     </div>
 
-    <div class="tfc-icon-grid">
+    <div class="tfc-icon-grid" id="icon-grid">
         
         <!-- Healthcare -->
         <div class="tfc-icon-card">
@@ -1271,8 +1363,7 @@ body {
 
     <!-- Protection Statement -->
     <div class="tfc-protection-box" id="protection-box">
-        <span class="tfc-bobbing-arrow">↑</span>
-        <p>To protect our programs and services, Hawaiʻi <span class="tfc-bold-animate" id="must-raise-taxes">must raise taxes</span> on the wealthy.</p>
+        <p>To protect our programs and services, Hawaiʻi <span class="tfc-bold-animate" id="must-raise-taxes">must raise taxes<span class="tfc-bobbing-arrow">↑</span></span> on the wealthy.</p>
     </div>
 
     <!-- Fairer Tax System -->
@@ -1331,7 +1422,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Localized nudge/wave effect for headings and protection text
-    const nudgeElements = document.querySelectorAll('.tfc-section h2, .tfc-grid-title h3, .tfc-footer-callout h2, .tfc-protection-box p');
+    const nudgeElements = document.querySelectorAll('.tfc-section h2, .tfc-grid-title h3, .tfc-footer-callout h2, .tfc-protection-box p, .tfc-treemap-title');
     
     nudgeElements.forEach(el => {
         el.classList.add('tfc-nudge-text');
@@ -1360,6 +1451,28 @@ document.addEventListener('DOMContentLoaded', function() {
             el.style.transformOrigin = 'center center';
         });
     });
+
+    // More toggle button for icon grid
+    const moreToggleBtn = document.getElementById('more-toggle-btn');
+    const iconGrid = document.getElementById('icon-grid');
+    if (moreToggleBtn && iconGrid) {
+        moreToggleBtn.addEventListener('click', () => {
+            moreToggleBtn.classList.toggle('expanded');
+            iconGrid.classList.toggle('expanded');
+            
+            // Trigger symbol animations after grid expands
+            if (iconGrid.classList.contains('expanded')) {
+                setTimeout(() => {
+                    const symbols = iconGrid.querySelectorAll('.tfc-symbol');
+                    symbols.forEach((symbol, index) => {
+                        setTimeout(() => {
+                            symbol.classList.add('animate');
+                        }, index * 100);
+                    });
+                }, 300);
+            }
+        });
+    }
 
     // Bar chart accordion animation - triggers when HR1 alert is visible
     const barChart = document.getElementById('cost-bar-chart');
