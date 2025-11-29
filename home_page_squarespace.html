@@ -646,10 +646,66 @@ body {
     font-weight: 700;
     opacity: 0;
     transition: opacity 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
 }
 
 .tfc-bar-chart.animate .tfc-bar-chart-title {
     opacity: 1;
+}
+
+/* Money icon with draw animation */
+.tfc-money-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #e57373;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #e57373;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.tfc-bar-chart.animate .tfc-money-icon {
+    opacity: 1;
+    transform: scale(1);
+    animation: drawCircle 0.8s ease forwards;
+}
+
+@keyframes drawCircle {
+    0% {
+        clip-path: polygon(50% 50%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+    }
+    12.5% {
+        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
+    }
+    25% {
+        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 50%, 100% 50%, 100% 50%, 100% 50%);
+    }
+    37.5% {
+        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%);
+    }
+    50% {
+        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 50% 100%, 50% 100%);
+    }
+    62.5% {
+        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 100%);
+    }
+    75% {
+        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 50%);
+    }
+    87.5% {
+        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 50%, 0% 0%);
+    }
+    100% {
+        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 50%, 0% 0%);
+    }
 }
 
 .tfc-bar-chart-year {
@@ -773,7 +829,7 @@ body {
     font-family: 'Open Sans', sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
-    color: #8fbfaa;
+    color: #e57373;
     white-space: nowrap;
     opacity: 0;
     display: inline-block;
@@ -957,8 +1013,12 @@ body {
 .tfc-protection-box p {
     font-size: 1.25rem;
     font-weight: 600;
-    margin: 0;
-    display: inline-block;
+    margin: 0 0 20px 0;
+    display: block;
+}
+
+.tfc-protection-box .tfc-secondary-btn {
+    margin-top: 16px;
 }
 
 /* Bold animation for "must raise taxes" */
@@ -1006,6 +1066,8 @@ body {
     margin-bottom: 12px;
     font-weight: 700;
     transition: transform 0.2s ease, transform-origin 0s;
+    display: block;
+    width: 100%;
 }
 
 .tfc-treemap-subtitle {
@@ -1338,7 +1400,7 @@ body {
 
     <!-- Cost to Hawaii Bar Chart -->
     <div class="tfc-bar-chart" id="cost-bar-chart">
-        <div class="tfc-bar-chart-title">Estimated Cost to Hawaiʻi<span class="tfc-bar-chart-year">in fiscal year 2027</span></div>
+        <div class="tfc-bar-chart-title"><span class="tfc-money-icon">$</span>Estimated Cost to Hawaiʻi<span class="tfc-bar-chart-year">in fiscal year 2027</span></div>
         <div class="tfc-bar-chart-container">
             <div class="tfc-bar-stack">
                 <div class="tfc-bar-segment tfc-bar-segment-act46">
@@ -1357,22 +1419,18 @@ body {
                     <div class="tfc-bar-tooltip">Federal SNAP cuts reduce food aid for low‑income households, which means that Hawaiʻi will have to cover more of the costs of running SNAP.</div>
                 </div>
             </div>
-            <div class="tfc-bar-total">$1.226B</div>
+            <div class="tfc-bar-total">-$1.226B</div>
         </div>
     </div>
 
     <!-- Protection Statement -->
     <div class="tfc-protection-box" id="protection-box">
-        <p>To protect our programs and services, Hawaiʻi <span class="tfc-bold-animate" id="must-raise-taxes">must raise taxes<span class="tfc-bobbing-arrow">↑</span></span> on the wealthy.</p>
+        <p>To protect our programs and services, Hawaiʻi <span class="tfc-bold-animate" id="must-raise-taxes">must raise taxes<span class="tfc-bobbing-arrow">↑</span></span> on the top 1%, out-of-state investors, and big corporations.</p>
+        <a href="/wealth-taxes" class="tfc-secondary-btn">View Our Priorities</a>
     </div>
 
     <!-- Fairer Tax System -->
     <div id="fairness" class="tfc-footer-callout">
-        <h2>Creating a Fairer Tax System</h2>
-        <div class="tfc-text-block">
-            <p>In Hawaiʻi, the wealthy—including many part-time residents—can take advantage of special tax breaks and loopholes. We need to balance the tax code by raising taxes on the top 1%, out-of-state investors, and corporations.</p>
-        </div>
-        <a href="/wealth-taxes" class="tfc-secondary-btn">View Our Priorities</a>
     </div>
 
 </div>
