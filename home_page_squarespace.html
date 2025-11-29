@@ -331,7 +331,7 @@ body {
 .tfc-icon-card {
     text-align: center;
     padding: 24px;
-    background: rgba(255, 255, 255, 0.8); /* Semi-transparent card bg */
+    background: rgba(255, 255, 255, 0.15); /* More transparent card bg */
     border-radius: 16px;
     backdrop-filter: blur(4px);
     transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
@@ -339,8 +339,8 @@ body {
 
 .tfc-icon-card:hover {
     transform: translate(-4px, -4px); /* Diagonal lift */
-    background-color: rgba(255, 255, 255, 0.7); /* Slightly darker/more transparent feel */
-    box-shadow: 4px 4px 15px rgba(0,0,0,0.05);
+    background-color: rgba(255, 255, 255, 0.25); /* Slightly more visible on hover */
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.15);
 }
 
 /* Animation for Symbols */
@@ -378,7 +378,7 @@ body {
 .tfc-card-title {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #243551;
+    color: #ffffff;
     margin-bottom: 8px;
     font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
 }
@@ -386,19 +386,39 @@ body {
 .tfc-card-cost {
     font-size: 1.5rem;
     font-weight: 800;
-    color: #38a169;
+    color: #6b9e8a; /* Muted teal-green matching color scheme */
     margin-bottom: 12px;
     font-family: 'Open Sans', sans-serif;
-    text-shadow: 0 0 8px rgba(56, 161, 105, 0.3); /* Subtle glowing effect */
+    text-shadow: 0 0 8px rgba(107, 158, 138, 0.3);
+    display: inline-block;
+    position: relative;
+}
+
+/* "in 2025" text that appears on hover */
+.tfc-card-cost::after {
+    content: 'in 2025';
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    margin-left: 8px;
+    opacity: 0;
+    transform: scale(0.8);
+    display: inline-block;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tfc-icon-card:hover .tfc-card-cost::after {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .tfc-card-desc {
-    color: #4a5568;
+    color: rgba(255, 255, 255, 0.8);
     font-size: 1rem;
-    background: #f7fafc;
+    background: rgba(255, 255, 255, 0.08);
     padding: 16px;
     border-radius: 12px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: 12px;
     font-family: 'Open Sans', sans-serif;
 }
@@ -425,15 +445,15 @@ body {
 
 .tfc-nav:hover {
     width: 140px;
-    background: rgba(255, 255, 255, 0.85); /* More opaque on hover */
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.25); /* Less white on hover */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
 .tfc-nav-item {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: #4a5568;
+    color: rgba(255, 255, 255, 0.6);
     white-space: nowrap;
     transition: color 0.2s;
 }
@@ -452,7 +472,7 @@ body {
 .tfc-nav-label {
     font-size: 0.85rem;
     font-weight: 500;
-    opacity: 0.6; /* Visible slightly */
+    opacity: 0.75; /* More visible by default */
     transform: translateX(0);
     transition: all 0.3s;
 }
@@ -462,18 +482,22 @@ body {
 }
 
 .tfc-nav-item.active .tfc-nav-dot {
-    background-color: #243551;
+    background-color: #ffffff;
     transform: scale(1.2);
 }
 
 .tfc-nav-item.active .tfc-nav-label {
-    color: #243551;
+    color: #ffffff;
     font-weight: 600;
     opacity: 1;
 }
 
 .tfc-nav-item:hover .tfc-nav-dot {
-    background-color: #4a5568;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.tfc-nav-item:hover .tfc-nav-label {
+    color: #ffffff;
 }
 
 /* Floating Effect Classes */
@@ -666,7 +690,7 @@ body {
     <!-- What Taxes Pay For -->
     <div id="taxes" class="tfc-grid-title">
         <h3>What Taxes Pay For</h3>
-        <p>Our $10.8+ billion in tax revenue goes to schools, hospitals, roads, affordable housing, and many other priorities. Here are some of the major program costs that Hawaiʻi covered in FY 2025—not counting federal funding.</p>
+        <p>Our $10.8+ billion in tax revenue goes to schools, hospitals, roads, affordable housing, and many other priorities. Here are some of the major program costs that Hawaiʻi covers not counting federal funding.</p>
     </div>
 
     <div class="tfc-icon-grid">
@@ -784,10 +808,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const posX = x / width;
             
             // Create a localized wave effect - stronger near cursor, fades at edges
-            // Use CSS filter for a subtle wave distortion
-            const waveIntensity = 3;
+            // Reduced intensity for more subtle deformation
+            const waveIntensity = 1.2;
             const skewAmount = Math.sin((posX - 0.5) * Math.PI) * waveIntensity;
-            const translateY = Math.sin((posX) * Math.PI) * 2;
+            const translateY = Math.sin((posX) * Math.PI) * 1;
             
             // Apply localized transform using transform-origin based on cursor position
             el.style.transformOrigin = `${posX * 100}% center`;
