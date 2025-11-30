@@ -1,0 +1,67 @@
+/* 
+ * Squarespace Header Fix for Home Page
+ * 
+ * This CSS forces the header text to be white on the /home page.
+ * 
+ * HOW TO ADD TO SQUARESPACE:
+ * 1. Go to your Squarespace site editor
+ * 2. Click on the page gear icon for the Home page
+ * 3. Scroll down to "Advanced" section
+ * 4. Paste this code in the "Page Header Code Injection" area
+ *    (wrap it in <style> tags if adding to code injection)
+ * 
+ * OR for site-wide via Design > Custom CSS:
+ * Just paste the CSS below (without the <style> tags)
+ */
+
+/* Force white header text on home page */
+.collection-type-page.collection-6839a9a5a7f0b0534b8c2e6a header,
+body.collection-type-page header .header-title-text a,
+body.collection-type-page header .header-nav-item a,
+body.collection-type-page header .header-nav-folder-title,
+body.collection-type-page header .header-burger {
+    color: #ffffff !important;
+}
+
+/* Alternative: Target by URL slug if the above doesn't work */
+body[data-page-id] header .header-title-text a,
+body[data-page-id] header .header-nav-item a {
+    color: #ffffff !important;
+}
+
+/* For the burger menu icon (mobile) */
+body.collection-type-page header .header-burger .burger-inner div {
+    background-color: #ffffff !important;
+}
+
+/* If using Squarespace 7.1 with specific header styles */
+.header--menu-open .header-title-text a,
+.header .header-title-text a {
+    color: #ffffff !important;
+}
+
+.header .header-nav-wrapper a {
+    color: #ffffff !important;
+}
+
+/* Cart icon if present */
+.header .header-actions-action--cart .icon {
+    color: #ffffff !important;
+}
+
+/* 
+ * PAGE-SPECIFIC TARGETING:
+ * If you only want this on the /home page specifically,
+ * add this to the Page Settings > Advanced > Page Header Code Injection:
+ * 
+ * <style>
+ * header .header-title-text a,
+ * header .header-nav-item a,
+ * header .header-nav-folder-title {
+ *     color: #ffffff !important;
+ * }
+ * header .header-burger .burger-inner div {
+ *     background-color: #ffffff !important;
+ * }
+ * </style>
+ */
