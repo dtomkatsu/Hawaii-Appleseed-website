@@ -1046,7 +1046,7 @@ body {
     border-radius: 16px;
     text-align: center;
     max-width: 800px;
-    margin: 0 auto 80px auto;
+    margin: 0 auto 30px auto;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
@@ -1298,10 +1298,14 @@ body {
 
 /* Footer Callout */
 .tfc-footer-callout {
-    background: linear-gradient(135deg, rgba(50, 65, 85, 0.5) 0%, rgba(40, 55, 75, 0.5) 100%);
-    padding: 60px 20px;
+    background: transparent;
+    padding: 0;
     border-radius: 24px;
     text-align: center;
+}
+
+.tfc-footer-callout:empty {
+    display: none;
 }
 
 .tfc-footer-callout h2 {
