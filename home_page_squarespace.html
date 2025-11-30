@@ -39,6 +39,7 @@ body {
     z-index: 0;
 }
 
+/* Blue tint overlay - must be above parallax bg */
 .tfc-hero-wrapper::before {
     content: '';
     position: absolute;
@@ -48,6 +49,7 @@ body {
     bottom: 0;
     background: rgba(42, 58, 77, 0.85);
     pointer-events: none;
+    z-index: 1;
 }
 
 .tfc-hero-wrapper::after {
@@ -59,11 +61,12 @@ body {
     height: 150px;
     background: linear-gradient(to bottom, transparent 0%, #2a3a4d 100%);
     pointer-events: none;
+    z-index: 1;
 }
 
 .tfc-hero-wrapper > * {
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 
 .tfc-home-container {
@@ -738,31 +741,10 @@ body {
 
 @keyframes drawCircle {
     0% {
-        clip-path: polygon(50% 50%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
-    }
-    12.5% {
-        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
-    }
-    25% {
-        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 50%, 100% 50%, 100% 50%, 100% 50%);
-    }
-    37.5% {
-        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%);
-    }
-    50% {
-        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 50% 100%, 50% 100%);
-    }
-    62.5% {
-        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 100%);
-    }
-    75% {
-        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 50%);
-    }
-    87.5% {
-        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 50%, 0% 0%);
+        clip-path: circle(0% at 50% 50%);
     }
     100% {
-        clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 50%, 0% 0%);
+        clip-path: circle(100% at 50% 50%);
     }
 }
 
@@ -1113,7 +1095,10 @@ body {
 .tfc-treemap-section {
     max-width: 900px;
     margin: 60px auto;
-    padding: 0 20px;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 1;
+    background: #2a3a4d;
 }
 
 .tfc-treemap-title {
