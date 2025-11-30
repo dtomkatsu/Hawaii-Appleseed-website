@@ -1215,6 +1215,43 @@ body {
     max-width: 180px;
 }
 
+/* VS divider between treemaps */
+.tfc-treemap-vs {
+    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    margin-top: 60px;
+}
+
+/* Shared caption below both treemaps */
+.tfc-treemap-shared-caption {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    margin-top: 30px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* HR1 link styling */
+.tfc-hr1-link {
+    color: #8fbfaa;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.tfc-hr1-link:hover {
+    color: #b8d9ca;
+}
+
 /* Footer Callout */
 .tfc-footer-callout {
     background: linear-gradient(135deg, rgba(50, 65, 85, 0.5) 0%, rgba(40, 55, 75, 0.5) 100%);
@@ -1321,8 +1358,8 @@ body {
                         <span class="tfc-treemap-percent">14.1%</span>
                     </div>
                 </div>
-                <div class="tfc-treemap-caption">Low-income families pay a larger share of their income</div>
             </div>
+            <div class="tfc-treemap-vs">VS</div>
             <div class="tfc-treemap">
                 <div class="tfc-treemap-label">Top 1%</div>
                 <div class="tfc-treemap-income">Earning over $594,000</div>
@@ -1332,9 +1369,9 @@ body {
                         <span class="tfc-treemap-percent">10.1%</span>
                     </div>
                 </div>
-                <div class="tfc-treemap-caption">The wealthy pay a smaller share despite higher incomes</div>
             </div>
         </div>
+        <div class="tfc-treemap-shared-caption">The top 1% spend less on their taxes than everyone else.</div>
     </div>
 
     <!-- What Taxes Pay For -->
@@ -1390,11 +1427,11 @@ body {
 
     <!-- HR1 Alert -->
     <div id="hr1" class="tfc-alert">
-        <h3>HR1 (“One Big Beautiful Bill”) risks federal funding</h3>
-        <p>It could take millions of federal dollars away from Hawaiʻi:</p>
+        <h3>Billions of federal and state dollars are at risk</h3>
+        <p><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">HR1</a> could take millions of federal dollars away from Hawaiʻi:</p>
         <ul>
             <li>Adding $36 to $109 million in costs for SNAP—food benefits for low-income households</li>
-            <li>108,000 Hawaiʻi residents will be at risk of losing Medicaid coverage</li>
+            <li>108,000 Hawaiʻi residents will be at risk of losing Medicaid coverage unless the State steps in.</li>
         </ul>
     </div>
 
