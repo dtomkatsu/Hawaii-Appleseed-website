@@ -8,6 +8,44 @@ body {
     cursor: none;
 }
 
+/* Hero section with background image */
+.tfc-hero-wrapper {
+    position: relative;
+    background-image: url('https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/1674028370383-G4WMD8WDKV6HC5XC93UA/pexels-kampus-production-8925997.jpeg?format=1500w&content-type=image%2Fjpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-bottom: 100px;
+    margin-bottom: -100px;
+}
+
+.tfc-hero-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(42, 58, 77, 0.85);
+    pointer-events: none;
+}
+
+.tfc-hero-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: linear-gradient(to bottom, transparent 0%, #2a3a4d 100%);
+    pointer-events: none;
+}
+
+.tfc-hero-wrapper > * {
+    position: relative;
+    z-index: 1;
+}
+
 .tfc-home-container {
     font-family: 'Open Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     max-width: 1200px;
@@ -1081,8 +1119,9 @@ body {
 .tfc-treemap-container {
     display: flex;
     justify-content: center;
-    gap: 80px;
+    gap: 40px;
     flex-wrap: wrap;
+    align-items: flex-start;
 }
 
 .tfc-treemap {
@@ -1224,7 +1263,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 20px;
+    padding: 0 10px;
     margin-top: 60px;
 }
 
@@ -1326,21 +1365,24 @@ body {
         ↓
     </a>
 
-    <!-- Hero -->
-    <div id="hero" class="tfc-hero">
-        <h1>Hawaiʻi Tax Fairness Coalition</h1>
-        <div class="tfc-hero-subtitle-wrapper">
-            <div class="tfc-hero-subtitle-text">For a tax system that lifts up working families.</div>
-            <div class="tfc-hero-subtitle-text">Through taxing the ultra-wealthy</div>
+    <!-- Hero Wrapper with Background Image -->
+    <div class="tfc-hero-wrapper">
+        <!-- Hero -->
+        <div id="hero" class="tfc-hero">
+            <h1>Hawaiʻi Tax Fairness Coalition</h1>
+            <div class="tfc-hero-subtitle-wrapper">
+                <div class="tfc-hero-subtitle-text">For a tax system that lifts up working families.</div>
+                <div class="tfc-hero-subtitle-text">Through taxing the ultra-wealthy</div>
+            </div>
+            <a href="/contact-your-legislator" class="tfc-btn tfc-hero-btn">Contact Your Legislator</a>
         </div>
-        <a href="/contact-your-legislator" class="tfc-btn tfc-hero-btn">Contact Your Legislator</a>
-    </div>
 
-    <!-- Purpose -->
-    <div id="purpose" class="tfc-section">
-        <h2>Our Purpose</h2>
-        <div class="tfc-text-block">
-            <p>Hawaiʻi’s low- and middle-income families are struggling with the rising cost of living. We believe that these families should owe less taxes, and the top 1% should pay higher taxes to support the programs and services that we all benefit from.</p>
+        <!-- Purpose -->
+        <div id="purpose" class="tfc-section">
+            <h2>Our Purpose</h2>
+            <div class="tfc-text-block">
+                <p>Hawaiʻi’s low- and middle-income families are struggling with the rising cost of living. We believe that these families should owe less taxes, and the top 1% should pay higher taxes to support the programs and services that we all benefit from.</p>
+            </div>
         </div>
     </div>
 
@@ -1386,7 +1428,7 @@ body {
         <div class="tfc-icon-card">
             <!-- REPLACE SRC WITH YOUR SQUARESPACE IMAGE URL -->
             <div class="tfc-symbol">
-                <img src="https://placehold.co/64x64/243551/white?text=H" alt="Healthcare Icon">
+                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/5d9c3cf1-6bab-4db3-8f24-86cd6ed58a3b/generated-image+%289%29.png?format=2500w" alt="Healthcare Icon">
             </div>
             <div class="tfc-card-title">Healthcare</div>
             <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$1.83 billion</div></div>
@@ -1396,7 +1438,7 @@ body {
         <!-- Affordable Housing -->
         <div class="tfc-icon-card">
             <div class="tfc-symbol">
-                <img src="https://placehold.co/64x64/243551/white?text=A" alt="Housing Icon">
+                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/c052bdbb-1660-4f88-b32b-936ad43a65ef/generated-image+%2814%29.png?format=1500w" alt="Housing Icon">
             </div>
             <div class="tfc-card-title">Affordable Housing</div>
             <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$305+ million</div></div>
@@ -1406,7 +1448,7 @@ body {
         <!-- Education -->
         <div class="tfc-icon-card">
             <div class="tfc-symbol">
-                <img src="https://placehold.co/64x64/243551/white?text=E" alt="Education Icon">
+                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/fe9369a0-3681-47a9-a26d-803f7670b0d5/generated-image+%2810%29.png?format=1500w" alt="Education Icon">
             </div>
             <div class="tfc-card-title">Public K-12 Schools</div>
             <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$1.76 billion</div></div>
@@ -1416,7 +1458,7 @@ body {
         <!-- Food Security -->
         <div class="tfc-icon-card">
             <div class="tfc-symbol">
-                <img src="https://placehold.co/64x64/243551/white?text=F" alt="Food Security Icon">
+                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/3a6214a4-d3b6-47b7-b560-b3815fd78f7d/generated-image+%2813%29.png?format=1500w" alt="Food Security Icon">
             </div>
             <div class="tfc-card-title">Food Security</div>
             <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$30+ million</div></div>
