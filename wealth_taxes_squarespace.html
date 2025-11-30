@@ -74,8 +74,9 @@
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 24px;
     margin: 32px 0;
-    position: relative; /* Needed for absolute positioning context */
-    min-height: 600px; /* Prevent collapse during animation */
+    position: relative;
+    min-height: 600px;
+    perspective: 1500px; /* Increased perspective for 3D peel effect */
 }
 
 .tfc-card {
@@ -91,6 +92,50 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     /* Initial state controlled by JS */
     opacity: 0; 
+    
+    /* Curl variables */
+    --peel-size: 0px;
+}
+
+/* The 3D Page Curl */
+.tfc-peel {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0; /* Controlled by JS */
+    height: 0; /* Controlled by JS */
+    background: linear-gradient(135deg, #243551 0%, #3a5278 100%);
+    /* Curved corner for realistic paper feel */
+    border-bottom-left-radius: 40%; 
+    /* Shadow behind the peel */
+    box-shadow: -5px -5px 20px rgba(0, 0, 0, 0.3);
+    /* Gradient overlay for 3D cylinder effect */
+    z-index: 20;
+    pointer-events: none;
+    /* Ensure background is clipped to the shape */
+    overflow: hidden;
+}
+
+/* Highlight on the curve */
+.tfc-peel::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 45%, rgba(255,255,255,0) 55%, rgba(0,0,0,0.1) 100%);
+}
+
+/* Shadow on the page under the curl */
+.tfc-peel-shadow {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0; /* Matches peel */
+    height: 0; /* Matches peel */
+    background: transparent;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    z-index: 15;
+    pointer-events: none;
+    transition: none;
 }
 
 /* Removed CSS animations in favor of JS-controlled FLIP animation */
@@ -330,13 +375,83 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Reset z-index delay so they don't pop under immediately
                         setTimeout(() => {
                             card.style.zIndex = '';
-                            // Re-enable hover effects
-                            card.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
+                            // Enable 3D peel interaction
+                            initPeelEffect(card);
                         }, 1800);
                     });
                 }, 100);
             });
         }, 200);
+    }
+    
+    function initPeelEffect(card) {
+        // Create peel elements
+        const peel = document.createElement('div');
+        peel.className = 'tfc-peel';
+        card.appendChild(peel);
+        
+        const shadow = document.createElement('div');
+        shadow.className = 'tfc-peel-shadow';
+        card.appendChild(shadow);
+        
+        // Mouse move handler for proximity detection
+        document.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            
+            // Distance from Bottom-Right corner
+            const cornerX = rect.right;
+            const cornerY = rect.bottom;
+            
+            const dist = Math.hypot(e.clientX - cornerX, e.clientY - cornerY);
+            
+            // Max peel size when close
+            const maxPeel = 100; // Size in px
+            const triggerDist = 300; // Start peeling when this close
+            
+            let peelSize = 0;
+            
+            // Only calculate if card is visible and mouse is somewhat close
+            if (dist < triggerDist) {
+                // Invert distance: closer = larger peel
+                const closeness = 1 - (dist / triggerDist);
+                // Easing for smoother feel
+                peelSize = Math.pow(closeness, 2) * maxPeel;
+            }
+            
+            // Apply effects
+            if (peelSize > 0.5) {
+                // 1. Clip the card (hide corner)
+                // Define clip path: Full rectangle minus the bottom-right triangle
+                card.style.clipPath = `polygon(0 0, 100% 0, 100% calc(100% - ${peelSize}px), calc(100% - ${peelSize}px) 100%, 0 100%)`;
+                
+                // 2. Size the peel
+                peel.style.width = `${peelSize}px`;
+                peel.style.height = `${peelSize}px`;
+                
+                // 3. Size the shadow
+                shadow.style.width = `${peelSize}px`;
+                shadow.style.height = `${peelSize}px`;
+                
+                // 4. Add slight rotation/translation to peel for flexibility
+                // Not strictly needed if using fixed 45deg, but adds flavor
+            } else {
+                // Reset
+                card.style.clipPath = 'none';
+                peel.style.width = '0';
+                peel.style.height = '0';
+                shadow.style.width = '0';
+                shadow.style.height = '0';
+            }
+        });
+        
+        // Add hover lift for main card
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-4px)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+        });
     }
 });
 </script>
