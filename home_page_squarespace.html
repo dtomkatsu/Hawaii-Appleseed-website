@@ -11,12 +11,32 @@ body {
 /* Hero section with background image */
 .tfc-hero-wrapper {
     position: relative;
+    padding-bottom: 100px;
+    margin-bottom: -100px;
+    /* Break out of container to be full-width */
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding-left: calc(50vw - 50%);
+    padding-right: calc(50vw - 50%);
+    /* Remove top padding from container */
+    margin-top: -20px;
+    padding-top: 20px;
+    overflow: hidden;
+}
+
+/* Parallax background layer */
+.tfc-hero-wrapper .tfc-parallax-bg {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    right: 0;
+    bottom: -50px;
     background-image: url('https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/1674028370383-G4WMD8WDKV6HC5XC93UA/pexels-kampus-production-8925997.jpeg?format=1500w&content-type=image%2Fjpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding-bottom: 100px;
-    margin-bottom: -100px;
+    will-change: transform;
+    z-index: 0;
 }
 
 .tfc-hero-wrapper::before {
@@ -1367,6 +1387,7 @@ body {
 
     <!-- Hero Wrapper with Background Image -->
     <div class="tfc-hero-wrapper">
+        <div class="tfc-parallax-bg" id="parallax-bg"></div>
         <!-- Hero -->
         <div id="hero" class="tfc-hero">
             <h1>Hawaiʻi Tax Fairness Coalition</h1>
@@ -1516,6 +1537,16 @@ body {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Parallax effect for hero background
+    const parallaxBg = document.getElementById('parallax-bg');
+    if (parallaxBg) {
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            // Move background at 30% of scroll speed for subtle parallax
+            parallaxBg.style.transform = `translateY(${scrollY * 0.3}px)`;
+        });
+    }
+    
     // Create custom cursor
     const cursor = document.createElement('div');
     cursor.className = 'tfc-cursor';
