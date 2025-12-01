@@ -236,18 +236,7 @@
     max-width: 700px;
     margin: 0 auto 32px auto;
     padding: 24px;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(36, 53, 81, 0.08);
-    border: 1px solid rgba(36, 53, 81, 0.12);
-}
-
-.tfc-chart-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1a202c;
-    margin: 0 0 20px 0;
-    text-align: center;
+    background: transparent;
 }
 
 .tfc-chart {
@@ -337,7 +326,6 @@
 
     <!-- Revenue Comparison Bar Chart -->
     <div class="tfc-chart-container">
-        <h3 class="tfc-chart-title">Revenue Comparison by Policy</h3>
         <div class="tfc-chart">
             <div class="tfc-bar-row">
                 <span class="tfc-bar-label">Income Tax Adjustment</span>
@@ -566,7 +554,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Mouse move on card - only bottom-right corner triggers peel
+        // Mouse move on card - peel grows as cursor moves AWAY from corner
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -575,13 +563,15 @@ document.addEventListener('DOMContentLoaded', function() {
             // Distance from bottom-right corner
             const distFromCorner = Math.hypot(rect.width - x, rect.height - y);
             
-            // Only trigger in bottom-right quadrant area
-            const maxDist = 120;
-            const maxPeel = 70;
+            // Peel effect zone: starts small at corner, grows as you move away
+            const minDist = 20;  // Must be at least this close to corner to start
+            const maxDist = 150; // Maximum distance where effect still works
+            const maxPeel = 80;
             
             if (distFromCorner < maxDist) {
-                const closeness = 1 - (distFromCorner / maxDist);
-                targetSize = closeness * maxPeel;
+                // Closer to corner = smaller peel, further = larger peel
+                const progress = Math.min(distFromCorner / maxDist, 1);
+                targetSize = progress * maxPeel;
             } else {
                 targetSize = 0;
             }
