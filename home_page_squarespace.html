@@ -1372,60 +1372,14 @@ body {
         padding: 0 10px;
     }
     
-    /* Mobile sidebar - collapsed, very transparent, below header */
+    /* Hide sidebar on mobile */
     .tfc-nav {
-        width: 36px !important;
-        padding: 8px 8px !important;
-        left: 10px !important;
-        top: 80px !important;
-        transform: none !important;
-        overflow: hidden !important;
-        background: transparent !important;
-        backdrop-filter: none !important;
-        box-shadow: none !important;
-        border: none !important;
+        display: none !important;
     }
     
-    .tfc-nav .tfc-nav-label {
-        opacity: 0 !important;
-        max-width: 0 !important;
-        overflow: hidden !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .tfc-nav .tfc-nav-dot {
-        margin-right: 0 !important;
-        background-color: rgba(255, 255, 255, 0.4) !important;
-        width: 8px !important;
-        height: 8px !important;
-    }
-    
-    .tfc-nav .tfc-nav-item.active .tfc-nav-dot {
-        background-color: rgba(255, 255, 255, 0.7) !important;
-    }
-    
-    /* Expanded state on mobile */
-    .tfc-nav.expanded {
-        width: 140px !important;
-        padding: 14px 12px !important;
-        background: rgba(42, 58, 77, 0.95) !important;
-        backdrop-filter: blur(10px) !important;
-    }
-    
-    .tfc-nav.expanded .tfc-nav-label {
-        opacity: 1 !important;
-        max-width: 100px !important;
-    }
-    
-    .tfc-nav.expanded .tfc-nav-dot {
-        margin-right: 12px !important;
-        background-color: rgba(255, 255, 255, 0.8) !important;
-        width: 10px !important;
-        height: 10px !important;
-    }
-    
-    .tfc-nav.expanded .tfc-nav-item.active .tfc-nav-dot {
-        background-color: #ffffff !important;
+    /* SNAP label spacing in bar chart */
+    .tfc-bar-segment-snap .tfc-bar-label {
+        margin-left: 8px;
     }
     
     /* Scroll arrow - less prominent on mobile */
