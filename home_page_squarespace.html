@@ -220,7 +220,11 @@ body {
 .tfc-hero .tfc-btn {
     opacity: 0;
     transform: translateY(-20px);
-    animation: slideInBtn 0.6s ease 0.5s forwards;
+    animation: slideInBtn 0.6s ease 0.5s forwards, expandBtn 1.5s ease 1s forwards;
+    max-width: 60px;
+    padding: 16px 20px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 @keyframes slideInBtn {
@@ -231,6 +235,18 @@ body {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes expandBtn {
+    from {
+        max-width: 60px;
+        padding: 16px 20px;
+    }
+    to {
+        max-width: 350px;
+        padding: 16px 32px;
+        padding-right: 48px;
     }
 }
 
@@ -781,6 +797,8 @@ body {
     overflow: visible;
     background: rgba(255, 255, 255, 0.1);
     position: relative;
+    transform-style: preserve-3d;
+    perspective: 500px;
 }
 
 .tfc-bar-segment {
@@ -1474,7 +1492,7 @@ body {
             <h1>Hawaiʻi Tax Fairness Coalition</h1>
             <div class="tfc-hero-subtitle-wrapper">
                 <div class="tfc-hero-subtitle-text">For a tax system that lifts up working families.</div>
-                <div class="tfc-hero-subtitle-text">Through taxing the ultra-wealthy</div>
+                <div class="tfc-hero-subtitle-text">Through taxing the ultra-wealthy.</div>
             </div>
             <a href="/contact-your-legislator" class="tfc-btn tfc-hero-btn">Contact Your Legislator</a>
         </div>
@@ -1483,7 +1501,7 @@ body {
         <div id="purpose" class="tfc-section">
             <h2>Our Purpose</h2>
             <div class="tfc-text-block">
-                <p>Hawaiʻi’s low- and middle-income families are struggling with the rising cost of living. We believe that these families should owe less taxes, and the top 1% should pay higher taxes to support the programs and services that we all benefit from.</p>
+                <p>Hawaiʻi's low- and middle-income families are struggling with the rising cost of living. We believe that these families should owe less taxes, and the top 1% should pay higher taxes to support the common good (like public healthcare and affordable housing).</p>
             </div>
         </div>
     </div>
@@ -1521,7 +1539,7 @@ body {
     <!-- What Taxes Pay For -->
     <div id="taxes" class="tfc-grid-title">
         <h3>What Taxes Pay For</h3>
-        <p>Our <span class="tfc-odometer-box" id="odometer-billion"><span class="tfc-odometer-digit" data-target="$"><span>$</span></span><span class="tfc-odometer-digit" data-target="1"><span>1</span></span><span class="tfc-odometer-digit" data-target="0"><span>0</span></span><span class="tfc-odometer-static">.</span><span class="tfc-odometer-digit" data-target="8"><span>8</span></span><span class="tfc-odometer-digit" data-target="+"><span>+</span></span><span class="tfc-odometer-billion">&nbsp;billion</span></span> in tax revenue goes to schools, hospitals, roads, affordable housing, and many other priorities. Here are some of the major program costs that Hawaiʻi covers not counting federal funding.<span class="tfc-more-toggle"><span class="tfc-more-btn" id="more-toggle-btn"><span class="tfc-more-text">More</span><span class="tfc-more-arrow">↓</span></span></span></p>
+        <p>Our <span class="tfc-odometer-box" id="odometer-billion"><span class="tfc-odometer-digit" data-target="$"><span>$</span></span><span class="tfc-odometer-digit" data-target="1"><span>1</span></span><span class="tfc-odometer-digit" data-target="0"><span>0</span></span><span class="tfc-odometer-static">.</span><span class="tfc-odometer-digit" data-target="8"><span>8</span></span><span class="tfc-odometer-digit" data-target="+"><span>+</span></span><span class="tfc-odometer-billion">&nbsp;billion</span></span> in tax revenue goes to schools, hospitals, roads, affordable housing, and many other priorities. Here are some of the major program costs that Hawaiʻi covers—not counting federal funding.<span class="tfc-more-toggle"><span class="tfc-more-btn" id="more-toggle-btn"><span class="tfc-more-text">More</span><span class="tfc-more-arrow">↓</span></span></span></p>
     </div>
 
     <div class="tfc-icon-grid" id="icon-grid">
@@ -1574,7 +1592,7 @@ body {
         <h3>Billions of federal and state dollars are at risk</h3>
         <p><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">HR1</a> could take millions of federal dollars away from Hawaiʻi:</p>
         <ul>
-            <li><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">Adding $36 to $109 million in costs for SNAP</a>—food benefits for low-income households</li>
+            <li><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">Adding $36 to $109 million in costs for SNAP</a>—food benefits for low-income households.</li>
             <li><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">108,000 Hawaiʻi residents will be at risk of losing Medicaid coverage</a> unless the State steps in.</li>
         </ul>
     </div>
@@ -1763,9 +1781,9 @@ document.addEventListener('DOMContentLoaded', function() {
             segment.style.setProperty('--liquid-x', `${x}%`);
             segment.style.setProperty('--liquid-y', `${y}%`);
             
-            // Apply 3D warp rotation (inverted for natural feel)
-            segment.style.setProperty('--warp-x', offsetX * 4);
-            segment.style.setProperty('--warp-y', -offsetY * 3);
+            // Apply 3D warp rotation (reduced intensity for subtlety)
+            segment.style.setProperty('--warp-x', offsetX * 2);
+            segment.style.setProperty('--warp-y', -offsetY * 1.5);
         });
         
         segment.addEventListener('mouseleave', () => {
