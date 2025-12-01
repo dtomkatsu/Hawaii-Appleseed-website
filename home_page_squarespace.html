@@ -140,7 +140,7 @@ body {
 
 /* Hero Subtitle Wrapper & Animation */
 .tfc-hero-subtitle-wrapper {
-    height: 2.5rem; /* Space for text */
+    height: 3rem; /* Increased space for text */
     margin-bottom: 32px;
     position: relative;
     max-width: 800px;
@@ -924,10 +924,25 @@ body {
     border-color: rgba(30, 40, 55, 0.95) transparent transparent transparent;
 }
 
-.tfc-bar-segment:hover .tfc-bar-tooltip {
+.tfc-bar-segment:hover .tfc-bar-tooltip,
+.tfc-bar-segment.tooltip-pinned .tfc-bar-tooltip {
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+/* Source link in tooltip */
+.tfc-tooltip-source {
+    display: block;
+    margin-top: 8px;
+    color: #8fbfaa;
+    font-size: 0.8rem;
+    text-decoration: underline;
+}
+
+.tfc-tooltip-source:hover {
+    color: #b8d9ca;
 }
 
 /* Liquid warp displacement effect on bar hover */
@@ -1440,15 +1455,19 @@ body {
         padding: 10px 0;
     }
     
-    /* Treemap section - ensure solid background to cover any gaps */
+    /* Treemap section - solid background on mobile to cover any overlap */
     .tfc-treemap-section {
         background: #2a3a4d !important;
-        margin-top: 0 !important;
+        margin-top: 0;
+        position: relative;
+        z-index: 10;
     }
     
-    /* Treemap title - ensure no background */
+    /* Treemap title - ensure full visibility */
     .tfc-treemap-title {
         background: transparent !important;
+        color: #ffffff !important;
+        opacity: 1 !important;
     }
     
     /* More button - prevent text splitting */
@@ -1601,8 +1620,8 @@ body {
         <h3>Billions of federal and state dollars are at risk</h3>
         <p><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">HR1</a> could take millions of federal dollars away from Hawaiʻi:</p>
         <ul>
-            <li><a href="https://www.hawaiihungeraction.org/federal-cuts" target="_blank" class="tfc-hr1-link">Adding $36 to $109 million in costs for SNAP</a>—food benefits for low-income households</li>
-            <li>108,000 Hawaiʻi residents will be at risk of losing Medicaid coverage unless the State steps in.</li>
+            <li><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">Adding $36 to $109 million in costs for SNAP</a>—food benefits for low-income households</li>
+            <li><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">108,000 Hawaiʻi residents will be at risk of losing Medicaid coverage</a> unless the State steps in.</li>
         </ul>
     </div>
 
@@ -1614,12 +1633,12 @@ body {
                 <div class="tfc-bar-segment tfc-bar-segment-act46">
                     <span class="tfc-bar-amount">$740M</span>
                     <span class="tfc-bar-label">Act 46</span>
-                    <div class="tfc-bar-tooltip">Act 46 is a huge state income tax cut that will benefit higher‑income households the most, instead of working class families. It also means the state will lose billions of tax dollars over time.</div>
+                    <div class="tfc-bar-tooltip">Act 46 is a huge state income tax cut that will benefit higher‑income households the most, instead of working class families. It also means the state will lose billions of tax dollars over time.<a href="https://files.hawaii.gov/tax/useful/cor/2025gf05-21with0522_RptGov.pdf" target="_blank" class="tfc-tooltip-source">Source</a></div>
                 </div>
                 <div class="tfc-bar-segment tfc-bar-segment-medicaid">
                     <span class="tfc-bar-amount">$450M</span>
                     <span class="tfc-bar-label">Medicaid</span>
-                    <div class="tfc-bar-tooltip">The federal government will pay a smaller share of Hawaiʻi's Medicaid costs by adding new rules (like work requirements and more paperwork) that push people off coverage.</div>
+                    <div class="tfc-bar-tooltip">The federal government will pay a smaller share of Hawaiʻi's Medicaid costs by adding new rules (like work requirements and more paperwork) that push people off coverage.<a href="https://shvs.org/resource/house-budget-bill-medicaid-proposals-state-by-state-estimates-of-impacts-on-expenditures-and-enrollment/" target="_blank" class="tfc-tooltip-source">Source</a></div>
                 </div>
                 <div class="tfc-bar-segment tfc-bar-segment-snap">
                     <span class="tfc-bar-amount">$36M</span>
@@ -1999,5 +2018,33 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // Bar chart tooltip click-to-pin behavior
+    const tooltipSegments = document.querySelectorAll('.tfc-bar-segment');
+    tooltipSegments.forEach(segment => {
+        segment.addEventListener('click', function(e) {
+            // Don't pin if clicking on the source link
+            if (e.target.classList.contains('tfc-tooltip-source')) {
+                return;
+            }
+            
+            // Remove pinned class from all other segments
+            tooltipSegments.forEach(s => {
+                if (s !== segment) {
+                    s.classList.remove('tooltip-pinned');
+                }
+            });
+            
+            // Toggle pinned state on clicked segment
+            segment.classList.toggle('tooltip-pinned');
+        });
+    });
+    
+    // Close pinned tooltip when clicking outside the bar chart
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.tfc-bar-stack') && !e.target.closest('.tfc-bar-tooltip')) {
+            tooltipSegments.forEach(s => s.classList.remove('tooltip-pinned'));
+        }
+    });
 });
 </script>
