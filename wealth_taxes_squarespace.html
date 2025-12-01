@@ -83,71 +83,75 @@
     background: #fff;
     border-radius: 16px;
     padding: 28px;
+    padding-top: 32px; /* Extra space for top bar */
     box-shadow: 0 4px 20px rgba(36, 53, 81, 0.08);
     border: 1px solid rgba(36, 53, 81, 0.12);
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     /* Initial state controlled by JS */
-    opacity: 0; 
-    
-    /* Curl variables */
-    --peel-size: 0px;
+    opacity: 0;
+    /* Paper texture */
+    background-image: 
+        linear-gradient(90deg, rgba(0,0,0,0.01) 1px, transparent 1px),
+        linear-gradient(rgba(0,0,0,0.01) 1px, transparent 1px),
+        linear-gradient(to bottom, #ffffff 0%, #fafafa 100%);
+    background-size: 20px 20px, 20px 20px, 100% 100%;
 }
 
-/* The 3D Page Curl */
-.tfc-peel {
+/* Corner peel - JS controlled */
+.tfc-peel-corner {
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 0; /* Controlled by JS */
-    height: 0; /* Controlled by JS */
-    background: linear-gradient(135deg, #243551 0%, #3a5278 100%);
-    /* Curved corner for realistic paper feel */
-    border-bottom-left-radius: 40%; 
-    /* Shadow behind the peel */
-    box-shadow: -5px -5px 20px rgba(0, 0, 0, 0.3);
-    /* Gradient overlay for 3D cylinder effect */
-    z-index: 20;
+    width: 0;
+    height: 0;
     pointer-events: none;
-    /* Ensure background is clipped to the shape */
-    overflow: hidden;
+    z-index: 15;
+    /* Paper back side - simple triangle shape */
+    background: linear-gradient(135deg, #3a5278 0%, #243551 100%);
+    box-shadow: -3px -3px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Highlight on the curve */
-.tfc-peel::after {
+/* Highlight on the curl */
+.tfc-peel-corner::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 45%, rgba(255,255,255,0) 55%, rgba(0,0,0,0.1) 100%);
-}
-
-/* Shadow on the page under the curl */
-.tfc-peel-shadow {
-    position: absolute;
-    bottom: 0;
+    top: 0;
+    left: 0;
     right: 0;
-    width: 0; /* Matches peel */
-    height: 0; /* Matches peel */
-    background: transparent;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
-    z-index: 15;
-    pointer-events: none;
-    transition: none;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
 }
 
-/* Removed CSS animations in favor of JS-controlled FLIP animation */
+/* Arrow hint - hidden until peel is active */
+.tfc-peel-corner::after {
+    content: '↗';
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+    font-size: 12px;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
 
+.tfc-peel-corner.active::after {
+    opacity: 1;
+}
+
+/* Top accent bar - conforms to rounded corners */
 .tfc-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
+    height: 5px;
     background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
+    border-radius: 16px 16px 0 0;
 }
 
 .tfc-card:hover {
@@ -177,35 +181,127 @@
 }
 
 .tfc-card-revenue {
+    display: inline-block;
     color: #38a169;
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1rem;
     margin-bottom: 12px;
+    padding: 6px 12px;
+    background: rgba(56, 161, 105, 0.1);
+    border: 1px solid rgba(56, 161, 105, 0.3);
+    border-radius: 20px;
 }
 
 .tfc-card-desc {
     font-size: 0.95rem;
     color: #4a5568;
-    margin-bottom: 16px;
+    margin-bottom: 50px; /* Space for bottom-right button */
     flex-grow: 1;
 }
 
+/* Button positioned in bottom-right, revealed by peel */
 .tfc-card-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
-    color: #fff !important;
-    font-size: 0.8rem;
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    padding: 8px 16px;
+    background: transparent;
+    color: #243551 !important;
+    font-size: 0.75rem;
     font-weight: 600;
     text-decoration: none !important;
-    border-radius: 8px;
+    border-radius: 6px;
     text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #243551;
+    transition: all 0.25s ease;
+    z-index: 5;
 }
 
 .tfc-card-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(36, 53, 81, 0.3);
+    background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
+    color: #fff !important;
+    border-color: transparent;
+    transform: scale(1.05);
+}
+
+/* When card is hovered, emphasize the button */
+.tfc-card:hover .tfc-card-btn {
+    background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
+    color: #fff !important;
+    border-color: transparent;
+}
+
+/* Bar Chart Styles */
+.tfc-chart-container {
+    max-width: 700px;
+    margin: 0 auto 32px auto;
+    padding: 24px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(36, 53, 81, 0.08);
+    border: 1px solid rgba(36, 53, 81, 0.12);
+}
+
+.tfc-chart-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a202c;
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.tfc-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.tfc-bar-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 70px;
+    align-items: center;
+    gap: 12px;
+}
+
+.tfc-bar-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #4a5568;
+    text-align: right;
+}
+
+.tfc-bar-track {
+    height: 28px;
+    background: #eef2f7;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.tfc-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
+    border-radius: 6px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tfc-bar-value {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #38a169;
+}
+
+@media (max-width: 600px) {
+    .tfc-bar-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+    .tfc-bar-label {
+        text-align: left;
+    }
+    .tfc-bar-track {
+        height: 24px;
+    }
 }
 
 .tfc-footer {
@@ -239,13 +335,48 @@
         </div>
     </div>
 
+    <!-- Revenue Comparison Bar Chart -->
+    <div class="tfc-chart-container">
+        <h3 class="tfc-chart-title">Revenue Comparison by Policy</h3>
+        <div class="tfc-chart">
+            <div class="tfc-bar-row">
+                <span class="tfc-bar-label">Income Tax Adjustment</span>
+                <div class="tfc-bar-track">
+                    <div class="tfc-bar" data-value="100" style="--bar-width: 100%;"></div>
+                </div>
+                <span class="tfc-bar-value">$100M+</span>
+            </div>
+            <div class="tfc-bar-row">
+                <span class="tfc-bar-label">Capital Gains</span>
+                <div class="tfc-bar-track">
+                    <div class="tfc-bar" data-value="84" style="--bar-width: 84%;"></div>
+                </div>
+                <span class="tfc-bar-value">$84M</span>
+            </div>
+            <div class="tfc-bar-row">
+                <span class="tfc-bar-label">Conveyance Tax</span>
+                <div class="tfc-bar-track">
+                    <div class="tfc-bar" data-value="50" style="--bar-width: 50%;"></div>
+                </div>
+                <span class="tfc-bar-value">$50M+</span>
+            </div>
+            <div class="tfc-bar-row">
+                <span class="tfc-bar-label">REIT Reform</span>
+                <div class="tfc-bar-track">
+                    <div class="tfc-bar" data-value="48" style="--bar-width: 48%;"></div>
+                </div>
+                <span class="tfc-bar-value">$36-60M</span>
+            </div>
+        </div>
+    </div>
+
     <div class="tfc-grid">
         <div class="tfc-card">
             <div class="tfc-card-title">Adjusting Income Tax Cuts</div>
             <div class="tfc-card-tag">INCOME TAX</div>
             <div class="tfc-card-revenue">$100M+ Revenue</div>
             <div class="tfc-card-desc">Hawaiʻi passed huge tax breaks with Act 46 in 2024, and the top 1% of taxpayers will benefit the most.</div>
-            <a href="https://www.hitaxfairness.org/act-46" class="tfc-card-btn" target="_blank">Read More</a>
+            <a href="https://www.hitaxfairness.org/act-46" class="tfc-card-btn" target="_blank">More</a>
         </div>
 
         <div class="tfc-card">
@@ -253,7 +384,7 @@
             <div class="tfc-card-tag">WEALTH TAX</div>
             <div class="tfc-card-revenue">$84M Revenue</div>
             <div class="tfc-card-desc">Income from investments should not be taxed at lower rates than income from regular work.</div>
-            <a href="https://www.hitaxfairness.org/capital-gains" class="tfc-card-btn" target="_blank">Read More</a>
+            <a href="https://www.hitaxfairness.org/capital-gains" class="tfc-card-btn" target="_blank">More</a>
         </div>
 
         <div class="tfc-card">
@@ -261,7 +392,7 @@
             <div class="tfc-card-tag">PROPERTY</div>
             <div class="tfc-card-revenue">$50M+ Revenue</div>
             <div class="tfc-card-desc">Luxury homes and second homes should be taxed at higher rates when they're sold.</div>
-            <a href="https://www.hitaxfairness.org/conveyance-tax" class="tfc-card-btn" target="_blank">Read More</a>
+            <a href="https://www.hitaxfairness.org/conveyance-tax" class="tfc-card-btn" target="_blank">More</a>
         </div>
 
         <div class="tfc-card">
@@ -269,7 +400,7 @@
             <div class="tfc-card-tag">CORPORATE TAX</div>
             <div class="tfc-card-revenue">$36M - $60M Revenue</div>
             <div class="tfc-card-desc">REITs make millions of dollars off Hawaiʻi real estate but pay no corporate income tax to our state.</div>
-            <a href="https://www.hitaxfairness.org/real-estate-investment-trust-reform" class="tfc-card-btn" target="_blank">Read More</a>
+            <a href="https://www.hitaxfairness.org/real-estate-investment-trust-reform" class="tfc-card-btn" target="_blank">More</a>
         </div>
 
         <div class="tfc-card">
@@ -277,7 +408,7 @@
             <div class="tfc-card-tag">INCOME TAX</div>
             <div class="tfc-card-revenue">Revenue Unknown</div>
             <div class="tfc-card-desc">Hawaiʻi's top 1 percent can afford to pay more to help secure our state's future.</div>
-            <a href="https://www.hitaxfairness.org/income-tax" class="tfc-card-btn" target="_blank">Read More</a>
+            <a href="https://www.hitaxfairness.org/income-tax" class="tfc-card-btn" target="_blank">More</a>
         </div>
     </div>
 
@@ -298,12 +429,24 @@ document.addEventListener('DOMContentLoaded', function() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 animateValue(valueElement, 0, 270, 1500);
+                // Also animate bars when summary card is visible
+                animateBars();
                 observer.unobserve(entry.target);
             }
         });
     }, { threshold: 0.5 });
 
     observer.observe(valueElement);
+    
+    // Bar chart animation - sequential rising bars
+    function animateBars() {
+        const bars = document.querySelectorAll('.tfc-bar');
+        bars.forEach((bar, index) => {
+            setTimeout(() => {
+                bar.style.width = bar.style.getPropertyValue('--bar-width');
+            }, 200 + (index * 150)); // Stagger each bar by 150ms
+        });
+    }
 
     function animateValue(obj, start, end, duration) {
         let startTimestamp = null;
@@ -385,72 +528,69 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function initPeelEffect(card) {
-        // Create peel elements
-        const peel = document.createElement('div');
-        peel.className = 'tfc-peel';
-        card.appendChild(peel);
+        // Create peel corner element
+        const peelCorner = document.createElement('div');
+        peelCorner.className = 'tfc-peel-corner';
+        card.appendChild(peelCorner);
         
-        const shadow = document.createElement('div');
-        shadow.className = 'tfc-peel-shadow';
-        card.appendChild(shadow);
+        // Track current peel size for smooth updates
+        let currentSize = 0;
+        let targetSize = 0;
+        let animating = false;
         
-        // Mouse move handler for proximity detection
-        document.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            
-            // Distance from Bottom-Right corner
-            const cornerX = rect.right;
-            const cornerY = rect.bottom;
-            
-            const dist = Math.hypot(e.clientX - cornerX, e.clientY - cornerY);
-            
-            // Max peel size when close
-            const maxPeel = 100; // Size in px
-            const triggerDist = 300; // Start peeling when this close
-            
-            let peelSize = 0;
-            
-            // Only calculate if card is visible and mouse is somewhat close
-            if (dist < triggerDist) {
-                // Invert distance: closer = larger peel
-                const closeness = 1 - (dist / triggerDist);
-                // Easing for smoother feel
-                peelSize = Math.pow(closeness, 2) * maxPeel;
-            }
-            
-            // Apply effects
-            if (peelSize > 0.5) {
-                // 1. Clip the card (hide corner)
-                // Define clip path: Full rectangle minus the bottom-right triangle
-                card.style.clipPath = `polygon(0 0, 100% 0, 100% calc(100% - ${peelSize}px), calc(100% - ${peelSize}px) 100%, 0 100%)`;
-                
-                // 2. Size the peel
-                peel.style.width = `${peelSize}px`;
-                peel.style.height = `${peelSize}px`;
-                
-                // 3. Size the shadow
-                shadow.style.width = `${peelSize}px`;
-                shadow.style.height = `${peelSize}px`;
-                
-                // 4. Add slight rotation/translation to peel for flexibility
-                // Not strictly needed if using fixed 45deg, but adds flavor
+        // Smooth animation loop
+        function animate() {
+            if (Math.abs(targetSize - currentSize) < 0.5) {
+                currentSize = targetSize;
+                animating = false;
             } else {
-                // Reset
-                card.style.clipPath = 'none';
-                peel.style.width = '0';
-                peel.style.height = '0';
-                shadow.style.width = '0';
-                shadow.style.height = '0';
+                currentSize += (targetSize - currentSize) * 0.2;
+                animating = true;
+                requestAnimationFrame(animate);
             }
-        });
+            peelCorner.style.width = `${currentSize}px`;
+            peelCorner.style.height = `${currentSize}px`;
+            
+            // Show arrow only when peel is large enough
+            if (currentSize > 30) {
+                peelCorner.classList.add('active');
+            } else {
+                peelCorner.classList.remove('active');
+            }
+        }
         
-        // Add hover lift for main card
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-4px)';
+        function startAnimation() {
+            if (!animating) {
+                animating = true;
+                requestAnimationFrame(animate);
+            }
+        }
+        
+        // Mouse move on card - only bottom-right corner triggers peel
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Distance from bottom-right corner
+            const distFromCorner = Math.hypot(rect.width - x, rect.height - y);
+            
+            // Only trigger in bottom-right quadrant area
+            const maxDist = 120;
+            const maxPeel = 70;
+            
+            if (distFromCorner < maxDist) {
+                const closeness = 1 - (distFromCorner / maxDist);
+                targetSize = closeness * maxPeel;
+            } else {
+                targetSize = 0;
+            }
+            startAnimation();
         });
         
         card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0)';
+            targetSize = 0;
+            startAnimation();
         });
     }
 });
