@@ -30,7 +30,7 @@ body {
     top: -50px;
     left: 0;
     right: 0;
-    bottom: -50px;
+    bottom: 0;
     background-image: url('https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/1674028370383-G4WMD8WDKV6HC5XC93UA/pexels-kampus-production-8925997.jpeg?format=1500w&content-type=image%2Fjpeg');
     background-size: cover;
     background-position: center;
@@ -1357,12 +1357,18 @@ body {
         padding: 0 10px;
     }
     
-    /* Mobile sidebar - collapsed by default, dots only */
+    /* Mobile sidebar - collapsed, very transparent, below header */
     .tfc-nav {
-        width: 44px !important;
-        padding: 12px 10px !important;
+        width: 36px !important;
+        padding: 8px 8px !important;
         left: 10px !important;
+        top: 80px !important;
+        transform: none !important;
         overflow: hidden !important;
+        background: transparent !important;
+        backdrop-filter: none !important;
+        box-shadow: none !important;
+        border: none !important;
     }
     
     .tfc-nav .tfc-nav-label {
@@ -1374,12 +1380,19 @@ body {
     
     .tfc-nav .tfc-nav-dot {
         margin-right: 0 !important;
+        background-color: rgba(255, 255, 255, 0.4) !important;
+        width: 8px !important;
+        height: 8px !important;
+    }
+    
+    .tfc-nav .tfc-nav-item.active .tfc-nav-dot {
+        background-color: rgba(255, 255, 255, 0.7) !important;
     }
     
     /* Expanded state on mobile */
     .tfc-nav.expanded {
-        width: 150px !important;
-        padding: 16px 14px !important;
+        width: 140px !important;
+        padding: 14px 12px !important;
         background: rgba(42, 58, 77, 0.95) !important;
         backdrop-filter: blur(10px) !important;
     }
@@ -1391,6 +1404,28 @@ body {
     
     .tfc-nav.expanded .tfc-nav-dot {
         margin-right: 12px !important;
+        background-color: rgba(255, 255, 255, 0.8) !important;
+        width: 10px !important;
+        height: 10px !important;
+    }
+    
+    .tfc-nav.expanded .tfc-nav-item.active .tfc-nav-dot {
+        background-color: #ffffff !important;
+    }
+    
+    /* Scroll arrow - less prominent on mobile */
+    .tfc-scroll-arrow {
+        width: 32px !important;
+        height: 32px !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        opacity: 0.5 !important;
+        font-size: 1rem !important;
+        background: rgba(36, 53, 81, 0.5) !important;
+    }
+    
+    .tfc-scroll-arrow:hover {
+        opacity: 0.7 !important;
     }
     
     /* Treemap - stack vertically with VS between */
@@ -1403,6 +1438,12 @@ body {
     .tfc-treemap-vs {
         margin-top: 0;
         padding: 10px 0;
+    }
+    
+    /* Treemap section - ensure solid background to cover any gaps */
+    .tfc-treemap-section {
+        background: #2a3a4d !important;
+        margin-top: 0 !important;
     }
     
     /* Treemap title - ensure no background */
@@ -1560,7 +1601,7 @@ body {
         <h3>Billions of federal and state dollars are at risk</h3>
         <p><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">HR1</a> could take millions of federal dollars away from Hawaiʻi:</p>
         <ul>
-            <li>Adding $36 to $109 million in costs for SNAP—food benefits for low-income households</li>
+            <li><a href="https://www.hawaiihungeraction.org/federal-cuts" target="_blank" class="tfc-hr1-link">Adding $36 to $109 million in costs for SNAP</a>—food benefits for low-income households</li>
             <li>108,000 Hawaiʻi residents will be at risk of losing Medicaid coverage unless the State steps in.</li>
         </ul>
     </div>
