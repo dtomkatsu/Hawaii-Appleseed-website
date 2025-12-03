@@ -1,4 +1,15 @@
 <meta charset="UTF-8">
+
+<!-- SVG Filters for liquid distortion effect -->
+<svg style="position: absolute; width: 0; height: 0;">
+    <defs>
+        <filter id="liquid-distort">
+            <feTurbulence type="fractalNoise" baseFrequency="0.01 0.02" numOctaves="2" result="noise" seed="1" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </defs>
+</svg>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
 
@@ -845,7 +856,7 @@ body {
 }
 
 .tfc-bar-segment-medicaid {
-    background: linear-gradient(135deg, #a8c5d8 0%, #98b5c8 100%);
+    background: linear-gradient(135deg, #8aa8be 0%, #7a98ae 100%);
 }
 
 .tfc-bar-label {
@@ -1134,12 +1145,12 @@ body {
 }
 
 .tfc-treemap-icon {
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 80px;
     margin-bottom: 10px;
     object-fit: contain;
     filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
-    animation: iconGlow 3s ease-in-out infinite;
+    animation: iconGlow 5s ease-in-out infinite;
 }
 
 @keyframes iconGlow {
@@ -1733,31 +1744,42 @@ document.addEventListener('DOMContentLoaded', function() {
         treemapObserver.observe(treemapSection);
     }
     
-    // Localized nudge/wave effect for headings (excluding protection box to prevent text shuffling)
+    // Liquid distortion effect for headings - tracks cursor position
     const nudgeElements = document.querySelectorAll('.tfc-section h2, .tfc-grid-title h3, .tfc-footer-callout h2, .tfc-treemap-title');
+    const turbulenceFilter = document.querySelector('#liquid-distort feTurbulence');
+    const displacementFilter = document.querySelector('#liquid-distort feDisplacementMap');
     
     nudgeElements.forEach(el => {
         el.classList.add('tfc-nudge-text');
+        let isHovering = false;
+        
+        el.addEventListener('mouseenter', () => {
+            isHovering = true;
+            el.style.filter = 'url(#liquid-distort)';
+            displacementFilter.setAttribute('scale', 6);
+        });
         
         el.addEventListener('mousemove', (e) => {
+            if (!isHovering) return;
             const rect = el.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const width = rect.width;
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
             
-            // Calculate position as percentage (0 to 1)
-            const posX = x / width;
+            // Adjust turbulence seed based on cursor position for dynamic effect
+            const seed = Math.floor(x * 10 + y * 10);
+            turbulenceFilter.setAttribute('seed', seed);
             
-            // Create a subtle wave effect based on cursor position
-            const waveIntensity = 0.8;
-            const skewAmount = (posX - 0.5) * waveIntensity * 2; // Simple linear skew
-            const translateY = Math.sin((posX) * Math.PI) * 0.5;
-            
-            // Keep transform-origin fixed to prevent text shuffling
-            el.style.transform = `skewX(${skewAmount}deg) translateY(${translateY}px)`;
+            // Vary baseFrequency slightly based on position for localized effect
+            const freqX = 0.005 + (x * 0.015);
+            const freqY = 0.01 + (y * 0.02);
+            turbulenceFilter.setAttribute('baseFrequency', `${freqX} ${freqY}`);
         });
         
         el.addEventListener('mouseleave', () => {
-            el.style.transform = 'skewX(0deg) translateY(0)';
+            isHovering = false;
+            el.style.filter = 'none';
+            displacementFilter.setAttribute('scale', 0);
+            turbulenceFilter.setAttribute('baseFrequency', '0.01 0.02');
         });
     });
 
