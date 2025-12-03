@@ -1744,7 +1744,7 @@ document.addEventListener('DOMContentLoaded', function() {
         treemapObserver.observe(treemapSection);
     }
     
-    // Liquid distortion effect for headings - tracks cursor position
+    // Liquid distortion effect for headings - tracks cursor position with smooth interpolation
     const nudgeElements = document.querySelectorAll('.tfc-section h2, .tfc-grid-title h3, .tfc-footer-callout h2, .tfc-treemap-title');
     const turbulenceFilter = document.querySelector('#liquid-distort feTurbulence');
     const displacementFilter = document.querySelector('#liquid-distort feDisplacementMap');
@@ -1752,11 +1752,42 @@ document.addEventListener('DOMContentLoaded', function() {
     nudgeElements.forEach(el => {
         el.classList.add('tfc-nudge-text');
         let isHovering = false;
+        let targetFreqX = 0.01, targetFreqY = 0.02;
+        let currentFreqX = 0.01, currentFreqY = 0.02;
+        let targetScale = 0, currentScale = 0;
+        let animating = false;
+        
+        const lerp = (start, end, factor) => start + (end - start) * factor;
+        
+        const animate = () => {
+            // Smooth interpolation
+            currentFreqX = lerp(currentFreqX, targetFreqX, 0.1);
+            currentFreqY = lerp(currentFreqY, targetFreqY, 0.1);
+            currentScale = lerp(currentScale, targetScale, 0.15);
+            
+            turbulenceFilter.setAttribute('baseFrequency', `${currentFreqX.toFixed(4)} ${currentFreqY.toFixed(4)}`);
+            displacementFilter.setAttribute('scale', currentScale.toFixed(2));
+            
+            // Continue animating if hovering or still transitioning out
+            if (isHovering || currentScale > 0.5) {
+                requestAnimationFrame(animate);
+            } else {
+                // Animation complete
+                animating = false;
+                el.style.filter = 'none';
+                currentScale = 0;
+                displacementFilter.setAttribute('scale', '0');
+            }
+        };
         
         el.addEventListener('mouseenter', () => {
             isHovering = true;
             el.style.filter = 'url(#liquid-distort)';
-            displacementFilter.setAttribute('scale', 6);
+            targetScale = 12; // Increased for more visible effect
+            if (!animating) {
+                animating = true;
+                animate();
+            }
         });
         
         el.addEventListener('mousemove', (e) => {
@@ -1765,21 +1796,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const x = (e.clientX - rect.left) / rect.width;
             const y = (e.clientY - rect.top) / rect.height;
             
-            // Adjust turbulence seed based on cursor position for dynamic effect
-            const seed = Math.floor(x * 10 + y * 10);
-            turbulenceFilter.setAttribute('seed', seed);
-            
-            // Vary baseFrequency slightly based on position for localized effect
-            const freqX = 0.005 + (x * 0.015);
-            const freqY = 0.01 + (y * 0.02);
-            turbulenceFilter.setAttribute('baseFrequency', `${freqX} ${freqY}`);
+            // Set target frequencies based on cursor position
+            targetFreqX = 0.01 + (x * 0.02);
+            targetFreqY = 0.02 + (y * 0.03);
         });
         
         el.addEventListener('mouseleave', () => {
             isHovering = false;
-            el.style.filter = 'none';
-            displacementFilter.setAttribute('scale', 0);
-            turbulenceFilter.setAttribute('baseFrequency', '0.01 0.02');
+            targetScale = 0;
+            targetFreqX = 0.01;
+            targetFreqY = 0.02;
         });
     });
 
