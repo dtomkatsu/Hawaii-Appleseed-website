@@ -3,9 +3,19 @@
 <!-- SVG Filters for liquid distortion effect -->
 <svg style="position: absolute; width: 0; height: 0;">
     <defs>
-        <filter id="liquid-distort">
-            <feTurbulence type="fractalNoise" baseFrequency="0.01 0.02" numOctaves="2" result="noise" seed="1" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" />
+        <!-- Localized liquid distortion with radial mask -->
+        <filter id="liquid-distort" x="-50%" y="-50%" width="200%" height="200%">
+            <!-- Create turbulence -->
+            <feTurbulence type="fractalNoise" baseFrequency="0.015 0.03" numOctaves="1" result="turbulence" seed="2" />
+            
+            <!-- Create a radial gradient mask for localization -->
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0" result="source" />
+            
+            <!-- Apply displacement -->
+            <feDisplacementMap in="source" in2="turbulence" scale="0" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+            
+            <!-- Output the result -->
+            <feComposite in="displaced" in2="SourceGraphic" operator="over" />
         </filter>
     </defs>
 </svg>
@@ -1742,35 +1752,47 @@ document.addEventListener('DOMContentLoaded', function() {
         treemapObserver.observe(treemapSection);
     }
     
-    // Liquid distortion effect for headings - tracks cursor position with smooth interpolation
+    // Liquid distortion effect for headings - localized to cursor position
     const nudgeElements = document.querySelectorAll('.tfc-hero h1, .tfc-section h2, .tfc-grid-title h3, .tfc-footer-callout h2, .tfc-treemap-title');
-    const turbulenceFilter = document.querySelector('#liquid-distort feTurbulence');
-    const displacementFilter = document.querySelector('#liquid-distort feDisplacementMap');
     
     nudgeElements.forEach(el => {
         el.classList.add('tfc-nudge-text');
+        el.style.position = 'relative';
+        
+        // Create individual filter for each element with smoother turbulence
+        const filterId = `liquid-${Math.random().toString(36).substr(2, 9)}`;
+        const filterSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        filterSvg.style.position = 'absolute';
+        filterSvg.style.width = '0';
+        filterSvg.style.height = '0';
+        filterSvg.innerHTML = `
+            <defs>
+                <filter id="${filterId}" x="-50%" y="-50%" width="200%" height="200%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" result="turbulence" seed="${Math.floor(Math.random() * 100)}" />
+                    <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="0" xChannelSelector="R" yChannelSelector="B" />
+                </filter>
+            </defs>
+        `;
+        document.body.appendChild(filterSvg);
+        
+        const displacementFilter = filterSvg.querySelector('feDisplacementMap');
+        const turbulenceFilter = filterSvg.querySelector('feTurbulence');
+        
         let isHovering = false;
-        let targetFreqX = 0.01, targetFreqY = 0.02;
-        let currentFreqX = 0.01, currentFreqY = 0.02;
-        let targetScale = 0, currentScale = 0;
+        let currentScale = 0;
+        let targetScale = 0;
+        let mouseX = 0;
         let animating = false;
         
-        const lerp = (start, end, factor) => start + (end - start) * factor;
-        
         const animate = () => {
-            // Smooth interpolation
-            currentFreqX = lerp(currentFreqX, targetFreqX, 0.1);
-            currentFreqY = lerp(currentFreqY, targetFreqY, 0.1);
-            currentScale = lerp(currentScale, targetScale, 0.15);
+            // Smooth scale transition
+            currentScale += (targetScale - currentScale) * 0.12;
             
-            turbulenceFilter.setAttribute('baseFrequency', `${currentFreqX.toFixed(4)} ${currentFreqY.toFixed(4)}`);
             displacementFilter.setAttribute('scale', currentScale.toFixed(2));
             
-            // Continue animating if hovering or still transitioning out
-            if (isHovering || currentScale > 0.5) {
+            if (Math.abs(currentScale - targetScale) > 0.1 || isHovering) {
                 requestAnimationFrame(animate);
-            } else {
-                // Animation complete
+            } else if (!isHovering) {
                 animating = false;
                 el.style.filter = 'none';
                 currentScale = 0;
@@ -1780,8 +1802,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         el.addEventListener('mouseenter', () => {
             isHovering = true;
-            el.style.filter = 'url(#liquid-distort)';
-            targetScale = 12; // Increased for more visible effect
+            el.style.filter = `url(#${filterId})`;
             if (!animating) {
                 animating = true;
                 animate();
@@ -1792,23 +1813,26 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!isHovering) return;
             const rect = el.getBoundingClientRect();
             const x = (e.clientX - rect.left) / rect.width;
-            const y = (e.clientY - rect.top) / rect.height;
+            mouseX = x;
             
-            // Localized effect - stronger near cursor, weaker at edges
-            // Use cursor position to set frequency - creates localized distortion
-            const distFromCenter = Math.abs(x - 0.5) * 2; // 0 at center, 1 at edges
-            const localIntensity = 1 - (distFromCenter * 0.6); // Reduce effect at edges
+            // Create subtle, smooth distortion
+            // Lower values for longer text to prevent excessive distortion
+            const textLength = el.textContent.length;
+            const maxScale = textLength > 30 ? 4 : (textLength > 15 ? 6 : 8);
             
-            targetFreqX = 0.02 + (x * 0.015 * localIntensity);
-            targetFreqY = 0.025 + (y * 0.02 * localIntensity);
-            targetScale = 10 * localIntensity + 2; // Min scale of 2, max of 12
+            // Simple smooth distortion
+            targetScale = maxScale;
+            
+            // Keep turbulence frequency low and stable to avoid fast waves
+            // Slightly vary based on position for subtle variation
+            const baseFreqX = 0.008 + (x * 0.002);
+            const baseFreqY = 0.012 + (x * 0.003);
+            turbulenceFilter.setAttribute('baseFrequency', `${baseFreqX} ${baseFreqY}`);
         });
         
         el.addEventListener('mouseleave', () => {
             isHovering = false;
             targetScale = 0;
-            targetFreqX = 0.01;
-            targetFreqY = 0.02;
         });
     });
 
