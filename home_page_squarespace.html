@@ -963,39 +963,7 @@ body {
     color: #b8d9ca;
 }
 
-/* Liquid warp displacement effect on bar hover */
-.tfc-bar-segment {
-    --liquid-x: 50%;
-    --liquid-y: 50%;
-    --warp-x: 0;
-    --warp-y: 0;
-}
-
-.tfc-bar-segment:hover {
-    transform: perspective(500px) rotateX(calc(var(--warp-y) * 1deg)) rotateY(calc(var(--warp-x) * 1deg));
-    transition: transform 0.1s ease-out, filter 0.3s ease;
-}
-
-.tfc-bar-segment::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(ellipse 80px 40px at var(--liquid-x) var(--liquid-y), 
-        rgba(255, 255, 255, 0.35) 0%, 
-        rgba(255, 255, 255, 0.1) 40%,
-        transparent 70%);
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    pointer-events: none;
-    border-radius: inherit;
-}
-
-.tfc-bar-segment:hover::before {
-    opacity: 1;
-}
+/* Simple hover effect on bar segments - removed warp/tilt to prevent flickering */
 
 /* Floating Effect Classes */
 .tfc-floating {
@@ -1103,12 +1071,7 @@ body {
 }
 
 .tfc-bold-animate.animating {
-    animation: boldUp 2s ease forwards;
-}
-
-@keyframes boldUp {
-    0% { font-weight: 600; letter-spacing: 0; }
-    100% { font-weight: 900; letter-spacing: 0.02em; }
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 /* Bobbing arrow after "must raise taxes" */
@@ -1750,8 +1713,8 @@ document.addEventListener('DOMContentLoaded', function() {
         treemapObserver.observe(treemapSection);
     }
     
-    // Localized nudge/wave effect for headings and protection text
-    const nudgeElements = document.querySelectorAll('.tfc-section h2, .tfc-grid-title h3, .tfc-footer-callout h2, .tfc-protection-box p, .tfc-treemap-title');
+    // Localized nudge/wave effect for headings (excluding protection box to prevent text shuffling)
+    const nudgeElements = document.querySelectorAll('.tfc-section h2, .tfc-grid-title h3, .tfc-footer-callout h2, .tfc-treemap-title');
     
     nudgeElements.forEach(el => {
         el.classList.add('tfc-nudge-text');
@@ -1764,20 +1727,17 @@ document.addEventListener('DOMContentLoaded', function() {
             // Calculate position as percentage (0 to 1)
             const posX = x / width;
             
-            // Create a localized wave effect - stronger near cursor, fades at edges
-            // Reduced intensity for more subtle deformation
-            const waveIntensity = 1.2;
-            const skewAmount = Math.sin((posX - 0.5) * Math.PI) * waveIntensity;
-            const translateY = Math.sin((posX) * Math.PI) * 1;
+            // Create a subtle wave effect based on cursor position
+            const waveIntensity = 0.8;
+            const skewAmount = (posX - 0.5) * waveIntensity * 2; // Simple linear skew
+            const translateY = Math.sin((posX) * Math.PI) * 0.5;
             
-            // Apply localized transform using transform-origin based on cursor position
-            el.style.transformOrigin = `${posX * 100}% center`;
-            el.style.transform = `skewY(${skewAmount}deg) translateY(${translateY}px)`;
+            // Keep transform-origin fixed to prevent text shuffling
+            el.style.transform = `skewX(${skewAmount}deg) translateY(${translateY}px)`;
         });
         
         el.addEventListener('mouseleave', () => {
-            el.style.transform = 'skewY(0deg) translateY(0)';
-            el.style.transformOrigin = 'center center';
+            el.style.transform = 'skewX(0deg) translateY(0)';
         });
     });
 
@@ -1824,35 +1784,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         barChartObserver.observe(hr1Alert);
     }
-    
-    // Liquid warp displacement effect on bar segments
-    const barSegments = document.querySelectorAll('.tfc-bar-segment');
-    barSegments.forEach(segment => {
-        segment.addEventListener('mousemove', (e) => {
-            const rect = segment.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            
-            // Calculate warp based on cursor position relative to center
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const offsetX = (e.clientX - rect.left - centerX) / centerX;
-            const offsetY = (e.clientY - rect.top - centerY) / centerY;
-            
-            // Apply liquid highlight position
-            segment.style.setProperty('--liquid-x', `${x}%`);
-            segment.style.setProperty('--liquid-y', `${y}%`);
-            
-            // Apply 3D warp rotation (reduced intensity for subtlety)
-            segment.style.setProperty('--warp-x', offsetX * 2);
-            segment.style.setProperty('--warp-y', -offsetY * 1.5);
-        });
-        
-        segment.addEventListener('mouseleave', () => {
-            segment.style.setProperty('--warp-x', 0);
-            segment.style.setProperty('--warp-y', 0);
-        });
-    });
     
     // Bold animation for "must raise taxes" on protection box hover
     const protectionBox = document.getElementById('protection-box');
