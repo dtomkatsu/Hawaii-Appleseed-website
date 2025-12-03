@@ -1133,13 +1133,32 @@ body {
     align-items: center;
 }
 
+.tfc-treemap-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 10px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+    animation: iconGlow 3s ease-in-out infinite;
+}
+
+@keyframes iconGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 5px rgba(255, 255, 255, 0.6));
+    }
+}
+
 .tfc-treemap-label {
     font-family: 'Open Sans', sans-serif;
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 8px;
-    text-align: center;
+    margin-bottom: 4px;
+    text-transform: uppercase;
     font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .tfc-treemap-income {
@@ -1298,8 +1317,7 @@ body {
 /* Tooltip trigger for "less on their taxes" */
 .tfc-tooltip-trigger {
     text-decoration: underline;
-    text-decoration-style: dotted;
-    text-underline-offset: 3px;
+    text-underline-offset: 2px;
     cursor: pointer;
     position: relative;
 }
@@ -1537,6 +1555,7 @@ body {
         <div class="tfc-treemap-subtitle">Share of family income spent on state and local taxes</div>
         <div class="tfc-treemap-container">
             <div class="tfc-treemap">
+                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/f7b69bfe-ce12-4755-9f67-98ba4254c97b/22ac3132-dfdb-4ffc-b20a-5b773b640312.png?format=2500w" alt="" class="tfc-treemap-icon">
                 <div class="tfc-treemap-label">Lowest 20%</div>
                 <div class="tfc-treemap-income">Earning less than $21,900</div>
                 <div class="tfc-treemap-box tfc-treemap-box-lowest">
@@ -1548,6 +1567,7 @@ body {
             </div>
             <div class="tfc-treemap-vs">VS</div>
             <div class="tfc-treemap">
+                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/5994d7ab-3aa9-4c08-9a64-80979054f3e3/0ecf4add-93c5-432a-85b4-8c379e096102.png?format=2500w" alt="" class="tfc-treemap-icon">
                 <div class="tfc-treemap-label">Top 1%</div>
                 <div class="tfc-treemap-income">Earning over $594,000</div>
                 <div class="tfc-treemap-box tfc-treemap-box-top">
