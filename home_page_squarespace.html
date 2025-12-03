@@ -1299,12 +1299,25 @@ body {
     font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
     font-size: 1.5rem;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 120, 100, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 10px;
     margin-top: 60px;
+    text-shadow: 0 0 8px rgba(255, 80, 50, 0.6), 0 0 16px rgba(255, 60, 30, 0.4), 0 0 24px rgba(255, 40, 20, 0.2);
+    animation: fireGlow 2s ease-in-out infinite;
+}
+
+@keyframes fireGlow {
+    0%, 100% {
+        text-shadow: 0 0 8px rgba(255, 80, 50, 0.6), 0 0 16px rgba(255, 60, 30, 0.4), 0 0 24px rgba(255, 40, 20, 0.2);
+        color: rgba(255, 120, 100, 0.9);
+    }
+    50% {
+        text-shadow: 0 0 12px rgba(255, 100, 60, 0.8), 0 0 24px rgba(255, 80, 40, 0.6), 0 0 36px rgba(255, 60, 30, 0.4);
+        color: rgba(255, 150, 120, 1);
+    }
 }
 
 /* Shared caption below both treemaps */
@@ -1317,6 +1330,55 @@ body {
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* Tooltip trigger for "less on their taxes" */
+.tfc-tooltip-trigger {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    position: relative;
+}
+
+.tfc-caption-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: rgba(30, 40, 55, 0.95);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    width: 280px;
+    text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+.tfc-caption-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px 8px 0 8px;
+    border-style: solid;
+    border-color: rgba(30, 40, 55, 0.95) transparent transparent transparent;
+}
+
+.tfc-tooltip-trigger:hover .tfc-caption-tooltip,
+.tfc-tooltip-trigger.tooltip-pinned .tfc-caption-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
 }
 
 /* HR1 link styling */
@@ -1491,8 +1553,8 @@ body {
         <div id="hero" class="tfc-hero">
             <h1>Hawaiʻi Tax Fairness Coalition</h1>
             <div class="tfc-hero-subtitle-wrapper">
-                <div class="tfc-hero-subtitle-text">For a tax system that lifts up working families.</div>
-                <div class="tfc-hero-subtitle-text">Through taxing the ultra-wealthy.</div>
+                <div class="tfc-hero-subtitle-text">Lifting up working families</div>
+                <div class="tfc-hero-subtitle-text">Taxing the top 1%</div>
             </div>
             <a href="/contact-your-legislator" class="tfc-btn tfc-hero-btn">Contact Your Legislator</a>
         </div>
@@ -1501,7 +1563,7 @@ body {
         <div id="purpose" class="tfc-section">
             <h2>Our Purpose</h2>
             <div class="tfc-text-block">
-                <p>Hawaiʻi's low- and middle-income families are struggling with the rising cost of living. We believe that these families should owe less taxes, and the top 1% should pay higher taxes to support the common good (like public healthcare and affordable housing).</p>
+                <p>Hawaiʻi's low- and middle-income families are struggling with the rising cost of living. We believe that these families should owe less taxes, and the top 1% should pay higher taxes to support the common good (like healthcare and affordable housing).</p>
             </div>
         </div>
     </div>
@@ -1533,7 +1595,7 @@ body {
                 </div>
             </div>
         </div>
-        <div class="tfc-treemap-shared-caption">The top 1% spend less on their taxes than everyone else.</div>
+        <div class="tfc-treemap-shared-caption">The top 1% spend <span class="tfc-tooltip-trigger" id="less-taxes-tooltip">less on their taxes<span class="tfc-caption-tooltip">For example, the General Excise Tax (GET) is easier for wealthy people to pay, since they have more money to spend.</span></span> than everyone else.</div>
     </div>
 
     <!-- What Taxes Pay For -->
@@ -2018,5 +2080,21 @@ document.addEventListener('DOMContentLoaded', function() {
             tooltipSegments.forEach(s => s.classList.remove('tooltip-pinned'));
         }
     });
+    
+    // "Less on their taxes" tooltip click-to-pin behavior
+    const lessTaxesTooltip = document.getElementById('less-taxes-tooltip');
+    if (lessTaxesTooltip) {
+        lessTaxesTooltip.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('tooltip-pinned');
+        });
+        
+        // Close when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#less-taxes-tooltip')) {
+                lessTaxesTooltip.classList.remove('tooltip-pinned');
+            }
+        });
+    }
 });
 </script>
