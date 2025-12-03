@@ -185,7 +185,7 @@ body {
     top: 0;
     text-align: center;
     opacity: 0;
-    animation: textCycle 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation: textCycle 12s ease-in-out infinite;
 }
 
 .tfc-hero-subtitle-text:nth-child(1) {
@@ -197,30 +197,60 @@ body {
 }
 
 @keyframes textCycle {
-    /* Enter from bottom (0-5% = ~0.6s) */
+    /* Start hidden below */
     0% {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(25px);
     }
-    /* Fully visible */
-    5% {
+    /* Accelerate in - mechanical start */
+    2% {
+        opacity: 0.3;
+        transform: translateY(15px);
+    }
+    /* Decelerate to stop - mechanical settle */
+    4% {
+        opacity: 0.8;
+        transform: translateY(3px);
+    }
+    /* Slight overshoot and settle back */
+    6% {
+        opacity: 1;
+        transform: translateY(-2px);
+    }
+    /* Final position with subtle bounce */
+    8% {
         opacity: 1;
         transform: translateY(0);
     }
-    /* Stay visible until 50% (~5.4s) */
+    /* Stay visible */
+    48% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    /* Begin exit - mechanical start */
     50% {
         opacity: 1;
         transform: translateY(0);
     }
-    /* Exit to top (50-55% = ~0.6s) */
-    55% {
+    /* Accelerate out */
+    52% {
+        opacity: 0.8;
+        transform: translateY(-5px);
+    }
+    /* Continue accelerating */
+    54% {
+        opacity: 0.4;
+        transform: translateY(-15px);
+    }
+    /* Exit complete */
+    56% {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-25px);
     }
     /* Stay hidden */
     100% {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-25px);
     }
 }
 
