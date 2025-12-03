@@ -145,9 +145,7 @@ body {
     display: inline-block; /* Allows individual hover */
 }
 
-.tfc-hero h1:hover {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* Subtle glow */
-}
+/* Hero h1 hover effect handled by liquid distortion JS */
 
 /* Hero Subtitle Wrapper & Animation */
 .tfc-hero-subtitle-wrapper {
@@ -1745,7 +1743,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Liquid distortion effect for headings - tracks cursor position with smooth interpolation
-    const nudgeElements = document.querySelectorAll('.tfc-section h2, .tfc-grid-title h3, .tfc-footer-callout h2, .tfc-treemap-title');
+    const nudgeElements = document.querySelectorAll('.tfc-hero h1, .tfc-section h2, .tfc-grid-title h3, .tfc-footer-callout h2, .tfc-treemap-title');
     const turbulenceFilter = document.querySelector('#liquid-distort feTurbulence');
     const displacementFilter = document.querySelector('#liquid-distort feDisplacementMap');
     
@@ -1796,9 +1794,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const x = (e.clientX - rect.left) / rect.width;
             const y = (e.clientY - rect.top) / rect.height;
             
-            // Set target frequencies based on cursor position
-            targetFreqX = 0.01 + (x * 0.02);
-            targetFreqY = 0.02 + (y * 0.03);
+            // Localized effect - stronger near cursor, weaker at edges
+            // Use cursor position to set frequency - creates localized distortion
+            const distFromCenter = Math.abs(x - 0.5) * 2; // 0 at center, 1 at edges
+            const localIntensity = 1 - (distFromCenter * 0.6); // Reduce effect at edges
+            
+            targetFreqX = 0.02 + (x * 0.015 * localIntensity);
+            targetFreqY = 0.025 + (y * 0.02 * localIntensity);
+            targetScale = 10 * localIntensity + 2; // Min scale of 2, max of 12
         });
         
         el.addEventListener('mouseleave', () => {
