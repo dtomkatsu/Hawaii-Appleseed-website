@@ -1457,9 +1457,38 @@ body {
         display: none !important;
     }
     
+    /* Act 46 tooltip - keep within viewport on mobile (leftmost bar) */
+    .tfc-bar-segment-act46 .tfc-bar-tooltip {
+        left: 0 !important;
+        transform: translateX(0) !important;
+    }
+    
+    .tfc-bar-segment-act46 .tfc-bar-tooltip::after {
+        left: 30px !important;
+        transform: none !important;
+    }
+    
+    .tfc-bar-segment-act46:hover .tfc-bar-tooltip,
+    .tfc-bar-segment-act46.tooltip-pinned .tfc-bar-tooltip {
+        transform: translateX(0) translateY(0) !important;
+    }
+    
+    /* Money icon - fix aspect ratio on mobile */
+    .tfc-money-icon {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 1rem !important;
+        line-height: 32px !important;
+    }
+    
     /* SNAP label spacing in bar chart */
     .tfc-bar-segment-snap .tfc-bar-label {
         margin-left: 8px;
+    }
+    
+    /* Bar chart title sizing on mobile */
+    .tfc-bar-chart-title {
+        font-size: 1.1rem !important;
     }
     
     /* Scroll arrow - less prominent on mobile */
