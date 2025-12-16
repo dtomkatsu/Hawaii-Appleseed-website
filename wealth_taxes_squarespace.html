@@ -1,6 +1,51 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* Squarespace Header Fix - Black font for light background pages */
+header.header,
+.header {
+    position: absolute !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+header .header-title-text a,
+header .header-nav-item a,
+header .header-nav-folder-title,
+.header .header-title-text a,
+.header .header-nav-item a,
+.header .header-nav-wrapper a {
+    color: #2A3A4D !important;
+}
+
+header .header-burger .burger-inner div,
+.header .header-burger .burger-inner div {
+    background-color: #2A3A4D !important;
+}
+
+.header-nav-folder-content,
+.header .header-nav-folder-content,
+header .header-nav-folder-content {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(42, 58, 77, 0.1) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.header-nav-folder-content a,
+.header .header-nav-folder-content a,
+header .header-nav-folder-content a,
+.header-nav-folder-item a {
+    color: #2A3A4D !important;
+}
+
+.header-nav-folder-content a:hover,
+.header-nav-folder-item a:hover {
+    background-color: rgba(42, 58, 77, 0.05) !important;
+    color: #2A3A4D !important;
+}
+
 /* Hide default cursor */
 * {
     cursor: none !important;

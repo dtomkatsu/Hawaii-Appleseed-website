@@ -12,9 +12,54 @@
             margin: 0;
             padding: 0;
             font-family: 'Open Sans', sans-serif;
-            background-color: #F7F6F2;
+            background-color: #E8E6E1; /* Darker beige to match wealth taxes page */
             color: #2A3A4D;
             line-height: 1.6;
+        }
+
+        /* Squarespace Header Fix - Black font for light background pages */
+        header.header,
+        .header {
+            position: absolute !important;
+            background-color: transparent !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+        header .header-title-text a,
+        header .header-nav-item a,
+        header .header-nav-folder-title,
+        .header .header-title-text a,
+        .header .header-nav-item a,
+        .header .header-nav-wrapper a {
+            color: #2A3A4D !important;
+        }
+
+        header .header-burger .burger-inner div,
+        .header .header-burger .burger-inner div {
+            background-color: #2A3A4D !important;
+        }
+
+        .header-nav-folder-content,
+        .header .header-nav-folder-content,
+        header .header-nav-folder-content {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid rgba(42, 58, 77, 0.1) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .header-nav-folder-content a,
+        .header .header-nav-folder-content a,
+        header .header-nav-folder-content a,
+        .header-nav-folder-item a {
+            color: #2A3A4D !important;
+        }
+
+        .header-nav-folder-content a:hover,
+        .header-nav-folder-item a:hover {
+            background-color: rgba(42, 58, 77, 0.05) !important;
+            color: #2A3A4D !important;
         }
 
         h1, h2, h3 {
@@ -335,12 +380,12 @@
                 <p class="tfc-credit-tagline">Helping local families with children afford the high cost of living.</p>
                 
                 <div class="tfc-credit-description">
-                    <p>The federal child tax credit helps offset the costs of raising kids and is worth up to $2,000 for each qualifying child. To get a federal child tax credit refund, a person must earn more than $2,500.</p>
-                    <p>Raising children is expensive—recent reports show that the cost of raising a child is over $200,000 throughout the child's lifetime. The American Rescue Plan Act of 2021 temporarily increased the federal credit to $3,600 for children under 6 and $3,000 for children under 18, lifting millions of families out of poverty.</p>
+                    <p>The federal child tax credit helps offset the costs of raising kids and is worth up to $2,000 for each qualifying child.</p>
+                    <p>Raising children is expensive—recent reports show that the cost of raising a child is over $200,000 throughout the child's lifetime. The American Rescue Plan Act of 2021 temporarily increased the federal credit to $3,600 for children under 6 and $3,000 for children under 18, bringing millions of families out of poverty.</p>
                 </div>
 
                 <div class="tfc-highlight-box">
-                    <p>Our proposal: A refundable state child tax credit of $1,000 for each child aged 0-5 and $500 for each child aged 6-17, distributed monthly.</p>
+                    <p>Our proposal: A refundable state child tax credit of $650 for each child aged 0-18.</p>
                 </div>
 
                 <!-- Dropdown for more details -->
@@ -355,9 +400,8 @@
                         <div class="tfc-dropdown-inner">
                             <ul>
                                 <li>The provisions of the American Rescue Plan that strengthened the child tax credit expired at the end of 2021, despite lifting millions of families and their children out of poverty.</li>
-                                <li>In the face of federal inaction to maintain a robust child tax credit, states have a responsibility to enact policies that assist working families with children in meeting their basic needs.</li>
-                                <li>According to the National Conference of State Legislatures, twelve other jurisdictions have enacted a state child tax credit.</li>
-                                <li>State laws vary regarding refundability and how child tax credits are calculated. The fixed limit for state child tax credits ranges from $75 to $1,000 per child.</li>
+                                <li>In the face of federal spending cuts, states have a responsibility to enact policies that assist working families with children.</li>
+                                <li>Twelve other states (and the District of Columbia) have their own, separate child tax credit.</li>
                             </ul>
                         </div>
                     </div>
@@ -378,8 +422,8 @@
                 <p class="tfc-credit-tagline">Helping Hawaiʻi's working families keep more of what they earn.</p>
                 
                 <div class="tfc-credit-description">
-                    <p>The Earned Income Tax Credit (EITC) is a special tax credit for families that work. It helps working families keep more of what they earn and has been helping Hawaiʻi residents make ends meet. However, the lowest-income families that need it most still can't access its full benefits.</p>
-                    <p>The state EITC mirrors the federal credit and provides eligible households with an additional credit. It's only available to people who earn income through low-wage work, with most recipients raising children.</p>
+                    <p>The Earned Income Tax Credit (EITC) is a special tax credit for people that are employed. It allows families keep more of what they earn, helping them put food on the table.</p>
+                    <p>The state EITC for Hawaiʻi mirrors the federal credit, and it's refundable. Most EITC recipients are raising children.</p>
                 </div>
 
                 <div class="tfc-stats-row">
@@ -394,8 +438,8 @@
                 </div>
 
                 <div class="tfc-highlight-box red-theme">
-                    <p>Hawaiʻi's low-income families face the second-highest tax rate in the nation—paying 15% of income in taxes while the top earners pay only 8.9%.</p>
-                </div>
+                    <p>Hawaiʻi's EITC is worth 40% of the federal credit, and it was last expanded in 2023.  </p>
+                </div>  ````
 
                 <!-- Dropdown for benefits -->
                 <div class="tfc-dropdown">
@@ -408,11 +452,11 @@
                     <div class="tfc-dropdown-content">
                         <div class="tfc-dropdown-inner">
                             <ul>
-                                <li>For families with very low wages, the credit increases with each dollar earned, encouraging work and helping them gain a firmer foothold in the workforce.</li>
+                                <li>The EITC is a lifeline for low-income people, giving them the financial security they need to stay employed while caring for their family. </li>
                                 <li>Children in families receiving the EITC experience financial, educational, and health benefits that strengthen their foundations for future success.</li>
                                 <li>Children whose families receive the EITC have higher test scores, graduation rates, and college enrollment.</li>
-                                <li>The federal EITC is linked to healthier moms and babies, including increased birth weight for newborns.</li>
-                                <li>Almost 30% of Hawaiʻi's households are "liquid asset poor"—the EITC helps families achieve greater economic security.</li>
+                                <li>The EITC is linked to healthier mothers and infants, including increased birth weight for newborns.</li>
+                            
                             </ul>
                         </div>
                     </div>
