@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RxKids</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Halyard+Display:wght@700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #E8E6E1; /* Darker beige to match other pages */
+            color: #2A3A4D;
+            line-height: 1.6;
+        }
+
+        /* Squarespace Header Fix - Black font for light background pages */
+        header.header,
+        .header {
+            position: absolute !important;
+            background-color: transparent !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+        header .header-title-text a,
+        header .header-nav-item a,
+        header .header-nav-folder-title,
+        .header .header-title-text a,
+        .header .header-nav-item a,
+        .header .header-nav-wrapper a {
+            color: #2A3A4D !important;
+        }
+
+        header .header-burger .burger-inner div,
+        .header .header-burger .burger-inner div {
+            background-color: #2A3A4D !important;
+        }
+
+        .header-nav-folder-content,
+        .header .header-nav-folder-content,
+        header .header-nav-folder-content {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid rgba(42, 58, 77, 0.1) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .header-nav-folder-content a,
+        .header .header-nav-folder-content a,
+        header .header-nav-folder-content a,
+        .header-nav-folder-item a {
+            color: #2A3A4D !important;
+        }
+
+        .header-nav-folder-content a:hover,
+        .header-nav-folder-item a:hover {
+            background-color: rgba(42, 58, 77, 0.05) !important;
+            color: #2A3A4D !important;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        /* Main Container */
+        .tfc-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 24px 60px;
+        }
+
+        /* Hero Section */
+        .tfc-hero {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .tfc-hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #E57373, #EF5350);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+
+        .tfc-hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            color: #2A3A4D;
+        }
+
+        .tfc-hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #E57373;
+            margin-bottom: 24px;
+        }
+
+        .tfc-hero-tagline {
+            font-size: 1.3rem;
+            color: #4a5568;
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+
+        /* Stats Row */
+        .tfc-stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin: 48px 0;
+            flex-wrap: wrap;
+        }
+
+        .tfc-stat-item {
+            text-align: center;
+        }
+
+        .tfc-stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #E57373;
+            line-height: 1.2;
+            font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+        }
+
+        .tfc-stat-label {
+            font-size: 1rem;
+            color: #718096;
+            margin-top: 8px;
+        }
+
+        /* Info Cards */
+        .tfc-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 60px 0;
+        }
+
+        .tfc-info-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 40px 32px;
+            box-shadow: 0 4px 20px rgba(42, 58, 77, 0.08);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tfc-info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(42, 58, 77, 0.12);
+        }
+
+        .tfc-card-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, #FFCDD2, #EF9A9A);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .tfc-card-title {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: #2A3A4D;
+        }
+
+        .tfc-card-text {
+            font-size: 1.05rem;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+
+        /* Section Styles */
+        .tfc-section {
+            margin-bottom: 80px;
+        }
+
+        .tfc-section-title {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            text-align: center;
+            color: #2A3A4D;
+        }
+
+        .tfc-section-subtitle {
+            font-size: 1.2rem;
+            color: #4a5568;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 48px;
+        }
+
+        /* How It Works */
+        .tfc-steps {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            margin-top: 48px;
+        }
+
+        .tfc-step {
+            flex: 1;
+            min-width: 250px;
+            max-width: 320px;
+            text-align: center;
+            position: relative;
+        }
+
+        .tfc-step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #E57373, #EF5350);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+            font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+        }
+
+        .tfc-step-title {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: #2A3A4D;
+        }
+
+        .tfc-step-text {
+            font-size: 1rem;
+            color: #4a5568;
+        }
+
+        /* Highlight Box */
+        .tfc-highlight-box {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .tfc-highlight-box h3 {
+            font-size: 1.75rem;
+            margin-bottom: 16px;
+            color: #C62828;
+        }
+
+        .tfc-highlight-box p {
+            font-size: 1.15rem;
+            color: #4a5568;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Benefits List */
+        .tfc-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .tfc-benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(42, 58, 77, 0.06);
+        }
+
+        .tfc-benefit-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #FFCDD2, #EF9A9A);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .tfc-benefit-content h4 {
+            font-size: 1.1rem;
+            margin: 0 0 8px;
+            color: #2A3A4D;
+        }
+
+        .tfc-benefit-content p {
+            font-size: 0.95rem;
+            color: #4a5568;
+            margin: 0;
+        }
+
+        /* CTA Section */
+        .tfc-cta-section {
+            background: linear-gradient(135deg, #E57373 0%, #EF5350 100%);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            color: white;
+            margin: 60px 0;
+        }
+
+        .tfc-cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .tfc-cta-section p {
+            font-size: 1.15rem;
+            margin-bottom: 32px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tfc-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: white;
+            color: #E57373;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tfc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .tfc-btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            margin-left: 16px;
+        }
+
+        .tfc-btn-outline:hover {
+            background: white;
+            color: #E57373;
+        }
+
+        /* Quote Section */
+        .tfc-quote-section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 48px;
+            margin: 60px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(42, 58, 77, 0.08);
+        }
+
+        .tfc-quote-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: #4a5568;
+            max-width: 800px;
+            margin: 0 auto 24px;
+            line-height: 1.8;
+        }
+
+        .tfc-quote-author {
+            font-size: 1rem;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        /* Source Link */
+        .tfc-source {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .tfc-source a {
+            color: #E57373;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .tfc-source a:hover {
+            color: #C62828;
+            text-decoration: underline;
+        }
+
+        /* 3D Bar Chart - Using skew technique from Codrops tutorial */
+        .tfc-chart-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .tfc-3d-chart {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 80px;
+            height: 320px;
+            padding: 40px 0 60px;
+        }
+
+        .tfc-3d-bar-group {
+            position: relative;
+        }
+
+        .tfc-3d-bar {
+            width: 70px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .tfc-3d-bar:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Front face - the main visible bar */
+        .tfc-3d-bar-front {
+            width: 70px;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 12px;
+        }
+
+        /* Top face - skewed horizontally */
+        .tfc-3d-bar-front::after {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 7px;
+            width: 100%;
+            height: 18px;
+            transform: skewX(-45deg);
+        }
+
+        /* Right side face - skewed vertically */
+        .tfc-3d-bar-front::before {
+            content: "";
+            position: absolute;
+            top: -7px;
+            right: -17px;
+            width: 18px;
+            height: 100%;
+            transform: skewY(-45deg);
+        }
+
+        .tfc-3d-bar-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .tfc-3d-bar-label {
+            position: absolute;
+            bottom: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #2A3A4D;
+            white-space: nowrap;
+        }
+
+        /* Green bar - Married Couple */
+        .tfc-3d-bar-group:nth-child(1) .tfc-3d-bar-front {
+            background: linear-gradient(180deg, #66BB6A 0%, #388E3C 100%);
+        }
+        .tfc-3d-bar-group:nth-child(1) .tfc-3d-bar-front::after {
+            background: linear-gradient(135deg, #A5D6A7 0%, #81C784 100%);
+        }
+        .tfc-3d-bar-group:nth-child(1) .tfc-3d-bar-front::before {
+            background: linear-gradient(180deg, #2E7D32 0%, #1B5E20 100%);
+        }
+
+        /* Blue bar - Single Father */
+        .tfc-3d-bar-group:nth-child(2) .tfc-3d-bar-front {
+            background: linear-gradient(180deg, #42A5F5 0%, #1976D2 100%);
+        }
+        .tfc-3d-bar-group:nth-child(2) .tfc-3d-bar-front::after {
+            background: linear-gradient(135deg, #90CAF9 0%, #64B5F6 100%);
+        }
+        .tfc-3d-bar-group:nth-child(2) .tfc-3d-bar-front::before {
+            background: linear-gradient(180deg, #1565C0 0%, #0D47A1 100%);
+        }
+
+        /* Red bar - Single Mother */
+        .tfc-3d-bar-group:nth-child(3) .tfc-3d-bar-front {
+            background: linear-gradient(180deg, #EF5350 0%, #C62828 100%);
+        }
+        .tfc-3d-bar-group:nth-child(3) .tfc-3d-bar-front::after {
+            background: linear-gradient(135deg, #EF9A9A 0%, #E57373 100%);
+        }
+        .tfc-3d-bar-group:nth-child(3) .tfc-3d-bar-front::before {
+            background: linear-gradient(180deg, #C62828 0%, #B71C1C 100%);
+        }
+
+        .tfc-chart-source {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 60px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tfc-hero-title {
+                font-size: 2.5rem;
+            }
+
+            .tfc-section-title {
+                font-size: 2rem;
+            }
+
+            .tfc-stats-row {
+                gap: 32px;
+            }
+
+            .tfc-stat-number {
+                font-size: 2.5rem;
+            }
+
+            .tfc-cta-section {
+                padding: 40px 24px;
+            }
+
+            .tfc-btn {
+                display: block;
+                margin: 12px auto;
+            }
+
+            .tfc-btn-outline {
+                margin-left: 0;
+            }
+
+            .tfc-quote-text {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tfc-container">
+        <!-- Hero Section -->
+        <div class="tfc-hero">
+            <div class="tfc-hero-badge">A Prescription for Families</div>
+            <h1 class="tfc-hero-title">RxKids</h1>
+            <p class="tfc-hero-subtitle">A Prescription for Health, Hope, and Opportunity</p>
+            <p class="tfc-hero-tagline">Direct cash support for pregnant mothers and babies—because every family deserves a strong start.</p>
+            
+            <div class="tfc-stats-row">
+                <div class="tfc-stat-item">
+                    <div class="tfc-stat-number">$2,000</div>
+                    <div class="tfc-stat-label">For Each Baby (Medicaid Birth)</div>
+                </div>
+                <div class="tfc-stat-item">
+                    <div class="tfc-stat-number">$15 million</div>
+                    <div class="tfc-stat-label">Total Support</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- What is RxKids -->
+        <div class="tfc-section">
+            <h2 class="tfc-section-title">What is RxKids?</h2>
+            <p class="tfc-section-subtitle">RxKids is a groundbreaking prenatal and infant cash prescription program that provides universal, unconditional financial support to families during pregnancy and a baby's first year of life.</p>
+            
+            <div class="tfc-cards-grid">
+                <div class="tfc-info-card">
+                    <div class="tfc-card-icon">💝</div>
+                    <h3 class="tfc-card-title">Universal Support</h3>
+                    <p class="tfc-card-text">Every pregnant mother in participating communities receives support—no complicated eligibility requirements or means testing.</p>
+                </div>
+                <div class="tfc-info-card">
+                    <div class="tfc-card-icon">💵</div>
+                    <h3 class="tfc-card-title">No Strings Attached</h3>
+                    <p class="tfc-card-text">Families decide how to use the funds based on their unique needs—whether for rent, food, baby supplies, or other essentials.</p>
+                </div>
+                <div class="tfc-info-card">
+                    <div class="tfc-card-icon">👶</div>
+                    <h3 class="tfc-card-title">Critical First Year</h3>
+                    <p class="tfc-card-text">Monthly payments continue throughout a baby's first year, providing stability during the most important developmental period.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Child Poverty Chart -->
+        <div class="tfc-section">
+            <h2 class="tfc-section-title">Child Poverty in Hawaiʻi by Household Type</h2>
+            <p class="tfc-section-subtitle">Percentage of children living in poverty</p>
+            
+            <div class="tfc-chart-container">
+                <div class="tfc-3d-chart">
+                    <!-- Married Couple -->
+                    <div class="tfc-3d-bar-group">
+                        <div class="tfc-3d-bar">
+                            <div class="tfc-3d-bar-front" style="height: 64px;">
+                                <span class="tfc-3d-bar-value">6.4%</span>
+                            </div>
+                        </div>
+                        <div class="tfc-3d-bar-label">Married Couple</div>
+                    </div>
+                    
+                    <!-- Single Father -->
+                    <div class="tfc-3d-bar-group">
+                        <div class="tfc-3d-bar">
+                            <div class="tfc-3d-bar-front" style="height: 113px;">
+                                <span class="tfc-3d-bar-value">11.3%</span>
+                            </div>
+                        </div>
+                        <div class="tfc-3d-bar-label">Single Father</div>
+                    </div>
+                    
+                    <!-- Single Mother -->
+                    <div class="tfc-3d-bar-group">
+                        <div class="tfc-3d-bar">
+                            <div class="tfc-3d-bar-front" style="height: 266px;">
+                                <span class="tfc-3d-bar-value">26.6%</span>
+                            </div>
+                        </div>
+                        <div class="tfc-3d-bar-label">Single Mother</div>
+                    </div>
+                </div>
+                <p class="tfc-chart-source">Source: U.S. Census Bureau</p>
+            </div>
+        </div>
+
+        <!-- Why It Matters -->
+        <div class="tfc-highlight-box">
+            <h3>Why Direct Cash Support Matters</h3>
+            <p>Research shows that direct cash transfers to families improve maternal and infant health outcomes, reduce stress, and give children a stronger foundation for lifelong success. When families have financial security, everyone benefits.</p>
+        </div>
+
+        <!-- Benefits Section -->
+        <div class="tfc-section">
+            <h2 class="tfc-section-title">Proven Benefits</h2>
+            <p class="tfc-section-subtitle">Cash support programs like RxKids have demonstrated significant positive impacts on families and communities.</p>
+            
+            <div class="tfc-benefits">
+                <div class="tfc-benefit-item">
+                    <div class="tfc-benefit-icon">🏥</div>
+                    <div class="tfc-benefit-content">
+                        <h4>Better Health Outcomes</h4>
+                        <p>Reduced maternal stress and improved prenatal care lead to healthier pregnancies and births.</p>
+                    </div>
+                </div>
+                <div class="tfc-benefit-item">
+                    <div class="tfc-benefit-icon">🧠</div>
+                    <div class="tfc-benefit-content">
+                        <h4>Child Development</h4>
+                        <p>Financial stability during early childhood supports cognitive and emotional development.</p>
+                    </div>
+                </div>
+                <div class="tfc-benefit-item">
+                    <div class="tfc-benefit-icon">🏠</div>
+                    <div class="tfc-benefit-content">
+                        <h4>Housing Stability</h4>
+                        <p>Families can better afford rent and utilities, reducing housing insecurity.</p>
+                    </div>
+                </div>
+                <div class="tfc-benefit-item">
+                    <div class="tfc-benefit-icon">🍎</div>
+                    <div class="tfc-benefit-content">
+                        <h4>Food Security</h4>
+                        <p>Parents can provide nutritious food for themselves and their growing families.</p>
+                    </div>
+                </div>
+                <div class="tfc-benefit-item">
+                    <div class="tfc-benefit-icon">💼</div>
+                    <div class="tfc-benefit-content">
+                        <h4>Economic Mobility</h4>
+                        <p>Reduced financial stress allows parents to focus on work and career advancement.</p>
+                    </div>
+                </div>
+                <div class="tfc-benefit-item">
+                    <div class="tfc-benefit-icon">❤️</div>
+                    <div class="tfc-benefit-content">
+                        <h4>Family Bonding</h4>
+                        <p>Less financial worry means more quality time for parents to bond with their newborns.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="tfc-section">
+            <h2 class="tfc-section-title">How RxKids Works</h2>
+            <p class="tfc-section-subtitle">A simple, dignified process that puts families first.</p>
+            
+            <div class="tfc-steps">
+                <div class="tfc-step">
+                    <div class="tfc-step-number">1</div>
+                    <h3 class="tfc-step-title">Pregnancy Enrollment</h3>
+                    <p class="tfc-step-text">Pregnant mothers enroll in the program at 16+ weeks of pregnancy.</p>
+                </div>
+                <div class="tfc-step">
+                    <div class="tfc-step-number">2</div>
+                    <h3 class="tfc-step-title">Initial Payment</h3>
+                    <p class="tfc-step-text">Receive $1,500 during pregnancy to prepare for baby's arrival.</p>
+                </div>
+                <div class="tfc-step">
+                    <div class="tfc-step-number">3</div>
+                    <h3 class="tfc-step-title">Monthly Support</h3>
+                    <p class="tfc-step-text">After birth, receive $500 monthly throughout baby's first year.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quote -->
+        <div class="tfc-quote-section">
+            <p class="tfc-quote-text">"RxKids is reimagining the social contract and positively impacting the lives of thousands of families. We want you to share in the story of lives impacted and communities improved."</p>
+            <p class="tfc-quote-author">— RxKids</p>
+        </div>
+
+        <!-- RxKids for Hawaiʻi -->
+        <div class="tfc-section">
+            <h2 class="tfc-section-title">RxKids for Hawaiʻi</h2>
+            <p class="tfc-section-subtitle">Hawaiʻi has one of the highest costs of living in the nation. A program like RxKids could provide critical support for local families during pregnancy and a child's first year.</p>
+            
+            <div class="tfc-cards-grid">
+                <div class="tfc-info-card">
+                    <div class="tfc-card-icon">🌺</div>
+                    <h3 class="tfc-card-title">High Cost of Living</h3>
+                    <p class="tfc-card-text">Hawaiʻi families face some of the highest housing, food, and childcare costs in the country, making early support essential.</p>
+                </div>
+                <div class="tfc-info-card">
+                    <div class="tfc-card-icon">👨‍👩‍👧</div>
+                    <h3 class="tfc-card-title">Supporting ʻOhana</h3>
+                    <p class="tfc-card-text">Direct cash support aligns with Hawaiian values of caring for family and community during life's most important moments.</p>
+                </div>
+                <div class="tfc-info-card">
+                    <div class="tfc-card-icon">🌱</div>
+                    <h3 class="tfc-card-title">Investing in Keiki</h3>
+                    <p class="tfc-card-text">Supporting families during pregnancy and infancy is an investment in the next generation of Hawaiʻi's children.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="tfc-cta-section">
+            <h2>Learn More About RxKids</h2>
+            <p>Discover how this innovative program is transforming communities and supporting families across the nation.</p>
+            <a href="https://rxkids.org/" target="_blank" class="tfc-btn">Visit RxKids.org</a>
+            <a href="https://rxkids.org/about/" target="_blank" class="tfc-btn tfc-btn-outline">About the Program</a>
+        </div>
+
+        <!-- Source -->
+        <div class="tfc-source">
+            <p>Learn more about RxKids at <a href="https://rxkids.org/" target="_blank">rxkids.org</a></p>
+        </div>
+    </div>
+</body>
+</html>
