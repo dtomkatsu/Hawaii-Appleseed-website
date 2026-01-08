@@ -21,28 +21,39 @@
 </svg>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Red+Hat+Display:wght@400;600;700&display=swap');
 
-/* Dark blue-grey page background */
+/* Site Header & Global Overrides */
+header, .header, #header {
+    background-color: #243551 !important;
+}
+
+/* Dark blue-grey text for light theme */
 body {
-    background: #2a3a4d;
+    background: #ffffff;
     cursor: none;
+    color: #2a3a4d;
+    overflow-x: hidden; /* Fix horizontal scroll */
+    margin: 0;
+    padding: 0;
 }
 
 /* Hero section with background image */
 .tfc-hero-wrapper {
     position: relative;
-    padding-bottom: 100px;
-    margin-bottom: -100px;
-    /* Break out of container to be full-width */
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
-    padding-left: calc(50vw - 50%);
-    padding-right: calc(50vw - 50%);
-    /* Remove top padding from container */
-    margin-top: -20px;
-    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 0;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-top: 0;
+    padding-top: 0;
     overflow: hidden;
+    height: auto;
+    min-height: 280px; /* Reduced further to cut off bottom */
+    transform: none;
 }
 
 /* Parallax background layer */
@@ -52,7 +63,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/1674028370383-G4WMD8WDKV6HC5XC93UA/pexels-kampus-production-8925997.jpeg?format=1500w&content-type=image%2Fjpeg');
+    background-image: url('https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/1673910150535-UZKUJYHHOCPR3PU47C8H/unsplash-image-DfLtSZdWmDU.jpg?content-type=image%2Fjpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -68,7 +79,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(42, 58, 77, 0.85);
+    background: rgba(42, 58, 77, 0.4);
     pointer-events: none;
     z-index: 1;
 }
@@ -79,10 +90,16 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 200px;
-    background: linear-gradient(to bottom, transparent 0%, #2a3a4d 100%);
+    height: 150px;
+    /* Hero Fade to White with Blur */
+    background: linear-gradient(to bottom, transparent 0%, #ffffff 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* Fade the blur effect in so it doesn't have a hard top edge */
+    mask-image: linear-gradient(to bottom, transparent, black);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black);
     pointer-events: none;
-    z-index: 3;
+    z-index: 1;
 }
 
 .tfc-hero-wrapper > * {
@@ -95,7 +112,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    color: #ffffff;
+    color: #2a3a4d;
     line-height: 1.6;
     background: transparent;
     cursor: none;
@@ -104,6 +121,7 @@ body {
 /* Hide default cursor on all elements */
 * {
     cursor: none !important;
+    box-sizing: border-box;
 }
 
 /* Custom cursor - light grey */
@@ -133,9 +151,168 @@ body {
     text-shadow: 0 0 20px rgba(36, 53, 81, 0.6); /* Stronger glow */
 }
 
+/* Section Wrappers */
+.tfc-bg-white {
+    background-color: #ffffff;
+    padding: 80px 20px;
+    margin: 0;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    box-sizing: border-box;
+    transform: none; /* Remove transform method to fix scrollbar issues */
+}
+
+.tfc-bg-gray {
+    background-color: #DFDFDC;
+    padding: 80px 20px;
+    margin: 0;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    box-sizing: border-box;
+    transform: none;
+}
+
+.tfc-section-wrapper-beige {
+    /* Deprecated, use tfc-bg-gray or tfc-bg-white */
+    background-color: #f7f7f7; 
+    padding: 80px 20px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    /* Break out of container to be full-width */
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding-left: calc(50vw - 50%);
+    padding-right: calc(50vw - 50%);
+    width: 100vw;
+    box-sizing: border-box;
+}
+
+.tfc-section-wrapper-beige .tfc-grid-title {
+    margin-bottom: 40px;
+    padding-top: 0;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tfc-section-wrapper-beige .tfc-icon-grid {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Save the Date Section */
+.tfc-save-date-container {
+    margin-bottom: 0;
+    animation: slideInFromTitle 0.6s ease 0.1s forwards;
+    opacity: 0;
+    position: relative;
+    top: 0;
+    background-color: rgba(36, 53, 81, 0.7); /* More transparent */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 16px 24px;
+    width: 100%;
+    padding-left: max(24px, calc(50% - 600px + 24px));
+    padding-right: max(24px, calc(50% - 600px + 24px));
+    box-sizing: border-box;
+    color: white;
+    text-align: left;
+    box-shadow: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0;
+    z-index: 5;
+    transform: none;
+}
+
+.tfc-save-date-title {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.15rem;
+    color: #ffffff;
+    margin-bottom: 4px;
+    font-weight: 400;
+    text-shadow: none;
+    line-height: 1.4;
+    display: inline-block;
+}
+
+.tfc-save-date-title strong {
+    font-weight: 700;
+    color: #ffffff;
+    margin-right: 4px;
+}
+
+.tfc-save-date-time {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem; /* Smaller size */
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 16px;
+    text-shadow: none;
+}
+
+.tfc-rsvp-btn {
+    display: inline-block;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Thinner border */
+    color: white !important;
+    padding: 6px 20px; /* Smaller padding for inline */
+    border-radius: 50px;
+    text-decoration: none !important;
+    font-weight: 600;
+    font-size: 0.85rem; /* Smaller font for inline */
+    transition: all 0.2s ease;
+    margin-left: 12px; /* Space between text and button */
+    vertical-align: middle;
+}
+
+.tfc-rsvp-btn:hover {
+    background-color: white;
+    color: #2a3a4d !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Hero Flex Layout for Title/Subtitle + Button */
+.tfc-hero-flex-container {
+    display: flex;
+    align-items: flex-end; /* Align with bottom (subtitle) */
+    justify-content: flex-start; /* Bring button left */
+    gap: 32px;
+}
+
+.tfc-hero-text-column {
+    flex: 0 1 auto; /* Don't take full width */
+    text-align: left;
+    max-width: 850px; /* Limit width to keep button close */
+}
+
+.tfc-hero-btn-wrapper {
+    flex: 0 0 auto;
+    padding-bottom: 8px; /* Align visually with last line of text */
+}
+
+@media (max-width: 768px) {
+    .tfc-hero-flex-container {
+        flex-direction: column;
+        gap: 24px;
+    }
+    
+    .tfc-hero-btn-wrapper {
+        padding-top: 0;
+    }
+}
+
 /* Hero Section */
 .tfc-hero {
-    text-align: center;
+    text-align: left;
     padding: 60px 20px;
     border-radius: 24px;
     color: #ffffff;
@@ -144,7 +321,7 @@ body {
 }
 
 .tfc-hero h1 {
-    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-family: 'Red Hat Display', 'Halyard Display', sans-serif;
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 16px;
@@ -159,13 +336,11 @@ body {
 
 /* Hero Subtitle Wrapper & Animation */
 .tfc-hero-subtitle-wrapper {
-    height: 3rem; /* Increased space for text */
     margin-bottom: 32px;
     position: relative;
     max-width: 800px;
-    margin-left: auto;
+    margin-left: 0;
     margin-right: auto;
-    overflow: hidden;
     
     /* Entrance Animation for the whole block */
     opacity: 0;
@@ -179,50 +354,13 @@ body {
     font-weight: 300;
     color: rgba(255, 255, 255, 0.85);
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    position: absolute;
+    position: relative;
     width: 100%;
-    left: 0;
-    top: 0;
-    text-align: center;
-    opacity: 0;
-    animation: textCycle 12s linear infinite;
+    text-align: left;
+    opacity: 1;
+    line-height: 1.5;
 }
 
-.tfc-hero-subtitle-text:nth-child(1) {
-    animation-delay: 0s;
-}
-
-.tfc-hero-subtitle-text:nth-child(2) {
-    animation-delay: 6s;
-}
-
-@keyframes textCycle {
-    /* Hidden below */
-    0% {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    /* Quick slide up */
-    3% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    /* Hold in place */
-    47% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    /* Quick slide up and out */
-    50% {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    /* Stay hidden */
-    100% {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-}
 
 /* Hero slide-in animation */
 @keyframes slideInFromTitle {
@@ -269,25 +407,56 @@ body {
     }
 }
 
+/* Hero Title Row */
+.tfc-hero-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 32px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.tfc-hero-title-row h1 {
+    margin-bottom: 0;
+}
+
+.tfc-hero-title-row .tfc-hero-btn {
+    margin-top: 0;
+    margin-bottom: 0;
+    /* Override absolute positioning or transforms if any */
+    transform: translateY(0);
+    opacity: 0; /* Keep start opacity for animation */
+}
+
+@media (max-width: 768px) {
+    .tfc-hero-title-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+}
+
 /* Purpose Section */
 .tfc-section {
     margin-bottom: 80px;
-    text-align: center;
+    text-align: left;
     background: transparent;
     padding: 40px;
     border-radius: 24px;
 }
 
 .tfc-section h2 {
-    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-family: 'Red Hat Display', 'Halyard Display', sans-serif;
     font-size: 2.25rem;
-    color: #ffffff;
+    color: #2a3a4d;
     margin-bottom: 24px;
     font-weight: 700;
     transition: transform 0.15s ease-out, opacity 0.6s ease;
     display: inline-block;
     position: relative;
     opacity: 0;
+    text-align: left;
 }
 
 .tfc-section h2.animated {
@@ -314,14 +483,53 @@ body {
 
 .tfc-text-block {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0; /* Align left */
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.85);
+    color: #2a3a4d;
     font-family: 'Open Sans', sans-serif;
     /* Slide-up animation moved to container */
     opacity: 0;
     transform: translateY(30px);
     animation: slideUpIntoView 0.6s ease 0.8s forwards;
+    text-align: left;
+}
+
+/* Why Focus on Taxes Layout */
+#purpose.tfc-section {
+    display: flex;
+    align-items: flex-start; /* Align top to allow margin offset */
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto 80px auto;
+    padding: 0 24px; /* Prevent cutoff */
+}
+
+#purpose .tfc-text-content {
+    flex: 1;
+}
+
+#purpose .tfc-section-image {
+    flex: 1;
+    max-width: 260px; /* Slightly bigger */
+    margin-top: 80px; /* Push down to align with paragraph */
+}
+
+#purpose .tfc-section-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 900px) {
+    #purpose.tfc-section {
+        flex-direction: column;
+    }
+    
+    #purpose .tfc-section-image {
+        max-width: 100%;
+        margin-top: 0;
+    }
 }
 
 .tfc-text-block p {
@@ -377,49 +585,82 @@ body {
     max-width: 800px;
     margin: 0 auto;
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.85);
+    color: #2a3a4d; /* Same as headings */
     font-family: 'Open Sans', sans-serif;
 }
 
 /* Icons Grid Section */
-.tfc-grid-title {
-    text-align: center;
-    margin-bottom: 40px;
+/* What Taxes Pay For Layout */
+#taxes-section-wrapper .tfc-grid-title {
     display: flex;
-    flex-direction: column; /* Stack heading and text vertically */
-    align-items: center;
+    align-items: flex-start; /* Align top to fix "image slightly higher" */
+    gap: 60px;
+    margin-bottom: 60px;
+    flex-direction: row;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 40px; /* Increased padding to prevent cutoff */
+}
+
+.tfc-taxes-intro-image {
+    flex: 0 0 300px; /* Adjusted to 300px */
+}
+
+.tfc-taxes-intro-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.tfc-taxes-intro-text {
+    flex: 1;
+}
+
+@media (max-width: 900px) {
+    #taxes-section-wrapper .tfc-grid-title {
+        flex-direction: column;
+    }
+    
+    .tfc-taxes-intro-image {
+        flex: none;
+        width: 100%;
+    }
 }
 
 .tfc-grid-title h3 {
-    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-family: 'Red Hat Display', 'Halyard Display', sans-serif;
     font-size: 2.25rem;
-    color: #ffffff;
+    color: #2a3a4d;
     margin-bottom: 16px;
+    margin-top: 0; /* Ensure top alignment */
     display: inline-block;
     position: relative;
 }
 
 
 .tfc-grid-title p {
-    color: rgba(255, 255, 255, 0.75);
+    color: #4a5568;
     font-size: 1.25rem;
     font-family: 'Open Sans', sans-serif;
     transition: transform 0.3s ease;
     display: block;
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0;
+    text-align: left;
 }
 
 /* Odometer box for $10.8+ billion */
 .tfc-odometer-box {
     display: inline-flex;
     align-items: baseline;
-    background: rgba(143, 191, 170, 0.15);
-    border: 1px solid rgba(143, 191, 170, 0.4);
+    background: rgba(49, 151, 149, 0.1);
+    border: 1px solid rgba(49, 151, 149, 0.3);
     border-radius: 6px;
     padding: 2px 8px;
     font-weight: 700;
-    color: #8fbfaa;
+    color: #2c7a7b;
     overflow: hidden;
     vertical-align: baseline;
     line-height: 1;
@@ -465,193 +706,89 @@ body {
 
 .tfc-icon-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
-    gap: 40px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
     margin-bottom: 60px;
-    max-width: 1000px; /* constrain width so 2 columns look good */
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-    /* Hidden by default until More is clicked */
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.8s ease, opacity 0.5s ease, margin 0.5s ease;
+    padding: 0 40px; /* Increased padding */
 }
 
-.tfc-icon-grid.expanded {
-    max-height: 2000px;
-    opacity: 1;
-}
-
-.tfc-icon-grid.expanded .tfc-icon-card {
-    animation: cascadeIn 0.5s ease forwards;
-}
-
-.tfc-icon-grid.expanded .tfc-icon-card:nth-child(1) { animation-delay: 0s; }
-.tfc-icon-grid.expanded .tfc-icon-card:nth-child(2) { animation-delay: 0.1s; }
-.tfc-icon-grid.expanded .tfc-icon-card:nth-child(3) { animation-delay: 0.2s; }
-.tfc-icon-grid.expanded .tfc-icon-card:nth-child(4) { animation-delay: 0.3s; }
-
-@keyframes cascadeIn {
-    0% { opacity: 0; transform: translateY(-30px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
 
 .tfc-icon-card {
     text-align: center;
-    padding: 24px;
-    background: rgba(255, 255, 255, 0.15); /* More transparent card bg */
-    border-radius: 16px;
-    backdrop-filter: blur(4px);
+    padding: 6px 8px; /* Further reduced padding */
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-    opacity: 0;
-    transform: translateY(-30px);
-}
-
-/* More button to expand cards */
-.tfc-more-toggle {
-    display: inline-flex;
-    align-items: center;
-    margin-left: 8px;
-    cursor: pointer;
-    vertical-align: middle;
-}
-
-.tfc-more-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 4px 12px;
-    border-radius: 20px;
-    color: rgba(255, 255, 255, 0.8);
-    font-family: 'Open Sans', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.tfc-more-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: #ffffff;
-}
-
-.tfc-more-btn .tfc-more-text {
-    transition: opacity 0.3s ease;
-}
-
-.tfc-more-btn.expanded .tfc-more-text {
-    display: none;
-}
-
-.tfc-more-btn.expanded {
-    padding: 4px 10px;
-}
-
-.tfc-more-arrow {
-    font-size: 1.2rem;
-    transition: transform 0.3s ease;
-}
-
-.tfc-more-btn.expanded .tfc-more-arrow {
-    transform: rotate(180deg);
 }
 
 .tfc-icon-card:hover {
-    transform: translate(-4px, -4px); /* Diagonal lift */
-    background-color: rgba(255, 255, 255, 0.25); /* Slightly more visible on hover */
-    box-shadow: 4px 4px 15px rgba(0,0,0,0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(36, 53, 81, 0.15);
+    border-color: #cbd5e0;
 }
 
-/* Animation for Symbols */
 .tfc-symbol {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 24px auto;
-    background-color: #eef2f7; /* Placeholder bg */
-    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 8px auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0; /* Start hidden */
-    transform: scale(0.5); /* Start smaller */
-    transition: opacity 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                transform 0.3s ease;
-}
-
-.tfc-symbol.animate {
-    opacity: 1;
-    transform: scale(1);
-}
-
-/* Icon pops out when card is hovered */
-.tfc-icon-card:hover .tfc-symbol.animate {
-    transform: scale(1.15); /* Slightly larger on hover */
 }
 
 .tfc-symbol img {
-    width: 48px;
-    height: 48px;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
 }
 
 .tfc-card-title {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 12px;
-    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    color: #2a3a4d;
+    margin-bottom: 4px;
+    font-family: 'Red Hat Display', 'Halyard Display', sans-serif;
     text-align: center;
 }
 
 .tfc-card-cost-wrapper {
-    display: none;
+    display: block;
     text-align: center;
     margin-bottom: 12px;
     width: 100%;
 }
 
 .tfc-card-cost {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 800;
     color: #8fbfaa; /* Lighter teal-green */
     font-family: 'Open Sans', sans-serif;
     text-shadow: 0 0 8px rgba(143, 191, 170, 0.3);
     display: inline-block;
+    margin-top: 4px;
 }
 
-/* "in 2025" text that appears on hover */
-.tfc-card-cost::after {
-    content: 'in 2025';
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.7);
-    margin-left: 8px;
-    opacity: 0;
-    transform: scale(0.8);
-    display: inline-block;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.tfc-icon-card:hover .tfc-card-cost::after {
-    opacity: 1;
-    transform: scale(1);
-}
+/* "in 2025" text removed */
 
 .tfc-card-desc {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
-    background: rgba(255, 255, 255, 0.08);
-    padding: 16px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    margin-top: 12px;
+    color: #4a5568;
+    font-size: 0.9rem;
+    background: #f7fafc;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #edf2f7;
+    margin-top: 6px;
     font-family: 'Open Sans', sans-serif;
 }
 
-/* Floating Navigation */
+/* Hide floating navigation on left side */
 .tfc-nav {
+    display: none !important;
     position: fixed;
     left: 20px;
     top: 50%;
@@ -661,26 +798,27 @@ body {
     flex-direction: column;
     gap: 16px;
     padding: 16px 14px;
-    background: rgba(255, 255, 255, 0.04); /* Even more transparent */
-    backdrop-filter: blur(4px);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
     border-radius: 30px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
-    width: 120px; /* Wide enough to show text */
+    width: 120px;
     overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
 .tfc-nav:hover {
     width: 140px;
-    background: rgba(255, 255, 255, 0.1); /* Less white on hover */
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    background: #ffffff;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
 }
 
 .tfc-nav-item {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.6);
+    color: #4a5568;
     white-space: nowrap;
     transition: color 0.2s;
 }
@@ -699,7 +837,7 @@ body {
 .tfc-nav-label {
     font-size: 0.85rem;
     font-weight: 500;
-    opacity: 0.75; /* More visible by default */
+    opacity: 0.75;
     transform: translateX(0);
     transition: all 0.3s;
 }
@@ -709,22 +847,22 @@ body {
 }
 
 .tfc-nav-item.active .tfc-nav-dot {
-    background-color: #ffffff;
+    background-color: #2a3a4d;
     transform: scale(1.2);
 }
 
 .tfc-nav-item.active .tfc-nav-label {
-    color: #ffffff;
+    color: #2a3a4d;
     font-weight: 600;
     opacity: 1;
 }
 
 .tfc-nav-item:hover .tfc-nav-dot {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: #4a5568;
 }
 
 .tfc-nav-item:hover .tfc-nav-label {
-    color: #ffffff;
+    color: #2a3a4d;
 }
 
 /* Stacked Bar Chart */
@@ -736,17 +874,17 @@ body {
 }
 
 .tfc-bar-chart-title {
-    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-family: 'Red Hat Display', 'Halyard Display', sans-serif;
     font-size: 1.5rem;
-    color: #ffffff;
+    color: #2a3a4d;
     margin-bottom: 20px;
-    text-align: center;
+    text-align: left;
     font-weight: 700;
     opacity: 0;
     transition: opacity 0.5s ease;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 12px;
 }
 
@@ -793,7 +931,7 @@ body {
     margin-left: 8px;
     font-size: 1rem;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.7);
+    color: #718096;
 }
 
 .tfc-bar-chart.animate .tfc-bar-chart-year {
@@ -814,7 +952,7 @@ body {
     height: 50px;
     border-radius: 8px;
     overflow: visible;
-    background: rgba(255, 255, 255, 0.1);
+    background: #edf2f7;
     position: relative;
     transform-style: preserve-3d;
     perspective: 500px;
@@ -874,7 +1012,7 @@ body {
     transform: translateX(-50%);
     font-size: 0.8rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
+    color: #4a5568;
     white-space: nowrap;
     font-family: 'Open Sans', sans-serif;
     opacity: 0;
@@ -973,13 +1111,13 @@ body {
 .tfc-tooltip-source {
     display: block;
     margin-top: 8px;
-    color: #8fbfaa;
+    color: #319795;
     font-size: 0.8rem;
     text-decoration: underline;
 }
 
 .tfc-tooltip-source:hover {
-    color: #b8d9ca;
+    color: #2c7a7b;
 }
 
 /* Simple hover effect on bar segments - removed warp/tilt to prevent flickering */
@@ -1031,56 +1169,100 @@ body {
     transform: rotate(180deg);
 }
 
-/* HR1 Alert Box Sizing - hidden until hover */
+/* HR1 Alert Box Sizing - Light Theme */
 .tfc-alert {
-    background-color: transparent;
-    border: 2px solid transparent;
+    background-color: #fff5f5;
+    border: 2px solid #fed7d7;
     border-radius: 16px;
     padding: 32px;
-    margin-bottom: 32px;
+    margin-bottom: 20px; /* Reduced from 32px */
     text-align: left;
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
     transition: all 0.3s ease;
-    color: #ffffff;
+    color: #2a3a4d;
 }
 
 .tfc-alert:hover {
-    background-color: rgba(254, 178, 178, 0.15);
-    border-color: #feb2b2;
+    background-color: #feebc8;
+    border-color: #fbd38d;
     transform: scale(1.02);
 }
 
 .tfc-alert h3 {
-    color: #ffffff;
+    color: #c53030;
 }
 
 .tfc-alert p, .tfc-alert li {
-    color: rgba(255, 255, 255, 0.85);
+    color: #2d3748;
 }
 
-/* Protection Statement Box */
-.tfc-protection-box {
-    background: linear-gradient(135deg, rgba(36, 53, 81, 0.6) 0%, rgba(26, 38, 57, 0.6) 100%);
-    color: white;
-    padding: 32px;
-    border-radius: 16px;
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto 30px auto;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+/* Priorities Section (formerly Protection Statement) */
+.tfc-priorities-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px; /* Prevent cutoff */
 }
 
-.tfc-protection-box p {
+.tfc-priorities-content {
+    flex: 1;
+    text-align: left;
+}
+
+.tfc-priorities-content h2 {
+    font-family: 'Red Hat Display', 'Halyard Display', sans-serif;
+    font-size: 2.25rem;
+    color: #2a3a4d;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.tfc-priorities-content p {
+    font-family: 'Open Sans', sans-serif;
     font-size: 1.25rem;
-    font-weight: 600;
-    margin: 0 0 20px 0;
-    display: block;
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 0;
 }
 
-.tfc-protection-box .tfc-secondary-btn {
-    margin-top: 16px;
+.tfc-priorities-image {
+    flex: 0 0 400px; /* Fixed width for the narrow slice look */
+    height: 400px;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.tfc-priorities-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This crops the image */
+    object-position: center; /* Focus on the center */
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.tfc-priorities-image:hover img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 900px) {
+    .tfc-priorities-container {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .tfc-priorities-image {
+        flex: none;
+        width: 100%;
+        height: 300px;
+    }
 }
 
 /* Bold animation for "must raise taxes" */
@@ -1110,19 +1292,19 @@ body {
 
 /* Tax Burden Treemaps */
 .tfc-treemap-section {
-    max-width: 900px;
-    margin: 60px auto;
-    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px; /* Added padding to prevent cutoff */
     position: relative;
     z-index: 1;
-    background: #2a3a4d;
+    background: transparent;
 }
 
 .tfc-treemap-title {
-    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-family: 'Red Hat Display', 'Halyard Display', sans-serif;
     font-size: 1.75rem;
-    color: #ffffff;
-    text-align: center;
+    color: #2a3a4d;
+    text-align: left;
     margin-bottom: 12px;
     font-weight: 700;
     transition: transform 0.2s ease, transform-origin 0s;
@@ -1133,9 +1315,19 @@ body {
 .tfc-treemap-subtitle {
     font-family: 'Open Sans', sans-serif;
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: #4a5568;
     text-align: center;
     margin-bottom: 40px;
+    width: 100%;
+}
+
+.tfc-treemap-cluster {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    margin-left: 0;
+    margin-right: auto; /* Explicitly prevent centering */
 }
 
 .tfc-treemap-container {
@@ -1173,16 +1365,16 @@ body {
 .tfc-treemap-label {
     font-family: 'Open Sans', sans-serif;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: #2a3a4d;
     margin-bottom: 4px;
     text-transform: uppercase;
     font-weight: 600;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    text-shadow: none;
 }
 
 .tfc-treemap-income {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: #4a5568;
     margin-bottom: 12px;
 }
 
@@ -1216,15 +1408,15 @@ body {
 .tfc-treemap-box-lowest {
     width: 180px;
     height: 180px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: #f7fafc;
+    border: 2px solid #cbd5e0;
 }
 
 .tfc-treemap-box-top {
     width: 180px;
     height: 180px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: #f7fafc;
+    border: 2px solid #cbd5e0;
 }
 
 .tfc-treemap-fill {
@@ -1282,14 +1474,14 @@ body {
     top: 8px;
     right: 8px;
     font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: #718096;
     font-family: 'Open Sans', sans-serif;
 }
 
 .tfc-treemap-caption {
     font-family: 'Open Sans', sans-serif;
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: #718096;
     margin-top: 12px;
     text-align: center;
     max-width: 180px;
@@ -1297,7 +1489,7 @@ body {
 
 /* VS divider between treemaps */
 .tfc-treemap-vs {
-    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-family: 'Red Hat Display', 'Halyard Display', sans-serif;
     font-size: 1.5rem;
     font-weight: 700;
     color: rgba(255, 120, 100, 0.9);
@@ -1325,12 +1517,13 @@ body {
 .tfc-treemap-shared-caption {
     font-family: 'Open Sans', sans-serif;
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: #4a5568;
     text-align: center;
     margin-top: 30px;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 800px;
+    /* Removed auto margins to work with cluster wrapper */
+    margin-left: 0;
+    margin-right: 0;
 }
 
 /* Tooltip trigger for "less on their taxes" */
@@ -1383,14 +1576,14 @@ body {
 
 /* HR1 link styling */
 .tfc-hr1-link {
-    color: #8fbfaa;
+    color: #319795;
     text-decoration: underline;
     font-weight: 600;
     transition: color 0.2s ease;
 }
 
 .tfc-hr1-link:hover {
-    color: #b8d9ca;
+    color: #2c7a7b;
 }
 
 /* Footer Callout */
@@ -1406,7 +1599,7 @@ body {
 }
 
 .tfc-footer-callout h2 {
-    font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+    font-family: 'Red Hat Display', 'Halyard Display', sans-serif;
     font-size: 2.25rem;
     color: #ffffff;
     font-weight: 700;
@@ -1420,21 +1613,88 @@ body {
 }
 
 
+/* People Power Section */
+.tfc-people-power-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    margin-top: 60px; /* Reduced from 100px */
+    margin-bottom: 60px; /* Reduced from 80px */
+    padding: 0 40px; /* Increased padding to prevent cutoff */
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tfc-people-power-content {
+    flex: 1;
+    text-align: left;
+}
+
+.tfc-people-power-content h2 {
+    font-family: 'Red Hat Display', 'Halyard Display', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2a3a4d;
+    margin-bottom: 24px;
+    line-height: 1.2;
+}
+
+.tfc-people-power-content p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.15rem;
+    color: #4a5568;
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+.tfc-people-power-image {
+    flex: 1;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.tfc-people-power-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.tfc-people-power-image:hover img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .tfc-people-power-section {
+        flex-direction: column-reverse;
+        gap: 40px;
+    }
+    
+    .tfc-people-power-content {
+        text-align: center;
+    }
+}
+
 .tfc-secondary-btn {
     display: inline-block;
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: #2a3a4d;
     color: white !important;
     padding: 16px 32px;
     border-radius: 8px;
     text-decoration: none !important;
     font-weight: 600;
     margin-top: 24px;
-    transition: background-color 0.2s;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: background-color 0.2s, transform 0.2s;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .tfc-secondary-btn:hover {
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: #3b4c60;
+    transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
@@ -1578,154 +1838,211 @@ body {
     <!-- Hero Wrapper with Background Image -->
     <div class="tfc-hero-wrapper">
         <div class="tfc-parallax-bg" id="parallax-bg"></div>
-        <!-- Hero -->
-        <div id="hero" class="tfc-hero">
-            <h1>Hawaiʻi Tax Fairness Coalition</h1>
-            <div class="tfc-hero-subtitle-wrapper">
-                <div class="tfc-hero-subtitle-text">Lifting up working families</div>
-                <div class="tfc-hero-subtitle-text">Taxing the top 1%</div>
-            </div>
-            <a href="/contact-your-legislator" class="tfc-btn tfc-hero-btn">Contact Your Legislator</a>
+        
+        <!-- Save the Date (Moved inside hero for transparency) -->
+        <div class="tfc-save-date-container">
+            <div class="tfc-save-date-title"><strong>SAVE THE DATE:</strong> Fund Our Future Campaign Launch <a href="https://fundourfuture.eventbrite.com" class="tfc-rsvp-btn" target="_blank">RSVP</a></div>
+            <div class="tfc-save-date-time">Saturday, January 24th</div>
         </div>
 
-        <!-- Purpose -->
-        <div id="purpose" class="tfc-section">
-            <h2>Our Purpose</h2>
-            <div class="tfc-text-block">
-                <p>Hawaiʻi's low- and middle-income families are struggling with the rising cost of living. We believe that these families should owe less taxes, and the top 1% should pay higher taxes to support public goods (like healthcare, affordable housing, childcare, and kūpuna care).</p>
+        <!-- Hero -->
+        <div id="hero" class="tfc-hero">
+            <div class="tfc-hero-flex-container">
+                <div class="tfc-hero-text-column">
+                    <h1>Let’s Fund Hawai‘i’s Future.</h1>
+                    <div class="tfc-hero-subtitle-wrapper">
+                        <div class="tfc-hero-subtitle-text">The Hawai‘i Tax Fairness Coalition is working to reclaim our economy so our communities—not the wealthy few—can thrive.</div>
+                    </div>
+                </div>
+                <div class="tfc-hero-btn-wrapper">
+                    <a href="/ways-to-get-involved" class="tfc-btn tfc-hero-btn">TAKE ACTION</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Purpose -->
+    <div class="tfc-bg-white" style="padding-top: 40px;">
+        <div id="purpose" class="tfc-section" style="margin-bottom: 0;">
+            <div class="tfc-text-content">
+                <h2>Why Focus on Taxes?</h2>
+                <div class="tfc-text-block">
+                    <p>While everyday households struggle to keep up, the wealthiest few pay a smaller share of their income in taxes. This makes it harder to fund what our communities rely on—healthcare, affordable housing, and other essentials.</p>
+                </div>
+            </div>
+            <div class="tfc-section-image">
+                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/1766613476428-DZTPW2R8NUQV5HU6BBCT/image-asset.jpeg?format=2500w" alt="Community">
             </div>
         </div>
     </div>
 
     <!-- Tax Burden Treemaps -->
-    <div class="tfc-treemap-section" id="treemap-section">
-        <div class="tfc-treemap-title">Why Hawaiʻi's Tax System Is Unfair</div>
-        <div class="tfc-treemap-subtitle">Share of family income<br>spent on state and local taxes</div>
-        <div class="tfc-treemap-container">
-            <div class="tfc-treemap">
-                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/f7b69bfe-ce12-4755-9f67-98ba4254c97b/22ac3132-dfdb-4ffc-b20a-5b773b640312.png?format=2500w" alt="" class="tfc-treemap-icon">
-                <div class="tfc-treemap-label">Lowest 20%</div>
-                <div class="tfc-treemap-income">Earning less than $21,900</div>
-                <div class="tfc-treemap-box tfc-treemap-box-lowest">
-                    <span class="tfc-treemap-box-label">Total Income</span>
-                    <div class="tfc-treemap-fill tfc-treemap-fill-lowest">
-                        <span class="tfc-treemap-percent">14.1%</span>
+    <div class="tfc-bg-gray">
+        <div class="tfc-treemap-section" id="treemap-section">
+            <div class="tfc-treemap-title">Why Hawaiʻi's Tax System Is Unfair</div>
+            
+            <!-- Grouped content for left alignment with internal centering -->
+            <div class="tfc-treemap-cluster">
+                <div class="tfc-treemap-subtitle">Share of family income<br>spent on state and local taxes</div>
+                <div class="tfc-treemap-container">
+                    <div class="tfc-treemap">
+                        <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/f7b69bfe-ce12-4755-9f67-98ba4254c97b/22ac3132-dfdb-4ffc-b20a-5b773b640312.png?format=2500w" alt="" class="tfc-treemap-icon">
+                        <div class="tfc-treemap-label">Lowest 20%</div>
+                        <div class="tfc-treemap-income">Earning less than $21,900</div>
+                        <div class="tfc-treemap-box tfc-treemap-box-lowest">
+                            <span class="tfc-treemap-box-label">Total Income</span>
+                            <div class="tfc-treemap-fill tfc-treemap-fill-lowest">
+                                <span class="tfc-treemap-percent">14.1%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tfc-treemap-vs">VS</div>
+                    <div class="tfc-treemap">
+                        <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/5994d7ab-3aa9-4c08-9a64-80979054f3e3/0ecf4add-93c5-432a-85b4-8c379e096102.png?format=2500w" alt="" class="tfc-treemap-icon">
+                        <div class="tfc-treemap-label">Top 1%</div>
+                        <div class="tfc-treemap-income">Earning over $594,000</div>
+                        <div class="tfc-treemap-box tfc-treemap-box-top">
+                            <span class="tfc-treemap-box-label">Total Income</span>
+                            <div class="tfc-treemap-fill tfc-treemap-fill-top">
+                                <span class="tfc-treemap-percent">10.1%</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="tfc-treemap-vs">VS</div>
-            <div class="tfc-treemap">
-                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/5994d7ab-3aa9-4c08-9a64-80979054f3e3/0ecf4add-93c5-432a-85b4-8c379e096102.png?format=2500w" alt="" class="tfc-treemap-icon">
-                <div class="tfc-treemap-label">Top 1%</div>
-                <div class="tfc-treemap-income">Earning over $594,000</div>
-                <div class="tfc-treemap-box tfc-treemap-box-top">
-                    <span class="tfc-treemap-box-label">Total Income</span>
-                    <div class="tfc-treemap-fill tfc-treemap-fill-top">
-                        <span class="tfc-treemap-percent">10.1%</span>
-                    </div>
+                <div class="tfc-treemap-shared-caption">The top 1% <span class="tfc-tooltip-trigger" id="less-taxes-tooltip">spend a lower portion of their income<span class="tfc-caption-tooltip">This is primarily because it's easier for wealthy people to afford the General Excise Tax (GET), which is a tax on groceries and other products.</span></span> on their taxes<br>than everyone else.</div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="https://www.hitaxfairness.org/tax-system" class="tfc-secondary-btn" target="_blank">Learn More</a>
                 </div>
             </div>
-        </div>
-        <div class="tfc-treemap-shared-caption">The top 1% <span class="tfc-tooltip-trigger" id="less-taxes-tooltip">spend a lower portion of their income<span class="tfc-caption-tooltip">This is primarily because it's easier for wealthy people to afford the General Excise Tax (GET), which is a tax on groceries and other products.</span></span> on their taxes than everyone else.</div>
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="https://www.hitaxfairness.org/tax-system" class="tfc-secondary-btn" target="_blank">Learn More</a>
         </div>
     </div>
 
     <!-- What Taxes Pay For -->
-    <div id="taxes" class="tfc-grid-title">
-        <h3>What Taxes Pay For</h3>
-        <p>Our <span class="tfc-odometer-box" id="odometer-billion"><span class="tfc-odometer-digit" data-target="$"><span>$</span></span><span class="tfc-odometer-digit" data-target="1"><span>1</span></span><span class="tfc-odometer-digit" data-target="0"><span>0</span></span><span class="tfc-odometer-static">.</span><span class="tfc-odometer-digit" data-target="8"><span>8</span></span><span class="tfc-odometer-digit" data-target="+"><span>+</span></span><span class="tfc-odometer-billion">&nbsp;billion</span></span> in tax revenue goes to schools, hospitals, roads, affordable housing, and many other priorities. Here are some of the major program costs that Hawaiʻi covers.<span class="tfc-more-toggle"><span class="tfc-more-btn" id="more-toggle-btn"><span class="tfc-more-text">More</span><span class="tfc-more-arrow">↓</span></span></span></p>
-    </div>
-
-    <div class="tfc-icon-grid" id="icon-grid">
-        
-        <!-- Healthcare -->
-        <div class="tfc-icon-card">
-            <!-- REPLACE SRC WITH YOUR SQUARESPACE IMAGE URL -->
-            <div class="tfc-symbol">
-                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/5d9c3cf1-6bab-4db3-8f24-86cd6ed58a3b/generated-image+%289%29.png?format=2500w" alt="Healthcare Icon">
+    <div id="taxes-section-wrapper" class="tfc-bg-white">
+        <div id="taxes" class="tfc-grid-title">
+            <div class="tfc-taxes-intro-image">
+                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/1766614142157-5E6H5Z3CR3TFB70S61X4/unsplash-image-zb7AuMaWqJQ.jpg?format=1500w" alt="Hawaii Scenery">
             </div>
-            <div class="tfc-card-title">Healthcare</div>
-            <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$1.83 billion</div></div>
-            <div class="tfc-card-desc">Health coverage for 441,000 children and adults</div>
+            <div class="tfc-taxes-intro-text">
+                <h3>What Taxes Pay For</h3>
+                <p>Hawai‘i's <span class="tfc-odometer-box" id="odometer-billion"><span class="tfc-odometer-digit" data-target="$"><span>$</span></span><span class="tfc-odometer-digit" data-target="1"><span>1</span></span><span class="tfc-odometer-digit" data-target="0"><span>0</span></span><span class="tfc-odometer-static">.</span><span class="tfc-odometer-digit" data-target="8"><span>8</span></span><span class="tfc-odometer-digit" data-target="+"><span>+</span></span><span class="tfc-odometer-billion">&nbsp;billion</span></span> in tax revenue dollars are meant to support the things our communities depend on. But rising costs, federal budget cuts, and growing needs are stretching public budgets thin. At a moment when families need support the most, raising sufficient revenue is essential to protect and strengthen core public investments—things like:</p>
+            </div>
         </div>
 
-        <!-- Affordable Housing -->
-        <div class="tfc-icon-card">
-            <div class="tfc-symbol">
-                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/c052bdbb-1660-4f88-b32b-936ad43a65ef/generated-image+%2814%29.png?format=1500w" alt="Housing Icon">
-            </div>
-            <div class="tfc-card-title">Affordable Housing</div>
-            <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$305+ million</div></div>
-            <div class="tfc-card-desc">Building affordable units, rental assistance, and homelessness programs</div>
-        </div>
-
-        <!-- Education -->
-        <div class="tfc-icon-card">
-            <div class="tfc-symbol">
-                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/fe9369a0-3681-47a9-a26d-803f7670b0d5/generated-image+%2810%29.png?format=1500w" alt="Education Icon">
-            </div>
-            <div class="tfc-card-title">Public K-12 Schools</div>
-            <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$1.76 billion</div></div>
-            <div class="tfc-card-desc">Education for 165,000+ students across 296 schools</div>
-        </div>
-
-        <!-- Food Security -->
-        <div class="tfc-icon-card">
-            <div class="tfc-symbol">
-                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/3a6214a4-d3b6-47b7-b560-b3815fd78f7d/generated-image+%2813%29.png?format=1500w" alt="Food Security Icon">
-            </div>
-            <div class="tfc-card-title">Food Security</div>
-            <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$30+ million</div></div>
-            <div class="tfc-card-desc">Free and reduced-price school meals for 78,000 students and SNAP administration for over 163,000 people.</div>
-        </div>
-
-    </div>
-
-    <!-- HR1 Alert -->
-    <div id="hr1" class="tfc-alert">
-        <h3>Billions of federal and state dollars are at risk</h3>
-        <p><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">HR1</a> could take millions of federal dollars away from Hawaiʻi:</p>
-        <ul>
-            <li><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">Adding $36 to $109 million in costs for SNAP</a>—food benefits for low-income households.</li>
-            <li><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">108,000 Hawaiʻi residents will be at risk of losing Medicaid coverage</a> unless the State steps in.</li>
-        </ul>
-    </div>
-
-    <!-- Cost to Hawaii Bar Chart -->
-    <div class="tfc-bar-chart" id="cost-bar-chart">
-        <div class="tfc-bar-chart-title"><span class="tfc-money-icon">$</span>Estimated Cost to Hawaiʻi<span class="tfc-bar-chart-year">in fiscal year 2027</span></div>
-        <div class="tfc-bar-chart-container">
-            <div class="tfc-bar-stack">
-                <div class="tfc-bar-segment tfc-bar-segment-act46">
-                    <span class="tfc-bar-amount">$740M</span>
-                    <span class="tfc-bar-label">Act 46</span>
-                    <div class="tfc-bar-tooltip">Act 46 is a huge state income tax cut that will benefit higher‑income households the most, instead of working class families. It also means the state will lose billions of tax dollars over time.<a href="https://files.hawaii.gov/tax/useful/cor/2025gf05-21with0522_RptGov.pdf" target="_blank" class="tfc-tooltip-source">Source</a></div>
+        <div class="tfc-icon-grid" id="icon-grid">
+            
+            <!-- Healthcare -->
+            <div class="tfc-icon-card">
+                <!-- REPLACE SRC WITH YOUR SQUARESPACE IMAGE URL -->
+                <div class="tfc-symbol">
+                    <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/5d9c3cf1-6bab-4db3-8f24-86cd6ed58a3b/generated-image+%289%29.png?format=2500w" alt="Healthcare Icon">
                 </div>
-                <div class="tfc-bar-segment tfc-bar-segment-medicaid">
-                    <span class="tfc-bar-amount">$450M</span>
-                    <span class="tfc-bar-label">Medicaid</span>
-                    <div class="tfc-bar-tooltip">The federal government will pay a smaller share of Hawaiʻi's Medicaid costs by adding new rules (like work requirements and more paperwork) that push people off coverage.<a href="https://shvs.org/resource/house-budget-bill-medicaid-proposals-state-by-state-estimates-of-impacts-on-expenditures-and-enrollment/" target="_blank" class="tfc-tooltip-source">Source</a></div>
-                </div>
-                <div class="tfc-bar-segment tfc-bar-segment-snap">
-                    <span class="tfc-bar-amount">$36M</span>
-                    <span class="tfc-bar-label">SNAP</span>
-                    <div class="tfc-bar-tooltip">Federal SNAP cuts reduce food aid for low‑income households, which means that Hawaiʻi will have to cover more of the costs of running SNAP.</div>
-                </div>
+                <div class="tfc-card-title">Healthcare</div>
+                <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$1.83 billion</div></div>
+                <div class="tfc-card-desc">Health coverage for 441,000 children and adults</div>
             </div>
-            <div class="tfc-bar-total">-$1.226B</div>
+
+            <!-- Affordable Housing -->
+            <div class="tfc-icon-card">
+                <div class="tfc-symbol">
+                    <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/c052bdbb-1660-4f88-b32b-936ad43a65ef/generated-image+%2814%29.png?format=1500w" alt="Housing Icon">
+                </div>
+                <div class="tfc-card-title">Affordable Housing</div>
+                <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$305+ million</div></div>
+                <div class="tfc-card-desc">Building affordable units, rental assistance, and homelessness programs</div>
+            </div>
+
+            <!-- Education -->
+            <div class="tfc-icon-card">
+                <div class="tfc-symbol">
+                    <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/fe9369a0-3681-47a9-a26d-803f7670b0d5/generated-image+%2810%29.png?format=1500w" alt="Education Icon">
+                </div>
+                <div class="tfc-card-title">Public K-12 Schools</div>
+                <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$1.76 billion</div></div>
+                <div class="tfc-card-desc">Education for 165,000+ students across 296 schools</div>
+            </div>
+
+            <!-- Food Security -->
+            <div class="tfc-icon-card">
+                <div class="tfc-symbol">
+                    <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/3a6214a4-d3b6-47b7-b560-b3815fd78f7d/generated-image+%2813%29.png?format=1500w" alt="Food Security Icon">
+                </div>
+                <div class="tfc-card-title">Food Security</div>
+                <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$30+ million</div></div>
+                <div class="tfc-card-desc">Free and reduced-price school meals for 78,000 students and SNAP administration for over 163,000 people.</div>
+            </div>
+
         </div>
     </div>
 
-    <!-- Protection Statement -->
-    <div class="tfc-protection-box" id="protection-box">
-        <p>To protect our programs and services, Hawaiʻi <span class="tfc-bold-animate" id="must-raise-taxes">must raise taxes<span class="tfc-bobbing-arrow">↑</span></span> on the top 1%, out-of-state investors, and big corporations.</p>
-        <a href="/wealth-taxes" class="tfc-secondary-btn">View Our Priorities</a>
+    <!-- HR1 Alert & Cost Chart -->
+    <div class="tfc-bg-gray">
+        <div id="hr1" class="tfc-alert">
+            <h3>Billions of federal and state dollars are at risk</h3>
+            <p><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">HR1</a> could take millions of federal dollars away from Hawaiʻi:</p>
+            <ul>
+                <li><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">Adding $36 to $109 million in costs for SNAP</a>—food benefits for low-income households.</li>
+                <li><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">108,000 Hawaiʻi residents will be at risk of losing Medicaid coverage</a> unless the State steps in.</li>
+            </ul>
+        </div>
+
+        <!-- Cost to Hawaii Bar Chart -->
+        <div class="tfc-bar-chart" id="cost-bar-chart">
+            <div class="tfc-bar-chart-title"><span class="tfc-money-icon">$</span>Estimated Cost to Hawaiʻi<span class="tfc-bar-chart-year">in fiscal year 2027</span></div>
+            <div class="tfc-bar-chart-container">
+                <div class="tfc-bar-stack">
+                    <div class="tfc-bar-segment tfc-bar-segment-act46">
+                        <span class="tfc-bar-amount">$740M</span>
+                        <span class="tfc-bar-label">Act 46</span>
+                        <div class="tfc-bar-tooltip">Act 46 is a huge state income tax cut that will benefit higher‑income households the most, instead of working class families. It also means the state will lose billions of tax dollars over time.<a href="https://files.hawaii.gov/tax/useful/cor/2025gf05-21with0522_RptGov.pdf" target="_blank" class="tfc-tooltip-source">Source</a></div>
+                    </div>
+                    <div class="tfc-bar-segment tfc-bar-segment-medicaid">
+                        <span class="tfc-bar-amount">$450M</span>
+                        <span class="tfc-bar-label">Medicaid</span>
+                        <div class="tfc-bar-tooltip">The federal government will pay a smaller share of Hawaiʻi's Medicaid costs by adding new rules (like work requirements and more paperwork) that push people off coverage.<a href="https://shvs.org/resource/house-budget-bill-medicaid-proposals-state-by-state-estimates-of-impacts-on-expenditures-and-enrollment/" target="_blank" class="tfc-tooltip-source">Source</a></div>
+                    </div>
+                    <div class="tfc-bar-segment tfc-bar-segment-snap">
+                        <span class="tfc-bar-amount">$36M</span>
+                        <span class="tfc-bar-label">SNAP</span>
+                        <div class="tfc-bar-tooltip">Federal SNAP cuts reduce food aid for low‑income households, which means that Hawaiʻi will have to cover more of the costs of running SNAP.</div>
+                    </div>
+                </div>
+                <div class="tfc-bar-total">-$1.226B</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Protection Statement (Priorities) -->
+    <div class="tfc-bg-white" id="fairness">
+        <div class="tfc-priorities-container">
+            <div class="tfc-priorities-content">
+                <h2>Our Priorities</h2>
+                <p>In 2026, we’re taking our priorities to the State Capitol and demanding action. That means advancing policies that raise the revenue Hawaiʻi needs to invest these public goods.</p>
+                <p style="margin-top: 16px;">Our five policy priorities center on fair, effective revenue generators that strengthen public services and ease the burden on working families.</p>
+                <a href="/wealth-taxes" class="tfc-secondary-btn">View Our Priorities</a>
+            </div>
+            <div class="tfc-priorities-image">
+                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/1718673242210-7PLTB9I3JAL4DVPEG3WS/Hawaii+State+Capitol+Rotunda+%285683208622%29.jpeg?format=2500w" alt="Hawaii State Capitol">
+            </div>
+        </div>
+    </div>
+
+    <!-- People Power Section -->
+    <div class="tfc-bg-gray">
+        <div class="tfc-people-power-section">
+            <div class="tfc-people-power-content">
+                <h2>People power will decide Hawaiʻi’s future—join us.</h2>
+                <p>Hawaiʻi’s families are counting on a fair tax system—but we can’t do it alone. We’re up against powerful interests, and the stakes have never been higher. Now is our moment to act, and people power is what will make it happen.</p>
+                <a href="/ways-to-get-involved" class="tfc-secondary-btn">Get Involved</a>
+            </div>
+            <div class="tfc-people-power-image">
+                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/1766784555581-T7O5V8NZ1XKJX21GDRF3/unsplash-image-i5Kx0P8A0d4.jpg" alt="People Power">
+            </div>
+        </div>
     </div>
 
     <!-- Fairer Tax System -->
-    <div id="fairness" class="tfc-footer-callout">
+    <div class="tfc-footer-callout">
     </div>
 
 </div>
@@ -1867,28 +2184,6 @@ document.addEventListener('DOMContentLoaded', function() {
             targetScale = 0;
         });
     });
-
-    // More toggle button for icon grid
-    const moreToggleBtn = document.getElementById('more-toggle-btn');
-    const iconGrid = document.getElementById('icon-grid');
-    if (moreToggleBtn && iconGrid) {
-        moreToggleBtn.addEventListener('click', () => {
-            moreToggleBtn.classList.toggle('expanded');
-            iconGrid.classList.toggle('expanded');
-            
-            // Trigger symbol animations after grid expands
-            if (iconGrid.classList.contains('expanded')) {
-                setTimeout(() => {
-                    const symbols = iconGrid.querySelectorAll('.tfc-symbol');
-                    symbols.forEach((symbol, index) => {
-                        setTimeout(() => {
-                            symbol.classList.add('animate');
-                        }, index * 100);
-                    });
-                }, 300);
-            }
-        });
-    }
 
     // Bar chart accordion animation - triggers when HR1 alert is visible
     const barChart = document.getElementById('cost-bar-chart');

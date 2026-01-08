@@ -101,6 +101,49 @@
             color: #2A3A4D;
         }
 
+        .tfc-hero-image {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            margin: 0 auto 60px;
+            display: block;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .tfc-scene-container {
+            position: relative;
+            width: 200px; /* Exactly 1/4 of 800px */
+            margin: 0 auto 32px;
+            /* Ensure the heart is visible even if it floats "outside" */
+            overflow: visible;
+            z-index: 5;
+        }
+
+        .tfc-childcare-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+        }
+
+        .tfc-floating-heart {
+            position: absolute;
+            width: 50px; 
+            top: -45px; /* Moved up to clear the house */
+            left: 50%; 
+            transform: translateX(-50%);
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+            z-index: 10;
+        }
+
+        @keyframes float {
+            0% { transform: translate(-50%, 0px); }
+            50% { transform: translate(-50%, -15px); }
+            100% { transform: translate(-50%, 0px); }
+        }
+
         .tfc-hero-subtitle {
             font-size: 1.5rem;
             font-weight: 600;
@@ -115,31 +158,144 @@
             margin: 0 auto 32px;
         }
 
-        /* Stats Row */
+        /* Stats Row - Wooden Block Style */
         .tfc-stats-row {
             display: flex;
             justify-content: center;
-            gap: 48px;
+            align-items: center;
+            gap: 20px;
             margin: 48px 0;
             flex-wrap: wrap;
         }
 
         .tfc-stat-item {
             text-align: center;
+            padding: 30px 28px 24px;
+            border-radius: 20px;
+            /* Wooden texture using gradients */
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(139, 90, 43, 0.03) 2px,
+                    rgba(139, 90, 43, 0.03) 4px
+                ),
+                linear-gradient(180deg, 
+                    #C4A574 0%, 
+                    #A8895A 15%,
+                    #9B7B4E 50%,
+                    #8B6914 85%,
+                    #7A5D3A 100%
+                );
+            /* Inset frame effect */
+            box-shadow: 
+                inset 0 4px 8px rgba(255, 255, 255, 0.3),
+                inset 0 -4px 8px rgba(0, 0, 0, 0.2),
+                inset 4px 0 8px rgba(255, 255, 255, 0.15),
+                inset -4px 0 8px rgba(0, 0, 0, 0.15),
+                0 6px 20px rgba(0, 0, 0, 0.25),
+                0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 3px solid #6B4423;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+            min-width: 180px;
         }
 
+        .tfc-stat-item:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 
+                inset 0 4px 8px rgba(255, 255, 255, 0.3),
+                inset 0 -4px 8px rgba(0, 0, 0, 0.2),
+                inset 4px 0 8px rgba(255, 255, 255, 0.15),
+                inset -4px 0 8px rgba(0, 0, 0, 0.15),
+                0 12px 30px rgba(0, 0, 0, 0.3),
+                0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 3D Block Arrow */
+        .tfc-stat-arrow {
+            font-size: 2.5rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tfc-stat-arrow::before {
+            content: "";
+            display: block;
+            width: 30px;
+            height: 12px;
+            background: linear-gradient(180deg, #4A90D9 0%, #2E5A8B 100%);
+            border-radius: 3px;
+            box-shadow: 
+                0 3px 0 #1E3A5B,
+                0 4px 6px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .tfc-stat-arrow::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 16px solid transparent;
+            border-bottom: 16px solid transparent;
+            border-left: 20px solid #E53935;
+            margin-left: -2px;
+            filter: drop-shadow(0 3px 0 #8B1A1A) drop-shadow(0 4px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        /* 3D Block Numbers */
         .tfc-stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #E57373;
-            line-height: 1.2;
-            font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1.1;
+            font-family: 'Arial Black', 'Helvetica', sans-serif;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        /* Colorful 3D text effect */
+        .tfc-stat-item:nth-child(1) .tfc-stat-number {
+            color: #E53935;
+            text-shadow: 
+                2px 2px 0 #FFD54F,
+                4px 4px 0 #B71C1C,
+                5px 5px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .tfc-stat-item:nth-child(3) .tfc-stat-number {
+            color: #FFD54F;
+            text-shadow: 
+                2px 2px 0 #E53935,
+                4px 4px 0 #F9A825,
+                5px 5px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .tfc-stat-item:nth-child(5) .tfc-stat-number {
+            color: #E53935;
+            text-shadow: 
+                2px 2px 0 #FFD54F,
+                4px 4px 0 #B71C1C,
+                5px 5px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .tfc-stat-item:nth-child(5) .tfc-stat-number .million {
+            color: #FFD54F;
+            text-shadow: 
+                2px 2px 0 #E53935,
+                4px 4px 0 #F9A825,
+                5px 5px 8px rgba(0, 0, 0, 0.4);
         }
 
         .tfc-stat-label {
             font-size: 1rem;
-            color: #718096;
-            margin-top: 8px;
+            font-weight: 600;
+            color: #4A3728;
+            margin-top: 4px;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
         }
 
         /* Info Cards */
@@ -578,16 +734,30 @@
         <div class="tfc-hero">
             <div class="tfc-hero-badge">A Prescription for Families</div>
             <h1 class="tfc-hero-title">RxKids</h1>
+            <img src="assets/3000_block.png" alt="RxKids $3,000 For Each Baby" class="tfc-hero-image">
+            
+            <!-- Childcare Scene -->
+            <div class="tfc-scene-container">
+                <img src="assets/floating_heart.png" alt="Love" class="tfc-floating-heart">
+                <img src="assets/childcare_center.png" alt="Childcare Center" class="tfc-childcare-image">
+            </div>
+
             <p class="tfc-hero-subtitle">A Prescription for Health, Hope, and Opportunity</p>
             <p class="tfc-hero-tagline">Direct cash support for pregnant mothers and babies—because every family deserves a strong start.</p>
             
             <div class="tfc-stats-row">
                 <div class="tfc-stat-item">
-                    <div class="tfc-stat-number">$2,000</div>
+                    <div class="tfc-stat-number">$3,000</div>
                     <div class="tfc-stat-label">For Each Baby (Medicaid Birth)</div>
                 </div>
+                <div class="tfc-stat-arrow"></div>
                 <div class="tfc-stat-item">
-                    <div class="tfc-stat-number">$15 million</div>
+                    <div class="tfc-stat-number">5,075</div>
+                    <div class="tfc-stat-label">Medicaid-Covered Births</div>
+                </div>
+                <div class="tfc-stat-arrow"></div>
+                <div class="tfc-stat-item">
+                    <div class="tfc-stat-number">$15.26 million</div>
                     <div class="tfc-stat-label">Total Support</div>
                 </div>
             </div>
