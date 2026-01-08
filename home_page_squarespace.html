@@ -90,7 +90,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 150px;
+    height: 60px; /* Reduced to reduce white gradient effect */
     /* Hero Fade to White with Blur */
     background: linear-gradient(to bottom, transparent 0%, #ffffff 100%);
     backdrop-filter: blur(8px);
@@ -216,6 +216,7 @@ body {
     opacity: 0;
     position: relative;
     top: 0;
+    margin-top: 90px; /* Added to clear fixed nav header */
     background-color: rgba(36, 53, 81, 0.7); /* More transparent */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -322,7 +323,7 @@ body {
 
 .tfc-hero h1 {
     font-family: 'Red Hat Display', 'Halyard Display', sans-serif;
-    font-size: 3rem;
+    font-size: 6rem; /* Doubled from 3rem */
     font-weight: 700;
     margin-bottom: 16px;
     letter-spacing: -0.02em;
@@ -338,7 +339,7 @@ body {
 .tfc-hero-subtitle-wrapper {
     margin-bottom: 32px;
     position: relative;
-    max-width: 800px;
+    max-width: 550px; /* Reduced from 800px */
     margin-left: 0;
     margin-right: auto;
     
@@ -1866,8 +1867,12 @@ body {
         <div id="purpose" class="tfc-section" style="margin-bottom: 0;">
             <div class="tfc-text-content">
                 <h2>Why Focus on Taxes?</h2>
+                <h3 style="font-family: 'Red Hat Display', sans-serif; font-size: 1.5rem; color: #4a5568; margin-top: -12px; margin-bottom: 24px; font-weight: 600;">Hawaiʻi’s low- and middle-income families are being squeezed by the rising cost of living.</h3>
                 <div class="tfc-text-block">
                     <p>While everyday households struggle to keep up, the wealthiest few pay a smaller share of their income in taxes. This makes it harder to fund what our communities rely on—healthcare, affordable housing, and other essentials.</p>
+                    <div style="margin-top: 24px;">
+                        <a href="https://www.hitaxfairness.org/tax-system" class="tfc-btn" style="background-color: #2a3a4d; color: white !important; border: none; font-size: 1rem; padding: 12px 24px;">Learn more about how Hawai‘i’s tax system —></a>
+                    </div>
                 </div>
             </div>
             <div class="tfc-section-image">
