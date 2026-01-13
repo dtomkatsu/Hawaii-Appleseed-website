@@ -458,7 +458,7 @@ header .header-nav-folder-content a,
     <div class="tfc-summary">
         <div class="tfc-summary-card">
             <h3>Total Potential Revenue</h3>
-            <div class="value">$220M+</div>
+            <div class="value">$357.5M+</div>
             <div class="label"></div>
         </div>
     </div>
@@ -479,6 +479,20 @@ header .header-nav-folder-content a,
                     <div class="tfc-bar" data-value="84" style="--bar-width: 84%;"></div>
                 </div>
                 <span class="tfc-bar-value">$84M</span>
+            </div>
+            <div class="tfc-bar-row">
+                <span class="tfc-bar-label">High Income Tax</span>
+                <div class="tfc-bar-track">
+                    <div class="tfc-bar" data-value="69" style="--bar-width: 69%;"></div>
+                </div>
+                <span class="tfc-bar-value">$69M</span>
+            </div>
+            <div class="tfc-bar-row">
+                <span class="tfc-bar-label">Conveyance Tax</span>
+                <div class="tfc-bar-track">
+                    <div class="tfc-bar" data-value="68.5" style="--bar-width: 68.5%;"></div>
+                </div>
+                <span class="tfc-bar-value">$68.5M</span>
             </div>
             <div class="tfc-bar-row">
                 <span class="tfc-bar-label">REIT Reform</span>
@@ -510,7 +524,7 @@ header .header-nav-folder-content a,
         <div class="tfc-card">
             <div class="tfc-card-title">Conveyance Tax Reform</div>
             <div class="tfc-card-tag">PROPERTY</div>
-            <div class="tfc-card-revenue unknown">Revenue Unknown</div>
+            <div class="tfc-card-revenue">$68.5M Revenue</div>
             <div class="tfc-card-desc">Luxury homes and second homes should be taxed at higher rates when they're sold.</div>
             <a href="https://www.hitaxfairness.org/conveyance-tax" class="tfc-card-btn" target="_blank">More</a>
         </div>
@@ -526,7 +540,7 @@ header .header-nav-folder-content a,
         <div class="tfc-card">
             <div class="tfc-card-title">Increase Income Tax on High-Earners</div>
             <div class="tfc-card-tag">INCOME TAX</div>
-            <div class="tfc-card-revenue unknown">Revenue Unknown</div>
+            <div class="tfc-card-revenue">$69M Revenue</div>
             <div class="tfc-card-desc">Hawaiʻi's top 1 percent can afford to pay more to help secure our state's future.</div>
             <a href="https://www.hitaxfairness.org/income-tax" class="tfc-card-btn" target="_blank">More</a>
         </div>
@@ -611,7 +625,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                animateValue(valueElement, 0, 220, 1500);
+                animateValue(valueElement, 0, 358, 1500);
                 // Also animate bars when summary card is visible
                 animateBars();
                 observer.unobserve(entry.target);
@@ -637,7 +651,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!startTimestamp) startTimestamp = timestamp;
             const progress = Math.min((timestamp - startTimestamp) / duration, 1);
             const currentVal = Math.floor(progress * (end - start) + start);
-            obj.textContent = '$' + currentVal + 'M+';
+            obj.textContent = '$' + (currentVal === 358 ? '357.5' : currentVal) + 'M+';
             if (progress < 1) {
                 window.requestAnimationFrame(step);
             }
