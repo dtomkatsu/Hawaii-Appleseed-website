@@ -93,6 +93,18 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 24px;
+            white-space: nowrap;
+            width: auto;
+            transition: width 0.8s ease-out;
+        }
+
+        .tfc-hero-badge span {
+            opacity: 0;
+            transition: opacity 0.6s ease-in;
+        }
+
+        .tfc-hero-badge span.visible {
+            opacity: 1;
         }
 
         .tfc-hero-title {
@@ -129,8 +141,8 @@
 
         .tfc-floating-heart {
             position: absolute;
-            width: 50px; 
-            top: -45px; /* Moved up to clear the house */
+            width: 160px; 
+            top: -55px; /* Moved further up */
             left: 50%; 
             transform: translateX(-50%);
             animation: float 3s ease-in-out infinite;
@@ -572,7 +584,7 @@
         .tfc-chart-container {
             max-width: 700px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 20px 20px;
         }
 
         .tfc-3d-chart {
@@ -581,7 +593,7 @@
             align-items: flex-end;
             gap: 80px;
             height: 320px;
-            padding: 40px 0 60px;
+            padding: 40px 0 43px;
         }
 
         .tfc-3d-bar-group {
@@ -726,43 +738,341 @@
                 font-size: 1.25rem;
             }
         }
+        /* Staggered Pull-out Quote */
+        .tfc-pullout-quote {
+            margin: 5px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .tfc-pullout-quote .tfc-quote-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #C62828;
+            font-style: italic;
+            line-height: 1.3;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            padding: 0 60px;
+        }
+
+        .tfc-pullout-quote .tfc-quote-text::before,
+        .tfc-pullout-quote .tfc-quote-text::after {
+            content: '"';
+            font-size: 4rem;
+            color: #FFCDD2;
+            position: absolute;
+            font-family: Georgia, serif;
+        }
+
+        .tfc-pullout-quote .tfc-quote-text::before {
+            top: -20px;
+            left: 0;
+        }
+
+        .tfc-pullout-quote .tfc-quote-text::after {
+            content: '"';
+            bottom: -40px;
+            right: 0;
+        }
+
+        @media (max-width: 768px) {
+            .tfc-pullout-quote .tfc-quote-text {
+                font-size: 1.4rem;
+                padding: 0 40px;
+            }
+        }
+
+        /* Flint Expandable Section */
+        .tfc-expandable-section {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        /* Carousel Styles */
+        .tfc-carousel-container {
+            position: relative;
+            max-width: 56.25%;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 0 40px; /* Space for arrows */
+            background: #FFEBEE;
+            border: 1px solid #FFCDD2;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(229, 57, 53, 0.1);
+        }
+
+        .tfc-carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .tfc-carousel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        .tfc-carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e2e8f0;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            color: #2A3A4D;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .tfc-carousel-arrow:hover {
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .tfc-carousel-prev { left: 0; }
+        .tfc-carousel-next { right: 0; }
+
+        /* Childcare Chart Styles */
+        .tfc-childcare-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tfc-cost-display {
+            text-align: center;
+            background: #FFF3E0;
+            padding: 12px;
+            border-radius: 16px;
+            margin-bottom: 10px;
+            border: 1px solid #FFE0B2;
+        }
+
+        .tfc-cost-title {
+            color: #E65100;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .tfc-cost-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #2A3A4D;
+            line-height: 1.2;
+        }
+
+        .tfc-cost-monthly {
+            font-size: 1.1rem;
+            color: #5D4037;
+            font-weight: 500;
+        }
+
+        .tfc-income-comparison {
+            display: grid;
+            gap: 12px;
+        }
+
+        .tfc-income-bar-group {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tfc-income-label {
+            font-weight: 700;
+            color: #2A3A4D;
+            margin-bottom: 16px;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .tfc-bar-container {
+            height: 36px;
+            background: #e2e8f0;
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tfc-bar-fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: width 1s ease-out;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        .tfc-bar-fill.single { 
+            background: linear-gradient(90deg, #EF5350, #E53935);
+            width: 0%; /* Will animate to 49% */
+        } 
+
+        .tfc-bar-fill.married { 
+            background: linear-gradient(90deg, #66BB6A, #43A047);
+            width: 0%; /* Will animate to 17.9% */
+        }
+
+        .tfc-expand-btn {
+            background-color: #E53935;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
+        }
+
+        .tfc-expand-btn:hover {
+            background-color: #C62828;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(229, 57, 53, 0.4);
+        }
+
+        .tfc-expand-icon {
+            font-size: 0.8em;
+            transition: transform 0.3s ease;
+        }
+
+        .tfc-expand-btn.active .tfc-expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .tfc-expand-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background: #fff;
+            border-radius: 16px;
+            margin-top: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .tfc-expand-content.active {
+            max-height: 1000px; /* Large enough to fit content */
+        }
+
+        .tfc-flint-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+            text-align: left;
+        }
+
+        .tfc-flint-column h3 {
+            color: #C62828;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #FFCDD2;
+            padding-bottom: 12px;
+        }
+
+        .tfc-flint-intro {
+            color: #4a5568;
+            font-style: italic;
+            margin-bottom: 24px;
+        }
+
+        .tfc-stat-block {
+            background: #FAFAFA;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            border-left: 4px solid #E57373;
+        }
+
+        .tfc-stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #2A3A4D;
+            margin-bottom: 4px;
+        }
+
+        .tfc-stat-desc {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .tfc-flint-source {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #E5E5E5;
+        }
+
+        .tfc-flint-source a {
+            color: #E57373;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .tfc-flint-source a:hover {
+            color: #C62828;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .tfc-flint-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="tfc-container">
         <!-- Hero Section -->
         <div class="tfc-hero">
-            <div class="tfc-hero-badge">A Prescription for Families</div>
             <h1 class="tfc-hero-title">RxKids</h1>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 40px; max-width: 600px; margin: 0 auto 60px;">
-                <img src="assets/3000_new.png" alt="RxKids $3,000 For Each Baby" class="tfc-hero-image" style="margin: 0; max-width: 50%; height: auto;">
-                <img src="assets/hash_new.png" alt="#" class="tfc-hero-image" style="margin: 0; max-width: 50%; height: auto;">
-                <img src="assets/last block.png" alt="Last Block" class="tfc-hero-image" style="margin: 0; max-width: 50%; height: auto;">
-            </div>
-            
-            <!-- Childcare Scene -->
-            <div class="tfc-scene-container">
-                <img src="assets/floating_heart.png" alt="Love" class="tfc-floating-heart">
-                <img src="assets/childcare_center.png" alt="Childcare Center" class="tfc-childcare-image">
-            </div>
+            <div class="tfc-hero-badge">A Prescription for <span>Health</span>, <span>Hope</span>, and <span>Opportunity</span></div>
+            <img src="https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/1673931525935-N3GTMH2YO0HVT68BZOA0/unsplash-image-5zp0jym2w9M.jpg?content-type=image%2Fjpeg" alt="RxKids Hero Image" class="tfc-hero-image">
 
-            <p class="tfc-hero-subtitle">A Prescription for Health, Hope, and Opportunity</p>
             <p class="tfc-hero-tagline">Direct cash support for pregnant mothers and babies—because every family deserves a strong start.</p>
             
             <div class="tfc-stats-row">
-                <div class="tfc-stat-item">
-                    <div class="tfc-stat-number">$3,000</div>
-                    <div class="tfc-stat-label">For Each Baby (Medicaid Birth)</div>
+                <div style="display: flex; justify-content: center; align-items: center; max-width: 150px; margin: 0 auto;">
+                    <img src="assets/3000_new.png" alt="RxKids $3,000 For Each Baby" style="max-width: 100%; height: auto; display: block;">
                 </div>
                 <div class="tfc-stat-arrow"></div>
-                <div class="tfc-stat-item">
-                    <div class="tfc-stat-number">5,075</div>
-                    <div class="tfc-stat-label">Medicaid-Covered Births</div>
+                <div style="display: flex; justify-content: center; align-items: center; max-width: 150px; margin: 0 auto;">
+                    <img src="assets/hash_new.png" alt="#" style="max-width: 100%; height: auto; display: block;">
                 </div>
                 <div class="tfc-stat-arrow"></div>
-                <div class="tfc-stat-item">
-                    <div class="tfc-stat-number">$15.26 million</div>
-                    <div class="tfc-stat-label">Total Support</div>
+                <div style="display: flex; justify-content: center; align-items: center; max-width: 150px; margin: 0 auto;">
+                    <img src="assets/last block.png" alt="Last Block" style="max-width: 100%; height: auto; display: block;">
                 </div>
             </div>
         </div>
@@ -770,7 +1080,13 @@
         <!-- What is RxKids -->
         <div class="tfc-section">
             <h2 class="tfc-section-title">What is RxKids?</h2>
-            <p class="tfc-section-subtitle">RxKids is a groundbreaking prenatal and infant cash prescription program that provides universal, unconditional financial support to families during pregnancy and a baby's first year of life.</p>
+            <p class="tfc-section-subtitle">RxKids is a groundbreaking program that provides unconditional financial support to pregnant mothers.</p>
+            
+            <!-- Childcare Scene -->
+            <div class="tfc-scene-container">
+                <img src="assets/floating_heart.png" alt="Love" class="tfc-floating-heart">
+                <img src="assets/childcare_center.png" alt="Childcare Center" class="tfc-childcare-image">
+            </div>
             
             <div class="tfc-cards-grid">
                 <div class="tfc-info-card">
@@ -789,46 +1105,177 @@
                     <p class="tfc-card-text">Monthly payments continue throughout a baby's first year, providing stability during the most important developmental period.</p>
                 </div>
             </div>
-        </div>
 
-        <!-- Child Poverty Chart -->
-        <div class="tfc-section">
-            <h2 class="tfc-section-title">Child Poverty in Hawaiʻi by Household Type</h2>
-            <p class="tfc-section-subtitle">Percentage of children living in poverty</p>
-            
-            <div class="tfc-chart-container">
-                <div class="tfc-3d-chart">
-                    <!-- Married Couple -->
-                    <div class="tfc-3d-bar-group">
-                        <div class="tfc-3d-bar">
-                            <div class="tfc-3d-bar-front" style="height: 64px;">
-                                <span class="tfc-3d-bar-value">6.4%</span>
+            <!-- Example: Flint Michigan Expandable Section -->
+            <div class="tfc-expandable-section">
+                <button class="tfc-expand-btn" onclick="toggleFlintSection()">
+                    Example: Flint Michigan <span class="tfc-expand-icon">▼</span>
+                </button>
+                <div id="flint-content" class="tfc-expand-content">
+                    <div class="tfc-flint-grid">
+                        <div class="tfc-flint-column">
+                            <h3>Key Hardship Improvements</h3>
+                            <p class="tfc-flint-intro">Among Flint mothers, comparing 2024 (eligible for Rx Kids) to 2023:</p>
+                            
+                            <div class="tfc-stat-block">
+                                <div class="tfc-stat-value">13.0%</div>
+                                <div class="tfc-stat-desc">Reduction in owing back rent or mortgage</div>
+                            </div>
+                            
+                            <div class="tfc-stat-block">
+                                <div class="tfc-stat-value">4.2%</div>
+                                <div class="tfc-stat-desc">Reduction in eviction risk after birth</div>
+                            </div>
+                            
+                            <div class="tfc-stat-block">
+                                <div class="tfc-stat-value">14.0%</div>
+                                <div class="tfc-stat-desc">Reduction in food insecurity</div>
+                            </div>
+                            
+                            <div class="tfc-stat-block">
+                                <div class="tfc-stat-value">$1,004</div>
+                                <div class="tfc-stat-desc">Less back rent/mortgage owed on average</div>
                             </div>
                         </div>
-                        <div class="tfc-3d-bar-label">Married Couple</div>
+                        
+                        <div class="tfc-flint-column">
+                            <h3>Maternal Mental Health & Well-being</h3>
+                            <p class="tfc-flint-intro">Adjusted estimates for mental health show:</p>
+                            
+                            <div class="tfc-stat-block">
+                                <div class="tfc-stat-value">14.0%</div>
+                                <div class="tfc-stat-desc">Reduction in screening positive for postpartum depression</div>
+                            </div>
+                            
+                            <div class="tfc-stat-block">
+                                <div class="tfc-stat-value">6.0%</div>
+                                <div class="tfc-stat-desc">Reduction in uncontrollable worrying</div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <!-- Single Father -->
-                    <div class="tfc-3d-bar-group">
-                        <div class="tfc-3d-bar">
-                            <div class="tfc-3d-bar-front" style="height: 113px;">
-                                <span class="tfc-3d-bar-value">11.3%</span>
-                            </div>
-                        </div>
-                        <div class="tfc-3d-bar-label">Single Father</div>
-                    </div>
-                    
-                    <!-- Single Mother -->
-                    <div class="tfc-3d-bar-group">
-                        <div class="tfc-3d-bar">
-                            <div class="tfc-3d-bar-front" style="height: 266px;">
-                                <span class="tfc-3d-bar-value">26.6%</span>
-                            </div>
-                        </div>
-                        <div class="tfc-3d-bar-label">Single Mother</div>
+                    <!-- Source -->
+                    <div class="tfc-flint-source">
+                        <p>Source: <a href="https://ajph.aphapublications.org/doi/full/10.2105/AJPH.2025.308244" target="_blank">American Journal of Public Health</a></p>
                     </div>
                 </div>
-                <p class="tfc-chart-source">Source: U.S. Census Bureau</p>
+            </div>
+        </div>
+
+        <!-- Child Poverty & Childcare Carousel -->
+        <div class="tfc-section">
+            <h2 class="tfc-section-title">Hawaiʻi's families are struggling</h2>
+            
+            <div class="tfc-carousel-container">
+                <button class="tfc-carousel-arrow tfc-carousel-prev" onclick="moveCarousel(-1)">&#10094;</button>
+                <button class="tfc-carousel-arrow tfc-carousel-next" onclick="moveCarousel(1)">&#10095;</button>
+                
+                <div class="tfc-carousel-track" id="statsTrack">
+                    <!-- Slide 1: Child Poverty -->
+                    <div class="tfc-carousel-slide">
+                        <h3 style="text-align: center; color: #2A3A4D; margin-bottom: 10px; font-size: 1.5rem;">Child Poverty in Hawaiʻi by Household Type</h3>
+                        <p class="tfc-section-subtitle">Percentage of children living in poverty</p>
+                        
+                        <!-- Staggered Pull-out Quote -->
+                        <div class="tfc-pullout-quote">
+                            <p class="tfc-quote-text">In Hawaiʻi, more than 1 out of 4 children with single mothers are in poverty.</p>
+                        </div>
+                        
+                        <div class="tfc-chart-container">
+                            <div class="tfc-3d-chart">
+                                <!-- Married Couple -->
+                                <div class="tfc-3d-bar-group">
+                                    <div class="tfc-3d-bar">
+                                        <div class="tfc-3d-bar-front" style="height: 64px;">
+                                            <span class="tfc-3d-bar-value">6.4%</span>
+                                        </div>
+                                    </div>
+                                    <div class="tfc-3d-bar-label">Married Couple</div>
+                                </div>
+                                
+                                <!-- Single Father -->
+                                <div class="tfc-3d-bar-group">
+                                    <div class="tfc-3d-bar">
+                                        <div class="tfc-3d-bar-front" style="height: 113px;">
+                                            <span class="tfc-3d-bar-value">11.3%</span>
+                                        </div>
+                                    </div>
+                                    <div class="tfc-3d-bar-label">Single Father</div>
+                                </div>
+                                
+                                <!-- Single Mother -->
+                                <div class="tfc-3d-bar-group">
+                                    <div class="tfc-3d-bar">
+                                        <div class="tfc-3d-bar-front" style="height: 266px;">
+                                            <span class="tfc-3d-bar-value">26.6%</span>
+                                        </div>
+                                    </div>
+                                    <div class="tfc-3d-bar-label">Single Mother</div>
+                                </div>
+                            </div>
+                            <p class="tfc-chart-source">Source: U.S. Census Bureau</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2: Childcare Costs -->
+                    <div class="tfc-carousel-slide">
+                        <h3 style="text-align: center; color: #2A3A4D; margin-bottom: 10px; font-size: 1.5rem;">Center-Based Care</h3>
+                        <p class="tfc-section-subtitle">Affordability Analysis 2024</p>
+
+                        <div class="tfc-childcare-stats">
+                            <div class="tfc-cost-display">
+                                <span class="tfc-cost-title">Annual Center-Based Care Cost</span>
+                                <div class="tfc-cost-amount">$24,115</div>
+                                <div class="tfc-cost-monthly">($2,010 per month)</div>
+                            </div>
+
+                            <div class="tfc-income-comparison">
+                                <div class="tfc-income-bar-group">
+                                    <span class="tfc-income-label">Percentage of single-parent median income</span>
+                                    <div class="tfc-bar-container">
+                                        <div class="tfc-bar-fill single" id="bar-single">49.0%</div>
+                                    </div>
+                                    <p style="font-size: 0.9rem; color: #718096; margin-top: 8px;">Nearly half of income goes to childcare</p>
+                                </div>
+
+                                <div class="tfc-income-bar-group">
+                                    <span class="tfc-income-label">Percentage of married-couple median income</span>
+                                    <div class="tfc-bar-container">
+                                        <div class="tfc-bar-fill married" id="bar-married">17.9%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tfc-flint-source">
+                            <p>Source: <a href="https://info.childcareaware.org/hubfs/Affordability_Analysis_2024.pdf" target="_blank">Child Care Aware of America 2024 Analysis</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RxKids for Hawaiʻi -->
+        <div class="tfc-section">
+            <h2 class="tfc-section-title">RxKids for Hawaiʻi</h2>
+            <p class="tfc-section-subtitle">Hawaiʻi has one of the highest costs of living in the nation. A program like RxKids could provide critical support for local families during pregnancy and a child's first year.</p>
+            
+            <div class="tfc-cards-grid">
+                <div class="tfc-info-card">
+                    <div class="tfc-card-icon">🌺</div>
+                    <h3 class="tfc-card-title">High Cost of Living</h3>
+                    <p class="tfc-card-text">Hawaiʻi families face some of the highest housing, food, and childcare costs in the country, making early support essential.</p>
+                </div>
+                <div class="tfc-info-card">
+                    <div class="tfc-card-icon">👨‍👩‍👧</div>
+                    <h3 class="tfc-card-title">Supporting ʻOhana</h3>
+                    <p class="tfc-card-text">Direct cash support aligns with Hawaiian values of caring for family and community during life's most important moments.</p>
+                </div>
+                <div class="tfc-info-card">
+                    <div class="tfc-card-icon">🌱</div>
+                    <h3 class="tfc-card-title">Investing in Keiki</h3>
+                    <p class="tfc-card-text">Supporting families during pregnancy and infancy is an investment in the next generation of Hawaiʻi's children.</p>
+                </div>
             </div>
         </div>
 
@@ -919,30 +1366,6 @@
             <p class="tfc-quote-author">— RxKids</p>
         </div>
 
-        <!-- RxKids for Hawaiʻi -->
-        <div class="tfc-section">
-            <h2 class="tfc-section-title">RxKids for Hawaiʻi</h2>
-            <p class="tfc-section-subtitle">Hawaiʻi has one of the highest costs of living in the nation. A program like RxKids could provide critical support for local families during pregnancy and a child's first year.</p>
-            
-            <div class="tfc-cards-grid">
-                <div class="tfc-info-card">
-                    <div class="tfc-card-icon">🌺</div>
-                    <h3 class="tfc-card-title">High Cost of Living</h3>
-                    <p class="tfc-card-text">Hawaiʻi families face some of the highest housing, food, and childcare costs in the country, making early support essential.</p>
-                </div>
-                <div class="tfc-info-card">
-                    <div class="tfc-card-icon">👨‍👩‍👧</div>
-                    <h3 class="tfc-card-title">Supporting ʻOhana</h3>
-                    <p class="tfc-card-text">Direct cash support aligns with Hawaiian values of caring for family and community during life's most important moments.</p>
-                </div>
-                <div class="tfc-info-card">
-                    <div class="tfc-card-icon">🌱</div>
-                    <h3 class="tfc-card-title">Investing in Keiki</h3>
-                    <p class="tfc-card-text">Supporting families during pregnancy and infancy is an investment in the next generation of Hawaiʻi's children.</p>
-                </div>
-            </div>
-        </div>
-
         <!-- CTA Section -->
         <div class="tfc-cta-section">
             <h2>Learn More About RxKids</h2>
@@ -956,5 +1379,60 @@
             <p>Learn more about RxKids at <a href="https://rxkids.org/" target="_blank">rxkids.org</a></p>
         </div>
     </div>
+
+    <script>
+        // Sequential word animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const badge = document.querySelector('.tfc-hero-badge');
+            const words = badge.querySelectorAll('span');
+            
+            // Start with "Health" visible
+            setTimeout(() => {
+                words[0].classList.add('visible');
+            }, 500);
+            
+            // Show "Hope" after 1.5 seconds
+            setTimeout(() => {
+                words[1].classList.add('visible');
+            }, 1500);
+            
+            // Show "Opportunity" after 2.5 seconds
+            setTimeout(() => {
+                words[2].classList.add('visible');
+            }, 2500);
+        });
+
+        function toggleFlintSection() {
+            const btn = document.querySelector('.tfc-expand-btn');
+            const content = document.getElementById('flint-content');
+            
+            btn.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+
+        let currentSlide = 0;
+        const totalSlides = 2;
+
+        function moveCarousel(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = totalSlides - 1;
+            if (currentSlide >= totalSlides) currentSlide = 0;
+            
+            const track = document.getElementById('statsTrack');
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            // Trigger animations if on childcare slide
+            if (currentSlide === 1) {
+                setTimeout(() => {
+                    document.getElementById('bar-single').style.width = '49.0%';
+                    document.getElementById('bar-married').style.width = '17.9%';
+                }, 300);
+            } else {
+                // Reset for re-animation
+                document.getElementById('bar-single').style.width = '0%';
+                document.getElementById('bar-married').style.width = '0%';
+            }
+        }
+    </script>
 </body>
 </html>
