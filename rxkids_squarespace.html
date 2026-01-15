@@ -254,6 +254,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 24px;
+            margin-top: 30px;
             white-space: nowrap;
             width: auto;
             transition: width 0.8s ease-out;
@@ -271,13 +272,23 @@
         .tfc-hero-title {
             font-size: 7rem;
             margin-bottom: 0px;
-            color: #2A3A4D;
+            color: #E8ECF0;
             font-weight: 500;
+            background-color: #2A3A4D;
+            display: inline-block;
+            padding: 0 30px;
+            border-radius: 16px;
+            line-height: 1.1;
         }
 
         .tfc-hawaii-title {
             font-size: 5.5rem;
             font-weight: 400;
+            color: #2A3A4D;
+            -webkit-text-stroke: 0;
+            text-stroke: 0;
+            background-color: transparent;
+            padding: 0;
         }
 
         .tfc-hero-subtitle {
@@ -612,6 +623,18 @@
             margin-bottom: 16px;
             text-align: center;
             color: #2A3A4D;
+        }
+
+        .tfc-section-subtitle.tfc-subtitle-box {
+            background: linear-gradient(135deg, #E57373, #EF5350);
+            color: white;
+            padding: 24px 32px;
+            border-radius: 16px;
+            display: block;
+            margin: 0 auto 48px;
+            line-height: 1.6;
+            text-align: center;
+            max-width: 700px;
         }
 
         .tfc-section-subtitle {
@@ -1353,9 +1376,8 @@
         <div class="tfc-hero tfc-reveal">
             <div class="tfc-hero-content">
                 <h1 class="tfc-hero-title">RxKids</h1>
-<h2 class="tfc-hero-title tfc-hawaii-title" style="margin-top: -0.6em; margin-left: 40px;">Hawaiʻi</h2>
-                <div class="tfc-hero-badge">Direct cash support for</div>
-                <div class="tfc-hero-badge tfc-hero-badge-secondary"><span>pregnant mothers</span> and <span>babies</span></div>
+<h2 class="tfc-hero-title tfc-hawaii-title" style="margin-top: 0px; margin-left: 80px; margin-right: 20px;">Hawaiʻi</h2>
+                <div class="tfc-hero-badge">Direct cash support for pregnant mothers and babies</div>
             </div>
             <div class="tfc-hero-image-container">
                 <img src="https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/1673931525935-N3GTMH2YO0HVT68BZOA0/unsplash-image-5zp0jym2w9M.jpg?content-type=image%2Fjpeg" alt="RxKids Hero Image" class="tfc-hero-image" id="hero-image">
@@ -1368,7 +1390,7 @@
             <div class="tfc-content-container">
                 <div class="tfc-section" style="margin-bottom: 0;">
                     <h2 class="tfc-section-title">What is RxKids?</h2>
-                    <p class="tfc-section-subtitle">RxKids is a groundbreaking program that provides no-strings-attached financial support to pregnant mothers. There are many successful RxKids programs in cities across Michigan.</p>
+                    <p class="tfc-section-subtitle tfc-subtitle-box">RxKids is a groundbreaking program that provides no-strings-attached financial support to pregnant mothers. There are many successful RxKids programs in cities across Michigan.</p>
                     
                     <!-- Childcare Scene -->
                     <div class="tfc-scene-container">
@@ -1558,7 +1580,7 @@
                             <p class="tfc-quote-text">In Hawaiʻi, more than 1 out of 4 children with single mothers are in poverty.</p>
                         </div>
                         
-                        <div class="tfc-chart-container" style="margin-top: 60px;">
+                        <div class="tfc-chart-container" style="margin-top: 100px;">
                             <div class="tfc-3d-chart">
                                 <!-- Married Couple -->
                                 <div class="tfc-3d-bar-group">
@@ -1638,7 +1660,7 @@
             <div class="tfc-content-container">
                 <div class="tfc-section" style="margin-bottom: 0;">
                     <h2 class="tfc-section-title">How RxKids would work in Hawaiʻi</h2>
-            <p class="tfc-section-subtitle">A simple, dignified process that puts Hawaiian families first.</p>
+            <p class="tfc-section-subtitle"></p>
             
             <div class="tfc-steps">
                 <div class="tfc-step">
@@ -1659,6 +1681,7 @@
             </div>
             
             <!-- Medicaid Birth Stats -->
+            <h3 style="text-align: center; color: #2A3A4D; margin-top: 60px; margin-bottom: 20px; font-size: 3rem;">Cost</h3>
             <div class="tfc-stats-row">
                 <div style="display: flex; justify-content: center; align-items: center; max-width: 200px; margin: 0 auto;">
                     <img src="assets/3000_new.png" alt="RxKids $3,000 For Each Baby" style="max-width: 100%; height: auto; display: block;">
