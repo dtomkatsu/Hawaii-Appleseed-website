@@ -15,6 +15,7 @@
             background-color: #E8E6E1; /* Darker beige to match other pages */
             color: #2A3A4D;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         /* Squarespace Header Fix - Black font for light background pages */
@@ -71,8 +72,20 @@
         /* Benefits Widget Styles */
         .tfc-benefits-widget-section {
             max-width: 900px;
-            margin: 60px auto;
+            margin: 100px auto 60px;
             text-align: center;
+        }
+
+        /* Scroll Animation Styles */
+        .tfc-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .tfc-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .tfc-benefits-display {
@@ -80,10 +93,12 @@
             background: #f8f9fa;
             border-radius: 16px;
             overflow: hidden;
-            min-height: 400px;
+            min-height: 500px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             margin: 0 auto;
             max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .tfc-benefit-tab {
@@ -96,7 +111,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
-            margin: 0 8px;
+            margin: 0 8px 16px;
         }
 
         .tfc-benefit-tab.active {
@@ -104,6 +119,93 @@
             color: white;
             font-weight: 700;
             box-shadow: 0 4px 12px rgba(38, 50, 56, 0.3);
+        }
+
+        /* Full Width Sections */
+        .tfc-full-width {
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+            position: relative;
+            padding: 80px 0 140px; /* Increased bottom padding */
+            box-sizing: border-box;
+            left: auto;
+            right: auto;
+        }
+
+        .tfc-bg-white { background-color: #FFFFFF; }
+        .tfc-bg-blue { background-color: #E8ECF0; }
+
+        .tfc-content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            box-sizing: border-box;
+        }
+
+        .tfc-benefit-content {
+            display: none;
+            padding: 40px;
+            min-height: 500px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            text-align: left;
+            transition: opacity 0.5s ease;
+            box-sizing: border-box;
+        }
+
+        .tfc-benefit-text-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 90%; /* Reduced from 700px to prevent cutoff */
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            margin: auto;
+            box-sizing: border-box;
+        }
+
+        .tfc-benefit-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tfc-benefit-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        .tfc-benefit-list li::before {
+            content: "•";
+            color: #E57373;
+            font-weight: bold;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+
+        .tfc-benefit-list a {
+            color: #263238;
+            font-size: 0.85rem;
+            text-decoration: none;
+            opacity: 0.7;
+            margin-left: 6px;
+            font-weight: 600;
+        }
+
+        .tfc-benefit-list a:hover {
+            color: #E57373;
+            opacity: 1;
+            text-decoration: underline;
         }
 
         /* Main Container */
@@ -737,7 +839,7 @@
             align-items: flex-end;
             gap: 80px;
             height: 220px;
-            padding: 10px 0 20px;
+            padding: 10px 0 80px;
         }
 
         .tfc-3d-bar-group {
@@ -844,7 +946,7 @@
             text-align: center;
             font-size: 0.85rem;
             color: #718096;
-            margin-top: 60px;
+            margin-top: 30px;
         }
 
         /* Responsive */
@@ -855,6 +957,14 @@
 
             .tfc-section-title {
                 font-size: 2rem;
+            }
+
+            .tfc-benefit-content {
+                padding: 24px;
+            }
+
+            .tfc-benefit-text-box {
+                padding: 24px;
             }
 
             .tfc-stats-row {
@@ -975,17 +1085,18 @@
             text-align: center;
         }
 
-        /* Carousel Styles */
+        /* What is RxKids */
         .tfc-carousel-container {
             position: relative;
             max-width: 56.25%;
             margin: 0 auto;
             overflow: hidden;
-            padding: 0;
+            padding: 0 0 20px 0;
             background: #FFEBEE;
             border: 1px solid #FFCDD2;
             border-radius: 16px;
             box-shadow: 0 4px 12px rgba(229, 57, 53, 0.1);
+            box-sizing: border-box;
         }
 
         .tfc-carousel-track {
@@ -1240,7 +1351,7 @@
 <body>
     <div class="tfc-container">
         <!-- Hero Section -->
-        <div class="tfc-hero">
+        <div class="tfc-hero tfc-reveal">
             <div class="tfc-hero-content">
                 <h1 class="tfc-hero-title">RxKids</h1>
 <h2 class="tfc-hero-title tfc-hawaii-title" style="margin-top: -0.6em; margin-left: 40px;">Hawaiʻi</h2>
@@ -1254,25 +1365,32 @@
 
 
         <!-- What is RxKids -->
-        <div class="tfc-section">
-            <h2 class="tfc-section-title">What is RxKids?</h2>
-            <p class="tfc-section-subtitle">RxKids is a groundbreaking program that provides no-strings-attached financial support to pregnant mothers. There are many successful RxKids programs in cities across Michigan.</p>
-            
-            <!-- Childcare Scene -->
-            <div class="tfc-scene-container">
-                <img src="assets/floating_heart.png" alt="Love" class="tfc-floating-heart">
-                <img src="assets/childcare_center.png" alt="Childcare Center" class="tfc-childcare-image">
-                <div class="tfc-scene-tag tfc-scene-tag-right"><h3 class="tfc-scene-title">No Strings Attached</h3><p>Families decide how to use the funds based on their unique needs—whether for rent, food, baby supplies, or other essentials.</p></div>
-                <div class="tfc-scene-tag tfc-scene-tag-left"><h3 class="tfc-scene-title">Universal Support</h3><p>Every pregnant mother in participating communities receives support—no complicated eligibility requirements or means testing.</p></div>
-                <div class="tfc-scene-tag tfc-scene-tag-bottom"><h3 class="tfc-scene-title">Critical First Year</h3><p>Monthly payments continue throughout baby's first year, providing stability during the most important developmental period.</p></div>
+        <div class="tfc-full-width tfc-bg-white tfc-reveal">
+            <div class="tfc-content-container">
+                <div class="tfc-section" style="margin-bottom: 0;">
+                    <h2 class="tfc-section-title">What is RxKids?</h2>
+                    <p class="tfc-section-subtitle">RxKids is a groundbreaking program that provides no-strings-attached financial support to pregnant mothers. There are many successful RxKids programs in cities across Michigan.</p>
+                    
+                    <!-- Childcare Scene -->
+                    <div class="tfc-scene-container">
+                        <img src="assets/floating_heart.png" alt="Love" class="tfc-floating-heart">
+                        <img src="assets/childcare_center.png" alt="Childcare Center" class="tfc-childcare-image">
+                        <div class="tfc-scene-tag tfc-scene-tag-right"><h3 class="tfc-scene-title">No Strings Attached</h3><p>Families decide how to use the funds based on their unique needs—whether for rent, food, baby supplies, or other essentials.</p></div>
+                        <div class="tfc-scene-tag tfc-scene-tag-left"><h3 class="tfc-scene-title">Universal Support</h3><p>Every pregnant mother in participating communities receives support—no complicated eligibility requirements or means testing.</p></div>
+                        <div class="tfc-scene-tag tfc-scene-tag-bottom"><h3 class="tfc-scene-title">Critical First Year</h3><p>Monthly payments continue throughout baby's first year, providing stability during the most important developmental period.</p></div>
+                    </div>
+                    
+                    <div class="tfc-cards-grid">
+                    </div>
+                </div>
             </div>
-            
-            <div class="tfc-cards-grid">
-            </div>
+        </div>
 
-            <!-- Proven Benefits Interactive Widget -->
-            <div class="tfc-section tfc-benefits-widget-section">
-                <h2 class="tfc-section-title">Benefits of RxKids</h2>
+        <!-- Proven Benefits Interactive Widget -->
+        <div class="tfc-full-width tfc-bg-blue tfc-reveal">
+            <div class="tfc-content-container">
+                <div class="tfc-section tfc-benefits-widget-section" style="margin: 0 auto;">
+                    <h2 class="tfc-section-title">Benefits of RxKids</h2>
                 
                 <div class="tfc-benefits-tabs">
                     <button class="tfc-benefit-tab active" onclick="openBenefit(event, 'benefit-health')">Better Health Outcomes</button>
@@ -1288,7 +1406,12 @@
                     <div id="benefit-health" class="tfc-benefit-content active" style="display: flex;">
                         <div class="tfc-benefit-text-box">
                             <h3>Better Health Outcomes</h3>
-                            <p>Reduced maternal stress and improved prenatal care lead to healthier pregnancies and births.</p>
+                            <ul class="tfc-benefit-list">
+                                <li><strong>Preterm births reduced by up to 18%</strong> and low birthweight by 27% <a href="https://www.givedirectly.org/flintstudy2025/" target="_blank">[Source]</a></li>
+                                <li><strong>Infant maltreatment allegations reduced by 32%</strong> <a href="https://rxkids.org/new-rigorous-research-shows-rx-kids-reduced-infant-maltreatment-allegations-in-flint-michigan/" target="_blank">[Source]</a></li>
+                                <li>Postpartum depression screenings dropped by 14 percentage points <a href="https://rxkids.org/new-research-shows-cash-for-moms-and-babies-improves-health-stabilizes-families-and-saves-millions/" target="_blank">[Source]</a></li>
+                                <li><strong>$6.2 million in annual healthcare savings</strong> from improved birth outcomes <a href="https://rxkids.org/new-research-shows-cash-for-moms-and-babies-improves-health-stabilizes-families-and-saves-millions/" target="_blank">[Source]</a></li>
+                            </ul>
                         </div>
                     </div>
 
@@ -1296,7 +1419,12 @@
                     <div id="benefit-development" class="tfc-benefit-content">
                         <div class="tfc-benefit-text-box">
                             <h3>Child Development</h3>
-                            <p>Financial stability during early childhood supports cognitive and emotional development.</p>
+                            <ul class="tfc-benefit-list">
+                                <li><strong>80% of participants</strong> report RxKids helped them become more confident parents <a href="https://rxkids.org/wp-content/uploads/2024/09/RxKids_Research_Brief.pdf" target="_blank">[Source]</a></li>
+                                <li>Reduced NICU admissions establish stronger developmental foundations <a href="https://yourchildrensfoundation.org/2025/09/30/rx-kids-helping-families-thrive-from-the-start/" target="_blank">[Source]</a></li>
+                                <li>Funds enable direct investments in home learning environments and enrichment materials <a href="https://rxkids.org/new-analysis-finds-child-cash-benefits-improve-child-health-and-development-internationally/" target="_blank">[Source]</a></li>
+                                <li>59% found it easier to obtain needed healthcare <a href="https://rxkids.org/wp-content/uploads/2024/09/RxKids_Research_Brief.pdf" target="_blank">[Source]</a></li>
+                            </ul>
                         </div>
                     </div>
 
@@ -1304,7 +1432,12 @@
                     <div id="benefit-housing" class="tfc-benefit-content">
                         <div class="tfc-benefit-text-box">
                             <h3>Housing Stability</h3>
-                            <p>Families can better afford rent and utilities, reducing housing insecurity.</p>
+                            <ul class="tfc-benefit-list">
+                                <li><strong>91% decrease in evictions</strong> among RxKids participants <a href="https://rxkids.org/impact/" target="_blank">[Source]</a></li>
+                                <li>Average reduction in housing debt of <strong>over $1,000 per family</strong> <a href="https://rxkids.org/new-research-shows-cash-for-moms-and-babies-improves-health-stabilizes-families-and-saves-millions/" target="_blank">[Source]</a></li>
+                                <li>57% of participants used funds explicitly for rent payments <a href="https://rxkids.org/wp-content/uploads/2024/09/RxKids_Research_Brief.pdf" target="_blank">[Source]</a></li>
+                                <li>Represents a <strong>75% income expansion</strong> for lowest-income families <a href="https://yourchildrensfoundation.org/2025/09/30/rx-kids-helping-families-thrive-from-the-start/" target="_blank">[Source]</a></li>
+                            </ul>
                         </div>
                     </div>
 
@@ -1312,7 +1445,12 @@
                     <div id="benefit-food" class="tfc-benefit-content">
                         <div class="tfc-benefit-text-box">
                             <h3>Food Security</h3>
-                            <p>Parents can provide nutritious food for themselves and their growing families.</p>
+                            <ul class="tfc-benefit-list">
+                                <li><strong>78% of participants</strong> use RxKids funds for food purchases <a href="https://rxkids.org/wp-content/uploads/2024/09/RxKids_Research_Brief.pdf" target="_blank">[Source]</a></li>
+                                <li>8.2% increase in families reporting they have "enough of the kinds of foods we want" <a href="https://rxkids.org/wp-content/uploads/2024/09/RxKids_Research_Brief.pdf" target="_blank">[Source]</a></li>
+                                <li>Cash enables purchase of preferred nutritious foods rather than reliance on emergency assistance</li>
+                                <li>Better nutrition supports improved maternal health and birth outcomes <a href="https://rxkids.org/new-analysis-finds-child-cash-benefits-improve-child-health-and-development-internationally/" target="_blank">[Source]</a></li>
+                            </ul>
                         </div>
                     </div>
 
@@ -1320,7 +1458,12 @@
                     <div id="benefit-economic" class="tfc-benefit-content">
                         <div class="tfc-benefit-text-box">
                             <h3>Economic Mobility</h3>
-                            <p>Reduced financial stress allows parents to focus on work and career advancement.</p>
+                            <ul class="tfc-benefit-list">
+                                <li>Economic benefits exceed program costs by <strong>2.4 times</strong> <a href="https://www.upjohn.org/research-highlights/study-finds-rx-kids-program-supports-families-drives-jobs-and-income-growth" target="_blank">[Source]</a></li>
+                                <li>Every dollar invested generates <strong>~$1.60 in local economic activity</strong> <a href="https://www.givedirectly.org/rxkids/" target="_blank">[Source]</a></li>
+                                <li>88% of participants report the program helped them make ends meet and feel financially secure <a href="https://rxkids.org/rx-kids-survey-results-november-2024/" target="_blank">[Source]</a></li>
+                                <li><strong>40% of economic gains</strong> flow to families in the lowest income quintile <a href="https://www.upjohn.org/research-highlights/study-finds-rx-kids-program-supports-families-drives-jobs-and-income-growth" target="_blank">[Source]</a></li>
+                            </ul>
                         </div>
                     </div>
 
@@ -1328,15 +1471,19 @@
                     <div id="benefit-bonding" class="tfc-benefit-content">
                         <div class="tfc-benefit-text-box">
                             <h3>Family Bonding</h3>
-                            <p>Less financial worry means more quality time for parents to bond with their newborns.</p>
+                            <ul class="tfc-benefit-list">
+                                <li>Mothers report feeling <strong>more loved, valued, empowered, and respected</strong> <a href="https://rxkids.org/impact/" target="_blank">[Source]</a></li>
+                                <li>"My mental space is different, so I'm happy to be happy for my baby" — Participant <a href="https://rxkids.org/rx-kids-survey-results-november-2024/" target="_blank">[Source]</a></li>
+                                <li>Reduced financial stress enables greater emotional availability for children <a href="https://rxkids.org/new-rigorous-research-shows-rx-kids-reduced-infant-maltreatment-allegations-in-flint-michigan/" target="_blank">[Source]</a></li>
+                                <li>Trust in healthcare institutions rose by 10 percentage points <a href="https://rxkids.org/new-research-shows-cash-for-moms-and-babies-improves-health-stabilizes-families-and-saves-millions/" target="_blank">[Source]</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Example: Flint Michigan Expandable Section -->
-            <div class="tfc-expandable-section">
-                <button class="tfc-expand-btn" onclick="toggleFlintSection()">
+                
+                <!-- Example: Flint Michigan Expandable Section -->
+                <div class="tfc-expandable-section">
+                    <button class="tfc-expand-btn" onclick="toggleFlintSection()">
                     Example: Flint Michigan <span class="tfc-expand-icon">▼</span>
                 </button>
                 <div id="flint-content" class="tfc-expand-content">
@@ -1388,11 +1535,15 @@
                     </div>
                 </div>
             </div>
+            
+            </div>
         </div>
 
         <!-- Child Poverty & Childcare Carousel -->
-        <div class="tfc-section">
-            <h2 class="tfc-section-title">Hawaiʻi's families are struggling</h2>
+        <div class="tfc-full-width tfc-bg-white tfc-reveal">
+            <div class="tfc-content-container">
+                <div class="tfc-section" style="margin-bottom: 0;">
+                    <h2 class="tfc-section-title">Hawaiʻi's families are struggling</h2>
             
             <div class="tfc-carousel-container">
                 <button class="tfc-carousel-arrow tfc-carousel-prev" onclick="moveCarousel(-1)">&#10094;</button>
@@ -1408,7 +1559,7 @@
                             <p class="tfc-quote-text">In Hawaiʻi, more than 1 out of 4 children with single mothers are in poverty.</p>
                         </div>
                         
-                        <div class="tfc-chart-container" style="margin-top: 110px;">
+                        <div class="tfc-chart-container" style="margin-top: 60px;">
                             <div class="tfc-3d-chart">
                                 <!-- Married Couple -->
                                 <div class="tfc-3d-bar-group">
@@ -1479,12 +1630,15 @@
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
         </div>
 
         <!-- How RxKids would work in Hawaiʻi -->
-        <div class="tfc-section">
-            <h2 class="tfc-section-title">How RxKids would work in Hawaiʻi</h2>
+        <div class="tfc-full-width tfc-bg-blue tfc-reveal">
+            <div class="tfc-content-container">
+                <div class="tfc-section" style="margin-bottom: 0;">
+                    <h2 class="tfc-section-title">How RxKids would work in Hawaiʻi</h2>
             <p class="tfc-section-subtitle">A simple, dignified process that puts Hawaiian families first.</p>
             
             <div class="tfc-steps">
@@ -1519,19 +1673,11 @@
                     <img src="assets/last block.png" alt="Last Block" style="max-width: 100%; height: auto; display: block;">
                 </div>
             </div>
+            </div>
         </div>
 
-        <!-- Why It Matters -->
-        <div class="tfc-highlight-box">
-            <h3>Why Direct Cash Support Matters</h3>
-            <p>Research shows that direct cash transfers to families improve maternal and infant health outcomes, reduce stress, and give children a stronger foundation for lifelong success. When families have financial security, everyone benefits.</p>
-        </div>
-
-
-        
-        
         <!-- CTA Section -->
-        <div class="tfc-cta-section">
+        <div class="tfc-cta-section tfc-reveal">
             <h2>Learn More About RxKids</h2>
             <p>Discover how this innovative program is transforming communities and supporting families across the nation.</p>
             <a href="https://rxkids.org/" target="_blank" class="tfc-btn">Visit RxKids.org</a>
@@ -1547,6 +1693,26 @@
     <script>
         // Sequential word animation
         document.addEventListener('DOMContentLoaded', function() {
+            // Scroll Reveal Animation
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.tfc-reveal').forEach(el => {
+                observer.observe(el);
+            });
+
             // Animate secondary badge (pregnant mothers and babies)
             const secondaryBadge = document.querySelector('.tfc-hero-badge-secondary');
             const secondaryWords = secondaryBadge.querySelectorAll('span');
