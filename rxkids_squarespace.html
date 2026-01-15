@@ -68,6 +68,44 @@
             margin-top: 0;
         }
 
+        /* Benefits Widget Styles */
+        .tfc-benefits-widget-section {
+            max-width: 900px;
+            margin: 60px auto;
+            text-align: center;
+        }
+
+        .tfc-benefits-display {
+            position: relative;
+            background: #f8f9fa;
+            border-radius: 16px;
+            overflow: hidden;
+            min-height: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .tfc-benefit-tab {
+            background: #37474F;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin: 0 8px;
+        }
+
+        .tfc-benefit-tab.active {
+            background: #263238;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(38, 50, 56, 0.3);
+        }
+
         /* Main Container */
         .tfc-container {
             max-width: 1200px;
@@ -184,6 +222,58 @@
             /* Ensure the heart is visible even if it floats "outside" */
             overflow: visible;
             z-index: 5;
+        }
+
+        .tfc-scene-tag {
+            position: absolute;
+            top: 10px;
+            right: -380px;
+            background: white;
+            color: black;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            z-index: 10;
+            max-width: 280px;
+            line-height: 1.3;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tfc-scene-tag:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .tfc-scene-tag-left {
+            right: auto;
+            left: -380px;
+        }
+
+        .tfc-scene-tag-bottom {
+            top: auto;
+            bottom: -150px;
+            right: -380px;
+            left: auto;
+        }
+
+        .tfc-scene-tag-bottom:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .tfc-scene-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2A3A4D;
+            margin: 0 0 8px 0;
+        }
+
+        .tfc-scene-tag p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.4;
         }
 
         .tfc-childcare-image {
@@ -1172,23 +1262,75 @@
             <div class="tfc-scene-container">
                 <img src="assets/floating_heart.png" alt="Love" class="tfc-floating-heart">
                 <img src="assets/childcare_center.png" alt="Childcare Center" class="tfc-childcare-image">
+                <div class="tfc-scene-tag tfc-scene-tag-right"><h3 class="tfc-scene-title">No Strings Attached</h3><p>Families decide how to use the funds based on their unique needs—whether for rent, food, baby supplies, or other essentials.</p></div>
+                <div class="tfc-scene-tag tfc-scene-tag-left"><h3 class="tfc-scene-title">Universal Support</h3><p>Every pregnant mother in participating communities receives support—no complicated eligibility requirements or means testing.</p></div>
+                <div class="tfc-scene-tag tfc-scene-tag-bottom"><h3 class="tfc-scene-title">Critical First Year</h3><p>Monthly payments continue throughout baby's first year, providing stability during the most important developmental period.</p></div>
             </div>
             
             <div class="tfc-cards-grid">
-                <div class="tfc-info-card">
-                    <div class="tfc-card-icon">💝</div>
-                    <h3 class="tfc-card-title">Universal Support</h3>
-                    <p class="tfc-card-text">Every pregnant mother in participating communities receives support—no complicated eligibility requirements or means testing.</p>
+            </div>
+
+            <!-- Proven Benefits Interactive Widget -->
+            <div class="tfc-section tfc-benefits-widget-section">
+                <h2 class="tfc-section-title">Benefits of RxKids</h2>
+                
+                <div class="tfc-benefits-tabs">
+                    <button class="tfc-benefit-tab active" onclick="openBenefit(event, 'benefit-health')">Better Health Outcomes</button>
+                    <button class="tfc-benefit-tab" onclick="openBenefit(event, 'benefit-development')">Child Development</button>
+                    <button class="tfc-benefit-tab" onclick="openBenefit(event, 'benefit-housing')">Housing Stability</button>
+                    <button class="tfc-benefit-tab" onclick="openBenefit(event, 'benefit-food')">Food Security</button>
+                    <button class="tfc-benefit-tab" onclick="openBenefit(event, 'benefit-economic')">Economic Mobility</button>
+                    <button class="tfc-benefit-tab" onclick="openBenefit(event, 'benefit-bonding')">Family Bonding</button>
                 </div>
-                <div class="tfc-info-card">
-                    <div class="tfc-card-icon">💵</div>
-                    <h3 class="tfc-card-title">No Strings Attached</h3>
-                    <p class="tfc-card-text">Families decide how to use the funds based on their unique needs—whether for rent, food, baby supplies, or other essentials.</p>
-                </div>
-                <div class="tfc-info-card">
-                    <div class="tfc-card-icon">👶</div>
-                    <h3 class="tfc-card-title">Critical First Year</h3>
-                    <p class="tfc-card-text">Monthly payments continue throughout a baby's first year, providing stability during the most important developmental period.</p>
+
+                <div class="tfc-benefits-display">
+                    <!-- Better Health Outcomes -->
+                    <div id="benefit-health" class="tfc-benefit-content active" style="display: flex;">
+                        <div class="tfc-benefit-text-box">
+                            <h3>Better Health Outcomes</h3>
+                            <p>Reduced maternal stress and improved prenatal care lead to healthier pregnancies and births.</p>
+                        </div>
+                    </div>
+
+                    <!-- Child Development -->
+                    <div id="benefit-development" class="tfc-benefit-content">
+                        <div class="tfc-benefit-text-box">
+                            <h3>Child Development</h3>
+                            <p>Financial stability during early childhood supports cognitive and emotional development.</p>
+                        </div>
+                    </div>
+
+                    <!-- Housing Stability -->
+                    <div id="benefit-housing" class="tfc-benefit-content">
+                        <div class="tfc-benefit-text-box">
+                            <h3>Housing Stability</h3>
+                            <p>Families can better afford rent and utilities, reducing housing insecurity.</p>
+                        </div>
+                    </div>
+
+                    <!-- Food Security -->
+                    <div id="benefit-food" class="tfc-benefit-content">
+                        <div class="tfc-benefit-text-box">
+                            <h3>Food Security</h3>
+                            <p>Parents can provide nutritious food for themselves and their growing families.</p>
+                        </div>
+                    </div>
+
+                    <!-- Economic Mobility -->
+                    <div id="benefit-economic" class="tfc-benefit-content">
+                        <div class="tfc-benefit-text-box">
+                            <h3>Economic Mobility</h3>
+                            <p>Reduced financial stress allows parents to focus on work and career advancement.</p>
+                        </div>
+                    </div>
+
+                    <!-- Family Bonding -->
+                    <div id="benefit-bonding" class="tfc-benefit-content">
+                        <div class="tfc-benefit-text-box">
+                            <h3>Family Bonding</h3>
+                            <p>Less financial worry means more quality time for parents to bond with their newborns.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1385,64 +1527,9 @@
             <p>Research shows that direct cash transfers to families improve maternal and infant health outcomes, reduce stress, and give children a stronger foundation for lifelong success. When families have financial security, everyone benefits.</p>
         </div>
 
-        <!-- Benefits Section -->
-        <div class="tfc-section">
-            <h2 class="tfc-section-title">Proven Benefits</h2>
-            <p class="tfc-section-subtitle">Cash support programs like RxKids have demonstrated significant positive impacts on families and communities.</p>
-            
-            <div class="tfc-benefits">
-                <div class="tfc-benefit-item">
-                    <div class="tfc-benefit-icon">🏥</div>
-                    <div class="tfc-benefit-content">
-                        <h4>Better Health Outcomes</h4>
-                        <p>Reduced maternal stress and improved prenatal care lead to healthier pregnancies and births.</p>
-                    </div>
-                </div>
-                <div class="tfc-benefit-item">
-                    <div class="tfc-benefit-icon">🧠</div>
-                    <div class="tfc-benefit-content">
-                        <h4>Child Development</h4>
-                        <p>Financial stability during early childhood supports cognitive and emotional development.</p>
-                    </div>
-                </div>
-                <div class="tfc-benefit-item">
-                    <div class="tfc-benefit-icon">🏠</div>
-                    <div class="tfc-benefit-content">
-                        <h4>Housing Stability</h4>
-                        <p>Families can better afford rent and utilities, reducing housing insecurity.</p>
-                    </div>
-                </div>
-                <div class="tfc-benefit-item">
-                    <div class="tfc-benefit-icon">🍎</div>
-                    <div class="tfc-benefit-content">
-                        <h4>Food Security</h4>
-                        <p>Parents can provide nutritious food for themselves and their growing families.</p>
-                    </div>
-                </div>
-                <div class="tfc-benefit-item">
-                    <div class="tfc-benefit-icon">💼</div>
-                    <div class="tfc-benefit-content">
-                        <h4>Economic Mobility</h4>
-                        <p>Reduced financial stress allows parents to focus on work and career advancement.</p>
-                    </div>
-                </div>
-                <div class="tfc-benefit-item">
-                    <div class="tfc-benefit-icon">❤️</div>
-                    <div class="tfc-benefit-content">
-                        <h4>Family Bonding</h4>
-                        <p>Less financial worry means more quality time for parents to bond with their newborns.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         
-        <!-- Quote -->
-        <div class="tfc-quote-section">
-            <p class="tfc-quote-text">"RxKids is reimagining the social contract and positively impacting the lives of thousands of families. We want you to share in the story of lives impacted and communities improved."</p>
-            <p class="tfc-quote-author">— RxKids</p>
-        </div>
-
+        
         <!-- CTA Section -->
         <div class="tfc-cta-section">
             <h2>Learn More About RxKids</h2>
@@ -1512,6 +1599,22 @@
             
             btn.classList.toggle('active');
             content.classList.toggle('active');
+        }
+
+        function openBenefit(evt, benefitName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tfc-benefit-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tfc-benefit-tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(benefitName).style.display = "flex";
+            document.getElementById(benefitName).classList.add("active");
+            evt.currentTarget.className += " active";
         }
 
         let currentSlide = 0;
