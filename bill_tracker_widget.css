@@ -285,6 +285,98 @@
     background: #a0aec0;
 }
 
+/* Sample Testimony Link */
+.tfc-sample-testimony {
+    display: block;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 1px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    margin-top: -1px;
+}
+
+.tfc-sample-testimony-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+.tfc-sample-testimony a {
+    color: #3a5278;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+}
+
+.tfc-sample-testimony a:hover {
+    color: #243551;
+    text-decoration: underline;
+}
+
+.tfc-sample-testimony a::after {
+    content: '\2197';
+    font-size: 0.75rem;
+}
+
+/* Bill tracker with testimony below - adjust border radius */
+.tfc-card-wrapper .tfc-bill-tracker.has-testimony {
+    border-radius: 0;
+}
+
+/* Policy Toggle (for Capital Gains card) */
+.tfc-policy-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 12px;
+    font-size: 0.7rem;
+    vertical-align: middle;
+}
+
+.tfc-policy-toggle-btn {
+    padding: 4px 10px;
+    border: 1px solid #cbd5e0;
+    background: #fff;
+    color: #718096;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.65rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.tfc-policy-toggle-btn:hover {
+    background: #f7fafc;
+    border-color: #a0aec0;
+}
+
+.tfc-policy-toggle-btn.active {
+    background: #243551;
+    color: #fff;
+    border-color: #243551;
+}
+
+/* Title with toggle container */
+.tfc-card-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.tfc-card-title-row .tfc-card-title {
+    margin-bottom: 0;
+}
+
 /* Responsive */
 @media (max-width: 480px) {
     .tfc-bill-columns {
@@ -298,5 +390,15 @@
     
     .tfc-bill-tracker {
         padding: 16px;
+    }
+    
+    .tfc-policy-toggle {
+        margin-left: 0;
+        margin-top: 8px;
+    }
+    
+    .tfc-card-title-row {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }

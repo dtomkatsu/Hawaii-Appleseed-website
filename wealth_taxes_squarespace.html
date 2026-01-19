@@ -689,20 +689,46 @@ header .header-nav-folder-content a,
                 <a href="https://www.hitaxfairness.org/act-46" class="tfc-card-btn" target="_blank">More</a>
             </div>
             <!-- Bill Tracker Component - Auto-updating Widget -->
-            <div class="tfc-bill-tracker" 
+            <div class="tfc-bill-tracker has-testimony" 
                  data-tracker-id="freezing-act-46"
                  data-hb="476"
                  data-sb=""
                  data-year="2026">
             </div>
+            <!-- Sample Testimony -->
+            <div class="tfc-sample-testimony">
+                <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                <a href="https://docs.google.com/document/d/1Ma3OIaiwDPvgUCBXl1_D-DFfWyd0jTke2JrDCdsRXRs/edit?tab=t.0" target="_blank">View Testimony Template</a>
+            </div>
         </div>
 
-        <div class="tfc-card">
-            <div class="tfc-card-title">Closing the Capital Gains Loophole</div>
-            <div class="tfc-card-tag">WEALTH TAX</div>
-            <div class="tfc-card-revenue">$84M Revenue</div>
-            <div class="tfc-card-desc">Income from investments should not be taxed at lower rates than income from regular work.</div>
-            <a href="https://www.hitaxfairness.org/capital-gains" class="tfc-card-btn" target="_blank">More</a>
+        <div class="tfc-card-wrapper">
+            <div class="tfc-card" id="capital-gains-card">
+                <div class="tfc-card-title-row">
+                    <div class="tfc-card-title">Closing the Capital Gains Loophole</div>
+                    <div class="tfc-policy-toggle">
+                        <button class="tfc-policy-toggle-btn active" data-policy="ordinary" onclick="switchCapGainsPolicy('ordinary')">As Ordinary Income</button>
+                        <button class="tfc-policy-toggle-btn" data-policy="9pct" onclick="switchCapGainsPolicy('9pct')">Max 9%</button>
+                    </div>
+                </div>
+                <div class="tfc-card-tag">WEALTH TAX</div>
+                <div class="tfc-card-revenue" id="capgains-revenue">$84M Revenue</div>
+                <div class="tfc-card-desc">Income from investments should not be taxed at lower rates than income from regular work.</div>
+                <a href="https://www.hitaxfairness.org/capital-gains" class="tfc-card-btn" target="_blank">More</a>
+            </div>
+            <!-- Bill Tracker Component -->
+            <div class="tfc-bill-tracker has-testimony" 
+                 id="capgains-tracker"
+                 data-tracker-id="capital-gains"
+                 data-hb=""
+                 data-sb=""
+                 data-year="2026">
+            </div>
+            <!-- Sample Testimony -->
+            <div class="tfc-sample-testimony" id="capgains-testimony">
+                <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                <a href="https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true" target="_blank">View Testimony Template</a>
+            </div>
         </div>
 
         <div class="tfc-card">
@@ -713,12 +739,26 @@ header .header-nav-folder-content a,
             <a href="https://www.hitaxfairness.org/conveyance-tax" class="tfc-card-btn" target="_blank">More</a>
         </div>
 
-        <div class="tfc-card">
-            <div class="tfc-card-title">Taxing Real Estate Investment Trusts</div>
-            <div class="tfc-card-tag">CORPORATE TAX</div>
-            <div class="tfc-card-revenue">$36M - $60M Revenue</div>
-            <div class="tfc-card-desc">REITs make millions of dollars off real estate but pay no corporate income tax to our state.</div>
-            <a href="https://www.hitaxfairness.org/real-estate-investment-trust-reform" class="tfc-card-btn" target="_blank">More</a>
+        <div class="tfc-card-wrapper">
+            <div class="tfc-card">
+                <div class="tfc-card-title">Taxing Real Estate Investment Trusts</div>
+                <div class="tfc-card-tag">CORPORATE TAX</div>
+                <div class="tfc-card-revenue">$36M - $60M Revenue</div>
+                <div class="tfc-card-desc">REITs make millions of dollars off real estate but pay no corporate income tax to our state.</div>
+                <a href="https://www.hitaxfairness.org/real-estate-investment-trust-reform" class="tfc-card-btn" target="_blank">More</a>
+            </div>
+            <!-- Bill Tracker Component -->
+            <div class="tfc-bill-tracker has-testimony" 
+                 data-tracker-id="reits"
+                 data-hb=""
+                 data-sb=""
+                 data-year="2026">
+            </div>
+            <!-- Sample Testimony -->
+            <div class="tfc-sample-testimony">
+                <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                <a href="https://docs.google.com/document/d/1uUbeScmkPPU8D25iyVKX3GrAwvq3n1qdmr26jfMbzEs/edit?tab=t.0" target="_blank">View Testimony Template</a>
+            </div>
         </div>
 
         <div class="tfc-card">
@@ -752,6 +792,57 @@ header .header-nav-folder-content a,
 <script src="bill_tracker_widget.js"></script>
 
 <script>
+// Capital Gains Policy Toggle Configuration
+const capGainsPolicies = {
+    ordinary: {
+        revenue: '$84M Revenue',
+        hbNumbers: '',  // Add bill numbers when available
+        sbNumbers: '',
+        testimonyUrl: 'https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true'
+    },
+    '9pct': {
+        revenue: '$42M Revenue',  // Adjust this revenue figure as needed
+        hbNumbers: '',  // Add bill numbers when available
+        sbNumbers: '',
+        testimonyUrl: 'https://docs.google.com/document/d/1TAW1-_Vd5M1CV-Rlu1ltPFdkoI0qd70X/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true'
+    }
+};
+
+function switchCapGainsPolicy(policy) {
+    const config = capGainsPolicies[policy];
+    if (!config) return;
+    
+    // Update toggle button states
+    document.querySelectorAll('.tfc-policy-toggle-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`[data-policy="${policy}"]`).classList.add('active');
+    
+    // Update revenue
+    const revenueEl = document.getElementById('capgains-revenue');
+    if (revenueEl) {
+        revenueEl.textContent = config.revenue;
+    }
+    
+    // Update bill tracker
+    const trackerEl = document.getElementById('capgains-tracker');
+    if (trackerEl && typeof BillTrackerWidget !== 'undefined') {
+        trackerEl.setAttribute('data-hb', config.hbNumbers);
+        trackerEl.setAttribute('data-sb', config.sbNumbers);
+        // Reinitialize tracker with new bills
+        BillTrackerWidget.refresh('capital-gains');
+    }
+    
+    // Update testimony link
+    const testimonyEl = document.getElementById('capgains-testimony');
+    if (testimonyEl) {
+        const link = testimonyEl.querySelector('a');
+        if (link) {
+            link.href = config.testimonyUrl;
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Create custom cursor
     const cursor = document.createElement('div');
