@@ -624,6 +624,17 @@ header .header-nav-folder-content a,
 }
 </style>
 
+<!-- Next Bill Hearings Widget -->
+<div class="tfc-hearings-widget" id="hearings-widget" style="position: absolute; top: 20px; right: 20px;">
+    <div class="tfc-hearings-header">
+        <h3 class="tfc-hearings-title">Next Bill Hearings</h3>
+        <button class="tfc-hearings-toggle" onclick="toggleHearingsWidget()" aria-label="Toggle hearings">&#9660;</button>
+    </div>
+    <div class="tfc-hearings-content" id="hearings-content">
+        <div class="tfc-hearings-loading">Loading upcoming hearings...</div>
+    </div>
+</div>
+
 <div class="tfc-container">
     <div class="tfc-header">
         <h1></h1>
@@ -697,8 +708,10 @@ header .header-nav-folder-content a,
             </div>
             <!-- Sample Testimony -->
             <div class="tfc-sample-testimony">
-                <div class="tfc-sample-testimony-label">Sample Testimony</div>
-                <a href="https://docs.google.com/document/d/1Ma3OIaiwDPvgUCBXl1_D-DFfWyd0jTke2JrDCdsRXRs/edit?tab=t.0" target="_blank">View Testimony Template</a>
+                <div class="tfc-sample-testimony-content">
+                    <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                    <a href="https://docs.google.com/document/d/1Ma3OIaiwDPvgUCBXl1_D-DFfWyd0jTke2JrDCdsRXRs/edit?tab=t.0" target="_blank">View Testimony Template</a>
+                </div>
             </div>
         </div>
 
@@ -706,14 +719,17 @@ header .header-nav-folder-content a,
             <div class="tfc-card" id="capital-gains-card">
                 <div class="tfc-card-title-row">
                     <div class="tfc-card-title">Closing the Capital Gains Loophole</div>
-                    <div class="tfc-policy-toggle">
-                        <button class="tfc-policy-toggle-btn active" data-policy="ordinary" onclick="switchCapGainsPolicy('ordinary')">As Ordinary Income</button>
-                        <button class="tfc-policy-toggle-btn" data-policy="9pct" onclick="switchCapGainsPolicy('9pct')">Max 9%</button>
+                    <div class="tfc-policy-wrapper">
+                        <span class="tfc-policy-label">Options</span>
+                        <div class="tfc-policy-toggle">
+                            <button class="tfc-policy-toggle-btn active" data-policy="ordinary" onclick="switchCapGainsPolicy('ordinary')">Ordinary Income</button>
+                            <button class="tfc-policy-toggle-btn" data-policy="9pct" onclick="switchCapGainsPolicy('9pct')">Max 9%</button>
+                        </div>
                     </div>
                 </div>
                 <div class="tfc-card-tag">WEALTH TAX</div>
                 <div class="tfc-card-revenue" id="capgains-revenue">$84M Revenue</div>
-                <div class="tfc-card-desc">Income from investments should not be taxed at lower rates than income from regular work.</div>
+                <div class="tfc-card-desc" id="capgains-desc">Income from investments should not be taxed at lower rates than income from regular work. This proposal would tax investment income fairly&mdash;at the same rate as ordinary income from a job.</div>
                 <a href="https://www.hitaxfairness.org/capital-gains" class="tfc-card-btn" target="_blank">More</a>
             </div>
             <!-- Bill Tracker Component -->
@@ -726,8 +742,10 @@ header .header-nav-folder-content a,
             </div>
             <!-- Sample Testimony -->
             <div class="tfc-sample-testimony" id="capgains-testimony">
-                <div class="tfc-sample-testimony-label">Sample Testimony</div>
-                <a href="https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true" target="_blank">View Testimony Template</a>
+                <div class="tfc-sample-testimony-content">
+                    <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                    <a href="https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true" target="_blank">View Testimony Template</a>
+                </div>
             </div>
         </div>
 
@@ -756,17 +774,35 @@ header .header-nav-folder-content a,
             </div>
             <!-- Sample Testimony -->
             <div class="tfc-sample-testimony">
-                <div class="tfc-sample-testimony-label">Sample Testimony</div>
-                <a href="https://docs.google.com/document/d/1uUbeScmkPPU8D25iyVKX3GrAwvq3n1qdmr26jfMbzEs/edit?tab=t.0" target="_blank">View Testimony Template</a>
+                <div class="tfc-sample-testimony-content">
+                    <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                    <a href="https://docs.google.com/document/d/1uUbeScmkPPU8D25iyVKX3GrAwvq3n1qdmr26jfMbzEs/edit?tab=t.0" target="_blank">View Testimony Template</a>
+                </div>
             </div>
         </div>
 
-        <div class="tfc-card">
-            <div class="tfc-card-title">Millionaire's Tax</div>
-            <div class="tfc-card-tag">INCOME TAX</div>
-            <div class="tfc-card-revenue">$71M Revenue</div>
-            <div class="tfc-card-desc">The State's top 1 percent can afford to pay more to help secure our state's future.</div>
-            <a href="https://www.hitaxfairness.org/income-tax" class="tfc-card-btn" target="_blank">More</a>
+        <div class="tfc-card-wrapper">
+            <div class="tfc-card">
+                <div class="tfc-card-title">Millionaire's Tax</div>
+                <div class="tfc-card-tag">INCOME TAX</div>
+                <div class="tfc-card-revenue">$71M Revenue</div>
+                <div class="tfc-card-desc">The State's top 1 percent can afford to pay more to help secure our state's future.</div>
+                <a href="https://www.hitaxfairness.org/income-tax" class="tfc-card-btn" target="_blank">More</a>
+            </div>
+            <!-- Bill Tracker Component -->
+            <div class="tfc-bill-tracker has-testimony" 
+                 data-tracker-id="millionaires-tax"
+                 data-hb=""
+                 data-sb=""
+                 data-year="2026">
+            </div>
+            <!-- Sample Testimony -->
+            <div class="tfc-sample-testimony">
+                <div class="tfc-sample-testimony-content">
+                    <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                    <a href="https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/edit?usp=sharing" target="_blank">View Testimony Template</a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -796,12 +832,14 @@ header .header-nav-folder-content a,
 const capGainsPolicies = {
     ordinary: {
         revenue: '$84M Revenue',
+        description: 'Income from investments should not be taxed at lower rates than income from regular work. This proposal would tax investment income fairly&mdash;at the same rate as ordinary income from a job.',
         hbNumbers: '',  // Add bill numbers when available
         sbNumbers: '',
         testimonyUrl: 'https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true'
     },
     '9pct': {
-        revenue: '$42M Revenue',  // Adjust this revenue figure as needed
+        revenue: '$44M Revenue',
+        description: 'Income from investments should not be taxed at lower rates than income from regular work. This proposal would raise the maximum capital gains rate from 7.25% to 9%, making sure that investment income receives less preferential treatment.',
         hbNumbers: '',  // Add bill numbers when available
         sbNumbers: '',
         testimonyUrl: 'https://docs.google.com/document/d/1TAW1-_Vd5M1CV-Rlu1ltPFdkoI0qd70X/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true'
@@ -824,6 +862,12 @@ function switchCapGainsPolicy(policy) {
         revenueEl.textContent = config.revenue;
     }
     
+    // Update description using innerHTML for HTML entities
+    const descEl = document.getElementById('capgains-desc');
+    if (descEl) {
+        descEl.innerHTML = config.description;
+    }
+    
     // Update bill tracker
     const trackerEl = document.getElementById('capgains-tracker');
     if (trackerEl && typeof BillTrackerWidget !== 'undefined') {
@@ -843,7 +887,100 @@ function switchCapGainsPolicy(policy) {
     }
 }
 
+// Toggle hearings widget
+function toggleHearingsWidget() {
+    const widget = document.getElementById('hearings-widget');
+    if (widget) {
+        widget.classList.toggle('collapsed');
+    }
+}
+
+// Next Bill Hearings functionality
+async function loadUpcomingHearings() {
+    const bills = [
+        { type: 'HB', number: '476', year: '2026' }
+        // Add more bills as needed
+    ];
+    
+    const hearingsContent = document.getElementById('hearings-content');
+    if (!hearingsContent) return;
+    
+    const allHearings = [];
+    
+    for (const bill of bills) {
+        try {
+            const url = `https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=${bill.type}&billnumber=${bill.number}&year=${bill.year}`;
+            const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+            
+            const response = await fetch(proxyUrl);
+            const xmlText = await response.text();
+            
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+            const items = xmlDoc.getElementsByTagName('item');
+            
+            for (let i = 0; i < items.length; i++) {
+                const titleEl = items[i].getElementsByTagName('title')[0];
+                const pubDateEl = items[i].getElementsByTagName('pubDate')[0];
+                
+                if (!titleEl || !pubDateEl) continue;
+                
+                const title = titleEl.textContent;
+                const pubDate = new Date(pubDateEl.textContent);
+                
+                // Check if this is a hearing announcement (contains "hearing" or "scheduled")
+                if (title.toLowerCase().includes('hearing') || title.toLowerCase().includes('scheduled')) {
+                    // Extract date from title if present
+                    const dateMatch = title.match(/(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})/);
+                    const timeMatch = title.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i);
+                    
+                    let hearingDate = pubDate;
+                    if (dateMatch) {
+                        try {
+                            hearingDate = new Date(dateMatch[1]);
+                        } catch (e) {
+                            hearingDate = pubDate;
+                        }
+                    }
+                    
+                    // Only show future hearings
+                    if (hearingDate >= new Date() || pubDate >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)) {
+                        allHearings.push({
+                            bill: `${bill.type} ${bill.number}`,
+                            date: hearingDate,
+                            time: timeMatch ? timeMatch[1] : '',
+                            description: title,
+                            sortDate: hearingDate
+                        });
+                    }
+                }
+            }
+        } catch (error) {
+            console.error(`Error loading hearings for ${bill.type} ${bill.number}:`, error);
+        }
+    }
+    
+    // Sort hearings by date
+    allHearings.sort((a, b) => a.sortDate - b.sortDate);
+    
+    // Display hearings
+    if (allHearings.length === 0) {
+        hearingsContent.innerHTML = '<div class="tfc-hearings-empty">No upcoming hearings scheduled</div>';
+    } else {
+        hearingsContent.innerHTML = allHearings.slice(0, 5).map(hearing => `
+            <div class="tfc-hearing-item">
+                <div class="tfc-hearing-bill">${hearing.bill}</div>
+                <div class="tfc-hearing-date">${hearing.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}${hearing.time ? ' • ' + hearing.time : ''}</div>
+                <div class="tfc-hearing-desc">${hearing.description.split(':').slice(1).join(':').trim()}</div>
+            </div>
+        `).join('');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Load upcoming hearings
+    loadUpcomingHearings();
+    
     // Create custom cursor
     const cursor = document.createElement('div');
     cursor.className = 'tfc-cursor';
