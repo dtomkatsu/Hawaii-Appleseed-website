@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="bill_tracker_widget.css">
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
@@ -686,35 +688,12 @@ header .header-nav-folder-content a,
                 <div class="tfc-card-desc">The State passed huge tax breaks with Act 46 in 2024, and the top 1% of taxpayers will benefit the most.</div>
                 <a href="https://www.hitaxfairness.org/act-46" class="tfc-card-btn" target="_blank">More</a>
             </div>
-            <!-- Bill Tracker Component -->
-            <div class="tfc-bill-tracker">
-                <div class="tfc-bill-columns">
-                    <div class="tfc-bill-col active" data-bill-type="hb" onclick="switchBillFeed('hb')">
-                        <h4>House Bill</h4>
-                        <div class="tfc-bill-number">HB <span id="hb-number">476</span></div>
-                    </div>
-                    <div class="tfc-bill-col" data-bill-type="sb" onclick="switchBillFeed('sb')">
-                        <h4>Senate Bill</h4>
-                        <div class="tfc-bill-number">SB <span id="sb-number">--</span></div>
-                    </div>
-                </div>
-
-                <div class="tfc-status-section" id="status-container">
-                    <div class="tfc-status-header" onclick="toggleHistory(this)">
-                        <span class="tfc-status-title">Latest Status <span class="tfc-status-badge" id="latest-badge">Loading...</span></span>
-                        <span class="tfc-status-toggle">History</span>
-                    </div>
-                    
-                    <!-- Latest Update -->
-                    <div class="tfc-latest-update" id="latest-update">
-                        Loading status feed...
-                    </div>
-
-                    <!-- History (Hidden by default) -->
-                    <div class="tfc-status-history" id="status-history">
-                        <!-- History items will be injected here -->
-                    </div>
-                </div>
+            <!-- Bill Tracker Component - Auto-updating Widget -->
+            <div class="tfc-bill-tracker" 
+                 data-tracker-id="freezing-act-46"
+                 data-hb="476"
+                 data-sb=""
+                 data-year="2026">
             </div>
         </div>
 
@@ -769,228 +748,11 @@ header .header-nav-folder-content a,
     </div>
 </div>
 
+<!-- Bill Tracker Widget -->
+<script src="bill_tracker_widget.js"></script>
+
 <script>
-// Mock RSS data for demo
-const sampleXML = `
-<rss version="2.0">
-<channel>
-<title>HB476 Status Feed</title>
-<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&amp;billnumber=476&amp;year=2026</link>
-<description>Hawaii State Legislature bill status information, updated frequently.</description>
-<pubDate>Mon, 12 Jan 2026 22:33:49 GMT</pubDate>
-<lastBuildDate>Mon, 12 Jan 2026 22:33:49 GMT</lastBuildDate>
-<item>
-<title>12/8/25 HB476: Carried over to 2026 Regular Session.</title>
-<description>12/8/25 HB476: Status Update</description>
-<pubDate>Mon, 08 Dec 2025 19:44:09 GMT</pubDate>
-<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&amp;billnumber=476&amp;year=2026</link>
-<guid isPermaLink="false">www.capitol.hawaii.gov_1127040</guid>
-</item>
-<item>
-<title>4/4/25 HB476: Recommitted to WAM.</title>
-<description>4/4/25 HB476: Senate Status Update</description>
-<pubDate>Fri, 04 Apr 2025 23:10:29 GMT</pubDate>
-<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&amp;billnumber=476&amp;year=2026</link>
-<guid isPermaLink="false">www.capitol.hawaii.gov_1114880</guid>
-</item>
-<item>
-<title>4/4/25 HB476: Reported from WAM (Stand. Com. Rep. No. 1742) with recommendation of passage on Second Reading, as amended (SD 1) and placement on the calendar for Third Reading.</title>
-<description>4/4/25 HB476: Senate Status Update</description>
-<pubDate>Fri, 04 Apr 2025 03:49:55 GMT</pubDate>
-<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&amp;billnumber=476&amp;year=2026</link>
-<guid isPermaLink="false">www.capitol.hawaii.gov_1114506</guid>
-</item>
-<item>
-<title>4/1/25 HB476: The committee(s) on WAM recommend(s) that the measure be PASSED, WITH AMENDMENTS. The votes in WAM were as follows: 11 Aye(s): Senator(s) Dela Cruz, Moriwaki, Aquino, Elefante, Hashimoto, Inouye, Kanuha, Kidani, Lee, C., Fevella; Aye(s) with reservations: Senator(s) Kim ; 0 No(es): none; and 2 Excused: Senator(s) DeCoite, Wakai.</title>
-<description>4/1/25 HB476: Senate Status Update</description>
-<pubDate>Tue, 01 Apr 2025 21:51:21 GMT</pubDate>
-<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&amp;billnumber=476&amp;year=2026</link>
-<guid isPermaLink="false">www.capitol.hawaii.gov_1112669</guid>
-</item>
-<item>
-<title>3/28/25 HB476: The committee(s) on WAM deferred the measure until 04-01-25 10:00AM; Conference Room 211 &amp; Videoconference.</title>
-<description>3/28/25 HB476: Senate Status Update</description>
-<pubDate>Fri, 28 Mar 2025 23:30:28 GMT</pubDate>
-<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&amp;billnumber=476&amp;year=2026</link>
-<guid isPermaLink="false">www.capitol.hawaii.gov_1111747</guid>
-</item>
-<item>
-<title>3/25/25 HB476: The committee(s) on WAM has scheduled a public hearing on 03-28-25 10:00AM; Conference Room 211 &amp; Videoconference.</title>
-<description>3/25/25 HB476: Senate Status Update</description>
-<pubDate>Tue, 25 Mar 2025 19:28:41 GMT</pubDate>
-<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&amp;billnumber=476&amp;year=2026</link>
-<guid isPermaLink="false">www.capitol.hawaii.gov_1110533</guid>
-</item>
-<item>
-<title>3/6/25 HB476: Referred to WAM.</title>
-<description>3/6/25 HB476: Senate Status Update</description>
-<pubDate>Thu, 06 Mar 2025 02:55:34 GMT</pubDate>
-<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&amp;billnumber=476&amp;year=2026</link>
-<guid isPermaLink="false">www.capitol.hawaii.gov_1103174</guid>
-</item>
-<item>
-<title>3/6/25 HB476: Passed First Reading.</title>
-<description>3/6/25 HB476: Senate Status Update</description>
-<pubDate>Thu, 06 Mar 2025 21:48:29 GMT</pubDate>
-<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&amp;billnumber=476&amp;year=2026</link>
-<guid isPermaLink="false">www.capitol.hawaii.gov_1103738</guid>
-</item>
-</channel>
-</rss>
-`;
-
-function parseRSS(xmlText) {
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
-    const items = xmlDoc.getElementsByTagName("item");
-    const updates = [];
-
-    console.log('Parsing RSS, found items:', items.length);
-
-    for (let i = 0; i < items.length; i++) {
-        const titleEl = items[i].getElementsByTagName("title")[0];
-        const pubDateEl = items[i].getElementsByTagName("pubDate")[0];
-        
-        if (!titleEl || !pubDateEl) {
-            console.warn('Missing title or pubDate for item', i);
-            continue;
-        }
-        
-        const title = titleEl.textContent;
-        const pubDate = pubDateEl.textContent;
-        
-        let cleanDesc = title;
-        // Basic cleanup logic - assuming "Date Bill: Desc" format
-        const parts = title.split(': ');
-        if (parts.length > 1) {
-            cleanDesc = parts.slice(1).join(': ');
-        }
-
-        updates.push({
-            description: cleanDesc,
-            date: new Date(pubDate).toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric' 
-            })
-        });
-    }
-    
-    console.log('Parsed updates:', updates.length);
-    return updates;
-}
-
-// Store feed data - initialized after sampleXML is defined
-let billFeeds;
-let currentBillType = 'hb';
-
-// Initialize billFeeds after sampleXML is available
-function initBillFeeds() {
-    billFeeds = {
-        hb: sampleXML,
-        sb: null // Placeholder for Senate Bill feed
-    };
-    console.log('billFeeds initialized:', !!billFeeds.hb);
-}
-
-function updateTracker(xmlText, billType) {
-    console.log('updateTracker called with billType:', billType, 'xmlText length:', xmlText ? xmlText.length : 0);
-    
-    if (!xmlText) {
-        console.warn('No XML text provided');
-        const latestEl = document.getElementById('latest-update');
-        if (latestEl) {
-            latestEl.innerHTML = '<span style="color: #718096;">No feed data available</span>';
-        }
-        const badgeEl = document.getElementById('latest-badge');
-        if (badgeEl) badgeEl.textContent = 'N/A';
-        return;
-    }
-
-    const updates = parseRSS(xmlText);
-    console.log('Updates parsed:', updates);
-    
-    if (updates.length > 0) {
-        const latest = updates[0];
-        
-        // Update Latest Section
-        const latestEl = document.getElementById('latest-update');
-        if (latestEl) {
-            latestEl.innerHTML = `
-                <span class="tfc-status-date">${latest.date}</span>
-                ${latest.description}
-            `;
-        }
-        
-        // Update Badge
-        let badgeText = "Update";
-        if (latest.description.toLowerCase().includes("passed")) badgeText = "Passed";
-        if (latest.description.toLowerCase().includes("referred")) badgeText = "Referred";
-        if (latest.description.toLowerCase().includes("hearing")) badgeText = "Hearing Scheduled";
-        if (latest.description.toLowerCase().includes("deferred")) badgeText = "Deferred";
-        if (latest.description.toLowerCase().includes("carried over")) badgeText = "Carried Over";
-        
-        const badgeEl = document.getElementById('latest-badge');
-        if (badgeEl) badgeEl.textContent = badgeText;
-
-        // Update History
-        const historyContainer = document.getElementById('status-history');
-        if (historyContainer) {
-            historyContainer.innerHTML = '';
-            
-            // Skip first item (latest)
-            for (let i = 1; i < updates.length; i++) {
-                const update = updates[i];
-                const div = document.createElement('div');
-                div.className = 'tfc-history-item';
-                div.innerHTML = `
-                    <span class="tfc-status-date">${update.date}</span>
-                    ${update.description}
-                `;
-                historyContainer.appendChild(div);
-            }
-        }
-    } else {
-        const latestEl = document.getElementById('latest-update');
-        if (latestEl) {
-            latestEl.innerHTML = '<span style="color: #718096;">No status updates found</span>';
-        }
-    }
-}
-
-function switchBillFeed(billType) {
-    currentBillType = billType;
-    
-    // Update active state
-    document.querySelectorAll('.tfc-bill-col').forEach(col => {
-        col.classList.remove('active');
-    });
-    document.querySelector(`[data-bill-type="${billType}"]`).classList.add('active');
-    
-    // Update tracker with selected feed
-    updateTracker(billFeeds[billType], billType);
-}
-
-function toggleHistory(header) {
-    header.parentElement.classList.toggle('expanded');
-}
-
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, initializing bill tracker');
-    console.log('sampleXML exists:', !!sampleXML);
-    
-    // Initialize billFeeds first
-    initBillFeeds();
-    
-    console.log('billFeeds.hb exists:', !!billFeeds.hb);
-    
-    // Initialize bill tracker with HB feed immediately
-    if (billFeeds && billFeeds.hb) {
-        updateTracker(billFeeds.hb, 'hb');
-    } else {
-        console.error('No HB feed data found!');
-    }
-
     // Create custom cursor
     const cursor = document.createElement('div');
     cursor.className = 'tfc-cursor';
