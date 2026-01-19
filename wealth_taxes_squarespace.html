@@ -447,6 +447,179 @@ header .header-nav-folder-content a,
         grid-template-columns: 1fr;
     }
 }
+/* Bill Tracker Styles */
+.tfc-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.tfc-bill-tracker {
+    background: #f8fafc;
+    border: 1px solid rgba(36, 53, 81, 0.12);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    padding: 20px;
+    margin-top: -20px; /* Overlap with card above */
+    padding-top: 36px; /* Extra padding to account for overlap */
+    position: relative;
+    z-index: 0; /* Below the main card */
+    font-family: 'Inter', sans-serif;
+    margin-left: 10px; /* Slight inset to look like it's sliding out */
+    margin-right: 10px;
+}
+
+/* Ensure main card stays on top */
+.tfc-card {
+    z-index: 2;
+    position: relative;
+}
+
+.tfc-bill-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.tfc-bill-col {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.tfc-bill-col:hover {
+    background: rgba(36, 53, 81, 0.05);
+}
+
+.tfc-bill-col.active {
+    background: rgba(36, 53, 81, 0.1);
+    border: 1px solid rgba(36, 53, 81, 0.2);
+}
+
+.tfc-bill-col h4 {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 8px 0;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+}
+
+.tfc-bill-number {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #243551;
+}
+
+.tfc-status-section {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 16px;
+}
+
+.tfc-status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.tfc-status-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.tfc-status-toggle {
+    font-size: 0.75rem;
+    color: #3a5278;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tfc-status-toggle::after {
+    content: '▼';
+    font-size: 0.6rem;
+    transition: transform 0.3s ease;
+}
+
+.tfc-status-section.expanded .tfc-status-toggle::after {
+    transform: rotate(180deg);
+}
+
+.tfc-latest-update {
+    margin-top: 12px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #2d3748;
+    position: relative;
+}
+
+.tfc-status-date {
+    display: block;
+    font-size: 0.7rem;
+    color: #718096;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.tfc-status-history {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    margin-top: 0;
+}
+
+.tfc-status-section.expanded .tfc-status-history {
+    max-height: 400px;
+    margin-top: 12px;
+    overflow-y: auto;
+}
+
+.tfc-history-item {
+    padding: 12px;
+    border-left: 2px solid #cbd5e0;
+    margin-left: 8px;
+    position: relative;
+    font-size: 0.8rem;
+    color: #4a5568;
+    padding-bottom: 16px;
+}
+
+.tfc-history-item::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 16px;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border: 2px solid #cbd5e0;
+    border-radius: 50%;
+}
+
+.tfc-history-item:last-child {
+    border-left-color: transparent;
+}
+
+.tfc-status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    background: #ebf8ff;
+    color: #2b6cb0;
+    margin-left: 8px;
+}
 </style>
 
 <div class="tfc-container">
@@ -458,7 +631,7 @@ header .header-nav-folder-content a,
     <div class="tfc-summary">
         <div class="tfc-summary-card">
             <h3>Total Potential Revenue</h3>
-            <div class="value">$357.5M+</div>
+            <div class="value">$584.5M+</div>
             <div class="label"></div>
         </div>
     </div>
@@ -467,37 +640,37 @@ header .header-nav-folder-content a,
     <div class="tfc-chart-container">
         <div class="tfc-chart">
             <div class="tfc-bar-row">
+                <span class="tfc-bar-label">Freezing Act 46</span>
+                <div class="tfc-bar-track">
+                    <div class="tfc-bar" data-value="296" style="--bar-width: 100%;"></div>
+                </div>
+                <span class="tfc-bar-value">$296M</span>
+            </div>
+            <div class="tfc-bar-row">
                 <span class="tfc-bar-label">Capital Gains</span>
                 <div class="tfc-bar-track">
-                    <div class="tfc-bar" data-value="84" style="--bar-width: 84%;"></div>
+                    <div class="tfc-bar" data-value="84" style="--bar-width: 28.38%;"></div>
                 </div>
                 <span class="tfc-bar-value">$84M</span>
             </div>
             <div class="tfc-bar-row">
                 <span class="tfc-bar-label">Millionaire's Tax</span>
                 <div class="tfc-bar-track">
-                    <div class="tfc-bar" data-value="71" style="--bar-width: 71%;"></div>
+                    <div class="tfc-bar" data-value="71" style="--bar-width: 23.98%;"></div>
                 </div>
                 <span class="tfc-bar-value">$71M</span>
             </div>
             <div class="tfc-bar-row">
-                <span class="tfc-bar-label">Freezing Act 46</span>
-                <div class="tfc-bar-track">
-                    <div class="tfc-bar" data-value="69" style="--bar-width: 69%;"></div>
-                </div>
-                <span class="tfc-bar-value">$69M</span>
-            </div>
-            <div class="tfc-bar-row">
                 <span class="tfc-bar-label">Conveyance Tax</span>
                 <div class="tfc-bar-track">
-                    <div class="tfc-bar" data-value="68.5" style="--bar-width: 68.5%;"></div>
+                    <div class="tfc-bar" data-value="68.5" style="--bar-width: 23.14%;"></div>
                 </div>
                 <span class="tfc-bar-value">$68.5M</span>
             </div>
             <div class="tfc-bar-row">
                 <span class="tfc-bar-label">REIT Reform</span>
                 <div class="tfc-bar-track">
-                    <div class="tfc-bar" data-value="48" style="--bar-width: 48%;"></div>
+                    <div class="tfc-bar" data-value="48" style="--bar-width: 16.22%;"></div>
                 </div>
                 <span class="tfc-bar-value">$36-60M</span>
             </div>
@@ -505,12 +678,44 @@ header .header-nav-folder-content a,
     </div>
 
     <div class="tfc-grid">
-        <div class="tfc-card">
-            <div class="tfc-card-title">Freezing Act 46</div>
-            <div class="tfc-card-tag">INCOME TAX</div>
-            <div class="tfc-card-revenue">$69M Revenue</div>
-            <div class="tfc-card-desc">Hawai&#699;i passed huge tax breaks with Act 46 in 2024, and the top 1% of taxpayers will benefit the most.</div>
-            <a href="https://www.hitaxfairness.org/act-46" class="tfc-card-btn" target="_blank">More</a>
+        <div class="tfc-card-wrapper">
+            <div class="tfc-card">
+                <div class="tfc-card-title">Freezing Act 46</div>
+                <div class="tfc-card-tag">INCOME TAX</div>
+                <div class="tfc-card-revenue">$296M Revenue</div>
+                <div class="tfc-card-desc">The State passed huge tax breaks with Act 46 in 2024, and the top 1% of taxpayers will benefit the most.</div>
+                <a href="https://www.hitaxfairness.org/act-46" class="tfc-card-btn" target="_blank">More</a>
+            </div>
+            <!-- Bill Tracker Component -->
+            <div class="tfc-bill-tracker">
+                <div class="tfc-bill-columns">
+                    <div class="tfc-bill-col active" data-bill-type="hb" onclick="switchBillFeed('hb')">
+                        <h4>House Bill</h4>
+                        <div class="tfc-bill-number">HB <span id="hb-number">476</span></div>
+                    </div>
+                    <div class="tfc-bill-col" data-bill-type="sb" onclick="switchBillFeed('sb')">
+                        <h4>Senate Bill</h4>
+                        <div class="tfc-bill-number">SB <span id="sb-number">--</span></div>
+                    </div>
+                </div>
+
+                <div class="tfc-status-section" id="status-container">
+                    <div class="tfc-status-header" onclick="toggleHistory(this)">
+                        <span class="tfc-status-title">Latest Status <span class="tfc-status-badge" id="latest-badge">Loading...</span></span>
+                        <span class="tfc-status-toggle">History</span>
+                    </div>
+                    
+                    <!-- Latest Update -->
+                    <div class="tfc-latest-update" id="latest-update">
+                        Loading status feed...
+                    </div>
+
+                    <!-- History (Hidden by default) -->
+                    <div class="tfc-status-history" id="status-history">
+                        <!-- History items will be injected here -->
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="tfc-card">
@@ -533,7 +738,7 @@ header .header-nav-folder-content a,
             <div class="tfc-card-title">Taxing Real Estate Investment Trusts</div>
             <div class="tfc-card-tag">CORPORATE TAX</div>
             <div class="tfc-card-revenue">$36M - $60M Revenue</div>
-            <div class="tfc-card-desc">REITs make millions of dollars off Hawai&#699;i real estate but pay no corporate income tax to our state.</div>
+            <div class="tfc-card-desc">REITs make millions of dollars off real estate but pay no corporate income tax to our state.</div>
             <a href="https://www.hitaxfairness.org/real-estate-investment-trust-reform" class="tfc-card-btn" target="_blank">More</a>
         </div>
 
@@ -541,7 +746,7 @@ header .header-nav-folder-content a,
             <div class="tfc-card-title">Millionaire's Tax</div>
             <div class="tfc-card-tag">INCOME TAX</div>
             <div class="tfc-card-revenue">$71M Revenue</div>
-            <div class="tfc-card-desc">Hawai&#699;i's top 1 percent can afford to pay more to help secure our state's future.</div>
+            <div class="tfc-card-desc">The State's top 1 percent can afford to pay more to help secure our state's future.</div>
             <a href="https://www.hitaxfairness.org/income-tax" class="tfc-card-btn" target="_blank">More</a>
         </div>
     </div>
@@ -565,7 +770,196 @@ header .header-nav-folder-content a,
 </div>
 
 <script>
+// Mock RSS data for demo
+const sampleXML = `
+<rss version="2.0">
+<channel>
+<title>HB476 Status Feed</title>
+<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&billnumber=476&year=2026</link>
+<description>Hawaii State Legislature bill status information, updated frequently.</description>
+<pubDate>Mon, 12 Jan 2026 22:33:49 GMT</pubDate>
+<lastBuildDate>Mon, 12 Jan 2026 22:33:49 GMT</lastBuildDate>
+<item>
+<title>12/8/25 HB476: Carried over to 2026 Regular Session.</title>
+<description>12/8/25 HB476: Status Update</description>
+<pubDate>Mon, 08 Dec 2025 19:44:09 GMT</pubDate>
+<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&billnumber=476&year=2026</link>
+<guid isPermaLink="false">www.capitol.hawaii.gov_1127040</guid>
+</item>
+<item>
+<title>4/4/25 HB476: Recommitted to WAM.</title>
+<description>4/4/25 HB476: Senate Status Update</description>
+<pubDate>Fri, 04 Apr 2025 23:10:29 GMT</pubDate>
+<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&billnumber=476&year=2026</link>
+<guid isPermaLink="false">www.capitol.hawaii.gov_1114880</guid>
+</item>
+<item>
+<title>4/4/25 HB476: Reported from WAM (Stand. Com. Rep. No. 1742) with recommendation of passage on Second Reading, as amended (SD 1) and placement on the calendar for Third Reading.</title>
+<description>4/4/25 HB476: Senate Status Update</description>
+<pubDate>Fri, 04 Apr 2025 03:49:55 GMT</pubDate>
+<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&billnumber=476&year=2026</link>
+<guid isPermaLink="false">www.capitol.hawaii.gov_1114506</guid>
+</item>
+<item>
+<title>4/1/25 HB476: The committee(s) on WAM recommend(s) that the measure be PASSED, WITH AMENDMENTS. The votes in WAM were as follows: 11 Aye(s): Senator(s) Dela Cruz, Moriwaki, Aquino, Elefante, Hashimoto, Inouye, Kanuha, Kidani, Lee, C., Fevella; Aye(s) with reservations: Senator(s) Kim ; 0 No(es): none; and 2 Excused: Senator(s) DeCoite, Wakai.</title>
+<description>4/1/25 HB476: Senate Status Update</description>
+<pubDate>Tue, 01 Apr 2025 21:51:21 GMT</pubDate>
+<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&billnumber=476&year=2026</link>
+<guid isPermaLink="false">www.capitol.hawaii.gov_1112669</guid>
+</item>
+<item>
+<title>3/28/25 HB476: The committee(s) on WAM deferred the measure until 04-01-25 10:00AM; Conference Room 211 & Videoconference.</title>
+<description>3/28/25 HB476: Senate Status Update</description>
+<pubDate>Fri, 28 Mar 2025 23:30:28 GMT</pubDate>
+<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&billnumber=476&year=2026</link>
+<guid isPermaLink="false">www.capitol.hawaii.gov_1111747</guid>
+</item>
+<item>
+<title>3/25/25 HB476: The committee(s) on WAM has scheduled a public hearing on 03-28-25 10:00AM; Conference Room 211 & Videoconference.</title>
+<description>3/25/25 HB476: Senate Status Update</description>
+<pubDate>Tue, 25 Mar 2025 19:28:41 GMT</pubDate>
+<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&billnumber=476&year=2026</link>
+<guid isPermaLink="false">www.capitol.hawaii.gov_1110533</guid>
+</item>
+<item>
+<title>3/6/25 HB476: Referred to WAM.</title>
+<description>3/6/25 HB476: Senate Status Update</description>
+<pubDate>Thu, 06 Mar 2025 02:55:34 GMT</pubDate>
+<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&billnumber=476&year=2026</link>
+<guid isPermaLink="false">www.capitol.hawaii.gov_1103174</guid>
+</item>
+<item>
+<title>3/6/25 HB476: Passed First Reading.</title>
+<description>3/6/25 HB476: Senate Status Update</description>
+<pubDate>Thu, 06 Mar 2025 21:48:29 GMT</pubDate>
+<link>https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=HB&billnumber=476&year=2026</link>
+<guid isPermaLink="false">www.capitol.hawaii.gov_1103738</guid>
+</item>
+</channel>
+</rss>
+`;
+
+function parseRSS(xmlText) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+    const items = xmlDoc.getElementsByTagName("item");
+    const updates = [];
+
+    for (let i = 0; i < items.length; i++) {
+        const title = items[i].getElementsByTagName("title")[0].textContent;
+        const pubDate = items[i].getElementsByTagName("pubDate")[0].textContent;
+        
+        let cleanDesc = title;
+        // Basic cleanup logic - assuming "Date Bill: Desc" format
+        const parts = title.split(': ');
+        if (parts.length > 1) {
+            cleanDesc = parts.slice(1).join(': ');
+        }
+
+        updates.push({
+            description: cleanDesc,
+            date: new Date(pubDate).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            })
+        });
+    }
+    return updates;
+}
+
+// Store feed data
+let billFeeds = {
+    hb: sampleXML,
+    sb: null // Placeholder for Senate Bill feed
+};
+
+let currentBillType = 'hb';
+
+function updateTracker(xmlText, billType) {
+    if (!xmlText) {
+        const latestEl = document.getElementById('latest-update');
+        if (latestEl) {
+            latestEl.innerHTML = '<span style="color: #718096;">No feed data available</span>';
+        }
+        const badgeEl = document.getElementById('latest-badge');
+        if (badgeEl) badgeEl.textContent = 'N/A';
+        return;
+    }
+
+    const updates = parseRSS(xmlText);
+    
+    if (updates.length > 0) {
+        const latest = updates[0];
+        
+        // Update Latest Section
+        const latestEl = document.getElementById('latest-update');
+        if (latestEl) {
+            latestEl.innerHTML = `
+                <span class="tfc-status-date">${latest.date}</span>
+                ${latest.description}
+            `;
+        }
+        
+        // Update Badge
+        let badgeText = "Update";
+        if (latest.description.toLowerCase().includes("passed")) badgeText = "Passed";
+        if (latest.description.toLowerCase().includes("referred")) badgeText = "Referred";
+        if (latest.description.toLowerCase().includes("hearing")) badgeText = "Hearing Scheduled";
+        if (latest.description.toLowerCase().includes("deferred")) badgeText = "Deferred";
+        if (latest.description.toLowerCase().includes("carried over")) badgeText = "Carried Over";
+        
+        const badgeEl = document.getElementById('latest-badge');
+        if (badgeEl) badgeEl.textContent = badgeText;
+
+        // Update History
+        const historyContainer = document.getElementById('status-history');
+        if (historyContainer) {
+            historyContainer.innerHTML = '';
+            
+            // Skip first item (latest)
+            for (let i = 1; i < updates.length; i++) {
+                const update = updates[i];
+                const div = document.createElement('div');
+                div.className = 'tfc-history-item';
+                div.innerHTML = `
+                    <span class="tfc-status-date">${update.date}</span>
+                    ${update.description}
+                `;
+                historyContainer.appendChild(div);
+            }
+        }
+    } else {
+        const latestEl = document.getElementById('latest-update');
+        if (latestEl) {
+            latestEl.innerHTML = '<span style="color: #718096;">No status updates found</span>';
+        }
+    }
+}
+
+function switchBillFeed(billType) {
+    currentBillType = billType;
+    
+    // Update active state
+    document.querySelectorAll('.tfc-bill-col').forEach(col => {
+        col.classList.remove('active');
+    });
+    document.querySelector(`[data-bill-type="${billType}"]`).classList.add('active');
+    
+    // Update tracker with selected feed
+    updateTracker(billFeeds[billType], billType);
+}
+
+function toggleHistory(header) {
+    header.parentElement.classList.toggle('expanded');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize bill tracker with HB feed
+    setTimeout(() => {
+        updateTracker(billFeeds.hb, 'hb');
+    }, 100);
+
     // Create custom cursor
     const cursor = document.createElement('div');
     cursor.className = 'tfc-cursor';
@@ -638,7 +1032,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                animateValue(valueElement, 0, 358, 1500);
+                animateValue(valueElement, 0, 585, 1500);
                 // Also animate bars when summary card is visible
                 animateBars();
                 observer.unobserve(entry.target);
@@ -664,7 +1058,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!startTimestamp) startTimestamp = timestamp;
             const progress = Math.min((timestamp - startTimestamp) / duration, 1);
             const currentVal = Math.floor(progress * (end - start) + start);
-            obj.textContent = '$' + (currentVal === 358 ? '357.5' : currentVal) + 'M+';
+            obj.textContent = '$' + (currentVal === 585 ? '584.5' : currentVal) + 'M+';
             if (progress < 1) {
                 window.requestAnimationFrame(step);
             }
