@@ -75,6 +75,35 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
+/* Multiple Bill Status Sections */
+.tfc-bill-status-section {
+    padding: 12px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.tfc-bill-status-section:last-child {
+    border-bottom: none;
+}
+
+.tfc-bill-status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+.tfc-bill-status-header strong {
+    color: #243551;
+    font-weight: 700;
+}
+
+.tfc-bill-latest {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #4a5568;
+}
+
 .tfc-status-header {
     display: flex;
     justify-content: space-between;

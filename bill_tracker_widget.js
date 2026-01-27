@@ -271,7 +271,7 @@ const BillTrackerWidget = (function() {
     /**
      * Update tracker UI with feed data
      */
-    function updateTrackerUI(trackerId, updates, billType) {
+    function updateTrackerUI(trackerId, updates, billType, billNumbers, isMultipleBills = false) {
         const latestEl = document.getElementById(`${trackerId}-latest`);
         const badgeEl = document.getElementById(`${trackerId}-badge`);
         const historyEl = document.getElementById(`${trackerId}-history`);
@@ -282,40 +282,120 @@ const BillTrackerWidget = (function() {
             return;
         }
 
-        if (!updates || updates.length === 0) {
-            latestEl.innerHTML = '<span style="color: #718096;">No status updates available</span>';
-            if (badgeEl) badgeEl.textContent = 'N/A';
-            return;
-        }
-
-        const latest = updates[0];
-        const badge = getStatusBadge(latest.description);
-
-        // Update latest status
-        latestEl.innerHTML = `
-            <span class="tfc-status-date">${latest.date}</span>
-            ${latest.description}
-        `;
-
-        // Update badge
-        if (badgeEl) {
-            badgeEl.textContent = badge.text;
-            badgeEl.className = `tfc-status-badge tfc-badge-${badge.class}`;
-        }
-
-        // Update history
-        if (historyEl) {
-            historyEl.innerHTML = '';
+        // Handle multiple bills - show each separately
+        if (isMultipleBills && Array.isArray(updates)) {
+            let hasAnyUpdates = false;
+            let latestOverallBadge = { text: 'N/A', class: 'update' };
             
-            for (let i = 1; i < updates.length; i++) {
-                const update = updates[i];
-                const div = document.createElement('div');
-                div.className = 'tfc-history-item';
-                div.innerHTML = `
-                    <span class="tfc-status-date">${update.date}</span>
-                    ${update.description}
-                `;
-                historyEl.appendChild(div);
+            latestEl.innerHTML = '';
+            if (historyEl) historyEl.innerHTML = '';
+            
+            updates.forEach(billData => {
+                const billUpdates = billData.updates;
+                const billNum = billData.billNum;
+                const billTypeUpper = billType.toUpperCase();
+                
+                if (billUpdates && billUpdates.length > 0) {
+                    hasAnyUpdates = true;
+                    const latest = billUpdates[0];
+                    const badge = getStatusBadge(latest.description);
+                    
+                    // Update overall badge to most recent status
+                    if (badge.class !== 'update') {
+                        latestOverallBadge = badge;
+                    }
+                    
+                    // Create section for this bill
+                    const billSection = document.createElement('div');
+                    billSection.className = 'tfc-bill-status-section';
+                    billSection.innerHTML = `
+                        <div class="tfc-bill-status-header">
+                            <strong>${billTypeUpper} ${billNum}</strong>
+                            <span class="tfc-status-badge tfc-badge-${badge.class}">${badge.text}</span>
+                        </div>
+                        <div class="tfc-bill-latest">
+                            <span class="tfc-status-date">${latest.date}</span>
+                            ${latest.description}
+                        </div>
+                    `;
+                    latestEl.appendChild(billSection);
+                    
+                    // Add history for this bill
+                    if (historyEl && billUpdates.length > 1) {
+                        for (let i = 1; i < billUpdates.length; i++) {
+                            const update = billUpdates[i];
+                            const div = document.createElement('div');
+                            div.className = 'tfc-history-item';
+                            div.innerHTML = `
+                                <strong>${billTypeUpper} ${billNum}:</strong>
+                                <span class="tfc-status-date">${update.date}</span>
+                                ${update.description}
+                            `;
+                            historyEl.appendChild(div);
+                        }
+                    }
+                } else {
+                    // No updates for this bill
+                    const billSection = document.createElement('div');
+                    billSection.className = 'tfc-bill-status-section';
+                    billSection.innerHTML = `
+                        <div class="tfc-bill-status-header">
+                            <strong>${billTypeUpper} ${billNum}</strong>
+                            <span class="tfc-status-badge">N/A</span>
+                        </div>
+                        <div class="tfc-bill-latest">
+                            <span style="color: #718096;">No status updates available</span>
+                        </div>
+                    `;
+                    latestEl.appendChild(billSection);
+                }
+            });
+            
+            if (!hasAnyUpdates) {
+                if (badgeEl) badgeEl.textContent = 'N/A';
+            } else {
+                if (badgeEl) {
+                    badgeEl.textContent = latestOverallBadge.text;
+                    badgeEl.className = `tfc-status-badge tfc-badge-${latestOverallBadge.class}`;
+                }
+            }
+        } else {
+            // Single bill or combined display
+            if (!updates || updates.length === 0) {
+                latestEl.innerHTML = '<span style="color: #718096;">No status updates available</span>';
+                if (badgeEl) badgeEl.textContent = 'N/A';
+                return;
+            }
+
+            const latest = updates[0];
+            const badge = getStatusBadge(latest.description);
+
+            // Update latest status
+            latestEl.innerHTML = `
+                <span class="tfc-status-date">${latest.date}</span>
+                ${latest.description}
+            `;
+
+            // Update badge
+            if (badgeEl) {
+                badgeEl.textContent = badge.text;
+                badgeEl.className = `tfc-status-badge tfc-badge-${badge.class}`;
+            }
+
+            // Update history
+            if (historyEl) {
+                historyEl.innerHTML = '';
+                
+                for (let i = 1; i < updates.length; i++) {
+                    const update = updates[i];
+                    const div = document.createElement('div');
+                    div.className = 'tfc-history-item';
+                    div.innerHTML = `
+                        <span class="tfc-status-date">${update.date}</span>
+                        ${update.description}
+                    `;
+                    historyEl.appendChild(div);
+                }
             }
         }
 
@@ -380,21 +460,22 @@ const BillTrackerWidget = (function() {
             const numbers = this.currentType === 'hb' ? this.hbNumbers : this.sbNumbers;
             
             if (numbers.length === 0) {
-                updateTrackerUI(this.id, [], this.currentType);
+                updateTrackerUI(this.id, [], this.currentType, numbers);
                 return;
             }
 
-            // Combine all updates for this type and sort by date
-            let allUpdates = [];
-            for (const billNum of numbers) {
-                const updates = this.feeds[this.currentType][billNum] || [];
-                allUpdates = allUpdates.concat(updates);
+            // If multiple bills of same type, show them separately
+            if (numbers.length > 1) {
+                const billsData = numbers.map(billNum => ({
+                    billNum: billNum,
+                    updates: this.feeds[this.currentType][billNum] || []
+                }));
+                updateTrackerUI(this.id, billsData, this.currentType, numbers, true);
+            } else {
+                // Single bill - show combined as before
+                const updates = this.feeds[this.currentType][numbers[0]] || [];
+                updateTrackerUI(this.id, updates, this.currentType, numbers, false);
             }
-
-            // Sort combined updates by date
-            allUpdates.sort((a, b) => b.rawDate - a.rawDate);
-
-            updateTrackerUI(this.id, allUpdates, this.currentType);
         }
 
         switchFeed(billType) {
