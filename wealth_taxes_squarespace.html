@@ -737,7 +737,7 @@ header .header-nav-folder-content a,
                  id="capgains-tracker"
                  data-tracker-id="capital-gains"
                  data-hb=""
-                 data-sb=""
+                 data-sb="349"
                  data-year="2026">
             </div>
             <!-- Sample Testimony -->
@@ -782,22 +782,33 @@ header .header-nav-folder-content a,
         </div>
 
         <div class="tfc-card-wrapper">
-            <div class="tfc-card">
-                <div class="tfc-card-title">Millionaire's Tax</div>
+            <div class="tfc-card" id="millionaires-tax-card">
+                <div class="tfc-card-title-row">
+                    <div class="tfc-card-title">Millionaire's Tax</div>
+                    <div class="tfc-policy-wrapper">
+                        <span class="tfc-policy-label">Bill Options</span>
+                        <div class="tfc-policy-toggle">
+                            <button class="tfc-policy-toggle-btn active" data-policy="hb2010" onclick="switchMillionairesTaxPolicy('hb2010')">Income >$1M</button>
+                            <button class="tfc-policy-toggle-btn" data-policy="hb1807" onclick="switchMillionairesTaxPolicy('hb1807')">High-Income Earner</button>
+                            <button class="tfc-policy-toggle-btn" data-policy="hb2008" onclick="switchMillionairesTaxPolicy('hb2008')">High Income Earners (Starting 2028)</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="tfc-card-tag">INCOME TAX</div>
-                <div class="tfc-card-revenue">$71M Revenue</div>
-                <div class="tfc-card-desc">The State's top 1 percent can afford to pay more to help secure our state's future.</div>
+                <div class="tfc-card-revenue" id="millionaires-revenue">$71M Revenue</div>
+                <div class="tfc-card-desc" id="millionaires-desc">Tax on income over $1 million. The State's top 1 percent can afford to pay more to help secure our state's future.</div>
                 <a href="https://www.hitaxfairness.org/income-tax" class="tfc-card-btn" target="_blank">More</a>
             </div>
             <!-- Bill Tracker Component -->
             <div class="tfc-bill-tracker has-testimony" 
+                 id="millionaires-tracker"
                  data-tracker-id="millionaires-tax"
-                 data-hb=""
-                 data-sb=""
+                 data-hb="2010"
+                 data-sb="2468"
                  data-year="2026">
             </div>
             <!-- Sample Testimony -->
-            <div class="tfc-sample-testimony">
+            <div class="tfc-sample-testimony" id="millionaires-testimony">
                 <div class="tfc-sample-testimony-content">
                     <div class="tfc-sample-testimony-label">Sample Testimony</div>
                     <a href="https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/edit?usp=sharing" target="_blank">View Testimony Template</a>
@@ -833,15 +844,15 @@ const capGainsPolicies = {
     ordinary: {
         revenue: '$84M Revenue',
         description: 'Income from investments should not be taxed at lower rates than income from regular work. This proposal would tax investment income fairly&mdash;at the same rate as ordinary income from a job.',
-        hbNumbers: '',  // Add bill numbers when available
-        sbNumbers: '',
+        hbNumbers: '',
+        sbNumbers: '349',
         testimonyUrl: 'https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true'
     },
     '9pct': {
         revenue: '$44M Revenue',
         description: 'Income from investments should not be taxed at lower rates than income from regular work. This proposal would raise the maximum capital gains rate from 7.25% to 9%, making sure that investment income receives less preferential treatment.',
-        hbNumbers: '',  // Add bill numbers when available
-        sbNumbers: '',
+        hbNumbers: '476',
+        sbNumbers: '2587',
         testimonyUrl: 'https://docs.google.com/document/d/1TAW1-_Vd5M1CV-Rlu1ltPFdkoI0qd70X/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true'
     }
 };
@@ -874,11 +885,77 @@ function switchCapGainsPolicy(policy) {
         trackerEl.setAttribute('data-hb', config.hbNumbers);
         trackerEl.setAttribute('data-sb', config.sbNumbers);
         // Reinitialize tracker with new bills
-        BillTrackerWidget.refresh('capital-gains');
+        BillTrackerWidget.reinit('capital-gains');
     }
     
     // Update testimony link
     const testimonyEl = document.getElementById('capgains-testimony');
+    if (testimonyEl) {
+        const link = testimonyEl.querySelector('a');
+        if (link) {
+            link.href = config.testimonyUrl;
+        }
+    }
+}
+
+// Millionaire's Tax Policy Toggle Configuration
+const millionairesTaxPolicies = {
+    hb2010: {
+        revenue: '$71M Revenue',
+        description: 'Tax on income over $1 million. The State\'s top 1 percent can afford to pay more to help secure our state\'s future.',
+        hbNumbers: '2010',
+        sbNumbers: '2468',
+        testimonyUrl: 'https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/edit?usp=sharing'
+    },
+    hb1807: {
+        revenue: 'Revenue Unknown',
+        description: 'Tax on high-income earners (joint filers over $1 million). The State\'s top 1 percent can afford to pay more to help secure our state\'s future.',
+        hbNumbers: '1807',
+        sbNumbers: '',
+        testimonyUrl: 'https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/edit?usp=sharing'
+    },
+    hb2008: {
+        revenue: 'Revenue Unknown',
+        description: 'Tax on high-income earners starting in 2028. The State\'s top 1 percent can afford to pay more to help secure our state\'s future.',
+        hbNumbers: '2008',
+        sbNumbers: '',
+        testimonyUrl: 'https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/edit?usp=sharing'
+    }
+};
+
+function switchMillionairesTaxPolicy(policy) {
+    const config = millionairesTaxPolicies[policy];
+    if (!config) return;
+    
+    // Update toggle button states
+    document.querySelectorAll('#millionaires-tax-card .tfc-policy-toggle-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`#millionaires-tax-card [data-policy="${policy}"]`).classList.add('active');
+    
+    // Update revenue
+    const revenueEl = document.getElementById('millionaires-revenue');
+    if (revenueEl) {
+        revenueEl.textContent = config.revenue;
+    }
+    
+    // Update description using innerHTML for HTML entities
+    const descEl = document.getElementById('millionaires-desc');
+    if (descEl) {
+        descEl.innerHTML = config.description;
+    }
+    
+    // Update bill tracker
+    const trackerEl = document.getElementById('millionaires-tracker');
+    if (trackerEl && typeof BillTrackerWidget !== 'undefined') {
+        trackerEl.setAttribute('data-hb', config.hbNumbers);
+        trackerEl.setAttribute('data-sb', config.sbNumbers);
+        // Reinitialize tracker with new bills
+        BillTrackerWidget.reinit('millionaires-tax');
+    }
+    
+    // Update testimony link
+    const testimonyEl = document.getElementById('millionaires-testimony');
     if (testimonyEl) {
         const link = testimonyEl.querySelector('a');
         if (link) {
@@ -898,8 +975,11 @@ function toggleHearingsWidget() {
 // Next Bill Hearings functionality
 async function loadUpcomingHearings() {
     const bills = [
-        { type: 'HB', number: '476', year: '2026' }
-        // Add more bills as needed
+        { type: 'HB', number: '476', year: '2026' },
+        { type: 'HB', number: '2010', year: '2026' },
+        { type: 'SB', number: '2468', year: '2026' },
+        { type: 'HB', number: '1807', year: '2026' },
+        { type: 'HB', number: '2008', year: '2026' }
     ];
     
     const hearingsContent = document.getElementById('hearings-content');
@@ -909,7 +989,8 @@ async function loadUpcomingHearings() {
     
     for (const bill of bills) {
         try {
-            const url = `https://www.capitol.hawaii.gov/measure_indiv.aspx?billtype=${bill.type}&billnumber=${bill.number}&year=${bill.year}`;
+            // Use correct RSS feed URL format
+            const url = `https://www.capitol.hawaii.gov/sessions/session${bill.year}/rss/${bill.type}${bill.number}.xml`;
             const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
             
             const response = await fetch(proxyUrl);

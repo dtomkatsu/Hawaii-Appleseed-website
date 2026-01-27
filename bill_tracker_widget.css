@@ -51,9 +51,20 @@
 }
 
 .tfc-bill-number {
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #243551;
+}
+
+.tfc-bill-number a {
+    color: #243551;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.tfc-bill-number a:hover {
+    color: #3b82f6;
+    text-decoration: underline;
 }
 
 /* Status Section */

@@ -28,7 +28,7 @@ const BillTrackerWidget = (function() {
     // Configuration
     const CONFIG = {
         corsProxy: 'https://api.allorigins.win/raw?url=',
-        baseUrl: 'https://www.capitol.hawaii.gov/sessions/session2026/rss/rss_measure_',
+        baseUrl: 'https://www.capitol.hawaii.gov/sessions/session',
         defaultYear: '2026',
         refreshInterval: 3600000, // 1 hour in milliseconds
         cachePrefix: 'btw_cache_',
@@ -42,10 +42,11 @@ const BillTrackerWidget = (function() {
 
     /**
      * Build RSS feed URL for a bill
+     * Format: https://www.capitol.hawaii.gov/sessions/session2026/rss/HB2010.xml
      */
     function buildRssUrl(billType, billNumber, year) {
         year = year || CONFIG.defaultYear;
-        return `${CONFIG.baseUrl}${billType.toUpperCase()}${billNumber}_.xml`;
+        return `${CONFIG.baseUrl}${year}/rss/${billType.toUpperCase()}${billNumber}.xml`;
     }
 
     /**
@@ -218,9 +219,18 @@ const BillTrackerWidget = (function() {
     /**
      * Generate tracker HTML
      */
-    function generateTrackerHTML(trackerId, hbNumbers, sbNumbers) {
-        const hbList = hbNumbers.length > 0 ? hbNumbers.join(', ') : '--';
-        const sbList = sbNumbers.length > 0 ? sbNumbers.join(', ') : '--';
+    function generateTrackerHTML(trackerId, hbNumbers, sbNumbers, year) {
+        year = year || CONFIG.defaultYear;
+        
+        // Generate hyperlinked bill numbers for HB
+        const hbList = hbNumbers.length > 0 
+            ? hbNumbers.map(num => `<a href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=${num}&year=${year}" target="_blank" onclick="event.stopPropagation()">${num}</a>`).join(', ')
+            : '--';
+        
+        // Generate hyperlinked bill numbers for SB
+        const sbList = sbNumbers.length > 0 
+            ? sbNumbers.map(num => `<a href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=SB&billnumber=${num}&year=${year}" target="_blank" onclick="event.stopPropagation()">${num}</a>`).join(', ')
+            : '--';
         
         return `
             <div class="tfc-bill-columns">
@@ -336,7 +346,8 @@ const BillTrackerWidget = (function() {
             this.element.innerHTML = generateTrackerHTML(
                 this.id, 
                 this.hbNumbers, 
-                this.sbNumbers
+                this.sbNumbers,
+                this.year
             );
 
             // Load initial data
@@ -516,6 +527,36 @@ const BillTrackerWidget = (function() {
             if (tracker) {
                 tracker.refresh();
             }
+        },
+
+        /**
+         * Reinitialize a tracker with new bill numbers from DOM attributes
+         */
+        reinit: function(trackerId) {
+            const existingTracker = trackers[trackerId];
+            if (existingTracker) {
+                existingTracker.destroy();
+            }
+
+            const element = document.querySelector(`[data-tracker-id="${trackerId}"]`);
+            if (!element) {
+                console.warn(`[BillTracker] Element not found for tracker: ${trackerId}`);
+                return;
+            }
+
+            const hbNumbers = element.dataset.hb ? element.dataset.hb.split(',').map(n => n.trim()).filter(n => n) : [];
+            const sbNumbers = element.dataset.sb ? element.dataset.sb.split(',').map(n => n.trim()).filter(n => n) : [];
+            const year = element.dataset.year || CONFIG.defaultYear;
+
+            this.init({
+                trackerId: trackerId,
+                element: element,
+                hbNumbers: hbNumbers,
+                sbNumbers: sbNumbers,
+                year: year
+            });
+
+            console.log(`[BillTracker] Reinitialized tracker: ${trackerId} with HB: ${hbNumbers.join(',')} SB: ${sbNumbers.join(',')}`);
         },
 
         /**
