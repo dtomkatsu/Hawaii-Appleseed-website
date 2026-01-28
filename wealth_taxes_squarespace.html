@@ -411,7 +411,7 @@
     justify-content: space-between;
     align-items: center;
 }
-.tfc-hearings-title { font-size: 0.9rem; font-weight: 700; margin: 0; }
+.tfc-hearings-title { font-size: 0.9rem; font-weight: 700; margin: 0; color: #fff; }
 .tfc-hearings-toggle {
     background: none;
     border: none;
@@ -1104,17 +1104,6 @@ header .header-nav-folder-content a,
 }
 </style>
 
-<!-- Next Bill Hearings Widget -->
-<div class="tfc-hearings-widget" id="hearings-widget" style="position: absolute; top: 20px; right: 20px;">
-    <div class="tfc-hearings-header">
-        <h3 class="tfc-hearings-title">Next Bill Hearings</h3>
-        <button class="tfc-hearings-toggle" onclick="toggleHearingsWidget()" aria-label="Toggle hearings">&#9660;</button>
-    </div>
-    <div class="tfc-hearings-content" id="hearings-content">
-        <div class="tfc-hearings-loading">Loading upcoming hearings...</div>
-    </div>
-</div>
-
 <div class="tfc-container">
     <div class="tfc-header">
         <h1></h1>
@@ -1170,11 +1159,21 @@ header .header-nav-folder-content a,
         </div>
     </div>
 
+    <!-- Next Bill Hearings Widget -->
+    <div class="tfc-hearings-widget" id="hearings-widget" style="position: static; margin: 40px auto; max-width: 400px;">
+        <div class="tfc-hearings-header">
+            <h3 class="tfc-hearings-title">Next Bill Hearings</h3>
+            <button class="tfc-hearings-toggle" onclick="toggleHearingsWidget()" aria-label="Toggle hearings">&#9660;</button>
+        </div>
+        <div class="tfc-hearings-content" id="hearings-content">
+            <div class="tfc-hearings-loading">Loading upcoming hearings...</div>
+        </div>
+    </div>
+
     <div class="tfc-grid">
         <div class="tfc-card-wrapper">
             <div class="tfc-card">
                 <div class="tfc-card-title">Stop Tax Cuts for the Wealthy</div>
-                <div class="tfc-card-tag">INCOME TAX</div>
                 <div class="tfc-card-revenue">$296M Revenue</div>
                 <div class="tfc-card-desc">The State passed huge tax breaks with Act 46 in 2024, and the top 1% of taxpayers will benefit the most. These tax cuts for taxpayers at the top should be frozen. </div>
             </div>
@@ -1207,7 +1206,6 @@ header .header-nav-folder-content a,
                         </div>
                     </div>
                 </div>
-                <div class="tfc-card-tag">WEALTH TAX</div>
                 <div class="tfc-card-revenue" id="capgains-revenue">$84M Revenue</div>
                 <div class="tfc-card-desc" id="capgains-desc">Income from investments should not be taxed at lower rates than income from regular work. This proposal would tax investment income fairly, at the same rate as ordinary income from a job.</div>
             </div>
@@ -1232,7 +1230,6 @@ header .header-nav-folder-content a,
         <div class="tfc-card-wrapper">
             <div class="tfc-card">
                 <div class="tfc-card-title">Mansion Sales Tax</div>
-                <div class="tfc-card-tag">PROPERTY</div>
                 <div class="tfc-card-revenue">$68.5M Revenue</div>
                 <div class="tfc-card-desc">Luxury homes and second homes should be taxed at higher rates when they're sold. This proposal would make the conveyance tax lower for middle-class Hawaii residents, while making it higher for the ultra-wealthy.</div>
             </div>
@@ -1253,7 +1250,6 @@ header .header-nav-folder-content a,
         <div class="tfc-card-wrapper">
             <div class="tfc-card">
                 <div class="tfc-card-title">Taxing Real Estate Investment Trusts</div>
-                <div class="tfc-card-tag">CORPORATE TAX</div>
                 <div class="tfc-card-revenue">$36M - $60M Revenue</div>
                 <div class="tfc-card-desc">REITs make millions of dollars off real estate but pay no corporate income tax to our state.</div>
             </div>
@@ -1287,7 +1283,6 @@ header .header-nav-folder-content a,
                         </div>
                     </div>
                 </div>
-                <div class="tfc-card-tag">INCOME TAX</div>
                 <div class="tfc-card-revenue" id="millionaires-revenue">$71M Revenue</div>
                 <div class="tfc-card-desc" id="millionaires-desc">Tax on income over $1 million. The State's top 1 percent can afford to pay more to help secure our state's future.</div>
             </div>
@@ -1316,7 +1311,6 @@ header .header-nav-folder-content a,
     <div class="tfc-grid" style="min-height: auto; margin-top: 0;">
         <div class="tfc-card" style="background: linear-gradient(to bottom, #f0fff4 0%, #e6fffa 100%); border-color: rgba(56, 161, 105, 0.2);">
             <div class="tfc-card-title">Wealth Proceeds Tax</div>
-            <div class="tfc-card-tag">WEALTH TAX</div>
             <div class="tfc-card-revenue">$53.9M Revenue</div>
             <div class="tfc-card-desc">Investors should be fairly taxed on all of their income from investments, including passive income.</div>
             <a href="https://www.hitaxfairness.org/wealth-proceeds-tax" class="tfc-card-btn" target="_blank">More</a>
