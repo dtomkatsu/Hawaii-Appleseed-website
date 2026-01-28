@@ -232,9 +232,42 @@
     color: #243551;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    padding: 12px 0;
     border-bottom: 2px solid #e2e8f0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+.tfc-legislation-header:hover {
+    color: #3a5278;
+    background: rgba(36, 53, 81, 0.03);
+    margin: 0 -20px;
+    padding: 12px 20px;
+    border-radius: 8px;
+}
+.tfc-legislation-toggle-icon::after {
+    content: '\25BC';
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+.tfc-bill-tracker.expanded .tfc-legislation-toggle-icon::after {
+    transform: rotate(180deg);
+}
+.tfc-tracker-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease-out, opacity 0.3s ease, margin-top 0.3s ease;
+    margin-top: 0;
+}
+.tfc-bill-tracker.expanded .tfc-tracker-content {
+    max-height: 800px;
+    opacity: 1;
+    margin-top: 16px;
 }
 .tfc-status-history::-webkit-scrollbar { width: 6px; }
 .tfc-status-history::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 3px; }
@@ -251,6 +284,7 @@
     border-radius: 0 0 16px 16px;
     margin-top: -1px;
     transition: background 0.2s ease;
+    gap: 16px;
 }
 .tfc-sample-testimony:hover { background: #f8fafc; }
 .tfc-sample-testimony-content {
@@ -265,7 +299,7 @@
     letter-spacing: 0.05em;
     margin-bottom: 2px;
 }
-.tfc-sample-testimony a {
+.tfc-sample-testimony a.tfc-testimony-link {
     color: #3a5278;
     text-decoration: none;
     font-size: 0.9rem;
@@ -275,13 +309,30 @@
     gap: 8px;
     transition: color 0.2s ease;
 }
-.tfc-sample-testimony a:hover { color: #243551; }
-.tfc-sample-testimony a::after {
+.tfc-sample-testimony a.tfc-testimony-link:hover { color: #243551; }
+.tfc-sample-testimony a.tfc-testimony-link::after {
     content: '\2192';
     font-size: 1rem;
     transition: transform 0.2s ease;
 }
-.tfc-sample-testimony a:hover::after { transform: translateX(4px); }
+.tfc-sample-testimony a.tfc-testimony-link:hover::after { transform: translateX(4px); }
+.tfc-sample-testimony .tfc-more-btn {
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
+    color: #fff !important;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    border-radius: 8px;
+    text-align: center;
+    border: none;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+.tfc-sample-testimony .tfc-more-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(36, 53, 81, 0.3);
+}
 .tfc-card-wrapper .tfc-bill-tracker.has-testimony {
     border-radius: 0;
     border-bottom: none;
@@ -1125,8 +1176,7 @@ header .header-nav-folder-content a,
                 <div class="tfc-card-title">Stop Tax Cuts for the Wealthy</div>
                 <div class="tfc-card-tag">INCOME TAX</div>
                 <div class="tfc-card-revenue">$296M Revenue</div>
-                <div class="tfc-card-desc">The State passed huge tax breaks with Act 46 in 2024, and the top 1% of taxpayers will benefit the most.</div>
-                <a href="https://www.hitaxfairness.org/act-46" class="tfc-card-btn" target="_blank">More</a>
+                <div class="tfc-card-desc">The State passed huge tax breaks with Act 46 in 2024, and the top 1% of taxpayers will benefit the most. These tax cuts for taxpayers at the top should be frozen. </div>
             </div>
             <!-- Bill Tracker Component - Auto-updating Widget -->
             <div class="tfc-bill-tracker has-testimony" 
@@ -1139,8 +1189,9 @@ header .header-nav-folder-content a,
             <div class="tfc-sample-testimony">
                 <div class="tfc-sample-testimony-content">
                     <div class="tfc-sample-testimony-label">Sample Testimony</div>
-                    <a href="https://docs.google.com/document/d/1Ma3OIaiwDPvgUCBXl1_D-DFfWyd0jTke2JrDCdsRXRs/edit?tab=t.0" target="_blank">View Testimony Template</a>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1Ma3OIaiwDPvgUCBXl1_D-DFfWyd0jTke2JrDCdsRXRs/edit?tab=t.0" target="_blank">View Testimony Template</a>
                 </div>
+                <a href="https://www.hitaxfairness.org/act-46" class="tfc-more-btn" target="_blank">More Info</a>
             </div>
         </div>
 
@@ -1158,8 +1209,7 @@ header .header-nav-folder-content a,
                 </div>
                 <div class="tfc-card-tag">WEALTH TAX</div>
                 <div class="tfc-card-revenue" id="capgains-revenue">$84M Revenue</div>
-                <div class="tfc-card-desc" id="capgains-desc">Income from investments should not be taxed at lower rates than income from regular work. This proposal would tax investment income fairly&mdash;at the same rate as ordinary income from a job.</div>
-                <a href="https://www.hitaxfairness.org/capital-gains" class="tfc-card-btn" target="_blank">More</a>
+                <div class="tfc-card-desc" id="capgains-desc">Income from investments should not be taxed at lower rates than income from regular work. This proposal would tax investment income fairly, at the same rate as ordinary income from a job.</div>
             </div>
             <!-- Bill Tracker Component -->
             <div class="tfc-bill-tracker has-testimony" 
@@ -1173,8 +1223,9 @@ header .header-nav-folder-content a,
             <div class="tfc-sample-testimony" id="capgains-testimony">
                 <div class="tfc-sample-testimony-content">
                     <div class="tfc-sample-testimony-label">Sample Testimony</div>
-                    <a href="https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true" target="_blank">View Testimony Template</a>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true" target="_blank">View Testimony Template</a>
                 </div>
+                <a href="https://www.hitaxfairness.org/capital-gains" class="tfc-more-btn" target="_blank">More Info</a>
             </div>
         </div>
 
@@ -1183,15 +1234,19 @@ header .header-nav-folder-content a,
                 <div class="tfc-card-title">Mansion Sales Tax</div>
                 <div class="tfc-card-tag">PROPERTY</div>
                 <div class="tfc-card-revenue">$68.5M Revenue</div>
-                <div class="tfc-card-desc">Luxury homes and second homes should be taxed at higher rates when they're sold.</div>
-                <a href="https://www.hitaxfairness.org/conveyance-tax" class="tfc-card-btn" target="_blank">More</a>
+                <div class="tfc-card-desc">Luxury homes and second homes should be taxed at higher rates when they're sold. This proposal would make the conveyance tax lower for middle-class Hawaii residents, while making it higher for the ultra-wealthy.</div>
             </div>
             <!-- Bill Tracker Component -->
-            <div class="tfc-bill-tracker" 
+            <div class="tfc-bill-tracker has-testimony" 
                  data-tracker-id="conveyance-tax"
                  data-hb="2049"
                  data-sb=""
                  data-year="2026">
+            </div>
+            <!-- Bottom section with More button -->
+            <div class="tfc-sample-testimony">
+                <div class="tfc-sample-testimony-content"></div>
+                <a href="https://www.hitaxfairness.org/conveyance-tax" class="tfc-more-btn" target="_blank">More Info</a>
             </div>
         </div>
 
@@ -1201,7 +1256,6 @@ header .header-nav-folder-content a,
                 <div class="tfc-card-tag">CORPORATE TAX</div>
                 <div class="tfc-card-revenue">$36M - $60M Revenue</div>
                 <div class="tfc-card-desc">REITs make millions of dollars off real estate but pay no corporate income tax to our state.</div>
-                <a href="https://www.hitaxfairness.org/real-estate-investment-trust-reform" class="tfc-card-btn" target="_blank">More</a>
             </div>
             <!-- Bill Tracker Component -->
             <div class="tfc-bill-tracker has-testimony" 
@@ -1214,8 +1268,9 @@ header .header-nav-folder-content a,
             <div class="tfc-sample-testimony">
                 <div class="tfc-sample-testimony-content">
                     <div class="tfc-sample-testimony-label">Sample Testimony</div>
-                    <a href="https://docs.google.com/document/d/1uUbeScmkPPU8D25iyVKX3GrAwvq3n1qdmr26jfMbzEs/edit?tab=t.0" target="_blank">View Testimony Template</a>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1uUbeScmkPPU8D25iyVKX3GrAwvq3n1qdmr26jfMbzEs/edit?tab=t.0" target="_blank">View Testimony Template</a>
                 </div>
+                <a href="https://www.hitaxfairness.org/real-estate-investment-trust-reform" class="tfc-more-btn" target="_blank">More Info</a>
             </div>
         </div>
 
@@ -1235,7 +1290,6 @@ header .header-nav-folder-content a,
                 <div class="tfc-card-tag">INCOME TAX</div>
                 <div class="tfc-card-revenue" id="millionaires-revenue">$71M Revenue</div>
                 <div class="tfc-card-desc" id="millionaires-desc">Tax on income over $1 million. The State's top 1 percent can afford to pay more to help secure our state's future.</div>
-                <a href="https://www.hitaxfairness.org/income-tax" class="tfc-card-btn" target="_blank">More</a>
             </div>
             <!-- Bill Tracker Component -->
             <div class="tfc-bill-tracker has-testimony" 
@@ -1249,8 +1303,9 @@ header .header-nav-folder-content a,
             <div class="tfc-sample-testimony" id="millionaires-testimony">
                 <div class="tfc-sample-testimony-content">
                     <div class="tfc-sample-testimony-label">Sample Testimony</div>
-                    <a href="https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/edit?usp=sharing" target="_blank">View Testimony Template</a>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/edit?usp=sharing" target="_blank">View Testimony Template</a>
                 </div>
+                <a href="https://www.hitaxfairness.org/income-tax" class="tfc-more-btn" target="_blank">More Info</a>
             </div>
         </div>
     </div>
@@ -1385,28 +1440,32 @@ const BillTrackerWidget = (function() {
             ? sbNumbers.map(num => `<a href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=SB&billnumber=${num}&year=${year}" target="_blank" onclick="event.stopPropagation()">${num}</a>`).join(', ')
             : '--';
         return `
-            <div class="tfc-legislation-header">Legislation</div>
-            <div class="tfc-bill-columns">
-                <div class="tfc-bill-col ${hbNumbers.length > 0 ? 'active' : ''}" data-bill-type="hb" onclick="BillTrackerWidget.switchFeed('${trackerId}', 'hb')">
-                    <h4>House Bill${hbNumbers.length > 1 ? 's' : ''}</h4>
-                    <div class="tfc-bill-number">HB <span class="hb-numbers">${hbList}</span></div>
-                </div>
-                <div class="tfc-bill-col ${hbNumbers.length === 0 && sbNumbers.length > 0 ? 'active' : ''}" data-bill-type="sb" onclick="BillTrackerWidget.switchFeed('${trackerId}', 'sb')">
-                    <h4>Senate Bill${sbNumbers.length > 1 ? 's' : ''}</h4>
-                    <div class="tfc-bill-number">SB <span class="sb-numbers">${sbList}</span></div>
-                </div>
+            <div class="tfc-legislation-header" onclick="BillTrackerWidget.toggleTracker('${trackerId}')">
+                Legislation <span class="tfc-legislation-toggle-icon"></span>
             </div>
-            <div class="tfc-status-section" id="${trackerId}-status">
-                <div class="tfc-status-header" onclick="BillTrackerWidget.toggleHistory('${trackerId}')">
-                    <span class="tfc-status-title">Latest Status <span class="tfc-status-badge" id="${trackerId}-badge">Loading...</span></span>
-                    <span class="tfc-status-toggle">History</span>
+            <div class="tfc-tracker-content" id="${trackerId}-content">
+                <div class="tfc-bill-columns">
+                    <div class="tfc-bill-col ${hbNumbers.length > 0 ? 'active' : ''}" data-bill-type="hb" onclick="BillTrackerWidget.switchFeed('${trackerId}', 'hb')">
+                        <h4>House Bill${hbNumbers.length > 1 ? 's' : ''}</h4>
+                        <div class="tfc-bill-number">HB <span class="hb-numbers">${hbList}</span></div>
+                    </div>
+                    <div class="tfc-bill-col ${hbNumbers.length === 0 && sbNumbers.length > 0 ? 'active' : ''}" data-bill-type="sb" onclick="BillTrackerWidget.switchFeed('${trackerId}', 'sb')">
+                        <h4>Senate Bill${sbNumbers.length > 1 ? 's' : ''}</h4>
+                        <div class="tfc-bill-number">SB <span class="sb-numbers">${sbList}</span></div>
+                    </div>
                 </div>
-                <div class="tfc-latest-update" id="${trackerId}-latest"><span class="tfc-loading">Loading bill status...</span></div>
-                <div class="tfc-status-history" id="${trackerId}-history"></div>
-            </div>
-            <div class="tfc-tracker-meta">
-                <span class="tfc-last-updated" id="${trackerId}-updated"></span>
-                <button class="tfc-refresh-btn" onclick="BillTrackerWidget.refresh('${trackerId}')" title="Refresh">&#8635;</button>
+                <div class="tfc-status-section" id="${trackerId}-status">
+                    <div class="tfc-status-header" onclick="BillTrackerWidget.toggleHistory('${trackerId}')">
+                        <span class="tfc-status-title">Latest Status <span class="tfc-status-badge" id="${trackerId}-badge">Loading...</span></span>
+                        <span class="tfc-status-toggle">History</span>
+                    </div>
+                    <div class="tfc-latest-update" id="${trackerId}-latest"><span class="tfc-loading">Loading bill status...</span></div>
+                    <div class="tfc-status-history" id="${trackerId}-history"></div>
+                </div>
+                <div class="tfc-tracker-meta">
+                    <span class="tfc-last-updated" id="${trackerId}-updated"></span>
+                    <button class="tfc-refresh-btn" onclick="BillTrackerWidget.refresh('${trackerId}')" title="Refresh">&#8635;</button>
+                </div>
             </div>
         `;
     }
@@ -1551,6 +1610,13 @@ const BillTrackerWidget = (function() {
         },
         switchFeed: function(trackerId, billType) { const tracker = trackers[trackerId]; if (tracker) { tracker.switchFeed(billType); } },
         toggleHistory: function(trackerId) { const tracker = trackers[trackerId]; if (tracker) { tracker.toggleHistory(); } },
+        toggleTracker: function(trackerId) {
+            const content = document.getElementById(`${trackerId}-content`);
+            const tracker = document.querySelector(`[data-tracker-id="${trackerId}"]`);
+            if (content && tracker) {
+                tracker.classList.toggle('expanded');
+            }
+        },
         refresh: function(trackerId) { const tracker = trackers[trackerId]; if (tracker) { tracker.refresh(); } },
         reinit: function(trackerId) {
             const existingTracker = trackers[trackerId];
