@@ -1499,6 +1499,7 @@ const BillTrackerWidget = (function() {
         if (!latestEl) { return; }
         if (isMultipleBills && Array.isArray(updates)) {
             let hasAnyUpdates = false;
+            let hasError = false;
             let latestOverallBadge = { text: 'N/A', class: 'update' };
             latestEl.innerHTML = '';
             if (historyEl) historyEl.innerHTML = '';
@@ -1506,7 +1507,13 @@ const BillTrackerWidget = (function() {
                 const billUpdates = billData.updates;
                 const billNum = billData.billNum;
                 const billTypeUpper = billType.toUpperCase();
-                if (billUpdates && billUpdates.length > 0) {
+                if (billUpdates === 'ERROR') {
+                    hasError = true;
+                    const billSection = document.createElement('div');
+                    billSection.className = 'tfc-bill-status-section';
+                    billSection.innerHTML = `<div class="tfc-bill-status-header"><strong>${billTypeUpper} ${billNum}</strong><span class="tfc-status-badge" style="background: #ef4444; color: white;">Error</span></div><div class="tfc-bill-latest"><span style="color: #ef4444; font-weight: 500;">Error: Press Refresh button</span></div>`;
+                    latestEl.appendChild(billSection);
+                } else if (billUpdates && billUpdates.length > 0) {
                     hasAnyUpdates = true;
                     const latest = billUpdates[0];
                     const badge = getStatusBadge(latest.description);
@@ -1531,9 +1538,15 @@ const BillTrackerWidget = (function() {
                     latestEl.appendChild(billSection);
                 }
             });
-            if (!hasAnyUpdates) { if (badgeEl) badgeEl.textContent = 'N/A'; }
+            if (hasError) { if (badgeEl) { badgeEl.textContent = 'Error'; badgeEl.style.background = '#ef4444'; badgeEl.style.color = 'white'; } }
+            else if (!hasAnyUpdates) { if (badgeEl) badgeEl.textContent = 'N/A'; }
             else { if (badgeEl) { badgeEl.textContent = latestOverallBadge.text; badgeEl.className = `tfc-status-badge tfc-badge-${latestOverallBadge.class}`; } }
         } else {
+            if (updates === 'ERROR') {
+                latestEl.innerHTML = '<span style="color: #ef4444; font-weight: 500;">Error: Press Refresh button</span>';
+                if (badgeEl) { badgeEl.textContent = 'Error'; badgeEl.style.background = '#ef4444'; badgeEl.style.color = 'white'; }
+                return;
+            }
             if (!updates || updates.length === 0) {
                 latestEl.innerHTML = '<span style="color: #718096;">No status updates available</span>';
                 if (badgeEl) badgeEl.textContent = 'N/A';
@@ -1576,11 +1589,19 @@ const BillTrackerWidget = (function() {
         async loadFeeds() {
             const hbPromises = this.hbNumbers.map(async billNum => {
                 const xmlText = await fetchRSS('HB', billNum, this.year);
-                this.feeds.hb[billNum] = parseRSS(xmlText);
+                if (xmlText === null) {
+                    this.feeds.hb[billNum] = 'ERROR';
+                } else {
+                    this.feeds.hb[billNum] = parseRSS(xmlText);
+                }
             });
             const sbPromises = this.sbNumbers.map(async billNum => {
                 const xmlText = await fetchRSS('SB', billNum, this.year);
-                this.feeds.sb[billNum] = parseRSS(xmlText);
+                if (xmlText === null) {
+                    this.feeds.sb[billNum] = 'ERROR';
+                } else {
+                    this.feeds.sb[billNum] = parseRSS(xmlText);
+                }
             });
             await Promise.all([...hbPromises, ...sbPromises]);
             this.updateDisplay();
@@ -1589,10 +1610,14 @@ const BillTrackerWidget = (function() {
             const numbers = this.currentType === 'hb' ? this.hbNumbers : this.sbNumbers;
             if (numbers.length === 0) { updateTrackerUI(this.id, [], this.currentType, numbers); return; }
             if (numbers.length > 1) {
-                const billsData = numbers.map(billNum => ({ billNum: billNum, updates: this.feeds[this.currentType][billNum] || [] }));
+                const billsData = numbers.map(billNum => {
+                    const feedData = this.feeds[this.currentType][billNum];
+                    return { billNum: billNum, updates: feedData === 'ERROR' ? 'ERROR' : (feedData || []) };
+                });
                 updateTrackerUI(this.id, billsData, this.currentType, numbers, true);
             } else {
-                const updates = this.feeds[this.currentType][numbers[0]] || [];
+                const feedData = this.feeds[this.currentType][numbers[0]];
+                const updates = feedData === 'ERROR' ? 'ERROR' : (feedData || []);
                 updateTrackerUI(this.id, updates, this.currentType, numbers, false);
             }
         }
