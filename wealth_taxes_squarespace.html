@@ -1143,7 +1143,7 @@ header .header-nav-folder-content a,
                 <span class="tfc-bar-value">$71M</span>
             </div>
             <div class="tfc-bar-row">
-                <span class="tfc-bar-label">Mansion Sales Tax</span>
+                <span class="tfc-bar-label">Tweak the Conveyance Tax</span>
                 <div class="tfc-bar-track">
                     <div class="tfc-bar" data-value="68.5" style="--bar-width: 23.14%;"></div>
                 </div>
@@ -1180,7 +1180,7 @@ header .header-nav-folder-content a,
             <!-- Bill Tracker Component - Auto-updating Widget -->
             <div class="tfc-bill-tracker has-testimony" 
                  data-tracker-id="freezing-act-46"
-                 data-hb=""
+                 data-hb="2306"
                  data-sb=""
                  data-year="2026">
             </div>
@@ -1207,7 +1207,7 @@ header .header-nav-folder-content a,
                     </div>
                 </div>
                 <div class="tfc-card-revenue" id="capgains-revenue">$84M Revenue</div>
-                <div class="tfc-card-desc" id="capgains-desc">Income from investments should not be taxed at lower rates than income from regular work. This proposal would tax investment income fairly, at the same rate as ordinary income from a job.</div>
+                <div class="tfc-card-desc" id="capgains-desc">Income from investments should not be taxed at lower rates than income from regular work. This proposal would tax capital gains fairly, at the same rate as ordinary income from a job.</div>
             </div>
             <!-- Bill Tracker Component -->
             <div class="tfc-bill-tracker has-testimony" 
@@ -1229,7 +1229,7 @@ header .header-nav-folder-content a,
 
         <div class="tfc-card-wrapper">
             <div class="tfc-card">
-                <div class="tfc-card-title">Mansion Sales Tax</div>
+                <div class="tfc-card-title">Tweak the Conveyance Tax</div>
                 <div class="tfc-card-revenue">$68.5M Revenue</div>
                 <div class="tfc-card-desc">Luxury homes and second homes should be taxed at higher rates when they're sold. This proposal would make the conveyance tax lower for middle-class Hawaii residents, while making it higher for the ultra-wealthy.</div>
             </div>
@@ -1327,40 +1327,68 @@ header .header-nav-folder-content a,
 const BillTrackerWidget = (function() {
     'use strict';
     const CONFIG = {
-        corsProxy: 'https://api.allorigins.win/raw?url=',
+        corsProxies: [
+            'https://api.allorigins.win/get?url=',
+            'https://api.allorigins.win/raw?url='
+        ],
         baseUrl: 'https://www.capitol.hawaii.gov/sessions/session',
         defaultYear: '2026',
         refreshInterval: 3600000,
         cachePrefix: 'btw_cache_',
         cacheDuration: 3600000,
-        maxRetries: 2,
-        retryDelay: 2000
+        fetchTimeout: 6000
     };
     const trackers = {};
     function buildRssUrl(billType, billNumber, year) {
         year = year || CONFIG.defaultYear;
         return `${CONFIG.baseUrl}${year}/rss/${billType.toUpperCase()}${billNumber}.xml`;
     }
-    async function fetchRSS(billType, billNumber, year, retryCount = 0) {
+    async function fetchWithTimeout(url, timeout) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        try {
+            const response = await fetch(url, { signal: controller.signal });
+            clearTimeout(timeoutId);
+            return response;
+        } catch (error) {
+            clearTimeout(timeoutId);
+            throw error;
+        }
+    }
+    async function fetchRSS(billType, billNumber, year) {
         const cacheKey = `${CONFIG.cachePrefix}${billType}_${billNumber}_${year}`;
         const cached = getFromCache(cacheKey);
         if (cached) { return cached; }
         const rssUrl = buildRssUrl(billType, billNumber, year);
-        const proxyUrl = CONFIG.corsProxy + encodeURIComponent(rssUrl);
-        try {
-            const response = await fetch(proxyUrl);
-            if (!response.ok) { throw new Error(`HTTP ${response.status}`); }
-            const xmlText = await response.text();
-            if (!xmlText.includes('<rss') && !xmlText.includes('<item>')) { throw new Error('Invalid RSS response'); }
-            saveToCache(cacheKey, xmlText);
-            return xmlText;
-        } catch (error) {
-            if (retryCount < CONFIG.maxRetries) {
-                await new Promise(resolve => setTimeout(resolve, CONFIG.retryDelay));
-                return fetchRSS(billType, billNumber, year, retryCount + 1);
+        
+        for (let i = 0; i < CONFIG.corsProxies.length; i++) {
+            const proxy = CONFIG.corsProxies[i];
+            const proxyUrl = proxy + encodeURIComponent(rssUrl);
+            try {
+                const response = await fetchWithTimeout(proxyUrl, CONFIG.fetchTimeout);
+                if (!response.ok) { throw new Error(`HTTP ${response.status}`); }
+                let xmlText = await response.text();
+                
+                if (proxy.includes('/get?url=')) {
+                    try {
+                        const json = JSON.parse(xmlText);
+                        xmlText = json.contents || '';
+                    } catch (e) {}
+                }
+                
+                if (xmlText.includes('<rss') || xmlText.includes('<item>')) {
+                    saveToCache(cacheKey, xmlText);
+                    console.log(`✓ ${billType}${billNumber} fetched via proxy ${i + 1}`);
+                    return xmlText;
+                }
+                throw new Error('Invalid RSS response');
+            } catch (error) {
+                console.log(`Proxy ${i + 1} failed for ${billType}${billNumber}: ${error.message}`);
+                if (i < CONFIG.corsProxies.length - 1) continue;
             }
-            return null;
         }
+        console.error(`All proxies failed for ${billType}${billNumber}`);
+        return null;
     }
     function getFromCache(key) {
         try {
@@ -1427,12 +1455,12 @@ const BillTrackerWidget = (function() {
     }
     function generateTrackerHTML(trackerId, hbNumbers, sbNumbers, year) {
         year = year || CONFIG.defaultYear;
-        const hbList = hbNumbers.length > 0 
-            ? hbNumbers.map(num => `<a href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=${num}&year=${year}" target="_blank" onclick="event.stopPropagation()">${num}</a>`).join(', ')
-            : '--';
-        const sbList = sbNumbers.length > 0 
-            ? sbNumbers.map(num => `<a href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=SB&billnumber=${num}&year=${year}" target="_blank" onclick="event.stopPropagation()">${num}</a>`).join(', ')
-            : '--';
+        const hbDisplay = hbNumbers.length > 0 
+            ? `HB <span class="hb-numbers">${hbNumbers.map(num => `<a href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=${num}&year=${year}" target="_blank" onclick="event.stopPropagation()">${num}</a>`).join(', ')}</span>`
+            : 'No Bill';
+        const sbDisplay = sbNumbers.length > 0 
+            ? `SB <span class="sb-numbers">${sbNumbers.map(num => `<a href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=SB&billnumber=${num}&year=${year}" target="_blank" onclick="event.stopPropagation()">${num}</a>`).join(', ')}</span>`
+            : 'No Bill';
         return `
             <div class="tfc-legislation-header" onclick="BillTrackerWidget.toggleTracker('${trackerId}')">
                 Legislation <span class="tfc-legislation-toggle-icon"></span>
@@ -1441,11 +1469,11 @@ const BillTrackerWidget = (function() {
                 <div class="tfc-bill-columns">
                     <div class="tfc-bill-col ${hbNumbers.length > 0 ? 'active' : ''}" data-bill-type="hb" onclick="BillTrackerWidget.switchFeed('${trackerId}', 'hb')">
                         <h4>House Bill${hbNumbers.length > 1 ? 's' : ''}</h4>
-                        <div class="tfc-bill-number">HB <span class="hb-numbers">${hbList}</span></div>
+                        <div class="tfc-bill-number">${hbDisplay}</div>
                     </div>
                     <div class="tfc-bill-col ${hbNumbers.length === 0 && sbNumbers.length > 0 ? 'active' : ''}" data-bill-type="sb" onclick="BillTrackerWidget.switchFeed('${trackerId}', 'sb')">
                         <h4>Senate Bill${sbNumbers.length > 1 ? 's' : ''}</h4>
-                        <div class="tfc-bill-number">SB <span class="sb-numbers">${sbList}</span></div>
+                        <div class="tfc-bill-number">${sbDisplay}</div>
                     </div>
                 </div>
                 <div class="tfc-status-section" id="${trackerId}-status">
@@ -1579,9 +1607,31 @@ const BillTrackerWidget = (function() {
             if (section) { section.classList.toggle('expanded'); }
         }
         async refresh() {
+            const refreshBtn = this.element.querySelector('.tfc-refresh-btn');
+            const updatedEl = document.getElementById(`${this.id}-updated`);
+            
+            if (refreshBtn) {
+                refreshBtn.disabled = true;
+                refreshBtn.style.opacity = '0.5';
+                refreshBtn.innerHTML = '&#8635;';
+                refreshBtn.classList.add('spinning');
+            }
+            
             for (const billNum of this.hbNumbers) { const key = `${CONFIG.cachePrefix}HB_${billNum}_${this.year}`; localStorage.removeItem(key); }
             for (const billNum of this.sbNumbers) { const key = `${CONFIG.cachePrefix}SB_${billNum}_${this.year}`; localStorage.removeItem(key); }
+            
             await this.loadFeeds();
+            
+            if (refreshBtn) {
+                refreshBtn.disabled = false;
+                refreshBtn.style.opacity = '1';
+                refreshBtn.classList.remove('spinning');
+            }
+            
+            if (updatedEl) {
+                const now = new Date();
+                updatedEl.textContent = `Updated: ${now.toLocaleTimeString()}`;
+            }
         }
         startAutoRefresh() {
             if (this.intervalId) { clearInterval(this.intervalId); }
@@ -1638,7 +1688,7 @@ else { BillTrackerWidget.initAll(); }
 const capGainsPolicies = {
     ordinary: {
         revenue: '$84M Revenue',
-        description: 'Income from investments should not be taxed at lower rates than income from regular work. This proposal would tax investment income fairly&mdash;at the same rate as ordinary income from a job.',
+        description: 'Income from investments should not be taxed at lower rates than income from regular work. This proposal would tax capital gains fairly&mdash;at the same rate as ordinary income from a job.',
         hbNumbers: '',
         sbNumbers: '349',
         testimonyUrl: 'https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true'
