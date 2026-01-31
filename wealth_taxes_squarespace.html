@@ -1327,25 +1327,14 @@ header .header-nav-folder-content a,
 const BillTrackerWidget = (function() {
     'use strict';
     const CONFIG = {
-        corsProxies: [
-            'https://api.allorigins.win/get?url=',
-            'https://corsproxy.io/?',
-            'https://api.codetabs.com/v1/proxy?quest=',
-            'https://cors-anywhere.herokuapp.com/',
-            'https://api.allorigins.win/raw?url='
-        ],
-        baseUrl: 'https://www.capitol.hawaii.gov/sessions/session',
+        proxyUrl: 'https://YOUR-PROJECT-NAME.vercel.app/api/rss-proxy',
         defaultYear: '2026',
         refreshInterval: 3600000,
         cachePrefix: 'btw_cache_',
         cacheDuration: 3600000,
-        fetchTimeout: 6000
+        fetchTimeout: 10000
     };
     const trackers = {};
-    function buildRssUrl(billType, billNumber, year) {
-        year = year || CONFIG.defaultYear;
-        return `${CONFIG.baseUrl}${year}/rss/${billType.toUpperCase()}${billNumber}.xml`;
-    }
     async function fetchWithTimeout(url, timeout) {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), timeout);
@@ -1362,36 +1351,31 @@ const BillTrackerWidget = (function() {
         const cacheKey = `${CONFIG.cachePrefix}${billType}_${billNumber}_${year}`;
         const cached = getFromCache(cacheKey);
         if (cached) { return cached; }
-        const rssUrl = buildRssUrl(billType, billNumber, year);
         
-        for (let i = 0; i < CONFIG.corsProxies.length; i++) {
-            const proxy = CONFIG.corsProxies[i];
-            const proxyUrl = proxy + encodeURIComponent(rssUrl);
-            try {
-                const response = await fetchWithTimeout(proxyUrl, CONFIG.fetchTimeout);
-                if (!response.ok) { throw new Error(`HTTP ${response.status}`); }
-                let xmlText = await response.text();
-                
-                if (proxy.includes('/get?url=')) {
-                    try {
-                        const json = JSON.parse(xmlText);
-                        xmlText = json.contents || '';
-                    } catch (e) {}
-                }
-                
-                if (xmlText.includes('<rss') || xmlText.includes('<item>')) {
-                    saveToCache(cacheKey, xmlText);
-                    console.log(`✓ ${billType}${billNumber} fetched via proxy ${i + 1}`);
-                    return xmlText;
-                }
-                throw new Error('Invalid RSS response');
-            } catch (error) {
-                console.log(`Proxy ${i + 1} failed for ${billType}${billNumber}: ${error.message}`);
-                if (i < CONFIG.corsProxies.length - 1) continue;
+        year = year || CONFIG.defaultYear;
+        const url = `${CONFIG.proxyUrl}?bill=${billType}${billNumber}&year=${year}`;
+        
+        try {
+            const response = await fetchWithTimeout(url, CONFIG.fetchTimeout);
+            if (!response.ok) { 
+                console.error(`Failed to fetch ${billType}${billNumber}: HTTP ${response.status}`);
+                return null;
             }
+            
+            const xmlText = await response.text();
+            
+            if (xmlText.includes('<rss') || xmlText.includes('<item>')) {
+                saveToCache(cacheKey, xmlText);
+                console.log(`✓ ${billType}${billNumber} fetched successfully`);
+                return xmlText;
+            }
+            
+            console.error(`Invalid RSS response for ${billType}${billNumber}`);
+            return null;
+        } catch (error) {
+            console.error(`Error fetching ${billType}${billNumber}:`, error.message);
+            return null;
         }
-        console.error(`All proxies failed for ${billType}${billNumber}`);
-        return null;
     }
     function getFromCache(key) {
         try {
