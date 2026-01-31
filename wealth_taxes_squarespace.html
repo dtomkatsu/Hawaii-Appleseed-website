@@ -1329,6 +1329,9 @@ const BillTrackerWidget = (function() {
     const CONFIG = {
         corsProxies: [
             'https://api.allorigins.win/get?url=',
+            'https://corsproxy.io/?',
+            'https://api.codetabs.com/v1/proxy?quest=',
+            'https://cors-anywhere.herokuapp.com/',
             'https://api.allorigins.win/raw?url='
         ],
         baseUrl: 'https://www.capitol.hawaii.gov/sessions/session',
@@ -1721,7 +1724,7 @@ const capGainsPolicies = {
     '9pct': {
         revenue: '$44M Revenue',
         description: 'Income from investments should not be taxed at lower rates than income from regular work. This proposal would raise the maximum capital gains rate from 7.25% to 9%, making sure that investment income receives less preferential treatment.',
-        hbNumbers: '476',
+        hbNumbers: '1850',
         sbNumbers: '2587',
         testimonyUrl: 'https://docs.google.com/document/d/1TAW1-_Vd5M1CV-Rlu1ltPFdkoI0qd70X/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true'
     }
@@ -1845,7 +1848,7 @@ function toggleHearingsWidget() {
 // Next Bill Hearings functionality
 async function loadUpcomingHearings() {
     const bills = [
-        { type: 'HB', number: '476', year: '2026' },
+        { type: 'HB', number: '1850', year: '2026' },
         { type: 'HB', number: '2010', year: '2026' },
         { type: 'SB', number: '2468', year: '2026' },
         { type: 'HB', number: '1807', year: '2026' },
