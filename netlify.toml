@@ -11,13 +11,6 @@
 [functions]
   # Directory where Netlify functions are located
   directory = "netlify/functions"
-  
-  # Function configuration
-  [functions rss-proxy]
-    # Memory allocation (MB)
-    memory = 1024
-    # Maximum execution time (seconds)
-    timeout = 10
 
 # Redirects and rewrites
 [[redirects]]
