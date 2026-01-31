@@ -1,0 +1,35 @@
+# Netlify configuration file
+
+[build]
+  # Directory to publish (static files)
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Functions configuration
+[functions]
+  # Directory where Netlify functions are located
+  directory = "netlify/functions"
+  
+  # Function configuration
+  [functions rss-proxy]
+    # Memory allocation (MB)
+    memory = 1024
+    # Maximum execution time (seconds)
+    timeout = 10
+
+# Redirects and rewrites
+[[redirects]]
+  # Optional: Add a simpler URL for the API
+  from = "/api/rss-proxy"
+  to = "/.netlify/functions/rss-proxy"
+  status = 200
+
+# Headers for all responses
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
