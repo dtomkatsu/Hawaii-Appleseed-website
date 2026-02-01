@@ -441,6 +441,15 @@
 .tfc-hearing-item:hover { background: #f8fafc; }
 .tfc-hearing-item:last-child { border-bottom: none; }
 .tfc-hearing-bill { font-size: 0.75rem; font-weight: 700; color: #243551; margin-bottom: 4px; }
+.tfc-hearing-bill a {
+    color: #243551;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.tfc-hearing-bill a:hover {
+    color: #3b82f6;
+    text-decoration: underline;
+}
 .tfc-hearing-date {
     font-size: 0.7rem;
     color: #64748b;
@@ -1869,22 +1878,40 @@ async function loadUpcomingHearings() {
         { type: 'HB', number: '2010', year: '2026' },
         { type: 'SB', number: '2468', year: '2026' },
         { type: 'HB', number: '1807', year: '2026' },
-        { type: 'HB', number: '2008', year: '2026' }
+        { type: 'HB', number: '2008', year: '2026' },
+        { type: 'HB', number: '2306', year: '2026' },
+        { type: 'SB', number: '349', year: '2026' },
+        { type: 'SB', number: '2587', year: '2026' },
+        { type: 'HB', number: '2049', year: '2026' },
+        { type: 'HB', number: '1273', year: '2026' },
+        { type: 'HB', number: '947', year: '2026' },
+        { type: 'SB', number: '2362', year: '2026' }
     ];
     
     const hearingsContent = document.getElementById('hearings-content');
     if (!hearingsContent) return;
     
     const allHearings = [];
+    const proxyUrl = 'https://verdant-dango-b7d425.netlify.app/.netlify/functions/rss-proxy';
     
     for (const bill of bills) {
         try {
-            // Use correct RSS feed URL format
-            const url = `https://www.capitol.hawaii.gov/sessions/session${bill.year}/rss/${bill.type}${bill.number}.xml`;
-            const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+            // Use the same proxy as the bill tracker widget
+            const url = `${proxyUrl}?bill=${bill.type}${bill.number}&year=${bill.year}`;
             
-            const response = await fetch(proxyUrl);
+            const response = await fetch(url);
+            if (!response.ok) {
+                console.warn(`Failed to fetch ${bill.type}${bill.number}: HTTP ${response.status}`);
+                continue;
+            }
+            
             const xmlText = await response.text();
+            
+            // Validate XML response
+            if (!xmlText.includes('<rss') && !xmlText.includes('<item>')) {
+                console.warn(`Invalid RSS response for ${bill.type}${bill.number}`);
+                continue;
+            }
             
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
@@ -1898,31 +1925,89 @@ async function loadUpcomingHearings() {
                 
                 const title = titleEl.textContent;
                 const pubDate = new Date(pubDateEl.textContent);
+                const titleLower = title.toLowerCase();
                 
-                // Check if this is a hearing announcement (contains "hearing" or "scheduled")
-                if (title.toLowerCase().includes('hearing') || title.toLowerCase().includes('scheduled')) {
-                    // Extract date from title if present
-                    const dateMatch = title.match(/(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})/);
-                    const timeMatch = title.match(/(\d{1,2}:\d{2}\s*(?:AM|PM))/i);
+                // Check if this is a hearing announcement
+                const isHearing = titleLower.includes('hearing') || 
+                                 titleLower.includes('scheduled') ||
+                                 titleLower.includes('notice');
+                
+                if (isHearing) {
+                    // Extract date from title - try multiple formats
+                    // Format: MM/DD/YYYY, MM-DD-YYYY, or "Month DD, YYYY"
+                    let hearingDate = null;
+                    let timeStr = '';
                     
-                    let hearingDate = pubDate;
-                    if (dateMatch) {
-                        try {
-                            hearingDate = new Date(dateMatch[1]);
-                        } catch (e) {
-                            hearingDate = pubDate;
+                    // Try to extract hearing date - look for patterns around "hearing", "heard", or specific date formats
+                    let dateMatch = null;
+                    
+                    // First try to find dates after "hearing", "heard", or "scheduled" keywords
+                    const hearingPatterns = [
+                        /(?:hearing|heard|scheduled).*?(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})/i,
+                        /(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4}).*?(?:hearing|heard|scheduled)/i,
+                        /(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})\s+\d{1,2}:\d{2}\s*(?:AM|PM)/i
+                    ];
+                    
+                    for (const pattern of hearingPatterns) {
+                        const match = title.match(pattern);
+                        if (match && match[1]) {
+                            dateMatch = match;
+                            break;
                         }
                     }
                     
-                    // Only show future hearings
-                    if (hearingDate >= new Date() || pubDate >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)) {
-                        allHearings.push({
-                            bill: `${bill.type} ${bill.number}`,
-                            date: hearingDate,
-                            time: timeMatch ? timeMatch[1] : '',
-                            description: title,
-                            sortDate: hearingDate
-                        });
+                    // If no hearing-specific date found, fall back to any date (but prefer later dates)
+                    if (!dateMatch) {
+                        const allDates = title.match(/(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})/g);
+                        if (allDates && allDates.length > 0) {
+                            // Use the last date found (usually the hearing date in Hawaii Legislature feeds)
+                            dateMatch = { 1: allDates[allDates.length - 1] };
+                        }
+                    }
+                    
+                    if (dateMatch) {
+                        try {
+                            const parts = dateMatch[1].split(/[-\/]/);
+                            if (parts.length === 3) {
+                                const month = parseInt(parts[0]) - 1;
+                                const day = parseInt(parts[1]);
+                                const year = parts[2].length === 2 ? 2000 + parseInt(parts[2]) : parseInt(parts[2]);
+                                hearingDate = new Date(year, month, day);
+                            }
+                        } catch (e) {
+                            console.warn(`Date parse error for ${bill.type}${bill.number}:`, e);
+                        }
+                    }
+                    
+                    // Extract time: HH:MM AM/PM
+                    const timeMatch = title.match(/(\d{1,2}:\d{2}\s*(?:AM|PM|am|pm))/i);
+                    if (timeMatch) {
+                        timeStr = timeMatch[1].toUpperCase();
+                    }
+                    
+                    // Only include if we found a hearing date in the title
+                    if (hearingDate) {
+                        // Show hearings from the last 3 days or future hearings
+                        const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000);
+                        const showHearing = hearingDate >= threeDaysAgo;
+                        
+                        if (showHearing) {
+                            // Clean up description - remove bill number prefix
+                            let description = title;
+                            const colonIndex = title.indexOf(':');
+                            if (colonIndex !== -1) {
+                                description = title.substring(colonIndex + 1).trim();
+                            }
+                            
+                            allHearings.push({
+                                bill: `${bill.type} ${bill.number}`,
+                                date: hearingDate,
+                                time: timeStr,
+                                description: description,
+                                sortDate: hearingDate,
+                                pubDate: pubDate
+                            });
+                        }
                     }
                 }
             }
@@ -1931,20 +2016,26 @@ async function loadUpcomingHearings() {
         }
     }
     
-    // Sort hearings by date
-    allHearings.sort((a, b) => a.sortDate - b.sortDate);
+    // Sort hearings by date (most recent/upcoming first)
+    allHearings.sort((a, b) => b.sortDate - a.sortDate);
     
     // Display hearings
     if (allHearings.length === 0) {
         hearingsContent.innerHTML = '<div class="tfc-hearings-empty">No upcoming hearings scheduled</div>';
     } else {
-        hearingsContent.innerHTML = allHearings.slice(0, 5).map(hearing => `
-            <div class="tfc-hearing-item">
-                <div class="tfc-hearing-bill">${hearing.bill}</div>
-                <div class="tfc-hearing-date">${hearing.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}${hearing.time ? ' • ' + hearing.time : ''}</div>
-                <div class="tfc-hearing-desc">${hearing.description.split(':').slice(1).join(':').trim()}</div>
-            </div>
-        `).join('');
+        hearingsContent.innerHTML = allHearings.slice(0, 5).map(hearing => {
+            const [billType, billNumber] = hearing.bill.split(' ');
+            const capitolUrl = `https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=${billType}&billnumber=${billNumber}&year=2026`;
+            return `
+                <div class="tfc-hearing-item">
+                    <div class="tfc-hearing-bill">
+                        <a href="${capitolUrl}" target="_blank" onclick="event.stopPropagation()">${hearing.bill}</a>
+                    </div>
+                    <div class="tfc-hearing-date">${hearing.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}${hearing.time ? ' • ' + hearing.time : ''}</div>
+                    <div class="tfc-hearing-desc">${hearing.description}</div>
+                </div>
+            `;
+        }).join('');
     }
 }
 
