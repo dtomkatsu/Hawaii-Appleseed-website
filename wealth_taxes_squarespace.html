@@ -476,10 +476,24 @@
     }
 }
 @media (max-width: 480px) {
+    .tfc-container {
+        padding: 12px;
+    }
     .tfc-bill-columns { grid-template-columns: 1fr; gap: 8px; }
     .tfc-bill-col { padding: 10px; }
-    .tfc-bill-tracker { padding: 16px; }
+    .tfc-bill-tracker { padding: 16px; margin-left: 0; margin-right: 0; }
     .tfc-card-title-row { flex-direction: column; align-items: flex-start; }
+    .tfc-card {
+        padding: 16px;
+        padding-top: 20px;
+    }
+    .tfc-policy-toggle {
+        width: 100%;
+    }
+    .tfc-policy-toggle-btn {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
 }
 /* ========== END BILL TRACKER WIDGET STYLES ========== */
 
@@ -558,6 +572,9 @@ header .header-nav-folder-content a,
     padding: 20px;
     line-height: 1.6;
     color: #1a202c;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 .tfc-header {
@@ -667,6 +684,8 @@ header .header-nav-folder-content a,
     position: relative;
     min-height: 600px;
     perspective: 1500px; /* Increased perspective for 3D peel effect */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .tfc-card {
@@ -689,6 +708,8 @@ header .header-nav-folder-content a,
         linear-gradient(rgba(0,0,0,0.01) 1px, transparent 1px),
         linear-gradient(to bottom, #ffffff 0%, #fafafa 100%);
     background-size: 20px 20px, 20px 20px, 100% 100%;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 /* Corner peel - JS controlled */
@@ -922,11 +943,23 @@ header .header-nav-folder-content a,
 }
 
 @media (max-width: 768px) {
+    .tfc-container {
+        padding: 16px;
+    }
     .tfc-header h1 {
         font-size: 2rem;
     }
     .tfc-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .tfc-card {
+        padding: 20px;
+        padding-top: 24px;
+    }
+    .tfc-card-wrapper {
+        width: 100%;
+        box-sizing: border-box;
     }
 }
 /* Bill Tracker Styles */
