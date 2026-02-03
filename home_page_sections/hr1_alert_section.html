@@ -1,0 +1,225 @@
+<!-- HR1 Alert & Cost Chart Section from home_page_squarespace.html -->
+<!-- Transparent background, no blur - paste into Squarespace code block -->
+
+<style>
+.tfc-hr1-section {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: transparent;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.tfc-alert {
+    background-color: #fff5f5;
+    border: 2px solid #fed7d7;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 40px;
+    text-align: left;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all 0.3s ease;
+    color: #2a3a4d;
+}
+
+.tfc-alert:hover {
+    background-color: #feebc8;
+    border-color: #fbd38d;
+    transform: scale(1.02);
+}
+
+.tfc-alert h3 {
+    font-family: 'Red Hat Display', sans-serif;
+    color: #c53030;
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.tfc-alert p, .tfc-alert li {
+    color: #2d3748;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.tfc-alert ul {
+    margin: 16px 0;
+    padding-left: 20px;
+}
+
+.tfc-alert li {
+    margin-bottom: 8px;
+}
+
+.tfc-hr1-link {
+    color: #319795;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.tfc-hr1-link:hover {
+    color: #2c7a7b;
+}
+
+/* Bar Chart */
+.tfc-bar-chart {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 24px;
+    padding-bottom: 60px;
+}
+
+.tfc-bar-chart-title {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 1.5rem;
+    color: #2a3a4d;
+    margin-bottom: 20px;
+    text-align: left;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tfc-money-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #e57373;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #e57373;
+}
+
+.tfc-bar-chart-year {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #718096;
+    margin-left: 8px;
+}
+
+.tfc-bar-chart-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.tfc-bar-stack {
+    flex: 1;
+    display: flex;
+    height: 50px;
+    border-radius: 8px;
+    overflow: visible;
+    background: #edf2f7;
+    position: relative;
+}
+
+.tfc-bar-segment {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: visible;
+    transition: filter 0.3s ease;
+}
+
+.tfc-bar-segment:hover {
+    filter: brightness(1.15);
+}
+
+.tfc-bar-segment-act46 {
+    width: 60.4%;
+    background: linear-gradient(135deg, #5a7a9a 0%, #4a6a8a 100%);
+    border-radius: 8px 0 0 8px;
+}
+
+.tfc-bar-segment-medicaid {
+    width: 36.7%;
+    background: linear-gradient(135deg, #8aa8be 0%, #7a98ae 100%);
+}
+
+.tfc-bar-segment-snap {
+    width: 2.9%;
+    background: linear-gradient(135deg, #8fbfaa 0%, #7aaf9a 100%);
+    border-radius: 0 8px 8px 0;
+}
+
+.tfc-bar-label {
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4a5568;
+    white-space: nowrap;
+}
+
+.tfc-bar-amount {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.tfc-bar-total {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #e57373;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .tfc-bar-chart-title {
+        font-size: 1.1rem;
+    }
+    
+    .tfc-money-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+}
+</style>
+
+<div class="tfc-hr1-section">
+    <div class="tfc-alert">
+        <h3>Billions of federal and state dollars are at risk</h3>
+        <p><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">HR1</a> could take millions of federal dollars away from Hawai'i:</p>
+        <ul>
+            <li><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">Adding $36 to $109 million in costs for SNAP</a>—food benefits for low-income households.</li>
+            <li><a href="https://www.cbpp.org/research/state-budget-and-tax/harmful-republican-megabill-fails-families-children-and-communities#pick_state=1&state=HI" target="_blank" class="tfc-hr1-link">108,000 Hawai'i residents will be at risk of losing Medicaid coverage</a> unless the State steps in.</li>
+        </ul>
+    </div>
+
+    <div class="tfc-bar-chart">
+        <div class="tfc-bar-chart-title">
+            <span class="tfc-money-icon">$</span>
+            Estimated Cost to Hawai'i
+            <span class="tfc-bar-chart-year">in fiscal year 2027</span>
+        </div>
+        <div class="tfc-bar-chart-container">
+            <div class="tfc-bar-stack">
+                <div class="tfc-bar-segment tfc-bar-segment-act46">
+                    <span class="tfc-bar-amount">$740M</span>
+                    <span class="tfc-bar-label">Act 46</span>
+                </div>
+                <div class="tfc-bar-segment tfc-bar-segment-medicaid">
+                    <span class="tfc-bar-amount">$450M</span>
+                    <span class="tfc-bar-label">Medicaid</span>
+                </div>
+                <div class="tfc-bar-segment tfc-bar-segment-snap">
+                    <span class="tfc-bar-amount">$36M</span>
+                    <span class="tfc-bar-label">SNAP</span>
+                </div>
+            </div>
+            <div class="tfc-bar-total">-$1.226B</div>
+        </div>
+    </div>
+</div>

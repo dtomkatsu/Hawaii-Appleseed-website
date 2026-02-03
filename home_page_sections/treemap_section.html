@@ -1,0 +1,222 @@
+<!-- Tax Burden Treemaps Section from home_page_squarespace.html -->
+<!-- Transparent background, no blur - paste into Squarespace code block -->
+
+<style>
+.tfc-treemap-section {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: transparent;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.tfc-treemap-title {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 1.75rem;
+    color: #2a3a4d;
+    text-align: left;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.tfc-treemap-subtitle {
+    font-size: 1rem;
+    color: #4a5568;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.tfc-treemap-cluster {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.tfc-treemap-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.tfc-treemap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tfc-treemap-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+    object-fit: contain;
+}
+
+.tfc-treemap-label {
+    font-size: 0.9rem;
+    color: #2a3a4d;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.tfc-treemap-income {
+    font-size: 0.8rem;
+    color: #4a5568;
+    margin-bottom: 12px;
+}
+
+.tfc-treemap-box {
+    position: relative;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    width: 180px;
+    height: 180px;
+    background: #f7fafc;
+    border: 2px solid #cbd5e0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.tfc-treemap-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.tfc-treemap-box-label {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 0.7rem;
+    color: #718096;
+}
+
+.tfc-treemap-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.tfc-treemap-fill:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.tfc-treemap-fill-lowest {
+    width: 67.6%;
+    height: 67.6%;
+    background: linear-gradient(135deg, #e57373 0%, #c62828 100%);
+}
+
+.tfc-treemap-fill-top {
+    width: 57.2%;
+    height: 57.2%;
+    background: linear-gradient(135deg, #8fbfaa 0%, #5a9a7a 100%);
+}
+
+.tfc-treemap-percent {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.tfc-treemap-vs {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #e57373;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    margin-top: 60px;
+}
+
+.tfc-treemap-shared-caption {
+    font-size: 1rem;
+    color: #4a5568;
+    text-align: center;
+    margin-top: 30px;
+    max-width: 800px;
+}
+
+.tfc-treemap-btn {
+    display: inline-block;
+    background-color: #2a3a4d;
+    color: white !important;
+    padding: 16px 32px;
+    border-radius: 8px;
+    text-decoration: none !important;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.tfc-treemap-btn:hover {
+    background-color: #3b4c60;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .tfc-treemap-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .tfc-treemap-vs {
+        margin-top: 0;
+        padding: 10px 0;
+    }
+}
+</style>
+
+<div class="tfc-treemap-section">
+    <div class="tfc-treemap-title">Why Hawai'i's Tax System Is Unfair</div>
+    
+    <div class="tfc-treemap-cluster">
+        <div class="tfc-treemap-subtitle">Share of family income<br>spent on state and local taxes</div>
+        <div class="tfc-treemap-container">
+            <div class="tfc-treemap">
+                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/f7b69bfe-ce12-4755-9f67-98ba4254c97b/22ac3132-dfdb-4ffc-b20a-5b773b640312.png?format=2500w" alt="" class="tfc-treemap-icon">
+                <div class="tfc-treemap-label">Lowest 20%</div>
+                <div class="tfc-treemap-income">Earning less than $21,900</div>
+                <div class="tfc-treemap-box">
+                    <span class="tfc-treemap-box-label">Total Income</span>
+                    <div class="tfc-treemap-fill tfc-treemap-fill-lowest">
+                        <span class="tfc-treemap-percent">14.1%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tfc-treemap-vs">VS</div>
+            <div class="tfc-treemap">
+                <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/5994d7ab-3aa9-4c08-9a64-80979054f3e3/0ecf4add-93c5-432a-85b4-8c379e096102.png?format=2500w" alt="" class="tfc-treemap-icon">
+                <div class="tfc-treemap-label">Top 1%</div>
+                <div class="tfc-treemap-income">Earning over $594,000</div>
+                <div class="tfc-treemap-box">
+                    <span class="tfc-treemap-box-label">Total Income</span>
+                    <div class="tfc-treemap-fill tfc-treemap-fill-top">
+                        <span class="tfc-treemap-percent">10.1%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tfc-treemap-shared-caption">The top 1% spend a lower portion of their income on their taxes<br>than everyone else.</div>
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="https://www.hitaxfairness.org/tax-system" class="tfc-treemap-btn" target="_blank">Learn More</a>
+        </div>
+    </div>
+</div>

@@ -391,7 +391,7 @@
     position: fixed;
     top: 100px;
     right: 20px;
-    width: 320px;
+    width: 480px;
     background: #fff;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
@@ -411,7 +411,7 @@
     justify-content: space-between;
     align-items: center;
 }
-.tfc-hearings-title { font-size: 0.9rem; font-weight: 700; margin: 0; color: #fff; }
+.tfc-hearings-title { font-size: 1.1rem; font-weight: 700; margin: 0; color: #fff; }
 .tfc-hearings-toggle {
     background: none;
     border: none;
@@ -434,13 +434,13 @@
 }
 .tfc-hearings-widget.collapsed .tfc-hearings-content { max-height: 0; overflow: hidden; }
 .tfc-hearing-item {
-    padding: 12px 16px;
+    padding: 16px 20px;
     border-bottom: 1px solid #f1f5f9;
     transition: background 0.2s ease;
 }
 .tfc-hearing-item:hover { background: #f8fafc; }
 .tfc-hearing-item:last-child { border-bottom: none; }
-.tfc-hearing-bill { font-size: 0.75rem; font-weight: 700; color: #243551; margin-bottom: 4px; }
+.tfc-hearing-bill { font-size: 0.95rem; font-weight: 700; color: #243551; margin-bottom: 6px; }
 .tfc-hearing-bill a {
     color: #243551;
     text-decoration: none;
@@ -451,15 +451,15 @@
     text-decoration: underline;
 }
 .tfc-hearing-date {
-    font-size: 0.7rem;
+    font-size: 0.85rem;
     color: #64748b;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
 }
 .tfc-hearing-date::before { content: '\1F4C5'; font-size: 0.8rem; }
-.tfc-hearing-desc { font-size: 0.75rem; color: #475569; line-height: 1.4; }
+.tfc-hearing-desc { font-size: 0.9rem; color: #475569; line-height: 1.5; }
 .tfc-hearings-empty { padding: 24px 16px; text-align: center; color: #94a3b8; font-size: 0.8rem; }
 .tfc-hearings-loading { padding: 24px 16px; text-align: center; color: #94a3b8; font-size: 0.8rem; font-style: italic; }
 .tfc-hearings-content::-webkit-scrollbar { width: 6px; }
@@ -1202,7 +1202,7 @@ header .header-nav-folder-content a,
     </div>
 
     <!-- Next Bill Hearings Widget -->
-    <div class="tfc-hearings-widget" id="hearings-widget" style="position: static; margin: 40px auto; max-width: 400px;">
+    <div class="tfc-hearings-widget" id="hearings-widget" style="position: static; margin: 40px auto; max-width: 600px;">
         <div class="tfc-hearings-header">
             <h3 class="tfc-hearings-title">Next Bill Hearings</h3>
             <button class="tfc-hearings-toggle" onclick="toggleHearingsWidget()" aria-label="Toggle hearings">&#9660;</button>
@@ -1230,7 +1230,7 @@ header .header-nav-folder-content a,
             <div class="tfc-sample-testimony">
                 <div class="tfc-sample-testimony-content">
                     <div class="tfc-sample-testimony-label">Sample Testimony</div>
-                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1Ma3OIaiwDPvgUCBXl1_D-DFfWyd0jTke2JrDCdsRXRs/edit?tab=t.0" target="_blank">View Testimony Template</a>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1Ma3OIaiwDPvgUCBXl1_D-DFfWyd0jTke2JrDCdsRXRs/template/preview" target="_blank">View Testimony Template</a>
                 </div>
                 <a href="https://www.hitaxfairness.org/act-46" class="tfc-more-btn" target="_blank">More Info</a>
             </div>
@@ -1263,7 +1263,7 @@ header .header-nav-folder-content a,
             <div class="tfc-sample-testimony" id="capgains-testimony">
                 <div class="tfc-sample-testimony-content">
                     <div class="tfc-sample-testimony-label">Sample Testimony</div>
-                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true" target="_blank">View Testimony Template</a>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/template/preview" target="_blank">View Testimony Template</a>
                 </div>
                 <a href="https://www.hitaxfairness.org/capital-gains" class="tfc-more-btn" target="_blank">More Info</a>
             </div>
@@ -1298,7 +1298,7 @@ header .header-nav-folder-content a,
             <!-- Bill Tracker Component -->
             <div class="tfc-bill-tracker has-testimony" 
                  data-tracker-id="reits"
-                 data-hb="1273,947"
+                 data-hb="2150"
                  data-sb="2362"
                  data-year="2026">
             </div>
@@ -1306,7 +1306,7 @@ header .header-nav-folder-content a,
             <div class="tfc-sample-testimony">
                 <div class="tfc-sample-testimony-content">
                     <div class="tfc-sample-testimony-label">Sample Testimony</div>
-                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1uUbeScmkPPU8D25iyVKX3GrAwvq3n1qdmr26jfMbzEs/edit?tab=t.0" target="_blank">View Testimony Template</a>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1uUbeScmkPPU8D25iyVKX3GrAwvq3n1qdmr26jfMbzEs/template/preview" target="_blank">View Testimony Template</a>
                 </div>
                 <a href="https://www.hitaxfairness.org/real-estate-investment-trust-reform" class="tfc-more-btn" target="_blank">More Info</a>
             </div>
@@ -1340,7 +1340,7 @@ header .header-nav-folder-content a,
             <div class="tfc-sample-testimony" id="millionaires-testimony">
                 <div class="tfc-sample-testimony-content">
                     <div class="tfc-sample-testimony-label">Sample Testimony</div>
-                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/edit?usp=sharing" target="_blank">View Testimony Template</a>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/template/preview" target="_blank">View Testimony Template</a>
                 </div>
                 <a href="https://www.hitaxfairness.org/income-tax" class="tfc-more-btn" target="_blank">More Info</a>
             </div>
@@ -1745,14 +1745,14 @@ const capGainsPolicies = {
         description: 'Income from investments should not be taxed at lower rates than income from regular work. This proposal would tax capital gains fairly&mdash;at the same rate as ordinary income from a job.',
         hbNumbers: '',
         sbNumbers: '349',
-        testimonyUrl: 'https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true'
+        testimonyUrl: 'https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/template/preview'
     },
     '9pct': {
         revenue: '$44M Revenue',
         description: 'Income from investments should not be taxed at lower rates than income from regular work. This proposal would raise the maximum capital gains rate from 7.25% to 9%, making sure that investment income receives less preferential treatment.',
         hbNumbers: '1850',
         sbNumbers: '2587',
-        testimonyUrl: 'https://docs.google.com/document/d/1TAW1-_Vd5M1CV-Rlu1ltPFdkoI0qd70X/edit?usp=sharing&ouid=115007820913125221716&rtpof=true&sd=true'
+        testimonyUrl: 'https://docs.google.com/document/d/1TAW1-_Vd5M1CV-Rlu1ltPFdkoI0qd70X/template/preview'
     }
 };
 
@@ -1804,21 +1804,21 @@ const millionairesTaxPolicies = {
         description: 'Tax on income over $1 million. The State\'s top 1 percent can afford to pay more to help secure our state\'s future.',
         hbNumbers: '2010',
         sbNumbers: '2468',
-        testimonyUrl: 'https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/edit?usp=sharing'
+        testimonyUrl: 'https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/template/preview'
     },
     hb1807: {
         revenue: 'Revenue Unknown',
         description: 'Tax on high-income earners (joint filers over $1 million). The State\'s top 1 percent can afford to pay more to help secure our state\'s future.',
         hbNumbers: '1807',
         sbNumbers: '',
-        testimonyUrl: 'https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/edit?usp=sharing'
+        testimonyUrl: 'https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/template/preview'
     },
     hb2008: {
         revenue: 'Revenue Unknown',
         description: 'Tax on high-income earners starting in 2028. The State\'s top 1 percent can afford to pay more to help secure our state\'s future.',
         hbNumbers: '2008',
         sbNumbers: '',
-        testimonyUrl: 'https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/edit?usp=sharing'
+        testimonyUrl: 'https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/template/preview'
     }
 };
 
@@ -1883,8 +1883,7 @@ async function loadUpcomingHearings() {
         { type: 'SB', number: '349', year: '2026' },
         { type: 'SB', number: '2587', year: '2026' },
         { type: 'HB', number: '2049', year: '2026' },
-        { type: 'HB', number: '1273', year: '2026' },
-        { type: 'HB', number: '947', year: '2026' },
+        { type: 'HB', number: '2150', year: '2026' },
         { type: 'SB', number: '2362', year: '2026' }
     ];
     
