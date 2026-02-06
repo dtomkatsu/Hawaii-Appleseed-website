@@ -286,8 +286,9 @@
                         }
                         
                         if (hearingDate) {
-                            const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000);
-                            if (hearingDate >= threeDaysAgo) {
+                            const now = new Date();
+                            // Only show future or today's hearings (not past ones)
+                            if (hearingDate >= now.setHours(0, 0, 0, 0)) {
                                 let description = title;
                                 const colonIndex = title.indexOf(':');
                                 if (colonIndex !== -1) {

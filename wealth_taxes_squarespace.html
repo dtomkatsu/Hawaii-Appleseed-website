@@ -1284,7 +1284,10 @@ header .header-nav-folder-content a,
             </div>
             <!-- Bottom section with More button -->
             <div class="tfc-sample-testimony">
-                <div class="tfc-sample-testimony-content"></div>
+                <div class="tfc-sample-testimony-content">
+                    <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1j4me2xYHv4z5f26RClAANvkNn5mji4kxG32BCWDVEQ8/template/preview" target="_blank">View Testimony Template</a>
+                </div>
                 <a href="https://www.hitaxfairness.org/conveyance-tax" class="tfc-more-btn" target="_blank">More Info</a>
             </div>
         </div>
@@ -1986,9 +1989,9 @@ async function loadUpcomingHearings() {
                     
                     // Only include if we found a hearing date in the title
                     if (hearingDate) {
-                        // Show hearings from the last 3 days or future hearings
-                        const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000);
-                        const showHearing = hearingDate >= threeDaysAgo;
+                        // Only show future or today's hearings (not past ones)
+                        const now = new Date();
+                        const showHearing = hearingDate >= now.setHours(0, 0, 0, 0);
                         
                         if (showHearing) {
                             // Clean up description - remove bill number prefix
