@@ -551,28 +551,6 @@ header .header-nav-folder-content a,
     color: #2A3A4D !important;
 }
 
-/* Hide default cursor */
-* {
-    cursor: none !important;
-}
-
-/* Custom cursor - grey circle */
-.tfc-cursor {
-    width: 20px;
-    height: 20px;
-    background: rgba(120, 120, 120, 0.7);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease, background 0.2s ease;
-}
-
-.tfc-cursor.hover {
-    transform: translate(-50%, -50%) scale(1.3);
-    background: rgba(150, 150, 150, 0.8);
-}
 
 .tfc-container {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -709,8 +687,7 @@ header .header-nav-folder-content a,
     display: flex;
     flex-direction: column;
     transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
-    /* Initial state controlled by JS */
-    opacity: 0;
+    opacity: 1;
     /* Paper texture */
     background-image: 
         linear-gradient(90deg, rgba(0,0,0,0.01) 1px, transparent 1px),
@@ -2005,24 +1982,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load upcoming hearings
     loadUpcomingHearings();
     
-    // Create custom cursor
-    const cursor = document.createElement('div');
-    cursor.className = 'tfc-cursor';
-    document.body.appendChild(cursor);
-    
-    // Track cursor position
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-    });
-    
-    // Hide cursor when leaving window
-    document.addEventListener('mouseleave', () => {
-        cursor.style.opacity = '0';
-    });
-    document.addEventListener('mouseenter', () => {
-        cursor.style.opacity = '1';
-    });
     
     // Particle effect that follows cursor on summary card hover
     const summaryCard = document.querySelector('.tfc-summary-card');
