@@ -1287,15 +1287,31 @@ header .header-nav-folder-content a,
         </div>
     </div>
 
-    <!-- Non-Coalition Priorities -->
-    <h3 style="text-align: center; margin: 60px 0 20px; color: #4a5568; font-weight: 600;">Non-Coalition Priorities</h3>
+    <!-- Other Priorities -->
+    <h3 style="text-align: center; margin: 60px 0 20px; color: #4a5568; font-weight: 600;">Other Priorities</h3>
     
     <div class="tfc-grid" style="min-height: auto; margin-top: 0;">
-        <div class="tfc-card" style="background: linear-gradient(to bottom, #f0fff4 0%, #e6fffa 100%); border-color: rgba(56, 161, 105, 0.2);">
-            <div class="tfc-card-title">Wealth Proceeds Tax</div>
-            <div class="tfc-card-revenue">$53.9M Revenue</div>
-            <div class="tfc-card-desc">Investors should be fairly taxed on all of their income from investments, including passive income.</div>
-            <a href="https://www.hitaxfairness.org/wealth-proceeds-tax" class="tfc-card-btn" target="_blank">More</a>
+        <div class="tfc-card-wrapper">
+            <div class="tfc-card" style="background: linear-gradient(to bottom, #f0fff4 0%, #e6fffa 100%); border-color: rgba(56, 161, 105, 0.2);">
+                <div class="tfc-card-title">Wealth Proceeds Tax</div>
+                <div class="tfc-card-revenue">$53.9M Revenue</div>
+                <div class="tfc-card-desc">Investors should be fairly taxed on all of their income from investments, including passive income.</div>
+            </div>
+            <!-- Bill Tracker Component -->
+            <div class="tfc-bill-tracker has-testimony" 
+                 data-tracker-id="wealth-proceeds"
+                 data-hb="2623"
+                 data-sb=""
+                 data-year="2026">
+            </div>
+            <!-- Sample Testimony -->
+            <div class="tfc-sample-testimony">
+                <div class="tfc-sample-testimony-content">
+                    <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                    <a class="tfc-testimony-link" href="#" target="_blank">View Testimony Template</a>
+                </div>
+                <a href="https://www.hitaxfairness.org/wealth-proceeds-tax" class="tfc-more-btn" target="_blank">More Info</a>
+            </div>
         </div>
     </div>
 
@@ -1824,7 +1840,8 @@ async function loadUpcomingHearings() {
         { type: 'SB', number: '2587', year: '2026' },
         { type: 'HB', number: '2049', year: '2026' },
         { type: 'HB', number: '2150', year: '2026' },
-        { type: 'SB', number: '2362', year: '2026' }
+        { type: 'SB', number: '2362', year: '2026' },
+        { type: 'HB', number: '2623', year: '2026' }
     ];
     
     const hearingsContent = document.getElementById('hearings-content');
@@ -1869,7 +1886,10 @@ async function loadUpcomingHearings() {
                 // Check if this is a hearing announcement
                 const isHearing = titleLower.includes('hearing') || 
                                  titleLower.includes('scheduled') ||
-                                 titleLower.includes('notice');
+                                 titleLower.includes('notice') ||
+                                 titleLower.includes('decision') ||
+                                 titleLower.includes('public') ||
+                                 titleLower.includes('hold');
                 
                 if (isHearing) {
                     // Extract date from title - try multiple formats
@@ -1906,12 +1926,15 @@ async function loadUpcomingHearings() {
                     
                     if (dateMatch) {
                         try {
+                            console.log(`Found date for ${bill.type}${bill.number}: ${dateMatch[1]}`);
                             const parts = dateMatch[1].split(/[-\/]/);
                             if (parts.length === 3) {
                                 const month = parseInt(parts[0]) - 1;
                                 const day = parseInt(parts[1]);
                                 const year = parts[2].length === 2 ? 2000 + parseInt(parts[2]) : parseInt(parts[2]);
                                 hearingDate = new Date(year, month, day);
+                                hearingDate.setHours(0, 0, 0, 0);
+                                console.log(`Parsed date: ${hearingDate.toISOString().split('T')[0]}`);
                             }
                         } catch (e) {
                             console.warn(`Date parse error for ${bill.type}${bill.number}:`, e);
@@ -1928,7 +1951,10 @@ async function loadUpcomingHearings() {
                     if (hearingDate) {
                         // Only show future or today's hearings (not past ones)
                         const now = new Date();
-                        const showHearing = hearingDate >= now.setHours(0, 0, 0, 0);
+                        now.setHours(0, 0, 0, 0);
+                        const showHearing = hearingDate >= now;
+                        
+                        console.log(`${bill.type}${bill.number} - Hearing: ${hearingDate.toISOString().split('T')[0]}, Today: ${now.toISOString().split('T')[0]}, Show: ${showHearing}`);
                         
                         if (showHearing) {
                             // Clean up description - remove bill number prefix

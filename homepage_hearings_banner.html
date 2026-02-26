@@ -238,7 +238,10 @@
                     
                     const isHearing = titleLower.includes('hearing') || 
                                      titleLower.includes('scheduled') ||
-                                     titleLower.includes('notice');
+                                     titleLower.includes('notice') ||
+                                     titleLower.includes('decision') ||
+                                     titleLower.includes('public') ||
+                                     titleLower.includes('hold');
                     
                     if (isHearing) {
                         let hearingDate = null;
@@ -275,6 +278,7 @@
                                     const day = parseInt(parts[1]);
                                     const year = parts[2].length === 2 ? 2000 + parseInt(parts[2]) : parseInt(parts[2]);
                                     hearingDate = new Date(year, month, day);
+                                    hearingDate.setHours(0, 0, 0, 0);
                                 }
                             } catch (e) {}
                         }
@@ -287,8 +291,9 @@
                         
                         if (hearingDate) {
                             const now = new Date();
+                            now.setHours(0, 0, 0, 0);
                             // Only show future or today's hearings (not past ones)
-                            if (hearingDate >= now.setHours(0, 0, 0, 0)) {
+                            if (hearingDate >= now) {
                                 let description = title;
                                 const colonIndex = title.indexOf(':');
                                 if (colonIndex !== -1) {
