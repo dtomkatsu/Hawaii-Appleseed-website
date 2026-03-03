@@ -2054,6 +2054,7 @@ async function loadBillsAlive() {
             
             // Check latest status
             let isDeferred = false;
+            let hasHadHearing = false;
             let latestStatus = '';
             let latestDate = '';
             if (items.length > 0) {
@@ -2071,6 +2072,20 @@ async function loadBillsAlive() {
                 }
                 updates.sort((a, b) => b.date - a.date);
                 
+                // Check if bill has had any hearings
+                for (const update of updates) {
+                    const titleLower = update.title.toLowerCase();
+                    if (titleLower.includes('hearing') || 
+                        titleLower.includes('scheduled') ||
+                        titleLower.includes('notice') ||
+                        titleLower.includes('decision') ||
+                        titleLower.includes('public') ||
+                        titleLower.includes('hold')) {
+                        hasHadHearing = true;
+                        break;
+                    }
+                }
+                
                 if (updates.length > 0) {
                     const latestTitle = updates[0].title.toLowerCase();
                     latestDate = updates[0].date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -2085,6 +2100,11 @@ async function loadBillsAlive() {
                         isDeferred = true;
                     }
                 }
+            }
+            
+            // Only include bills that have had at least one hearing
+            if (!hasHadHearing) {
+                continue;
             }
             
             const billData = {
