@@ -466,6 +466,97 @@
 .tfc-hearings-content::-webkit-scrollbar-track { background: #f1f5f9; }
 .tfc-hearings-content::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 3px; }
 .tfc-hearings-content::-webkit-scrollbar-thumb:hover { background: #a0aec0; }
+
+/* Bill Status Table Styles */
+.tfc-bill-status-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+.tfc-bill-status-table thead {
+    background: #f8fafc;
+    border-bottom: 2px solid #e2e8f0;
+}
+.tfc-bill-status-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.tfc-bill-status-table tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s ease;
+}
+.tfc-bill-status-table tbody tr:hover {
+    background: #f8fafc;
+}
+.tfc-bill-status-table tbody tr.has-hearing {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+}
+.tfc-bill-status-table tbody tr.has-hearing:hover {
+    background: #fde68a;
+}
+.tfc-bill-status-table td {
+    padding: 14px 16px;
+    color: #334155;
+    vertical-align: top;
+}
+.tfc-bill-status-table td.bill-number {
+    font-weight: 600;
+    color: #243551;
+    white-space: nowrap;
+}
+.tfc-bill-status-table td.bill-number a {
+    color: #243551;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.tfc-bill-status-table td.bill-number a:hover {
+    color: #3b82f6;
+    text-decoration: underline;
+}
+.tfc-bill-status-table td.issue-area {
+    font-weight: 500;
+    color: #475569;
+}
+.tfc-bill-status-table td.latest-status {
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.5;
+}
+.tfc-bill-status-table td.latest-status .status-date {
+    font-weight: 600;
+    color: #475569;
+    margin-right: 6px;
+}
+.tfc-bill-status-table .hearing-indicator {
+    display: inline-block;
+    background: #f59e0b;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+@media (max-width: 768px) {
+    .tfc-bill-status-table {
+        font-size: 0.8rem;
+    }
+    .tfc-bill-status-table th,
+    .tfc-bill-status-table td {
+        padding: 10px 12px;
+    }
+    .tfc-bill-status-table td.latest-status {
+        font-size: 0.75rem;
+    }
+}
 @media (max-width: 600px) {
     .tfc-policy-wrapper {
         margin-left: 0;
@@ -481,7 +572,7 @@
         position: static;
         width: 100%;
         margin: 20px auto;
-        max-width: 600px;
+        max-width: 95%;
     }
 }
 @media (max-width: 480px) {
@@ -554,7 +645,7 @@ header .header-nav-folder-content a,
 
 .tfc-container {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    max-width: 1200px;
+    max-width: 2400px;
     margin: 0 auto;
     padding: 20px;
     line-height: 1.6;
@@ -1138,25 +1229,20 @@ header .header-nav-folder-content a,
         </div>
     </div>
 
-    <!-- Next Bill Hearings Widget -->
-    <div class="tfc-hearings-widget" id="hearings-widget" style="position: static; margin: 40px auto; max-width: 600px;">
+    <!-- Bill Status Table Widget -->
+    <div class="tfc-hearings-widget" id="bill-status-widget" style="position: static; margin: 40px auto; max-width: 1800px;">
         <div class="tfc-hearings-header">
-            <h3 class="tfc-hearings-title">Next Bill Hearings</h3>
-            <button class="tfc-hearings-toggle" onclick="toggleHearingsWidget()" aria-label="Toggle hearings">&#9660;</button>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <h3 class="tfc-hearings-title">Bill Status Tracker</h3>
+                <label style="display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: #475569; cursor: pointer;">
+                    <input type="checkbox" id="alive-filter" checked onchange="filterBillStatus()" style="cursor: pointer;">
+                    <span>Alive Only</span>
+                </label>
+            </div>
+            <button class="tfc-hearings-toggle" onclick="toggleBillStatusWidget()" aria-label="Toggle bill status">&#9660;</button>
         </div>
-        <div class="tfc-hearings-content" id="hearings-content">
-            <div class="tfc-hearings-loading">Loading upcoming hearings...</div>
-        </div>
-    </div>
-
-    <!-- Bills Still Alive Widget -->
-    <div class="tfc-hearings-widget" id="alive-widget" style="position: static; margin: 20px auto 40px; max-width: 600px;">
-        <div class="tfc-hearings-header">
-            <h3 class="tfc-hearings-title">Bills Still Alive</h3>
-            <button class="tfc-hearings-toggle" onclick="toggleAliveWidget()" aria-label="Toggle alive bills">&#9660;</button>
-        </div>
-        <div class="tfc-hearings-content" id="alive-content">
-            <div class="tfc-hearings-loading">Checking bill statuses...</div>
+        <div class="tfc-hearings-content" id="bill-status-content">
+            <div class="tfc-hearings-loading">Loading bill statuses...</div>
         </div>
     </div>
 
@@ -1830,214 +1916,37 @@ function switchMillionairesTaxPolicy(policy) {
     }
 }
 
-// Toggle hearings widget
-function toggleHearingsWidget() {
-    const widget = document.getElementById('hearings-widget');
+// Toggle bill status widget
+function toggleBillStatusWidget() {
+    const widget = document.getElementById('bill-status-widget');
     if (widget) {
         widget.classList.toggle('collapsed');
     }
 }
 
-// Next Bill Hearings functionality
-async function loadUpcomingHearings() {
+// Bill Status Table functionality
+async function loadBillStatusTable() {
     const bills = [
-        { type: 'HB', number: '1850', year: '2026' },
-        { type: 'HB', number: '2010', year: '2026' },
-        { type: 'SB', number: '2468', year: '2026' },
-        { type: 'HB', number: '1807', year: '2026' },
-        { type: 'HB', number: '2008', year: '2026' },
-        { type: 'HB', number: '2306', year: '2026' },
-        { type: 'SB', number: '2441', year: '2026' },
-        { type: 'SB', number: '2587', year: '2026' },
-        { type: 'HB', number: '2049', year: '2026' },
-        { type: 'HB', number: '2150', year: '2026' },
-        { type: 'SB', number: '2362', year: '2026' },
-        { type: 'HB', number: '2623', year: '2026' },
-        { type: 'SB', number: '3125', year: '2026' }
+        { type: 'HB', number: '2306', year: '2026', issueArea: 'Stop Tax Cuts for the Wealthy' },
+        { type: 'SB', number: '3125', year: '2026', issueArea: 'Stop Tax Cuts for the Wealthy' },
+        { type: 'SB', number: '2441', year: '2026', issueArea: 'Tax Wealth Like Work' },
+        { type: 'HB', number: '1850', year: '2026', issueArea: 'Tax Wealth Like Work' },
+        { type: 'SB', number: '2587', year: '2026', issueArea: 'Tax Wealth Like Work' },
+        { type: 'HB', number: '2010', year: '2026', issueArea: 'Millionaires Tax' },
+        { type: 'SB', number: '2468', year: '2026', issueArea: 'Millionaires Tax' },
+        { type: 'HB', number: '1807', year: '2026', issueArea: 'Millionaires Tax' },
+        { type: 'HB', number: '2008', year: '2026', issueArea: 'Millionaires Tax' },
+        { type: 'HB', number: '2049', year: '2026', issueArea: 'Conveyance Tax' },
+        { type: 'HB', number: '2150', year: '2026', issueArea: 'Closing REIT Loophole' },
+        { type: 'SB', number: '2362', year: '2026', issueArea: 'Closing REIT Loophole' },
+        { type: 'HB', number: '2623', year: '2026', issueArea: 'Wealth Proceeds Tax' }
     ];
     
-    const hearingsContent = document.getElementById('hearings-content');
-    if (!hearingsContent) return;
-    
-    const allHearings = [];
-    const proxyUrl = 'https://verdant-dango-b7d425.netlify.app/.netlify/functions/rss-proxy';
-    
-    for (const bill of bills) {
-        try {
-            // Use the same proxy as the bill tracker widget
-            const url = `${proxyUrl}?bill=${bill.type}${bill.number}&year=${bill.year}`;
-            
-            const response = await fetch(url);
-            if (!response.ok) {
-                console.warn(`Failed to fetch ${bill.type}${bill.number}: HTTP ${response.status}`);
-                continue;
-            }
-            
-            const xmlText = await response.text();
-            
-            // Validate XML response
-            if (!xmlText.includes('<rss') && !xmlText.includes('<item>')) {
-                console.warn(`Invalid RSS response for ${bill.type}${bill.number}`);
-                continue;
-            }
-            
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-            const items = xmlDoc.getElementsByTagName('item');
-            
-            for (let i = 0; i < items.length; i++) {
-                const titleEl = items[i].getElementsByTagName('title')[0];
-                const pubDateEl = items[i].getElementsByTagName('pubDate')[0];
-                
-                if (!titleEl || !pubDateEl) continue;
-                
-                const title = titleEl.textContent;
-                const pubDate = new Date(pubDateEl.textContent);
-                const titleLower = title.toLowerCase();
-                
-                // Check if this is a hearing announcement
-                const isHearing = titleLower.includes('hearing') || 
-                                 titleLower.includes('scheduled') ||
-                                 titleLower.includes('notice') ||
-                                 titleLower.includes('decision') ||
-                                 titleLower.includes('public') ||
-                                 titleLower.includes('hold');
-                
-                if (isHearing) {
-                    // Extract date from title - try multiple formats
-                    // Format: MM/DD/YYYY, MM-DD-YYYY, or "Month DD, YYYY"
-                    let hearingDate = null;
-                    let timeStr = '';
-                    
-                    // Try to extract hearing date - look for patterns around "hearing", "heard", or specific date formats
-                    let dateMatch = null;
-                    
-                    // First try to find dates after "hearing", "heard", or "scheduled" keywords
-                    const hearingPatterns = [
-                        /(?:hearing|heard|scheduled).*?(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})/i,
-                        /(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4}).*?(?:hearing|heard|scheduled)/i,
-                        /(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})\s+\d{1,2}:\d{2}\s*(?:AM|PM)/i
-                    ];
-                    
-                    for (const pattern of hearingPatterns) {
-                        const match = title.match(pattern);
-                        if (match && match[1]) {
-                            dateMatch = match;
-                            break;
-                        }
-                    }
-                    
-                    // If no hearing-specific date found, fall back to any date (but prefer later dates)
-                    if (!dateMatch) {
-                        const allDates = title.match(/(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})/g);
-                        if (allDates && allDates.length > 0) {
-                            // Use the last date found (usually the hearing date in Hawaii Legislature feeds)
-                            dateMatch = { 1: allDates[allDates.length - 1] };
-                        }
-                    }
-                    
-                    if (dateMatch) {
-                        try {
-                            const parts = dateMatch[1].split(/[-\/]/);
-                            if (parts.length === 3) {
-                                const month = parseInt(parts[0]) - 1;
-                                const day = parseInt(parts[1]);
-                                const year = parts[2].length === 2 ? 2000 + parseInt(parts[2]) : parseInt(parts[2]);
-                                hearingDate = new Date(year, month, day);
-                                hearingDate.setHours(0, 0, 0, 0);
-                            }
-                        } catch (e) {
-                            console.warn(`Date parse error for ${bill.type}${bill.number}:`, e);
-                        }
-                    }
-                    
-                    // Extract time: HH:MM AM/PM
-                    const timeMatch = title.match(/(\d{1,2}:\d{2}\s*(?:AM|PM|am|pm))/i);
-                    if (timeMatch) {
-                        timeStr = timeMatch[1].toUpperCase();
-                    }
-                    
-                    // Extract location (e.g., "House conference room 308", "Senate conference room 229")
-                    let location = '';
-                    const locationMatch = title.match(/((?:House|Senate)\s+conference\s+room\s+\S+)/i);
-                    if (locationMatch) {
-                        location = locationMatch[1];
-                    }
-                    
-                    // Only include if we found a hearing date in the title
-                    if (hearingDate) {
-                        // Only show future or today's hearings (not past ones)
-                        const now = new Date();
-                        now.setHours(0, 0, 0, 0);
-                        const showHearing = hearingDate >= now;
-                        
-                        if (showHearing) {
-                            allHearings.push({
-                                bill: `${bill.type} ${bill.number}`,
-                                date: hearingDate,
-                                time: timeStr,
-                                location: location,
-                                sortDate: hearingDate,
-                                pubDate: pubDate
-                            });
-                        }
-                    }
-                }
-            }
-        } catch (error) {
-            console.error(`Error loading hearings for ${bill.type} ${bill.number}:`, error);
-        }
-    }
-    
-    // Sort hearings by date (upcoming first)
-    allHearings.sort((a, b) => a.sortDate - b.sortDate);
-    
-    // Display hearings
-    if (allHearings.length === 0) {
-        hearingsContent.innerHTML = '<div class="tfc-hearings-empty">No upcoming hearings scheduled</div>';
-    } else {
-        hearingsContent.innerHTML = allHearings.slice(0, 5).map(hearing => {
-            const [billType, billNumber] = hearing.bill.split(' ');
-            const capitolUrl = `https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=${billType}&billnumber=${billNumber}&year=2026`;
-            let dateLine = hearing.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            if (hearing.time) dateLine += ' • ' + hearing.time;
-            if (hearing.location) dateLine += ' • ' + hearing.location;
-            return `
-                <div class="tfc-hearing-item">
-                    <div class="tfc-hearing-bill">
-                        <a href="${capitolUrl}" target="_blank" onclick="event.stopPropagation()">${hearing.bill}</a>
-                    </div>
-                    <div class="tfc-hearing-date">${dateLine}</div>
-                </div>
-            `;
-        }).join('');
-    }
-}
-
-// Bills Still Alive functionality
-async function loadBillsAlive() {
-    const bills = [
-        { type: 'HB', number: '2306', year: '2026', label: 'Stop Tax Cuts for the Wealthy' },
-        { type: 'SB', number: '3125', year: '2026', label: 'Stop Tax Cuts for the Wealthy' },
-        { type: 'SB', number: '2441', year: '2026', label: 'Tax Wealth Like Work (Ordinary)' },
-        { type: 'HB', number: '1850', year: '2026', label: 'Tax Wealth Like Work (Max 9%)' },
-        { type: 'SB', number: '2587', year: '2026', label: 'Tax Wealth Like Work (Max 9%)' },
-        { type: 'HB', number: '2010', year: '2026', label: 'Millionaires Tax' },
-        { type: 'SB', number: '2468', year: '2026', label: 'Millionaires Tax' },
-        { type: 'HB', number: '1807', year: '2026', label: 'Millionaires Tax' },
-        { type: 'HB', number: '2008', year: '2026', label: 'Millionaires Tax' },
-        { type: 'HB', number: '2049', year: '2026', label: 'Conveyance Tax' },
-        { type: 'HB', number: '2150', year: '2026', label: 'Closing REIT Loophole' },
-        { type: 'SB', number: '2362', year: '2026', label: 'Closing REIT Loophole' },
-        { type: 'HB', number: '2623', year: '2026', label: 'Wealth Proceeds Tax' }
-    ];
-    
-    const aliveContent = document.getElementById('alive-content');
-    if (!aliveContent) return;
+    const statusContent = document.getElementById('bill-status-content');
+    if (!statusContent) return;
     
     const proxyUrl = 'https://verdant-dango-b7d425.netlify.app/.netlify/functions/rss-proxy';
-    const aliveBills = [];
-    const deadBills = [];
+    const billStatuses = [];
     
     for (const bill of bills) {
         try {
@@ -2052,13 +1961,13 @@ async function loadBillsAlive() {
             const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
             const items = xmlDoc.getElementsByTagName('item');
             
-            // Check latest status
-            let isDeferred = false;
-            let hasHadHearing = false;
             let latestStatus = '';
             let latestDate = '';
+            let hasScheduledHearing = false;
+            let isDeferred = false;
+            let hasHadHearing = false;
+            
             if (items.length > 0) {
-                // Items are typically newest first, but let's sort to be sure
                 const updates = [];
                 for (let i = 0; i < items.length; i++) {
                     const titleEl = items[i].getElementsByTagName('title')[0];
@@ -2072,17 +1981,40 @@ async function loadBillsAlive() {
                 }
                 updates.sort((a, b) => b.date - a.date);
                 
-                // Check if bill has had any hearings
+                // Check for scheduled hearings (future hearings) and if bill has had any hearings
                 for (const update of updates) {
                     const titleLower = update.title.toLowerCase();
-                    if (titleLower.includes('hearing') || 
-                        titleLower.includes('scheduled') ||
-                        titleLower.includes('notice') ||
-                        titleLower.includes('decision') ||
-                        titleLower.includes('public') ||
-                        titleLower.includes('hold')) {
+                    const isHearing = titleLower.includes('hearing') || 
+                                     titleLower.includes('scheduled') ||
+                                     titleLower.includes('notice') ||
+                                     titleLower.includes('decision') ||
+                                     titleLower.includes('public') ||
+                                     titleLower.includes('hold');
+                    
+                    if (isHearing) {
                         hasHadHearing = true;
-                        break;
+                        // Try to extract date from title
+                        const dateMatch = update.title.match(/(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})/);
+                        if (dateMatch) {
+                            try {
+                                const parts = dateMatch[1].split(/[-\/]/);
+                                if (parts.length === 3) {
+                                    const month = parseInt(parts[0]) - 1;
+                                    const day = parseInt(parts[1]);
+                                    const year = parts[2].length === 2 ? 2000 + parseInt(parts[2]) : parseInt(parts[2]);
+                                    const hearingDate = new Date(year, month, day);
+                                    hearingDate.setHours(0, 0, 0, 0);
+                                    
+                                    const now = new Date();
+                                    now.setHours(0, 0, 0, 0);
+                                    
+                                    if (hearingDate >= now) {
+                                        hasScheduledHearing = true;
+                                        break;
+                                    }
+                                }
+                            } catch (e) {}
+                        }
                     }
                 }
                 
@@ -2094,96 +2026,117 @@ async function loadBillsAlive() {
                     let desc = updates[0].title;
                     const colonIdx = desc.indexOf(':');
                     if (colonIdx !== -1) desc = desc.substring(colonIdx + 1).trim();
+                    
+                    // Remove voting details - look for patterns like "with Representative(s) ... voting"
+                    desc = desc.replace(/\s*with\s+Representative\(s\)[^.]*\./g, '');
+                    desc = desc.replace(/\s*with\s+Senator\(s\)[^.]*\./g, '');
+                    desc = desc.replace(/\s*voting\s+[^.]*\./g, '');
+                    
+                    // Clean up any extra whitespace
+                    desc = desc.replace(/\s+/g, ' ').trim();
+                    
                     latestStatus = desc;
                     
+                    // Check if bill is deferred
                     if (latestTitle.includes('deferred') || latestTitle.includes('carried over')) {
                         isDeferred = true;
                     }
                 }
             }
             
-            // Only include bills that have had at least one hearing
-            if (!hasHadHearing) {
-                continue;
-            }
-            
-            const billData = {
+            billStatuses.push({
                 bill: `${bill.type} ${bill.number}`,
                 type: bill.type,
                 number: bill.number,
                 year: bill.year,
-                label: bill.label,
-                latestStatus: latestStatus,
+                issueArea: bill.issueArea,
+                latestStatus: latestStatus || 'No updates available',
                 latestDate: latestDate,
-                isDeferred: isDeferred
-            };
-            
-            if (isDeferred) {
-                deadBills.push(billData);
-            } else {
-                aliveBills.push(billData);
-            }
+                hasScheduledHearing: hasScheduledHearing,
+                isDeferred: isDeferred,
+                hasHadHearing: hasHadHearing
+            });
         } catch (error) {
             console.error(`Error checking status for ${bill.type} ${bill.number}:`, error);
         }
     }
     
-    if (aliveBills.length === 0 && deadBills.length === 0) {
-        aliveContent.innerHTML = '<div class="tfc-hearings-empty">Unable to check bill statuses</div>';
+    if (billStatuses.length === 0) {
+        statusContent.innerHTML = '<div class="tfc-hearings-empty">Unable to load bill statuses</div>';
         return;
     }
     
-    let html = '';
+    // Build table HTML
+    let tableHTML = `
+        <table class="tfc-bill-status-table">
+            <thead>
+                <tr>
+                    <th>Bill Number</th>
+                    <th>Issue Area</th>
+                    <th>Latest Status</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
     
-    if (aliveBills.length > 0) {
-        html += aliveBills.map(bill => {
-            const capitolUrl = `https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=${bill.type}&billnumber=${bill.number}&year=${bill.year}`;
-            return `
-                <div class="tfc-hearing-item" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <div class="tfc-hearing-bill" style="margin-bottom: 2px;">
-                            <a href="${capitolUrl}" target="_blank" onclick="event.stopPropagation()">${bill.bill}</a>
-                            <span style="font-weight: 400; color: #64748b; font-size: 0.85rem;"> — ${bill.label}</span>
-                        </div>
-                        <div style="font-size: 0.8rem; color: #64748b;">${bill.latestDate} — ${bill.latestStatus}</div>
-                    </div>
-                    <span class="tfc-status-badge tfc-badge-progress" style="font-size: 0.7rem; padding: 2px 8px; white-space: nowrap;">Alive</span>
-                </div>
-            `;
-        }).join('');
-    }
+    billStatuses.forEach(bill => {
+        const capitolUrl = `https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=${bill.type}&billnumber=${bill.number}&year=${bill.year}`;
+        const rowClass = bill.hasScheduledHearing ? 'has-hearing' : '';
+        const hearingIndicator = bill.hasScheduledHearing ? '<span class="hearing-indicator">Hearing Scheduled</span>' : '';
+        
+        // Determine if bill is "alive" (not deferred and has had a hearing)
+        const isAlive = !bill.isDeferred && bill.hasHadHearing;
+        
+        tableHTML += `
+            <tr class="${rowClass}" data-alive="${isAlive}" data-deferred="${bill.isDeferred}" data-has-hearing="${bill.hasHadHearing}">
+                <td class="bill-number">
+                    <a href="${capitolUrl}" target="_blank">${bill.bill}</a>
+                    ${hearingIndicator}
+                </td>
+                <td class="issue-area">${bill.issueArea}</td>
+                <td class="latest-status">
+                    ${bill.latestDate ? `<span class="status-date">${bill.latestDate}</span>` : ''}
+                    ${bill.latestStatus}
+                </td>
+            </tr>
+        `;
+    });
     
-    if (deadBills.length > 0) {
-        html += `<div style="padding: 10px 20px 4px; font-size: 0.8rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Deferred</div>`;
-        html += deadBills.map(bill => {
-            const capitolUrl = `https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=${bill.type}&billnumber=${bill.number}&year=${bill.year}`;
-            return `
-                <div class="tfc-hearing-item" style="display: flex; justify-content: space-between; align-items: center; opacity: 0.6;">
-                    <div>
-                        <div class="tfc-hearing-bill" style="margin-bottom: 2px;">
-                            <a href="${capitolUrl}" target="_blank" onclick="event.stopPropagation()">${bill.bill}</a>
-                            <span style="font-weight: 400; color: #64748b; font-size: 0.85rem;"> — ${bill.label}</span>
-                        </div>
-                        <div style="font-size: 0.8rem; color: #64748b;">${bill.latestDate} — ${bill.latestStatus}</div>
-                    </div>
-                    <span class="tfc-status-badge tfc-badge-deferred" style="font-size: 0.7rem; padding: 2px 8px; white-space: nowrap;">Deferred</span>
-                </div>
-            `;
-        }).join('');
-    }
+    tableHTML += `
+            </tbody>
+        </table>
+    `;
     
-    aliveContent.innerHTML = html;
+    statusContent.innerHTML = tableHTML;
+    
+    // Apply initial filter (show only alive bills by default)
+    filterBillStatus();
 }
 
-function toggleAliveWidget() {
-    const widget = document.getElementById('alive-widget');
-    if (widget) widget.classList.toggle('collapsed');
+// Filter bill status table based on "Alive Only" checkbox
+function filterBillStatus() {
+    const checkbox = document.getElementById('alive-filter');
+    const rows = document.querySelectorAll('#bill-status-content tbody tr');
+    
+    if (!checkbox || !rows.length) return;
+    
+    const showAliveOnly = checkbox.checked;
+    
+    rows.forEach(row => {
+        if (showAliveOnly) {
+            // Show only alive bills (not deferred and has had a hearing)
+            const isAlive = row.getAttribute('data-alive') === 'true';
+            row.style.display = isAlive ? '' : 'none';
+        } else {
+            // Show all bills
+            row.style.display = '';
+        }
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Load upcoming hearings and bill statuses
-    loadUpcomingHearings();
-    loadBillsAlive();
+    // Load bill status table
+    loadBillStatusTable();
     
     
     // Particle effect that follows cursor on summary card hover
