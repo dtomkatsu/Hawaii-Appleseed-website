@@ -128,7 +128,7 @@
 }
 .tfc-badge-enacted { background: #c6f6d5; color: #22543d; }
 .tfc-badge-passed { background: #c6f6d5; color: #276749; }
-.tfc-badge-progress { background: #bee3f8; color: #2b6cb0; }
+.tfc-badge-progress { background: #bee3f8; color: #ffffff; }
 .tfc-badge-hearing { background: #feebc8; color: #c05621; }
 .tfc-badge-referred { background: #e9d8fd; color: #6b46c1; }
 .tfc-badge-deferred { background: #fed7d7; color: #c53030; }
@@ -525,7 +525,7 @@
 }
 .tfc-bill-status-table td.latest-status {
     font-size: 0.85rem;
-    color: #64748b;
+    color: #ffffff !important;
     line-height: 1.5;
 }
 .tfc-bill-status-table td.latest-status .status-date {
@@ -1232,14 +1232,16 @@ header .header-nav-folder-content a,
     <!-- Bill Status Table Widget -->
     <div class="tfc-hearings-widget" id="bill-status-widget" style="position: static; margin: 40px auto; max-width: 1800px;">
         <div class="tfc-hearings-header">
-            <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <h3 class="tfc-hearings-title">Bill Status Tracker</h3>
-                <label style="display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: #475569; cursor: pointer;">
-                    <input type="checkbox" id="alive-filter" checked onchange="filterBillStatus()" style="cursor: pointer;">
+                <button class="tfc-hearings-toggle" onclick="toggleBillStatusWidget()" aria-label="Toggle bill status">&#9660;</button>
+            </div>
+            <div style="margin-top: 12px; padding: 8px 12px; background: rgba(255, 255, 255, 0.1); border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #fbbf24; cursor: pointer; font-weight: 500;">
+                    <input type="checkbox" id="alive-filter" checked onchange="filterBillStatus()" style="cursor: pointer; transform: scale(1.1);">
                     <span>Alive Only</span>
                 </label>
             </div>
-            <button class="tfc-hearings-toggle" onclick="toggleBillStatusWidget()" aria-label="Toggle bill status">&#9660;</button>
         </div>
         <div class="tfc-hearings-content" id="bill-status-content">
             <div class="tfc-hearings-loading">Loading bill statuses...</div>
