@@ -2196,7 +2196,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                animateValue(valueElement, 0, 585, 1500);
+                animateValue(valueElement, 0, 1100, 1500);
                 // Also animate bars when summary card is visible
                 animateBars();
                 observer.unobserve(entry.target);
