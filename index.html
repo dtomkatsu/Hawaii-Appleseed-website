@@ -717,10 +717,26 @@
     const originY = ((cPortal.y - wordRect.top ) / wordRect.height) * 100;
     inner.style.transformOrigin = `${originX}% ${originY}%`;
 
-    const clipCX = (cPortal.x / window.innerWidth ) * 100;
-    const clipCY = (cPortal.y / window.innerHeight) * 100;
+    // Restore the display scale, then re-measure the d in its visible state.
+    // The original code computed clipCX/clipCY from the unscaled (480px) d rect,
+    // but the user SEES the scaled-down d — and a lowercase d's counter is
+    // offset from its centroid, so the f.fx-relative counter point shifts on
+    // screen as the d scales. Measuring at display scale puts cx,cy on the
+    // counter as it actually appears, so the mask d's hole opens from the
+    // visible bowl of the d.
+    inner.style.transform = `scale(${displayScale})`;
+    void inner.getBoundingClientRect();
+    const dRectScaled = zoomD.getBoundingClientRect();
+    const cPortalVisible = {
+      x: dRectScaled.left + dRectScaled.width  * f.fx,
+      y: dRectScaled.top  + dRectScaled.height * f.fy,
+      w: dRectScaled.width  * f.fw,
+      h: dRectScaled.height * f.fh,
+    };
+    const clipCX = (cPortalVisible.x / window.innerWidth ) * 100;
+    const clipCY = (cPortalVisible.y / window.innerHeight) * 100;
 
-    const counterDiameter = Math.min(cPortal.w, cPortal.h);
+    const counterDiameter = Math.min(cPortalVisible.w, cPortalVisible.h);
     // Cap fillScale — beyond ~40x the browser can struggle with composite layers
     const needed = Math.max(window.innerWidth, window.innerHeight) * 1.2;
     const fillScale = Math.min(40, needed / Math.max(counterDiameter, 1));
@@ -730,7 +746,6 @@
       clipCX, clipCY,
       counterBaseRadius: counterDiameter / 2,
     };
-    inner.style.transform = `scale(${displayScale})`;
   }
 
   const maskD = document.getElementById('mask-d');
@@ -769,15 +784,20 @@
       const cx = window.innerWidth  * baseline.clipCX / 100;
       const cy = window.innerHeight * baseline.clipCY / 100;
       maskD.setAttribute('font-size', size);
-      // First place the centroid at (cx,cy), then measure where the counter falls
-      // and shift the anchor by (target − current) so the counter lands on (cx,cy).
       maskD.setAttribute('x', cx);
       maskD.setAttribute('y', cy);
-      const bbox = maskD.getBBox();
-      const counterX = bbox.x + bbox.width  * f.fx;
-      const counterY = bbox.y + bbox.height * f.fy;
-      maskD.setAttribute('x', cx + (cx - counterX));
-      maskD.setAttribute('y', cy + (cy - counterY));
+      // Iterate: measure where the counter actually lands and shift the anchor by the
+      // residual error. Two passes converges to sub-pixel accuracy even when the bbox
+      // doesn't translate perfectly with x (font-metric asymmetries between browsers).
+      for (let i = 0; i < 2; i++) {
+        const bbox = maskD.getBBox();
+        const counterX = bbox.x + bbox.width  * f.fx;
+        const counterY = bbox.y + bbox.height * f.fy;
+        const ax = parseFloat(maskD.getAttribute('x'));
+        const ay = parseFloat(maskD.getAttribute('y'));
+        maskD.setAttribute('x', ax + (cx - counterX));
+        maskD.setAttribute('y', ay + (cy - counterY));
+      }
     }
 
     if (islands) islands.style.opacity = Math.max(0, 1 - raw / 0.30);
