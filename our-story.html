@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Our Story — Hawaiʻi Appleseed</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap">
+<style>
+  /* ===== Brand-guide palette ===== */
+  :root{
+    --ash:        #CAD2C5;   /* light backgrounds */
+    --teal:       #84A98C;   /* logo, accents */
+    --teal-deep:  #52796F;   /* mid-tone, hairlines */
+    --slate:      #354F52;   /* darker bg / reversed text */
+    --charcoal:   #2F3E46;   /* deep bg, body ink */
+    --white:      #FFFFFF;
+    --rule:       rgba(53,79,82,.18);
+    --rule-light: rgba(202,210,197,.30);
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Poppins', system-ui, -apple-system, Arial, sans-serif;
+    color:var(--charcoal);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    line-height:1.6;
+  }
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  /* ===== Announcement bar (carried over) ===== */
+  .announce{
+    background:var(--charcoal);color:#fff;
+    font-size:13px;letter-spacing:.01em;
+    padding:10px 18px;text-align:center;
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    font-family:'Poppins',sans-serif;
+  }
+  .announce a{text-decoration:underline}
+  .announce .x{position:absolute;right:14px;top:50%;transform:translateY(-50%);opacity:.7;cursor:pointer}
+
+  /* ===== Nav (carried over, retinted to brand palette) ===== */
+  .nav{
+    background:#fff;
+    border-bottom:1px solid var(--rule);
+    padding:16px 36px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:24px;
+    position:fixed; top:40px; left:0; right:0; z-index:40;
+  }
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand-mark{width:64px;height:64px;flex:none}
+  .brand-mark svg{width:100%;height:100%;display:block}
+  .brand-text{line-height:1}
+  .brand-text .name{
+    font-family:'Manrope',sans-serif;
+    font-weight:800;letter-spacing:.14em;
+    font-size:22px;color:var(--teal-deep);
+  }
+  .brand-text .tag{
+    font-family:'Poppins',sans-serif;
+    font-size:9.5px;letter-spacing:.28em;
+    color:var(--teal-deep);margin-top:4px;
+  }
+  .nav-links{
+    display:flex;flex-wrap:wrap;align-items:center;
+    gap:22px 26px;justify-content:flex-end;flex:1;
+    font-family:'Poppins',sans-serif;font-size:15px;font-weight:400;
+    color:var(--charcoal);
+    max-width:640px;
+  }
+  .nav-links a{position:relative;padding:4px 0}
+  .nav-links a.is-active{color:var(--teal-deep);font-weight:600}
+  .nav-links a.is-active::after{
+    content:"";position:absolute;left:0;right:0;bottom:-2px;
+    height:2px;background:var(--teal);
+  }
+  .nav-links a:hover{color:var(--teal-deep)}
+  .nav-right{display:flex;align-items:center;gap:16px}
+  .social{display:flex;gap:12px;color:var(--charcoal)}
+  .social svg{width:18px;height:18px}
+  .donate-btn{
+    background:var(--charcoal);color:#fff;padding:14px 30px;
+    font-family:'Poppins',sans-serif;font-weight:500;font-size:15px;
+    border-radius:2px;
+  }
+  .donate-btn:hover{background:var(--teal-deep)}
+
+  /* ===== HERO ===== */
+  .story-hero{
+    position:relative;
+    min-height:92vh;
+    padding:200px 8vw 120px;
+    background:
+      radial-gradient(ellipse 100% 60% at 50% 0%, rgba(132,169,140,.18), transparent 70%),
+      linear-gradient(180deg, var(--charcoal) 0%, var(--slate) 100%);
+    color:#fff;
+    display:flex;flex-direction:column;justify-content:center;
+    overflow:hidden;
+  }
+  .story-hero::before{
+    /* subtle horizontal hairline grid for "archive" feel */
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:
+      linear-gradient(to bottom, transparent 0, transparent calc(100% - 1px), rgba(202,210,197,.06) 100%);
+    background-size:100% 80px;
+  }
+  .eyebrow{
+    font-family:'Poppins',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.32em;
+    font-size:12px;font-weight:500;
+    color:var(--ash);
+    display:flex;align-items:center;gap:14px;
+    margin-bottom:36px;
+  }
+  .eyebrow::before{content:"";width:48px;height:1px;background:var(--teal);}
+  .hero-quote{
+    font-family:'Manrope',sans-serif;font-weight:500;
+    font-size:clamp(28px, 3.4vw, 52px);
+    line-height:1.18;letter-spacing:-0.015em;
+    color:#fff;max-width:24ch;margin:0;
+    position:relative;
+  }
+  .hero-quote .open-q{
+    color:var(--teal);font-family:'Manrope',sans-serif;
+    font-weight:300;font-size:1.4em;line-height:0;
+    margin-right:.08em;vertical-align:-0.1em;
+  }
+  .hero-quote .accent{color:var(--teal)}
+  .hero-meta{
+    margin-top:64px;display:flex;flex-wrap:wrap;gap:48px 80px;
+    color:var(--ash);font-family:'Poppins',sans-serif;font-size:14px;
+  }
+  .hero-meta .stat .num{
+    font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:38px;color:#fff;line-height:1;letter-spacing:-0.01em;
+    margin-bottom:4px;
+  }
+  .hero-meta .stat .lbl{
+    text-transform:uppercase;letter-spacing:.18em;font-size:11px;color:var(--ash);
+  }
+  .scroll-cue{
+    position:absolute;bottom:32px;left:8vw;
+    font-family:'Poppins',sans-serif;font-size:11px;letter-spacing:.3em;
+    text-transform:uppercase;color:rgba(202,210,197,.7);
+    display:flex;align-items:center;gap:12px;
+  }
+  .scroll-cue::after{
+    content:"";width:1px;height:32px;background:rgba(202,210,197,.5);
+    animation:drop 2s infinite;display:inline-block;
+  }
+  @keyframes drop{
+    0%{transform:scaleY(.3);transform-origin:top}
+    50%{transform:scaleY(1)}
+    100%{transform:scaleY(.3);transform-origin:bottom}
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline-wrap{
+    background:var(--ash);
+    padding:120px 0 160px;
+    position:relative;
+  }
+  .timeline-wrap::before{
+    /* a soft top fade so the hero blends into the ash bg */
+    content:"";position:absolute;left:0;right:0;top:0;height:80px;
+    background:linear-gradient(180deg, rgba(53,79,82,.10), transparent);
+    pointer-events:none;
+  }
+
+  .era{
+    position:relative;
+    padding:80px 8vw 60px;
+  }
+  .era-header{
+    position:sticky; top:120px; z-index:5;
+    pointer-events:none;
+    margin-bottom:40px;
+  }
+  .era-header .era-num{
+    font-family:'Manrope',sans-serif;font-weight:800;
+    font-size:14px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--teal-deep);
+    display:flex;align-items:center;gap:14px;
+    opacity:.95;
+  }
+  .era-header .era-num::before{content:"";width:36px;height:1px;background:var(--teal-deep);}
+  .era-header h2{
+    font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:clamp(34px, 3.6vw, 56px);
+    line-height:1.08;letter-spacing:-0.02em;
+    color:var(--charcoal);
+    margin:8px 0 0;max-width:18ch;
+  }
+  .era-header .era-years{
+    font-family:'Poppins',sans-serif;font-weight:300;
+    font-size:18px;color:var(--teal-deep);margin-top:6px;letter-spacing:.04em;
+  }
+
+  /* Timeline rail + items */
+  .rail{
+    position:relative;
+    margin-top:60px;
+    padding-left:64px;
+  }
+  .rail::before{
+    /* the vertical line */
+    content:""; position:absolute; left:14px; top:8px; bottom:8px;
+    width:2px; background:linear-gradient(180deg,
+      var(--teal) 0%, var(--teal-deep) 100%);
+    border-radius:2px;
+  }
+
+  .milestone{
+    position:relative;
+    padding:0 0 72px;
+    opacity:0; transform:translateY(28px);
+    transition:opacity .9s cubic-bezier(.22,.61,.36,1), transform .9s cubic-bezier(.22,.61,.36,1);
+    will-change:opacity,transform;
+  }
+  .milestone.is-in{ opacity:1; transform:translateY(0); }
+
+  .milestone::before{
+    /* dot on the rail */
+    content:""; position:absolute;
+    left:-58px; top:6px;
+    width:18px; height:18px; border-radius:50%;
+    background:var(--white); border:3px solid var(--teal);
+    box-shadow:0 0 0 4px rgba(132,169,140,.18);
+    transition:background .3s, box-shadow .3s, transform .3s;
+  }
+  .milestone.is-in::before{
+    background:var(--teal);
+    box-shadow:0 0 0 6px rgba(132,169,140,.28);
+  }
+  .milestone .year{
+    font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:14px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--teal-deep);margin-bottom:10px;
+  }
+  .milestone h3{
+    font-family:'Manrope',sans-serif;font-weight:600;
+    font-size:clamp(22px, 2vw, 30px);
+    line-height:1.2;letter-spacing:-0.01em;
+    color:var(--charcoal);
+    margin:0 0 14px;max-width:34ch;
+  }
+  .milestone p{
+    font-family:'Poppins',sans-serif;font-weight:400;
+    font-size:17px;line-height:1.7;color:var(--charcoal);
+    margin:0 0 14px;max-width:62ch;
+  }
+  .milestone p + p{margin-top:14px}
+  .milestone ul{
+    list-style:none;padding:0;margin:14px 0 0;
+    border-top:1px dashed var(--rule);padding-top:16px;
+  }
+  .milestone li{
+    font-family:'Poppins',sans-serif;font-size:15.5px;
+    color:var(--charcoal);line-height:1.6;
+    padding:6px 0 6px 22px;position:relative;
+    max-width:62ch;
+  }
+  .milestone li::before{
+    content:""; position:absolute; left:0; top:14px;
+    width:10px;height:1px;background:var(--teal);
+  }
+  .milestone .figcap{
+    margin-top:22px;
+    padding:14px 18px;
+    border-left:3px solid var(--teal);
+    background:rgba(255,255,255,.55);
+    font-family:'Poppins',sans-serif;font-size:14px;
+    color:var(--charcoal);font-style:italic;line-height:1.5;
+    max-width:60ch;
+  }
+  .milestone .figcap .credit{
+    display:block;font-style:normal;font-size:11px;
+    letter-spacing:.18em;text-transform:uppercase;
+    color:var(--teal-deep);margin-top:6px;
+  }
+  .milestone .pull{
+    margin:24px 0 0;
+    font-family:'Manrope',sans-serif;font-weight:500;
+    font-size:clamp(20px, 1.8vw, 26px);line-height:1.3;
+    color:var(--teal-deep);max-width:34ch;
+    border-top:1px solid var(--rule);padding-top:18px;
+  }
+  .milestone .impact-tag{
+    display:inline-block;
+    font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--white); background:var(--teal-deep);
+    padding:5px 12px;border-radius:999px;
+    margin-bottom:14px;
+  }
+
+  /* Era backgrounds — alternate ash / lighter for visual rhythm */
+  .era.alt{ background:#dde3d6; }    /* slightly cooler ash */
+  .era.dark{
+    background:var(--slate); color:var(--ash);
+  }
+  .era.dark .era-header h2{ color:#fff; }
+  .era.dark .era-header .era-num{ color:var(--teal); }
+  .era.dark .era-header .era-num::before{ background:var(--teal); }
+  .era.dark .era-header .era-years{ color:var(--ash); }
+  .era.dark .milestone h3{ color:#fff; }
+  .era.dark .milestone p{ color:var(--ash); }
+  .era.dark .milestone li{ color:var(--ash); }
+  .era.dark .milestone .year{ color:var(--teal); }
+  .era.dark .milestone::before{
+    background:var(--slate);border-color:var(--teal);
+  }
+  .era.dark .milestone.is-in::before{
+    background:var(--teal);
+  }
+  .era.dark .milestone .figcap{
+    background:rgba(255,255,255,.05);
+    border-left-color:var(--teal);
+    color:var(--ash);
+  }
+  .era.dark .milestone .figcap .credit{ color:var(--teal); }
+  .era.dark .milestone .pull{
+    color:var(--white);border-top-color:rgba(202,210,197,.25);
+  }
+  .era.dark .rail::before{
+    background:linear-gradient(180deg, var(--teal) 0%, var(--ash) 100%);
+  }
+
+  /* ===== CLOSING ===== */
+  .closing{
+    background:var(--white);
+    padding:140px 8vw 120px;
+    text-align:center;
+    position:relative;
+  }
+  .closing .eyebrow{
+    color:var(--teal-deep);justify-content:center;margin-bottom:24px;
+  }
+  .closing .eyebrow::before{display:none}
+  .closing h2{
+    font-family:'Manrope',sans-serif;font-weight:600;
+    font-size:clamp(34px, 3.4vw, 52px);
+    line-height:1.18;letter-spacing:-0.018em;
+    color:var(--charcoal);max-width:24ch;margin:0 auto 28px;
+  }
+  .closing p{
+    font-family:'Poppins',sans-serif;font-size:18px;line-height:1.7;
+    color:var(--slate);max-width:56ch;margin:0 auto 18px;
+  }
+  .cta-row{
+    margin-top:48px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:16px 30px;
+    font-family:'Poppins',sans-serif;font-size:14px;
+    letter-spacing:.06em;font-weight:500;
+    border:1px solid transparent;cursor:pointer;
+    transition:transform .2s, background .2s, color .2s;
+  }
+  .btn-primary{background:var(--charcoal);color:#fff}
+  .btn-primary:hover{background:var(--teal-deep)}
+  .btn-ghost{background:transparent;color:var(--charcoal);border-color:var(--rule)}
+  .btn-ghost:hover{border-color:var(--teal-deep);color:var(--teal-deep)}
+  .btn svg{width:14px;height:14px}
+
+  /* ===== FOOTER ===== */
+  footer{
+    background:var(--charcoal);color:var(--ash);
+    padding:64px 8vw 32px;
+    font-family:'Poppins',sans-serif;font-size:14px;
+    line-height:1.6;
+  }
+  .foot-grid{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:48px;
+    border-bottom:1px solid rgba(202,210,197,.18);padding-bottom:40px;
+  }
+  .foot-grid h4{
+    font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:13px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--teal);margin:0 0 16px;
+  }
+  .foot-grid a{color:var(--ash);display:block;padding:3px 0}
+  .foot-grid a:hover{color:#fff}
+  .foot-bottom{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;
+    padding-top:24px;font-size:12px;color:rgba(202,210,197,.7);
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 980px){
+    .nav{padding:14px 20px}
+    .nav-links{display:none}
+    .story-hero{padding:160px 24px 80px}
+    .scroll-cue{left:24px}
+    .era{padding:60px 24px 40px}
+    .era-header{position:static}
+    .rail{padding-left:48px}
+    .milestone::before{left:-46px}
+    .closing{padding:80px 24px}
+    .foot-grid{grid-template-columns:1fr;gap:28px}
+    footer{padding:48px 24px 24px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Announcement bar -->
+<div class="announce">
+  New Data Tool: <a href="#">Hawaiʻi Budget Bill Draft Tracker</a>
+  <span class="x">×</span>
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <div class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 64 64" fill="none">
+        <path d="M32 54c0-12 6-20 16-22-2 12-8 20-16 22z" fill="#84A98C"/>
+        <path d="M32 54c0-12-6-20-16-22 2 12 8 20 16 22z" fill="#52796F"/>
+        <path d="M32 54c-1-10 2-18 8-24" stroke="#2F3E46" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+        <ellipse cx="32" cy="56" rx="10" ry="3" fill="#2F3E46" opacity=".15"/>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <div class="name">HAWAIʻI APPLESEED</div>
+      <div class="tag">CENTER FOR LAW &amp; ECONOMIC JUSTICE</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#">About</a>
+    <a href="our-story.html" class="is-active">Our Story</a>
+    <a href="#">Issues</a>
+    <a href="#">Data</a>
+    <a href="#">Publications</a>
+    <a href="#">Blog</a>
+    <a href="#">Get Involved</a>
+  </div>
+  <div class="nav-right">
+    <div class="social" aria-label="Social">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-8h3l.5-4H13V7.5c0-1.2.3-2 2-2H17V2h-3c-3 0-5 1.8-5 5v3H6v4h3v8h4z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 7.5a3 3 0 00-2-2C18 5 12 5 12 5s-6 0-8 .5a3 3 0 00-2 2C2 9.5 2 12 2 12s0 2.5.1 4.5a3 3 0 002 2C6 19 12 19 12 19s6 0 8-.5a3 3 0 002-2c.1-2 .1-4.5.1-4.5s0-2.5-.1-4.5zM10 15V9l5 3-5 3z"/></svg>
+    </div>
+    <a class="donate-btn" href="#">Donate</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="story-hero" data-fade>
+  <div class="eyebrow">Our Story</div>
+  <p class="hero-quote">
+    <span class="open-q">“</span>From impact litigation as <span class="accent">Lawyers for Equal Justice</span>, to policy advocates and data analysts as <span class="accent">Hawaiʻi Appleseed</span>—our methods have changed, but our vision for a Hawaiʻi that puts its people first has remained.<span class="open-q" style="margin-left:.05em">”</span>
+  </p>
+  <div class="hero-meta">
+    <div class="stat"><div class="num">2004</div><div class="lbl">Founded</div></div>
+    <div class="stat"><div class="num">$1B<span style="font-size:.6em">/yr</span></div><div class="lbl">Wage gains secured</div></div>
+    <div class="stat"><div class="num">$60M<span style="font-size:.6em">/yr</span></div><div class="lbl">Tax relief delivered</div></div>
+    <div class="stat"><div class="num">5</div><div class="lbl">Issue areas</div></div>
+  </div>
+  <div class="scroll-cue">Scroll to journey</div>
+</section>
+
+<!-- TIMELINE -->
+<div class="timeline-wrap">
+
+  <!-- ERA 1 -->
+  <section class="era" id="era-founding">
+    <div class="era-header">
+      <div class="era-num">Chapter 01</div>
+      <h2>Founding and early years</h2>
+      <div class="era-years">2004 — 2010</div>
+    </div>
+
+    <div class="rail">
+      <article class="milestone" data-fade>
+        <div class="year">2004 · Origin</div>
+        <h3>A new firm, founded to fight inequality.</h3>
+        <p>The organization was founded in 2004 under the name <strong>Lawyers for Equal Justice</strong> by a group of attorneys and advocates concerned about the persistent realities of poverty and inequality in Hawaiʻi. Their mission was to use legal tools to address systemic issues and ensure that low-income and marginalized communities had access to justice.</p>
+        <p>Veteran civil rights attorney <strong>Victor Geminiani</strong> led the early work, focused squarely on housing rights, public benefits, and economic security.</p>
+      </article>
+
+      <article class="milestone" data-fade>
+        <div class="year">2004 · First Case</div>
+        <h3>Stopping the state from overcharging low-income families.</h3>
+        <p>LEJ's first case challenged rent overcharges in subsidized housing, fighting to ensure that public housing actually serves as a platform for economic stability. The case led to the hiring of LEJ's first employee — a part-time attorney named <strong>Gavin Thornton</strong>, who would, many years later, lead the organization as its executive director.</p>
+        <p class="pull">The case resulted in rent reductions of more than $1 million every year since it was resolved.</p>
+        <div class="figcap">
+          Hawaiʻi Appleseed's second executive director, Gavin Thornton, was also its first employee.
+          <span class="credit">Photo · Will Caron</span>
+        </div>
+      </article>
+
+      <article class="milestone" data-fade>
+        <div class="year">2007 — 2014 · Litigation Wins</div>
+        <h3>Forcing the state to keep its promises.</h3>
+        <p>Through a string of class actions, LEJ secured systemic legal victories that protected the state's most vulnerable residents:</p>
+        <ul>
+          <li><strong>2007–08</strong> · Ensured homeless children in Hawaiʻi have full, meaningful access to a public education.</li>
+          <li><strong>2008–15</strong> · Forced long-overdue upgrades to Kuhio Park Terrace and Mayor Wright Homes after years of disrepair and squalor.</li>
+          <li><strong>2010–14</strong> · Preserved life-saving healthcare access for Compact of Free Association (COFA) residents.</li>
+          <li><strong>2010–11</strong> · Required the timely processing and delivery of SNAP benefits to beneficiaries.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- ERA 2 -->
+  <section class="era alt" id="era-renaming">
+    <div class="era-header">
+      <div class="era-num">Chapter 02</div>
+      <h2>Expansion and renaming</h2>
+      <div class="era-years">2011 — 2016</div>
+    </div>
+
+    <div class="rail">
+      <article class="milestone" data-fade>
+        <div class="year">2011 · Becoming Appleseed</div>
+        <h3>From Lawyers for Equal Justice to Hawaiʻi Appleseed.</h3>
+        <p>In 2011, the organization became the <strong>Hawaiʻi Appleseed Center for Law and Economic Justice</strong>, joining a national network of Appleseed Centers pursuing social and economic equality through research, organizing, policy advocacy, and impact litigation.</p>
+        <p>The shift recognized a hard-won truth: enforcing existing laws wasn't enough to achieve equity within a legal and policy framework that is itself inherently inequitable. Real change would require new laws, new budgets, and new public investment.</p>
+      </article>
+
+      <article class="milestone" data-fade>
+        <div class="year">2013 — 2017 · Foster Care Lawsuit</div>
+        <h3>Proof of concept: winning systemic change at the Capitol.</h3>
+        <p>In 2013, Appleseed sued to force the state to raise foster care payments to account for the rising cost of living. In 2017, the Legislature took action to increase foster care rates, rendering the lawsuit moot — and cementing the proof of concept for winning systemic victories through the legislative branch rather than (or in addition to) the courts.</p>
+        <div class="figcap">
+          Hawaiʻi Appleseed clients in the foster care case.
+          <span class="credit">Photo · Hawaiʻi Appleseed</span>
+        </div>
+      </article>
+
+      <article class="milestone" data-fade>
+        <div class="year">2013 — 2015 · Language Access</div>
+        <h3>Translation on driver's license forms — won.</h3>
+        <p>An additional class action forced the state to provide language translation on driver's license forms and tests, expanding meaningful civic participation for non-English-speaking residents.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ERA 3 -->
+  <section class="era dark" id="era-broadening">
+    <div class="era-header">
+      <div class="era-num">Chapter 03</div>
+      <h2>Broadening impact and advocacy</h2>
+      <div class="era-years">2017 — 2022</div>
+    </div>
+
+    <div class="rail">
+      <article class="milestone" data-fade>
+        <span class="impact-tag">Tax Justice</span>
+        <div class="year">2017 · EITC Established</div>
+        <h3>A state Earned Income Tax Credit, at last.</h3>
+        <p>Hawaiʻi Appleseed's research and coalition advocacy delivered the state's first Earned Income Tax Credit, putting <strong>$20 million in tax relief</strong> back into the pockets of Hawaiʻi's working families every year.</p>
+      </article>
+
+      <article class="milestone" data-fade>
+        <div class="year">2018 · Capacity Built</div>
+        <h3>Joining the State Priorities Partnership; founding the Hawaiʻi Budget &amp; Policy Center.</h3>
+        <p>In 2018, Appleseed joined the State Priorities Partnership — a network of policy think tanks convened by the Center on Budget and Policy Priorities — and stood up the <strong>Hawaiʻi Budget &amp; Policy Center</strong>, headed by veteran policy expert Beth Giesting, to invest in budget-focused data and research that powers everything that comes next.</p>
+      </article>
+
+      <article class="milestone" data-fade>
+        <span class="impact-tag">Food Equity</span>
+        <div class="year">2019 · DA BUX Launched</div>
+        <h3>Doubling the dollar at the farmers' market.</h3>
+        <p>Appleseed helped establish <strong>DA BUX</strong>, a SNAP doubling program that has dramatically expanded the capacity of low-income households to eat more healthy, locally-sourced food. It has become one of the most popular government programs in the state.</p>
+      </article>
+
+      <article class="milestone" data-fade>
+        <span class="impact-tag">Wages &amp; Labor</span>
+        <div class="year">2022 · $18 Minimum Wage</div>
+        <h3>$1 billion in additional wages, every year.</h3>
+        <p>After multiple years of advocacy, the Legislature passed a phased increase of Hawaiʻi's minimum wage from $10.10 to <strong>$18 an hour over six years</strong> — delivering an estimated <strong>$1 billion in additional wages each year</strong> to more than 200,000 of the state's low-wage workers and translating into economic growth and prosperity for the entire community.</p>
+        <div class="figcap">
+          Hawaiʻi Appleseed staff, supporters, and coalition partners sign-wave in support of raising the state minimum wage and expanding the EITC in 2022 — efforts that paid off after multiple years of advocacy.
+          <span class="credit">Photo · Will Caron</span>
+        </div>
+      </article>
+
+      <article class="milestone" data-fade>
+        <span class="impact-tag">Tax Justice</span>
+        <div class="year">2022 · EITC Expanded</div>
+        <h3>From $20M to $40M in tax relief, better targeted.</h3>
+        <p>The state EITC was expanded and refined to maximize its benefits and better target them toward the truly low-income families who need help most — bringing the credit's total annual value to <strong>$40 million</strong>.</p>
+      </article>
+
+      <article class="milestone" data-fade>
+        <span class="impact-tag">Affordable Housing</span>
+        <div class="year">2018 — 2023 · Front Street</div>
+        <h3>The Front Street apartments — a victory, then a loss.</h3>
+        <p>The Front Street apartments in Lahaina were developed using millions of dollars in public funds, with the developer agreeing to preserve low-income affordability for 51 years, through 2052. In 2019, the developer tried to exit that promise decades early, threatening to push 142 mostly kūpuna households onto the street.</p>
+        <p>Appleseed sued in 2018 and won a judgment in 2020 — the developer would have to abide by the 51-year covenant. The horrible irony of that victory came in <strong>2023</strong>, when wildfires burned Lahaina and Front Street to the ground, killing more than 100 people, displacing thousands more, and devastating the community.</p>
+        <p class="pull">A harsh reminder of the precariousness of our affordable housing supply — and the urgent need for resilient, sustainable solutions in the era of climate change.</p>
+      </article>
+
+      <article class="milestone" data-fade>
+        <span class="impact-tag">Affordable Housing</span>
+        <div class="year">2022 · Housing Investment</div>
+        <h3>$1 billion in state funds, finally aimed at the supply.</h3>
+        <p>As the housing crisis deepened, Appleseed dove into research showing that public investment in the financing of affordable housing was the missing element to actually building homes at prices low-income residents could afford. The drumbeat from Appleseed and its partners helped drive a <strong>$1 billion injection of state funds</strong> in 2022 to develop affordable housing — plus millions more for homelessness services.</p>
+        <div class="figcap">
+          (L–R) Ragnhild Lydia Nystad, formerly of the Norwegian Sámi Parliament; Dr. Davianna McGregor, of the University of Hawaiʻi at Mānoa's ethnic studies program; and Irja Seurujärvi-Kari, of the Finnish Sámi Parliament — at the 2022 Appleseed Housing Solutions Conference at UH Mānoa.
+          <span class="credit">Photo · Hawaiʻi Appleseed</span>
+        </div>
+      </article>
+
+      <article class="milestone" data-fade>
+        <span class="impact-tag">COVID-19 Response</span>
+        <div class="year">2020 — 2022 · Pandemic Era</div>
+        <h3>Don't cut. Invest. Stabilize.</h3>
+        <p>When COVID-19 hit Hawaiʻi in March 2020, Appleseed responded with research-based policy proposals and convened on-the-ground service providers to inform the state's response. Drawing on lessons from the Great Recession, the recommendations centered on resisting austerity and instead pouring funding into programs, expanding the safety net, and getting struggling families stabilized so they could resume economic activity.</p>
+        <p>The state adopted Appleseed's proposal to create an <strong>emergency rent relief and eviction mediation program</strong>. Subsequent Appleseed research showed that this single policy saved thousands of households from homelessness during the height of the pandemic.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ERA 4 -->
+  <section class="era" id="era-current">
+    <div class="era-header">
+      <div class="era-num">Chapter 04</div>
+      <h2>Recent developments and current focus</h2>
+      <div class="era-years">2023 — Present</div>
+    </div>
+
+    <div class="rail">
+      <article class="milestone" data-fade>
+        <div class="year">2023 — Present · One House</div>
+        <h3>Hawaiʻi Budget &amp; Policy Center, folded into Appleseed.</h3>
+        <p>Tax and budget policy continues to be a central pillar of the organization's work — but the separate brand of the Hawaiʻi Budget &amp; Policy Center has been folded into the Appleseed umbrella as the distinction is no longer helpful. With newly hired staff expanding the scope of advocacy in food equity, affordable housing, and — for the first time ever — <strong>transportation equity</strong>, Appleseed's work continues to shape the policy landscape.</p>
+        <div class="figcap">
+          Hawaiʻi Appleseed's third executive director, Will White, emcees a 2026 "Fund Our Future" press conference in support of fair taxes on extreme wealth — designed to generate revenue to invest in our communities and people.
+          <span class="credit">Photo · Will Caron</span>
+        </div>
+      </article>
+
+      <article class="milestone" data-fade>
+        <span class="impact-tag">Community Power</span>
+        <div class="year">Ongoing · Pilina Builders</div>
+        <h3>Policy that comes from the community.</h3>
+        <p>A growing aspect of the work is empowering community members to advocate for themselves. Through workshops, training programs, and organizing, Appleseed has helped build a stronger, more informed, and more engaged community — and has made an internal commitment to drive policy that comes from the community, putting people first.</p>
+        <p class="pull">Appleseed's biggest legislative wins have only come with a critical mass of community support and participation.</p>
+        <div class="figcap">
+          Director of community engagement Christy MacPherson does leadership development training with the 2025–26 cohort of the Pilina Builders — a diverse, bright, and community-grounded group of women from ʻEwa and Waipahu.
+          <span class="credit">Photo · Hawaiʻi Appleseed</span>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+
+<!-- CLOSING -->
+<section class="closing" data-fade>
+  <div class="eyebrow">Looking Forward</div>
+  <h2>A third decade of fighting for a more just and equitable Hawaiʻi.</h2>
+  <p>As Hawaiʻi Appleseed moves into its third decade of service, the organization remains committed to its mission of advancing economic justice for and with the people of Hawaiʻi. With a focus on systemic change, community empowerment, and strategic advocacy, Hawaiʻi Appleseed continues to work toward a future where all residents have the opportunity to thrive.</p>
+  <p>From a small group of dedicated attorneys to a powerful force for social and economic justice — and with new leadership in place — Hawaiʻi Appleseed remains a beacon of hope and a tireless champion for the rights of Hawaiʻi's most vulnerable residents.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="#">Support Our Work
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+    <a class="btn btn-ghost" href="#">Subscribe to updates</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div>
+      <h4>Hawaiʻi Appleseed</h4>
+      <p style="margin:0">733 Bishop Street, Suite 1180<br>Honolulu, Hawaiʻi 96813</p>
+      <p style="margin:8px 0 0">
+        <a href="tel:+18085877605">(808) 587-7605</a><br>
+        <a href="mailto:info@hiappleseed.org">info@hiappleseed.org</a>
+      </p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="#">Our Mission</a>
+      <a href="#">Publications</a>
+      <a href="#">Blog</a>
+      <a href="#">In The News</a>
+      <a href="#">Press Releases</a>
+    </div>
+    <div>
+      <h4>Take Action</h4>
+      <a href="#">Donate</a>
+      <a href="#">Subscribe</a>
+      <a href="#">Get Involved</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div>© 2026 Hawaiʻi Appleseed Center for Law &amp; Economic Justice. All rights reserved.</div>
+    <div>#HawaiiPeopleFirst</div>
+  </div>
+</footer>
+
+<script>
+  // ===== Scroll fade =====
+  // Two patterns:
+  // (a) Hero + closing get a gentle continuous fade-in/fade-out as they pass
+  //     through the viewport — opacity ramps based on visible overlap with
+  //     the viewport.
+  // (b) Milestones use IntersectionObserver to add an `.is-in` class that
+  //     triggers a one-shot CSS fade-in. They stay readable once visible —
+  //     fading them back out would make body text unreadable on tall mobile
+  //     viewports where each milestone spans more than one screen height.
+  const continuousFadeEls = document.querySelectorAll('.story-hero, .closing');
+
+  function applyContinuousFade(){
+    const vh = window.innerHeight;
+    for (const el of continuousFadeEls) {
+      const r = el.getBoundingClientRect();
+      const visTop = Math.max(0, r.top);
+      const visBot = Math.min(vh, r.bottom);
+      const overlap = Math.max(0, visBot - visTop);
+      // Opacity ramps to 1 when at least 35% of viewport is filled by the
+      // element (or, for short elements, when most of the element is visible).
+      const ramp = Math.min(vh * 0.35, r.height * 0.6) || 1;
+      const op = Math.max(0, Math.min(1, overlap / ramp));
+      el.style.opacity = op.toFixed(3);
+    }
+  }
+
+  // Milestone fade-in via IntersectionObserver (one-shot)
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+  document.querySelectorAll('.milestone').forEach(m => io.observe(m));
+
+  // rAF-throttled scroll
+  let raf = 0;
+  function onScroll(){
+    if (raf) return;
+    raf = requestAnimationFrame(() => { applyContinuousFade(); raf = 0; });
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  window.addEventListener('resize', onScroll);
+  applyContinuousFade();
+
+  // Dismiss announcement bar
+  document.querySelector('.announce .x')?.addEventListener('click', e => {
+    e.target.closest('.announce').style.display = 'none';
+  });
+</script>
+</body>
+</html>
