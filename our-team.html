@@ -299,13 +299,12 @@
   }
   .ha-team .ha-grid{
     display:grid;gap:36px 28px;
-    grid-template-columns:1fr;
+    grid-template-columns:repeat(auto-fit, 300px);
+    justify-content:center;
   }
-  @media (min-width:600px){.ha-team .ha-grid{grid-template-columns:repeat(2,1fr);}}
-  @media (min-width:980px){.ha-team .ha-grid{grid-template-columns:repeat(3,1fr);}}
 
   .ha-team .ha-member{
-    position:relative;
+    position:relative;width:300px;
     opacity:0;transform:translateY(28px);
     transition:opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1);
     will-change:opacity,transform;
@@ -315,8 +314,8 @@
   /* Photo button — clickable container that reveals bio overlay */
   .ha-team .ha-member-photo{
     position:relative;overflow:hidden;border-radius:6px;
-    aspect-ratio:4/5;background:var(--ha-ash);
-    margin:0 0 20px;padding:0;width:100%;display:block;
+    width:300px;aspect-ratio:4/5;background:var(--ha-ash);
+    margin:0 0 20px;padding:0;display:block;
     border:0;font:inherit;color:inherit;text-align:left;
     cursor:pointer;
     -webkit-tap-highlight-color:transparent;
@@ -349,22 +348,23 @@
   }
   .ha-team .ha-member-photo[aria-expanded="true"] .ha-member-hint{opacity:0;}
 
-  /* Bio overlay — slides up from bottom */
+  /* Bio overlay — slides up from bottom. Fixed photo size (300×375) means
+     the canvas is always the same; tune text to fit confidently. */
   .ha-team .ha-member-bio{
     position:absolute;inset:0;
-    background:linear-gradient(180deg, rgba(47,62,70,.55) 0%, rgba(47,62,70,.96) 55%);
-    color:#fff;padding:24px 22px 22px;
-    display:flex;flex-direction:column;justify-content:flex-end;
+    background:linear-gradient(180deg, rgba(47,62,70,.65) 0%, rgba(47,62,70,.97) 45%);
+    color:#fff;padding:14px 18px 14px;
+    display:flex;flex-direction:column;justify-content:center;
     opacity:0;transform:translateY(28%);
     transition:opacity .5s cubic-bezier(.22,.61,.36,1), transform .5s cubic-bezier(.22,.61,.36,1);
-    overflow-y:auto;
+    overflow:hidden;
     pointer-events:none;
   }
   .ha-team .ha-member-bio p{
-    font-family:'Poppins',sans-serif;font-size:13.5px;line-height:1.55;
+    font-family:'Poppins',sans-serif;font-size:12.5px;line-height:1.5;
     color:var(--ha-ash);
   }
-  .ha-team .ha-member-bio p + p{margin-top:10px;}
+  .ha-team .ha-member-bio p + p{margin-top:6px;}
   /* Reveal: hover (desktop), focus (keyboard), or click-locked (touch / clicked) */
   .ha-team .ha-member:hover .ha-member-bio,
   .ha-team .ha-member-photo:focus-visible .ha-member-bio,
