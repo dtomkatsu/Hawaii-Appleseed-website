@@ -248,6 +248,43 @@
   }
   .ha-team .ha-ed-email:hover::after{transform:translateX(4px);}
 
+  /* ED bio collapse / Learn More */
+  .ha-team .ha-ed-bio-more{
+    max-height:0;overflow:hidden;opacity:0;
+    transform:translateY(8px);
+    margin-top:0;
+    transition:max-height .8s cubic-bezier(.22,.61,.36,1),
+               opacity .5s cubic-bezier(.22,.61,.36,1) .1s,
+               transform .5s cubic-bezier(.22,.61,.36,1) .1s,
+               margin-top .8s cubic-bezier(.22,.61,.36,1);
+  }
+  .ha-team .ha-ed-bio-more.is-expanded{
+    max-height:1400px;opacity:1;transform:translateY(0);
+    margin-top:16px;
+  }
+  .ha-team .ha-ed-actions{
+    display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:32px;
+  }
+  .ha-team .ha-ed-learn-more{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'Poppins',sans-serif;font-weight:500;font-size:14px;letter-spacing:.04em;
+    color:#fff;background:transparent;border:1px solid rgba(202,210,197,.4);
+    padding:13px 22px;border-radius:999px;cursor:pointer;
+    transition:background .3s, border-color .3s, color .3s, transform .3s;
+  }
+  .ha-team .ha-ed-learn-more:hover{
+    background:rgba(132,169,140,.12);border-color:var(--ha-teal);
+    transform:translateY(-2px);
+  }
+  .ha-team .ha-ed-learn-more:focus-visible{outline:2px solid var(--ha-teal);outline-offset:3px;}
+  .ha-team .ha-ed-learn-more .icon{
+    display:inline-block;font-size:14px;
+    transition:transform .4s cubic-bezier(.22,.61,.36,1);
+  }
+  .ha-team .ha-ed-learn-more[aria-expanded="true"] .icon{transform:rotate(180deg);}
+  /* When ED actions wraps, keep the email on its own row */
+  .ha-team .ha-ed-actions .ha-ed-email{margin-top:0;}
+
   /* ===== TEAM GRID (alphabetical) ===== */
   .ha-team .ha-grid-wrap{background:var(--ha-white);padding:120px 0;}
   .ha-team .ha-grid-head{margin-bottom:56px;}
@@ -275,23 +312,72 @@
   }
   .ha-team .ha-member.is-in{opacity:1;transform:translateY(0);}
 
+  /* Photo button — clickable container that reveals bio overlay */
   .ha-team .ha-member-photo{
     position:relative;overflow:hidden;border-radius:6px;
     aspect-ratio:4/5;background:var(--ha-ash);
-    margin-bottom:20px;
+    margin:0 0 20px;padding:0;width:100%;display:block;
+    border:0;font:inherit;color:inherit;text-align:left;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .ha-team .ha-member-photo:focus-visible{
+    outline:2px solid var(--ha-teal);outline-offset:3px;
   }
   .ha-team .ha-member-photo img{
     display:block;width:100%;height:100%;object-fit:cover;
     transition:transform .8s cubic-bezier(.22,.61,.36,1), filter .4s;
   }
-  /* Subtle bottom gradient overlay for legibility (when role tag overlays photo on hover) */
-  .ha-team .ha-member-photo::after{
-    content:"";position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(180deg, transparent 60%, rgba(47,62,70,.55) 100%);
-    opacity:0;transition:opacity .4s;
+  .ha-team .ha-member:hover .ha-member-photo img,
+  .ha-team .ha-member-photo:focus-visible img{transform:scale(1.05);}
+
+  /* "+ Bio" hint chip — bottom-right corner of photo */
+  .ha-team .ha-member-hint{
+    position:absolute;bottom:12px;right:12px;
+    font-family:'Poppins',sans-serif;font-weight:600;
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ha-charcoal);background:rgba(255,255,255,.94);
+    padding:6px 11px;border-radius:999px;
+    display:inline-flex;align-items:center;gap:6px;
+    pointer-events:none;
+    opacity:0;transform:translateY(8px);
+    transition:opacity .35s, transform .35s;
   }
-  .ha-team .ha-member:hover .ha-member-photo img{transform:scale(1.05);}
-  .ha-team .ha-member:hover .ha-member-photo::after{opacity:1;}
+  .ha-team .ha-member:hover .ha-member-hint,
+  .ha-team .ha-member-photo:focus-visible .ha-member-hint{
+    opacity:1;transform:translateY(0);
+  }
+  .ha-team .ha-member-photo[aria-expanded="true"] .ha-member-hint{opacity:0;}
+
+  /* Bio overlay — slides up from bottom */
+  .ha-team .ha-member-bio{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(47,62,70,.55) 0%, rgba(47,62,70,.96) 55%);
+    color:#fff;padding:24px 22px 22px;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    opacity:0;transform:translateY(28%);
+    transition:opacity .5s cubic-bezier(.22,.61,.36,1), transform .5s cubic-bezier(.22,.61,.36,1);
+    overflow-y:auto;
+    pointer-events:none;
+  }
+  .ha-team .ha-member-bio p{
+    font-family:'Poppins',sans-serif;font-size:13.5px;line-height:1.55;
+    color:var(--ha-ash);
+  }
+  .ha-team .ha-member-bio p + p{margin-top:10px;}
+  /* Reveal: hover (desktop), focus (keyboard), or click-locked (touch / clicked) */
+  .ha-team .ha-member:hover .ha-member-bio,
+  .ha-team .ha-member-photo:focus-visible .ha-member-bio,
+  .ha-team .ha-member-photo[aria-expanded="true"] .ha-member-bio{
+    opacity:1;transform:translateY(0);pointer-events:auto;
+  }
+  /* On touch devices, hover should NOT auto-reveal — only tap (aria-expanded) */
+  @media (hover:none){
+    .ha-team .ha-member:hover .ha-member-bio{opacity:0;transform:translateY(28%);pointer-events:none;}
+    .ha-team .ha-member-photo[aria-expanded="true"] .ha-member-bio{
+      opacity:1;transform:translateY(0);pointer-events:auto;
+    }
+  }
 
   .ha-team .ha-member-name{
     font-family:'Manrope',sans-serif;font-weight:600;
@@ -309,10 +395,6 @@
     flex-shrink:0;transition:width .4s cubic-bezier(.22,.61,.36,1);
   }
   .ha-team .ha-member:hover .ha-member-role::before{width:32px;}
-  .ha-team .ha-member-blurb{
-    font-family:'Poppins',sans-serif;font-size:14.5px;line-height:1.6;
-    color:var(--ha-charcoal);opacity:.78;margin-bottom:14px;max-width:38ch;
-  }
   .ha-team .ha-member-email{
     display:inline-block;font-family:'Poppins',sans-serif;font-size:13px;
     color:var(--ha-charcoal);letter-spacing:.01em;
@@ -396,10 +478,20 @@
           <h2>Will White</h2>
           <div class="ha-ed-role">Executive Director</div>
           <div class="ha-ed-bio">
-            <p>Will is an experienced advocate, community organizer, and all-around policy wonk, who has dedicated his professional career to advancing equitable public policy for communities across the United States. A graduate of Kamehameha Schools and proud son of Kalihi Valley, Will spent the last 20 years on the U.S. continent working as a community organizer, policy advocate (and sometimes nightclub doorman) in both New York City and the San Francisco Bay Area.</p>
-            <p>For seven years, Will served as the Senior Director of Policy and Government Affairs at United Way Bay Area, where he worked to increase the minimum wage, improve access to healthcare for undocumented immigrants, and expand tax credits for working families. Having returned home in 2021, Will has had the opportunity to serve in the Hawaiʻi State Governor's Office and the State Department of Budget and Finance before joining Hawaiʻi Appleseed. Will holds a bachelor's degree in history from New York University and a master's in urban policy analysis and management from The New School.</p>
+            <p>Will is an experienced advocate, community organizer, and all-around policy wonk, who has dedicated his professional career to advancing equitable public policy for communities across the United States.</p>
+            <div class="ha-ed-bio-more" id="ed-bio-more">
+              <p>A graduate of Kamehameha Schools and proud son of Kalihi Valley, Will spent the last 20 years on the U.S. continent working as a community organizer, policy advocate (and sometimes nightclub doorman) in both New York City and the San Francisco Bay Area.</p>
+              <p>For seven years, Will served as the Senior Director of Policy and Government Affairs at United Way Bay Area, where he worked to increase the minimum wage, improve access to healthcare for undocumented immigrants, and expand tax credits for working families. Having returned home in 2021, Will has had the opportunity to serve in the Hawaiʻi State Governor's Office and the State Department of Budget and Finance before joining Hawaiʻi Appleseed. Will holds a bachelor's degree in history from New York University and a master's in urban policy analysis and management from The New School.</p>
+            </div>
           </div>
-          <a class="ha-ed-email" href="mailto:willwhite@hiappleseed.org">willwhite@hiappleseed.org</a>
+          <div class="ha-ed-actions">
+            <button class="ha-ed-learn-more" type="button"
+                    aria-expanded="false" aria-controls="ed-bio-more">
+              <span class="label">Learn More</span>
+              <span class="icon" aria-hidden="true">↓</span>
+            </button>
+            <a class="ha-ed-email" href="mailto:willwhite@hiappleseed.org">willwhite@hiappleseed.org</a>
+          </div>
         </div>
       </div>
     </div>
@@ -418,131 +510,181 @@
 
         <!-- AMADOR, Anthony -->
         <article class="ha-member" data-fade>
-          <div class="ha-member-photo">
+          <button type="button" class="ha-member-photo"
+                  aria-expanded="false" aria-label="Read bio for Anthony Amador">
             <img src="assets/team/amador-anthony.webp"
                  alt="Portrait of Anthony Amador."
                  loading="lazy" decoding="async">
-          </div>
+            <div class="ha-member-bio">
+              <p>Anthony is driven by a deep belief that strong communities are built through storytelling, connection, and showing up. He approaches development work with a community-first mindset, viewing fundraising not as an end in itself, but as a means of resourcing the people and policies that create real, lasting change.</p>
+              <p>Anthony comes to Appleseed as an educator turned development professional, with a decade of experience spanning communications, community engagement, and fundraising across nonprofit and educational settings.</p>
+            </div>
+            <span class="ha-member-hint" aria-hidden="true">+ Bio</span>
+          </button>
           <h3 class="ha-member-name">Anthony Amador</h3>
           <div class="ha-member-role">Director of Development</div>
-          <p class="ha-member-blurb">Driven by the belief that strong communities are built through storytelling, connection, and showing up.</p>
           <a class="ha-member-email" href="mailto:anthony@hiappleseed.org">anthony@hiappleseed.org</a>
         </article>
 
         <!-- BOKSANSKI, Malia -->
         <article class="ha-member" data-fade>
-          <div class="ha-member-photo">
+          <button type="button" class="ha-member-photo"
+                  aria-expanded="false" aria-label="Read bio for Malia Boksanski">
             <img src="assets/team/boksanski-malia.webp"
                  alt="Portrait of Malia Boksanski."
                  loading="lazy" decoding="async">
-          </div>
+            <div class="ha-member-bio">
+              <p>As a Transportation Equity Policy Analyst, Malia is dedicated to ensuring that Hawaiʻi's transportation systems and infrastructure serve all residents equitably. Malia built her career in the Bay Area's transit sector, first as a Sustainable Transportation Associate for Commute.org, and later as a Planner and Safe Routes to School Specialist.</p>
+              <p>Malia served as an inaugural member of the Hawaiʻi Youth Transportation Council and, upon returning home, as a Community and Transportation Planning Intern for the Oʻahu Metropolitan Planning Organization.</p>
+            </div>
+            <span class="ha-member-hint" aria-hidden="true">+ Bio</span>
+          </button>
           <h3 class="ha-member-name">Malia Boksanski</h3>
           <div class="ha-member-role">Transportation Equity Policy Analyst</div>
-          <p class="ha-member-blurb">Working to ensure Hawaiʻi's transportation systems and infrastructure serve all residents equitably.</p>
           <a class="ha-member-email" href="mailto:malia@hiappleseed.org">malia@hiappleseed.org</a>
         </article>
 
         <!-- CARON, Will -->
         <article class="ha-member" data-fade>
-          <div class="ha-member-photo">
+          <button type="button" class="ha-member-photo"
+                  aria-expanded="false" aria-label="Read bio for Will Caron">
             <img src="assets/team/caron-will.webp"
                  alt="Portrait of Will Caron."
                  loading="lazy" decoding="async">
-          </div>
+            <div class="ha-member-bio">
+              <p>Will was born and raised on Oʻahu and is a graduate of the University of Hawaiʻi at Mānoa. Before joining Hawaiʻi Appleseed, Will spent a decade working in media — serving as editor-in-chief at Ka Leo O Hawaiʻi, as a writer and associate editor at The Honolulu Weekly, and then as editor of The Hawaii Independent and Summit magazine.</p>
+              <p>Will oversees Hawaiʻi Appleseed's messaging and the production of communications products and resources. He also puts together the final version of Appleseed's data-driven research products, working to ensure these tools are useful and accessible to the public and lawmakers in advancing people-first public policy.</p>
+            </div>
+            <span class="ha-member-hint" aria-hidden="true">+ Bio</span>
+          </button>
           <h3 class="ha-member-name">Will Caron</h3>
           <div class="ha-member-role">Director of Communications</div>
-          <p class="ha-member-blurb">Oversees messaging and the production of Appleseed's data-driven research products and resources.</p>
           <a class="ha-member-email" href="mailto:will@hiappleseed.org">will@hiappleseed.org</a>
         </article>
 
         <!-- HEIM, Arjuna -->
         <article class="ha-member" data-fade>
-          <div class="ha-member-photo">
+          <button type="button" class="ha-member-photo"
+                  aria-expanded="false" aria-label="Read bio for Arjuna Heim">
             <img src="assets/team/heim-arjuna.webp"
                  alt="Portrait of Arjuna Heim."
                  loading="lazy" decoding="async">
-          </div>
+            <div class="ha-member-bio">
+              <p>Arjuna is Hawaiʻi Appleseed's Director of Research, and also serves as housing policy director. She has a master's degree in urban planning from the University of Hawaiʻi at Mānoa.</p>
+              <p>She has contributed research to several affordable housing studies, including the ALOHA Homes study and the Maui County Comprehensive Affordable Housing Plan. Her research centers on finding equitable solutions to ensure all Hawaiʻi residents can access safe, stable housing.</p>
+            </div>
+            <span class="ha-member-hint" aria-hidden="true">+ Bio</span>
+          </button>
           <h3 class="ha-member-name">Arjuna Heim</h3>
           <div class="ha-member-role">Director of Research, Director of Housing Policy</div>
-          <p class="ha-member-blurb">Research centers on equitable solutions for safe, stable housing across all of Hawaiʻi.</p>
           <a class="ha-member-email" href="mailto:arjuna@hiappleseed.org">arjuna@hiappleseed.org</a>
         </article>
 
         <!-- KAWASAKI, Maile -->
         <article class="ha-member" data-fade>
-          <div class="ha-member-photo">
+          <button type="button" class="ha-member-photo"
+                  aria-expanded="false" aria-label="Read bio for Maile Kawasaki">
             <img src="assets/team/kawasaki-maile.webp"
                  alt="Portrait of Maile Kawasaki."
                  loading="lazy" decoding="async">
-          </div>
+            <div class="ha-member-bio">
+              <p>Maile is passionate about building relationships and serving as a connector in the community. At Hawaiʻi Appleseed, she works closely with community members, listening to their lived experiences and understanding the issues that impact their lives — focusing on developing community leadership and strengthening collective power.</p>
+              <p>Maile was born and raised in Hawaiʻi and is a graduate of Kamehameha Schools. She earned her bachelor's degree in economics from Occidental College in Los Angeles, and previously worked in commercial banking, leadership development, and teaching.</p>
+            </div>
+            <span class="ha-member-hint" aria-hidden="true">+ Bio</span>
+          </button>
           <h3 class="ha-member-name">Maile Kawasaki</h3>
           <div class="ha-member-role">Community Organizer</div>
-          <p class="ha-member-blurb">Develops community leadership and strengthens collective power for more equitable policy.</p>
           <a class="ha-member-email" href="mailto:maile@hiappleseed.org">maile@hiappleseed.org</a>
         </article>
 
         <!-- MACPHERSON, Christy -->
         <article class="ha-member" data-fade>
-          <div class="ha-member-photo">
+          <button type="button" class="ha-member-photo"
+                  aria-expanded="false" aria-label="Read bio for Christy MacPherson">
             <img src="assets/team/macpherson-christy.webp"
                  alt="Portrait of Christy MacPherson."
                  loading="lazy" decoding="async">
-          </div>
+            <div class="ha-member-bio">
+              <p>Christy is a community organizer, licensed clinical social worker, and field instructor for the University of Hawaiʻi Thompson School of Social Work & Public Health. She works to cultivate Appleseed's connections with the grassroots from which the best public policy originates.</p>
+              <p>She is the former executive director of Faith Action for Community Equity, and was program manager for Family Promise of Hawaiʻi, which serves homeless families with children. Her other social work experiences deal primarily with substance abuse and mental health.</p>
+            </div>
+            <span class="ha-member-hint" aria-hidden="true">+ Bio</span>
+          </button>
           <h3 class="ha-member-name">Christy MacPherson</h3>
           <div class="ha-member-role">Director of Community Engagement</div>
-          <p class="ha-member-blurb">Cultivates Appleseed's connections with the grassroots from which the best public policy originates.</p>
           <a class="ha-member-email" href="mailto:christy@hiappleseed.org">christy@hiappleseed.org</a>
         </article>
 
         <!-- MUMMA, Genevieve -->
         <article class="ha-member" data-fade>
-          <div class="ha-member-photo">
+          <button type="button" class="ha-member-photo"
+                  aria-expanded="false" aria-label="Read bio for Genevieve Mumma">
             <img src="assets/team/mumma-genevieve.jpg"
                  alt="Portrait of Genevieve Mumma."
                  loading="lazy" decoding="async">
-          </div>
+            <div class="ha-member-bio">
+              <p>As a Food Equity Policy Analyst, Genevieve researches and advocates for equitable food systems in Hawaiʻi, focusing on policy initiatives and data-driven research that promote access to culturally significant and nutritious foods for all.</p>
+              <p>Before joining Appleseed, Genevieve conducted research at Democracy Unlimited and Move to Amend, and promoted health equity as a Training Fellow for Grassroots Health in Washington D.C. She graduated from The George Washington University with a degree in Political Science and Peace Studies. Being Filipina and growing up on Oʻahu, she is dedicated to serving AAPI/NH and immigrant communities.</p>
+            </div>
+            <span class="ha-member-hint" aria-hidden="true">+ Bio</span>
+          </button>
           <h3 class="ha-member-name">Genevieve Mumma</h3>
           <div class="ha-member-role">Food Equity Policy Analyst</div>
-          <p class="ha-member-blurb">Researches and advocates for equitable food systems and access to nutritious, culturally significant foods.</p>
           <a class="ha-member-email" href="mailto:genevieve@hiappleseed.org">genevieve@hiappleseed.org</a>
         </article>
 
         <!-- SEITZ, Abbey -->
         <article class="ha-member" data-fade>
-          <div class="ha-member-photo">
+          <button type="button" class="ha-member-photo"
+                  aria-expanded="false" aria-label="Read bio for Abbey Seitz">
             <img src="assets/team/seitz-abbey.webp"
                  alt="Portrait of Abbey Seitz."
                  loading="lazy" decoding="async">
-          </div>
+            <div class="ha-member-bio">
+              <p>Abbey is Hawaiʻi Appleseed's Director of Transportation Equity. In this role, she advocates for transportation and land use policy that improves residents' access to safe and affordable public transit services, as well as walking and biking infrastructure.</p>
+              <p>Before joining Appleseed, Abbey worked as a community and urban planner at Planning for Community LLC, a consultancy firm she founded, and previously at SSFM International. Abbey holds a bachelor's in architecture from the University of Minnesota and a master's in urban and regional planning from the University of Hawaiʻi at Manoa.</p>
+            </div>
+            <span class="ha-member-hint" aria-hidden="true">+ Bio</span>
+          </button>
           <h3 class="ha-member-name">Abbey Seitz</h3>
           <div class="ha-member-role">Director of Transportation Equity</div>
-          <p class="ha-member-blurb">Advocates for transportation and land use policy that improves access to public transit, walking, and biking.</p>
           <a class="ha-member-email" href="mailto:abbey@hiappleseed.org">abbey@hiappleseed.org</a>
         </article>
 
         <!-- SPOTO, Daniela -->
         <article class="ha-member" data-fade>
-          <div class="ha-member-photo">
+          <button type="button" class="ha-member-photo"
+                  aria-expanded="false" aria-label="Read bio for Daniela Spoto">
             <img src="assets/team/spoto-daniela.webp"
                  alt="Portrait of Daniela Spoto."
                  loading="lazy" decoding="async">
-          </div>
+            <div class="ha-member-bio">
+              <p>Daniela serves as Deputy Director at Hawaiʻi Appleseed, helping guide strategy, policy advocacy, and operations across the organization's core issue areas. She also continues to lead the food equity work, advancing policies that make healthy food more accessible.</p>
+              <p>Daniela brings over 15 years of experience in public health and social justice policy in Hawaiʻi. Before joining Appleseed in 2018, she led statewide initiatives for the Department of Health and the City and County of Honolulu. She holds a master's in public health from the University of Hawaiʻi at Mānoa.</p>
+            </div>
+            <span class="ha-member-hint" aria-hidden="true">+ Bio</span>
+          </button>
           <h3 class="ha-member-name">Daniela Spoto</h3>
           <div class="ha-member-role">Deputy Director, Director of Food Equity</div>
-          <p class="ha-member-blurb">Helps guide strategy, policy, and operations while leading Appleseed's food equity work.</p>
           <a class="ha-member-email" href="mailto:daniela@hiappleseed.org">daniela@hiappleseed.org</a>
         </article>
 
         <!-- THOMAS, Devin -->
         <article class="ha-member" data-fade>
-          <div class="ha-member-photo">
+          <button type="button" class="ha-member-photo"
+                  aria-expanded="false" aria-label="Read bio for Devin Thomas">
             <img src="assets/team/thomas-devin.webp"
                  alt="Portrait of Devin Thomas."
                  loading="lazy" decoding="async">
-          </div>
+            <div class="ha-member-bio">
+              <p>Devin is particularly interested in researching how the dire housing crisis in Hawaiʻi can be alleviated, and this focus informs his work with Hawaiʻi Appleseed. He obtained his master's degree in international relations at the University of Edinburgh, where he wrote his dissertation on the motivations of the United States in regard to its interactions with Venezuela.</p>
+              <p>Having grown up in Hawaiʻi, Devin is ardently committed to giving back to the local community by researching and promoting policies that combat economic and racial injustices.</p>
+            </div>
+            <span class="ha-member-hint" aria-hidden="true">+ Bio</span>
+          </button>
           <h3 class="ha-member-name">Devin Thomas</h3>
           <div class="ha-member-role">Director of Tax & Budget Policy</div>
-          <p class="ha-member-blurb">Researches how Hawaiʻi's housing crisis can be alleviated through smarter tax and budget policy.</p>
           <a class="ha-member-email" href="mailto:devin@hiappleseed.org">devin@hiappleseed.org</a>
         </article>
 
@@ -599,6 +741,51 @@
 
     root.querySelectorAll('.ha-ed, [data-fade]').forEach(function(el){ io.observe(el); });
   }
+
+  // === ED Learn More toggle ===
+  var edBtn = root.querySelector('.ha-ed-learn-more');
+  var edMore = root.querySelector('#ed-bio-more');
+  if (edBtn && edMore){
+    edBtn.addEventListener('click', function(){
+      var expanded = edBtn.getAttribute('aria-expanded') === 'true';
+      var next = !expanded;
+      edBtn.setAttribute('aria-expanded', String(next));
+      edMore.classList.toggle('is-expanded', next);
+      var lbl = edBtn.querySelector('.label');
+      if (lbl) lbl.textContent = next ? 'Show Less' : 'Learn More';
+    });
+  }
+
+  // === Staff bios: click photo to pin open (also closes any other open card) ===
+  root.querySelectorAll('.ha-member-photo').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      // Close all others, then toggle this one
+      root.querySelectorAll('.ha-member-photo[aria-expanded="true"]').forEach(function(other){
+        if (other !== btn) other.setAttribute('aria-expanded', 'false');
+      });
+      btn.setAttribute('aria-expanded', String(!expanded));
+    });
+  });
+  // Click outside any card closes the open one
+  document.addEventListener('click', function(e){
+    if (e.target.closest('.ha-member-photo')) return;
+    root.querySelectorAll('.ha-member-photo[aria-expanded="true"]').forEach(function(btn){
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+  // Escape key closes any open bio
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape') return;
+    root.querySelectorAll('.ha-member-photo[aria-expanded="true"], .ha-ed-learn-more[aria-expanded="true"]').forEach(function(btn){
+      btn.setAttribute('aria-expanded', 'false');
+      if (btn.classList.contains('ha-ed-learn-more')){
+        edMore && edMore.classList.remove('is-expanded');
+        var lbl = btn.querySelector('.label');
+        if (lbl) lbl.textContent = 'Learn More';
+      }
+    });
+  });
 })();
 </script>
 <!-- END ha-team =========================================== -->
