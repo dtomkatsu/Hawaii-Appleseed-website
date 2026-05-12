@@ -115,7 +115,9 @@
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
     line-height:1.6;
-    overflow-x:hidden;
+    /* NOTE: removed overflow-x:hidden — it creates a new scroll container that
+       breaks position:sticky on .ha-five-stage. Each section (.ha-hero,
+       .ha-focus, .ha-cta) already declares its own overflow:hidden. */
   }
   .ha-mission, .ha-mission *, .ha-mission *::before, .ha-mission *::after{ box-sizing:border-box; }
   .ha-mission a{color:inherit;text-decoration:none}
@@ -166,6 +168,15 @@
   .ha-mission .ha-hero h1 .ha-mark{
     color:var(--ha-teal);font-style:italic;font-weight:600;
     position:relative;display:inline-block;
+  }
+  .ha-mission .ha-hero-lead{
+    font-family:'Manrope',sans-serif;font-weight:500;
+    font-size:clamp(19px, 1.9vw, 24px);
+    line-height:1.45;letter-spacing:-0.005em;
+    color:var(--ha-ash);max-width:52ch;margin-top:32px;
+  }
+  .ha-mission .ha-hero-lead em{
+    color:var(--ha-teal);font-style:italic;font-weight:600;
   }
   .ha-mission .ha-word{
     display:inline-block;opacity:0;transform:translateY(24px);
@@ -373,6 +384,235 @@
   .ha-mission .ha-btn-ghost:hover{background:rgba(255,255,255,.08);transform:translateY(-2px);}
   .ha-mission .ha-btn svg{width:14px;height:14px;}
 
+  /* ===== FIVE — combined scrollytelling (practices ↔ fronts) ===== */
+  .ha-mission .ha-five{position:relative;}
+  .ha-mission .ha-five-track{
+    position:relative;
+    /* Track length tunes the scrub speed. 3 phases (A→B→C) in ~1.2 viewports of scrub. */
+    height:220vh;
+  }
+  .ha-mission .ha-five-stage{
+    position:sticky;top:0;
+    height:100vh;min-height:680px;
+    display:flex;align-items:center;
+    padding-top:110px; /* clear the fixed announce + nav so headline isn't covered */
+    overflow:hidden;isolation:isolate;
+  }
+  .ha-mission .ha-five-bg{position:absolute;inset:0;z-index:-2;}
+  .ha-mission .ha-five-bg-white{position:absolute;inset:0;background:var(--ha-white);}
+  .ha-mission .ha-five-bg-slate{
+    position:absolute;inset:0;background:var(--ha-slate);
+    opacity:0;will-change:opacity;
+  }
+  .ha-mission .ha-five-bg-slate::before{
+    content:"";position:absolute;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle, rgba(132,169,140,.22), transparent 70%);
+    top:-260px;right:-200px;filter:blur(40px);pointer-events:none;
+  }
+  .ha-mission .ha-five-bg-ash{
+    position:absolute;inset:0;background:var(--ha-ash);
+    opacity:0;will-change:opacity;
+  }
+  .ha-mission .ha-five-inner{position:relative;width:100%;}
+
+  /* Eyebrow stack — A & B occupy same slot, crossfade */
+  .ha-mission .ha-five-eb-stack{
+    position:relative;display:block;min-height:16px;margin-bottom:18px;
+  }
+  .ha-mission .ha-five-eb{
+    position:absolute;top:0;left:0;will-change:opacity;
+  }
+  .ha-mission .ha-five-eb-b{opacity:0;}
+
+  /* Heading: "Five" pinned on top line; tail swaps on line 2 */
+  .ha-mission .ha-five-h{
+    font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:clamp(36px, 5.2vw, 68px);
+    line-height:1.04;letter-spacing:-0.025em;
+    color:var(--ha-charcoal);
+    margin:0 0 36px;
+    transition:color .5s ease;
+  }
+  .ha-mission .ha-five.is-dark .ha-five-h{color:#fff;}
+  .ha-mission .ha-five-fixed{display:block;}
+  .ha-mission .ha-five-tail-stack{position:relative;display:block;}
+  .ha-mission .ha-five-tail{display:block;}
+  .ha-mission .ha-five-tail-b{position:absolute;left:0;top:0;}
+  .ha-mission .ha-five-tail .ha-w{
+    display:inline-block;opacity:0;transform:translateY(12px);
+    transition:opacity .45s cubic-bezier(.22,.61,.36,1),
+               transform .45s cubic-bezier(.22,.61,.36,1);
+    will-change:opacity,transform;
+  }
+  .ha-mission .ha-five-tail-a .ha-w{opacity:1;transform:translateY(0);}
+  .ha-mission .ha-five-tail-c{position:absolute;left:0;top:0;}
+  .ha-mission .ha-five-tail-b .ha-w.is-in,
+  .ha-mission .ha-five-tail-c .ha-w.is-in{opacity:1;transform:translateY(0);}
+  /* is-out declared AFTER is-in so it wins when both classes are present (tail-b mid → tail-c) */
+  .ha-mission .ha-five-tail-a .ha-w.is-out,
+  .ha-mission .ha-five-tail-b .ha-w.is-out,
+  .ha-mission .ha-five-tail-c .ha-w.is-out{opacity:0;transform:translateY(-12px);}
+
+  /* Noun emphasis — practices / fronts / values get italic teal accent
+     (matches the .ha-mark pattern used elsewhere on the page). */
+  .ha-mission .ha-five-noun{
+    color:var(--ha-teal-deep);
+    font-weight:600;
+  }
+  /* On the slate phase, switch the accent to the lighter teal for contrast
+     (covers desktop scrolly when .is-dark is toggled by JS, plus mobile's
+     static slate panel which never gets the class) */
+  .ha-mission .ha-five.is-dark .ha-five-noun,
+  .ha-mission .ha-five-mobile-break-c .ha-five-noun{
+    color:var(--ha-teal);
+  }
+
+  /* Body stack — list & grid share the same slot, crossfade */
+  .ha-mission .ha-five-bodies{position:relative;min-height:340px;}
+  .ha-mission .ha-five-body{
+    position:absolute;left:0;right:0;top:0;
+    will-change:opacity,transform;
+  }
+  .ha-mission .ha-five-body-b,
+  .ha-mission .ha-five-body-c{transform:translateY(28px);}
+
+  /* Steps list inside body-a */
+  .ha-mission .ha-five-body-a .ha-steps{
+    display:grid;grid-template-columns:1fr;gap:0;
+    border-top:1px solid var(--ha-rule);
+  }
+  .ha-mission .ha-five-body-a .ha-step{
+    display:grid;grid-template-columns:80px 1fr;gap:36px;align-items:baseline;
+    padding:16px 0;border-bottom:1px solid var(--ha-rule);
+  }
+  .ha-mission .ha-five-body-a .ha-step-num{
+    font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:clamp(20px, 2vw, 26px);
+    color:var(--ha-teal-deep);letter-spacing:-0.02em;line-height:1;
+  }
+  .ha-mission .ha-five-body-a .ha-step h3{
+    font-family:'Manrope',sans-serif;font-weight:600;
+    font-size:clamp(17px, 1.7vw, 21px);
+    line-height:1.3;letter-spacing:-0.005em;color:var(--ha-charcoal);
+  }
+
+  /* Focus grid inside body-b */
+  .ha-mission .ha-five-body-c .ha-section-lead{
+    font-family:'Poppins',sans-serif;font-size:16px;line-height:1.65;
+    color:var(--ha-ash);max-width:54ch;margin-bottom:32px;
+  }
+  .ha-mission .ha-five-body-c .ha-focus-grid{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:14px;
+  }
+  @media (max-width:1000px){
+    .ha-mission .ha-five-body-c .ha-focus-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  .ha-mission .ha-five-body-c .ha-focus-card{
+    position:relative;background:rgba(255,255,255,.04);
+    border:1px solid var(--ha-rule-dark);
+    padding:22px 20px 20px;border-radius:6px;
+    transition:background .35s, border-color .35s, transform .35s;
+    overflow:hidden;
+  }
+  .ha-mission .ha-five-body-c .ha-focus-card:hover{
+    background:rgba(132,169,140,.10);
+    border-color:var(--ha-teal);
+    transform:translateY(-3px);
+  }
+  .ha-mission .ha-five-body-c .ha-focus-card .ha-focus-icon{
+    width:34px;height:34px;border-radius:50%;
+    background:var(--ha-teal-deep);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:14px;transition:background .35s;
+  }
+  .ha-mission .ha-five-body-c .ha-focus-card:hover .ha-focus-icon{background:var(--ha-teal);}
+  .ha-mission .ha-five-body-c .ha-focus-card .ha-focus-icon svg{
+    width:17px;height:17px;stroke:#fff;fill:none;stroke-width:1.7;
+  }
+  .ha-mission .ha-five-body-c .ha-focus-card h3{
+    font-family:'Manrope',sans-serif;font-weight:600;font-size:15.5px;
+    color:#fff;letter-spacing:-0.005em;line-height:1.25;
+  }
+
+  /* Values grid inside body-c (on ash background) */
+  .ha-mission .ha-five-body-b .ha-values-grid{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:14px;
+  }
+  @media (max-width:1000px){
+    .ha-mission .ha-five-body-b .ha-values-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  .ha-mission .ha-five-body-b .ha-value-card{
+    background:#fff;border-radius:6px;padding:20px 18px;
+    border:1px solid var(--ha-rule);
+    position:relative;overflow:hidden;
+    opacity:1;transform:none; /* override the original card's hidden-default */
+    transition:border-color .35s;
+  }
+  .ha-mission .ha-five-body-b .ha-value-card::before{
+    content:"";position:absolute;left:0;top:0;width:100%;height:2px;
+    background:var(--ha-teal);transform:scaleX(0);transform-origin:left;
+    transition:transform .5s cubic-bezier(.22,.61,.36,1);
+  }
+  .ha-mission .ha-five-body-b .ha-value-card:hover{border-color:var(--ha-teal);}
+  .ha-mission .ha-five-body-b .ha-value-card:hover::before{transform:scaleX(1);}
+  .ha-mission .ha-five-body-b .ha-value-card h3{
+    font-family:'Manrope',sans-serif;font-weight:700;font-size:17px;
+    color:var(--ha-charcoal);margin-bottom:8px;letter-spacing:-0.01em;
+  }
+  .ha-mission .ha-five-body-b .ha-value-card p{
+    font-family:'Poppins',sans-serif;font-size:13.5px;line-height:1.55;
+    color:var(--ha-charcoal);
+  }
+
+  /* Guiding-principle block — integrated below the values grid, not a card */
+  .ha-mission .ha-five-principle{
+    display:none;
+    margin-top:36px;padding-top:28px;
+    border-top:1px solid rgba(53,79,82,.18);
+    grid-template-columns:1.2fr 1fr;gap:48px;
+    align-items:start;
+  }
+  @media (max-width:760px){
+    .ha-mission .ha-five-principle{
+      grid-template-columns:1fr;gap:14px;margin-top:28px;padding-top:22px;
+    }
+  }
+  .ha-mission .ha-five-principle-eyebrow{margin-bottom:14px;}
+  .ha-mission .ha-five-principle-quote{
+    font-family:'Manrope',sans-serif;font-weight:500;
+    font-size:clamp(20px, 2.2vw, 28px);
+    line-height:1.22;letter-spacing:-0.015em;
+    color:var(--ha-charcoal);max-width:30ch;margin:0;
+  }
+  .ha-mission .ha-five-principle-quote em{
+    color:var(--ha-teal-deep);font-style:italic;font-weight:600;
+  }
+  .ha-mission .ha-five-principle-body{
+    font-family:'Poppins',sans-serif;font-size:14.5px;line-height:1.65;
+    color:var(--ha-charcoal);opacity:.78;max-width:50ch;margin:0;
+    align-self:end;
+  }
+
+  /* Progress dots — tiny visual cue that there's a scroll-driven sequence */
+  .ha-mission .ha-five-dots{
+    position:absolute;right:28px;top:50%;transform:translateY(-50%);
+    display:flex;flex-direction:column;gap:10px;z-index:2;
+  }
+  .ha-mission .ha-five-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:rgba(53,79,82,.25);transition:background .35s, transform .35s;
+  }
+  .ha-mission .ha-five.is-dark .ha-five-dot{background:rgba(202,210,197,.25);}
+  .ha-mission .ha-five-dot.is-active{
+    background:var(--ha-teal-deep);transform:scale(1.4);
+  }
+  .ha-mission .ha-five.is-dark .ha-five-dot.is-active{background:var(--ha-teal);}
+  @media (max-width:900px){ .ha-mission .ha-five-dots{display:none;} }
+
+  /* Hide both mobile-break elements by default — overridden in the ≤700px media query below */
+  .ha-mission .ha-five-mobile-break,
+  .ha-mission .ha-five-mobile-break-c{display:none;}
+
   /* ===== Mobile refinements ===== */
   @media (max-width: 700px){
     .ha-mission .ha-wrap{ padding:0 20px; }
@@ -426,6 +666,71 @@
     /* Hero blob reduced so it doesn't dominate mobile */
     .ha-mission .ha-hero::before{ width:380px; height:380px; top:-120px; right:-120px; }
     .ha-mission .ha-hero::after{ width:340px; height:340px; bottom:-180px; left:-100px; }
+
+    /* ===== FIVE — disable scrolly on mobile, render as two stacked sections ===== */
+    .ha-mission .ha-five-track{height:auto;}
+    .ha-mission .ha-five-stage{
+      position:static;height:auto;min-height:0;
+      display:block;overflow:visible;padding:64px 0 0;
+    }
+    .ha-mission .ha-five-bg-white,
+    .ha-mission .ha-five-bg-slate{display:none;}
+    .ha-mission .ha-five-dots{display:none;}
+
+    /* Eyebrow row: drop absolute, show only eb-a (eb-b is shown by mobile-break) */
+    .ha-mission .ha-five-eb-stack{height:auto;min-height:0;margin-bottom:14px;}
+    .ha-mission .ha-five-eb{position:static;}
+    .ha-mission .ha-five-eb-b{display:none;}
+
+    /* Main heading: drop absolute, show only tail-a (tail-b is shown by mobile-break) */
+    .ha-mission .ha-five-h{font-size:28px;line-height:1.1;margin:0 0 28px;}
+    .ha-mission .ha-five-tail-stack{position:static;display:block;}
+    .ha-mission .ha-five-tail-b{display:none;}
+    .ha-mission .ha-five-tail-a{display:block;}
+    .ha-mission .ha-five-tail .ha-w{opacity:1;transform:none;}
+
+    /* Bodies: drop absolute, normal flow */
+    .ha-mission .ha-five-bodies{position:static;min-height:0;display:block;}
+    .ha-mission .ha-five-body{position:static;opacity:1;transform:none;display:block;}
+
+    /* Mobile-only break: introduces panel B (values, ash background) between body-a and body-b */
+    .ha-mission .ha-five-mobile-break{
+      display:block;
+      background:var(--ha-ash);
+      margin:48px -20px 0;
+      padding:48px 20px 8px;
+    }
+    .ha-mission .ha-five-mobile-break .ha-eyebrow{
+      display:inline-flex;margin-bottom:14px;
+    }
+    .ha-mission .ha-five-mobile-break .ha-five-h{
+      color:var(--ha-charcoal);font-size:28px;line-height:1.1;margin:0;
+    }
+    .ha-mission .ha-five-body-b{
+      background:var(--ha-ash);
+      margin:0 -20px;padding:24px 20px 48px;
+    }
+    .ha-mission .ha-five-body-b .ha-values-grid{grid-template-columns:1fr;gap:10px;}
+
+    /* Mobile-only break + body for panel C (fronts, slate background) */
+    .ha-mission .ha-five-mobile-break-c{
+      display:block;
+      background:var(--ha-slate);color:#fff;
+      margin:0 -20px;
+      padding:48px 20px 8px;
+    }
+    .ha-mission .ha-five-mobile-break-c .ha-eyebrow{
+      display:inline-flex;margin-bottom:14px;
+    }
+    .ha-mission .ha-five-mobile-break-c .ha-five-h{
+      color:#fff;font-size:28px;line-height:1.1;margin:0;
+    }
+    .ha-mission .ha-five-body-c{
+      background:var(--ha-slate);color:#fff;
+      margin:0 -20px;padding:24px 20px 48px;
+      transform:none;
+    }
+    .ha-mission .ha-five-body-c .ha-focus-grid{grid-template-columns:1fr;gap:10px;}
   }
 
   /* ===== Reduced motion ===== */
@@ -446,100 +751,139 @@
     <div class="ha-wrap">
       <div class="ha-eyebrow on-dark ha-hero-eyebrow">Our Mission</div>
       <h1 data-split>Advancing <span class="ha-mark">economic justice</span> for and with the people of Hawaiʻi.</h1>
+      <p class="ha-hero-lead">A more <em>socially and economically just Hawaiʻi</em>, where everyone has genuine opportunities to achieve economic security and fulfill their potential.</p>
     </div>
   </section>
 
-  <!-- ============= STATEMENT ============= -->
-  <section class="ha-statement">
-    <div class="ha-wrap">
-      <div class="ha-eyebrow">Our Commitment</div>
-      <p class="ha-statement-body">A more <em>socially and economically just Hawaiʻi</em>, where everyone has genuine opportunities to achieve economic security and fulfill their potential.</p>
-    </div>
-  </section>
+  <!-- ============= FIVE (combined APPROACH + FOCUS scrollytelling) ============= -->
+  <section class="ha-five">
+    <div class="ha-five-track">
+      <div class="ha-five-stage">
+        <!-- Background plates: white (base), slate (mid), ash (final) -->
+        <div class="ha-five-bg" aria-hidden="true">
+          <div class="ha-five-bg-white"></div>
+          <div class="ha-five-bg-slate"></div>
+          <div class="ha-five-bg-ash"></div>
+        </div>
 
-  <!-- ============= APPROACH ============= -->
-  <section class="ha-approach">
-    <div class="ha-wrap">
-      <div class="ha-eyebrow">How We Work</div>
-      <h2>Five practices that move policy and people.</h2>
-      <div class="ha-steps">
-        <article class="ha-step" data-fade><div class="ha-step-num">01</div><h3>Community engagement to surface real barriers and solutions.</h3></article>
-        <article class="ha-step" data-fade><div class="ha-step-num">02</div><h3>Data-driven research and analysis on inequities.</h3></article>
-        <article class="ha-step" data-fade><div class="ha-step-num">03</div><h3>Education for policymakers and the public.</h3></article>
-        <article class="ha-step" data-fade><div class="ha-step-num">04</div><h3>Collaborative problem-solving and coalition building.</h3></article>
-        <article class="ha-step" data-fade><div class="ha-step-num">05</div><h3>Advocacy for state, local, and federal systems change.</h3></article>
-      </div>
-    </div>
-  </section>
+        <!-- Progress dots on right rail -->
+        <div class="ha-five-dots" aria-hidden="true">
+          <div class="ha-five-dot ha-five-dot-a is-active"></div>
+          <div class="ha-five-dot ha-five-dot-b"></div>
+          <div class="ha-five-dot ha-five-dot-c"></div>
+        </div>
 
-  <!-- ============= FOCUS AREAS ============= -->
-  <section class="ha-focus">
-    <div class="ha-wrap">
-      <div class="ha-eyebrow on-dark">What We Focus On</div>
-      <h2>Five fronts for change.</h2>
-      <p class="ha-section-lead">Each examined through a lens that centers racial, indigenous, gender, and other forms of equity.</p>
-      <div class="ha-focus-grid">
-        <div class="ha-focus-card" data-fade>
-          <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><path d="M3 12L12 4l9 8M5 10v10h14V10"/></svg></div>
-          <h3>Affordable Housing</h3>
-        </div>
-        <div class="ha-focus-card" data-fade>
-          <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><path d="M12 3c-3 5-3 9 0 12s3-7 0-12zM6 21h12"/></svg></div>
-          <h3>Food Equity</h3>
-        </div>
-        <div class="ha-focus-card" data-fade>
-          <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div>
-          <h3>Wages &amp; Labor</h3>
-        </div>
-        <div class="ha-focus-card" data-fade>
-          <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M6 15V9h12v6M3 9h18"/></svg></div>
-          <h3>Transportation Equity</h3>
-        </div>
-        <div class="ha-focus-card" data-fade>
-          <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10l7-5 7 5v11"/></svg></div>
-          <h3>Taxes &amp; Budget</h3>
-        </div>
-      </div>
-    </div>
-  </section>
+        <div class="ha-wrap ha-five-inner">
 
-  <!-- ============= VALUES ============= -->
-  <section class="ha-values">
-    <div class="ha-wrap">
-      <div class="ha-eyebrow">Our Values</div>
-      <h2>What guides every campaign.</h2>
-      <div class="ha-values-grid">
-        <div class="ha-value-card" data-fade>
-          <h3>People First</h3>
-          <p>Change must center those most adversely impacted by current systems.</p>
-        </div>
-        <div class="ha-value-card" data-fade>
-          <h3>Equity</h3>
-          <p>We name the structural inequities rooted in racism, colonialism, and oppression.</p>
-        </div>
-        <div class="ha-value-card" data-fade>
-          <h3>Courage</h3>
-          <p>We speak up against powerful interests for people-first policies.</p>
-        </div>
-        <div class="ha-value-card" data-fade>
-          <h3>Collaboration</h3>
-          <p>We work with diverse partners to build durable connections.</p>
-        </div>
-        <div class="ha-value-card" data-fade>
-          <h3>Integrity</h3>
-          <p>Our work is accurate, reliable, and aligned with our stated values.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+          <!-- Eyebrow row: A, B & C crossfade in same slot -->
+          <div class="ha-five-eb-stack">
+            <span class="ha-eyebrow ha-five-eb ha-five-eb-a">How We Work</span>
+            <span class="ha-eyebrow ha-five-eb ha-five-eb-b">Our Values</span>
+            <span class="ha-eyebrow on-dark ha-five-eb ha-five-eb-c">What We Focus On</span>
+          </div>
 
-  <!-- ============= LIVED EXPERIENCE ============= -->
-  <section class="ha-lived" data-fade>
-    <div class="ha-wrap">
-      <div class="ha-lived-inner">
-        <div class="ha-eyebrow">A Guiding Principle</div>
-        <h2>Those closest to the problem are closest to the solution.</h2>
-        <p>We integrate people with lived experience of these issues into our leadership and decision-making.</p>
+          <!-- Heading: "Five" pinned on top line, tail crossfades on line 2 (A → B → C) -->
+          <h2 class="ha-five-h">
+            <span class="ha-five-fixed">Five</span>
+            <span class="ha-five-tail-stack">
+              <span class="ha-five-tail ha-five-tail-a">
+                <span class="ha-w ha-five-noun">practices</span> <span class="ha-w">that</span> <span class="ha-w">move</span> <span class="ha-w">policy</span> <span class="ha-w">and</span> <span class="ha-w">people.</span>
+              </span>
+              <span class="ha-five-tail ha-five-tail-b" aria-hidden="true">
+                <span class="ha-w">core</span> <span class="ha-w ha-five-noun">values.</span>
+              </span>
+              <span class="ha-five-tail ha-five-tail-c" aria-hidden="true">
+                <span class="ha-w ha-five-noun">fronts</span> <span class="ha-w">for</span> <span class="ha-w">change.</span>
+              </span>
+            </span>
+          </h2>
+
+          <!-- Body slot: list & grid crossfade in same slot -->
+          <div class="ha-five-bodies">
+            <div class="ha-five-body ha-five-body-a">
+              <div class="ha-steps">
+                <article class="ha-step is-in"><div class="ha-step-num">01</div><h3>Community engagement to surface real barriers and solutions.</h3></article>
+                <article class="ha-step is-in"><div class="ha-step-num">02</div><h3>Data-driven research and analysis on inequities.</h3></article>
+                <article class="ha-step is-in"><div class="ha-step-num">03</div><h3>Education for policymakers and the public.</h3></article>
+                <article class="ha-step is-in"><div class="ha-step-num">04</div><h3>Collaborative problem-solving and coalition building.</h3></article>
+                <article class="ha-step is-in"><div class="ha-step-num">05</div><h3>Advocacy for state, local, and federal systems change.</h3></article>
+              </div>
+            </div>
+
+            <!-- Mobile-only break: shown between body-a and body-b on mobile, hidden on desktop -->
+            <div class="ha-five-mobile-break" aria-hidden="true">
+              <span class="ha-eyebrow">Our Values</span>
+              <h2 class="ha-five-h"><span class="ha-five-fixed">Five</span> <span class="ha-five-tail">core <span class="ha-five-noun">values.</span></span></h2>
+            </div>
+
+            <div class="ha-five-body ha-five-body-b" aria-hidden="true">
+              <div class="ha-values-grid">
+                <div class="ha-value-card is-in">
+                  <h3>People First</h3>
+                  <p>Change must center those most adversely impacted by current systems.</p>
+                </div>
+                <div class="ha-value-card is-in">
+                  <h3>Equity</h3>
+                  <p>We name the structural inequities rooted in racism, colonialism, and oppression.</p>
+                </div>
+                <div class="ha-value-card is-in">
+                  <h3>Courage</h3>
+                  <p>We speak up against powerful interests for people-first policies.</p>
+                </div>
+                <div class="ha-value-card is-in">
+                  <h3>Collaboration</h3>
+                  <p>We work with diverse partners to build durable connections.</p>
+                </div>
+                <div class="ha-value-card is-in">
+                  <h3>Integrity</h3>
+                  <p>Our work is accurate, reliable, and aligned with our stated values.</p>
+                </div>
+              </div>
+
+              <!-- Guiding-principle inline block — integrated, not a card -->
+              <div class="ha-five-principle">
+                <div>
+                  <span class="ha-eyebrow ha-five-principle-eyebrow">A Guiding Principle</span>
+                  <p class="ha-five-principle-quote">Those closest to the problem are <em>closest to the solution.</em></p>
+                </div>
+                <p class="ha-five-principle-body">We integrate people with lived experience of these issues into our leadership and decision-making.</p>
+              </div>
+            </div>
+
+            <!-- Mobile-only break: introduces the third (slate) section between body-b and body-c -->
+            <div class="ha-five-mobile-break-c" aria-hidden="true">
+              <span class="ha-eyebrow on-dark">What We Focus On</span>
+              <h2 class="ha-five-h"><span class="ha-five-fixed">Five</span> <span class="ha-five-tail"><span class="ha-five-noun">fronts</span> for change.</span></h2>
+            </div>
+
+            <div class="ha-five-body ha-five-body-c" aria-hidden="true">
+              <p class="ha-section-lead">Each examined through a lens that centers racial, indigenous, gender, and other forms of equity.</p>
+              <div class="ha-focus-grid">
+                <div class="ha-focus-card is-in">
+                  <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><path d="M3 12L12 4l9 8M5 10v10h14V10"/></svg></div>
+                  <h3>Affordable Housing</h3>
+                </div>
+                <div class="ha-focus-card is-in">
+                  <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><path d="M12 3c-3 5-3 9 0 12s3-7 0-12zM6 21h12"/></svg></div>
+                  <h3>Food Equity</h3>
+                </div>
+                <div class="ha-focus-card is-in">
+                  <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div>
+                  <h3>Wages &amp; Labor</h3>
+                </div>
+                <div class="ha-focus-card is-in">
+                  <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M6 15V9h12v6M3 9h18"/></svg></div>
+                  <h3>Transportation Equity</h3>
+                </div>
+                <div class="ha-focus-card is-in">
+                  <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10l7-5 7 5v11"/></svg></div>
+                  <h3>Taxes &amp; Budget</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </section>
@@ -612,6 +956,123 @@
   // Trigger hero immediately
   const hero = ROOT.querySelector('.ha-hero');
   if (hero) requestAnimationFrame(() => hero.classList.add('is-in'));
+
+  // ===== FIVE — scroll-driven crossfade across practices → fronts → values =====
+  (function fiveScrolly(){
+    const five = ROOT.querySelector('.ha-five');
+    if (!five) return;
+    const track  = five.querySelector('.ha-five-track');
+    const ebA    = five.querySelector('.ha-five-eb-a');
+    const ebB    = five.querySelector('.ha-five-eb-b');
+    const ebC    = five.querySelector('.ha-five-eb-c');
+    const bodyA  = five.querySelector('.ha-five-body-a');
+    const bodyB  = five.querySelector('.ha-five-body-b');
+    const bodyC  = five.querySelector('.ha-five-body-c');
+    const bgSlate= five.querySelector('.ha-five-bg-slate');
+    const bgAsh  = five.querySelector('.ha-five-bg-ash');
+    const wordsA = Array.from(five.querySelectorAll('.ha-five-tail-a .ha-w'));
+    const wordsB = Array.from(five.querySelectorAll('.ha-five-tail-b .ha-w'));
+    const wordsC = Array.from(five.querySelectorAll('.ha-five-tail-c .ha-w'));
+    const dotA   = five.querySelector('.ha-five-dot-a');
+    const dotB   = five.querySelector('.ha-five-dot-b');
+    const dotC   = five.querySelector('.ha-five-dot-c');
+
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    const mobileMQ = window.matchMedia('(max-width: 700px)');
+    const reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    // Reset all dynamic state to the "panel A only" baseline (used when we bail)
+    function resetToA(){
+      [ebA, ebB, ebC, bodyA, bodyB, bodyC, bgSlate, bgAsh].forEach(el => {
+        if (el) el.style.opacity = '';
+      });
+      [bodyA, bodyB, bodyC].forEach(el => { if (el) el.style.pointerEvents = ''; });
+      if (bodyB) bodyB.style.transform = '';
+      if (bodyC) bodyC.style.transform = '';
+      wordsA.forEach(w => w.classList.remove('is-out'));
+      wordsB.forEach(w => { w.classList.remove('is-in'); w.classList.remove('is-out'); });
+      wordsC.forEach(w => w.classList.remove('is-in'));
+      five.classList.remove('is-dark');
+      if (dotA) dotA.classList.add('is-active');
+      if (dotB) dotB.classList.remove('is-active');
+      if (dotC) dotC.classList.remove('is-active');
+    }
+
+    // Phase timings — keep these grouped so they're easy to retune
+    //   A: practices  (white bg)   — settled p ≤ 0.12
+    //   T1: A → B                  — p 0.12 .. 0.38
+    //   B: fronts     (slate bg)   — settled 0.40 ≤ p ≤ 0.55
+    //   T2: B → C                  — p 0.55 .. 0.82
+    //   C: values     (ash bg)     — settled p ≥ 0.82
+    let ticking = false;
+    function update(){
+      ticking = false;
+      if (mobileMQ.matches || reduceMQ.matches){ resetToA(); return; }
+
+      const rect = track.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const total = rect.height - vh;
+      if (total <= 0) return;
+      const p = clamp(-rect.top, 0, total) / total; // 0..1
+
+      // ----- Eyebrows -----
+      ebA.style.opacity = clamp(1 - (p - 0.15) / 0.18, 0, 1);
+      const ebBin  = clamp((p - 0.22) / 0.18, 0, 1);
+      const ebBout = clamp(1 - (p - 0.55) / 0.18, 0, 1);
+      ebB.style.opacity = Math.min(ebBin, ebBout);
+      ebC.style.opacity = clamp((p - 0.62) / 0.18, 0, 1);
+
+      // ----- Bodies -----
+      const aOp = clamp(1 - (p - 0.12) / 0.26, 0, 1);
+      bodyA.style.opacity = aOp;
+      const bIn  = clamp((p - 0.17) / 0.21, 0, 1);
+      const bOut = clamp(1 - (p - 0.55) / 0.22, 0, 1);
+      const bOp  = Math.min(bIn, bOut);
+      bodyB.style.opacity = bOp;
+      bodyB.style.transform = 'translateY(' + (28 * (1 - bIn)) + 'px)';
+      const cIn = clamp((p - 0.60) / 0.22, 0, 1);
+      bodyC.style.opacity = cIn;
+      bodyC.style.transform = 'translateY(' + (28 * (1 - cIn)) + 'px)';
+      // Only the most-visible body should receive pointer events — otherwise
+      // the topmost absolutely-positioned body intercepts hover on the cards.
+      bodyA.style.pointerEvents = aOp > 0.5 ? 'auto' : 'none';
+      bodyB.style.pointerEvents = bOp > 0.5 ? 'auto' : 'none';
+      bodyC.style.pointerEvents = cIn > 0.5 ? 'auto' : 'none';
+
+      // ----- Backgrounds (white base; ash covers mid for values; slate covers final for fronts) -----
+      const aIn  = clamp((p - 0.20) / 0.18, 0, 1);
+      const aOut2 = clamp(1 - (p - 0.60) / 0.18, 0, 1);
+      bgAsh.style.opacity = Math.min(aIn, aOut2);
+      bgSlate.style.opacity = clamp((p - 0.65) / 0.18, 0, 1);
+
+      // ----- Heading color: white only during the slate phase (now the final phase) -----
+      five.classList.toggle('is-dark', p >= 0.68);
+
+      // ----- Word stagger -----
+      const stagger = (words, start, span, klass) => {
+        const n = Math.max(words.length - 1, 1);
+        words.forEach((w, i) => {
+          w.classList.toggle(klass, p > start + (i / n) * span);
+        });
+      };
+      stagger(wordsA, 0.05, 0.24, 'is-out');   // tail-A leaves
+      stagger(wordsB, 0.22, 0.18, 'is-in');    // tail-B arrives
+      stagger(wordsB, 0.55, 0.16, 'is-out');   // tail-B leaves (overrides is-in via CSS order)
+      stagger(wordsC, 0.68, 0.17, 'is-in');    // tail-C arrives
+
+      // ----- Progress dots -----
+      if (dotA) dotA.classList.toggle('is-active', p < 0.32);
+      if (dotB) dotB.classList.toggle('is-active', p >= 0.32 && p < 0.65);
+      if (dotC) dotC.classList.toggle('is-active', p >= 0.65);
+    }
+    function onScroll(){
+      if (!ticking){ ticking = true; requestAnimationFrame(update); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    if (mobileMQ.addEventListener) mobileMQ.addEventListener('change', onScroll);
+    update();
+  })();
 })();
 </script>
 
