@@ -128,41 +128,42 @@
   .ha-issues .ha-eyebrow.on-dark{color:var(--ha-teal);}
   .ha-issues .ha-eyebrow.on-dark::before{background:var(--ha-teal);}
 
-  /* ===== HERO ===== */
+  /* ===== HERO + ISSUE CARDS (merged) ===== */
   .ha-issues .ha-hero{
     position:relative;
-    padding:100px 0 80px;overflow:hidden;isolation:isolate;
+    padding:60px 0 90px;overflow:hidden;isolation:isolate;
     background:
-      radial-gradient(ellipse 90% 60% at 50% 0%, rgba(132,169,140,.16), transparent 70%),
+      radial-gradient(ellipse 90% 60% at 50% 0%, rgba(132,169,140,.14), transparent 70%),
       linear-gradient(180deg, var(--ha-white) 0%, var(--ha-ash-light) 100%);
   }
+  .ha-issues .ha-hero-text{margin-bottom:48px;max-width:760px;}
   .ha-issues .ha-hero h1{
     font-family:'Manrope',sans-serif;font-weight:700;
-    font-size:clamp(36px, 5.6vw, 72px);
+    font-size:clamp(34px, 5vw, 60px);
     line-height:1.06;letter-spacing:-0.025em;
-    color:var(--ha-charcoal);max-width:18ch;margin-top:24px;
+    color:var(--ha-charcoal);max-width:20ch;margin-top:20px;
   }
   .ha-issues .ha-hero h1 em{color:var(--ha-teal-deep);font-style:italic;font-weight:600;}
   .ha-issues .ha-hero-lead{
     font-family:'Poppins',sans-serif;font-weight:400;
-    font-size:clamp(16px, 1.6vw, 19px);line-height:1.65;
-    color:var(--ha-charcoal);max-width:58ch;margin:22px 0 0;opacity:.82;
+    font-size:clamp(15px, 1.4vw, 18px);line-height:1.65;
+    color:var(--ha-charcoal);max-width:58ch;margin:18px 0 0;opacity:.82;
   }
 
   /* ===== ISSUE CARDS (2×2) ===== */
-  .ha-issues .ha-cards-wrap{padding:90px 0;background:var(--ha-white);}
   .ha-issues .ha-cards{
-    display:grid;gap:24px;margin-top:40px;
+    display:grid;gap:20px;
     grid-template-columns:1fr;
   }
-  @media (min-width:760px){.ha-issues .ha-cards{grid-template-columns:repeat(2,1fr);gap:28px;}}
+  @media (min-width:760px){.ha-issues .ha-cards{grid-template-columns:repeat(2,1fr);gap:24px;}}
 
   .ha-issues .ha-card{
     position:relative;display:flex;flex-direction:column;
-    padding:36px 32px 32px;
+    padding:32px 28px 28px;
     background:var(--ha-white);
     border:1px solid var(--ha-rule);
-    border-radius:8px;
+    border-radius:10px;
+    box-shadow:0 6px 16px -10px rgba(53,79,82,.10);
     transition:transform .5s cubic-bezier(.22,.61,.36,1),
                box-shadow .5s cubic-bezier(.22,.61,.36,1),
                border-color .5s;
@@ -218,8 +219,39 @@
   .ha-issues .ha-card[data-accent="charcoal"]:hover .ha-card-icon{background:rgba(47,62,70,.18);}
 
   /* ===== DEEP DIVES ===== */
-  .ha-issues .ha-deep{padding:110px 0;scroll-margin-top:120px;}
-  .ha-issues .ha-deep--alt{background:var(--ha-ash-light);}
+  /* Each deep-dive section gets its own tinted background from the brand palette.
+     All tints are light variations of the brand colors so text contrast stays consistent. */
+  .ha-issues .ha-deep{
+    padding:110px 0;scroll-margin-top:120px;
+    background:var(--section-bg, var(--ha-white));
+    position:relative;
+  }
+  .ha-issues .ha-deep[data-color="tax-budget"]{
+    --section-bg: #F2F4EF;           /* very light ash — neutral, foundational */
+    --section-accent: var(--ha-slate);
+  }
+  .ha-issues .ha-deep[data-color="food"]{
+    --section-bg: #E6EFE9;           /* pale sage — organic, fresh */
+    --section-accent: var(--ha-teal-deep);
+  }
+  .ha-issues .ha-deep[data-color="housing"]{
+    --section-bg: #D9E2D8;           /* deeper ash-sage — grounded, home-like */
+    --section-accent: var(--ha-teal-deep);
+  }
+  .ha-issues .ha-deep[data-color="transit"]{
+    --section-bg: #E2E8E8;           /* pale slate — cool, infrastructural */
+    --section-accent: var(--ha-slate);
+  }
+  /* Section-accent color cascades to eyebrow underline + focus bullets */
+  .ha-issues .ha-deep .ha-eyebrow{color:var(--section-accent);}
+  .ha-issues .ha-deep .ha-eyebrow::before{background:var(--section-accent);}
+  .ha-issues .ha-deep .ha-deep-num{color:var(--section-accent);}
+  .ha-issues .ha-deep .ha-focus li::before{
+    background:var(--section-accent);
+    box-shadow:0 0 0 4px color-mix(in srgb, var(--section-accent) 20%, transparent);
+  }
+  .ha-issues .ha-deep .ha-deep-sub::before{background:var(--section-accent);}
+
   .ha-issues .ha-deep-head{margin-bottom:36px;}
   .ha-issues .ha-deep-num{
     font-family:'Manrope',sans-serif;font-weight:600;
@@ -428,8 +460,8 @@
 
   /* ===== MOBILE TUNING ===== */
   @media (max-width:700px){
-    .ha-issues .ha-hero{padding:72px 0 60px;}
-    .ha-issues .ha-cards-wrap{padding:64px 0;}
+    .ha-issues .ha-hero{padding:36px 0 64px;}
+    .ha-issues .ha-hero-text{margin-bottom:32px;}
     .ha-issues .ha-deep{padding:72px 0;scroll-margin-top:100px;}
     .ha-issues .ha-pubs-wrap{padding:72px 0;}
     .ha-issues .ha-cta{padding:64px 0;}
@@ -454,20 +486,16 @@
 
 <div class="ha-issues">
 
-  <!-- HERO -->
+  <!-- HERO + ISSUE CARDS (merged so cards are visible immediately) -->
   <section class="ha-hero">
     <div class="ha-wrap">
-      <span class="ha-eyebrow">Our Issues</span>
-      <h1>Building a <em>more equitable</em> Hawaiʻi.</h1>
-      <p class="ha-hero-lead">
-        From kitchen tables to the State Capitol, we research and advocate for policies that put Hawaiʻi's people first — across four interconnected fights for a fairer future.
-      </p>
-    </div>
-  </section>
-
-  <!-- ISSUE CARDS (2×2) -->
-  <section class="ha-cards-wrap">
-    <div class="ha-wrap">
+      <div class="ha-hero-text">
+        <span class="ha-eyebrow">Our Issues</span>
+        <h1>Building a <em>more equitable</em> Hawaiʻi.</h1>
+        <p class="ha-hero-lead">
+          From kitchen tables to the State Capitol, we research and advocate for policies that put Hawaiʻi's people first — across four interconnected fights for a fairer future.
+        </p>
+      </div>
       <div class="ha-cards">
 
         <!-- Tax & Budget -->
@@ -534,7 +562,7 @@
   </section>
 
   <!-- ========== DEEP DIVE 1: TAX & BUDGET ========== -->
-  <section class="ha-deep" id="tax-budget" data-fade>
+  <section class="ha-deep" id="tax-budget" data-color="tax-budget" data-fade>
     <div class="ha-wrap">
       <div class="ha-deep-head">
         <span class="ha-deep-num">01 · Issue Area</span>
@@ -591,7 +619,7 @@
   </section>
 
   <!-- ========== DEEP DIVE 2: FOOD SECURITY ========== -->
-  <section class="ha-deep ha-deep--alt" id="food-security" data-fade>
+  <section class="ha-deep" id="food-security" data-color="food" data-fade>
     <div class="ha-wrap">
       <div class="ha-deep-head">
         <span class="ha-deep-num">02 · Issue Area</span>
@@ -648,7 +676,7 @@
   </section>
 
   <!-- ========== DEEP DIVE 3: AFFORDABLE HOUSING ========== -->
-  <section class="ha-deep" id="housing" data-fade>
+  <section class="ha-deep" id="housing" data-color="housing" data-fade>
     <div class="ha-wrap">
       <div class="ha-deep-head">
         <span class="ha-deep-num">03 · Issue Area</span>
@@ -705,7 +733,7 @@
   </section>
 
   <!-- ========== DEEP DIVE 4: TRANSPORTATION ========== -->
-  <section class="ha-deep ha-deep--alt" id="transportation" data-fade>
+  <section class="ha-deep" id="transportation" data-color="transit" data-fade>
     <div class="ha-wrap">
       <div class="ha-deep-head">
         <span class="ha-deep-num">04 · Issue Area</span>
