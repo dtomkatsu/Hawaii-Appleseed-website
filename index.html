@@ -714,6 +714,8 @@
   const line1        = document.querySelector('.hero-h1 .line-1');
   const line3        = document.querySelector('.hero-h1 .line-3');
   const islands      = document.querySelector('.hero-islands');
+  const portalBehind = document.getElementById('portal-behind');
+  const revealSection= document.getElementById('reveal');
 
   let baseline = null;
   let stageHidden = false;
@@ -841,6 +843,18 @@
     // Hold full opacity through raw=0.5 (while the word reads "affordable"),
     // then fade to 0 by raw=0.85 (when the portal is essentially full-screen).
     inner.style.opacity = Math.max(0, Math.min(1, 1 - (raw - 0.5) / 0.35));
+
+    // Fade portal-behind based on how much reveal section is in viewport.
+    // Going DOWN, as reveal slides up into viewport, portal-behind fades out
+    // (so we don't see DUPLICATE "Changing systems..." text in two places).
+    // Going UP, as reveal slides back down out of viewport, portal-behind
+    // fades in — so the d-portal smoothly transitions back to its centered
+    // preview without flashing duplicate content. revealSection.top spans
+    // (windowHeight → 0) as reveal enters viewport from below to top-aligned.
+    if (portalBehind && revealSection){
+      const rt = revealSection.getBoundingClientRect().top;
+      portalBehind.style.opacity = Math.max(0, Math.min(1, rt / window.innerHeight));
+    }
 
     // ===== Scale the word + sync the mask hole to the d's actual counter =====
     // The visible word "affordable" grows from display size to ~viewport-fill,
