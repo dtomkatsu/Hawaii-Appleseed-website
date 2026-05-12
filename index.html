@@ -7,23 +7,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900&display=swap">
 <style>
-  /* ------- Sage-green Appleseed palette (rooted in #3a7811 but pushed sage) ------- */
+  /* ------- Hawaiʻi Appleseed brand palette ------- */
   :root{
-    --sage-50:  #f2f4ee;
-    --sage-100: #e4ead9;
-    --sage-200: #c9d4b4;
-    --sage-300: #a6b886;
-    --sage-400: #829a5c;
-    --sage-500: #5f7a3e;
-    --sage-600: #456028;   /* darker deep sage */
-    --sage-700: #3a5021;
-    --sage-800: #2c3c19;
-    --sage-900: #1c2710;
-    --appleseed: #3a7811;  /* original brand green */
-    --cream:    #f6f2e7;
-    --ink:      #1a1f15;
-    --rule:     #e7e3d5;
-    --accent:   #e2b13c; /* warm accent (sparingly) */
+    /* Canonical brand palette */
+    --ha-ash:        #CAD2C5;
+    --ha-teal:       #84A98C;
+    --ha-teal-deep:  #52796F;
+    --ha-slate:      #354F52;
+    --ha-charcoal:   #2F3E46;
+    --ha-white:      #FFFFFF;
+    --ha-rule:       rgba(53,79,82,.18);
+    --ha-rule-dark:  rgba(202,210,197,.18);
+
+    /* Legacy alias names — map to brand palette. Kept so existing usages
+       resolve to the right brand color without sweeping selector edits. */
+    --sage-50:  #F4F7F2;
+    --sage-100: #E8EEE4;
+    --sage-200: var(--ha-ash);
+    --sage-300: var(--ha-teal);
+    --sage-400: var(--ha-teal);
+    --sage-500: var(--ha-teal-deep);
+    --sage-600: var(--ha-teal-deep);
+    --sage-700: var(--ha-teal-deep);
+    --sage-800: var(--ha-charcoal);
+    --sage-900: var(--ha-charcoal);
+    --appleseed: var(--ha-teal-deep);
+    --cream:    var(--ha-white);
+    --ink:      var(--ha-charcoal);
+    --rule:     var(--ha-rule);
+    --accent:   var(--ha-teal);
   }
 
   *,*::before,*::after{box-sizing:border-box}
@@ -92,17 +104,21 @@
   .donate-btn:hover{background:var(--appleseed)}
 
   /* ========== HERO / ZOOM ========== */
+  /* The wrap + stage must be TRANSPARENT — the SVG mask layer (z:8) provides
+     the slate color via its full-viewport rect, and its d-shaped hole reveals
+     the portal-behind (z:1) underneath. Giving the stage its own opaque slate
+     bg would defeat the mask hole. */
   .hero-zoom-wrap{
     position:relative;
     height:380vh;
-    background:var(--sage-700);
+    background:transparent;
   }
   .hero-zoom-stage{
     position:fixed;
     top:0; left:0; right:0;
     height:100vh;
     overflow:hidden;
-    background:var(--sage-700);
+    background:transparent;
     z-index:5; /* nav (z:40) sits above; reveal/issues scroll over it */
   }
   .zoom-d{ position:relative; display:inline-block; }
@@ -123,9 +139,9 @@
     margin-bottom: 20px;
   }
   .portal-behind h2{
-    font-family:'Fraunces', Georgia, serif; font-weight:400;
-    font-size: clamp(38px, 5vw, 72px); line-height:1.08;
-    letter-spacing:-0.02em; color:var(--sage-900);
+    font-family:'Manrope', sans-serif; font-weight:700;
+    font-size: clamp(38px, 5vw, 72px); line-height:1.05;
+    letter-spacing:-0.025em; color:var(--sage-900);
     margin:0; max-width: 22ch;
   }
   /* SVG mask layer that sits ON TOP of the hero, with a "d"-shaped hole.
@@ -153,7 +169,7 @@
   /* eyebrow — pinned near top, below the sticky nav */
   .hero-eyebrow{
     position:absolute; top:110px; left:50%; transform:translateX(-50%);
-    z-index:2; white-space:nowrap;
+    z-index:10; white-space:nowrap;
     font-family:'Poppins',sans-serif; text-transform:uppercase;
     letter-spacing:.32em; font-size:12px; color:var(--sage-200);
     display:flex; align-items:center; gap:14px;
@@ -163,20 +179,27 @@
   .hero-h1{
     position:absolute; top:46%; left:50%;
     transform:translate(-50%,-50%);
-    z-index:2; text-align:center;
-    font-family:'Fraunces',Georgia,serif; font-weight:400;
-    font-size:clamp(38px,5vw,80px); line-height:1.08;
-    letter-spacing:-0.02em; color:#fff;
+    z-index:10; text-align:center;
+    font-family:'Manrope',sans-serif; font-weight:700;
+    font-size:clamp(38px,5vw,80px); line-height:1.05;
+    letter-spacing:-0.025em; color:#fff;
     margin:0; padding:0;
     white-space:nowrap;
   }
   .hero-h1 .line{ display:block; }
   .zoom-word{
     display:inline-block;
-    font-size: 480px;
-    line-height: 0;         /* collapses layout height to 0 — glyph overflows but doesn't push siblings */
-    vertical-align: middle; /* centers the 0-height box within the line */
-    color:var(--accent); font-weight:600;
+    /* Render at a large font-size so the browser rasterizes the glyph at high
+       resolution. JS scales it DOWN to displayScale (~headlineSize/400) at rest,
+       then scales UP toward 1 on scroll — by the time it fills the screen we're
+       at or near native resolution, no pixelation. */
+    font-family:'Manrope',sans-serif;
+    font-size: 400px;
+    line-height: 1;
+    /* Center the 400px-rendered word on line-2's midpoint so the scaled-down
+       word visually sits between the two surrounding headline lines. */
+    vertical-align: middle;
+    color:var(--ha-ash); font-weight:700;
     transform-origin:50% 50%; will-change:transform;
     font-variant-ligatures:none; -webkit-font-variant-ligatures:none;
     font-feature-settings:"liga" 0,"calt" 0;
@@ -184,14 +207,16 @@
   .hero-h1 .line-2{
     display:block;
     overflow:visible;
-    /* give line-2 the same line-height as the other lines */
+    /* Lock layout height so the 400px-rendered zoom-word doesn't blow up the
+       h1's box; the scaled-down word overflows visually (origin pinned in JS). */
     line-height: 1.1em;
+    height: 1.1em;
   }
   /* sub-copy — pinned below headline */
   .hero-sub{
     position:absolute; top:calc(46% + 160px); left:50%;
     transform:translateX(-50%);
-    z-index:2; width:100%; max-width:640px;
+    z-index:10; width:100%; max-width:640px;
     display:flex; flex-direction:column; align-items:center; gap:20px;
     padding:0 28px;
   }
@@ -209,7 +234,7 @@
     transition:transform .2s, background .2s, color .2s;
   }
   .btn-primary{background:#fff;color:var(--sage-800)}
-  .btn-primary:hover{background:var(--accent);color:#1a1f15}
+  .btn-primary:hover{background:var(--accent);color:#2F3E46}
   .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
   .btn-ghost:hover{border-color:#fff; background:rgba(255,255,255,.08)}
   .btn svg{width:14px;height:14px}
@@ -220,6 +245,7 @@
   /* Scroll cue */
   .scroll-cue{
     position:absolute;left:72px;bottom:28px;
+    z-index:10;
     font-family:'Poppins',sans-serif;font-size:11px;letter-spacing:.3em;
     text-transform:uppercase;color:rgba(255,255,255,.7);
     display:flex;align-items:center;gap:10px;
@@ -250,9 +276,9 @@
     margin-bottom:22px;
   }
   .reveal h2{
-    font-family:'Fraunces',serif; font-weight:400;
+    font-family:'Manrope',sans-serif; font-weight:700;
     font-size: clamp(36px, 4.5vw, 64px);
-    line-height:1.08; letter-spacing:-0.02em;
+    line-height:1.05; letter-spacing:-0.025em;
     margin:0 0 22px; max-width: 22ch;
     color:var(--sage-800);
   }
@@ -300,9 +326,9 @@
     gap:40px; margin-bottom:46px; flex-wrap:wrap;
   }
   .issues-head h2{
-    font-family:'Fraunces',serif; font-weight:400;
+    font-family:'Manrope',sans-serif; font-weight:700;
     font-size: clamp(34px, 3.8vw, 52px);
-    letter-spacing:-0.015em; line-height:1.1;
+    letter-spacing:-0.025em; line-height:1.05;
     margin:0; max-width:18ch; color:var(--sage-800);
   }
   .issues-head .mini{
@@ -326,8 +352,8 @@
     display:inline-flex; align-items:center; gap:10px;
   }
   .tab .num{
-    font-family:'Fraunces',serif; font-size:11px;
-    color: var(--sage-500); letter-spacing:.05em; font-weight:600;
+    font-family:'Poppins',sans-serif; font-size:11px;
+    color: var(--sage-500); letter-spacing:.08em; font-weight:600;
   }
   .tab:hover{border-color:var(--sage-400); color:var(--sage-700)}
   .tab[aria-selected="true"]{
@@ -346,9 +372,9 @@
   }
   .panel.hidden{display:none}
   .panel h3{
-    font-family:'Fraunces',serif; font-weight:400;
+    font-family:'Manrope',sans-serif; font-weight:700;
     font-size: clamp(30px, 3.2vw, 46px);
-    letter-spacing:-0.015em; line-height:1.1;
+    letter-spacing:-0.025em; line-height:1.05;
     margin:0 0 20px; color:var(--sage-800);
   }
   .panel p{
@@ -361,9 +387,9 @@
     border-top:1px solid var(--rule);
   }
   .panel .stat .num{
-    font-family:'Fraunces',serif; font-size:42px;
+    font-family:'Manrope',sans-serif; font-weight:800; font-size:42px;
     color:var(--sage-700); line-height:1; margin-bottom:6px;
-    letter-spacing:-0.01em;
+    letter-spacing:-0.025em;
   }
   .panel .stat .lbl{
     font-size:13px; color:#4a5240; line-height:1.45;
@@ -439,10 +465,10 @@
     <div class="brand-mark" aria-hidden="true">
       <!-- Apple-seed sprout mark -->
       <svg viewBox="0 0 64 64" fill="none">
-        <path d="M32 54c0-12 6-20 16-22-2 12-8 20-16 22z" fill="#3a7811"/>
-        <path d="M32 54c0-12-6-20-16-22 2 12 8 20 16 22z" fill="#4a8b15" opacity=".85"/>
-        <path d="M32 54c-1-10 2-18 8-24" stroke="#2c3c19" stroke-width="1.6" stroke-linecap="round" fill="none"/>
-        <ellipse cx="32" cy="56" rx="10" ry="3" fill="#2c3c19" opacity=".15"/>
+        <path d="M32 54c0-12 6-20 16-22-2 12-8 20-16 22z" fill="#52796F"/>
+        <path d="M32 54c0-12-6-20-16-22 2 12 8 20 16 22z" fill="#84A98C" opacity=".85"/>
+        <path d="M32 54c-1-10 2-18 8-24" stroke="#2F3E46" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+        <ellipse cx="32" cy="56" rx="10" ry="3" fill="#2F3E46" opacity=".15"/>
       </svg>
     </div>
     <div class="brand-text">
@@ -519,13 +545,13 @@
         <defs>
           <mask id="d-hole-mask" maskUnits="userSpaceOnUse">
             <rect x="0" y="0" width="100%" height="100%" fill="white"/>
-            <text id="mask-d" x="50%" y="50%"
-                  text-anchor="middle" dominant-baseline="central"
-                  font-family="Fraunces, Georgia, serif" font-weight="500"
-                  font-size="1" fill="black">d</text>
+            <!-- Ellipse anchored to the d's counter — its growth opens the
+                 portal-behind through the counter, NOT through the d glyph
+                 outline. JS drives cx/cy/rx/ry on scroll. -->
+            <ellipse id="mask-ellipse" cx="0" cy="0" rx="0" ry="0" fill="black"/>
           </mask>
         </defs>
-        <rect x="0" y="0" width="100%" height="100%" fill="#5f7a3e" mask="url(#d-hole-mask)"/>
+        <rect x="0" y="0" width="100%" height="100%" fill="#52796F" mask="url(#d-hole-mask)"/>
       </svg>
     </div>
   </div>
@@ -692,63 +718,99 @@
   let baseline = null;
   let stageHidden = false;
 
-  // Counter of lowercase d: lower-left region, tuned to Fraunces.
-  // Used for both the real d's counter location and to offset the mask d
-  // so its OWN counter (not its glyph center) sits on that point.
-  const f = { fx: 0.34, fy: 0.70, fw: 0.42, fh: 0.36 };
+  // Counter of lowercase d in Manrope 700. Counter center position (fx, fy)
+  // was measured precisely by rendering the d on a canvas and flood-filling
+  // to detect counter pixels. fw/fh are bumped slightly above the measured
+  // counter size so the portal fully fills the visible bowl interior.
+  const f = { fx: 0.52, fy: 0.74, fw: 0.62, fh: 0.56 };
+
+  // Manrope 700 metrics — d glyph extents within the line-box, measured from
+  // canvas pixel-tracing of the actual rendered d glyph.
+  const dGlyphTopRatio    = 0.06;  // top of d glyph from top of line-box
+  const dGlyphHeightRatio = 0.74;  // height of d glyph as fraction of line-box
 
   function measureBaseline(){
+    // Reset transforms so we measure the d at its natural displayed size
+    const line2 = document.querySelector('.hero-h1 .line-2');
+    if (line2) line2.style.transform = '';
     inner.style.transform = 'none';
     inner.style.transformOrigin = '50% 50%';
     void inner.getBoundingClientRect();
 
     const wordRect = inner.getBoundingClientRect();
     const dRect = zoomD.getBoundingClientRect();
-    const h1FontSize = parseFloat(window.getComputedStyle(document.querySelector('.hero-h1')).fontSize);
-    const displayScale = h1FontSize / 480;
+
+    // dRect.height is the line-box height (= font-size at line-height:1).
+    // Reconstruct the actual d glyph rect using Manrope font metrics.
+    const lineHeight = dRect.height;
+    const dGlyphTop = dRect.top + lineHeight * dGlyphTopRatio;
+    const dGlyphHeight = lineHeight * dGlyphHeightRatio;
+    const dGlyphLeft = dRect.left;
+    const dGlyphWidth = dRect.width;
+
     const cPortal = {
-      x: dRect.left + dRect.width  * f.fx,
-      y: dRect.top  + dRect.height * f.fy,
-      w: dRect.width  * f.fw,
-      h: dRect.height * f.fh,
+      x: dGlyphLeft + dGlyphWidth  * f.fx,
+      y: dGlyphTop  + dGlyphHeight * f.fy,
+      w: dGlyphWidth  * f.fw,
+      h: dGlyphHeight * f.fh,
     };
 
-    const originX = ((cPortal.x - wordRect.left) / wordRect.width ) * 100;
-    const originY = ((cPortal.y - wordRect.top ) / wordRect.height) * 100;
-    inner.style.transformOrigin = `${originX}% ${originY}%`;
+    // Display scale: the word is rendered at a fixed large font-size (400px in
+    // CSS) for crisp rasterization. Scale it down so it visually matches the
+    // headline font-size at rest. As scroll progresses, currentScale grows
+    // toward 1 (native render size) → no pixelation when filling the screen.
+    const h1Rect = document.querySelector('.hero-h1').getBoundingClientRect();
+    const h1FontSize = parseFloat(getComputedStyle(document.querySelector('.hero-h1')).fontSize);
+    const wordFontSize = parseFloat(getComputedStyle(inner).fontSize);
+    const displayScale = h1FontSize / wordFontSize;
 
-    // Restore the display scale, then re-measure the d in its visible state.
-    // The original code computed clipCX/clipCY from the unscaled (480px) d rect,
-    // but the user SEES the scaled-down d — and a lowercase d's counter is
-    // offset from its centroid, so the f.fx-relative counter point shifts on
-    // screen as the d scales. Measuring at display scale puts cx,cy on the
-    // counter as it actually appears, so the mask d's hole opens from the
-    // visible bowl of the d.
-    inner.style.transform = `scale(${displayScale})`;
-    void inner.getBoundingClientRect();
-    const dRectScaled = zoomD.getBoundingClientRect();
-    const cPortalVisible = {
-      x: dRectScaled.left + dRectScaled.width  * f.fx,
-      y: dRectScaled.top  + dRectScaled.height * f.fy,
-      w: dRectScaled.width  * f.fw,
-      h: dRectScaled.height * f.fh,
-    };
-    const clipCX = (cPortalVisible.x / window.innerWidth ) * 100;
-    const clipCY = (cPortalVisible.y / window.innerHeight) * 100;
+    // === Shift .line-2 so that, after scale(displayScale) around the d's
+    // counter, the d's baseline lands on line-2's NATURAL text baseline (where
+    // "affordable" would have sat as plain inline text). This makes the scaled
+    // word read in-line between line-1 and line-3 without visual overlap. ===
+    const line2Rect = line2.getBoundingClientRect();
+    // Manrope ascent ≈ 0.78 of em; line-2 line-height is 1.1em so baseline is
+    // (line-height - em)/2 + 0.78em from the top of the line-box.
+    const ascentRatio = 0.78;
+    const line2NaturalBaseline = line2Rect.top + (line2Rect.height - h1FontSize) / 2 + h1FontSize * ascentRatio;
+    // d-glyph bottom (=baseline) in natural element-local coords:
+    const dBaselineNaturalY = dGlyphTop + dGlyphHeight; // screen y at natural state
+    // After scaling by displayScale around (cPortal.x, cPortal.y), the
+    // d-baseline lands at: cPortal.y + (dBaselineNaturalY - cPortal.y) * displayScale.
+    // Set this == line2NaturalBaseline, solve for shifted counter y:
+    const dBaselineOffsetFromCounter = (dBaselineNaturalY - cPortal.y) * displayScale;
+    const targetCounterY = line2NaturalBaseline - dBaselineOffsetFromCounter;
+    const h1CenterX = h1Rect.left + h1Rect.width / 2;
+    const wordShiftX = h1CenterX - cPortal.x;
+    const wordShiftY = targetCounterY - cPortal.y;
+    if (line2) line2.style.transform = `translate(${wordShiftX}px, ${wordShiftY}px)`;
+    cPortal.x += wordShiftX;
+    cPortal.y += wordShiftY;
 
-    const counterDiameter = Math.min(cPortalVisible.w, cPortalVisible.h);
-    // Cap fillScale — beyond ~40x the browser can struggle with composite layers
-    const needed = Math.max(window.innerWidth, window.innerHeight) * 1.2;
-    const fillScale = Math.min(40, needed / Math.max(counterDiameter, 1));
+    // Pin transform-origin to the counter so the d's counter stays at this
+    // screen position as the word scales. Origin is in pixels relative to
+    // the un-transformed element's top-left — the shift on .line-2 doesn't
+    // change the element-local offset (parent moves with element).
+    const originXpx = cPortal.x - (wordRect.left + wordShiftX);
+    const originYpx = cPortal.y - (wordRect.top + wordShiftY);
+    inner.style.transformOrigin = `${originXpx}px ${originYpx}px`;
+
+    // The on-screen counter center (used for the mask ellipse cx/cy)
+    const clipCX = (cPortal.x / window.innerWidth ) * 100;
+    const clipCY = (cPortal.y / window.innerHeight) * 100;
 
     baseline = {
-      displayScale, fillScale,
+      displayScale,
       clipCX, clipCY,
-      counterBaseRadius: counterDiameter / 2,
+      startRX: cPortal.w / 2,
+      startRY: cPortal.h / 2,
     };
+
+    // Apply initial scale immediately so the first paint isn't a 400px monster
+    inner.style.transform = `scale(${displayScale})`;
   }
 
-  const maskD = document.getElementById('mask-d');
+  const maskEllipse = document.getElementById('mask-ellipse');
 
   function onScroll(){
     if (!baseline) return;
@@ -763,41 +825,47 @@
     }
     if (stageHidden) return;
 
-    // Keep the word at display scale; the MASK d scales instead
-    inner.style.transform = `scale(${baseline.displayScale})`;
-
-    const surroundFade = Math.max(0, 1 - raw / 0.20);
+    // Fade surround copy quickly so it doesn't clash with the growing word
+    const surroundFade = Math.max(0, 1 - raw / 0.18);
     if (line1) line1.style.opacity = surroundFade;
     if (line3) line3.style.opacity = surroundFade;
     if (heroSub) heroSub.style.opacity = surroundFade;
     if (eyebrow) eyebrow.style.opacity = surroundFade;
     if (scrollCue) scrollCue.style.opacity = Math.max(0, 1 - raw / 0.10);
 
-    // Scale the mask "d" — starts matching the real d's size, grows to fill viewport.
-    // Anchor the mask d's COUNTER (not its glyph center) onto (cx,cy) so the
-    // portal-behind reveal expands from the actual bowl of the d, not the centroid.
-    if (maskD) {
-      const h1FontPx = parseFloat(window.getComputedStyle(document.querySelector('.hero-h1')).fontSize);
-      const startSize = h1FontPx; // matches the real d
-      const endSize   = Math.max(window.innerWidth, window.innerHeight) * 3;
-      const size = startSize + raw * (endSize - startSize);
-      const cx = window.innerWidth  * baseline.clipCX / 100;
-      const cy = window.innerHeight * baseline.clipCY / 100;
-      maskD.setAttribute('font-size', size);
-      maskD.setAttribute('x', cx);
-      maskD.setAttribute('y', cy);
-      // Iterate: measure where the counter actually lands and shift the anchor by the
-      // residual error. Two passes converges to sub-pixel accuracy even when the bbox
-      // doesn't translate perfectly with x (font-metric asymmetries between browsers).
-      for (let i = 0; i < 2; i++) {
-        const bbox = maskD.getBBox();
-        const counterX = bbox.x + bbox.width  * f.fx;
-        const counterY = bbox.y + bbox.height * f.fy;
-        const ax = parseFloat(maskD.getAttribute('x'));
-        const ay = parseFloat(maskD.getAttribute('y'));
-        maskD.setAttribute('x', ax + (cx - counterX));
-        maskD.setAttribute('y', ay + (cy - counterY));
-      }
+    // ===== Scale the word + sync the mask hole to the d's actual counter =====
+    // The visible word "affordable" grows from display size to ~viewport-fill,
+    // staying anchored on the d's counter (transformOrigin set in measureBaseline).
+    // The mask ellipse rx/ry are kept proportional to the on-screen counter, so the
+    // d's natural counter and the mask hole align — together they form the portal.
+    const cx = window.innerWidth  * baseline.clipCX / 100;
+    const cy = window.innerHeight * baseline.clipCY / 100;
+    const maxCornerDist = Math.max(
+      Math.hypot(cx, cy),
+      Math.hypot(window.innerWidth - cx, cy),
+      Math.hypot(cx, window.innerHeight - cy),
+      Math.hypot(window.innerWidth - cx, window.innerHeight - cy)
+    ) * 1.1;
+    // End-scale: counter's larger axis fills past the furthest viewport corner.
+    // startRX/Y is the natural counter radius (in 400px-rendered pixels), so
+    // endScale = maxCornerDist / startCounterR scales the natural counter to
+    // exactly maxCornerDist on screen — no displayScale multiplier needed.
+    const startCounterR = Math.max(baseline.startRX, baseline.startRY);
+    const endScale = maxCornerDist / startCounterR;
+    // Ease-out: reveal feels snappier near the start, finishes by raw ~0.85
+    const t = Math.min(1, raw / 0.85);
+    const eased = 1 - Math.pow(1 - t, 2);
+    const currentScale = baseline.displayScale + eased * (endScale - baseline.displayScale);
+
+    inner.style.transform = `scale(${currentScale})`;
+
+    if (maskEllipse) {
+      // Mask ellipse on-screen radius = natural counter radius * currentScale,
+      // matching the scaled visual size of the d's counter.
+      maskEllipse.setAttribute('cx', cx);
+      maskEllipse.setAttribute('cy', cy);
+      maskEllipse.setAttribute('rx', baseline.startRX * currentScale);
+      maskEllipse.setAttribute('ry', baseline.startRY * currentScale);
     }
 
     if (islands) islands.style.opacity = Math.max(0, 1 - raw / 0.30);
