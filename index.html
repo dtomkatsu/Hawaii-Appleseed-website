@@ -501,11 +501,13 @@
   </div>
 </nav>
 
-<!-- Portal-behind: cream layer behind the hero; visible through the "d"-shaped mask hole -->
-<div class="portal-behind" id="portal-behind" aria-hidden="true">
-  <div class="eyebrow">Our work — in four fronts</div>
-  <h2>Changing systems to address inequality and foster greater opportunity.</h2>
-</div>
+<!-- Portal-behind: plain white layer visible through the d-shaped mask hole.
+     Intentionally has NO text content — the duplicate "Our work / Changing
+     systems..." headline used to live here, which conflicted with the same
+     text in the reveal section below (creating two visible copies during the
+     scroll-up transition through the hold zone). The d-portal now opens to
+     a clean white area; the real reveal section provides the actual content. -->
+<div class="portal-behind" id="portal-behind" aria-hidden="true"></div>
 
 <!-- ===== HERO + ZOOM — combined sticky scroll section ===== -->
 <section class="hero-zoom-wrap" id="zoom-wrap" aria-label="Mission statement">
