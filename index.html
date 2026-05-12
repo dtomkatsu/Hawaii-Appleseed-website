@@ -721,6 +721,13 @@
 
   let baseline = null;
   let stageHidden = false;
+  // Tracks whether the user has scrolled past the wrap bottom and is now
+  // returning. We use this to apply an ASYMMETRIC opacity fade: going down,
+  // the word stays visible during the growth phase (so the user sees the
+  // d-portal effect develop). Coming back up from past the wrap, the word
+  // stays invisible until near the top — otherwise ghost letters appear at
+  // large scale in the partial-opacity fade window. Reset when scrollY≈0.
+  let pastWrapMode = false;
 
   // Counter of lowercase d in Manrope 700. Counter center position (fx, fy)
   // was measured precisely by rendering the d on a canvas and flood-filling
@@ -827,6 +834,11 @@
       stage.style.display = shouldHide ? 'none' : 'block';
       stageHidden = shouldHide;
     }
+    // Track pastWrapMode BEFORE the stageHidden early-return so the flag is
+    // updated even while stage is hidden (otherwise pastWrapMode would never
+    // get set to true since the first frame past wrapBottom returns early).
+    if (window.scrollY >= wrapBottom) pastWrapMode = true;
+    else if (window.scrollY < 5) pastWrapMode = false;
     if (stageHidden) return;
 
     // Fade surround copy quickly so it doesn't clash with the growing word
@@ -837,15 +849,18 @@
     if (eyebrow) eyebrow.style.opacity = surroundFade;
     if (scrollCue) scrollCue.style.opacity = Math.max(0, 1 - raw / 0.10);
 
-    // Fade the zoom-word out quickly as it starts growing past readable size.
-    // The ease curve scales the word very aggressively (it reaches 8x+ within
-    // raw=0.5), so a slow fade leaves ghost partial-letters ("rda") visible at
-    // huge scale during the partial-opacity zone. Going DOWN that looks like
-    // the word "morphing into the portal." Going UP from past the wrap, the
-    // user sees ghost letters appearing at large scale — perceived as broken.
-    // Fade fast (raw 0 → 0.05) so the word is only visible at near-readable
-    // scale, in either direction. The d-portal effect continues independently.
-    inner.style.opacity = Math.max(0, Math.min(1, 1 - raw / 0.05));
+    // Asymmetric opacity fade:
+    //   First scroll-down (pastWrapMode=false): slow fade — word visible
+    //     during growth, fades to invisible by raw≈0.5 as the d-portal opens.
+    //   Returning from past wrap (pastWrapMode=true): word stays invisible
+    //     for the entire return scroll, only fading in over the last ~30px
+    //     near the top. This prevents ghost letters appearing at large scale
+    //     in the partial-opacity zone during scroll-up.
+    if (pastWrapMode) {
+      inner.style.opacity = Math.max(0, Math.min(1, 1 - window.scrollY / 30));
+    } else {
+      inner.style.opacity = Math.max(0, Math.min(1, 1 - (raw - 0.3) / 0.2));
+    }
 
     // Fade portal-behind based on how much reveal section is in viewport.
     // Going DOWN, as reveal slides up into viewport, portal-behind fades out
