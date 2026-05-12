@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Issues — Hawaiʻi Appleseed</title>
+
+<!-- ===========================================================
+     PREVIEW-ONLY chrome (announce / nav / footer).
+     Skip this block when copying into Squarespace.
+     =========================================================== -->
+<style>
+  html,body{margin:0;padding:0;background:#fff;}
+  body{font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif;color:#2F3E46;}
+  .px-announce{
+    background:#2F3E46;color:#fff;
+    font:500 13px/1.4 'Poppins',sans-serif;letter-spacing:.01em;
+    padding:10px 18px;text-align:center;
+    position:fixed;top:0;left:0;right:0;z-index:50;
+  }
+  .px-announce a{color:#fff;text-decoration:underline}
+  .px-announce .x{position:absolute;right:14px;top:50%;transform:translateY(-50%);opacity:.7;cursor:pointer}
+  .px-nav{
+    background:#fff;border-bottom:1px solid rgba(53,79,82,.18);
+    padding:18px 28px;display:flex;align-items:center;gap:32px;
+    position:fixed;top:38px;left:0;right:0;z-index:49;
+    font-family:'Poppins',sans-serif;
+  }
+  .px-nav .px-logo{display:flex;align-items:center;gap:12px;font-family:'Manrope',sans-serif;font-weight:800;font-size:20px;color:#52796F;letter-spacing:.05em;}
+  .px-nav .px-logo svg{width:36px;height:36px;}
+  .px-nav .px-spacer{flex:1}
+  .px-nav .px-links{display:none;gap:28px;font-size:14px;font-weight:500;color:#2F3E46;}
+  .px-nav .px-links a:hover{color:#52796F}
+  @media (min-width: 900px){ .px-nav .px-links{display:flex} }
+  .px-footer{
+    background:#2F3E46;color:#CAD2C5;padding:60px 28px 40px;
+    font-family:'Poppins',sans-serif;font-size:14px;line-height:1.7;
+  }
+  .px-footer .px-foot-grid{display:grid;grid-template-columns:1fr;gap:32px;max-width:1200px;margin:0 auto 40px;}
+  @media (min-width:760px){.px-footer .px-foot-grid{grid-template-columns:2fr 1fr 1fr;}}
+  .px-footer h4{font-family:'Manrope',sans-serif;font-weight:700;color:#fff;margin:0 0 12px;font-size:14px;letter-spacing:.04em;text-transform:uppercase;}
+  .px-footer a{color:#CAD2C5;text-decoration:none;display:block;margin-bottom:6px;}
+  .px-footer a:hover{color:#84A98C}
+  .px-foot-bottom{max-width:1200px;margin:0 auto;padding-top:24px;border-top:1px solid rgba(202,210,197,.18);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:12px;}
+  .px-spacer-top{height:120px}
+</style>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap">
+</head>
+<body>
+
+<!-- PREVIEW-ONLY: announce bar -->
+<div class="px-announce">
+  New Data Tool: <a href="#">Hawaiʻi Budget Bill Draft Tracker</a>
+  <span class="x">×</span>
+</div>
+
+<!-- PREVIEW-ONLY: nav -->
+<nav class="px-nav">
+  <div class="px-logo">
+    <svg viewBox="0 0 40 40" fill="none">
+      <path d="M20 8c-3 4-3 9 0 13 3-4 3-9 0-13z" fill="#52796F"/>
+      <path d="M14 14c-2 5 1 10 6 11 1-5-1-10-6-11z" fill="#84A98C"/>
+      <path d="M26 14c2 5-1 10-6 11-1-5 1-10 6-11z" fill="#84A98C"/>
+      <ellipse cx="20" cy="32" rx="9" ry="2" fill="#CAD2C5"/>
+    </svg>
+    HAWAIʻI APPLESEED
+  </div>
+  <div class="px-spacer"></div>
+  <div class="px-links">
+    <a href="index.html">Home</a>
+    <a href="our-story.html">Our Story</a>
+    <a href="our-mission.html">Our Mission</a>
+    <a href="our-team.html">Our Team</a>
+    <a href="board-of-directors.html">Board</a>
+    <a href="issues.html" style="color:#52796F;font-weight:600">Issues</a>
+    <a href="#">News</a>
+    <a href="#">Donate</a>
+  </div>
+</nav>
+
+<div class="px-spacer-top"></div>
+
+<!-- ============================================================
+     ============   SQUARESPACE INJECTION  =====================
+     Copy EVERYTHING between BEGIN ha-issues and END ha-issues
+     into a single Code Block on your Squarespace "Issues" page.
+     ============================================================ -->
+
+<!-- BEGIN ha-issues ========================================= -->
+<style>
+  /* ===== Brand-guide palette (scoped) ===== */
+  .ha-issues{
+    --ha-ash:        #CAD2C5;
+    --ha-ash-light:  #E5E9E2;
+    --ha-teal:       #84A98C;
+    --ha-teal-deep:  #52796F;
+    --ha-slate:      #354F52;
+    --ha-charcoal:   #2F3E46;
+    --ha-white:      #FFFFFF;
+    --ha-rule:       rgba(53,79,82,.18);
+    --ha-rule-dark:  rgba(202,210,197,.18);
+
+    font-family:'Poppins', system-ui, -apple-system, Arial, sans-serif;
+    color:var(--ha-charcoal);
+    background:var(--ha-white);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  .ha-issues, .ha-issues *, .ha-issues *::before, .ha-issues *::after{ box-sizing:border-box; }
+  .ha-issues a{color:inherit;text-decoration:none}
+  .ha-issues p,.ha-issues h1,.ha-issues h2,.ha-issues h3,.ha-issues h4,.ha-issues ul,.ha-issues li{margin:0;padding:0}
+  .ha-issues ul{list-style:none}
+
+  .ha-issues .ha-wrap{ max-width:1180px;margin:0 auto;padding:0 28px; }
+  @media (max-width:700px){ .ha-issues .ha-wrap{ padding:0 20px; } }
+
+  .ha-issues .ha-eyebrow{
+    display:inline-flex;align-items:center;gap:14px;
+    font-family:'Poppins',sans-serif;font-weight:600;
+    font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--ha-teal-deep);
+  }
+  .ha-issues .ha-eyebrow::before{content:"";width:42px;height:1px;background:var(--ha-teal);}
+  .ha-issues .ha-eyebrow.on-dark{color:var(--ha-teal);}
+  .ha-issues .ha-eyebrow.on-dark::before{background:var(--ha-teal);}
+
+  /* ===== HERO ===== */
+  .ha-issues .ha-hero{
+    position:relative;
+    padding:100px 0 80px;overflow:hidden;isolation:isolate;
+    background:
+      radial-gradient(ellipse 90% 60% at 50% 0%, rgba(132,169,140,.16), transparent 70%),
+      linear-gradient(180deg, var(--ha-white) 0%, var(--ha-ash-light) 100%);
+  }
+  .ha-issues .ha-hero h1{
+    font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:clamp(36px, 5.6vw, 72px);
+    line-height:1.06;letter-spacing:-0.025em;
+    color:var(--ha-charcoal);max-width:18ch;margin-top:24px;
+  }
+  .ha-issues .ha-hero h1 em{color:var(--ha-teal-deep);font-style:italic;font-weight:600;}
+  .ha-issues .ha-hero-lead{
+    font-family:'Poppins',sans-serif;font-weight:400;
+    font-size:clamp(16px, 1.6vw, 19px);line-height:1.65;
+    color:var(--ha-charcoal);max-width:58ch;margin:22px 0 0;opacity:.82;
+  }
+
+  /* ===== ISSUE CARDS (2×2) ===== */
+  .ha-issues .ha-cards-wrap{padding:90px 0;background:var(--ha-white);}
+  .ha-issues .ha-cards{
+    display:grid;gap:24px;margin-top:40px;
+    grid-template-columns:1fr;
+  }
+  @media (min-width:760px){.ha-issues .ha-cards{grid-template-columns:repeat(2,1fr);gap:28px;}}
+
+  .ha-issues .ha-card{
+    position:relative;display:flex;flex-direction:column;
+    padding:36px 32px 32px;
+    background:var(--ha-white);
+    border:1px solid var(--ha-rule);
+    border-radius:8px;
+    transition:transform .5s cubic-bezier(.22,.61,.36,1),
+               box-shadow .5s cubic-bezier(.22,.61,.36,1),
+               border-color .5s;
+    opacity:0;transform:translateY(28px);
+    will-change:opacity,transform;
+    cursor:pointer;
+  }
+  .ha-issues .ha-card.is-in{opacity:1;transform:translateY(0);}
+  .ha-issues .ha-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 24px 50px -20px rgba(53,79,82,.30);
+    border-color:var(--ha-teal);
+  }
+  .ha-issues .ha-card-icon{
+    width:52px;height:52px;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:50%;background:rgba(132,169,140,.14);
+    color:var(--ha-teal-deep);margin-bottom:22px;
+    transition:transform .5s cubic-bezier(.22,.61,.36,1), background .4s;
+  }
+  .ha-issues .ha-card:hover .ha-card-icon{
+    transform:scale(1.08) rotate(-4deg);
+    background:rgba(132,169,140,.24);
+  }
+  .ha-issues .ha-card-icon svg{width:28px;height:28px;}
+  .ha-issues .ha-card h3{
+    font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:clamp(22px, 2.4vw, 28px);line-height:1.15;letter-spacing:-0.015em;
+    color:var(--ha-charcoal);margin-bottom:14px;
+  }
+  .ha-issues .ha-card p{
+    font-family:'Poppins',sans-serif;font-size:15px;line-height:1.65;
+    color:var(--ha-charcoal);opacity:.78;margin-bottom:20px;
+    flex:1;
+  }
+  .ha-issues .ha-card-link{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'Poppins',sans-serif;font-weight:600;
+    font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ha-teal-deep);
+    align-self:flex-start;
+    transition:gap .4s;
+  }
+  .ha-issues .ha-card:hover .ha-card-link{gap:16px;color:var(--ha-charcoal);}
+  .ha-issues .ha-card-link::after{
+    content:"→";font-size:16px;letter-spacing:0;
+  }
+
+  /* Card accent dot (different per issue) */
+  .ha-issues .ha-card[data-accent="slate"] .ha-card-icon{background:rgba(53,79,82,.10);color:var(--ha-slate);}
+  .ha-issues .ha-card[data-accent="slate"]:hover .ha-card-icon{background:rgba(53,79,82,.18);}
+  .ha-issues .ha-card[data-accent="charcoal"] .ha-card-icon{background:rgba(47,62,70,.10);color:var(--ha-charcoal);}
+  .ha-issues .ha-card[data-accent="charcoal"]:hover .ha-card-icon{background:rgba(47,62,70,.18);}
+
+  /* ===== DEEP DIVES ===== */
+  .ha-issues .ha-deep{padding:110px 0;scroll-margin-top:120px;}
+  .ha-issues .ha-deep--alt{background:var(--ha-ash-light);}
+  .ha-issues .ha-deep-head{margin-bottom:36px;}
+  .ha-issues .ha-deep-num{
+    font-family:'Manrope',sans-serif;font-weight:600;
+    font-size:13px;letter-spacing:.32em;color:var(--ha-teal-deep);
+    opacity:.7;margin-bottom:18px;display:block;
+  }
+  .ha-issues .ha-deep h2{
+    font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:clamp(32px, 4.6vw, 56px);line-height:1.05;letter-spacing:-0.025em;
+    color:var(--ha-charcoal);margin-bottom:12px;
+  }
+  .ha-issues .ha-deep-body{max-width:760px;}
+  .ha-issues .ha-deep-lead{
+    font-family:'Manrope',sans-serif;font-weight:500;
+    font-size:clamp(18px, 1.9vw, 22px);line-height:1.45;
+    color:var(--ha-charcoal);margin:24px 0 18px;
+    letter-spacing:-0.005em;
+  }
+  .ha-issues .ha-deep p{
+    font-family:'Poppins',sans-serif;font-size:16px;line-height:1.75;
+    color:var(--ha-charcoal);opacity:.85;margin-bottom:14px;
+  }
+  .ha-issues .ha-deep-sub{
+    font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:13px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ha-charcoal);margin:48px 0 20px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .ha-issues .ha-deep-sub::before{
+    content:"";width:32px;height:1px;background:var(--ha-teal);
+  }
+
+  /* Focus list */
+  .ha-issues .ha-focus{
+    display:grid;gap:16px;
+    grid-template-columns:1fr;
+  }
+  @media (min-width:680px){.ha-issues .ha-focus{grid-template-columns:repeat(2,1fr);gap:14px 28px;}}
+  .ha-issues .ha-focus li{
+    display:flex;align-items:flex-start;gap:14px;
+    font-family:'Poppins',sans-serif;font-size:15px;line-height:1.55;
+    color:var(--ha-charcoal);opacity:.85;
+  }
+  .ha-issues .ha-focus li::before{
+    content:"";flex-shrink:0;
+    width:8px;height:8px;border-radius:50%;
+    background:var(--ha-teal);margin-top:9px;
+    box-shadow:0 0 0 4px rgba(132,169,140,.18);
+  }
+
+  /* Featured pubs row (inside deep dives) */
+  .ha-issues .ha-pub-row{
+    display:grid;gap:24px;
+    grid-template-columns:1fr;
+    max-width:none;
+  }
+  @media (min-width:720px){.ha-issues .ha-pub-row{grid-template-columns:repeat(2,1fr);}}
+
+  /* ===== PUBLICATIONS (universal card) ===== */
+  .ha-issues .ha-pub{
+    position:relative;
+    background:var(--ha-white);
+    border-radius:8px;
+    overflow:hidden;
+    border:1px solid var(--ha-rule);
+    transition:transform .5s cubic-bezier(.22,.61,.36,1),
+               box-shadow .5s cubic-bezier(.22,.61,.36,1),
+               border-color .5s,
+               opacity .4s;
+    opacity:0;transform:translateY(20px);
+  }
+  .ha-issues .ha-pub.is-in{opacity:1;transform:translateY(0);}
+  .ha-issues .ha-pub:hover{
+    transform:translateY(-4px);
+    box-shadow:0 18px 36px -16px rgba(53,79,82,.25);
+    border-color:var(--ha-teal);
+  }
+  .ha-issues .ha-pub-link{display:flex;flex-direction:column;height:100%;}
+  .ha-issues .ha-pub-img{
+    position:relative;aspect-ratio:16/10;overflow:hidden;
+    background:var(--ha-ash);
+  }
+  .ha-issues .ha-pub-img img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .8s cubic-bezier(.22,.61,.36,1);
+  }
+  .ha-issues .ha-pub:hover .ha-pub-img img{transform:scale(1.06);}
+  .ha-issues .ha-pub-body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1;}
+  .ha-issues .ha-pub-meta{
+    display:flex;align-items:center;gap:10px;margin-bottom:12px;
+    font-family:'Poppins',sans-serif;font-size:11px;letter-spacing:.06em;
+    color:var(--ha-slate);opacity:.85;
+  }
+  .ha-issues .ha-pub-cat{
+    display:inline-flex;align-items:center;
+    padding:4px 10px;border-radius:999px;
+    font-weight:600;font-size:10.5px;letter-spacing:.10em;
+    text-transform:uppercase;
+    background:rgba(82,121,111,.10);color:var(--ha-teal-deep);
+  }
+  /* Per-category color pills */
+  .ha-issues .ha-pub-cat[data-cat="tax-budget"]{background:rgba(53,79,82,.12);color:var(--ha-slate);}
+  .ha-issues .ha-pub-cat[data-cat="food"]{background:rgba(82,121,111,.14);color:var(--ha-teal-deep);}
+  .ha-issues .ha-pub-cat[data-cat="housing"]{background:rgba(132,169,140,.22);color:var(--ha-teal-deep);}
+  .ha-issues .ha-pub-cat[data-cat="transit"]{background:rgba(47,62,70,.10);color:var(--ha-charcoal);}
+  .ha-issues .ha-pub-date{font-weight:500;}
+  .ha-issues .ha-pub-title{
+    font-family:'Manrope',sans-serif;font-weight:600;
+    font-size:18px;line-height:1.25;letter-spacing:-0.01em;
+    color:var(--ha-charcoal);margin-bottom:10px;
+    transition:color .3s;
+  }
+  .ha-issues .ha-pub:hover .ha-pub-title{color:var(--ha-teal-deep);}
+  .ha-issues .ha-pub-excerpt{
+    font-family:'Poppins',sans-serif;font-size:13.5px;line-height:1.6;
+    color:var(--ha-charcoal);opacity:.78;flex:1;
+  }
+
+  /* ===== LATEST PUBLICATIONS SECTION ===== */
+  .ha-issues .ha-pubs-wrap{padding:110px 0;background:var(--ha-white);}
+  .ha-issues .ha-pubs-head h2{
+    font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:clamp(30px, 4vw, 48px);line-height:1.1;letter-spacing:-0.02em;
+    color:var(--ha-charcoal);margin:14px 0 8px;max-width:22ch;
+  }
+  .ha-issues .ha-pubs-head p{
+    font-family:'Poppins',sans-serif;font-size:16px;color:var(--ha-charcoal);
+    opacity:.78;max-width:60ch;
+  }
+  .ha-issues .ha-filters{
+    display:flex;flex-wrap:wrap;gap:10px;margin:36px 0 32px;
+  }
+  .ha-issues .ha-chip{
+    display:inline-flex;align-items:center;
+    padding:9px 18px;border-radius:999px;
+    font-family:'Poppins',sans-serif;font-weight:500;font-size:13px;
+    color:var(--ha-charcoal);background:transparent;
+    border:1px solid var(--ha-rule);cursor:pointer;
+    transition:background .3s, color .3s, border-color .3s, transform .3s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .ha-issues .ha-chip:hover{
+    background:rgba(132,169,140,.10);border-color:var(--ha-teal);
+  }
+  .ha-issues .ha-chip.is-active{
+    background:var(--ha-charcoal);border-color:var(--ha-charcoal);color:#fff;
+  }
+  .ha-issues .ha-chip:focus-visible{outline:2px solid var(--ha-teal);outline-offset:3px;}
+  .ha-issues .ha-pub-grid{
+    display:grid;gap:28px;
+    grid-template-columns:1fr;
+  }
+  @media (min-width:640px){.ha-issues .ha-pub-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (min-width:980px){.ha-issues .ha-pub-grid{grid-template-columns:repeat(3,1fr);}}
+
+  /* Hide pubs that don't match active filter */
+  .ha-issues .ha-pub.is-hidden{
+    display:none;
+  }
+  .ha-issues .ha-more-wrap{margin-top:48px;text-align:center;}
+  .ha-issues .ha-more-link{
+    display:inline-flex;align-items:center;gap:12px;
+    font-family:'Poppins',sans-serif;font-weight:600;font-size:13px;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ha-teal-deep);
+    padding:14px 24px;border-radius:999px;
+    border:1px solid var(--ha-rule);
+    transition:background .3s, border-color .3s, color .3s, transform .3s;
+  }
+  .ha-issues .ha-more-link::after{content:"→";font-size:16px;letter-spacing:0;transition:transform .3s;}
+  .ha-issues .ha-more-link:hover{background:var(--ha-charcoal);border-color:var(--ha-charcoal);color:#fff;transform:translateY(-2px);}
+  .ha-issues .ha-more-link:hover::after{transform:translateX(4px);}
+
+  /* ===== CTA ===== */
+  .ha-issues .ha-cta{
+    background:var(--ha-charcoal);color:#fff;padding:96px 0;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  .ha-issues .ha-cta::before{
+    content:"";position:absolute;inset:0;z-index:0;
+    background:
+      radial-gradient(circle at 90% 10%, rgba(132,169,140,.18), transparent 50%),
+      radial-gradient(circle at 10% 90%, rgba(82,121,111,.22), transparent 55%);
+  }
+  .ha-issues .ha-cta > *{position:relative;z-index:1;}
+  .ha-issues .ha-cta h2{
+    font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:clamp(28px, 3.4vw, 44px);line-height:1.15;letter-spacing:-0.02em;
+    color:#fff;margin:16px auto 14px;max-width:24ch;
+  }
+  .ha-issues .ha-cta p{
+    font-family:'Poppins',sans-serif;font-size:16px;color:var(--ha-ash);
+    opacity:.92;margin:0 auto 32px;max-width:48ch;
+  }
+  .ha-issues .ha-cta-actions{display:inline-flex;flex-wrap:wrap;gap:14px;justify-content:center;}
+  .ha-issues .ha-btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 28px;border-radius:999px;
+    font-family:'Poppins',sans-serif;font-weight:600;font-size:14px;letter-spacing:.04em;
+    transition:transform .3s, background .3s, color .3s, border-color .3s;
+  }
+  .ha-issues .ha-btn-primary{background:var(--ha-teal);color:var(--ha-charcoal);border:1px solid var(--ha-teal);}
+  .ha-issues .ha-btn-primary:hover{background:var(--ha-ash);border-color:var(--ha-ash);transform:translateY(-2px);}
+  .ha-issues .ha-btn-ghost{background:transparent;color:#fff;border:1px solid rgba(202,210,197,.40);}
+  .ha-issues .ha-btn-ghost:hover{border-color:var(--ha-teal);color:var(--ha-teal);transform:translateY(-2px);}
+
+  /* ===== MOBILE TUNING ===== */
+  @media (max-width:700px){
+    .ha-issues .ha-hero{padding:72px 0 60px;}
+    .ha-issues .ha-cards-wrap{padding:64px 0;}
+    .ha-issues .ha-deep{padding:72px 0;scroll-margin-top:100px;}
+    .ha-issues .ha-pubs-wrap{padding:72px 0;}
+    .ha-issues .ha-cta{padding:64px 0;}
+    .ha-issues .ha-card{padding:28px 24px 24px;}
+    .ha-issues .ha-deep-head{margin-bottom:24px;}
+    .ha-issues .ha-deep-sub{margin:36px 0 16px;}
+    .ha-issues .ha-eyebrow{font-size:11px;letter-spacing:.24em;}
+    .ha-issues .ha-eyebrow::before{width:32px;}
+    .ha-issues .ha-cta-actions{flex-direction:column;width:100%;align-items:stretch;}
+    .ha-issues .ha-cta .ha-btn{justify-content:center;width:100%;}
+    .ha-issues .ha-filters{margin:24px 0 24px;gap:8px;}
+    .ha-issues .ha-chip{font-size:12px;padding:8px 14px;}
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    .ha-issues *,
+    .ha-issues *::before,
+    .ha-issues *::after{transition-duration:.01ms !important;animation-duration:.01ms !important;}
+  }
+</style>
+
+<div class="ha-issues">
+
+  <!-- HERO -->
+  <section class="ha-hero">
+    <div class="ha-wrap">
+      <span class="ha-eyebrow">Our Issues</span>
+      <h1>Building a <em>more equitable</em> Hawaiʻi.</h1>
+      <p class="ha-hero-lead">
+        From kitchen tables to the State Capitol, we research and advocate for policies that put Hawaiʻi's people first — across four interconnected fights for a fairer future.
+      </p>
+    </div>
+  </section>
+
+  <!-- ISSUE CARDS (2×2) -->
+  <section class="ha-cards-wrap">
+    <div class="ha-wrap">
+      <div class="ha-cards">
+
+        <!-- Tax & Budget -->
+        <a class="ha-card" href="#tax-budget" data-fade data-accent="slate">
+          <div class="ha-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 27h24"/>
+              <rect x="7" y="19" width="4" height="8"/>
+              <rect x="14" y="13" width="4" height="14"/>
+              <rect x="21" y="8" width="4" height="19"/>
+              <path d="M7 15l7-4 7 3 4-7"/>
+            </svg>
+          </div>
+          <h3>Tax &amp; Budget</h3>
+          <p>Hawaiʻi's tax code is among the most regressive in the nation. We push for progressive revenue and budget transparency so public dollars reach the communities that need them.</p>
+          <span class="ha-card-link">Explore</span>
+        </a>
+
+        <!-- Food Security -->
+        <a class="ha-card" href="#food-security" data-fade data-accent="teal-deep">
+          <div class="ha-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="16" cy="17" r="11"/>
+              <path d="M9 17c0-4 3-7 7-7s7 3 7 7"/>
+              <path d="M16 4c-2 3 0 6 3 7-1-4-1-5-3-7z" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3>Food Security</h3>
+          <p>Nearly 1 in 8 residents face food insecurity — including 1 in 5 keiki — while we import 85% of our food. We work to expand food access and strengthen Hawaiʻi's local food systems.</p>
+          <span class="ha-card-link">Explore</span>
+        </a>
+
+        <!-- Affordable Housing -->
+        <a class="ha-card" href="#housing" data-fade>
+          <div class="ha-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 15l12-9 12 9v12a2 2 0 01-2 2H6a2 2 0 01-2-2V15z"/>
+              <path d="M12 29V19h8v10"/>
+            </svg>
+          </div>
+          <h3>Affordable Housing</h3>
+          <p>Hawaiʻi is the most expensive housing market in the country. We advocate for renter protections, social housing, and policies that put residents over speculators.</p>
+          <span class="ha-card-link">Explore</span>
+        </a>
+
+        <!-- Transportation -->
+        <a class="ha-card" href="#transportation" data-fade data-accent="charcoal">
+          <div class="ha-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="6" width="22" height="16" rx="2"/>
+              <path d="M5 15h22"/>
+              <circle cx="10" cy="25" r="2.5"/>
+              <circle cx="22" cy="25" r="2.5"/>
+              <path d="M9 9h4M19 9h4"/>
+            </svg>
+          </div>
+          <h3>Transportation</h3>
+          <p>Hawaiʻi's car-dependent infrastructure leaves many residents stranded. We push for safer streets, fare-free transit, and equity-centered transportation policy.</p>
+          <span class="ha-card-link">Explore</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DEEP DIVE 1: TAX & BUDGET ========== -->
+  <section class="ha-deep" id="tax-budget" data-fade>
+    <div class="ha-wrap">
+      <div class="ha-deep-head">
+        <span class="ha-deep-num">01 · Issue Area</span>
+        <span class="ha-eyebrow">Tax &amp; Budget</span>
+        <h2>A fairer tax code for a thriving Hawaiʻi.</h2>
+      </div>
+      <div class="ha-deep-body">
+        <p class="ha-deep-lead">Hawaiʻi has one of the most regressive tax structures in the country. Working families pay a larger share of their income in state and local taxes than the wealthiest households — and many essential services remain underfunded as a result.</p>
+        <p>We push for progressive revenue policies that ask those who can afford it most to pay their fair share, while strengthening the budget process so public dollars reach the people who need them. From our annual Budget Primer to deep analyses of credits and exemptions, our research equips lawmakers, advocates, and the public to demand a tax code that funds a thriving Hawaiʻi.</p>
+
+        <h4 class="ha-deep-sub">What we focus on</h4>
+        <ul class="ha-focus">
+          <li>Progressive income tax reform</li>
+          <li>Working family tax credits (EITC)</li>
+          <li>Budget transparency &amp; accountability</li>
+          <li>Closing corporate tax loopholes</li>
+        </ul>
+
+        <h4 class="ha-deep-sub">Featured research</h4>
+        <div class="ha-pub-row">
+          <article class="ha-pub" data-cat="tax-budget" data-fade>
+            <a class="ha-pub-link" href="https://hiappleseed.org/publications/fair-tax-code-thriving-hawaii" target="_blank" rel="noopener">
+              <div class="ha-pub-img">
+                <img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/4dc08ceb-d243-4cce-9d4e-28a44aca9516/pexels_tanaphong-toochinda-GagC07wVvck-unsplash.jpg" alt="" loading="lazy" decoding="async">
+              </div>
+              <div class="ha-pub-body">
+                <div class="ha-pub-meta">
+                  <span class="ha-pub-cat" data-cat="tax-budget">Tax &amp; Budget</span>
+                  <span class="ha-pub-date">Jan 28, 2026</span>
+                </div>
+                <h3 class="ha-pub-title">A Fairer Tax Code for a Thriving Hawaiʻi</h3>
+                <p class="ha-pub-excerpt">Progressive Revenue Options to Protect and Invest in Our Future.</p>
+              </div>
+            </a>
+          </article>
+          <article class="ha-pub" data-cat="tax-budget" data-fade>
+            <a class="ha-pub-link" href="https://hiappleseed.org/publications/hawaii-budget-primer-fy202526" target="_blank" rel="noopener">
+              <div class="ha-pub-img">
+                <img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1724720104790-1U925CU7TJUCK559WDB6/pexels-pixabay-415824.jpeg" alt="" loading="lazy" decoding="async">
+              </div>
+              <div class="ha-pub-body">
+                <div class="ha-pub-meta">
+                  <span class="ha-pub-cat" data-cat="tax-budget">Tax &amp; Budget</span>
+                  <span class="ha-pub-date">Sep 8, 2025</span>
+                </div>
+                <h3 class="ha-pub-title">Hawaiʻi Budget Primer FY2025–26</h3>
+                <p class="ha-pub-excerpt">A reader's guide to how Hawaiʻi's state budget works — and how to push for decisions that improve lives.</p>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DEEP DIVE 2: FOOD SECURITY ========== -->
+  <section class="ha-deep ha-deep--alt" id="food-security" data-fade>
+    <div class="ha-wrap">
+      <div class="ha-deep-head">
+        <span class="ha-deep-num">02 · Issue Area</span>
+        <span class="ha-eyebrow">Food Security</span>
+        <h2>Healthy, accessible food for every Hawaiʻi family.</h2>
+      </div>
+      <div class="ha-deep-body">
+        <p class="ha-deep-lead">Hawaiʻi imports nearly 85 percent of the food it consumes, leaving our islands vulnerable to supply-chain shocks and high prices. Meanwhile, one in eight residents — including one in five keiki — struggles to consistently put food on the table.</p>
+        <p>We work alongside farmers, food hubs, schools, and grassroots coalitions to advance policies that expand access to fresh, culturally significant food and strengthen Hawaiʻi's local food economy. From universal school meals to SNAP modernization, our advocacy makes sure every family — and the farms that feed them — can thrive.</p>
+
+        <h4 class="ha-deep-sub">What we focus on</h4>
+        <ul class="ha-focus">
+          <li>Universal school meals</li>
+          <li>DA BUX &amp; SNAP expansion</li>
+          <li>Local food procurement</li>
+          <li>Farm-to-school programs</li>
+        </ul>
+
+        <h4 class="ha-deep-sub">Featured research</h4>
+        <div class="ha-pub-row">
+          <article class="ha-pub" data-cat="food" data-fade>
+            <a class="ha-pub-link" href="https://hiappleseed.org/publications/county-leadership-combating-food-insecurity" target="_blank" rel="noopener">
+              <div class="ha-pub-img">
+                <img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/5e0b2003-0e01-4a52-a4f5-5342a5fc7243/iStock-1430371622.jpg" alt="" loading="lazy" decoding="async">
+              </div>
+              <div class="ha-pub-body">
+                <div class="ha-pub-meta">
+                  <span class="ha-pub-cat" data-cat="food">Food Equity</span>
+                  <span class="ha-pub-date">Dec 15, 2025</span>
+                </div>
+                <h3 class="ha-pub-title">County Leadership in Combating Food Insecurity</h3>
+                <p class="ha-pub-excerpt">Seizing local levers in uncertain times.</p>
+              </div>
+            </a>
+          </article>
+          <article class="ha-pub" data-cat="food" data-fade>
+            <a class="ha-pub-link" href="https://hiappleseed.org/publications/policy-in-perspective-2025" target="_blank" rel="noopener">
+              <div class="ha-pub-img">
+                <img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1766015509114-MZAOQ00B4MVC5N7TRMT9/IMG_0851.png" alt="" loading="lazy" decoding="async">
+              </div>
+              <div class="ha-pub-body">
+                <div class="ha-pub-meta">
+                  <span class="ha-pub-cat" data-cat="food">Food Equity</span>
+                  <span class="ha-pub-date">Sep 8, 2025</span>
+                </div>
+                <h3 class="ha-pub-title">Policy in Perspective 2025</h3>
+                <p class="ha-pub-excerpt">A look back at a legislative session shaped by Hawaiʻi's worsening affordability crisis.</p>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DEEP DIVE 3: AFFORDABLE HOUSING ========== -->
+  <section class="ha-deep" id="housing" data-fade>
+    <div class="ha-wrap">
+      <div class="ha-deep-head">
+        <span class="ha-deep-num">03 · Issue Area</span>
+        <span class="ha-eyebrow">Affordable Housing</span>
+        <h2>Homes Hawaiʻi's families can actually afford.</h2>
+      </div>
+      <div class="ha-deep-body">
+        <p class="ha-deep-lead">Hawaiʻi is the most expensive place to rent or buy a home in the United States. One in four households is severely rent-burdened, and tens of thousands of working families have been priced out of the islands they call home.</p>
+        <p>We research and advocate for housing policies that put residents first — from tenant protections and rent stabilization to expanding supply through social housing models like ALOHA Homes. Our work centers the experiences of renters, working families, and those displaced by escalating costs and climate disasters.</p>
+
+        <h4 class="ha-deep-sub">What we focus on</h4>
+        <ul class="ha-focus">
+          <li>Renter protections &amp; rent stabilization</li>
+          <li>ALOHA Homes &amp; social housing</li>
+          <li>Reducing zoning &amp; parking barriers</li>
+          <li>Climate resilience &amp; disaster recovery</li>
+        </ul>
+
+        <h4 class="ha-deep-sub">Featured research</h4>
+        <div class="ha-pub-row">
+          <article class="ha-pub" data-cat="housing" data-fade>
+            <a class="ha-pub-link" href="https://hiappleseed.org/publications/renters-left-behind-hawaii-state-legislature" target="_blank" rel="noopener">
+              <div class="ha-pub-img">
+                <img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1742434718423-25CNO12WRYYWQ4G1POII/pexels-thirdman-8470839.jpg" alt="" loading="lazy" decoding="async">
+              </div>
+              <div class="ha-pub-body">
+                <div class="ha-pub-meta">
+                  <span class="ha-pub-cat" data-cat="housing">Affordable Housing</span>
+                  <span class="ha-pub-date">Mar 24, 2025</span>
+                </div>
+                <h3 class="ha-pub-title">Renters left behind at the Hawaiʻi State Legislature</h3>
+                <p class="ha-pub-excerpt">38% of Hawaiʻi households rent — yet renters' needs are sidelined at the Capitol.</p>
+              </div>
+            </a>
+          </article>
+          <article class="ha-pub" data-cat="housing" data-fade>
+            <a class="ha-pub-link" href="https://hiappleseed.org/publications/who-pays-climate-disasters" target="_blank" rel="noopener">
+              <div class="ha-pub-img">
+                <img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/f2958f94-93e2-47d4-b5ca-3ba5f14734c2/pexels-pppsdavid-7924139.jpg" alt="" loading="lazy" decoding="async">
+              </div>
+              <div class="ha-pub-body">
+                <div class="ha-pub-meta">
+                  <span class="ha-pub-cat" data-cat="housing">Affordable Housing</span>
+                  <span class="ha-pub-date">Dec 1, 2025</span>
+                </div>
+                <h3 class="ha-pub-title">Who Pays for Climate Disasters?</h3>
+                <p class="ha-pub-excerpt">Case studies on regulatory responses to climate change-related disasters.</p>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DEEP DIVE 4: TRANSPORTATION ========== -->
+  <section class="ha-deep ha-deep--alt" id="transportation" data-fade>
+    <div class="ha-wrap">
+      <div class="ha-deep-head">
+        <span class="ha-deep-num">04 · Issue Area</span>
+        <span class="ha-eyebrow">Transportation</span>
+        <h2>Safer streets, smarter transit, lower costs.</h2>
+      </div>
+      <div class="ha-deep-body">
+        <p class="ha-deep-lead">For too many Hawaiʻi residents, getting to work, school, or the doctor depends on owning a car — a financial burden that eats up an outsized share of household budgets and leaves seniors, students, and low-income families isolated.</p>
+        <p>We advocate for transportation policy that connects communities and protects pedestrians, with a focus on fare-free transit for youth, complete-streets design, and equitable traffic enforcement. Our research highlights how smart investment in transit and walkability lowers costs, cuts emissions, and builds healthier neighborhoods.</p>
+
+        <h4 class="ha-deep-sub">What we focus on</h4>
+        <ul class="ha-focus">
+          <li>Keiki Ride Free fare-free transit</li>
+          <li>Safer streets &amp; complete streets</li>
+          <li>Equitable traffic enforcement</li>
+          <li>Reducing parking mandates</li>
+        </ul>
+
+        <h4 class="ha-deep-sub">Featured research</h4>
+        <div class="ha-pub-row">
+          <article class="ha-pub" data-cat="transit" data-fade>
+            <a class="ha-pub-link" href="https://hiappleseed.org/publications/pedestrian-head-start" target="_blank" rel="noopener">
+              <div class="ha-pub-img">
+                <img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/4d70babb-d562-4296-b3fc-64cc719a408e/pexels-brcunel-19831125_edit.jpg" alt="" loading="lazy" decoding="async">
+              </div>
+              <div class="ha-pub-body">
+                <div class="ha-pub-meta">
+                  <span class="ha-pub-cat" data-cat="transit">Transportation</span>
+                  <span class="ha-pub-date">Mar 10, 2026</span>
+                </div>
+                <h3 class="ha-pub-title">Pedestrian Head Start</h3>
+                <p class="ha-pub-excerpt">Accessible signals and leading pedestrian intervals make crossings safer and more inclusive.</p>
+              </div>
+            </a>
+          </article>
+          <article class="ha-pub" data-cat="transit" data-fade>
+            <a class="ha-pub-link" href="https://hiappleseed.org/publications/keiki-ride-free" target="_blank" rel="noopener">
+              <div class="ha-pub-img">
+                <img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1771460253592-XPWUAD8KOMKLLGXDPUC5/iStock-1927073126_web.jpg" alt="" loading="lazy" decoding="async">
+              </div>
+              <div class="ha-pub-body">
+                <div class="ha-pub-meta">
+                  <span class="ha-pub-cat" data-cat="transit">Transportation</span>
+                  <span class="ha-pub-date">Feb 18, 2026</span>
+                </div>
+                <h3 class="ha-pub-title">Keiki Ride Free</h3>
+                <p class="ha-pub-excerpt">Adopting a statewide fare-free transit model for Hawaiʻi's young riders.</p>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LATEST PUBLICATIONS ========== -->
+  <section class="ha-pubs-wrap" id="latest-research">
+    <div class="ha-wrap">
+      <div class="ha-pubs-head" data-fade>
+        <span class="ha-eyebrow">Latest research</span>
+        <h2>Our 10 most recent publications.</h2>
+        <p>Research, briefings, and policy analysis from across our issue areas.</p>
+      </div>
+
+      <div class="ha-filters" data-fade role="tablist" aria-label="Filter publications by issue area">
+        <button class="ha-chip is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+        <button class="ha-chip" data-filter="tax-budget" role="tab">Tax &amp; Budget</button>
+        <button class="ha-chip" data-filter="food" role="tab">Food Security</button>
+        <button class="ha-chip" data-filter="housing" role="tab">Affordable Housing</button>
+        <button class="ha-chip" data-filter="transit" role="tab">Transportation</button>
+      </div>
+
+      <div class="ha-pub-grid" id="ha-latest-grid">
+
+        <article class="ha-pub" data-cat="transit" data-fade>
+          <a class="ha-pub-link" href="https://hiappleseed.org/publications/pedestrian-head-start" target="_blank" rel="noopener">
+            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/4d70babb-d562-4296-b3fc-64cc719a408e/pexels-brcunel-19831125_edit.jpg" alt="" loading="lazy" decoding="async"></div>
+            <div class="ha-pub-body">
+              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="transit">Transportation</span><span class="ha-pub-date">Mar 10, 2026</span></div>
+              <h3 class="ha-pub-title">Pedestrian Head Start</h3>
+              <p class="ha-pub-excerpt">Accessible Pedestrian Signals (APS) and Leading Pedestrian Intervals (LPIs) give people a safer head start and make crossings more inclusive.</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="ha-pub" data-cat="transit" data-fade>
+          <a class="ha-pub-link" href="https://hiappleseed.org/publications/keiki-ride-free" target="_blank" rel="noopener">
+            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1771460253592-XPWUAD8KOMKLLGXDPUC5/iStock-1927073126_web.jpg" alt="" loading="lazy" decoding="async"></div>
+            <div class="ha-pub-body">
+              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="transit">Transportation</span><span class="ha-pub-date">Feb 18, 2026</span></div>
+              <h3 class="ha-pub-title">Keiki Ride Free</h3>
+              <p class="ha-pub-excerpt">Adopting a statewide fare-free transit model for Hawaiʻi's young riders.</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="ha-pub" data-cat="tax-budget" data-fade>
+          <a class="ha-pub-link" href="https://hiappleseed.org/publications/fair-tax-code-thriving-hawaii" target="_blank" rel="noopener">
+            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/4dc08ceb-d243-4cce-9d4e-28a44aca9516/pexels_tanaphong-toochinda-GagC07wVvck-unsplash.jpg" alt="" loading="lazy" decoding="async"></div>
+            <div class="ha-pub-body">
+              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="tax-budget">Tax &amp; Budget</span><span class="ha-pub-date">Jan 28, 2026</span></div>
+              <h3 class="ha-pub-title">A Fairer Tax Code for a Thriving Hawaiʻi</h3>
+              <p class="ha-pub-excerpt">Progressive revenue options to protect and invest in Hawaiʻi's future.</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="ha-pub" data-cat="food" data-fade>
+          <a class="ha-pub-link" href="https://hiappleseed.org/publications/county-leadership-combating-food-insecurity" target="_blank" rel="noopener">
+            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/5e0b2003-0e01-4a52-a4f5-5342a5fc7243/iStock-1430371622.jpg" alt="" loading="lazy" decoding="async"></div>
+            <div class="ha-pub-body">
+              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="food">Food Equity</span><span class="ha-pub-date">Dec 15, 2025</span></div>
+              <h3 class="ha-pub-title">County Leadership in Combating Food Insecurity</h3>
+              <p class="ha-pub-excerpt">Seizing local levers in uncertain times.</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="ha-pub" data-cat="housing" data-fade>
+          <a class="ha-pub-link" href="https://hiappleseed.org/publications/who-pays-climate-disasters" target="_blank" rel="noopener">
+            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/f2958f94-93e2-47d4-b5ca-3ba5f14734c2/pexels-pppsdavid-7924139.jpg" alt="" loading="lazy" decoding="async"></div>
+            <div class="ha-pub-body">
+              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="housing">Affordable Housing</span><span class="ha-pub-date">Dec 1, 2025</span></div>
+              <h3 class="ha-pub-title">Who Pays for Climate Disasters?</h3>
+              <p class="ha-pub-excerpt">Case studies on regulatory responses to climate change-related disasters.</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="ha-pub" data-cat="transit" data-fade>
+          <a class="ha-pub-link" href="https://hiappleseed.org/publications/stalled-parking-mandates-housing-costs" target="_blank" rel="noopener">
+            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/5d105386-6d18-42c1-af34-16e1ce0e81b8/pexels-brett-sayles-1756957.jpg" alt="" loading="lazy" decoding="async"></div>
+            <div class="ha-pub-body">
+              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="transit">Transportation</span><span class="ha-pub-date">Oct 1, 2025</span></div>
+              <h3 class="ha-pub-title">Stalled</h3>
+              <p class="ha-pub-excerpt">How parking mandates drive up housing costs.</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="ha-pub" data-cat="tax-budget" data-fade>
+          <a class="ha-pub-link" href="https://hiappleseed.org/publications/hawaii-budget-primer-fy202526" target="_blank" rel="noopener">
+            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1724720104790-1U925CU7TJUCK559WDB6/pexels-pixabay-415824.jpeg" alt="" loading="lazy" decoding="async"></div>
+            <div class="ha-pub-body">
+              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="tax-budget">Tax &amp; Budget</span><span class="ha-pub-date">Sep 8, 2025</span></div>
+              <h3 class="ha-pub-title">Hawaiʻi Budget Primer FY2025–26</h3>
+              <p class="ha-pub-excerpt">A reader's guide to how Hawaiʻi's state budget works — and how to push for decisions that improve lives.</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="ha-pub" data-cat="food" data-fade>
+          <a class="ha-pub-link" href="https://hiappleseed.org/publications/policy-in-perspective-2025" target="_blank" rel="noopener">
+            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1766015509114-MZAOQ00B4MVC5N7TRMT9/IMG_0851.png" alt="" loading="lazy" decoding="async"></div>
+            <div class="ha-pub-body">
+              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="food">Food Equity</span><span class="ha-pub-date">Sep 8, 2025</span></div>
+              <h3 class="ha-pub-title">Policy in Perspective 2025</h3>
+              <p class="ha-pub-excerpt">A look back at a legislative session shaped by Hawaiʻi's worsening affordability crisis.</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="ha-pub" data-cat="housing" data-fade>
+          <a class="ha-pub-link" href="https://hiappleseed.org/publications/renters-left-behind-hawaii-state-legislature" target="_blank" rel="noopener">
+            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1742434718423-25CNO12WRYYWQ4G1POII/pexels-thirdman-8470839.jpg" alt="" loading="lazy" decoding="async"></div>
+            <div class="ha-pub-body">
+              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="housing">Affordable Housing</span><span class="ha-pub-date">Mar 24, 2025</span></div>
+              <h3 class="ha-pub-title">Renters left behind at the Hawaiʻi State Legislature</h3>
+              <p class="ha-pub-excerpt">38% of Hawaiʻi households rent — yet renters' needs are sidelined at the Capitol.</p>
+            </div>
+          </a>
+        </article>
+
+        <article class="ha-pub" data-cat="transit" data-fade>
+          <a class="ha-pub-link" href="https://hiappleseed.org/publications/beyond-the-ticket" target="_blank" rel="noopener">
+            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1740688760009-JVPO0JP6GF5ZDG681SYN/pexels-jess-vide-4601420.jpeg" alt="" loading="lazy" decoding="async"></div>
+            <div class="ha-pub-body">
+              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="transit">Transportation</span><span class="ha-pub-date">Mar 3, 2025</span></div>
+              <h3 class="ha-pub-title">Beyond the Ticket</h3>
+              <p class="ha-pub-excerpt">Recommendations for a more equitable traffic enforcement system.</p>
+            </div>
+          </a>
+        </article>
+
+      </div>
+
+      <div class="ha-more-wrap">
+        <a class="ha-more-link" href="https://hiappleseed.org/publications" target="_blank" rel="noopener">View all publications</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="ha-cta" data-fade>
+    <div class="ha-wrap">
+      <span class="ha-eyebrow on-dark">Take action</span>
+      <h2>Help build a Hawaiʻi that puts its people first.</h2>
+      <p>Whether you're a researcher, advocate, donor, or neighbor — there's a place for you in this work.</p>
+      <div class="ha-cta-actions">
+        <a class="ha-btn ha-btn-primary" href="#">Donate</a>
+        <a class="ha-btn ha-btn-ghost" href="our-team.html">Meet our team</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var root = document.querySelector('.ha-issues');
+  if (!root) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function show(el){ el && el.classList.add('is-in'); }
+
+  if (reduce) {
+    root.querySelectorAll('[data-fade]').forEach(show);
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        // Stagger cards by index
+        if (el.classList.contains('ha-card') || el.classList.contains('ha-pub')) {
+          var siblings = Array.prototype.slice.call(el.parentNode.children);
+          var idx = siblings.indexOf(el);
+          el.style.transitionDelay = (Math.min(idx, 8) * 70) + 'ms';
+        }
+        show(el);
+        io.unobserve(el);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    root.querySelectorAll('[data-fade]').forEach(function(el){ io.observe(el); });
+  }
+
+  // === Filter chips (latest publications section) ===
+  var chips = root.querySelectorAll('.ha-chip');
+  var grid = document.getElementById('ha-latest-grid');
+  if (chips.length && grid) {
+    chips.forEach(function(chip){
+      chip.addEventListener('click', function(){
+        var filter = chip.getAttribute('data-filter');
+        chips.forEach(function(c){
+          c.classList.toggle('is-active', c === chip);
+          c.setAttribute('aria-selected', c === chip ? 'true' : 'false');
+        });
+        grid.querySelectorAll('.ha-pub').forEach(function(pub){
+          var cat = pub.getAttribute('data-cat');
+          pub.classList.toggle('is-hidden', filter !== 'all' && cat !== filter);
+        });
+      });
+    });
+  }
+
+  // === Smooth scroll for issue card links ===
+  root.querySelectorAll('.ha-card[href^="#"]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      var targetId = link.getAttribute('href').slice(1);
+      var target = document.getElementById(targetId);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      }
+    });
+  });
+})();
+</script>
+<!-- END ha-issues =========================================== -->
+
+<!-- ============================================================
+     ============   END SQUARESPACE INJECTION  =================
+     ============================================================ -->
+
+<!-- PREVIEW-ONLY: footer -->
+<footer class="px-footer">
+  <div class="px-foot-grid">
+    <div>
+      <h4>Hawaiʻi Appleseed</h4>
+      <p style="margin:0 0 6px 0;color:#CAD2C5;">Center for Law &amp; Economic Justice<br>P.O. Box 37952<br>Honolulu, HI 96837</p>
+      <a href="mailto:info@hiappleseed.org">info@hiappleseed.org</a>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="our-story.html">Our Story</a>
+      <a href="our-mission.html">Our Mission</a>
+      <a href="our-team.html">Our Team</a>
+      <a href="board-of-directors.html">Board</a>
+      <a href="issues.html">Issues</a>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <a href="#">News</a>
+      <a href="#">Donate</a>
+      <a href="#">Newsletter</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="px-foot-bottom">
+    <div>© 2026 Hawaiʻi Appleseed Center for Law &amp; Economic Justice</div>
+    <div>Making Hawaiʻi more affordable.</div>
+  </div>
+</footer>
+
+</body>
+</html>
