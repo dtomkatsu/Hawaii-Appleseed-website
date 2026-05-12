@@ -837,14 +837,15 @@
     if (eyebrow) eyebrow.style.opacity = surroundFade;
     if (scrollCue) scrollCue.style.opacity = Math.max(0, 1 - raw / 0.10);
 
-    // Fade the zoom-word itself as the d-portal opens. Without this, the
-    // ash-colored letters of "affordable" stay opaque on top of the mask and
-    // remain visible as faint remnants over the portal-behind reveal — which
-    // looks broken when scrolling BACK UP from below the wrap, because the
-    // word "reappears" through the reveal section's content.
-    // Hold full opacity through raw=0.5 (while the word reads "affordable"),
-    // then fade to 0 by raw=0.85 (when the portal is essentially full-screen).
-    inner.style.opacity = Math.max(0, Math.min(1, 1 - (raw - 0.5) / 0.35));
+    // Fade the zoom-word out quickly as it starts growing past readable size.
+    // The ease curve scales the word very aggressively (it reaches 8x+ within
+    // raw=0.5), so a slow fade leaves ghost partial-letters ("rda") visible at
+    // huge scale during the partial-opacity zone. Going DOWN that looks like
+    // the word "morphing into the portal." Going UP from past the wrap, the
+    // user sees ghost letters appearing at large scale — perceived as broken.
+    // Fade fast (raw 0 → 0.05) so the word is only visible at near-readable
+    // scale, in either direction. The d-portal effect continues independently.
+    inner.style.opacity = Math.max(0, Math.min(1, 1 - raw / 0.05));
 
     // Fade portal-behind based on how much reveal section is in viewport.
     // Going DOWN, as reveal slides up into viewport, portal-behind fades out
