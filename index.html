@@ -53,7 +53,7 @@
 
   /* ========== Announcement bar (retained from original) ========== */
   .announce{
-    background:#0b0b0b;color:#fff;
+    background:var(--ha-charcoal);color:var(--ha-white);
     font-size:13px;letter-spacing:.01em;
     padding:10px 18px;text-align:center;position:fixed;
     top:0;left:0;right:0;z-index:50;
@@ -64,8 +64,8 @@
 
   /* ========== Nav (retained structure from original Squarespace site) ========== */
   .nav{
-    background:#fff;
-    border-bottom:1px solid #eee;
+    background:var(--ha-white);
+    border-bottom:1px solid var(--ha-rule);
     padding:16px 36px;
     display:flex;align-items:center;justify-content:space-between;
     gap:24px;
@@ -78,30 +78,30 @@
   .brand-text .name{
     font-family:'Poppins',sans-serif;
     font-weight:700;letter-spacing:.14em;
-    font-size:22px; color:var(--appleseed);
+    font-size:22px; color:var(--ha-teal-deep);
   }
   .brand-text .tag{
     font-family:'Poppins',sans-serif;
     font-size:9.5px; letter-spacing:.28em;
-    color:var(--appleseed); margin-top:4px;
+    color:var(--ha-teal-deep); margin-top:4px;
   }
   .nav-links{
     display:flex; flex-wrap:wrap; align-items:center;
     gap:22px 26px; justify-content:flex-end; flex:1;
     font-family:'Poppins',sans-serif; font-size:15px; font-weight:400;
-    color:#111;
+    color:var(--ha-charcoal);
     max-width:640px;
   }
-  .nav-links a:hover{color:var(--appleseed)}
+  .nav-links a:hover{color:var(--ha-teal-deep)}
   .nav-right{display:flex;align-items:center;gap:16px}
-  .social{display:flex;gap:12px;color:#111}
+  .social{display:flex;gap:12px;color:var(--ha-charcoal)}
   .social svg{width:18px;height:18px}
   .donate-btn{
-    background:#000;color:#fff;padding:14px 30px;
+    background:var(--ha-charcoal);color:var(--ha-white);padding:14px 30px;
     font-family:'Poppins',sans-serif; font-weight:500; font-size:15px;
     border-radius:2px;
   }
-  .donate-btn:hover{background:var(--appleseed)}
+  .donate-btn:hover{background:var(--ha-teal-deep)}
 
   /* ========== HERO / ZOOM ========== */
   /* The wrap + stage must be TRANSPARENT — the SVG mask layer (z:8) provides
@@ -127,7 +127,7 @@
   /* Portal reveal: a layer BEHIND the hero that shows through the "d" shaped hole */
   .portal-behind{
     position:fixed; inset:0;
-    background: var(--cream);
+    background: var(--ha-white);
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     text-align:center; padding: 0 40px;
     z-index: 1; /* below the hero stage (z:5), but visible through the mask hole */
@@ -135,18 +135,18 @@
   }
   .portal-behind .eyebrow{
     font-family:'Poppins',sans-serif; text-transform:uppercase;
-    letter-spacing:.32em; font-size:12px; color:var(--sage-700);
+    letter-spacing:.32em; font-size:12px; color:var(--ha-teal-deep);
     margin-bottom: 20px;
   }
   .portal-behind h2{
     font-family:'Manrope', sans-serif; font-weight:700;
     font-size: clamp(38px, 5vw, 72px); line-height:1.05;
-    letter-spacing:-0.025em; color:var(--sage-900);
+    letter-spacing:-0.025em; color:var(--ha-charcoal);
     margin:0; max-width: 22ch;
   }
-  /* SVG mask layer that sits ON TOP of the hero, with a "d"-shaped hole.
-     Everything outside the hole shows the sage hero; the hole lets the cream
-     portal-behind show through. */
+  /* SVG mask layer that sits ON TOP of the hero, with a d-shaped hole.
+     Everything outside the hole shows the teal hero overlay; the hole lets the
+     white portal-behind layer show through. */
   .mask-layer{
     position:absolute; inset:0;
     z-index: 8;
@@ -171,10 +171,10 @@
     position:absolute; top:110px; left:50%; transform:translateX(-50%);
     z-index:10; white-space:nowrap;
     font-family:'Poppins',sans-serif; text-transform:uppercase;
-    letter-spacing:.32em; font-size:12px; color:var(--sage-200);
+    letter-spacing:.32em; font-size:12px; color:var(--ha-ash);
     display:flex; align-items:center; gap:14px;
   }
-  .hero-eyebrow::before,.hero-eyebrow::after{ content:""; width:36px; height:1px; background:var(--sage-200); }
+  .hero-eyebrow::before,.hero-eyebrow::after{ content:""; width:36px; height:1px; background:var(--ha-ash); }
   /* headline — vertically centered, slightly higher */
   .hero-h1{
     position:absolute; top:46%; left:50%;
@@ -233,10 +233,10 @@
     border:1px solid transparent; cursor:pointer;
     transition:transform .2s, background .2s, color .2s;
   }
-  .btn-primary{background:#fff;color:var(--sage-800)}
-  .btn-primary:hover{background:var(--accent);color:#2F3E46}
-  .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
-  .btn-ghost:hover{border-color:#fff; background:rgba(255,255,255,.08)}
+  .btn-primary{background:var(--ha-white);color:var(--ha-charcoal)}
+  .btn-primary:hover{background:var(--ha-teal);color:var(--ha-charcoal)}
+  .btn-ghost{background:transparent;color:var(--ha-white);border-color:rgba(255,255,255,.4)}
+  .btn-ghost:hover{border-color:var(--ha-white); background:rgba(255,255,255,.08)}
   .btn svg{width:14px;height:14px}
 
   /* Hawaii islands illustration — used in issues panels only */
@@ -263,16 +263,16 @@
   /* The portal "o" — plain, no distortion */
   .portal-o{ display:inline; }
 
-  /* ========== REVEALED SECTION (inside the "o") ========== */
+  /* ========== REVEALED SECTION (inside the "d") ========== */
   .reveal{
     position:relative; z-index:10;
-    background:var(--cream);
+    background:var(--ha-white);
     padding: 90px 72px 40px;
   }
   .reveal .eyebrow{
     font-family:'Poppins',sans-serif;
     text-transform:uppercase; letter-spacing:.3em;
-    font-size:12px; color:var(--sage-600);
+    font-size:12px; color:var(--ha-teal-deep);
     margin-bottom:22px;
   }
   .reveal h2{
@@ -280,17 +280,17 @@
     font-size: clamp(36px, 4.5vw, 64px);
     line-height:1.05; letter-spacing:-0.025em;
     margin:0 0 22px; max-width: 22ch;
-    color:var(--sage-800);
+    color:var(--ha-charcoal);
   }
   .reveal .sub{
     max-width:62ch; font-size:17px; line-height:1.6;
-    color:#3d4636;
+    color:var(--ha-slate);
   }
   .reveal-media{
     margin-top:48px;
     position:relative; border-radius:4px; overflow:hidden;
     aspect-ratio: 16/7;
-    background: linear-gradient(135deg, #c9d4b4, #829a5c 60%, #3a5021);
+    background: linear-gradient(135deg, var(--ha-ash), var(--ha-teal) 50%, var(--ha-teal-deep));
   }
   .reveal-media .badges{
     position:absolute; top:22px; left:50%; transform:translateX(-50%);
@@ -298,16 +298,16 @@
   }
   .reveal-media .card{
     position:absolute; right:32px; bottom:32px;
-    background:#fff; padding:22px 26px; max-width:340px;
-    box-shadow:0 6px 32px rgba(0,0,0,.18);
+    background:var(--ha-white); padding:22px 26px; max-width:340px;
+    box-shadow:0 6px 32px rgba(47,62,70,.18);
   }
   .reveal-media .card p{
-    margin:0 0 14px; font-size:14px; line-height:1.55; color:#222;
+    margin:0 0 14px; font-size:14px; line-height:1.55; color:var(--ha-charcoal);
   }
   .reveal-media .card a{
     font-family:'Poppins',sans-serif; font-size:12px; letter-spacing:.22em;
-    text-transform:uppercase; font-weight:600; color:var(--sage-700);
-    border-bottom:2px solid var(--accent); padding-bottom:4px;
+    text-transform:uppercase; font-weight:600; color:var(--ha-teal-deep);
+    border-bottom:2px solid var(--ha-teal); padding-bottom:4px;
   }
   .reveal-media .ph-label{
     position:absolute; inset:auto 0 0 0; padding:18px 24px;
@@ -317,7 +317,7 @@
 
   /* ========== ISSUES TABS ========== */
   .issues{
-    background:var(--cream);
+    background:var(--ha-white);
     position:relative; z-index:10;
     padding: 120px 72px 140px;
   }
@@ -329,37 +329,37 @@
     font-family:'Manrope',sans-serif; font-weight:700;
     font-size: clamp(34px, 3.8vw, 52px);
     letter-spacing:-0.025em; line-height:1.05;
-    margin:0; max-width:18ch; color:var(--sage-800);
+    margin:0; max-width:18ch; color:var(--ha-charcoal);
   }
   .issues-head .mini{
-    max-width:38ch; font-size:16px;line-height:1.55; color:#4a5240;
+    max-width:38ch; font-size:16px;line-height:1.55; color:var(--ha-slate);
   }
 
   .tabs-bar{
     display:flex; gap:10px; flex-wrap:wrap;
     padding-bottom:22px;
-    border-bottom:1px solid var(--rule);
+    border-bottom:1px solid var(--ha-rule);
     margin-bottom:36px;
   }
   .tab{
     font-family:'Poppins',sans-serif;
     font-size:13px; letter-spacing:.18em; text-transform:uppercase;
     font-weight:500;
-    background:#fff; color:#2a3024;
-    border:1px solid var(--rule);
+    background:var(--ha-white); color:var(--ha-charcoal);
+    border:1px solid var(--ha-rule);
     padding:12px 22px; border-radius:999px;
     cursor:pointer; transition: all .2s;
     display:inline-flex; align-items:center; gap:10px;
   }
   .tab .num{
     font-family:'Poppins',sans-serif; font-size:11px;
-    color: var(--sage-500); letter-spacing:.08em; font-weight:600;
+    color: var(--ha-teal-deep); letter-spacing:.08em; font-weight:600;
   }
-  .tab:hover{border-color:var(--sage-400); color:var(--sage-700)}
+  .tab:hover{border-color:var(--ha-teal); color:var(--ha-teal-deep)}
   .tab[aria-selected="true"]{
-    background:var(--sage-700); color:#fff; border-color:var(--sage-700);
+    background:var(--ha-teal-deep); color:var(--ha-white); border-color:var(--ha-teal-deep);
   }
-  .tab[aria-selected="true"] .num{color:var(--sage-200)}
+  .tab[aria-selected="true"] .num{color:var(--ha-ash)}
 
   .panel{
     display:grid; grid-template-columns: 1.1fr .9fr;
@@ -375,44 +375,44 @@
     font-family:'Manrope',sans-serif; font-weight:700;
     font-size: clamp(30px, 3.2vw, 46px);
     letter-spacing:-0.025em; line-height:1.05;
-    margin:0 0 20px; color:var(--sage-800);
+    margin:0 0 20px; color:var(--ha-charcoal);
   }
   .panel p{
-    font-size:16px; line-height:1.65; color:#3d4636;
+    font-size:16px; line-height:1.65; color:var(--ha-slate);
     max-width:56ch; margin:0 0 18px;
   }
   .panel .stats{
     display:grid; grid-template-columns: repeat(2, 1fr);
     gap: 28px 48px; margin-top: 36px; padding-top:30px;
-    border-top:1px solid var(--rule);
+    border-top:1px solid var(--ha-rule);
   }
   .panel .stat .num{
     font-family:'Manrope',sans-serif; font-weight:800; font-size:42px;
-    color:var(--sage-700); line-height:1; margin-bottom:6px;
+    color:var(--ha-teal-deep); line-height:1; margin-bottom:6px;
     letter-spacing:-0.025em;
   }
   .panel .stat .lbl{
-    font-size:13px; color:#4a5240; line-height:1.45;
+    font-size:13px; color:var(--ha-slate); line-height:1.45;
   }
   .panel-links{margin-top:34px; display:flex; gap:14px; flex-wrap:wrap}
   .pill-link{
     font-family:'Poppins',sans-serif; font-size:13px;
-    letter-spacing:.05em; color:var(--sage-700);
-    border-bottom:1.5px solid var(--accent);
+    letter-spacing:.05em; color:var(--ha-teal-deep);
+    border-bottom:1.5px solid var(--ha-teal);
     padding:4px 0;
   }
-  .pill-link:hover{color:var(--sage-800); border-color:var(--sage-700)}
+  .pill-link:hover{color:var(--ha-charcoal); border-color:var(--ha-teal-deep)}
 
   .panel-media{
     position:relative; min-height:420px; border-radius:4px;
     overflow:hidden;
-    background: linear-gradient(135deg, var(--sage-300), var(--sage-600));
+    background: linear-gradient(135deg, var(--ha-teal), var(--ha-teal-deep));
     display:flex; align-items:flex-end; padding:28px;
   }
   .panel-media .tag{
-    background:#fff; padding:10px 16px;
+    background:var(--ha-white); padding:10px 16px;
     font-family:'Poppins',sans-serif; font-size:12px;
-    letter-spacing:.22em; text-transform:uppercase; color:var(--sage-700);
+    letter-spacing:.22em; text-transform:uppercase; color:var(--ha-teal-deep);
     font-weight:600;
   }
   .panel-media .ph-stripes{
@@ -431,12 +431,12 @@
   /* ========== FOOTER minimal ========== */
   footer{
     position:relative; z-index:10;
-    background:var(--sage-900); color:#cfd6c3;
+    background:var(--ha-charcoal); color:var(--ha-ash);
     padding:56px 72px 40px;
     font-family:'Poppins',sans-serif; font-size:13px;
     display:flex; justify-content:space-between; gap:40px; flex-wrap:wrap;
   }
-  footer a:hover{color:#fff}
+  footer a:hover{color:var(--ha-white)}
 
   /* ========== RESPONSIVE ========== */
   @media (max-width: 980px){
@@ -566,10 +566,10 @@
   <div class="reveal-media" aria-label="Community photo placeholder">
     <div class="ph-stripes" style="position:absolute;inset:0;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.06) 0 16px,rgba(255,255,255,0) 16px 32px)"></div>
     <div class="badges">
-      <span class="tag" style="background:#fff;padding:8px 14px;font-family:Poppins;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--sage-700)">Research</span>
-      <span class="tag" style="background:#fff;padding:8px 14px;font-family:Poppins;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--sage-700)">Advocacy</span>
-      <span class="tag" style="background:#fff;padding:8px 14px;font-family:Poppins;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--sage-700)">Coalition</span>
-      <span class="tag" style="background:#fff;padding:8px 14px;font-family:Poppins;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--sage-700)">Litigation</span>
+      <span class="tag" style="background:var(--ha-white);padding:8px 14px;font-family:Poppins;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--ha-teal-deep)">Research</span>
+      <span class="tag" style="background:var(--ha-white);padding:8px 14px;font-family:Poppins;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--ha-teal-deep)">Advocacy</span>
+      <span class="tag" style="background:var(--ha-white);padding:8px 14px;font-family:Poppins;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--ha-teal-deep)">Coalition</span>
+      <span class="tag" style="background:var(--ha-white);padding:8px 14px;font-family:Poppins;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--ha-teal-deep)">Litigation</span>
     </div>
     <div class="ph-label">&nbsp;[ drop-in: community photograph · 1600×700 ]</div>
     <div class="card">
