@@ -833,6 +833,15 @@
     if (eyebrow) eyebrow.style.opacity = surroundFade;
     if (scrollCue) scrollCue.style.opacity = Math.max(0, 1 - raw / 0.10);
 
+    // Fade the zoom-word itself as the d-portal opens. Without this, the
+    // ash-colored letters of "affordable" stay opaque on top of the mask and
+    // remain visible as faint remnants over the portal-behind reveal — which
+    // looks broken when scrolling BACK UP from below the wrap, because the
+    // word "reappears" through the reveal section's content.
+    // Hold full opacity through raw=0.5 (while the word reads "affordable"),
+    // then fade to 0 by raw=0.85 (when the portal is essentially full-screen).
+    inner.style.opacity = Math.max(0, Math.min(1, 1 - (raw - 0.5) / 0.35));
+
     // ===== Scale the word + sync the mask hole to the d's actual counter =====
     // The visible word "affordable" grows from display size to ~viewport-fill,
     // staying anchored on the d's counter (transformOrigin set in measureBaseline).
