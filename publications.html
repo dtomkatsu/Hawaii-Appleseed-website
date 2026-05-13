@@ -150,27 +150,50 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-pub__hero-eyebrow::before,
 .ha-pub__hero-eyebrow::after { content:""; width:28px; height:1px; background:var(--ha-ash); opacity:.5; }
 .ha-pub__hero h1 {
+  margin:0 0 14px;
+  display:flex; justify-content:center;
   font-family:'Manrope',sans-serif; font-weight:700;
-  font-size:clamp(28px,4vw,42px); line-height:1.05;
-  letter-spacing:-.025em; color:var(--ha-white);
-  margin:0 0 10px;
-  display:flex; justify-content:center; align-items:baseline;
-  gap:18px; flex-wrap:wrap;
+}
+
+/* ===== Segmented pill switch ===== */
+.ha-pub__switch {
+  --switch-tab-w: 220px;
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  padding:4px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+}
+.ha-pub__switch-indicator {
+  position:absolute;
+  top:4px; bottom:4px; left:4px;
+  width:var(--switch-tab-w);
+  background:var(--ha-teal-deep);
+  border-radius:999px;
+  transition:transform 320ms cubic-bezier(.4,0,.2,1);
+  z-index:0;
+  box-shadow:0 2px 12px rgba(82,121,111,.35);
 }
 .ha-pub__title-tab {
-  background:none; border:none; padding:0; cursor:pointer;
-  font:inherit; letter-spacing:inherit;
-  color:rgba(255,255,255,.32);
-  transition:color .18s;
+  position:relative; z-index:1;
+  background:none; border:none; padding:0;
+  width:var(--switch-tab-w); height:48px;
+  cursor:pointer;
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:22px; letter-spacing:-.01em; line-height:1;
+  color:rgba(255,255,255,.55);
+  border-radius:999px;
+  transition:color .22s;
+  display:flex; align-items:center; justify-content:center;
+  white-space:nowrap;
 }
-.ha-pub__title-tab:hover { color:rgba(255,255,255,.6); }
-.ha-pub__title-tab.active {
-  color:var(--ha-white); cursor:default;
-}
-.ha-pub__title-divider {
-  color:rgba(255,255,255,.22); font-weight:400;
-  font-size:.7em;
-}
+.ha-pub__title-tab.active { color:var(--ha-white); cursor:default; }
+.ha-pub__title-tab:not(.active):hover { color:rgba(255,255,255,.85); }
+
 .ha-pub__hero-sub {
   font-size:14px; line-height:1.6; color:rgba(202,210,197,.8);
   max-width:54ch; margin:0 auto;
@@ -179,7 +202,8 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 @media (max-width:700px) {
   .ha-pub__hero { padding:28px 20px 24px; }
   .ha-pub__hero-eyebrow { font-size:10px; letter-spacing:.22em; }
-  .ha-pub__hero h1 { gap:12px; }
+  .ha-pub__switch { --switch-tab-w: 145px; }
+  .ha-pub__title-tab { height:40px; font-size:15px; }
 }
 
 /* ===== View visibility ===== */
@@ -441,9 +465,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <header class="ha-pub__hero">
     <div class="ha-pub__hero-eyebrow" id="ha-pub-hero-eyebrow">Research &amp; Policy</div>
     <h1>
-      <button class="ha-pub__title-tab active" data-view="publications" aria-current="page">Publications</button>
-      <span class="ha-pub__title-divider" aria-hidden="true">/</span>
-      <button class="ha-pub__title-tab" data-view="data">Data</button>
+      <span class="ha-pub__switch" role="tablist" aria-label="View">
+        <span class="ha-pub__switch-indicator" aria-hidden="true"></span>
+        <button class="ha-pub__title-tab active" data-view="publications" role="tab" aria-selected="true">Publications</button>
+        <button class="ha-pub__title-tab" data-view="data" role="tab" aria-selected="false">Interactive Data</button>
+      </span>
     </h1>
     <p class="ha-pub__hero-sub" id="ha-pub-hero-sub">Reports, briefs, and analyses from the Hawaiʻi Appleseed Center for Law &amp; Economic Justice.</p>
   </header>
@@ -729,13 +755,22 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       sub: 'Interactive dashboards and datasets that bring Hawaiʻi-specific economic-justice indicators to life.',
     },
   };
+  function moveIndicator(view) {
+    const indicator = document.querySelector('.ha-pub__switch-indicator');
+    const activeBtn = document.querySelector(`.ha-pub__title-tab[data-view="${view}"]`);
+    if (!indicator || !activeBtn) return;
+    // offset relative to first tab — works regardless of tab width
+    const firstBtn = document.querySelector('.ha-pub__title-tab');
+    const delta = activeBtn.offsetLeft - firstBtn.offsetLeft;
+    indicator.style.transform = `translateX(${delta}px)`;
+  }
   function setView(view) {
     document.querySelectorAll('.ha-pub__title-tab').forEach(t => {
       const isActive = t.dataset.view === view;
       t.classList.toggle('active', isActive);
-      if (isActive) t.setAttribute('aria-current', 'page');
-      else t.removeAttribute('aria-current');
+      t.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
+    moveIndicator(view);
     document.querySelectorAll('.ha-pub__view').forEach(v => {
       const isActive = v.id === 'ha-pub-view-' + view;
       v.classList.toggle('active', isActive);
@@ -750,6 +785,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   }
   document.querySelectorAll('.ha-pub__title-tab').forEach(t => {
     t.addEventListener('click', () => setView(t.dataset.view));
+  });
+  // Re-position indicator on resize (tab widths shrink on mobile)
+  window.addEventListener('resize', () => {
+    const activeBtn = document.querySelector('.ha-pub__title-tab.active');
+    if (activeBtn) moveIndicator(activeBtn.dataset.view);
   });
 
   /* ── load data ── */
