@@ -131,12 +131,22 @@
   /* ===== HERO + ISSUE CARDS (merged) ===== */
   .ha-issues .ha-hero{
     position:relative;
-    padding:60px 0 90px;overflow:hidden;isolation:isolate;
+    padding:44px 0 64px;overflow:hidden;isolation:isolate;
     background:
       radial-gradient(ellipse 90% 60% at 50% 0%, rgba(132,169,140,.14), transparent 70%),
       linear-gradient(180deg, var(--ha-white) 0%, var(--ha-ash-light) 100%);
   }
   .ha-issues .ha-hero-text{margin-bottom:48px;max-width:760px;}
+  /* Two-column hero on desktop: text left, bars right */
+  @media (min-width:1024px){
+    .ha-issues .ha-hero .ha-wrap{
+      display:grid;grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap:56px;align-items:start;
+    }
+    .ha-issues .ha-hero-text{margin-bottom:0;max-width:none;}
+    .ha-issues .ha-hero h1{max-width:18ch;}
+    .ha-issues .ha-hero-lead{max-width:none;}
+  }
   .ha-issues .ha-hero h1{
     font-family:'Manrope',sans-serif;font-weight:700;
     font-size:clamp(34px, 5vw, 60px);
@@ -166,8 +176,8 @@
   }
 
   .ha-issues .ha-card{
-    position:relative;display:flex;flex-direction:row;align-items:center;gap:24px;
-    padding:22px 28px;
+    position:relative;display:flex;flex-direction:row;align-items:center;gap:20px;
+    padding:16px 22px;
     background:var(--ha-white);
     border:1px solid var(--ha-rule);
     border-left:4px solid var(--ha-teal);
@@ -190,7 +200,7 @@
   }
   .ha-issues .ha-card-icon{
     flex:0 0 auto;
-    width:48px;height:48px;
+    width:40px;height:40px;
     display:flex;align-items:center;justify-content:center;
     border-radius:50%;background:rgba(132,169,140,.14);
     color:var(--ha-teal-deep);
@@ -200,10 +210,10 @@
     transform:scale(1.08) rotate(-4deg);
     background:rgba(132,169,140,.24);
   }
-  .ha-issues .ha-card-icon svg{width:26px;height:26px;}
+  .ha-issues .ha-card-icon svg{width:22px;height:22px;}
   .ha-issues .ha-card h3{
     font-family:'Manrope',sans-serif;font-weight:700;
-    font-size:clamp(20px, 2vw, 26px);line-height:1.2;letter-spacing:-0.015em;
+    font-size:clamp(18px, 1.6vw, 22px);line-height:1.2;letter-spacing:-0.015em;
     color:var(--ha-charcoal);margin:0;flex:1;
   }
   .ha-issues .ha-card::after{
