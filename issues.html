@@ -146,77 +146,85 @@
   .ha-issues .ha-hero h1 em{color:var(--ha-teal-deep);font-style:italic;font-weight:600;}
   .ha-issues .ha-hero-lead{
     font-family:'Poppins',sans-serif;font-weight:400;
-    font-size:clamp(15px, 1.4vw, 18px);line-height:1.65;
-    color:var(--ha-charcoal);max-width:58ch;margin:18px 0 0;opacity:.82;
+    font-size:clamp(15px, 1.4vw, 18px);line-height:1.7;
+    color:var(--ha-charcoal);max-width:62ch;
+    margin:28px 0 0;
+    padding:24px 28px 24px 32px;
+    background:linear-gradient(180deg, rgba(132,169,140,.10), rgba(132,169,140,.04));
+    border-left:3px solid var(--ha-teal);
+    border-radius:0 8px 8px 0;
+    position:relative;
+  }
+  .ha-issues .ha-hero-lead::before{
+    content:"";position:absolute;left:-3px;top:0;width:3px;height:40px;
+    background:var(--ha-teal-deep);border-radius:0;
   }
 
-  /* ===== ISSUE CARDS (2×2) ===== */
+  /* ===== ISSUE BARS (horizontal, stacked) ===== */
   .ha-issues .ha-cards{
-    display:grid;gap:20px;
-    grid-template-columns:1fr;
+    display:flex;flex-direction:column;gap:14px;
   }
-  @media (min-width:760px){.ha-issues .ha-cards{grid-template-columns:repeat(2,1fr);gap:24px;}}
 
   .ha-issues .ha-card{
-    position:relative;display:flex;flex-direction:column;
-    padding:32px 28px 28px;
+    position:relative;display:flex;flex-direction:row;align-items:center;gap:24px;
+    padding:22px 28px;
     background:var(--ha-white);
     border:1px solid var(--ha-rule);
-    border-radius:10px;
-    box-shadow:0 6px 16px -10px rgba(53,79,82,.10);
-    transition:transform .5s cubic-bezier(.22,.61,.36,1),
-               box-shadow .5s cubic-bezier(.22,.61,.36,1),
-               border-color .5s;
-    opacity:0;transform:translateY(28px);
+    border-left:4px solid var(--ha-teal);
+    border-radius:8px;
+    box-shadow:0 4px 12px -8px rgba(53,79,82,.10);
+    transition:transform .4s cubic-bezier(.22,.61,.36,1),
+               box-shadow .4s cubic-bezier(.22,.61,.36,1),
+               border-color .4s,
+               background .4s;
+    opacity:0;transform:translateY(16px);
     will-change:opacity,transform;
     cursor:pointer;
+    text-decoration:none;
   }
   .ha-issues .ha-card.is-in{opacity:1;transform:translateY(0);}
   .ha-issues .ha-card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 24px 50px -20px rgba(53,79,82,.30);
-    border-color:var(--ha-teal);
+    transform:translateX(6px);
+    box-shadow:0 16px 36px -20px rgba(53,79,82,.30);
+    background:#FAFBF9;
   }
   .ha-issues .ha-card-icon{
-    width:52px;height:52px;
+    flex:0 0 auto;
+    width:48px;height:48px;
     display:flex;align-items:center;justify-content:center;
     border-radius:50%;background:rgba(132,169,140,.14);
-    color:var(--ha-teal-deep);margin-bottom:22px;
-    transition:transform .5s cubic-bezier(.22,.61,.36,1), background .4s;
+    color:var(--ha-teal-deep);
+    transition:transform .4s cubic-bezier(.22,.61,.36,1), background .4s;
   }
   .ha-issues .ha-card:hover .ha-card-icon{
     transform:scale(1.08) rotate(-4deg);
     background:rgba(132,169,140,.24);
   }
-  .ha-issues .ha-card-icon svg{width:28px;height:28px;}
+  .ha-issues .ha-card-icon svg{width:26px;height:26px;}
   .ha-issues .ha-card h3{
     font-family:'Manrope',sans-serif;font-weight:700;
-    font-size:clamp(22px, 2.4vw, 28px);line-height:1.15;letter-spacing:-0.015em;
-    color:var(--ha-charcoal);margin-bottom:14px;
+    font-size:clamp(20px, 2vw, 26px);line-height:1.2;letter-spacing:-0.015em;
+    color:var(--ha-charcoal);margin:0;flex:1;
   }
-  .ha-issues .ha-card p{
-    font-family:'Poppins',sans-serif;font-size:15px;line-height:1.65;
-    color:var(--ha-charcoal);opacity:.78;margin-bottom:20px;
-    flex:1;
-  }
-  .ha-issues .ha-card-link{
-    display:inline-flex;align-items:center;gap:10px;
-    font-family:'Poppins',sans-serif;font-weight:600;
-    font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  .ha-issues .ha-card::after{
+    content:"→";
+    font-family:'Manrope',sans-serif;font-size:22px;font-weight:500;
     color:var(--ha-teal-deep);
-    align-self:flex-start;
-    transition:gap .4s;
+    transition:transform .4s, color .4s;
+    margin-left:auto;
   }
-  .ha-issues .ha-card:hover .ha-card-link{gap:16px;color:var(--ha-charcoal);}
-  .ha-issues .ha-card-link::after{
-    content:"→";font-size:16px;letter-spacing:0;
-  }
+  .ha-issues .ha-card:hover::after{transform:translateX(6px);color:var(--ha-charcoal);}
 
-  /* Card accent dot (different per issue) */
+  /* Card accent (different per issue) */
+  .ha-issues .ha-card[data-accent="slate"]{border-left-color:var(--ha-slate);}
   .ha-issues .ha-card[data-accent="slate"] .ha-card-icon{background:rgba(53,79,82,.10);color:var(--ha-slate);}
   .ha-issues .ha-card[data-accent="slate"]:hover .ha-card-icon{background:rgba(53,79,82,.18);}
+  .ha-issues .ha-card[data-accent="slate"]::after{color:var(--ha-slate);}
+  .ha-issues .ha-card[data-accent="charcoal"]{border-left-color:var(--ha-charcoal);}
   .ha-issues .ha-card[data-accent="charcoal"] .ha-card-icon{background:rgba(47,62,70,.10);color:var(--ha-charcoal);}
   .ha-issues .ha-card[data-accent="charcoal"]:hover .ha-card-icon{background:rgba(47,62,70,.18);}
+  .ha-issues .ha-card[data-accent="charcoal"]::after{color:var(--ha-charcoal);}
+  .ha-issues .ha-card[data-accent="teal-deep"]{border-left-color:var(--ha-teal-deep);}
 
   /* ===== DEEP DIVES ===== */
   /* Each deep-dive section gets its own tinted background from the brand palette.
@@ -465,7 +473,12 @@
     .ha-issues .ha-deep{padding:72px 0;scroll-margin-top:100px;}
     .ha-issues .ha-pubs-wrap{padding:72px 0;}
     .ha-issues .ha-cta{padding:64px 0;}
-    .ha-issues .ha-card{padding:28px 24px 24px;}
+    .ha-issues .ha-card{padding:18px 18px 18px 20px;gap:16px;}
+    .ha-issues .ha-card-icon{width:42px;height:42px;}
+    .ha-issues .ha-card-icon svg{width:22px;height:22px;}
+    .ha-issues .ha-card h3{font-size:18px;}
+    .ha-issues .ha-card::after{font-size:18px;}
+    .ha-issues .ha-hero-lead{padding:20px 20px 20px 22px;font-size:15px;}
     .ha-issues .ha-deep-head{margin-bottom:24px;}
     .ha-issues .ha-deep-sub{margin:36px 0 16px;}
     .ha-issues .ha-eyebrow{font-size:11px;letter-spacing:.24em;}
@@ -498,22 +511,6 @@
       </div>
       <div class="ha-cards">
 
-        <!-- Tax & Budget -->
-        <a class="ha-card" href="#tax-budget" data-fade data-accent="slate">
-          <div class="ha-card-icon" aria-hidden="true">
-            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 27h24"/>
-              <rect x="7" y="19" width="4" height="8"/>
-              <rect x="14" y="13" width="4" height="14"/>
-              <rect x="21" y="8" width="4" height="19"/>
-              <path d="M7 15l7-4 7 3 4-7"/>
-            </svg>
-          </div>
-          <h3>Tax &amp; Budget</h3>
-          <p>Hawaiʻi's tax code is among the most regressive in the nation. We push for progressive revenue and budget transparency so public dollars reach the communities that need them.</p>
-          <span class="ha-card-link">Explore</span>
-        </a>
-
         <!-- Food Security -->
         <a class="ha-card" href="#food-security" data-fade data-accent="teal-deep">
           <div class="ha-card-icon" aria-hidden="true">
@@ -524,8 +521,6 @@
             </svg>
           </div>
           <h3>Food Security</h3>
-          <p>Nearly 1 in 8 residents face food insecurity — including 1 in 5 keiki — while we import 85% of our food. We work to expand food access and strengthen Hawaiʻi's local food systems.</p>
-          <span class="ha-card-link">Explore</span>
         </a>
 
         <!-- Affordable Housing -->
@@ -537,8 +532,6 @@
             </svg>
           </div>
           <h3>Affordable Housing</h3>
-          <p>Hawaiʻi is the most expensive housing market in the country. We advocate for renter protections, social housing, and policies that put residents over speculators.</p>
-          <span class="ha-card-link">Explore</span>
         </a>
 
         <!-- Transportation -->
@@ -553,76 +546,31 @@
             </svg>
           </div>
           <h3>Transportation</h3>
-          <p>Hawaiʻi's car-dependent infrastructure leaves many residents stranded. We push for safer streets, fare-free transit, and equity-centered transportation policy.</p>
-          <span class="ha-card-link">Explore</span>
+        </a>
+
+        <!-- Tax & Budget -->
+        <a class="ha-card" href="#tax-budget" data-fade data-accent="slate">
+          <div class="ha-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 27h24"/>
+              <rect x="7" y="19" width="4" height="8"/>
+              <rect x="14" y="13" width="4" height="14"/>
+              <rect x="21" y="8" width="4" height="19"/>
+              <path d="M7 15l7-4 7 3 4-7"/>
+            </svg>
+          </div>
+          <h3>Tax &amp; Budget</h3>
         </a>
 
       </div>
     </div>
   </section>
 
-  <!-- ========== DEEP DIVE 1: TAX & BUDGET ========== -->
-  <section class="ha-deep" id="tax-budget" data-color="tax-budget" data-fade>
-    <div class="ha-wrap">
-      <div class="ha-deep-head">
-        <span class="ha-deep-num">01 · Issue Area</span>
-        <span class="ha-eyebrow">Tax &amp; Budget</span>
-        <h2>A fairer tax code for a thriving Hawaiʻi.</h2>
-      </div>
-      <div class="ha-deep-body">
-        <p class="ha-deep-lead">Hawaiʻi has one of the most regressive tax structures in the country. Working families pay a larger share of their income in state and local taxes than the wealthiest households — and many essential services remain underfunded as a result.</p>
-        <p>We push for progressive revenue policies that ask those who can afford it most to pay their fair share, while strengthening the budget process so public dollars reach the people who need them. From our annual Budget Primer to deep analyses of credits and exemptions, our research equips lawmakers, advocates, and the public to demand a tax code that funds a thriving Hawaiʻi.</p>
-
-        <h4 class="ha-deep-sub">What we focus on</h4>
-        <ul class="ha-focus">
-          <li>Progressive income tax reform</li>
-          <li>Working family tax credits (EITC)</li>
-          <li>Budget transparency &amp; accountability</li>
-          <li>Closing corporate tax loopholes</li>
-        </ul>
-
-        <h4 class="ha-deep-sub">Featured research</h4>
-        <div class="ha-pub-row">
-          <article class="ha-pub" data-cat="tax-budget" data-fade>
-            <a class="ha-pub-link" href="https://hiappleseed.org/publications/fair-tax-code-thriving-hawaii" target="_blank" rel="noopener">
-              <div class="ha-pub-img">
-                <img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/4dc08ceb-d243-4cce-9d4e-28a44aca9516/pexels_tanaphong-toochinda-GagC07wVvck-unsplash.jpg" alt="" loading="lazy" decoding="async">
-              </div>
-              <div class="ha-pub-body">
-                <div class="ha-pub-meta">
-                  <span class="ha-pub-cat" data-cat="tax-budget">Tax &amp; Budget</span>
-                  <span class="ha-pub-date">Jan 28, 2026</span>
-                </div>
-                <h3 class="ha-pub-title">A Fairer Tax Code for a Thriving Hawaiʻi</h3>
-                <p class="ha-pub-excerpt">Progressive Revenue Options to Protect and Invest in Our Future.</p>
-              </div>
-            </a>
-          </article>
-          <article class="ha-pub" data-cat="tax-budget" data-fade>
-            <a class="ha-pub-link" href="https://hiappleseed.org/publications/hawaii-budget-primer-fy202526" target="_blank" rel="noopener">
-              <div class="ha-pub-img">
-                <img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1724720104790-1U925CU7TJUCK559WDB6/pexels-pixabay-415824.jpeg" alt="" loading="lazy" decoding="async">
-              </div>
-              <div class="ha-pub-body">
-                <div class="ha-pub-meta">
-                  <span class="ha-pub-cat" data-cat="tax-budget">Tax &amp; Budget</span>
-                  <span class="ha-pub-date">Sep 8, 2025</span>
-                </div>
-                <h3 class="ha-pub-title">Hawaiʻi Budget Primer FY2025–26</h3>
-                <p class="ha-pub-excerpt">A reader's guide to how Hawaiʻi's state budget works — and how to push for decisions that improve lives.</p>
-              </div>
-            </a>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== DEEP DIVE 2: FOOD SECURITY ========== -->
+  <!-- ========== DEEP DIVE 1: FOOD SECURITY ========== -->
   <section class="ha-deep" id="food-security" data-color="food" data-fade>
     <div class="ha-wrap">
       <div class="ha-deep-head">
-        <span class="ha-deep-num">02 · Issue Area</span>
+        <span class="ha-deep-num">01 · Issue Area</span>
         <span class="ha-eyebrow">Food Security</span>
         <h2>Healthy, accessible food for every Hawaiʻi family.</h2>
       </div>
@@ -675,11 +623,11 @@
     </div>
   </section>
 
-  <!-- ========== DEEP DIVE 3: AFFORDABLE HOUSING ========== -->
+  <!-- ========== DEEP DIVE 2: AFFORDABLE HOUSING ========== -->
   <section class="ha-deep" id="housing" data-color="housing" data-fade>
     <div class="ha-wrap">
       <div class="ha-deep-head">
-        <span class="ha-deep-num">03 · Issue Area</span>
+        <span class="ha-deep-num">02 · Issue Area</span>
         <span class="ha-eyebrow">Affordable Housing</span>
         <h2>Homes Hawaiʻi's families can actually afford.</h2>
       </div>
@@ -732,11 +680,11 @@
     </div>
   </section>
 
-  <!-- ========== DEEP DIVE 4: TRANSPORTATION ========== -->
+  <!-- ========== DEEP DIVE 3: TRANSPORTATION ========== -->
   <section class="ha-deep" id="transportation" data-color="transit" data-fade>
     <div class="ha-wrap">
       <div class="ha-deep-head">
-        <span class="ha-deep-num">04 · Issue Area</span>
+        <span class="ha-deep-num">03 · Issue Area</span>
         <span class="ha-eyebrow">Transportation</span>
         <h2>Safer streets, smarter transit, lower costs.</h2>
       </div>
@@ -781,6 +729,63 @@
                 </div>
                 <h3 class="ha-pub-title">Keiki Ride Free</h3>
                 <p class="ha-pub-excerpt">Adopting a statewide fare-free transit model for Hawaiʻi's young riders.</p>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DEEP DIVE 4: TAX & BUDGET ========== -->
+  <section class="ha-deep" id="tax-budget" data-color="tax-budget" data-fade>
+    <div class="ha-wrap">
+      <div class="ha-deep-head">
+        <span class="ha-deep-num">04 · Issue Area</span>
+        <span class="ha-eyebrow">Tax &amp; Budget</span>
+        <h2>A fairer tax code for a thriving Hawaiʻi.</h2>
+      </div>
+      <div class="ha-deep-body">
+        <p class="ha-deep-lead">Hawaiʻi has one of the most regressive tax structures in the country. Working families pay a larger share of their income in state and local taxes than the wealthiest households — and many essential services remain underfunded as a result.</p>
+        <p>We push for progressive revenue policies that ask those who can afford it most to pay their fair share, while strengthening the budget process so public dollars reach the people who need them. From our annual Budget Primer to deep analyses of credits and exemptions, our research equips lawmakers, advocates, and the public to demand a tax code that funds a thriving Hawaiʻi.</p>
+
+        <h4 class="ha-deep-sub">What we focus on</h4>
+        <ul class="ha-focus">
+          <li>Progressive income tax reform</li>
+          <li>Working family tax credits (EITC)</li>
+          <li>Budget transparency &amp; accountability</li>
+          <li>Closing corporate tax loopholes</li>
+        </ul>
+
+        <h4 class="ha-deep-sub">Featured research</h4>
+        <div class="ha-pub-row">
+          <article class="ha-pub" data-cat="tax-budget" data-fade>
+            <a class="ha-pub-link" href="https://hiappleseed.org/publications/fair-tax-code-thriving-hawaii" target="_blank" rel="noopener">
+              <div class="ha-pub-img">
+                <img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/4dc08ceb-d243-4cce-9d4e-28a44aca9516/pexels_tanaphong-toochinda-GagC07wVvck-unsplash.jpg" alt="" loading="lazy" decoding="async">
+              </div>
+              <div class="ha-pub-body">
+                <div class="ha-pub-meta">
+                  <span class="ha-pub-cat" data-cat="tax-budget">Tax &amp; Budget</span>
+                  <span class="ha-pub-date">Jan 28, 2026</span>
+                </div>
+                <h3 class="ha-pub-title">A Fairer Tax Code for a Thriving Hawaiʻi</h3>
+                <p class="ha-pub-excerpt">Progressive Revenue Options to Protect and Invest in Our Future.</p>
+              </div>
+            </a>
+          </article>
+          <article class="ha-pub" data-cat="tax-budget" data-fade>
+            <a class="ha-pub-link" href="https://hiappleseed.org/publications/hawaii-budget-primer-fy202526" target="_blank" rel="noopener">
+              <div class="ha-pub-img">
+                <img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1724720104790-1U925CU7TJUCK559WDB6/pexels-pixabay-415824.jpeg" alt="" loading="lazy" decoding="async">
+              </div>
+              <div class="ha-pub-body">
+                <div class="ha-pub-meta">
+                  <span class="ha-pub-cat" data-cat="tax-budget">Tax &amp; Budget</span>
+                  <span class="ha-pub-date">Sep 8, 2025</span>
+                </div>
+                <h3 class="ha-pub-title">Hawaiʻi Budget Primer FY2025–26</h3>
+                <p class="ha-pub-excerpt">A reader's guide to how Hawaiʻi's state budget works — and how to push for decisions that improve lives.</p>
               </div>
             </a>
           </article>
