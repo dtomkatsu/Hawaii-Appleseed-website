@@ -1,0 +1,31 @@
+name: Sync Publications
+
+on:
+  schedule:
+    # Runs every day at 6 AM UTC (8 PM Hawaii time, so new posts from the day are captured)
+    - cron: "0 6 * * *"
+  workflow_dispatch: # allows manual trigger from the Actions tab
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch publications from Squarespace
+        run: python3 scripts/sync-publications.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add publications.json
+          if git diff --cached --quiet; then
+            echo "No changes to publications.json — skipping commit"
+          else
+            git commit -m "sync: update publications.json"
+            git push
+          fi

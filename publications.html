@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Publications — Hawaiʻi Appleseed</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,600&display=swap">
+
+<style>
+/* ============================================================
+   PREVIEW-ONLY chrome (announce / nav / footer).
+   Skip this block when injecting into Squarespace.
+   ============================================================ */
+
+html,body { margin:0; padding:0; background:#fff; }
+html { scroll-behavior:smooth; }
+body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F3E46; }
+
+.px-announce {
+  background:#2F3E46; color:#fff;
+  font:500 13px/1.4 'Poppins',sans-serif; letter-spacing:.01em;
+  padding:10px 18px; text-align:center;
+  position:fixed; top:0; left:0; right:0; z-index:50;
+}
+.px-announce a { color:#fff; text-decoration:underline; }
+.px-announce .x { position:absolute; right:14px; top:50%; transform:translateY(-50%); opacity:.7; cursor:pointer; }
+
+.px-nav {
+  background:#fff; border-bottom:1px solid rgba(53,79,82,.18);
+  padding:18px 28px; display:flex; align-items:center; gap:32px;
+  position:fixed; top:38px; left:0; right:0; z-index:49;
+  font-family:'Poppins',sans-serif;
+}
+.px-nav .px-logo {
+  display:flex; align-items:center; gap:12px;
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:20px; color:#52796F; letter-spacing:.05em;
+}
+.px-nav .px-logo svg { width:36px; height:36px; }
+.px-nav .px-spacer { flex:1; }
+.px-nav .px-links { display:none; gap:28px; font-size:14px; font-weight:500; color:#2F3E46; }
+.px-nav .px-links a { color:inherit; text-decoration:none; }
+.px-nav .px-links a:hover { color:#52796F; }
+.px-nav .px-links a.active { color:#52796F; font-weight:600; }
+@media (min-width:900px) { .px-nav .px-links { display:flex; } }
+
+.px-footer {
+  background:#2F3E46; color:#CAD2C5; padding:60px 28px 40px;
+  font-family:'Poppins',sans-serif; font-size:14px; line-height:1.7;
+}
+.px-footer .px-foot-grid {
+  display:grid; grid-template-columns:1fr; gap:32px;
+  max-width:1200px; margin:0 auto 40px;
+}
+@media (min-width:760px) { .px-footer .px-foot-grid { grid-template-columns:2fr 1fr 1fr; } }
+.px-footer h4 {
+  font-family:'Manrope',sans-serif; font-weight:700;
+  color:#fff; margin:0 0 12px; font-size:14px;
+  letter-spacing:.04em; text-transform:uppercase;
+}
+.px-footer a { color:#CAD2C5; text-decoration:none; display:block; margin-bottom:6px; }
+.px-footer a:hover { color:#84A98C; }
+.px-foot-bottom {
+  max-width:1200px; margin:0 auto; padding-top:24px;
+  border-top:1px solid rgba(202,210,197,.18);
+  display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; font-size:12px;
+}
+
+.px-spacer-top { height:120px; }
+</style>
+</head>
+<body>
+
+<!-- PREVIEW-ONLY: announce bar -->
+<div class="px-announce">
+  New Data Tool: <a href="#">Hawaiʻi Budget Bill Draft Tracker</a>
+  <span class="x" onclick="this.parentElement.style.display='none'">×</span>
+</div>
+
+<!-- PREVIEW-ONLY: nav -->
+<nav class="px-nav">
+  <div class="px-logo">
+    <svg viewBox="0 0 40 40" fill="none">
+      <path d="M20 8c-3 4-3 9 0 13 3-4 3-9 0-13z" fill="#52796F"/>
+      <path d="M14 14c-2 5 1 10 6 11 1-5-1-10-6-11z" fill="#84A98C"/>
+      <path d="M26 14c2 5-1 10-6 11-1-5 1-10 6-11z" fill="#84A98C"/>
+      <ellipse cx="20" cy="32" rx="9" ry="2" fill="#CAD2C5"/>
+    </svg>
+    HAWAIʻI APPLESEED
+  </div>
+  <div class="px-spacer"></div>
+  <div class="px-links">
+    <a href="index.html">Home</a>
+    <a href="our-story.html">Our Story</a>
+    <a href="our-mission.html">Our Mission</a>
+    <a href="our-team.html">Our Team</a>
+    <a href="#">Issues</a>
+    <a href="publications.html" class="active">Publications</a>
+    <a href="#">Donate</a>
+  </div>
+</nav>
+
+<div class="px-spacer-top"></div>
+
+<!-- ============================================================
+     BEGIN ha-publications
+     Copy everything below this comment (up to END ha-publications)
+     into a Squarespace Code Block on the Publications page.
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,600&display=swap">
+
+<style>
+/* ===== Brand palette ===== */
+.ha-pub {
+  --ha-ash:       #CAD2C5;
+  --ha-teal:      #84A98C;
+  --ha-teal-deep: #52796F;
+  --ha-slate:     #354F52;
+  --ha-charcoal:  #2F3E46;
+  --ha-white:     #FFFFFF;
+  --ha-bg:        #F6F8F5;
+  --ha-rule:      rgba(53,79,82,.14);
+
+  font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif;
+  color:var(--ha-charcoal);
+  background:var(--ha-white);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.ha-pub, .ha-pub *, .ha-pub *::before, .ha-pub *::after { box-sizing:border-box; }
+.ha-pub a { color:inherit; text-decoration:none; }
+.ha-pub img { display:block; max-width:100%; }
+
+/* ===== Page hero ===== */
+.ha-pub__hero {
+  background:var(--ha-charcoal);
+  padding:72px 36px 64px;
+  text-align:center;
+}
+.ha-pub__hero-eyebrow {
+  font-family:'Poppins',sans-serif;
+  text-transform:uppercase; letter-spacing:.32em; font-size:11px;
+  color:var(--ha-ash); margin-bottom:20px;
+  display:flex; align-items:center; justify-content:center; gap:14px;
+}
+.ha-pub__hero-eyebrow::before,
+.ha-pub__hero-eyebrow::after { content:""; width:28px; height:1px; background:var(--ha-ash); opacity:.5; }
+.ha-pub__hero h1 {
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:clamp(34px,5vw,60px); line-height:1.05;
+  letter-spacing:-.025em; color:var(--ha-white);
+  margin:0 0 18px;
+}
+.ha-pub__hero-sub {
+  font-size:16px; line-height:1.65; color:rgba(202,210,197,.85);
+  max-width:50ch; margin:0 auto;
+}
+
+@media (max-width:700px) {
+  .ha-pub__hero { padding:56px 20px 48px; }
+  .ha-pub__hero-eyebrow { font-size:10px; letter-spacing:.22em; }
+}
+
+/* ===== Filter / search toolbar ===== */
+.ha-pub__toolbar {
+  background:var(--ha-white);
+  border-bottom:1px solid var(--ha-rule);
+  padding:20px 36px;
+  position:sticky; top:0; z-index:20;
+}
+.ha-pub__toolbar-inner {
+  max-width:1200px; margin:0 auto;
+  display:flex; flex-direction:column; gap:14px;
+}
+
+/* search row */
+.ha-pub__search-wrap {
+  position:relative; width:100%; max-width:480px;
+}
+.ha-pub__search {
+  width:100%; padding:11px 16px 11px 42px;
+  border:1px solid var(--ha-rule); border-radius:3px;
+  font-family:'Poppins',sans-serif; font-size:14px; color:var(--ha-charcoal);
+  background:var(--ha-bg); outline:none;
+  transition:border-color .18s;
+}
+.ha-pub__search:focus { border-color:var(--ha-teal-deep); background:var(--ha-white); }
+.ha-pub__search::placeholder { color:rgba(47,62,70,.4); }
+.ha-pub__search-icon {
+  position:absolute; left:13px; top:50%; transform:translateY(-50%);
+  color:rgba(47,62,70,.4); pointer-events:none;
+}
+
+/* filter pills row */
+.ha-pub__filters {
+  display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+}
+.ha-pub__filter-label {
+  font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ha-teal-deep); font-weight:600; margin-right:4px;
+}
+.ha-pub__pill {
+  padding:6px 14px;
+  border:1px solid var(--ha-rule);
+  border-radius:999px;
+  font-family:'Poppins',sans-serif; font-size:12.5px; font-weight:500;
+  color:rgba(47,62,70,.7); background:transparent;
+  cursor:pointer; transition:background .16s, border-color .16s, color .16s;
+  white-space:nowrap;
+}
+.ha-pub__pill:hover { border-color:var(--ha-teal); color:var(--ha-teal-deep); }
+.ha-pub__pill.active {
+  background:var(--ha-teal-deep); border-color:var(--ha-teal-deep);
+  color:var(--ha-white);
+}
+
+@media (max-width:700px) {
+  .ha-pub__toolbar { padding:16px 20px; top:0; }
+  .ha-pub__search-wrap { max-width:100%; }
+  .ha-pub__filter-label { display:none; }
+}
+
+/* ===== Results meta bar ===== */
+.ha-pub__meta {
+  max-width:1200px; margin:0 auto;
+  padding:20px 36px 0;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  flex-wrap:wrap;
+}
+.ha-pub__count {
+  font-size:13px; color:rgba(47,62,70,.55);
+  font-family:'Poppins',sans-serif;
+}
+.ha-pub__count strong { color:var(--ha-teal-deep); font-weight:600; }
+
+@media (max-width:700px) {
+  .ha-pub__meta { padding:16px 20px 0; }
+}
+
+/* ===== Publications grid ===== */
+.ha-pub__grid {
+  max-width:1200px; margin:0 auto;
+  padding:24px 36px 80px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+  gap:28px;
+}
+
+@media (max-width:700px) {
+  .ha-pub__grid {
+    padding:20px 20px 64px;
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+}
+
+/* ===== Publication card ===== */
+.ha-pub__card {
+  display:flex; flex-direction:column;
+  border:1px solid var(--ha-rule);
+  border-radius:4px;
+  overflow:hidden;
+  transition:box-shadow .2s, transform .2s;
+  background:var(--ha-white);
+}
+.ha-pub__card:hover {
+  box-shadow:0 6px 28px rgba(47,62,70,.10);
+  transform:translateY(-2px);
+}
+.ha-pub__card-thumb {
+  aspect-ratio:16/9;
+  overflow:hidden;
+  background:var(--ha-bg);
+  flex:none;
+}
+.ha-pub__card-thumb img {
+  width:100%; height:100%;
+  object-fit:cover;
+  transition:transform .35s ease;
+}
+.ha-pub__card:hover .ha-pub__card-thumb img { transform:scale(1.03); }
+.ha-pub__card-thumb-placeholder {
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--ha-bg);
+}
+.ha-pub__card-thumb-placeholder svg { width:40px; height:40px; opacity:.25; }
+
+.ha-pub__card-body {
+  display:flex; flex-direction:column; flex:1;
+  padding:20px 20px 22px;
+  gap:8px;
+}
+.ha-pub__card-meta {
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+}
+.ha-pub__card-cat {
+  font-family:'Poppins',sans-serif;
+  font-size:10.5px; font-weight:600; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--ha-teal-deep);
+}
+.ha-pub__card-date {
+  font-size:12px; color:rgba(47,62,70,.45);
+  font-family:'Poppins',sans-serif;
+}
+.ha-pub__card-title {
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:15.5px; line-height:1.35; color:var(--ha-charcoal);
+  margin:0;
+}
+.ha-pub__card-excerpt {
+  font-size:13.5px; line-height:1.6; color:rgba(47,62,70,.7);
+  margin:0; display:-webkit-box;
+  -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+}
+.ha-pub__card-author {
+  font-size:12px; color:rgba(47,62,70,.5);
+  font-family:'Poppins',sans-serif; margin-top:auto; padding-top:8px;
+}
+.ha-pub__card-link {
+  display:inline-flex; align-items:center; gap:6px;
+  margin-top:12px;
+  font-family:'Poppins',sans-serif; font-size:12.5px; font-weight:600;
+  letter-spacing:.04em; color:var(--ha-teal-deep);
+  transition:gap .18s;
+}
+.ha-pub__card-link:hover { gap:10px; }
+.ha-pub__card-link svg { width:12px; height:12px; }
+
+/* ===== Empty state ===== */
+.ha-pub__empty {
+  grid-column:1/-1;
+  text-align:center; padding:72px 20px;
+  color:rgba(47,62,70,.45);
+  font-family:'Poppins',sans-serif;
+}
+.ha-pub__empty strong { display:block; font-size:18px; margin-bottom:8px; color:var(--ha-charcoal); }
+
+/* ===== Sync note (footer) ===== */
+.ha-pub__sync-note {
+  text-align:center; padding:0 20px 36px;
+  font-size:11.5px; color:rgba(47,62,70,.35);
+  font-family:'Poppins',sans-serif;
+}
+.ha-pub__sync-note a { color:var(--ha-teal-deep); text-decoration:underline; }
+</style>
+
+<div class="ha-pub">
+
+  <!-- Hero -->
+  <header class="ha-pub__hero">
+    <div class="ha-pub__hero-eyebrow">Research &amp; Policy</div>
+    <h1>Publications</h1>
+    <p class="ha-pub__hero-sub">Reports, briefs, and analyses from the Hawaiʻi Appleseed Center for Law &amp; Economic Justice.</p>
+  </header>
+
+  <!-- Toolbar: search + category filters -->
+  <div class="ha-pub__toolbar" id="ha-pub-toolbar">
+    <div class="ha-pub__toolbar-inner">
+
+      <div class="ha-pub__search-wrap">
+        <svg class="ha-pub__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="6.5" cy="6.5" r="4.5"/>
+          <path d="M10.5 10.5l3 3"/>
+        </svg>
+        <input
+          class="ha-pub__search"
+          type="search"
+          id="ha-pub-search"
+          placeholder="Search publications…"
+          autocomplete="off"
+          aria-label="Search publications"
+        />
+      </div>
+
+      <div class="ha-pub__filters" id="ha-pub-filters" role="group" aria-label="Filter by category">
+        <span class="ha-pub__filter-label">Topic</span>
+        <!-- Pills are injected by JS once data loads -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Results count -->
+  <div class="ha-pub__meta">
+    <p class="ha-pub__count" id="ha-pub-count">&nbsp;</p>
+  </div>
+
+  <!-- Grid -->
+  <div class="ha-pub__grid" id="ha-pub-grid" role="list">
+    <!-- Cards injected by JS -->
+  </div>
+
+  <!-- Sync note -->
+  <p class="ha-pub__sync-note" id="ha-pub-sync-note"></p>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── state ── */
+  let allItems = [];
+  let activeCategory = null;
+  let searchQuery = '';
+
+  const CATEGORIES = [
+    'Affordable Housing',
+    'Food Equity',
+    'Health',
+    'Native Hawaiian Equity',
+    'Taxes & Budget',
+    'Transportation Equity',
+    'Wages & Labor',
+  ];
+
+  /* ── DOM refs ── */
+  const grid     = document.getElementById('ha-pub-grid');
+  const filters  = document.getElementById('ha-pub-filters');
+  const countEl  = document.getElementById('ha-pub-count');
+  const searchEl = document.getElementById('ha-pub-search');
+  const syncNote = document.getElementById('ha-pub-sync-note');
+
+  /* ── helpers ── */
+  function formatDate(ms) {
+    if (!ms) return '';
+    const d = new Date(ms);
+    return d.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+  }
+
+  function stripHtml(html) {
+    if (!html) return '';
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return div.textContent || div.innerText || '';
+  }
+
+  /* ── build filter pills ── */
+  function buildFilters() {
+    // All pill
+    const allPill = document.createElement('button');
+    allPill.className = 'ha-pub__pill active';
+    allPill.dataset.cat = '';
+    allPill.textContent = 'All';
+    allPill.addEventListener('click', () => setCategory(null));
+    filters.appendChild(allPill);
+
+    CATEGORIES.forEach(cat => {
+      const pill = document.createElement('button');
+      pill.className = 'ha-pub__pill';
+      pill.dataset.cat = cat;
+      pill.textContent = cat;
+      pill.addEventListener('click', () => setCategory(cat));
+      filters.appendChild(pill);
+    });
+  }
+
+  function setCategory(cat) {
+    activeCategory = cat;
+    filters.querySelectorAll('.ha-pub__pill').forEach(p => {
+      p.classList.toggle('active', (p.dataset.cat || null) === cat);
+    });
+    render();
+  }
+
+  /* ── filter + render ── */
+  function filteredItems() {
+    let items = allItems;
+    if (activeCategory) {
+      items = items.filter(i => i.categories && i.categories.includes(activeCategory));
+    }
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+      items = items.filter(i =>
+        (i.title || '').toLowerCase().includes(q) ||
+        stripHtml(i.excerpt || '').toLowerCase().includes(q) ||
+        (i.author || '').toLowerCase().includes(q) ||
+        (i.categories || []).some(c => c.toLowerCase().includes(q)) ||
+        (i.tags || []).some(t => t.toLowerCase().includes(q))
+      );
+    }
+    return items;
+  }
+
+  function cardHtml(item) {
+    const date   = formatDate(item.publishOn);
+    const cat    = (item.categories || [])[0] || '';
+    const title  = item.title || 'Untitled';
+    const excerpt = stripHtml(item.excerpt || '');
+    const url    = item.fullUrl || '#';
+    const author = item.author || '';
+
+    const thumbHtml = item.assetUrl
+      ? `<img src="${item.assetUrl}?format=500w" alt="" loading="lazy">`
+      : `<div class="ha-pub__card-thumb-placeholder">
+           <svg viewBox="0 0 24 24" fill="none" stroke="#354F52" stroke-width="1.5">
+             <rect x="3" y="3" width="18" height="18" rx="2"/>
+             <path d="M3 9h18M9 21V9"/>
+           </svg>
+         </div>`;
+
+    return `
+      <article class="ha-pub__card" role="listitem">
+        <a href="${url}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <div class="ha-pub__card-thumb">${thumbHtml}</div>
+        </a>
+        <div class="ha-pub__card-body">
+          <div class="ha-pub__card-meta">
+            ${cat ? `<span class="ha-pub__card-cat">${cat}</span>` : ''}
+            ${date ? `<span class="ha-pub__card-date">${date}</span>` : ''}
+          </div>
+          <h2 class="ha-pub__card-title">
+            <a href="${url}" target="_blank" rel="noopener">${title}</a>
+          </h2>
+          ${excerpt ? `<p class="ha-pub__card-excerpt">${excerpt}</p>` : ''}
+          ${author ? `<p class="ha-pub__card-author">By ${author}</p>` : ''}
+          <a class="ha-pub__card-link" href="${url}" target="_blank" rel="noopener" aria-label="Read ${title}">
+            Read publication
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M1 6h10M7 2l4 4-4 4"/>
+            </svg>
+          </a>
+        </div>
+      </article>`;
+  }
+
+  function render() {
+    const items = filteredItems();
+    const total = allItems.length;
+    const shown = items.length;
+
+    if (shown === 0) {
+      grid.innerHTML = `
+        <div class="ha-pub__empty">
+          <strong>No publications found</strong>
+          Try a different search term or category.
+        </div>`;
+    } else {
+      grid.innerHTML = items.map(cardHtml).join('');
+    }
+
+    if (activeCategory || searchQuery) {
+      countEl.innerHTML = `Showing <strong>${shown}</strong> of ${total} publications`;
+    } else {
+      countEl.innerHTML = `<strong>${total}</strong> publications`;
+    }
+  }
+
+  /* ── search debounce ── */
+  let searchTimer;
+  searchEl.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      searchQuery = searchEl.value.trim();
+      render();
+    }, 220);
+  });
+
+  /* ── load data ── */
+  function load() {
+    grid.innerHTML = '<div class="ha-pub__empty"><strong>Loading…</strong></div>';
+
+    fetch('publications.json')
+      .then(r => {
+        if (!r.ok) throw new Error('Could not load publications.json');
+        return r.json();
+      })
+      .then(data => {
+        allItems = (data.items || []).sort((a, b) => b.publishOn - a.publishOn);
+        buildFilters();
+        render();
+        if (data.lastSynced) {
+          const d = new Date(data.lastSynced);
+          syncNote.innerHTML = `Data synced from <a href="https://hiappleseed.org/publications" target="_blank" rel="noopener">hiappleseed.org/publications</a> — last updated ${d.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' })}.`;
+        }
+      })
+      .catch(err => {
+        grid.innerHTML = `<div class="ha-pub__empty"><strong>Could not load publications.</strong> ${err.message}</div>`;
+      });
+  }
+
+  load();
+})();
+</script>
+
+<!-- END ha-publications -->
+
+<!-- PREVIEW-ONLY: footer -->
+<footer class="px-footer">
+  <div class="px-foot-grid">
+    <div>
+      <h4>Hawaiʻi Appleseed</h4>
+      <p style="color:#CAD2C5;margin:0 0 16px;font-size:13px;line-height:1.7;">
+        Making Hawaiʻi more affordable and just through policy advocacy, research, and litigation.
+      </p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <a href="our-story.html">Our Story</a>
+      <a href="our-mission.html">Our Mission</a>
+      <a href="our-team.html">Our Team</a>
+      <a href="publications.html">Publications</a>
+    </div>
+    <div>
+      <h4>Get Involved</h4>
+      <a href="#">Donate</a>
+      <a href="#">Newsletter</a>
+      <a href="https://hiappleseed.org" target="_blank" rel="noopener">Main Website</a>
+    </div>
+  </div>
+  <div class="px-foot-bottom">
+    <span>© 2025 Hawaiʻi Appleseed Center for Law &amp; Economic Justice</span>
+    <span>Honolulu, Hawaiʻi</span>
+  </div>
+</footer>
+
+</body>
+</html>
