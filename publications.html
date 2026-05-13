@@ -138,30 +138,30 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 /* ===== Page hero ===== */
 .ha-pub__hero {
   background:var(--ha-charcoal);
-  padding:72px 36px 64px;
+  padding:36px 36px 32px;
   text-align:center;
 }
 .ha-pub__hero-eyebrow {
   font-family:'Poppins',sans-serif;
   text-transform:uppercase; letter-spacing:.32em; font-size:11px;
-  color:var(--ha-ash); margin-bottom:20px;
+  color:var(--ha-ash); margin-bottom:12px;
   display:flex; align-items:center; justify-content:center; gap:14px;
 }
 .ha-pub__hero-eyebrow::before,
 .ha-pub__hero-eyebrow::after { content:""; width:28px; height:1px; background:var(--ha-ash); opacity:.5; }
 .ha-pub__hero h1 {
   font-family:'Manrope',sans-serif; font-weight:700;
-  font-size:clamp(34px,5vw,60px); line-height:1.05;
+  font-size:clamp(28px,4vw,42px); line-height:1.05;
   letter-spacing:-.025em; color:var(--ha-white);
-  margin:0 0 18px;
+  margin:0 0 10px;
 }
 .ha-pub__hero-sub {
-  font-size:16px; line-height:1.65; color:rgba(202,210,197,.85);
-  max-width:50ch; margin:0 auto;
+  font-size:14px; line-height:1.6; color:rgba(202,210,197,.8);
+  max-width:54ch; margin:0 auto;
 }
 
 @media (max-width:700px) {
-  .ha-pub__hero { padding:56px 20px 48px; }
+  .ha-pub__hero { padding:28px 20px 24px; }
   .ha-pub__hero-eyebrow { font-size:10px; letter-spacing:.22em; }
 }
 
@@ -182,7 +182,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   position:relative; width:100%; max-width:480px;
 }
 .ha-pub__search {
-  width:100%; padding:11px 16px 11px 42px;
+  width:100%; padding:11px 16px;
   border:1px solid var(--ha-rule); border-radius:3px;
   font-family:'Poppins',sans-serif; font-size:14px; color:var(--ha-charcoal);
   background:var(--ha-bg); outline:none;
@@ -190,10 +190,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 .ha-pub__search:focus { border-color:var(--ha-teal-deep); background:var(--ha-white); }
 .ha-pub__search::placeholder { color:rgba(47,62,70,.4); }
-.ha-pub__search-icon {
-  position:absolute; left:13px; top:50%; transform:translateY(-50%);
-  color:rgba(47,62,70,.4); pointer-events:none;
-}
 
 /* filter pills row */
 .ha-pub__filters {
@@ -363,10 +359,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <div class="ha-pub__toolbar-inner">
 
       <div class="ha-pub__search-wrap">
-        <svg class="ha-pub__search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
-          <circle cx="6.5" cy="6.5" r="4.5"/>
-          <path d="M10.5 10.5l3 3"/>
-        </svg>
         <input
           class="ha-pub__search"
           type="search"
@@ -489,7 +481,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
   function cardHtml(item) {
     const date   = formatDate(item.publishOn);
-    const cat    = (item.categories || [])[0] || '';
+    const cats   = item.categories || [];
     const title  = item.title || 'Untitled';
     const excerpt = stripHtml(item.excerpt || '');
     const url    = item.fullUrl || '#';
@@ -504,6 +496,8 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
            </svg>
          </div>`;
 
+    const catHtml = cats.map(c => `<span class="ha-pub__card-cat">${c}</span>`).join('');
+
     return `
       <article class="ha-pub__card" role="listitem">
         <a href="${url}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
@@ -511,7 +505,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         </a>
         <div class="ha-pub__card-body">
           <div class="ha-pub__card-meta">
-            ${cat ? `<span class="ha-pub__card-cat">${cat}</span>` : ''}
+            ${catHtml}
             ${date ? `<span class="ha-pub__card-date">${date}</span>` : ''}
           </div>
           <h2 class="ha-pub__card-title">
