@@ -154,6 +154,22 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   font-size:clamp(28px,4vw,42px); line-height:1.05;
   letter-spacing:-.025em; color:var(--ha-white);
   margin:0 0 10px;
+  display:flex; justify-content:center; align-items:baseline;
+  gap:18px; flex-wrap:wrap;
+}
+.ha-pub__title-tab {
+  background:none; border:none; padding:0; cursor:pointer;
+  font:inherit; letter-spacing:inherit;
+  color:rgba(255,255,255,.32);
+  transition:color .18s;
+}
+.ha-pub__title-tab:hover { color:rgba(255,255,255,.6); }
+.ha-pub__title-tab.active {
+  color:var(--ha-white); cursor:default;
+}
+.ha-pub__title-divider {
+  color:rgba(255,255,255,.22); font-weight:400;
+  font-size:.7em;
 }
 .ha-pub__hero-sub {
   font-size:14px; line-height:1.6; color:rgba(202,210,197,.8);
@@ -163,32 +179,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 @media (max-width:700px) {
   .ha-pub__hero { padding:28px 20px 24px; }
   .ha-pub__hero-eyebrow { font-size:10px; letter-spacing:.22em; }
-}
-
-/* ===== Tab switcher ===== */
-.ha-pub__tabs {
-  background:var(--ha-white);
-  border-bottom:1px solid var(--ha-rule);
-  padding:18px 36px 0;
-  display:flex; justify-content:center; gap:0;
-}
-.ha-pub__tab {
-  background:transparent; border:none; cursor:pointer;
-  padding:14px 28px 16px;
-  font-family:'Poppins',sans-serif; font-size:14px; font-weight:500;
-  letter-spacing:.02em;
-  color:rgba(47,62,70,.5);
-  border-bottom:2px solid transparent;
-  transition:color .16s, border-color .16s;
-}
-.ha-pub__tab:hover { color:var(--ha-teal-deep); }
-.ha-pub__tab.active {
-  color:var(--ha-teal-deep); font-weight:600;
-  border-bottom-color:var(--ha-teal-deep);
-}
-@media (max-width:700px) {
-  .ha-pub__tabs { padding:12px 16px 0; }
-  .ha-pub__tab { padding:12px 18px 14px; font-size:13px; }
+  .ha-pub__hero h1 { gap:12px; }
 }
 
 /* ===== View visibility ===== */
@@ -449,15 +440,13 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <!-- Hero -->
   <header class="ha-pub__hero">
     <div class="ha-pub__hero-eyebrow" id="ha-pub-hero-eyebrow">Research &amp; Policy</div>
-    <h1 id="ha-pub-hero-title">Publications</h1>
+    <h1>
+      <button class="ha-pub__title-tab active" data-view="publications" aria-current="page">Publications</button>
+      <span class="ha-pub__title-divider" aria-hidden="true">/</span>
+      <button class="ha-pub__title-tab" data-view="data">Data</button>
+    </h1>
     <p class="ha-pub__hero-sub" id="ha-pub-hero-sub">Reports, briefs, and analyses from the Hawaiʻi Appleseed Center for Law &amp; Economic Justice.</p>
   </header>
-
-  <!-- Tab switcher -->
-  <div class="ha-pub__tabs" role="tablist" aria-label="Resource type">
-    <button class="ha-pub__tab active" data-view="publications" role="tab" aria-selected="true">Publications</button>
-    <button class="ha-pub__tab" data-view="data" role="tab" aria-selected="false">Data</button>
-  </div>
 
   <!-- ============ PUBLICATIONS VIEW ============ -->
   <section class="ha-pub__view active" id="ha-pub-view-publications" role="tabpanel">
@@ -729,24 +718,23 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     }, 220);
   });
 
-  /* ── tab switching ── */
+  /* ── tab switching (titles in hero) ── */
   const HERO_TEXT = {
     publications: {
       eyebrow: 'Research &amp; Policy',
-      title: 'Publications',
       sub: 'Reports, briefs, and analyses from the Hawaiʻi Appleseed Center for Law &amp; Economic Justice.',
     },
     data: {
       eyebrow: 'Interactive Tools',
-      title: 'Data',
       sub: 'Interactive dashboards and datasets that bring Hawaiʻi-specific economic-justice indicators to life.',
     },
   };
   function setView(view) {
-    document.querySelectorAll('.ha-pub__tab').forEach(t => {
+    document.querySelectorAll('.ha-pub__title-tab').forEach(t => {
       const isActive = t.dataset.view === view;
       t.classList.toggle('active', isActive);
-      t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      if (isActive) t.setAttribute('aria-current', 'page');
+      else t.removeAttribute('aria-current');
     });
     document.querySelectorAll('.ha-pub__view').forEach(v => {
       const isActive = v.id === 'ha-pub-view-' + view;
@@ -756,12 +744,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     const txt = HERO_TEXT[view];
     if (txt) {
       document.getElementById('ha-pub-hero-eyebrow').innerHTML = txt.eyebrow;
-      document.getElementById('ha-pub-hero-title').textContent = txt.title;
       document.getElementById('ha-pub-hero-sub').innerHTML = txt.sub;
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  document.querySelectorAll('.ha-pub__tab').forEach(t => {
+  document.querySelectorAll('.ha-pub__title-tab').forEach(t => {
     t.addEventListener('click', () => setView(t.dataset.view));
   });
 
