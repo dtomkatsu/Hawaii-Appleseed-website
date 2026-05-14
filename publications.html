@@ -298,14 +298,13 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 .ha-pub__toolbar-inner {
   max-width:1200px; margin:0 auto;
-  display:flex; flex-direction:row; align-items:flex-start; gap:24px;
+  display:flex; flex-direction:column; align-items:center; gap:14px;
 }
 
 /* search row */
 .ha-pub__search-wrap {
-  position:relative; flex:0 0 260px; order:2; margin-left:auto;
+  position:relative; width:100%; max-width:520px;
 }
-.ha-pub__filters { order:1; }
 .ha-pub__search {
   width:100%; padding:11px 16px;
   border:1px solid var(--ha-rule); border-radius:3px;
@@ -318,8 +317,8 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
 /* filter pills row */
 .ha-pub__filters {
-  display:flex; flex-wrap:wrap; gap:8px; align-items:center;
-  max-width:460px;
+  display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:center;
+  max-width:600px;
 }
 .ha-pub__filter-label {
   font-size:11px; letter-spacing:.18em; text-transform:uppercase;
@@ -346,8 +345,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
 @media (max-width:700px) {
   .ha-pub__toolbar { padding:16px 20px; top:0; }
-  .ha-pub__toolbar-inner { flex-direction:column; gap:12px; }
-  .ha-pub__search-wrap { flex:none; width:100%; }
+  .ha-pub__search-wrap { max-width:100%; }
   .ha-pub__filters { max-width:none; }
   .ha-pub__filter-label { display:none; }
 }
