@@ -194,7 +194,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   width:var(--tab-w);
   background:var(--ha-teal-deep);
   border-radius:999px;
-  transition:transform 340ms cubic-bezier(.4,0,.2,1);
+  transition:transform 340ms cubic-bezier(.4,0,.2,1), opacity 220ms ease;
   z-index:0;
   box-shadow:0 2px 14px rgba(82,121,111,.5);
 }
@@ -962,6 +962,37 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   text-decoration:none; display:inline-flex; align-items:center; gap:6px;
 }
 .ha-tax__news-link:hover { gap:9px; }
+
+/* ===== Panel close button ===== */
+.ha-tax__panel-close-wrap {
+  display:flex; justify-content:center;
+  padding:28px 0 52px;
+}
+.ha-tax button.ha-tax__panel-close {
+  display:inline-flex; align-items:center; gap:8px;
+  background:none;
+  border:1px solid rgba(53,79,82,.2);
+  border-radius:999px;
+  padding:9px 22px;
+  font-family:'Poppins',sans-serif; font-size:13px; font-weight:500;
+  color:rgba(47,62,70,.55);
+  cursor:pointer;
+  transition:color .18s, border-color .18s, background .18s;
+}
+.ha-tax button.ha-tax__panel-close:hover {
+  color:var(--ha-charcoal);
+  border-color:rgba(53,79,82,.4);
+  background:rgba(53,79,82,.04);
+}
+.ha-tax button.ha-tax__panel-close svg {
+  width:14px; height:14px;
+  stroke:currentColor; fill:none;
+  stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+  transition:transform .2s;
+}
+.ha-tax button.ha-tax__panel-close:hover svg {
+  transform:translateY(-2px);
+}
 </style>
 
 <section class="ha-tax">
@@ -990,7 +1021,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         Taxes are the engine of state government — funding healthcare, schools, housing, and the programs Hawaiʻi families rely on.
       </p>
       <div class="ha-tax__hero-actions">
-        <a class="ha-tax__hero-pill" id="ha-tax-hero-research" href="#" target="_blank" rel="noopener">
+        <a class="ha-tax__hero-pill" id="ha-tax-hero-research" href="#ha-tax-featured">
           <span class="pill-icon">
             <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
           </span>
@@ -999,7 +1030,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
             <span class="pill-title" id="ha-tax-hero-research-title">Loading…</span>
           </span>
         </a>
-        <a class="ha-tax__hero-pill" href="https://hiappleseed.org/blog" target="_blank" rel="noopener">
+        <a class="ha-tax__hero-pill" href="#ha-tax-news">
           <span class="pill-icon">
             <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8z"/></svg>
           </span>
@@ -1083,6 +1114,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         </article>
 
       </div>
+    </div>
+    <div class="ha-tax__panel-close-wrap">
+      <button class="ha-tax__panel-close" aria-label="Close section">
+        <svg viewBox="0 0 14 9"><path d="M1 8l6-7 6 7"/></svg>
+        Close
+      </button>
     </div>
   </section>
 
@@ -1232,6 +1269,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     </div>
   </section>
 
+    <div class="ha-tax__panel-close-wrap">
+      <button class="ha-tax__panel-close" aria-label="Close section">
+        <svg viewBox="0 0 14 9"><path d="M1 8l6-7 6 7"/></svg>
+        Close
+      </button>
+    </div>
   </section><!-- /#ha-tax-panel-overview -->
 
   <!-- =========== OPPORTUNITIES PANEL =========== -->
@@ -1308,6 +1351,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       </article>
     </div>
     </div>
+    <div class="ha-tax__panel-close-wrap">
+      <button class="ha-tax__panel-close" aria-label="Close section">
+        <svg viewBox="0 0 14 9"><path d="M1 8l6-7 6 7"/></svg>
+        Close
+      </button>
+    </div>
   </section><!-- /#ha-tax-panel-opportunities -->
 
   </div><!-- /.ha-tax__panels -->
@@ -1332,7 +1381,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <!-- ===================================
        LATEST BLOG / NEWS
        =================================== -->
-  <section class="ha-tax__section ha-tax__section--tight" style="background:var(--ha-bg);max-width:none;">
+  <section class="ha-tax__section ha-tax__section--tight" id="ha-tax-news" style="background:var(--ha-bg);max-width:none;">
     <div style="max-width:1200px;margin:0 auto;">
       <div class="ha-tax__section-head">
         <div class="ha-tax__eyebrow">From the blog &amp; press</div>
@@ -1489,10 +1538,8 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       const fUrl = f.fullUrl ? 'https://hiappleseed.org' + f.fullUrl : '#';
       const fImg = f.assetUrl ? `${f.assetUrl}?format=900w` : '';
 
-      // Hero research pill
-      const heroPill = document.getElementById('ha-tax-hero-research');
+      // Hero research pill — update title only; href stays as #ha-tax-featured scroll anchor
       const heroPillTitle = document.getElementById('ha-tax-hero-research-title');
-      if (heroPill) heroPill.href = fUrl;
       if (heroPillTitle) heroPillTitle.textContent = f.title || 'Untitled';
       document.getElementById('ha-tax-featured').innerHTML = `
         <div class="ha-tax__featured-pub-thumb">${fImg ? `<img src="${fImg}" alt="">` : ''}</div>
@@ -1538,6 +1585,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     let pieInitialized = false;
 
     function setTab(name) {
+      if (indicator) indicator.style.opacity = '1';
       tabs.forEach((t, i) => {
         const active = t.dataset.panel === name;
         t.classList.toggle('active', active);
@@ -1557,8 +1605,35 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       }
     }
 
+    function closeAll() {
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      panels.forEach(p => {
+        p.classList.remove('active');
+        p.setAttribute('hidden', '');
+      });
+      if (indicator) indicator.style.opacity = '0';
+    }
+
     tabs.forEach(t => {
-      t.addEventListener('click', () => setTab(t.dataset.panel));
+      t.addEventListener('click', () => {
+        // Clicking the already-active tab closes the panel
+        if (t.classList.contains('active')) {
+          closeAll();
+        } else {
+          setTab(t.dataset.panel);
+        }
+      });
+    });
+
+    document.querySelectorAll('.ha-tax__panel-close').forEach(btn => {
+      btn.addEventListener('click', () => {
+        closeAll();
+        // Scroll smoothly back up to the tab bar
+        document.querySelector('.ha-tax__tab-bar').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
     });
 
     // Position indicator on initial active tab + window resize
