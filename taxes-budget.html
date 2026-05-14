@@ -155,7 +155,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-tax__hero h1 {
   font-family:'Manrope',sans-serif; font-weight:800;
   font-size:78px; line-height:1; letter-spacing:-.035em;
-  margin:0 0 30px;
+  margin:0 0 22px;
   color:#fff;
 }
 .ha-tax__hero h1 .ha-tax__hero-amp {
@@ -164,21 +164,17 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   letter-spacing:-.025em;
   margin-left:.12em;
 }
-.ha-tax__hero-sub-wrap {
-  display:inline-flex; align-items:stretch; gap:18px;
-  max-width:640px; width:100%;
-  text-align:left;
-  margin:0 auto 26px;
-}
-.ha-tax__hero-sub-bar {
-  width:3px; flex:none;
+.ha-tax__hero-rule {
+  width:56px; height:3px;
   background:var(--ha-teal);
   border-radius:2px;
+  margin:0 auto 22px;
 }
 .ha-tax__hero-sub {
-  font-size:17px; line-height:1.55;
+  font-size:17px; line-height:1.6;
   color:rgba(202,210,197,.86);
-  margin:0; flex:1; min-width:0;
+  max-width:600px; margin:0 auto 28px;
+  text-align:center;
 }
 
 /* ===== Tab bar (extends hero, dark) ===== */
@@ -225,8 +221,8 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-tax button.ha-tax__tab:not(.active):hover { color:rgba(255,255,255,.92); }
 
 .ha-tax__hero-actions {
-  display:flex; gap:10px; justify-content:center; align-items:stretch;
-  flex-wrap:wrap; margin-top:6px;
+  display:flex; justify-content:center;
+  margin-top:4px;
 }
 .ha-tax a.ha-tax__hero-subscribe {
   position:absolute; top:18px; right:24px;
@@ -249,34 +245,29 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-tax a.ha-tax__hero-subscribe svg { width:13px; height:13px; opacity:.8; }
 
 .ha-tax a.ha-tax__hero-pill {
-  display:inline-flex; align-items:center; gap:10px;
-  padding:11px 22px 11px 14px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.18);
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 18px 8px 14px;
+  background:transparent;
+  border:1px solid rgba(202,210,197,.28);
   border-radius:999px;
   font-family:'Poppins',sans-serif;
-  color:#fff; text-decoration:none;
-  transition:background .18s, border-color .18s, transform .18s;
+  font-size:13px; font-weight:500;
+  letter-spacing:.02em;
+  color:rgba(202,210,197,.85);
+  text-decoration:none;
+  transition:color .18s, border-color .18s, background .18s, gap .18s;
 }
 .ha-tax a.ha-tax__hero-pill:hover {
-  background:rgba(255,255,255,.12);
-  border-color:rgba(255,255,255,.36);
-  transform:translateY(-1px);
+  color:#fff;
+  border-color:rgba(202,210,197,.55);
+  background:rgba(255,255,255,.05);
+  gap:10px;
 }
-.ha-tax a.ha-tax__hero-pill .pill-icon {
-  width:28px; height:28px; flex:none;
-  background:rgba(132,169,140,.22);
-  border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-}
-.ha-tax a.ha-tax__hero-pill .pill-icon svg {
-  width:14px; height:14px; stroke:#fff; opacity:.95;
-  fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;
-}
-.ha-tax a.ha-tax__hero-pill .pill-label {
-  font-weight:600; font-size:13.5px; line-height:1;
-  letter-spacing:.01em; color:#fff;
-  white-space:nowrap;
+.ha-tax a.ha-tax__hero-pill svg {
+  width:13px; height:13px;
+  fill:none; stroke:currentColor;
+  stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;
+  opacity:.85;
 }
 
 /* Back to Issues link (top-left of hero) */
@@ -540,8 +531,8 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
 @media (max-width:700px) {
   .ha-tax__hero { padding:56px 20px 48px; }
-  .ha-tax__hero h1 { font-size:48px; letter-spacing:-.03em; margin-bottom:22px; }
-  .ha-tax__hero-sub-wrap { gap:14px; }
+  .ha-tax__hero h1 { font-size:48px; letter-spacing:-.03em; margin-bottom:18px; }
+  .ha-tax__hero-rule { margin-bottom:18px; }
   .ha-tax__hero-sub { font-size:15px; }
   .ha-tax__vision { padding:56px 20px 56px; }
   .ha-tax__vision h2 { font-size:28px; }
@@ -847,163 +838,159 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 .ha-tax__priority-bill:hover { background:rgba(82,121,111,.2); }
 
-/* ===== Publication card grid (unified) ===== */
-.ha-tax__pub-grid {
-  display:grid; grid-template-columns:repeat(4, 1fr);
-  gap:22px;
-  max-width:1200px; margin:0 auto;
-}
-@media (max-width:1024px) {
-  .ha-tax__pub-grid { grid-template-columns:repeat(2, 1fr); gap:20px; }
-}
-@media (max-width:600px) {
-  .ha-tax__pub-grid { grid-template-columns:1fr; gap:18px; }
-}
-.ha-tax a.ha-tax__pub-card,
-.ha-tax__pub-card {
-  position:relative;
-  background:#fff; border:1px solid var(--ha-rule);
-  border-radius:6px; overflow:hidden;
-  display:flex; flex-direction:column;
-  text-decoration:none; color:inherit;
-  transition:transform .2s, box-shadow .2s, border-color .2s;
-}
-.ha-tax a.ha-tax__pub-card:hover,
-.ha-tax__pub-card:hover {
-  transform:translateY(-3px);
-  box-shadow:0 12px 32px rgba(47,62,70,.10);
-  border-color:rgba(82,121,111,.32);
-}
-.ha-tax__pub-card-thumb {
-  aspect-ratio:4/3;
-  background:var(--ha-bg);
-  overflow:hidden;
-  position:relative;
-}
-.ha-tax__pub-card-thumb img {
-  width:100%; height:100%; object-fit:cover;
-  transition:transform .35s;
-}
-.ha-tax__pub-card:hover .ha-tax__pub-card-thumb img { transform:scale(1.04); }
-.ha-tax__pub-card-badge {
-  position:absolute; top:12px; left:12px; z-index:1;
-  display:inline-flex; align-items:center; gap:5px;
-  background:var(--ha-teal-deep); color:#fff;
-  padding:5px 11px; border-radius:999px;
-  font-family:'Manrope',sans-serif; font-size:10.5px; font-weight:700;
-  letter-spacing:.14em; text-transform:uppercase;
-  box-shadow:0 4px 12px rgba(47,62,70,.18);
-}
-.ha-tax__pub-card-badge::before {
-  content:""; width:6px; height:6px; border-radius:50%;
-  background:#fff;
-}
-.ha-tax__pub-card-body {
-  padding:20px 22px 22px;
-  display:flex; flex-direction:column; gap:10px; flex:1;
-}
-.ha-tax__pub-card-meta {
-  font-size:11px; font-weight:600;
-  color:var(--ha-teal-deep);
-  letter-spacing:.14em; text-transform:uppercase;
-  line-height:1;
-}
-.ha-tax__pub-card-title {
-  font-family:'Manrope',sans-serif; font-weight:700;
-  font-size:16.5px; line-height:1.32; letter-spacing:-.005em;
-  color:var(--ha-charcoal); margin:0;
-}
-.ha-tax__pub-card-link {
-  margin-top:auto; padding-top:10px;
-  font-size:13px; font-weight:600; color:var(--ha-teal-deep);
-  display:inline-flex; align-items:center; gap:5px;
-  transition:gap .18s;
-}
-.ha-tax__pub-card:hover .ha-tax__pub-card-link { gap:8px; }
-
-/* ===== News strip (editorial / typographic) ===== */
-.ha-tax__news-grid {
+/* ===== Combined Research & News (two-column hybrid) ===== */
+.ha-tax__combined {
   display:grid; grid-template-columns:1fr 1fr;
-  gap:0;
+  gap:64px;
   max-width:1200px; margin:0 auto;
-  border-top:1px solid rgba(53,79,82,.18);
-  border-bottom:1px solid rgba(53,79,82,.18);
 }
-@media (max-width:800px) {
-  .ha-tax__news-grid { grid-template-columns:1fr; }
+@media (max-width:900px) {
+  .ha-tax__combined { grid-template-columns:1fr; gap:56px; }
 }
-.ha-tax__news-clipping {
-  padding:44px 40px;
-  display:flex; flex-direction:column;
-  position:relative;
-}
-.ha-tax__news-clipping + .ha-tax__news-clipping {
-  border-left:1px solid rgba(53,79,82,.18);
-}
-@media (max-width:800px) {
-  .ha-tax__news-clipping { padding:36px 24px; }
-  .ha-tax__news-clipping + .ha-tax__news-clipping {
-    border-left:none; border-top:1px solid rgba(53,79,82,.18);
-  }
-}
-.ha-tax__news-source {
-  display:inline-flex; align-items:center; gap:12px;
+.ha-tax__combined-col-head {
+  display:flex; align-items:center; gap:14px;
   font-family:'Manrope',sans-serif; font-size:11px; font-weight:700;
   letter-spacing:.24em; text-transform:uppercase;
   color:var(--ha-teal-deep);
-  margin-bottom:24px;
+  margin-bottom:6px;
 }
-.ha-tax__news-source::after {
-  content:""; flex:1; height:1px; background:rgba(82,121,111,.35);
+.ha-tax__combined-col-head::after {
+  content:""; flex:1; height:1px; background:rgba(82,121,111,.32);
+}
+
+/* ----- Publications list (left column) ----- */
+.ha-tax__pub-list { display:flex; flex-direction:column; }
+.ha-tax a.ha-tax__pub-list-item {
+  position:relative;
+  display:grid; grid-template-columns:96px 1fr;
+  gap:20px; align-items:center;
+  padding:22px 0;
+  border-bottom:1px solid var(--ha-rule);
+  text-decoration:none; color:inherit;
+  transition:padding .2s;
+}
+.ha-tax a.ha-tax__pub-list-item:last-child { border-bottom:none; }
+.ha-tax a.ha-tax__pub-list-item:hover { padding-left:8px; }
+.ha-tax__pub-list-thumb {
+  aspect-ratio:1/1; flex:none;
+  background:var(--ha-bg);
+  border-radius:4px; overflow:hidden;
+  position:relative;
+}
+.ha-tax__pub-list-thumb img {
+  width:100%; height:100%; object-fit:cover;
+  transition:transform .35s;
+}
+.ha-tax a.ha-tax__pub-list-item:hover .ha-tax__pub-list-thumb img { transform:scale(1.05); }
+.ha-tax__pub-list-badge {
+  position:absolute; top:6px; left:6px;
+  display:inline-flex; align-items:center; gap:4px;
+  background:var(--ha-teal-deep); color:#fff;
+  padding:3px 7px; border-radius:999px;
+  font-family:'Manrope',sans-serif; font-size:8.5px; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase;
+  box-shadow:0 3px 10px rgba(47,62,70,.22);
+}
+.ha-tax__pub-list-badge::before {
+  content:""; width:4px; height:4px; border-radius:50%; background:#fff;
+}
+.ha-tax__pub-list-body {
+  display:flex; flex-direction:column; gap:6px; min-width:0;
+}
+.ha-tax__pub-list-meta {
+  font-family:'Manrope',sans-serif;
+  font-size:10.5px; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ha-teal-deep);
+  line-height:1;
+}
+.ha-tax__pub-list-title {
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:15.5px; line-height:1.34; letter-spacing:-.005em;
+  color:var(--ha-charcoal); margin:0;
+  transition:color .18s;
+}
+.ha-tax a.ha-tax__pub-list-item:hover .ha-tax__pub-list-title {
+  color:var(--ha-teal-deep);
+}
+.ha-tax__pub-list-all {
+  margin-top:18px;
+  font-family:'Manrope',sans-serif; font-size:12.5px; font-weight:700;
+  letter-spacing:.06em;
+  color:var(--ha-teal-deep);
+  display:inline-flex; align-items:center; gap:6px;
+  text-decoration:none;
+  align-self:flex-start;
+  padding-bottom:2px;
+  border-bottom:1px solid rgba(82,121,111,.3);
+  transition:gap .18s, color .18s, border-color .18s;
+}
+.ha-tax__pub-list-all:hover { gap:10px; color:var(--ha-charcoal); border-bottom-color:var(--ha-charcoal); }
+
+/* ----- News clippings (right column, editorial) ----- */
+.ha-tax__news-stack { display:flex; flex-direction:column; }
+.ha-tax__news-clipping {
+  padding:22px 0;
+  border-bottom:1px solid var(--ha-rule);
+  display:flex; flex-direction:column;
+}
+.ha-tax__news-clipping:last-child { border-bottom:none; }
+.ha-tax__news-clipping:first-child { padding-top:0; }
+.ha-tax__news-source {
+  display:flex; align-items:center; gap:10px;
+  font-family:'Manrope',sans-serif; font-size:10.5px; font-weight:700;
+  letter-spacing:.2em; text-transform:uppercase;
+  color:var(--ha-teal-deep);
+  margin-bottom:10px;
+}
+.ha-tax__news-source-tag {
+  background:rgba(82,121,111,.12);
+  color:var(--ha-teal-deep);
+  padding:3px 8px; border-radius:3px;
+  font-size:9.5px; letter-spacing:.16em;
 }
 .ha-tax__news-title {
   font-family:'Manrope',sans-serif; font-weight:800;
-  font-size:28px; line-height:1.18; letter-spacing:-.015em;
-  color:var(--ha-charcoal); margin:0 0 18px;
-}
-@media (max-width:700px) {
-  .ha-tax__news-title { font-size:22px; }
+  font-size:20px; line-height:1.22; letter-spacing:-.01em;
+  color:var(--ha-charcoal); margin:0 0 12px;
 }
 .ha-tax__news-excerpt {
   font-family:'Fraunces',serif; font-style:italic; font-weight:400;
-  font-size:17px; line-height:1.55;
+  font-size:15px; line-height:1.55;
   color:rgba(47,62,70,.78);
-  margin:0 0 28px;
+  margin:0 0 14px;
   position:relative;
-  padding-left:18px;
+  padding-left:14px;
 }
 .ha-tax__news-excerpt::before {
   content:""; position:absolute;
-  left:0; top:6px; bottom:6px;
+  left:0; top:4px; bottom:4px;
   width:2px; background:var(--ha-teal);
 }
 .ha-tax__news-byline {
-  font-family:'Manrope',sans-serif; font-size:12px; font-weight:600;
-  letter-spacing:.05em; color:rgba(47,62,70,.55);
-  margin-bottom:14px;
+  font-family:'Manrope',sans-serif; font-size:11.5px; font-weight:600;
+  letter-spacing:.04em; color:rgba(47,62,70,.55);
+  margin-bottom:12px;
 }
-.ha-tax__news-byline strong {
-  color:var(--ha-charcoal); font-weight:700;
-}
+.ha-tax__news-byline strong { color:var(--ha-charcoal); font-weight:700; }
 .ha-tax__news-byline-sep {
-  display:inline-block; width:14px; height:1px;
+  display:inline-block; width:12px; height:1px;
   background:rgba(47,62,70,.4);
   vertical-align:middle; margin:0 6px;
 }
 .ha-tax__news-link {
-  margin-top:auto;
   font-family:'Manrope',sans-serif;
-  font-size:13.5px; font-weight:700; color:var(--ha-teal-deep);
+  font-size:12.5px; font-weight:700; color:var(--ha-teal-deep);
   letter-spacing:.04em;
   text-decoration:none;
-  display:inline-flex; align-items:center; gap:8px;
-  transition:gap .18s, color .18s;
+  display:inline-flex; align-items:center; gap:7px;
+  transition:gap .18s, color .18s, border-color .18s;
   align-self:flex-start;
   padding-bottom:2px;
-  border-bottom:1px solid rgba(82,121,111,.35);
+  border-bottom:1px solid rgba(82,121,111,.3);
 }
-.ha-tax__news-link:hover { gap:12px; color:var(--ha-charcoal); border-bottom-color:var(--ha-charcoal); }
-.ha-tax__news-link svg { width:14px; height:14px; }
+.ha-tax__news-link:hover { gap:10px; color:var(--ha-charcoal); border-bottom-color:var(--ha-charcoal); }
+.ha-tax__news-link svg { width:13px; height:13px; }
 
 /* ===== Panel close button ===== */
 .ha-tax__panel-close-wrap {
@@ -1058,24 +1045,14 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     </a>
     <div class="ha-tax__hero-inner">
       <h1>Taxes <span class="ha-tax__hero-amp">&amp; Budget</span></h1>
-      <div class="ha-tax__hero-sub-wrap">
-        <span class="ha-tax__hero-sub-bar" aria-hidden="true"></span>
-        <p class="ha-tax__hero-sub">
-          The engine that funds healthcare, schools, housing — and the programs Hawaiʻi families rely on.
-        </p>
-      </div>
+      <div class="ha-tax__hero-rule" aria-hidden="true"></div>
+      <p class="ha-tax__hero-sub">
+        The engine that funds healthcare, schools, housing — and the programs Hawaiʻi families rely on.
+      </p>
       <div class="ha-tax__hero-actions">
-        <a class="ha-tax__hero-pill" href="#ha-tax-featured">
-          <span class="pill-icon">
-            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
-          </span>
-          <span class="pill-label">Research</span>
-        </a>
-        <a class="ha-tax__hero-pill" href="#ha-tax-news">
-          <span class="pill-icon">
-            <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8z"/></svg>
-          </span>
-          <span class="pill-label">News</span>
+        <a class="ha-tax__hero-pill" href="#ha-tax-research-news">
+          Research &amp; News
+          <svg viewBox="0 0 14 14"><path d="M7 2v10M2 7l5 5 5-5"/></svg>
         </a>
       </div>
     </div>
@@ -1400,65 +1377,74 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   </div><!-- /.ha-tax__panels -->
 
   <!-- ===================================
-       LATEST RESEARCH
+       RESEARCH & NEWS (combined two-column)
        =================================== -->
-  <section class="ha-tax__section" id="ha-tax-featured">
+  <section class="ha-tax__section" id="ha-tax-research-news">
     <div class="ha-tax__section-head">
-      <div class="ha-tax__eyebrow">Publications</div>
-      <h2 class="ha-tax__h2">Our latest research</h2>
+      <div class="ha-tax__eyebrow">Stay informed</div>
+      <h2 class="ha-tax__h2">Research &amp; News</h2>
       <div class="ha-tax__h2-rule"></div>
       <p class="ha-tax__lede">
-        Reports, fact sheets, and analyses from our Taxes &amp; Budget team.
+        Reports from our Taxes &amp; Budget team, plus news coverage and analysis from around Hawaiʻi.
       </p>
     </div>
-    <div class="ha-tax__pub-grid" id="ha-tax-pubs">
-      <!-- Filled in by JS once publications.json loads -->
-    </div>
-  </section>
 
-  <!-- ===================================
-       LATEST BLOG / NEWS
-       =================================== -->
-  <section class="ha-tax__section ha-tax__section--tight" id="ha-tax-news" style="background:var(--ha-bg);max-width:none;">
-    <div style="max-width:1200px;margin:0 auto;">
-      <div class="ha-tax__section-head">
-        <div class="ha-tax__eyebrow">From the blog &amp; press</div>
-        <h2 class="ha-tax__h2">In the news</h2>
-        <div class="ha-tax__h2-rule"></div>
+    <div class="ha-tax__combined">
+      <!-- LEFT: Publications -->
+      <div>
+        <div class="ha-tax__combined-col-head">Publications</div>
+        <div class="ha-tax__pub-list" id="ha-tax-pubs">
+          <!-- Filled in by JS once publications.json loads -->
+        </div>
+        <a class="ha-tax__pub-list-all" href="publications.html?cat=Taxes+%26+Budget">
+          See all publications
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+        </a>
       </div>
-      <div class="ha-tax__news-grid">
-        <article class="ha-tax__news-clipping">
-          <div class="ha-tax__news-source">Hawaiʻi Appleseed Blog</div>
-          <h3 class="ha-tax__news-title">Highlights from House Bill 1800</h3>
-          <p class="ha-tax__news-excerpt">
-            The single most consequential bill of the 2026 session — what's in the House budget proposal, what's missing, and where the conference committee may take it next.
-          </p>
-          <div class="ha-tax__news-byline">
-            April 17, 2026
-            <span class="ha-tax__news-byline-sep"></span>
-            By <strong>Devin Thomas</strong>
-          </div>
-          <a class="ha-tax__news-link" href="https://hiappleseed.org/blog" target="_blank" rel="noopener">
-            Read the full post
-            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
-          </a>
-        </article>
-        <article class="ha-tax__news-clipping">
-          <div class="ha-tax__news-source">Honolulu Civil Beat</div>
-          <h3 class="ha-tax__news-title">The Sunshine Blog</h3>
-          <p class="ha-tax__news-excerpt">
-            Coverage of Hawaiʻi Appleseed's analysis of the legislature's tax proposals and the trade-offs facing lawmakers as they finalize the FY26–27 budget.
-          </p>
-          <div class="ha-tax__news-byline">
-            April 26, 2026
-            <span class="ha-tax__news-byline-sep"></span>
-            In the <strong>Press</strong>
-          </div>
-          <a class="ha-tax__news-link" href="https://www.civilbeat.org" target="_blank" rel="noopener">
-            Read on Civil Beat
-            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
-          </a>
-        </article>
+
+      <!-- RIGHT: Press & Blog -->
+      <div>
+        <div class="ha-tax__combined-col-head">Press &amp; Blog</div>
+        <div class="ha-tax__news-stack">
+          <article class="ha-tax__news-clipping">
+            <div class="ha-tax__news-source">
+              <span class="ha-tax__news-source-tag">Blog</span>
+              Hawaiʻi Appleseed
+            </div>
+            <h3 class="ha-tax__news-title">Highlights from House Bill 1800</h3>
+            <p class="ha-tax__news-excerpt">
+              The single most consequential bill of the 2026 session — what's in the House budget proposal, what's missing, and where the conference committee may take it next.
+            </p>
+            <div class="ha-tax__news-byline">
+              April 17, 2026
+              <span class="ha-tax__news-byline-sep"></span>
+              By <strong>Devin Thomas</strong>
+            </div>
+            <a class="ha-tax__news-link" href="https://hiappleseed.org/blog" target="_blank" rel="noopener">
+              Read the full post
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+            </a>
+          </article>
+          <article class="ha-tax__news-clipping">
+            <div class="ha-tax__news-source">
+              <span class="ha-tax__news-source-tag">Press</span>
+              Honolulu Civil Beat
+            </div>
+            <h3 class="ha-tax__news-title">The Sunshine Blog</h3>
+            <p class="ha-tax__news-excerpt">
+              Coverage of Hawaiʻi Appleseed's analysis of the legislature's tax proposals and the trade-offs facing lawmakers as they finalize the FY26–27 budget.
+            </p>
+            <div class="ha-tax__news-byline">
+              April 26, 2026
+              <span class="ha-tax__news-byline-sep"></span>
+              <strong>Honolulu Civil Beat</strong>
+            </div>
+            <a class="ha-tax__news-link" href="https://www.civilbeat.org" target="_blank" rel="noopener">
+              Read on Civil Beat
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+            </a>
+          </article>
+        </div>
       </div>
     </div>
   </section>
@@ -1573,22 +1559,21 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
       if (!items.length) return;
 
-      // Single unified grid: 4 most-recent publications, first marked "Latest"
+      // Vertical list: 3 most-recent publications, first marked "Latest"
       const grid = document.getElementById('ha-tax-pubs');
-      grid.innerHTML = items.slice(0, 4).map((i, idx) => {
+      grid.innerHTML = items.slice(0, 3).map((i, idx) => {
         const url = i.fullUrl ? 'https://hiappleseed.org' + i.fullUrl : '#';
-        const img = i.assetUrl ? `${i.assetUrl}?format=500w` : '';
-        const badge = idx === 0 ? `<span class="ha-tax__pub-card-badge">Latest</span>` : '';
+        const img = i.assetUrl ? `${i.assetUrl}?format=300w` : '';
+        const badge = idx === 0 ? `<span class="ha-tax__pub-list-badge">Latest</span>` : '';
         return `
-          <a class="ha-tax__pub-card" href="${url}" target="_blank" rel="noopener">
-            <div class="ha-tax__pub-card-thumb">
+          <a class="ha-tax__pub-list-item" href="${url}" target="_blank" rel="noopener">
+            <div class="ha-tax__pub-list-thumb">
               ${badge}
               ${img ? `<img src="${img}" alt="">` : ''}
             </div>
-            <div class="ha-tax__pub-card-body">
-              <div class="ha-tax__pub-card-meta">${formatDate(i.publishOn)}</div>
-              <h3 class="ha-tax__pub-card-title">${i.title || 'Untitled'}</h3>
-              <span class="ha-tax__pub-card-link">Read publication →</span>
+            <div class="ha-tax__pub-list-body">
+              <div class="ha-tax__pub-list-meta">${formatDate(i.publishOn)}</div>
+              <h3 class="ha-tax__pub-list-title">${i.title || 'Untitled'}</h3>
             </div>
           </a>
         `;
