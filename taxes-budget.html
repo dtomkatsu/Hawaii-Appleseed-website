@@ -212,10 +212,13 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-tax button.ha-tax__tab.active { color:#fff; cursor:default; }
 .ha-tax button.ha-tax__tab:not(.active):hover { color:rgba(255,255,255,.92); }
 
+.ha-tax__hero-actions {
+  display:flex; gap:10px; justify-content:center; align-items:stretch;
+  flex-wrap:wrap; margin-top:6px;
+}
 .ha-tax a.ha-tax__hero-subscribe {
   display:inline-flex; align-items:center; gap:7px;
-  margin-top:6px;
-  padding:7px 14px;
+  padding:9px 16px;
   background:transparent;
   border:1px solid rgba(202,210,197,.28);
   border-radius:999px;
@@ -229,6 +232,77 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   background:rgba(255,255,255,.05);
 }
 .ha-tax a.ha-tax__hero-subscribe svg { width:13px; height:13px; opacity:.8; }
+
+.ha-tax a.ha-tax__hero-pill {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:9px 16px 9px 12px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;
+  font-family:'Poppins',sans-serif; font-size:12.5px;
+  color:#fff; text-decoration:none;
+  max-width:300px;
+  transition:background .18s, border-color .18s, transform .18s;
+}
+.ha-tax a.ha-tax__hero-pill:hover {
+  background:rgba(255,255,255,.12);
+  border-color:rgba(255,255,255,.36);
+  transform:translateY(-1px);
+}
+.ha-tax a.ha-tax__hero-pill .pill-icon {
+  width:26px; height:26px; flex:none;
+  background:rgba(132,169,140,.22);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+.ha-tax a.ha-tax__hero-pill .pill-icon svg {
+  width:13px; height:13px; stroke:#fff; opacity:.95;
+  fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;
+}
+.ha-tax a.ha-tax__hero-pill .pill-text {
+  display:flex; flex-direction:column; align-items:flex-start; min-width:0;
+}
+.ha-tax a.ha-tax__hero-pill .pill-eyebrow {
+  font-size:10px; font-weight:700;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:rgba(202,210,197,.78); line-height:1;
+  margin-bottom:3px;
+}
+.ha-tax a.ha-tax__hero-pill .pill-title {
+  font-weight:600; font-size:13px; line-height:1.2;
+  color:#fff;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  max-width:200px;
+}
+
+/* Back to Issues link (top-left of hero) */
+.ha-tax a.ha-tax__back {
+  position:absolute; top:18px; left:24px;
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:'Poppins',sans-serif; font-size:12.5px; font-weight:500;
+  letter-spacing:.02em;
+  color:rgba(202,210,197,.72);
+  text-decoration:none;
+  padding:6px 12px 6px 8px;
+  border:1px solid rgba(202,210,197,.18);
+  border-radius:999px;
+  transition:color .18s, border-color .18s, background .18s, gap .18s;
+  z-index:3;
+}
+.ha-tax a.ha-tax__back:hover {
+  color:#fff; border-color:rgba(202,210,197,.5);
+  background:rgba(255,255,255,.05); gap:8px;
+}
+.ha-tax a.ha-tax__back svg {
+  width:14px; height:14px;
+  fill:none; stroke:currentColor; stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round;
+}
+
+@media (max-width:700px) {
+  .ha-tax a.ha-tax__back { top:12px; left:14px; font-size:11.5px; padding:5px 10px 5px 7px; }
+  .ha-tax a.ha-tax__hero-pill .pill-title { max-width:140px; }
+}
 
 @media (max-width:700px) {
   .ha-tax__tabs { --tab-w: 105px; flex-wrap:nowrap; }
@@ -917,19 +991,41 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 <section class="ha-tax">
 
   <!-- ===================================
-       HERO (compact: eyebrow + title + intro)
+       HERO (compact: eyebrow + title + intro + quick-pills)
        =================================== -->
   <header class="ha-tax__hero" id="ha-tax-hero">
+    <a class="ha-tax__back" href="issues.html" aria-label="Back to Issues">
+      <svg viewBox="0 0 14 14"><path d="M9 2l-5 5 5 5"/></svg>
+      Back to Issues
+    </a>
     <div class="ha-tax__hero-inner">
       <div class="ha-tax__hero-eyebrow">Issues · Taxes &amp; Budget</div>
       <h1>How Hawaiʻi funds <br>our shared future.</h1>
       <p class="ha-tax__hero-sub">
         Taxes are the engine of state government — funding healthcare, schools, housing, and the programs Hawaiʻi families rely on.
       </p>
-      <div>
+      <div class="ha-tax__hero-actions">
+        <a class="ha-tax__hero-pill" id="ha-tax-hero-research" href="#" target="_blank" rel="noopener">
+          <span class="pill-icon">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+          </span>
+          <span class="pill-text">
+            <span class="pill-eyebrow">Latest Research</span>
+            <span class="pill-title" id="ha-tax-hero-research-title">Loading…</span>
+          </span>
+        </a>
+        <a class="ha-tax__hero-pill" href="https://hiappleseed.org/blog" target="_blank" rel="noopener">
+          <span class="pill-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8z"/></svg>
+          </span>
+          <span class="pill-text">
+            <span class="pill-eyebrow">In the News</span>
+            <span class="pill-title">HB 1800 highlights</span>
+          </span>
+        </a>
         <a class="ha-tax__hero-subscribe" href="https://www.quorum.us/grassroots-action/signup/Hawaii-Appleseed-Center-for-Law-and-Economic-Justice/" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><polyline points="22,6 12,13 2,6"/></svg>
-          Get tax &amp; budget alerts
+          Get alerts
         </a>
       </div>
     </div>
@@ -1236,37 +1332,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   </div><!-- /.ha-tax__panels -->
 
   <!-- ===================================
-       HUB STRIP — Latest Research / In the News
-       =================================== -->
-  <section class="ha-tax__hub" aria-label="Quick access">
-    <a class="ha-tax__hub-card" id="ha-tax-hub-research" href="#" target="_blank" rel="noopener">
-      <div class="ha-tax__hub-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
-      </div>
-      <div class="ha-tax__hub-card-eyebrow">Latest Research</div>
-      <h3 class="ha-tax__hub-card-title" id="ha-tax-hub-research-title">Loading featured research…</h3>
-      <p class="ha-tax__hub-card-meta" id="ha-tax-hub-research-meta">&nbsp;</p>
-      <span class="ha-tax__hub-card-link">
-        Read publication
-        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
-      </span>
-    </a>
-
-    <a class="ha-tax__hub-card" href="https://hiappleseed.org/blog" target="_blank" rel="noopener">
-      <div class="ha-tax__hub-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8z"/></svg>
-      </div>
-      <div class="ha-tax__hub-card-eyebrow">In the News</div>
-      <h3 class="ha-tax__hub-card-title">Highlights from House Bill 1800</h3>
-      <p class="ha-tax__hub-card-meta">Apr 17, 2026 · The single most consequential bill of the session.</p>
-      <span class="ha-tax__hub-card-link">
-        Read on the blog
-        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
-      </span>
-    </a>
-  </section>
-
-  <!-- ===================================
        CTA STRIP
        =================================== -->
   <section class="ha-tax__cta-strip">
@@ -1461,13 +1526,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       const fUrl = f.fullUrl ? 'https://hiappleseed.org' + f.fullUrl : '#';
       const fImg = f.assetUrl ? `${f.assetUrl}?format=900w` : '';
 
-      // Hub research card
-      const hubCard = document.getElementById('ha-tax-hub-research');
-      const hubTitle = document.getElementById('ha-tax-hub-research-title');
-      const hubMeta = document.getElementById('ha-tax-hub-research-meta');
-      if (hubCard) hubCard.href = fUrl;
-      if (hubTitle) hubTitle.textContent = f.title || 'Untitled';
-      if (hubMeta) hubMeta.textContent = `${formatDate(f.publishOn)}${f.author ? ' · By ' + f.author : ''}`;
+      // Hero research pill
+      const heroPill = document.getElementById('ha-tax-hero-research');
+      const heroPillTitle = document.getElementById('ha-tax-hero-research-title');
+      if (heroPill) heroPill.href = fUrl;
+      if (heroPillTitle) heroPillTitle.textContent = f.title || 'Untitled';
       document.getElementById('ha-tax-featured').innerHTML = `
         <div class="ha-tax__featured-pub-thumb">${fImg ? `<img src="${fImg}" alt="">` : ''}</div>
         <div class="ha-tax__featured-pub-body">
