@@ -184,12 +184,62 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-tax__hero.is-open button.ha-tax__expand-btn .lbl-open { display:inline; }
 .ha-tax__hero.is-open button.ha-tax__expand-btn .lbl-closed { display:none; }
 
+.ha-tax a.ha-tax__hero-subscribe {
+  display:inline-flex; align-items:center; gap:7px;
+  margin-top:14px;
+  padding:7px 14px;
+  background:transparent;
+  border:1px solid rgba(202,210,197,.32);
+  border-radius:999px;
+  font-size:12.5px; font-weight:500;
+  color:rgba(202,210,197,.85);
+  text-decoration:none;
+  transition:color .18s, border-color .18s, background .18s;
+}
+.ha-tax a.ha-tax__hero-subscribe:hover {
+  color:#fff; border-color:rgba(202,210,197,.6);
+  background:rgba(255,255,255,.06);
+}
+.ha-tax a.ha-tax__hero-subscribe svg { width:13px; height:13px; opacity:.8; }
+
+/* ===== Hero mini-spark (preview of the explainer) ===== */
+.ha-tax__spark {
+  max-width:300px; margin:30px auto 24px;
+}
+.ha-tax__spark-label {
+  font-size:10.5px; font-weight:600;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(202,210,197,.6);
+  text-align:center; margin-bottom:10px;
+}
+.ha-tax__spark-bars {
+  display:grid; grid-template-columns:repeat(5, 1fr);
+  gap:6px; align-items:end;
+  height:54px;
+  border-bottom:1px solid rgba(202,210,197,.22);
+  padding-bottom:2px;
+}
+.ha-tax__spark-bars div {
+  background:rgba(132,169,140,.7);
+  border-radius:2px 2px 0 0;
+  transition:background .25s;
+}
+.ha-tax__spark-bars div:last-child { background:rgba(132,169,140,.32); }
+.ha-tax__hero:hover .ha-tax__spark-bars div { background:rgba(132,169,140,.85); }
+.ha-tax__hero:hover .ha-tax__spark-bars div:last-child { background:rgba(132,169,140,.45); }
+.ha-tax__spark-axis {
+  display:flex; justify-content:space-between;
+  margin-top:6px;
+  font-size:10px; color:rgba(202,210,197,.5);
+  letter-spacing:.04em;
+}
+
 /* ===== Hub strip (3-up command center under hero) ===== */
 .ha-tax__hub {
-  max-width:1200px;
+  max-width:960px;
   margin:-44px auto 0;
   padding:0 36px;
-  display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;
+  display:grid; grid-template-columns:repeat(2, 1fr); gap:20px;
   position:relative; z-index:5;
 }
 @media (max-width:900px) {
@@ -750,11 +800,33 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       <p class="ha-tax__hero-sub">
         Taxes are the engine of state government — funding healthcare, schools, housing, and the programs Hawaiʻi families rely on.
       </p>
+
+      <div class="ha-tax__spark" aria-hidden="true">
+        <div class="ha-tax__spark-label">Effective tax rate by income</div>
+        <div class="ha-tax__spark-bars">
+          <div style="height:71%"></div>
+          <div style="height:68%"></div>
+          <div style="height:71%"></div>
+          <div style="height:67%"></div>
+          <div style="height:53%"></div>
+        </div>
+        <div class="ha-tax__spark-axis">
+          <span>Lowest 20%</span>
+          <span>Top 20%</span>
+        </div>
+      </div>
+
       <button class="ha-tax__expand-btn" id="ha-tax-expand" aria-expanded="false" aria-controls="ha-tax-explainer">
         <span class="lbl-closed">How Hawaiʻi's tax system works</span>
         <span class="lbl-open">Hide the overview</span>
         <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l4 4 4-4"/></svg>
       </button>
+      <div>
+        <a class="ha-tax__hero-subscribe" href="https://www.quorum.us/grassroots-action/signup/Hawaii-Appleseed-Center-for-Law-and-Economic-Justice/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Get tax &amp; budget alerts
+        </a>
+      </div>
     </div>
   </header>
 
@@ -788,18 +860,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       </span>
     </a>
 
-    <a class="ha-tax__hub-card ha-tax__hub-card--action" href="https://www.quorum.us/grassroots-action/signup/Hawaii-Appleseed-Center-for-Law-and-Economic-Justice/" target="_blank" rel="noopener">
-      <div class="ha-tax__hub-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
-      </div>
-      <div class="ha-tax__hub-card-eyebrow">Take Action</div>
-      <h3 class="ha-tax__hub-card-title">Help pass fair tax reform.</h3>
-      <p class="ha-tax__hub-card-meta">Get email alerts when bills move and action campaigns open.</p>
-      <span class="ha-tax__hub-card-link">
-        Subscribe to alerts
-        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
-      </span>
-    </a>
   </section>
 
   <!-- ===================================
@@ -1280,12 +1340,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       if (isOpen && !pieInitialized) {
         // Defer chart init until panel is visible so canvas can size correctly
         requestAnimationFrame(() => { initPie(); pieInitialized = true; });
-      }
-      if (isOpen) {
-        // Scroll to the stat headline
-        setTimeout(() => {
-          panel.scrollIntoView({ behavior:'smooth', block:'start' });
-        }, 80);
       }
     });
   }
