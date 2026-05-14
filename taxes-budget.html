@@ -239,13 +239,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
 .ha-tax a.ha-tax__hero-pill {
   display:inline-flex; align-items:center; gap:10px;
-  padding:9px 16px 9px 12px;
+  padding:11px 22px 11px 14px;
   background:rgba(255,255,255,.06);
   border:1px solid rgba(255,255,255,.18);
   border-radius:999px;
-  font-family:'Poppins',sans-serif; font-size:12.5px;
+  font-family:'Poppins',sans-serif;
   color:#fff; text-decoration:none;
-  max-width:300px;
   transition:background .18s, border-color .18s, transform .18s;
 }
 .ha-tax a.ha-tax__hero-pill:hover {
@@ -254,29 +253,19 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   transform:translateY(-1px);
 }
 .ha-tax a.ha-tax__hero-pill .pill-icon {
-  width:26px; height:26px; flex:none;
+  width:28px; height:28px; flex:none;
   background:rgba(132,169,140,.22);
   border-radius:50%;
   display:flex; align-items:center; justify-content:center;
 }
 .ha-tax a.ha-tax__hero-pill .pill-icon svg {
-  width:13px; height:13px; stroke:#fff; opacity:.95;
+  width:14px; height:14px; stroke:#fff; opacity:.95;
   fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;
 }
-.ha-tax a.ha-tax__hero-pill .pill-text {
-  display:flex; flex-direction:column; align-items:flex-start; min-width:0;
-}
-.ha-tax a.ha-tax__hero-pill .pill-eyebrow {
-  font-size:10px; font-weight:700;
-  letter-spacing:.18em; text-transform:uppercase;
-  color:rgba(202,210,197,.78); line-height:1;
-  margin-bottom:3px;
-}
-.ha-tax a.ha-tax__hero-pill .pill-title {
-  font-weight:600; font-size:13px; line-height:1.2;
-  color:#fff;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  max-width:200px;
+.ha-tax a.ha-tax__hero-pill .pill-label {
+  font-weight:600; font-size:13.5px; line-height:1;
+  letter-spacing:.01em; color:#fff;
+  white-space:nowrap;
 }
 
 /* Back to Issues link (top-left of hero) */
@@ -306,7 +295,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 @media (max-width:700px) {
   .ha-tax a.ha-tax__back { top:12px; left:14px; font-size:11.5px; padding:5px 10px 5px 7px; }
   .ha-tax a.ha-tax__hero-subscribe { top:12px; right:14px; font-size:11.5px; padding:5px 10px 5px 8px; }
-  .ha-tax a.ha-tax__hero-pill .pill-title { max-width:140px; }
 }
 
 @media (max-width:700px) {
@@ -1015,29 +1003,22 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       Get alerts
     </a>
     <div class="ha-tax__hero-inner">
-      <div class="ha-tax__hero-eyebrow">Issues · Taxes &amp; Budget</div>
       <h1>How Hawaiʻi funds <br>our shared future.</h1>
       <p class="ha-tax__hero-sub">
         Taxes are the engine of state government — funding healthcare, schools, housing, and the programs Hawaiʻi families rely on.
       </p>
       <div class="ha-tax__hero-actions">
-        <a class="ha-tax__hero-pill" id="ha-tax-hero-research" href="#ha-tax-featured">
+        <a class="ha-tax__hero-pill" href="#ha-tax-featured">
           <span class="pill-icon">
             <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
           </span>
-          <span class="pill-text">
-            <span class="pill-eyebrow">Latest Research</span>
-            <span class="pill-title" id="ha-tax-hero-research-title">Loading…</span>
-          </span>
+          <span class="pill-label">Latest Research</span>
         </a>
         <a class="ha-tax__hero-pill" href="#ha-tax-news">
           <span class="pill-icon">
             <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8z"/></svg>
           </span>
-          <span class="pill-text">
-            <span class="pill-eyebrow">In the News</span>
-            <span class="pill-title">HB 1800 highlights</span>
-          </span>
+          <span class="pill-label">In the News</span>
         </a>
       </div>
     </div>
@@ -1538,9 +1519,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       const fUrl = f.fullUrl ? 'https://hiappleseed.org' + f.fullUrl : '#';
       const fImg = f.assetUrl ? `${f.assetUrl}?format=900w` : '';
 
-      // Hero research pill — update title only; href stays as #ha-tax-featured scroll anchor
-      const heroPillTitle = document.getElementById('ha-tax-hero-research-title');
-      if (heroPillTitle) heroPillTitle.textContent = f.title || 'Untitled';
       document.getElementById('ha-tax-featured').innerHTML = `
         <div class="ha-tax__featured-pub-thumb">${fImg ? `<img src="${fImg}" alt="">` : ''}</div>
         <div class="ha-tax__featured-pub-body">
