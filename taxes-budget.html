@@ -134,47 +134,55 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-tax * { box-sizing:border-box; }
 .ha-tax img { max-width:100%; }
 
-/* ===== Hero ===== */
+/* ===== Hero (compact) ===== */
 .ha-tax__hero {
   background:linear-gradient(135deg, var(--ha-charcoal) 0%, var(--ha-slate) 100%);
   color:#fff;
-  padding:80px 28px 96px;
+  padding:54px 28px 48px;
   text-align:center;
   position:relative;
   overflow:hidden;
 }
 @media (max-width:700px) {
-  .ha-tax__hero { padding:56px 20px 64px; }
+  .ha-tax__hero { padding:40px 20px 36px; }
 }
 .ha-tax__hero-inner { max-width:900px; margin:0 auto; position:relative; z-index:1; }
 .ha-tax__hero-eyebrow {
   font-family:'Poppins',sans-serif;
   text-transform:uppercase; letter-spacing:.32em; font-size:11px;
-  color:var(--ha-ash); margin-bottom:18px;
+  color:var(--ha-ash); margin-bottom:14px;
   display:flex; align-items:center; justify-content:center; gap:14px;
 }
 .ha-tax__hero-eyebrow::before,
 .ha-tax__hero-eyebrow::after { content:""; width:28px; height:1px; background:var(--ha-ash); opacity:.5; }
 .ha-tax__hero h1 {
   font-family:'Manrope',sans-serif; font-weight:800;
-  font-size:54px; line-height:1.05; letter-spacing:-.02em;
-  margin:0 0 22px;
+  font-size:40px; line-height:1.08; letter-spacing:-.02em;
+  margin:0 0 14px;
 }
 .ha-tax__hero-sub {
-  font-size:17px; line-height:1.6; color:rgba(202,210,197,.85);
-  max-width:620px; margin:0 auto 32px;
+  font-size:16px; line-height:1.6; color:rgba(202,210,197,.82);
+  max-width:620px; margin:0 auto 16px;
 }
 
-/* ===== Tab pill switcher in hero ===== */
+/* ===== Tab bar (top of panels area) ===== */
+.ha-tax__tab-bar {
+  position:sticky; top:0; z-index:10;
+  background:var(--ha-bg);
+  padding:18px 28px;
+  display:flex; justify-content:center;
+  border-bottom:1px solid var(--ha-rule);
+  box-shadow:0 2px 0 rgba(53,79,82,.04);
+}
 .ha-tax__tabs {
   --tab-w: 170px;
   position:relative;
   display:inline-flex; align-items:center;
   padding:4px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.16);
+  background:#fff;
+  border:1px solid var(--ha-rule);
   border-radius:999px;
-  margin-bottom:18px;
+  box-shadow:0 1px 0 rgba(53,79,82,.03);
 }
 .ha-tax__tabs-indicator {
   position:absolute;
@@ -184,7 +192,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   border-radius:999px;
   transition:transform 340ms cubic-bezier(.4,0,.2,1);
   z-index:0;
-  box-shadow:0 2px 14px rgba(82,121,111,.4);
+  box-shadow:0 2px 12px rgba(82,121,111,.32);
 }
 .ha-tax button.ha-tax__tab {
   position:relative; z-index:1;
@@ -193,13 +201,13 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   cursor:pointer;
   font-family:'Manrope',sans-serif; font-weight:700;
   font-size:15.5px; letter-spacing:.01em;
-  color:rgba(255,255,255,.6);
+  color:rgba(47,62,70,.55);
   border-radius:999px;
   transition:color .22s;
   white-space:nowrap;
 }
 .ha-tax button.ha-tax__tab.active { color:#fff; cursor:default; }
-.ha-tax button.ha-tax__tab:not(.active):hover { color:rgba(255,255,255,.92); }
+.ha-tax button.ha-tax__tab:not(.active):hover { color:var(--ha-teal-deep); }
 
 .ha-tax a.ha-tax__hero-subscribe {
   display:inline-flex; align-items:center; gap:7px;
@@ -317,7 +325,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 /* ===== Vision panel ===== */
 .ha-tax__vision {
   max-width:920px; margin:0 auto;
-  padding:80px 36px 72px;
+  padding:56px 36px 72px;
   text-align:center;
 }
 .ha-tax__vision-eyebrow {
@@ -369,7 +377,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
 /* ===== Stat headline (Overview top) ===== */
 .ha-tax__stat-headline {
-  padding:72px 28px 24px;
+  padding:48px 28px 16px;
   text-align:center;
 }
 .ha-tax__stat-headline-fy {
@@ -391,7 +399,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 /* ===== Opportunities panel ===== */
 .ha-tax__opps {
   max-width:1200px; margin:0 auto;
-  padding:72px 36px;
+  padding:56px 36px;
 }
 .ha-tax__opps-head {
   text-align:center; max-width:760px; margin:0 auto 48px;
@@ -853,7 +861,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 <section class="ha-tax">
 
   <!-- ===================================
-       HERO
+       HERO (compact: eyebrow + title + intro)
        =================================== -->
   <header class="ha-tax__hero" id="ha-tax-hero">
     <div class="ha-tax__hero-inner">
@@ -862,13 +870,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       <p class="ha-tax__hero-sub">
         Taxes are the engine of state government — funding healthcare, schools, housing, and the programs Hawaiʻi families rely on.
       </p>
-
-      <div class="ha-tax__tabs" role="tablist" aria-label="Section">
-        <span class="ha-tax__tabs-indicator" aria-hidden="true"></span>
-        <button class="ha-tax__tab active" data-panel="vision" role="tab" aria-selected="true" aria-controls="ha-tax-panel-vision">Vision</button>
-        <button class="ha-tax__tab" data-panel="overview" role="tab" aria-selected="false" aria-controls="ha-tax-panel-overview">Overview</button>
-        <button class="ha-tax__tab" data-panel="opportunities" role="tab" aria-selected="false" aria-controls="ha-tax-panel-opportunities">Opportunities</button>
-      </div>
       <div>
         <a class="ha-tax__hero-subscribe" href="https://www.quorum.us/grassroots-action/signup/Hawaii-Appleseed-Center-for-Law-and-Economic-Justice/" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -880,8 +881,19 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
   <!-- ===================================
        DRAWER — Vision / Overview / Opportunities panels
+       (Tab pills live at the top of this section so content is
+        visually attached to the pills.)
        =================================== -->
   <div class="ha-tax__panels">
+
+    <div class="ha-tax__tab-bar">
+      <div class="ha-tax__tabs" role="tablist" aria-label="Section">
+        <span class="ha-tax__tabs-indicator" aria-hidden="true"></span>
+        <button class="ha-tax__tab active" data-panel="vision" role="tab" aria-selected="true" aria-controls="ha-tax-panel-vision">Vision</button>
+        <button class="ha-tax__tab" data-panel="overview" role="tab" aria-selected="false" aria-controls="ha-tax-panel-overview">Overview</button>
+        <button class="ha-tax__tab" data-panel="opportunities" role="tab" aria-selected="false" aria-controls="ha-tax-panel-opportunities">Opportunities</button>
+      </div>
+    </div>
 
   <!-- =========== VISION PANEL =========== -->
   <section class="ha-tax__panel active" id="ha-tax-panel-vision" role="tabpanel">
