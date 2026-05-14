@@ -157,33 +157,65 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   font-size:54px; line-height:1.05; letter-spacing:-.02em;
   margin:0 0 22px;
 }
-.ha-tax__hero-stat {
-  display:inline-flex; align-items:baseline; gap:16px;
-  background:rgba(132,169,140,.12); border:1px solid rgba(132,169,140,.3);
-  padding:18px 28px; border-radius:6px;
-  margin-top:14px;
-}
-.ha-tax__hero-stat-fy {
-  font-family:'Poppins',sans-serif; font-size:11px; font-weight:600;
-  letter-spacing:.22em; text-transform:uppercase; color:var(--ha-ash);
-}
-.ha-tax__hero-stat-num {
-  font-family:'Manrope',sans-serif; font-weight:800;
-  font-size:38px; line-height:1; color:#fff; letter-spacing:-.02em;
-}
-.ha-tax__hero-stat-label {
-  font-size:14px; color:rgba(202,210,197,.85);
-}
 .ha-tax__hero-sub {
   font-size:17px; line-height:1.6; color:rgba(202,210,197,.85);
-  max-width:620px; margin:24px auto 0;
+  max-width:620px; margin:0 auto 28px;
+}
+.ha-tax button.ha-tax__expand-btn {
+  display:inline-flex; align-items:center; gap:10px;
+  background:rgba(255,255,255,.08); color:#fff;
+  border:1px solid rgba(255,255,255,.28);
+  padding:13px 26px; border-radius:999px;
+  font-family:'Poppins',sans-serif; font-size:14.5px; font-weight:600;
+  letter-spacing:.02em; cursor:pointer;
+  transition:background .18s, border-color .18s, transform .18s;
+}
+.ha-tax button.ha-tax__expand-btn:hover {
+  background:rgba(255,255,255,.16); border-color:rgba(255,255,255,.5);
+}
+.ha-tax button.ha-tax__expand-btn .chev {
+  width:14px; height:14px; transition:transform .25s;
+}
+.ha-tax__hero.is-open button.ha-tax__expand-btn .chev { transform:rotate(180deg); }
+.ha-tax button.ha-tax__expand-btn .lbl-open { display:none; }
+.ha-tax__hero.is-open button.ha-tax__expand-btn .lbl-open { display:inline; }
+.ha-tax__hero.is-open button.ha-tax__expand-btn .lbl-closed { display:none; }
+
+/* ===== Collapsible explainer ===== */
+.ha-tax__explainer {
+  overflow:hidden;
+  max-height:0;
+  transition:max-height .5s ease;
+}
+.ha-tax__explainer.is-open { max-height:9999px; }
+
+/* ===== Stat headline (above pie) ===== */
+.ha-tax__stat-headline {
+  background:var(--ha-bg);
+  padding:72px 28px 24px;
+  text-align:center;
+}
+.ha-tax__stat-headline-fy {
+  display:inline-block;
+  font-family:'Poppins',sans-serif; font-size:11px; font-weight:600;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--ha-teal-deep);
+  background:rgba(82,121,111,.1); padding:5px 12px; border-radius:3px;
+  margin-bottom:18px;
+}
+.ha-tax__stat-headline h2 {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:54px; line-height:1.1; letter-spacing:-.02em;
+  color:var(--ha-charcoal); margin:0;
+}
+.ha-tax__stat-headline strong {
+  color:var(--ha-teal-deep); font-weight:800;
 }
 @media (max-width:700px) {
-  .ha-tax__hero { padding:56px 20px 64px; }
+  .ha-tax__hero { padding:56px 20px 56px; }
   .ha-tax__hero h1 { font-size:36px; }
-  .ha-tax__hero-stat { padding:14px 18px; gap:10px; flex-wrap:wrap; }
-  .ha-tax__hero-stat-num { font-size:28px; }
   .ha-tax__hero-sub { font-size:15px; }
+  .ha-tax__stat-headline { padding:48px 20px 16px; }
+  .ha-tax__stat-headline h2 { font-size:34px; }
 }
 
 /* ===== Section frame ===== */
@@ -632,22 +664,31 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <!-- ===================================
        HERO
        =================================== -->
-  <header class="ha-tax__hero">
+  <header class="ha-tax__hero" id="ha-tax-hero">
     <div class="ha-tax__hero-inner">
       <div class="ha-tax__hero-eyebrow">Issues · Taxes &amp; Budget</div>
       <h1>How Hawaiʻi funds <br>our shared future.</h1>
-      <div class="ha-tax__hero-stat">
-        <div>
-          <div class="ha-tax__hero-stat-fy">FY 2025</div>
-          <div class="ha-tax__hero-stat-num">$11.08&nbsp;billion</div>
-          <div class="ha-tax__hero-stat-label">collected from state taxes</div>
-        </div>
-      </div>
       <p class="ha-tax__hero-sub">
-        Taxes are the engine of state government — funding healthcare, schools, housing, and the programs Hawaiʻi families rely on. Here's how our tax system works, where the money goes, and the reforms we're advancing to make it fairer.
+        Taxes are the engine of state government — funding healthcare, schools, housing, and the programs Hawaiʻi families rely on.
       </p>
+      <button class="ha-tax__expand-btn" id="ha-tax-expand" aria-expanded="false" aria-controls="ha-tax-explainer">
+        <span class="lbl-closed">How Hawaiʻi's tax system works</span>
+        <span class="lbl-open">Hide the overview</span>
+        <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l4 4 4-4"/></svg>
+      </button>
     </div>
   </header>
+
+  <!-- ===================================
+       COLLAPSIBLE EXPLAINER
+       =================================== -->
+  <div class="ha-tax__explainer" id="ha-tax-explainer">
+
+  <!-- Big headline stat above the pie -->
+  <div class="ha-tax__stat-headline">
+    <div class="ha-tax__stat-headline-fy">Fiscal Year 2025</div>
+    <h2>Hawaiʻi raised over<br><strong>$11.08 billion</strong> from taxes.</h2>
+  </div>
 
   <!-- ===================================
        WHERE THE MONEY COMES FROM
@@ -785,6 +826,8 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       </div>
     </div>
   </section>
+
+  </div><!-- /.ha-tax__explainer -->
 
   <!-- ===================================
        LEGISLATIVE & POLICY PRIORITIES
@@ -1090,11 +1133,37 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     }
   }
 
+  // ===== Expand/collapse =====
+  function initExpand() {
+    const btn = document.getElementById('ha-tax-expand');
+    const hero = document.getElementById('ha-tax-hero');
+    const panel = document.getElementById('ha-tax-explainer');
+    if (!btn || !panel) return;
+    let isOpen = false;
+    let pieInitialized = false;
+    btn.addEventListener('click', () => {
+      isOpen = !isOpen;
+      hero.classList.toggle('is-open', isOpen);
+      panel.classList.toggle('is-open', isOpen);
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      if (isOpen && !pieInitialized) {
+        // Defer chart init until panel is visible so canvas can size correctly
+        requestAnimationFrame(() => { initPie(); pieInitialized = true; });
+      }
+      if (isOpen) {
+        // Scroll to the stat headline
+        setTimeout(() => {
+          panel.scrollIntoView({ behavior:'smooth', block:'start' });
+        }, 80);
+      }
+    });
+  }
+
   // ===== Init =====
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { initPie(); loadPubs(); });
+    document.addEventListener('DOMContentLoaded', () => { initExpand(); loadPubs(); });
   } else {
-    initPie(); loadPubs();
+    initExpand(); loadPubs();
   }
 })();
 </script>
