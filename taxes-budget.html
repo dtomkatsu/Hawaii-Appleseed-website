@@ -835,121 +835,163 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 .ha-tax__priority-bill:hover { background:rgba(82,121,111,.2); }
 
-/* ===== Button (used by featured pub read link) ===== */
-.ha-tax a.ha-tax__btn {
-  display:inline-flex; align-items:center; gap:8px;
-  padding:11px 22px;
-  border-radius:3px;
-  font-family:'Poppins',sans-serif; font-weight:600; font-size:14px;
-  text-decoration:none;
-  transition:opacity .18s, transform .18s;
+/* ===== Publication card grid (unified) ===== */
+.ha-tax__pub-grid {
+  display:grid; grid-template-columns:repeat(4, 1fr);
+  gap:22px;
+  max-width:1200px; margin:0 auto;
 }
-.ha-tax a.ha-tax__btn:hover { opacity:.88; transform:translateY(-1px); }
-
-/* ===== Featured Publication ===== */
-.ha-tax__featured-pub {
-  display:grid; grid-template-columns:1fr 1.2fr;
-  gap:36px; align-items:center;
+@media (max-width:1024px) {
+  .ha-tax__pub-grid { grid-template-columns:repeat(2, 1fr); gap:20px; }
+}
+@media (max-width:600px) {
+  .ha-tax__pub-grid { grid-template-columns:1fr; gap:18px; }
+}
+.ha-tax a.ha-tax__pub-card,
+.ha-tax__pub-card {
+  position:relative;
   background:#fff; border:1px solid var(--ha-rule);
   border-radius:6px; overflow:hidden;
-  max-width:1100px; margin:0 auto;
+  display:flex; flex-direction:column;
+  text-decoration:none; color:inherit;
+  transition:transform .2s, box-shadow .2s, border-color .2s;
 }
-@media (max-width:800px) {
-  .ha-tax__featured-pub { grid-template-columns:1fr; }
+.ha-tax a.ha-tax__pub-card:hover,
+.ha-tax__pub-card:hover {
+  transform:translateY(-3px);
+  box-shadow:0 12px 32px rgba(47,62,70,.10);
+  border-color:rgba(82,121,111,.32);
 }
-.ha-tax__featured-pub-thumb {
+.ha-tax__pub-card-thumb {
   aspect-ratio:4/3;
   background:var(--ha-bg);
   overflow:hidden;
+  position:relative;
 }
-.ha-tax__featured-pub-thumb img { width:100%; height:100%; object-fit:cover; }
-.ha-tax__featured-pub-body { padding:36px 32px 36px 0; }
-@media (max-width:800px) {
-  .ha-tax__featured-pub-body { padding:24px 28px 32px; }
+.ha-tax__pub-card-thumb img {
+  width:100%; height:100%; object-fit:cover;
+  transition:transform .35s;
 }
-.ha-tax__featured-pub-eyebrow {
-  display:inline-block;
-  background:rgba(82,121,111,.12);
-  color:var(--ha-teal-deep);
-  padding:4px 12px; border-radius:3px;
-  font-size:11px; font-weight:600;
+.ha-tax__pub-card:hover .ha-tax__pub-card-thumb img { transform:scale(1.04); }
+.ha-tax__pub-card-badge {
+  position:absolute; top:12px; left:12px; z-index:1;
+  display:inline-flex; align-items:center; gap:5px;
+  background:var(--ha-teal-deep); color:#fff;
+  padding:5px 11px; border-radius:999px;
+  font-family:'Manrope',sans-serif; font-size:10.5px; font-weight:700;
   letter-spacing:.14em; text-transform:uppercase;
-  margin-bottom:14px;
+  box-shadow:0 4px 12px rgba(47,62,70,.18);
 }
-.ha-tax__featured-pub-title {
-  font-family:'Manrope',sans-serif; font-weight:800;
-  font-size:30px; line-height:1.2; letter-spacing:-.01em;
-  color:var(--ha-charcoal); margin:0 0 14px;
+.ha-tax__pub-card-badge::before {
+  content:""; width:6px; height:6px; border-radius:50%;
+  background:#fff;
 }
-.ha-tax__featured-pub-desc {
-  font-size:16px; line-height:1.65; color:rgba(47,62,70,.85);
-  margin:0 0 22px;
+.ha-tax__pub-card-body {
+  padding:20px 22px 22px;
+  display:flex; flex-direction:column; gap:10px; flex:1;
 }
-.ha-tax__featured-pub-meta {
-  font-size:13px; color:rgba(47,62,70,.6);
-  margin-bottom:20px;
+.ha-tax__pub-card-meta {
+  font-size:11px; font-weight:600;
+  color:var(--ha-teal-deep);
+  letter-spacing:.14em; text-transform:uppercase;
+  line-height:1;
 }
-.ha-tax__featured-pub-meta strong { color:var(--ha-charcoal); }
-
-/* ===== Pub mini-cards ===== */
-.ha-tax__pub-grid {
-  display:grid; grid-template-columns:repeat(3, 1fr);
-  gap:24px; margin-top:36px;
-}
-@media (max-width:900px) {
-  .ha-tax__pub-grid { grid-template-columns:1fr; gap:20px; }
-}
-.ha-tax__pub-card {
-  background:#fff; border:1px solid var(--ha-rule);
-  border-radius:4px; overflow:hidden;
-  display:flex; flex-direction:column;
-  transition:transform .2s, box-shadow .2s;
-}
-.ha-tax__pub-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(47,62,70,.08); }
-.ha-tax__pub-card-thumb { aspect-ratio:16/9; background:var(--ha-bg); overflow:hidden; }
-.ha-tax__pub-card-thumb img { width:100%; height:100%; object-fit:cover; transition:transform .35s; }
-.ha-tax__pub-card:hover .ha-tax__pub-card-thumb img { transform:scale(1.03); }
-.ha-tax__pub-card-body { padding:18px 20px 22px; display:flex; flex-direction:column; gap:8px; flex:1; }
-.ha-tax__pub-card-meta { font-size:11px; color:rgba(47,62,70,.6); letter-spacing:.08em; text-transform:uppercase; }
 .ha-tax__pub-card-title {
   font-family:'Manrope',sans-serif; font-weight:700;
-  font-size:17px; line-height:1.3; color:var(--ha-charcoal); margin:0;
+  font-size:16.5px; line-height:1.32; letter-spacing:-.005em;
+  color:var(--ha-charcoal); margin:0;
 }
 .ha-tax__pub-card-link {
   margin-top:auto; padding-top:10px;
   font-size:13px; font-weight:600; color:var(--ha-teal-deep);
   display:inline-flex; align-items:center; gap:5px;
+  transition:gap .18s;
 }
+.ha-tax__pub-card:hover .ha-tax__pub-card-link { gap:8px; }
 
-/* ===== News strip ===== */
+/* ===== News strip (editorial / typographic) ===== */
 .ha-tax__news-grid {
   display:grid; grid-template-columns:1fr 1fr;
-  gap:32px; max-width:1200px; margin:0 auto;
+  gap:0;
+  max-width:1200px; margin:0 auto;
+  border-top:1px solid rgba(53,79,82,.18);
+  border-bottom:1px solid rgba(53,79,82,.18);
 }
 @media (max-width:800px) {
-  .ha-tax__news-grid { grid-template-columns:1fr; gap:28px; }
+  .ha-tax__news-grid { grid-template-columns:1fr; }
 }
-.ha-tax__news-card {
-  background:#fff; border:1px solid var(--ha-rule);
-  border-radius:4px; padding:28px 30px;
+.ha-tax__news-clipping {
+  padding:44px 40px;
+  display:flex; flex-direction:column;
+  position:relative;
 }
-.ha-tax__news-eyebrow {
-  font-size:11px; font-weight:600;
-  letter-spacing:.18em; text-transform:uppercase;
-  color:var(--ha-teal-deep); margin-bottom:10px;
+.ha-tax__news-clipping + .ha-tax__news-clipping {
+  border-left:1px solid rgba(53,79,82,.18);
+}
+@media (max-width:800px) {
+  .ha-tax__news-clipping { padding:36px 24px; }
+  .ha-tax__news-clipping + .ha-tax__news-clipping {
+    border-left:none; border-top:1px solid rgba(53,79,82,.18);
+  }
+}
+.ha-tax__news-source {
+  display:inline-flex; align-items:center; gap:12px;
+  font-family:'Manrope',sans-serif; font-size:11px; font-weight:700;
+  letter-spacing:.24em; text-transform:uppercase;
+  color:var(--ha-teal-deep);
+  margin-bottom:24px;
+}
+.ha-tax__news-source::after {
+  content:""; flex:1; height:1px; background:rgba(82,121,111,.35);
 }
 .ha-tax__news-title {
-  font-family:'Manrope',sans-serif; font-weight:700;
-  font-size:20px; color:var(--ha-charcoal); margin:0 0 8px;
-  line-height:1.3;
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:28px; line-height:1.18; letter-spacing:-.015em;
+  color:var(--ha-charcoal); margin:0 0 18px;
 }
-.ha-tax__news-meta { font-size:13px; color:rgba(47,62,70,.6); margin-bottom:12px; }
-.ha-tax__news-excerpt { font-size:15px; line-height:1.6; color:rgba(47,62,70,.82); margin:0 0 16px; }
+@media (max-width:700px) {
+  .ha-tax__news-title { font-size:22px; }
+}
+.ha-tax__news-excerpt {
+  font-family:'Fraunces',serif; font-style:italic; font-weight:400;
+  font-size:17px; line-height:1.55;
+  color:rgba(47,62,70,.78);
+  margin:0 0 28px;
+  position:relative;
+  padding-left:18px;
+}
+.ha-tax__news-excerpt::before {
+  content:""; position:absolute;
+  left:0; top:6px; bottom:6px;
+  width:2px; background:var(--ha-teal);
+}
+.ha-tax__news-byline {
+  font-family:'Manrope',sans-serif; font-size:12px; font-weight:600;
+  letter-spacing:.05em; color:rgba(47,62,70,.55);
+  margin-bottom:14px;
+}
+.ha-tax__news-byline strong {
+  color:var(--ha-charcoal); font-weight:700;
+}
+.ha-tax__news-byline-sep {
+  display:inline-block; width:14px; height:1px;
+  background:rgba(47,62,70,.4);
+  vertical-align:middle; margin:0 6px;
+}
 .ha-tax__news-link {
-  font-size:14px; font-weight:600; color:var(--ha-teal-deep);
-  text-decoration:none; display:inline-flex; align-items:center; gap:6px;
+  margin-top:auto;
+  font-family:'Manrope',sans-serif;
+  font-size:13.5px; font-weight:700; color:var(--ha-teal-deep);
+  letter-spacing:.04em;
+  text-decoration:none;
+  display:inline-flex; align-items:center; gap:8px;
+  transition:gap .18s, color .18s;
+  align-self:flex-start;
+  padding-bottom:2px;
+  border-bottom:1px solid rgba(82,121,111,.35);
 }
-.ha-tax__news-link:hover { gap:9px; }
+.ha-tax__news-link:hover { gap:12px; color:var(--ha-charcoal); border-bottom-color:var(--ha-charcoal); }
+.ha-tax__news-link svg { width:14px; height:14px; }
 
 /* ===== Panel close button ===== */
 .ha-tax__panel-close-wrap {
@@ -1343,19 +1385,19 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   </div><!-- /.ha-tax__panels -->
 
   <!-- ===================================
-       FEATURED PUBLICATION
+       LATEST RESEARCH
        =================================== -->
-  <section class="ha-tax__section">
+  <section class="ha-tax__section" id="ha-tax-featured">
     <div class="ha-tax__section-head">
-      <div class="ha-tax__eyebrow">Featured Publication</div>
+      <div class="ha-tax__eyebrow">Publications</div>
       <h2 class="ha-tax__h2">Our latest research</h2>
       <div class="ha-tax__h2-rule"></div>
+      <p class="ha-tax__lede">
+        Reports, fact sheets, and analyses from our Taxes &amp; Budget team.
+      </p>
     </div>
-    <article class="ha-tax__featured-pub" id="ha-tax-featured">
-      <!-- Filled in by JS once publications.json loads -->
-    </article>
     <div class="ha-tax__pub-grid" id="ha-tax-pubs">
-      <!-- Filled in by JS -->
+      <!-- Filled in by JS once publications.json loads -->
     </div>
   </section>
 
@@ -1370,28 +1412,36 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <div class="ha-tax__h2-rule"></div>
       </div>
       <div class="ha-tax__news-grid">
-        <article class="ha-tax__news-card">
-          <div class="ha-tax__news-eyebrow">Latest Blog Post</div>
+        <article class="ha-tax__news-clipping">
+          <div class="ha-tax__news-source">Hawaiʻi Appleseed Blog</div>
           <h3 class="ha-tax__news-title">Highlights from House Bill 1800</h3>
-          <div class="ha-tax__news-meta">April 17, 2026 · By Devin Thomas</div>
           <p class="ha-tax__news-excerpt">
             The single most consequential bill of the 2026 session — what's in the House budget proposal, what's missing, and where the conference committee may take it next.
           </p>
+          <div class="ha-tax__news-byline">
+            April 17, 2026
+            <span class="ha-tax__news-byline-sep"></span>
+            By <strong>Devin Thomas</strong>
+          </div>
           <a class="ha-tax__news-link" href="https://hiappleseed.org/blog" target="_blank" rel="noopener">
             Read the full post
-            <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
           </a>
         </article>
-        <article class="ha-tax__news-card">
-          <div class="ha-tax__news-eyebrow">In the Press</div>
+        <article class="ha-tax__news-clipping">
+          <div class="ha-tax__news-source">Honolulu Civil Beat</div>
           <h3 class="ha-tax__news-title">The Sunshine Blog</h3>
-          <div class="ha-tax__news-meta">April 26, 2026 · Honolulu Civil Beat</div>
           <p class="ha-tax__news-excerpt">
             Coverage of Hawaiʻi Appleseed's analysis of the legislature's tax proposals and the trade-offs facing lawmakers as they finalize the FY26–27 budget.
           </p>
+          <div class="ha-tax__news-byline">
+            April 26, 2026
+            <span class="ha-tax__news-byline-sep"></span>
+            In the <strong>Press</strong>
+          </div>
           <a class="ha-tax__news-link" href="https://www.civilbeat.org" target="_blank" rel="noopener">
             Read on Civil Beat
-            <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
           </a>
         </article>
       </div>
@@ -1497,12 +1547,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     const d = new Date(ts);
     return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
   }
-  function stripHtml(s) {
-    const tmp = document.createElement('div');
-    tmp.innerHTML = s || '';
-    return tmp.textContent || '';
-  }
-
   async function loadPubs() {
     try {
       const r = await fetch('publications.json');
@@ -1514,38 +1558,24 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
       if (!items.length) return;
 
-      // Featured = most recent
-      const f = items[0];
-      const fUrl = f.fullUrl ? 'https://hiappleseed.org' + f.fullUrl : '#';
-      const fImg = f.assetUrl ? `${f.assetUrl}?format=900w` : '';
-
-      document.getElementById('ha-tax-featured').innerHTML = `
-        <div class="ha-tax__featured-pub-thumb">${fImg ? `<img src="${fImg}" alt="">` : ''}</div>
-        <div class="ha-tax__featured-pub-body">
-          <div class="ha-tax__featured-pub-eyebrow">Featured Report</div>
-          <h3 class="ha-tax__featured-pub-title"><a href="${fUrl}" target="_blank" rel="noopener" style="text-decoration:none">${f.title || 'Untitled'}</a></h3>
-          <p class="ha-tax__featured-pub-desc">${stripHtml(f.excerpt)}</p>
-          <div class="ha-tax__featured-pub-meta">${formatDate(f.publishOn)}${f.author ? ` · <strong>By ${f.author}</strong>` : ''}</div>
-          <a class="ha-tax__btn ha-tax__btn--primary" style="background:var(--ha-teal-deep);color:#fff" href="${fUrl}" target="_blank" rel="noopener">Read publication →</a>
-        </div>
-      `;
-
-      // Remaining 3 in a strip
+      // Single unified grid: 4 most-recent publications, first marked "Latest"
       const grid = document.getElementById('ha-tax-pubs');
-      grid.innerHTML = items.slice(1, 4).map(i => {
+      grid.innerHTML = items.slice(0, 4).map((i, idx) => {
         const url = i.fullUrl ? 'https://hiappleseed.org' + i.fullUrl : '#';
         const img = i.assetUrl ? `${i.assetUrl}?format=500w` : '';
+        const badge = idx === 0 ? `<span class="ha-tax__pub-card-badge">Latest</span>` : '';
         return `
-          <article class="ha-tax__pub-card">
-            <a href="${url}" target="_blank" rel="noopener" style="text-decoration:none;display:contents">
-              <div class="ha-tax__pub-card-thumb">${img ? `<img src="${img}" alt="">` : ''}</div>
-              <div class="ha-tax__pub-card-body">
-                <div class="ha-tax__pub-card-meta">${formatDate(i.publishOn)}</div>
-                <h3 class="ha-tax__pub-card-title">${i.title || 'Untitled'}</h3>
-                <span class="ha-tax__pub-card-link">Read →</span>
-              </div>
-            </a>
-          </article>
+          <a class="ha-tax__pub-card" href="${url}" target="_blank" rel="noopener">
+            <div class="ha-tax__pub-card-thumb">
+              ${badge}
+              ${img ? `<img src="${img}" alt="">` : ''}
+            </div>
+            <div class="ha-tax__pub-card-body">
+              <div class="ha-tax__pub-card-meta">${formatDate(i.publishOn)}</div>
+              <h3 class="ha-tax__pub-card-title">${i.title || 'Untitled'}</h3>
+              <span class="ha-tax__pub-card-link">Read publication →</span>
+            </div>
+          </a>
         `;
       }).join('');
     } catch (e) {
