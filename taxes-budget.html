@@ -162,88 +162,77 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 .ha-tax__hero-sub {
   font-size:17px; line-height:1.6; color:rgba(202,210,197,.85);
-  max-width:620px; margin:0 auto 28px;
+  max-width:620px; margin:0 auto 32px;
 }
-.ha-tax button.ha-tax__expand-btn {
-  display:inline-flex; align-items:center; gap:10px;
-  background:rgba(255,255,255,.08); color:#fff;
-  border:1px solid rgba(255,255,255,.28);
-  padding:13px 26px; border-radius:999px;
-  font-family:'Poppins',sans-serif; font-size:14.5px; font-weight:600;
-  letter-spacing:.02em; cursor:pointer;
-  transition:background .18s, border-color .18s, transform .18s;
+
+/* ===== Tab pill switcher in hero ===== */
+.ha-tax__tabs {
+  --tab-w: 170px;
+  position:relative;
+  display:inline-flex; align-items:center;
+  padding:4px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:999px;
+  margin-bottom:18px;
 }
-.ha-tax button.ha-tax__expand-btn:hover {
-  background:rgba(255,255,255,.16); border-color:rgba(255,255,255,.5);
+.ha-tax__tabs-indicator {
+  position:absolute;
+  top:4px; bottom:4px; left:4px;
+  width:var(--tab-w);
+  background:var(--ha-teal-deep);
+  border-radius:999px;
+  transition:transform 340ms cubic-bezier(.4,0,.2,1);
+  z-index:0;
+  box-shadow:0 2px 14px rgba(82,121,111,.4);
 }
-.ha-tax button.ha-tax__expand-btn .chev {
-  width:14px; height:14px; transition:transform .25s;
+.ha-tax button.ha-tax__tab {
+  position:relative; z-index:1;
+  background:none; border:none; padding:0;
+  width:var(--tab-w); height:46px;
+  cursor:pointer;
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:15.5px; letter-spacing:.01em;
+  color:rgba(255,255,255,.6);
+  border-radius:999px;
+  transition:color .22s;
+  white-space:nowrap;
 }
-.ha-tax__hero.is-open button.ha-tax__expand-btn .chev { transform:rotate(180deg); }
-.ha-tax button.ha-tax__expand-btn .lbl-open { display:none; }
-.ha-tax__hero.is-open button.ha-tax__expand-btn .lbl-open { display:inline; }
-.ha-tax__hero.is-open button.ha-tax__expand-btn .lbl-closed { display:none; }
+.ha-tax button.ha-tax__tab.active { color:#fff; cursor:default; }
+.ha-tax button.ha-tax__tab:not(.active):hover { color:rgba(255,255,255,.92); }
 
 .ha-tax a.ha-tax__hero-subscribe {
   display:inline-flex; align-items:center; gap:7px;
-  margin-top:14px;
+  margin-top:6px;
   padding:7px 14px;
   background:transparent;
-  border:1px solid rgba(202,210,197,.32);
+  border:1px solid rgba(202,210,197,.28);
   border-radius:999px;
   font-size:12.5px; font-weight:500;
-  color:rgba(202,210,197,.85);
+  color:rgba(202,210,197,.78);
   text-decoration:none;
   transition:color .18s, border-color .18s, background .18s;
 }
 .ha-tax a.ha-tax__hero-subscribe:hover {
-  color:#fff; border-color:rgba(202,210,197,.6);
-  background:rgba(255,255,255,.06);
+  color:#fff; border-color:rgba(202,210,197,.55);
+  background:rgba(255,255,255,.05);
 }
 .ha-tax a.ha-tax__hero-subscribe svg { width:13px; height:13px; opacity:.8; }
 
-/* ===== Hero mini-spark (preview of the explainer) ===== */
-.ha-tax__spark {
-  max-width:300px; margin:30px auto 24px;
-}
-.ha-tax__spark-label {
-  font-size:10.5px; font-weight:600;
-  letter-spacing:.16em; text-transform:uppercase;
-  color:rgba(202,210,197,.6);
-  text-align:center; margin-bottom:10px;
-}
-.ha-tax__spark-bars {
-  display:grid; grid-template-columns:repeat(5, 1fr);
-  gap:6px; align-items:end;
-  height:54px;
-  border-bottom:1px solid rgba(202,210,197,.22);
-  padding-bottom:2px;
-}
-.ha-tax__spark-bars div {
-  background:rgba(132,169,140,.7);
-  border-radius:2px 2px 0 0;
-  transition:background .25s;
-}
-.ha-tax__spark-bars div:last-child { background:rgba(132,169,140,.32); }
-.ha-tax__hero:hover .ha-tax__spark-bars div { background:rgba(132,169,140,.85); }
-.ha-tax__hero:hover .ha-tax__spark-bars div:last-child { background:rgba(132,169,140,.45); }
-.ha-tax__spark-axis {
-  display:flex; justify-content:space-between;
-  margin-top:6px;
-  font-size:10px; color:rgba(202,210,197,.5);
-  letter-spacing:.04em;
+@media (max-width:700px) {
+  .ha-tax__tabs { --tab-w: 105px; flex-wrap:nowrap; }
+  .ha-tax button.ha-tax__tab { font-size:13px; height:40px; }
 }
 
 /* ===== Hub strip (3-up command center under hero) ===== */
 .ha-tax__hub {
-  max-width:960px;
-  margin:-44px auto 0;
-  padding:0 36px;
-  display:grid; grid-template-columns:repeat(2, 1fr); gap:20px;
-  position:relative; z-index:5;
+  max-width:1100px;
+  margin:0 auto;
+  padding:56px 36px 24px;
+  display:grid; grid-template-columns:repeat(2, 1fr); gap:24px;
 }
 @media (max-width:900px) {
-  .ha-tax__hub { grid-template-columns:1fr; padding:0 20px; margin-top:-32px; }
+  .ha-tax__hub { grid-template-columns:1fr; padding:48px 20px 16px; }
 }
 .ha-tax a.ha-tax__hub-card,
 .ha-tax__hub-card {
@@ -309,18 +298,77 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-tax__hub-card--action .ha-tax__hub-card-meta { color:rgba(255,255,255,.82); }
 .ha-tax__hub-card--action .ha-tax__hub-card-link { color:#fff; }
 
-/* ===== Collapsible explainer ===== */
-.ha-tax__explainer {
-  overflow:hidden;
-  max-height:0;
-  transition:max-height .5s ease;
-  margin-top:72px;
-}
-.ha-tax__explainer.is-open { max-height:9999px; }
-
-/* ===== Stat headline (above pie) ===== */
-.ha-tax__stat-headline {
+/* ===== Drawer / panels ===== */
+.ha-tax__panels {
   background:var(--ha-bg);
+  border-top:1px solid var(--ha-rule);
+  position:relative;
+}
+.ha-tax__panel {
+  display:none;
+  animation:ha-tax-fade .35s ease;
+}
+.ha-tax__panel.active { display:block; }
+@keyframes ha-tax-fade {
+  from { opacity:0; transform:translateY(6px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ===== Vision panel ===== */
+.ha-tax__vision {
+  max-width:920px; margin:0 auto;
+  padding:80px 36px 72px;
+  text-align:center;
+}
+.ha-tax__vision-eyebrow {
+  display:inline-block;
+  font-size:11px; font-weight:600;
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--ha-teal-deep);
+  background:rgba(82,121,111,.1); padding:5px 12px; border-radius:3px;
+  margin-bottom:22px;
+}
+.ha-tax__vision h2 {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:42px; line-height:1.15; letter-spacing:-.02em;
+  color:var(--ha-charcoal); margin:0 0 24px;
+}
+.ha-tax__vision h2 em {
+  font-style:normal; color:var(--ha-teal-deep);
+}
+.ha-tax__vision p {
+  font-size:17px; line-height:1.7; color:rgba(47,62,70,.85);
+  max-width:660px; margin:0 auto 18px;
+}
+.ha-tax__vision-pillars {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:24px; margin-top:48px; text-align:left;
+}
+@media (max-width:800px) {
+  .ha-tax__vision-pillars { grid-template-columns:1fr; gap:18px; }
+}
+.ha-tax__vision-pillar {
+  background:#fff; border:1px solid var(--ha-rule);
+  border-top:3px solid var(--ha-teal-deep);
+  border-radius:4px; padding:24px 22px;
+}
+.ha-tax__vision-pillar-eyebrow {
+  font-size:11px; font-weight:600;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ha-teal-deep); margin-bottom:10px;
+}
+.ha-tax__vision-pillar h3 {
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:18px; line-height:1.3; color:var(--ha-charcoal);
+  margin:0 0 8px;
+}
+.ha-tax__vision-pillar p {
+  font-size:14px; line-height:1.6; color:rgba(47,62,70,.78);
+  margin:0; text-align:left;
+}
+
+/* ===== Stat headline (Overview top) ===== */
+.ha-tax__stat-headline {
   padding:72px 28px 24px;
   text-align:center;
 }
@@ -339,12 +387,26 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-tax__stat-headline strong {
   color:var(--ha-teal-deep); font-weight:800;
 }
+
+/* ===== Opportunities panel ===== */
+.ha-tax__opps {
+  max-width:1200px; margin:0 auto;
+  padding:72px 36px;
+}
+.ha-tax__opps-head {
+  text-align:center; max-width:760px; margin:0 auto 48px;
+}
+
 @media (max-width:700px) {
-  .ha-tax__hero { padding:56px 20px 56px; }
-  .ha-tax__hero h1 { font-size:36px; }
+  .ha-tax__hero { padding:48px 20px 48px; }
+  .ha-tax__hero h1 { font-size:34px; }
   .ha-tax__hero-sub { font-size:15px; }
+  .ha-tax__vision { padding:56px 20px 56px; }
+  .ha-tax__vision h2 { font-size:28px; }
+  .ha-tax__vision p { font-size:15px; }
   .ha-tax__stat-headline { padding:48px 20px 16px; }
-  .ha-tax__stat-headline h2 { font-size:34px; }
+  .ha-tax__stat-headline h2 { font-size:30px; }
+  .ha-tax__opps { padding:56px 20px; }
 }
 
 /* ===== Section frame ===== */
@@ -801,26 +863,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         Taxes are the engine of state government — funding healthcare, schools, housing, and the programs Hawaiʻi families rely on.
       </p>
 
-      <div class="ha-tax__spark" aria-hidden="true">
-        <div class="ha-tax__spark-label">Effective tax rate by income</div>
-        <div class="ha-tax__spark-bars">
-          <div style="height:71%"></div>
-          <div style="height:68%"></div>
-          <div style="height:71%"></div>
-          <div style="height:67%"></div>
-          <div style="height:53%"></div>
-        </div>
-        <div class="ha-tax__spark-axis">
-          <span>Lowest 20%</span>
-          <span>Top 20%</span>
-        </div>
+      <div class="ha-tax__tabs" role="tablist" aria-label="Section">
+        <span class="ha-tax__tabs-indicator" aria-hidden="true"></span>
+        <button class="ha-tax__tab active" data-panel="vision" role="tab" aria-selected="true" aria-controls="ha-tax-panel-vision">Vision</button>
+        <button class="ha-tax__tab" data-panel="overview" role="tab" aria-selected="false" aria-controls="ha-tax-panel-overview">Overview</button>
+        <button class="ha-tax__tab" data-panel="opportunities" role="tab" aria-selected="false" aria-controls="ha-tax-panel-opportunities">Opportunities</button>
       </div>
-
-      <button class="ha-tax__expand-btn" id="ha-tax-expand" aria-expanded="false" aria-controls="ha-tax-explainer">
-        <span class="lbl-closed">How Hawaiʻi's tax system works</span>
-        <span class="lbl-open">Hide the overview</span>
-        <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4l4 4 4-4"/></svg>
-      </button>
       <div>
         <a class="ha-tax__hero-subscribe" href="https://www.quorum.us/grassroots-action/signup/Hawaii-Appleseed-Center-for-Law-and-Economic-Justice/" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -831,41 +879,43 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   </header>
 
   <!-- ===================================
-       HUB STRIP — Latest Research / News / Action
+       DRAWER — Vision / Overview / Opportunities panels
        =================================== -->
-  <section class="ha-tax__hub" aria-label="Quick access">
-    <a class="ha-tax__hub-card" id="ha-tax-hub-research" href="#" target="_blank" rel="noopener">
-      <div class="ha-tax__hub-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
-      </div>
-      <div class="ha-tax__hub-card-eyebrow">Latest Research</div>
-      <h3 class="ha-tax__hub-card-title" id="ha-tax-hub-research-title">Loading featured research…</h3>
-      <p class="ha-tax__hub-card-meta" id="ha-tax-hub-research-meta">&nbsp;</p>
-      <span class="ha-tax__hub-card-link">
-        Read publication
-        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
-      </span>
-    </a>
+  <div class="ha-tax__panels">
 
-    <a class="ha-tax__hub-card" href="https://hiappleseed.org/blog" target="_blank" rel="noopener">
-      <div class="ha-tax__hub-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8z"/></svg>
+  <!-- =========== VISION PANEL =========== -->
+  <section class="ha-tax__panel active" id="ha-tax-panel-vision" role="tabpanel">
+    <div class="ha-tax__vision">
+      <span class="ha-tax__vision-eyebrow">Our Vision</span>
+      <h2>A tax code that asks more of those who can afford it — and <em>invests in everyone.</em></h2>
+      <p>
+        Hawaiʻi's tax system is one of the most regressive in the country. Working families pay a larger share of their income in state and local taxes than the wealthiest residents. We believe that's backwards.
+      </p>
+      <p>
+        We're working to build a tax code that taxes wealth like work, raises the revenue Hawaiʻi needs to fund healthcare, housing, schools, and food security, and gives working families room to breathe.
+      </p>
+      <div class="ha-tax__vision-pillars">
+        <div class="ha-tax__vision-pillar">
+          <div class="ha-tax__vision-pillar-eyebrow">Fair</div>
+          <h3>Tax wealth like work.</h3>
+          <p>Income from investments should be taxed at the same rate as income from a paycheck. Close loopholes that almost entirely benefit the wealthiest residents.</p>
+        </div>
+        <div class="ha-tax__vision-pillar">
+          <div class="ha-tax__vision-pillar-eyebrow">Adequate</div>
+          <h3>Fund what Hawaiʻi needs.</h3>
+          <p>Raise the revenue required to deliver healthcare, affordable housing, public schools, and food security — without cutting the services families rely on.</p>
+        </div>
+        <div class="ha-tax__vision-pillar">
+          <div class="ha-tax__vision-pillar-eyebrow">Equitable</div>
+          <h3>Lift the burden on working families.</h3>
+          <p>Hawaiʻi's poorest 20% pay 14.1% of their income in state and local taxes; the wealthiest 20% pay just 10.7%. We can flip that.</p>
+        </div>
       </div>
-      <div class="ha-tax__hub-card-eyebrow">In the News</div>
-      <h3 class="ha-tax__hub-card-title">Highlights from House Bill 1800</h3>
-      <p class="ha-tax__hub-card-meta">Apr 17, 2026 · The single most consequential bill of the session.</p>
-      <span class="ha-tax__hub-card-link">
-        Read on the blog
-        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
-      </span>
-    </a>
-
+    </div>
   </section>
 
-  <!-- ===================================
-       COLLAPSIBLE EXPLAINER
-       =================================== -->
-  <div class="ha-tax__explainer" id="ha-tax-explainer">
+  <!-- =========== OVERVIEW PANEL =========== -->
+  <section class="ha-tax__panel" id="ha-tax-panel-overview" role="tabpanel" hidden>
 
   <!-- Big headline stat above the pie -->
   <div class="ha-tax__stat-headline">
@@ -1010,13 +1060,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     </div>
   </section>
 
-  </div><!-- /.ha-tax__explainer -->
+  </section><!-- /#ha-tax-panel-overview -->
 
-  <!-- ===================================
-       LEGISLATIVE & POLICY PRIORITIES
-       =================================== -->
-  <section class="ha-tax__section">
-    <div class="ha-tax__section-head">
+  <!-- =========== OPPORTUNITIES PANEL =========== -->
+  <section class="ha-tax__panel" id="ha-tax-panel-opportunities" role="tabpanel" hidden>
+    <div class="ha-tax__opps">
+    <div class="ha-tax__opps-head">
       <div class="ha-tax__eyebrow">2026 Legislative Priorities</div>
       <h2 class="ha-tax__h2">The ultra-wealthy should pay their fair share</h2>
       <div class="ha-tax__h2-rule"></div>
@@ -1086,6 +1135,40 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         </div>
       </article>
     </div>
+    </div>
+  </section><!-- /#ha-tax-panel-opportunities -->
+
+  </div><!-- /.ha-tax__panels -->
+
+  <!-- ===================================
+       HUB STRIP — Latest Research / In the News
+       =================================== -->
+  <section class="ha-tax__hub" aria-label="Quick access">
+    <a class="ha-tax__hub-card" id="ha-tax-hub-research" href="#" target="_blank" rel="noopener">
+      <div class="ha-tax__hub-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+      </div>
+      <div class="ha-tax__hub-card-eyebrow">Latest Research</div>
+      <h3 class="ha-tax__hub-card-title" id="ha-tax-hub-research-title">Loading featured research…</h3>
+      <p class="ha-tax__hub-card-meta" id="ha-tax-hub-research-meta">&nbsp;</p>
+      <span class="ha-tax__hub-card-link">
+        Read publication
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+      </span>
+    </a>
+
+    <a class="ha-tax__hub-card" href="https://hiappleseed.org/blog" target="_blank" rel="noopener">
+      <div class="ha-tax__hub-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8z"/></svg>
+      </div>
+      <div class="ha-tax__hub-card-eyebrow">In the News</div>
+      <h3 class="ha-tax__hub-card-title">Highlights from House Bill 1800</h3>
+      <p class="ha-tax__hub-card-meta">Apr 17, 2026 · The single most consequential bill of the session.</p>
+      <span class="ha-tax__hub-card-link">
+        Read on the blog
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+      </span>
+    </a>
   </section>
 
   <!-- ===================================
@@ -1324,31 +1407,60 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     }
   }
 
-  // ===== Expand/collapse =====
-  function initExpand() {
-    const btn = document.getElementById('ha-tax-expand');
-    const hero = document.getElementById('ha-tax-hero');
-    const panel = document.getElementById('ha-tax-explainer');
-    if (!btn || !panel) return;
-    let isOpen = false;
+  // ===== Tab panel switcher =====
+  function initTabs() {
+    const tabs = document.querySelectorAll('.ha-tax__tab');
+    const panels = document.querySelectorAll('.ha-tax__panel');
+    const indicator = document.querySelector('.ha-tax__tabs-indicator');
+    if (!tabs.length || !panels.length) return;
+
     let pieInitialized = false;
-    btn.addEventListener('click', () => {
-      isOpen = !isOpen;
-      hero.classList.toggle('is-open', isOpen);
-      panel.classList.toggle('is-open', isOpen);
-      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      if (isOpen && !pieInitialized) {
-        // Defer chart init until panel is visible so canvas can size correctly
+
+    function setTab(name) {
+      tabs.forEach((t, i) => {
+        const active = t.dataset.panel === name;
+        t.classList.toggle('active', active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+        if (active && indicator) {
+          indicator.style.transform = `translateX(${t.offsetLeft - 4}px)`;
+        }
+      });
+      panels.forEach(p => {
+        const active = p.id === `ha-tax-panel-${name}`;
+        p.classList.toggle('active', active);
+        if (active) p.removeAttribute('hidden');
+        else p.setAttribute('hidden', '');
+      });
+      if (name === 'overview' && !pieInitialized) {
         requestAnimationFrame(() => { initPie(); pieInitialized = true; });
       }
+    }
+
+    tabs.forEach(t => {
+      t.addEventListener('click', () => setTab(t.dataset.panel));
     });
+
+    // Position indicator on initial active tab + window resize
+    function positionIndicator() {
+      const active = document.querySelector('.ha-tax__tab.active');
+      if (active && indicator) {
+        indicator.style.transform = `translateX(${active.offsetLeft - 4}px)`;
+      }
+    }
+    // Run after fonts/layout settle
+    requestAnimationFrame(() => requestAnimationFrame(positionIndicator));
+    window.addEventListener('load', positionIndicator);
+    window.addEventListener('resize', positionIndicator);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(positionIndicator);
+    }
   }
 
   // ===== Init =====
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { initExpand(); loadPubs(); });
+    document.addEventListener('DOMContentLoaded', () => { initTabs(); loadPubs(); });
   } else {
-    initExpand(); loadPubs();
+    initTabs(); loadPubs();
   }
 })();
 </script>
