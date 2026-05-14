@@ -222,15 +222,22 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   .ha-pub__data-grid { padding:28px 20px 64px; grid-template-columns:1fr; gap:24px; }
 }
 .ha-pub__data-card {
+  position:relative;
   display:flex; flex-direction:column;
   border:1px solid var(--ha-rule);
   border-radius:4px; overflow:hidden;
-  background:var(--ha-white);
-  transition:box-shadow .2s, transform .2s;
+  background:rgba(132,169,140,.06);
+  transition:box-shadow .2s, transform .2s, border-color .2s;
+}
+.ha-pub__data-card::before {
+  content:""; position:absolute; top:0; left:0; right:0;
+  height:4px; background:var(--ha-teal-deep);
+  z-index:2;
 }
 .ha-pub__data-card:hover {
-  box-shadow:0 10px 32px rgba(47,62,70,.10);
+  box-shadow:0 10px 32px rgba(47,62,70,.12);
   transform:translateY(-2px);
+  border-color:var(--ha-teal);
 }
 .ha-pub__data-card-thumb {
   aspect-ratio:16/10;
@@ -255,24 +262,31 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 .ha-pub__data-card-title {
   font-family:'Manrope',sans-serif; font-weight:700;
-  font-size:20px; line-height:1.25; color:var(--ha-charcoal);
+  font-size:25px; line-height:1.2; color:var(--ha-charcoal);
+  letter-spacing:-.01em;
   margin:0;
 }
 .ha-pub__data-card-desc {
-  font-size:15px; line-height:1.6; color:rgba(47,62,70,.72);
+  font-size:15px; line-height:1.6; color:rgba(47,62,70,.85);
   margin:0;
 }
-.ha-pub__data-card-link {
-  display:inline-flex; align-items:center; gap:6px;
-  margin-top:auto; padding-top:6px;
-  font-family:'Poppins',sans-serif; font-size:13px; font-weight:600;
-  letter-spacing:.04em; color:var(--ha-teal-deep);
-  transition:gap .18s;
+.ha-pub a.ha-pub__data-card-link {
+  display:inline-flex; align-items:center; gap:8px;
+  margin-top:14px; align-self:flex-start;
+  padding:11px 22px;
+  background:var(--ha-teal-deep); color:var(--ha-white);
+  border-radius:3px;
+  font-family:'Poppins',sans-serif; font-size:14px; font-weight:600;
+  letter-spacing:.02em;
+  transition:background .18s, gap .18s, transform .18s;
 }
-.ha-pub__data-card-link:hover { gap:10px; }
-.ha-pub__data-card-link svg { width:13px; height:13px; }
+.ha-pub a.ha-pub__data-card-link:hover {
+  background:var(--ha-slate); color:var(--ha-white); gap:11px;
+}
+.ha-pub__data-card-link svg { width:14px; height:14px; }
 @media (max-width:700px) {
-  .ha-pub__data-card-title { font-size:18px; }
+  .ha-pub__data-card-title { font-size:22px; }
+  .ha-pub__data-card-link { padding:10px 18px; font-size:13.5px; }
 }
 
 /* ===== Filter / search toolbar ===== */
@@ -432,13 +446,22 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   margin:0;
 }
 .ha-pub__card-excerpt {
-  font-size:15px; line-height:1.6; color:rgba(47,62,70,.7);
+  font-size:15px; line-height:1.6; color:rgba(47,62,70,.85);
   margin:0; display:-webkit-box;
   -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
 }
 .ha-pub__card-author {
-  font-size:12px; color:rgba(47,62,70,.5);
-  font-family:'Poppins',sans-serif; margin-top:auto; padding-top:8px;
+  font-family:'Manrope',sans-serif; font-size:13px; font-weight:600;
+  color:var(--ha-charcoal);
+  margin-top:auto; padding-top:12px;
+  border-top:1px solid var(--ha-rule);
+}
+.ha-pub__card-author::before {
+  content:"BY ";
+  font-family:'Poppins',sans-serif; font-size:11px; font-weight:600;
+  letter-spacing:.15em;
+  color:var(--ha-teal-deep);
+  margin-right:2px;
 }
 .ha-pub__card-link {
   display:inline-flex; align-items:center; gap:6px;
@@ -756,7 +779,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
             <a href="${url}" target="_blank" rel="noopener">${title}</a>
           </h2>
           ${excerpt ? `<p class="ha-pub__card-excerpt">${excerpt}</p>` : ''}
-          ${author ? `<p class="ha-pub__card-author">By ${author}</p>` : ''}
+          ${author ? `<p class="ha-pub__card-author">${author}</p>` : ''}
           <a class="ha-pub__card-link" href="${url}" target="_blank" rel="noopener" aria-label="Read ${title}">
             Read publication
             <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
