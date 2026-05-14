@@ -143,6 +143,9 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   position:relative;
   overflow:hidden;
 }
+@media (max-width:700px) {
+  .ha-tax__hero { padding:56px 20px 64px; }
+}
 .ha-tax__hero-inner { max-width:900px; margin:0 auto; position:relative; z-index:1; }
 .ha-tax__hero-eyebrow {
   font-family:'Poppins',sans-serif;
@@ -181,11 +184,87 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-tax__hero.is-open button.ha-tax__expand-btn .lbl-open { display:inline; }
 .ha-tax__hero.is-open button.ha-tax__expand-btn .lbl-closed { display:none; }
 
+/* ===== Hub strip (3-up command center under hero) ===== */
+.ha-tax__hub {
+  max-width:1200px;
+  margin:-44px auto 0;
+  padding:0 36px;
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;
+  position:relative; z-index:5;
+}
+@media (max-width:900px) {
+  .ha-tax__hub { grid-template-columns:1fr; padding:0 20px; margin-top:-32px; }
+}
+.ha-tax a.ha-tax__hub-card,
+.ha-tax__hub-card {
+  background:#fff;
+  border:1px solid var(--ha-rule);
+  border-radius:6px;
+  padding:26px 24px 22px;
+  display:flex; flex-direction:column; gap:9px;
+  box-shadow:0 12px 32px rgba(47,62,70,.10);
+  transition:transform .2s, box-shadow .2s;
+  text-decoration:none; color:inherit;
+}
+.ha-tax a.ha-tax__hub-card:hover,
+.ha-tax__hub-card:hover {
+  transform:translateY(-2px);
+  box-shadow:0 16px 40px rgba(47,62,70,.14);
+}
+.ha-tax__hub-card-icon {
+  width:38px; height:38px; border-radius:8px;
+  background:rgba(82,121,111,.12);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:2px; flex:none;
+}
+.ha-tax__hub-card-icon svg {
+  width:20px; height:20px; stroke:var(--ha-teal-deep);
+  fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;
+}
+.ha-tax__hub-card-eyebrow {
+  font-size:10.5px; font-weight:700;
+  letter-spacing:.2em; text-transform:uppercase;
+  color:var(--ha-teal-deep);
+}
+.ha-tax__hub-card-title {
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:18px; line-height:1.3;
+  color:var(--ha-charcoal); margin:0;
+}
+.ha-tax__hub-card-meta {
+  font-size:13px; line-height:1.5;
+  color:rgba(47,62,70,.7); margin:0;
+}
+.ha-tax__hub-card-link {
+  margin-top:auto; padding-top:6px;
+  font-size:13.5px; font-weight:600;
+  color:var(--ha-teal-deep);
+  display:inline-flex; align-items:center; gap:5px;
+  transition:gap .18s;
+}
+.ha-tax__hub-card:hover .ha-tax__hub-card-link { gap:8px; }
+.ha-tax__hub-card-link svg { width:12px; height:12px; }
+
+/* Action card variant */
+.ha-tax a.ha-tax__hub-card--action,
+.ha-tax__hub-card--action {
+  background:var(--ha-teal-deep);
+  border-color:var(--ha-teal-deep);
+  color:#fff;
+}
+.ha-tax__hub-card--action .ha-tax__hub-card-icon { background:rgba(255,255,255,.18); }
+.ha-tax__hub-card--action .ha-tax__hub-card-icon svg { stroke:#fff; }
+.ha-tax__hub-card--action .ha-tax__hub-card-eyebrow { color:rgba(255,255,255,.78); }
+.ha-tax__hub-card--action .ha-tax__hub-card-title { color:#fff; }
+.ha-tax__hub-card--action .ha-tax__hub-card-meta { color:rgba(255,255,255,.82); }
+.ha-tax__hub-card--action .ha-tax__hub-card-link { color:#fff; }
+
 /* ===== Collapsible explainer ===== */
 .ha-tax__explainer {
   overflow:hidden;
   max-height:0;
   transition:max-height .5s ease;
+  margin-top:72px;
 }
 .ha-tax__explainer.is-open { max-height:9999px; }
 
@@ -680,6 +759,50 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   </header>
 
   <!-- ===================================
+       HUB STRIP — Latest Research / News / Action
+       =================================== -->
+  <section class="ha-tax__hub" aria-label="Quick access">
+    <a class="ha-tax__hub-card" id="ha-tax-hub-research" href="#" target="_blank" rel="noopener">
+      <div class="ha-tax__hub-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+      </div>
+      <div class="ha-tax__hub-card-eyebrow">Latest Research</div>
+      <h3 class="ha-tax__hub-card-title" id="ha-tax-hub-research-title">Loading featured research…</h3>
+      <p class="ha-tax__hub-card-meta" id="ha-tax-hub-research-meta">&nbsp;</p>
+      <span class="ha-tax__hub-card-link">
+        Read publication
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+      </span>
+    </a>
+
+    <a class="ha-tax__hub-card" href="https://hiappleseed.org/blog" target="_blank" rel="noopener">
+      <div class="ha-tax__hub-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8z"/></svg>
+      </div>
+      <div class="ha-tax__hub-card-eyebrow">In the News</div>
+      <h3 class="ha-tax__hub-card-title">Highlights from House Bill 1800</h3>
+      <p class="ha-tax__hub-card-meta">Apr 17, 2026 · The single most consequential bill of the session.</p>
+      <span class="ha-tax__hub-card-link">
+        Read on the blog
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+      </span>
+    </a>
+
+    <a class="ha-tax__hub-card ha-tax__hub-card--action" href="https://www.quorum.us/grassroots-action/signup/Hawaii-Appleseed-Center-for-Law-and-Economic-Justice/" target="_blank" rel="noopener">
+      <div class="ha-tax__hub-card-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+      </div>
+      <div class="ha-tax__hub-card-eyebrow">Take Action</div>
+      <h3 class="ha-tax__hub-card-title">Help pass fair tax reform.</h3>
+      <p class="ha-tax__hub-card-meta">Get email alerts when bills move and action campaigns open.</p>
+      <span class="ha-tax__hub-card-link">
+        Subscribe to alerts
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+      </span>
+    </a>
+  </section>
+
+  <!-- ===================================
        COLLAPSIBLE EXPLAINER
        =================================== -->
   <div class="ha-tax__explainer" id="ha-tax-explainer">
@@ -1099,6 +1222,14 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       const f = items[0];
       const fUrl = f.fullUrl ? 'https://hiappleseed.org' + f.fullUrl : '#';
       const fImg = f.assetUrl ? `${f.assetUrl}?format=900w` : '';
+
+      // Hub research card
+      const hubCard = document.getElementById('ha-tax-hub-research');
+      const hubTitle = document.getElementById('ha-tax-hub-research-title');
+      const hubMeta = document.getElementById('ha-tax-hub-research-meta');
+      if (hubCard) hubCard.href = fUrl;
+      if (hubTitle) hubTitle.textContent = f.title || 'Untitled';
+      if (hubMeta) hubMeta.textContent = `${formatDate(f.publishOn)}${f.author ? ' · By ' + f.author : ''}`;
       document.getElementById('ha-tax-featured').innerHTML = `
         <div class="ha-tax__featured-pub-thumb">${fImg ? `<img src="${fImg}" alt="">` : ''}</div>
         <div class="ha-tax__featured-pub-body">
