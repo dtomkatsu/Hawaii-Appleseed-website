@@ -165,24 +165,27 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   max-width:620px; margin:0 auto 16px;
 }
 
-/* ===== Tab bar (top of panels area) ===== */
+/* ===== Tab bar (extends hero, dark) ===== */
 .ha-tax__tab-bar {
-  position:sticky; top:0; z-index:10;
-  background:var(--ha-bg);
-  padding:18px 28px;
+  background:linear-gradient(135deg, var(--ha-charcoal) 0%, var(--ha-slate) 100%);
+  padding:0 28px 32px;
   display:flex; justify-content:center;
-  border-bottom:1px solid var(--ha-rule);
-  box-shadow:0 2px 0 rgba(53,79,82,.04);
+  position:relative;
+}
+.ha-tax__tab-bar::after {
+  content:""; position:absolute; left:0; right:0; bottom:0;
+  height:1px; background:rgba(255,255,255,.06);
 }
 .ha-tax__tabs {
   --tab-w: 170px;
   position:relative;
   display:inline-flex; align-items:center;
   padding:4px;
-  background:#fff;
-  border:1px solid var(--ha-rule);
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.14);
   border-radius:999px;
-  box-shadow:0 1px 0 rgba(53,79,82,.03);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
 }
 .ha-tax__tabs-indicator {
   position:absolute;
@@ -192,7 +195,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   border-radius:999px;
   transition:transform 340ms cubic-bezier(.4,0,.2,1);
   z-index:0;
-  box-shadow:0 2px 12px rgba(82,121,111,.32);
+  box-shadow:0 2px 14px rgba(82,121,111,.5);
 }
 .ha-tax button.ha-tax__tab {
   position:relative; z-index:1;
@@ -201,13 +204,13 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   cursor:pointer;
   font-family:'Manrope',sans-serif; font-weight:700;
   font-size:15.5px; letter-spacing:.01em;
-  color:rgba(47,62,70,.55);
+  color:rgba(255,255,255,.6);
   border-radius:999px;
   transition:color .22s;
   white-space:nowrap;
 }
 .ha-tax button.ha-tax__tab.active { color:#fff; cursor:default; }
-.ha-tax button.ha-tax__tab:not(.active):hover { color:var(--ha-teal-deep); }
+.ha-tax button.ha-tax__tab:not(.active):hover { color:rgba(255,255,255,.92); }
 
 .ha-tax a.ha-tax__hero-subscribe {
   display:inline-flex; align-items:center; gap:7px;
@@ -322,11 +325,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   to   { opacity:1; transform:translateY(0); }
 }
 
-/* ===== Vision panel ===== */
+/* ===== Vision panel (manifesto treatment) ===== */
 .ha-tax__vision {
-  max-width:920px; margin:0 auto;
-  padding:56px 36px 72px;
+  max-width:1000px; margin:0 auto;
+  padding:64px 36px 80px;
   text-align:center;
+  position:relative;
 }
 .ha-tax__vision-eyebrow {
   display:inline-block;
@@ -336,43 +340,95 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   background:rgba(82,121,111,.1); padding:5px 12px; border-radius:3px;
   margin-bottom:22px;
 }
+.ha-tax__vision-quote {
+  font-family:'Fraunces','Manrope',serif; font-style:italic; font-weight:600;
+  font-size:120px; line-height:.6; letter-spacing:-.02em;
+  color:rgba(82,121,111,.18);
+  margin:0 auto 4px;
+  user-select:none;
+}
 .ha-tax__vision h2 {
   font-family:'Manrope',sans-serif; font-weight:800;
-  font-size:42px; line-height:1.15; letter-spacing:-.02em;
-  color:var(--ha-charcoal); margin:0 0 24px;
+  font-size:44px; line-height:1.12; letter-spacing:-.02em;
+  color:var(--ha-charcoal);
+  max-width:880px; margin:0 auto 18px;
 }
 .ha-tax__vision h2 em {
-  font-style:normal; color:var(--ha-teal-deep);
+  font-family:'Fraunces',serif; font-style:italic; font-weight:600;
+  color:var(--ha-teal-deep);
+}
+.ha-tax__vision-rule {
+  width:60px; height:3px; background:var(--ha-teal-deep);
+  margin:0 auto 26px; border-radius:2px;
 }
 .ha-tax__vision p {
-  font-size:17px; line-height:1.7; color:rgba(47,62,70,.85);
-  max-width:660px; margin:0 auto 18px;
+  font-size:17px; line-height:1.7; color:rgba(47,62,70,.82);
+  max-width:680px; margin:0 auto 18px;
 }
 .ha-tax__vision-pillars {
   display:grid; grid-template-columns:repeat(3,1fr);
-  gap:24px; margin-top:48px; text-align:left;
+  gap:22px; margin-top:52px; text-align:left;
 }
 @media (max-width:800px) {
   .ha-tax__vision-pillars { grid-template-columns:1fr; gap:18px; }
 }
 .ha-tax__vision-pillar {
-  background:#fff; border:1px solid var(--ha-rule);
-  border-top:3px solid var(--ha-teal-deep);
-  border-radius:4px; padding:24px 22px;
+  position:relative;
+  background:rgba(132,169,140,.07);
+  border:1px solid var(--ha-rule);
+  border-radius:6px; padding:28px 26px 26px;
+  transition:transform .2s, box-shadow .2s, background .2s;
+}
+.ha-tax__vision-pillar::before {
+  content:""; position:absolute; top:0; left:0; right:0;
+  height:4px; background:var(--ha-teal-deep); border-radius:6px 6px 0 0;
+}
+.ha-tax__vision-pillar:hover {
+  transform:translateY(-2px);
+  box-shadow:0 10px 28px rgba(47,62,70,.08);
+  background:rgba(132,169,140,.11);
+}
+.ha-tax__vision-pillar-icon {
+  width:42px; height:42px;
+  background:#fff; border:1px solid rgba(82,121,111,.18);
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:16px;
+}
+.ha-tax__vision-pillar-icon svg {
+  width:22px; height:22px; stroke:var(--ha-teal-deep);
+  fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round;
 }
 .ha-tax__vision-pillar-eyebrow {
-  font-size:11px; font-weight:600;
+  font-size:10.5px; font-weight:700;
   letter-spacing:.18em; text-transform:uppercase;
-  color:var(--ha-teal-deep); margin-bottom:10px;
+  color:var(--ha-teal-deep); margin-bottom:8px;
 }
 .ha-tax__vision-pillar h3 {
   font-family:'Manrope',sans-serif; font-weight:700;
-  font-size:18px; line-height:1.3; color:var(--ha-charcoal);
-  margin:0 0 8px;
+  font-size:18px; line-height:1.25; color:var(--ha-charcoal);
+  margin:0 0 10px;
 }
 .ha-tax__vision-pillar p {
   font-size:14px; line-height:1.6; color:rgba(47,62,70,.78);
-  margin:0; text-align:left;
+  margin:0 0 16px; text-align:left;
+  max-width:none;
+}
+.ha-tax__vision-pillar-stat {
+  border-top:1px solid var(--ha-rule);
+  padding-top:14px;
+  margin-top:auto;
+}
+.ha-tax__vision-pillar-stat-num {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:22px; line-height:1.1; color:var(--ha-charcoal);
+  letter-spacing:-.01em; margin-bottom:3px;
+}
+.ha-tax__vision-pillar-stat-label {
+  font-size:12px; line-height:1.45; color:rgba(47,62,70,.65);
+}
+.ha-tax__vision-pillar-stat-label strong {
+  color:var(--ha-teal-deep); font-weight:600;
 }
 
 /* ===== Stat headline (Overview top) ===== */
@@ -899,7 +955,9 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <section class="ha-tax__panel active" id="ha-tax-panel-vision" role="tabpanel">
     <div class="ha-tax__vision">
       <span class="ha-tax__vision-eyebrow">Our Vision</span>
-      <h2>A tax code that asks more of those who can afford it — and <em>invests in everyone.</em></h2>
+      <div class="ha-tax__vision-quote" aria-hidden="true">&ldquo;</div>
+      <h2>A tax code that asks more of those who can afford it — and <em>invests in everyone</em>.</h2>
+      <div class="ha-tax__vision-rule"></div>
       <p>
         Hawaiʻi's tax system is one of the most regressive in the country. Working families pay a larger share of their income in state and local taxes than the wealthiest residents. We believe that's backwards.
       </p>
@@ -907,21 +965,46 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         We're working to build a tax code that taxes wealth like work, raises the revenue Hawaiʻi needs to fund healthcare, housing, schools, and food security, and gives working families room to breathe.
       </p>
       <div class="ha-tax__vision-pillars">
-        <div class="ha-tax__vision-pillar">
+
+        <article class="ha-tax__vision-pillar">
+          <div class="ha-tax__vision-pillar-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M5 8h14"/><path d="M5 8l-2 6h7l-2-6"/><path d="M19 8l-2 6h7l-2-6"/><path d="M9 21h6"/></svg>
+          </div>
           <div class="ha-tax__vision-pillar-eyebrow">Fair</div>
           <h3>Tax wealth like work.</h3>
-          <p>Income from investments should be taxed at the same rate as income from a paycheck. Close loopholes that almost entirely benefit the wealthiest residents.</p>
-        </div>
-        <div class="ha-tax__vision-pillar">
+          <p>Income from investments should be taxed at the same rate as a paycheck. Close loopholes that almost entirely benefit the wealthiest residents.</p>
+          <div class="ha-tax__vision-pillar-stat">
+            <div class="ha-tax__vision-pillar-stat-num">7.25% <span style="font-size:14px;color:rgba(47,62,70,.45);font-weight:600;">vs</span> 11%</div>
+            <div class="ha-tax__vision-pillar-stat-label">Capital gains rate <strong>vs</strong> top wage rate today</div>
+          </div>
+        </article>
+
+        <article class="ha-tax__vision-pillar">
+          <div class="ha-tax__vision-pillar-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/><path d="M9 11h.01M15 11h.01"/></svg>
+          </div>
           <div class="ha-tax__vision-pillar-eyebrow">Adequate</div>
           <h3>Fund what Hawaiʻi needs.</h3>
-          <p>Raise the revenue required to deliver healthcare, affordable housing, public schools, and food security — without cutting the services families rely on.</p>
-        </div>
-        <div class="ha-tax__vision-pillar">
+          <p>Raise the revenue required to deliver healthcare, affordable housing, public schools, and food security — without cutting services families rely on.</p>
+          <div class="ha-tax__vision-pillar-stat">
+            <div class="ha-tax__vision-pillar-stat-num">$11.08B</div>
+            <div class="ha-tax__vision-pillar-stat-label">Raised in tax revenue last year — <strong>and still not enough</strong></div>
+          </div>
+        </article>
+
+        <article class="ha-tax__vision-pillar">
+          <div class="ha-tax__vision-pillar-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M3 12c2-1 3-1 5 0 1.5.7 2.5.7 4 0 1.5-.7 2.5-.7 4 0 2 1 3 1 5 0"/><path d="M3 6c2-1 3-1 5 0 1.5.7 2.5.7 4 0 1.5-.7 2.5-.7 4 0 2 1 3 1 5 0"/><path d="M3 18c2-1 3-1 5 0 1.5.7 2.5.7 4 0 1.5-.7 2.5-.7 4 0 2 1 3 1 5 0"/></svg>
+          </div>
           <div class="ha-tax__vision-pillar-eyebrow">Equitable</div>
           <h3>Lift the burden on working families.</h3>
-          <p>Hawaiʻi's poorest 20% pay 14.1% of their income in state and local taxes; the wealthiest 20% pay just 10.7%. We can flip that.</p>
-        </div>
+          <p>Hawaiʻi's poorest 20% pay a larger share of their income in state and local taxes than the wealthiest 20%. We can flip that.</p>
+          <div class="ha-tax__vision-pillar-stat">
+            <div class="ha-tax__vision-pillar-stat-num">14.1% <span style="font-size:14px;color:rgba(47,62,70,.45);font-weight:600;">vs</span> 10.7%</div>
+            <div class="ha-tax__vision-pillar-stat-label">What the poorest 20% pay <strong>vs</strong> the wealthiest 20%</div>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
