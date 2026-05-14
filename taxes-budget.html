@@ -143,7 +143,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-tax__hero {
   background:transparent;
   color:#fff;
-  padding:54px 28px 48px;
+  padding:72px 28px 56px;
   text-align:center;
   position:relative;
   overflow:hidden;
@@ -152,22 +152,33 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   .ha-tax__hero { padding:40px 20px 36px; }
 }
 .ha-tax__hero-inner { max-width:900px; margin:0 auto; position:relative; z-index:1; }
-.ha-tax__hero-eyebrow {
-  font-family:'Poppins',sans-serif;
-  text-transform:uppercase; letter-spacing:.32em; font-size:11px;
-  color:var(--ha-ash); margin-bottom:14px;
-  display:flex; align-items:center; justify-content:center; gap:14px;
-}
-.ha-tax__hero-eyebrow::before,
-.ha-tax__hero-eyebrow::after { content:""; width:28px; height:1px; background:var(--ha-ash); opacity:.5; }
 .ha-tax__hero h1 {
   font-family:'Manrope',sans-serif; font-weight:800;
-  font-size:40px; line-height:1.08; letter-spacing:-.02em;
-  margin:0 0 14px;
+  font-size:78px; line-height:1; letter-spacing:-.035em;
+  margin:0 0 30px;
+  color:#fff;
+}
+.ha-tax__hero h1 .ha-tax__hero-amp {
+  font-weight:400;
+  color:rgba(255,255,255,.78);
+  letter-spacing:-.025em;
+  margin-left:.12em;
+}
+.ha-tax__hero-sub-wrap {
+  display:inline-flex; align-items:stretch; gap:18px;
+  max-width:640px; width:100%;
+  text-align:left;
+  margin:0 auto 26px;
+}
+.ha-tax__hero-sub-bar {
+  width:3px; flex:none;
+  background:var(--ha-teal);
+  border-radius:2px;
 }
 .ha-tax__hero-sub {
-  font-size:16px; line-height:1.6; color:rgba(202,210,197,.82);
-  max-width:620px; margin:0 auto 16px;
+  font-size:17px; line-height:1.55;
+  color:rgba(202,210,197,.86);
+  margin:0; flex:1; min-width:0;
 }
 
 /* ===== Tab bar (extends hero, dark) ===== */
@@ -528,8 +539,9 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 
 @media (max-width:700px) {
-  .ha-tax__hero { padding:48px 20px 48px; }
-  .ha-tax__hero h1 { font-size:34px; }
+  .ha-tax__hero { padding:56px 20px 48px; }
+  .ha-tax__hero h1 { font-size:48px; letter-spacing:-.03em; margin-bottom:22px; }
+  .ha-tax__hero-sub-wrap { gap:14px; }
   .ha-tax__hero-sub { font-size:15px; }
   .ha-tax__vision { padding:56px 20px 56px; }
   .ha-tax__vision h2 { font-size:28px; }
@@ -1045,22 +1057,25 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       Get alerts
     </a>
     <div class="ha-tax__hero-inner">
-      <h1>How Hawaiʻi funds <br>our shared future.</h1>
-      <p class="ha-tax__hero-sub">
-        Taxes are the engine of state government — funding healthcare, schools, housing, and the programs Hawaiʻi families rely on.
-      </p>
+      <h1>Taxes <span class="ha-tax__hero-amp">&amp; Budget</span></h1>
+      <div class="ha-tax__hero-sub-wrap">
+        <span class="ha-tax__hero-sub-bar" aria-hidden="true"></span>
+        <p class="ha-tax__hero-sub">
+          The engine that funds healthcare, schools, housing — and the programs Hawaiʻi families rely on.
+        </p>
+      </div>
       <div class="ha-tax__hero-actions">
         <a class="ha-tax__hero-pill" href="#ha-tax-featured">
           <span class="pill-icon">
             <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
           </span>
-          <span class="pill-label">Latest Research</span>
+          <span class="pill-label">Research</span>
         </a>
         <a class="ha-tax__hero-pill" href="#ha-tax-news">
           <span class="pill-icon">
             <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8z"/></svg>
           </span>
-          <span class="pill-label">In the News</span>
+          <span class="pill-label">News</span>
         </a>
       </div>
     </div>
