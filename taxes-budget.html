@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Taxes &amp; Budget — Hawaiʻi Appleseed</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,600&display=swap">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+
+<style>
+/* ============================================================
+   PREVIEW-ONLY chrome (announce / nav / footer).
+   Skip this block when injecting into Squarespace.
+   ============================================================ */
+
+html,body { margin:0; padding:0; background:#fff; }
+html { scroll-behavior:smooth; }
+body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F3E46; }
+
+.px-announce {
+  background:#2F3E46; color:#fff;
+  font:500 13px/1.4 'Poppins',sans-serif; letter-spacing:.01em;
+  padding:10px 18px; text-align:center;
+  position:fixed; top:0; left:0; right:0; z-index:50;
+}
+.px-announce a { color:#fff; text-decoration:underline; }
+.px-announce .x { position:absolute; right:14px; top:50%; transform:translateY(-50%); opacity:.7; cursor:pointer; }
+
+.px-nav {
+  background:#fff; border-bottom:1px solid rgba(53,79,82,.18);
+  padding:18px 28px; display:flex; align-items:center; gap:32px;
+  position:fixed; top:38px; left:0; right:0; z-index:49;
+  font-family:'Poppins',sans-serif;
+}
+.px-nav .px-logo {
+  display:flex; align-items:center; gap:12px;
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:20px; color:#52796F; letter-spacing:.05em;
+}
+.px-nav .px-logo svg { width:36px; height:36px; }
+.px-nav .px-spacer { flex:1; }
+.px-nav .px-links { display:none; gap:28px; font-size:14px; font-weight:500; color:#2F3E46; }
+.px-nav .px-links a { color:inherit; text-decoration:none; }
+.px-nav .px-links a:hover { color:#52796F; }
+.px-nav .px-links a.active { color:#52796F; font-weight:600; }
+@media (min-width:900px) { .px-nav .px-links { display:flex; } }
+
+.px-footer {
+  background:#2F3E46; color:#CAD2C5; padding:60px 28px 40px;
+  font-family:'Poppins',sans-serif; font-size:14px; line-height:1.7;
+}
+.px-footer .px-foot-grid {
+  display:grid; grid-template-columns:1fr; gap:32px;
+  max-width:1200px; margin:0 auto 40px;
+}
+@media (min-width:760px) { .px-footer .px-foot-grid { grid-template-columns:2fr 1fr 1fr; } }
+.px-footer h4 {
+  font-family:'Manrope',sans-serif; font-weight:700;
+  color:#fff; margin:0 0 12px; font-size:14px;
+  letter-spacing:.04em; text-transform:uppercase;
+}
+.px-footer a { color:#CAD2C5; text-decoration:none; display:block; margin-bottom:6px; }
+.px-footer a:hover { color:#84A98C; }
+.px-foot-bottom {
+  max-width:1200px; margin:0 auto; padding-top:24px;
+  border-top:1px solid rgba(202,210,197,.18);
+  display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; font-size:12px;
+}
+
+.px-spacer-top { height:120px; }
+</style>
+</head>
+<body>
+
+<!-- PREVIEW-ONLY: announce bar -->
+<div class="px-announce">
+  New Data Tool: <a href="#">Hawaiʻi Budget Bill Draft Tracker</a>
+  <span class="x" onclick="this.parentElement.style.display='none'">×</span>
+</div>
+
+<!-- PREVIEW-ONLY: nav -->
+<nav class="px-nav">
+  <div class="px-logo">
+    <svg viewBox="0 0 40 40" fill="none">
+      <path d="M20 8c-3 4-3 9 0 13 3-4 3-9 0-13z" fill="#52796F"/>
+      <path d="M14 14c-2 5 1 10 6 11 1-5-1-10-6-11z" fill="#84A98C"/>
+      <path d="M26 14c2 5-1 10-6 11-1-5 1-10 6-11z" fill="#84A98C"/>
+      <ellipse cx="20" cy="32" rx="9" ry="2" fill="#CAD2C5"/>
+    </svg>
+    HAWAIʻI APPLESEED
+  </div>
+  <div class="px-spacer"></div>
+  <div class="px-links">
+    <a href="index.html">Home</a>
+    <a href="our-story.html">Our Story</a>
+    <a href="our-mission.html">Our Mission</a>
+    <a href="our-team.html">Our Team</a>
+    <a href="#" class="active">Issues</a>
+    <a href="publications.html">Publications</a>
+    <a href="#">Donate</a>
+  </div>
+</nav>
+
+<div class="px-spacer-top"></div>
+
+<!-- ============================================================
+     BEGIN ha-tax
+     Copy everything below this comment (up to END ha-tax)
+     into a Squarespace Code Block on the Taxes & Budget page.
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,600&display=swap">
+
+<style>
+.ha-tax {
+  --ha-charcoal:  #2F3E46;
+  --ha-slate:     #354F52;
+  --ha-teal-deep: #52796F;
+  --ha-teal:      #84A98C;
+  --ha-ash:       #CAD2C5;
+  --ha-bg:        #F4F7F4;
+  --ha-white:     #FFFFFF;
+  --ha-rule:      rgba(53,79,82,.14);
+
+  font-family:'Poppins',sans-serif;
+  color:var(--ha-charcoal);
+  line-height:1.6;
+}
+.ha-tax a { color:inherit; }
+.ha-tax * { box-sizing:border-box; }
+.ha-tax img { max-width:100%; }
+
+/* ===== Hero ===== */
+.ha-tax__hero {
+  background:linear-gradient(135deg, var(--ha-charcoal) 0%, var(--ha-slate) 100%);
+  color:#fff;
+  padding:80px 28px 96px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.ha-tax__hero-inner { max-width:900px; margin:0 auto; position:relative; z-index:1; }
+.ha-tax__hero-eyebrow {
+  font-family:'Poppins',sans-serif;
+  text-transform:uppercase; letter-spacing:.32em; font-size:11px;
+  color:var(--ha-ash); margin-bottom:18px;
+  display:flex; align-items:center; justify-content:center; gap:14px;
+}
+.ha-tax__hero-eyebrow::before,
+.ha-tax__hero-eyebrow::after { content:""; width:28px; height:1px; background:var(--ha-ash); opacity:.5; }
+.ha-tax__hero h1 {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:54px; line-height:1.05; letter-spacing:-.02em;
+  margin:0 0 22px;
+}
+.ha-tax__hero-stat {
+  display:inline-flex; align-items:baseline; gap:16px;
+  background:rgba(132,169,140,.12); border:1px solid rgba(132,169,140,.3);
+  padding:18px 28px; border-radius:6px;
+  margin-top:14px;
+}
+.ha-tax__hero-stat-fy {
+  font-family:'Poppins',sans-serif; font-size:11px; font-weight:600;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--ha-ash);
+}
+.ha-tax__hero-stat-num {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:38px; line-height:1; color:#fff; letter-spacing:-.02em;
+}
+.ha-tax__hero-stat-label {
+  font-size:14px; color:rgba(202,210,197,.85);
+}
+.ha-tax__hero-sub {
+  font-size:17px; line-height:1.6; color:rgba(202,210,197,.85);
+  max-width:620px; margin:24px auto 0;
+}
+@media (max-width:700px) {
+  .ha-tax__hero { padding:56px 20px 64px; }
+  .ha-tax__hero h1 { font-size:36px; }
+  .ha-tax__hero-stat { padding:14px 18px; gap:10px; flex-wrap:wrap; }
+  .ha-tax__hero-stat-num { font-size:28px; }
+  .ha-tax__hero-sub { font-size:15px; }
+}
+
+/* ===== Section frame ===== */
+.ha-tax__section {
+  max-width:1200px; margin:0 auto;
+  padding:80px 36px;
+}
+.ha-tax__section--tight { padding:48px 36px; }
+.ha-tax__section-head {
+  text-align:center; max-width:760px; margin:0 auto 48px;
+}
+.ha-tax__eyebrow {
+  font-size:11px; font-weight:600;
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--ha-teal-deep); margin-bottom:12px;
+}
+.ha-tax__h2 {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:38px; line-height:1.15; letter-spacing:-.02em;
+  color:var(--ha-charcoal); margin:0 0 16px;
+}
+.ha-tax__h2-rule {
+  width:54px; height:3px; background:var(--ha-teal-deep);
+  margin:0 auto 18px; border-radius:2px;
+}
+.ha-tax__lede {
+  font-size:17px; line-height:1.65; color:rgba(47,62,70,.78);
+  margin:0 auto; max-width:620px;
+}
+@media (max-width:700px) {
+  .ha-tax__section { padding:56px 20px; }
+  .ha-tax__h2 { font-size:28px; }
+  .ha-tax__lede { font-size:15px; }
+}
+
+/* ===== Revenue Section: pie + legend + description ===== */
+.ha-tax__revenue {
+  background:var(--ha-bg);
+  padding:80px 0;
+}
+.ha-tax__revenue-grid {
+  max-width:1200px; margin:0 auto;
+  padding:0 36px;
+  display:grid; grid-template-columns:minmax(0,420px) 1fr;
+  gap:48px; align-items:start;
+}
+@media (max-width:900px) {
+  .ha-tax__revenue-grid { grid-template-columns:1fr; gap:36px; padding:0 20px; }
+}
+.ha-tax__chart-wrap {
+  position:relative; height:380px;
+}
+.ha-tax__legend {
+  margin-top:24px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.ha-tax__legend-item {
+  display:flex; align-items:center; gap:12px;
+  padding:10px 14px; border-radius:4px;
+  cursor:pointer;
+  background:#fff;
+  border:1px solid var(--ha-rule);
+  transition:background .15s, border-color .15s;
+}
+.ha-tax__legend-item:hover { background:rgba(132,169,140,.08); border-color:var(--ha-teal); }
+.ha-tax__legend-item.active {
+  background:rgba(132,169,140,.14);
+  border-color:var(--ha-teal-deep);
+}
+.ha-tax__legend-swatch {
+  width:14px; height:14px; border-radius:3px; flex:none;
+}
+.ha-tax__legend-label {
+  font-size:14px; font-weight:500; flex:1;
+}
+.ha-tax__legend-pct {
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:15px; color:var(--ha-teal-deep);
+}
+.ha-tax__desc {
+  background:#fff;
+  border:1px solid var(--ha-rule);
+  border-left:4px solid var(--ha-teal-deep);
+  border-radius:4px; padding:32px;
+  min-height:280px;
+}
+.ha-tax__desc-name {
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:22px; color:var(--ha-charcoal); margin:0 0 4px;
+}
+.ha-tax__desc-pct {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:36px; line-height:1; margin-bottom:6px;
+  letter-spacing:-.02em;
+}
+.ha-tax__desc-amount {
+  font-size:15px; font-weight:600; color:rgba(47,62,70,.6); margin-bottom:18px;
+}
+.ha-tax__desc-text {
+  font-size:15px; line-height:1.65; color:rgba(47,62,70,.85);
+}
+.ha-tax__desc-text strong { color:var(--ha-charcoal); }
+.ha-tax__rate-chip {
+  display:inline-block;
+  background:rgba(82,121,111,.12);
+  color:var(--ha-teal-deep);
+  padding:4px 10px; border-radius:4px;
+  font-size:13px; font-weight:600;
+  margin-top:12px;
+}
+
+/* ===== Services Grid ===== */
+.ha-tax__services {
+  display:grid; grid-template-columns:repeat(2, 1fr);
+  gap:20px; max-width:900px; margin:48px auto 0;
+}
+@media (max-width:700px) {
+  .ha-tax__services { grid-template-columns:1fr; }
+}
+.ha-tax__service {
+  background:#fff; border:1px solid var(--ha-rule);
+  border-radius:4px; padding:28px;
+  display:flex; gap:18px; align-items:flex-start;
+  transition:transform .2s, box-shadow .2s;
+}
+.ha-tax__service:hover {
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(47,62,70,.08);
+}
+.ha-tax__service-icon {
+  flex:none; width:48px; height:48px;
+  background:rgba(132,169,140,.16);
+  border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+}
+.ha-tax__service-icon svg { width:24px; height:24px; stroke:var(--ha-teal-deep); }
+.ha-tax__service-body { flex:1; }
+.ha-tax__service-title {
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:15px; color:var(--ha-charcoal);
+  text-transform:uppercase; letter-spacing:.05em;
+  margin:0 0 6px;
+}
+.ha-tax__service-cost {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:24px; color:var(--ha-teal-deep);
+  letter-spacing:-.01em; line-height:1.1; margin:0 0 8px;
+}
+.ha-tax__service-desc {
+  font-size:14px; line-height:1.55; color:rgba(47,62,70,.72); margin:0;
+}
+
+/* ===== Equity bar chart ===== */
+.ha-tax__equity {
+  background:var(--ha-bg);
+  padding:80px 0;
+}
+.ha-tax__equity-inner {
+  max-width:960px; margin:0 auto;
+  padding:0 36px;
+}
+.ha-tax__bars {
+  display:grid; grid-template-columns:repeat(5, 1fr);
+  gap:16px; align-items:end;
+  height:340px;
+  padding:20px 0 0;
+  margin:48px 0 24px;
+  border-bottom:1px solid var(--ha-rule);
+  position:relative;
+}
+.ha-tax__bar-col {
+  display:flex; flex-direction:column; align-items:center;
+  height:100%; justify-content:flex-end;
+}
+.ha-tax__bar {
+  width:100%; max-width:80px;
+  background:var(--ha-teal-deep);
+  border-radius:4px 4px 0 0;
+  position:relative;
+  transition:opacity .2s;
+}
+.ha-tax__bar-value {
+  position:absolute; top:-30px; left:50%; transform:translateX(-50%);
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:16px; color:var(--ha-charcoal); white-space:nowrap;
+}
+.ha-tax__bar-col:nth-child(1) .ha-tax__bar { background:var(--ha-slate); }
+.ha-tax__bar-col:nth-child(2) .ha-tax__bar { background:#436659; }
+.ha-tax__bar-col:nth-child(3) .ha-tax__bar { background:var(--ha-teal-deep); }
+.ha-tax__bar-col:nth-child(4) .ha-tax__bar { background:#7CA08E; }
+.ha-tax__bar-col:nth-child(5) .ha-tax__bar { background:var(--ha-teal); opacity:.85; }
+.ha-tax__bar-label {
+  margin-top:14px; text-align:center;
+  font-size:13px; font-weight:600; color:var(--ha-charcoal);
+}
+.ha-tax__bar-range {
+  font-size:11px; color:rgba(47,62,70,.55); margin-top:2px;
+}
+.ha-tax__bar-yaxis {
+  font-size:11px; color:rgba(47,62,70,.45);
+  margin-bottom:8px; text-transform:uppercase; letter-spacing:.1em;
+  font-weight:600;
+}
+.ha-tax__bar-note {
+  text-align:center; font-size:14px; color:rgba(47,62,70,.7);
+  font-style:italic; max-width:560px; margin:0 auto;
+}
+@media (max-width:700px) {
+  .ha-tax__bars { height:240px; gap:8px; }
+  .ha-tax__bar-value { font-size:13px; top:-24px; }
+  .ha-tax__bar-label { font-size:11px; }
+  .ha-tax__bar-range { display:none; }
+}
+
+/* ===== Callout ===== */
+.ha-tax__callout {
+  background:#fff;
+  border:1px solid var(--ha-rule);
+  border-left:4px solid var(--ha-teal-deep);
+  border-radius:4px; padding:32px 36px;
+  max-width:880px; margin:48px auto 0;
+}
+.ha-tax__callout-eyebrow {
+  font-size:11px; font-weight:600;
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--ha-teal-deep); margin-bottom:10px;
+}
+.ha-tax__callout-q {
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:24px; color:var(--ha-charcoal);
+  margin:0 0 14px; line-height:1.3;
+}
+.ha-tax__callout-body { font-size:15.5px; line-height:1.65; color:rgba(47,62,70,.85); }
+.ha-tax__callout-body em { font-style:normal; color:var(--ha-teal-deep); font-weight:600; }
+
+/* ===== Policy priorities (3-col with bill links) ===== */
+.ha-tax__priorities {
+  display:grid; grid-template-columns:repeat(3, 1fr);
+  gap:40px; max-width:1200px; margin:0 auto;
+}
+@media (max-width:900px) {
+  .ha-tax__priorities { grid-template-columns:1fr; gap:36px; }
+}
+.ha-tax__priority { position:relative; }
+.ha-tax__priority:nth-child(n+2) {
+  border-left:1px solid var(--ha-rule); padding-left:40px;
+}
+@media (max-width:900px) {
+  .ha-tax__priority:nth-child(n+2) { border-left:none; padding-left:0; border-top:1px solid var(--ha-rule); padding-top:36px; }
+}
+.ha-tax__priority-head { display:flex; align-items:flex-start; gap:14px; margin-bottom:18px; }
+.ha-tax__priority-num {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:48px; line-height:.9;
+  color:rgba(82,121,111,.18);
+}
+.ha-tax__priority-title {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:22px; color:var(--ha-charcoal);
+  letter-spacing:-.01em; line-height:1.15; margin:0 0 4px;
+}
+.ha-tax__priority-sub {
+  font-size:11px; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ha-teal-deep);
+}
+.ha-tax__priority-desc {
+  font-size:15px; line-height:1.7; color:rgba(47,62,70,.8);
+  margin:0 0 20px;
+}
+.ha-tax__priority-stat {
+  border-left:3px solid var(--ha-teal-deep);
+  padding:14px 18px;
+  margin-bottom:18px;
+}
+.ha-tax__priority-stat-num {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:28px; color:var(--ha-charcoal);
+  line-height:1.1; letter-spacing:-.01em;
+  margin-bottom:4px;
+}
+.ha-tax__priority-stat-label {
+  font-size:13px; color:rgba(47,62,70,.7); line-height:1.45;
+}
+.ha-tax__priority-bills {
+  display:flex; flex-wrap:wrap; gap:6px;
+  margin-top:14px;
+}
+.ha-tax__priority-bill {
+  display:inline-flex; align-items:center; gap:4px;
+  background:rgba(82,121,111,.1);
+  color:var(--ha-teal-deep);
+  padding:4px 10px; border-radius:3px;
+  font-size:12px; font-weight:600;
+  text-decoration:none;
+  transition:background .15s;
+}
+.ha-tax__priority-bill:hover { background:rgba(82,121,111,.2); }
+
+/* ===== CTA strip ===== */
+.ha-tax__cta-strip {
+  background:linear-gradient(135deg, var(--ha-teal-deep) 0%, var(--ha-slate) 100%);
+  color:#fff;
+  padding:64px 36px;
+  text-align:center;
+}
+.ha-tax__cta-inner { max-width:740px; margin:0 auto; }
+.ha-tax__cta-h {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:32px; line-height:1.2; letter-spacing:-.01em;
+  margin:0 0 14px;
+}
+.ha-tax__cta-sub {
+  font-size:16px; line-height:1.6; color:rgba(202,210,197,.85);
+  margin:0 0 28px;
+}
+.ha-tax__cta-actions { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+.ha-tax a.ha-tax__btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:13px 26px;
+  border-radius:3px;
+  font-family:'Poppins',sans-serif; font-weight:600; font-size:15px;
+  text-decoration:none;
+  transition:background .18s, transform .18s;
+}
+.ha-tax a.ha-tax__btn--primary {
+  background:#fff; color:var(--ha-teal-deep);
+}
+.ha-tax a.ha-tax__btn--primary:hover { background:var(--ha-ash); transform:translateY(-1px); }
+.ha-tax a.ha-tax__btn--ghost {
+  background:transparent; color:#fff;
+  border:1.5px solid rgba(255,255,255,.4);
+}
+.ha-tax a.ha-tax__btn--ghost:hover { background:rgba(255,255,255,.12); border-color:#fff; }
+@media (max-width:700px) {
+  .ha-tax__cta-h { font-size:24px; }
+}
+
+/* ===== Featured Publication ===== */
+.ha-tax__featured-pub {
+  display:grid; grid-template-columns:1fr 1.2fr;
+  gap:36px; align-items:center;
+  background:#fff; border:1px solid var(--ha-rule);
+  border-radius:6px; overflow:hidden;
+  max-width:1100px; margin:0 auto;
+}
+@media (max-width:800px) {
+  .ha-tax__featured-pub { grid-template-columns:1fr; }
+}
+.ha-tax__featured-pub-thumb {
+  aspect-ratio:4/3;
+  background:var(--ha-bg);
+  overflow:hidden;
+}
+.ha-tax__featured-pub-thumb img { width:100%; height:100%; object-fit:cover; }
+.ha-tax__featured-pub-body { padding:36px 32px 36px 0; }
+@media (max-width:800px) {
+  .ha-tax__featured-pub-body { padding:24px 28px 32px; }
+}
+.ha-tax__featured-pub-eyebrow {
+  display:inline-block;
+  background:rgba(82,121,111,.12);
+  color:var(--ha-teal-deep);
+  padding:4px 12px; border-radius:3px;
+  font-size:11px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase;
+  margin-bottom:14px;
+}
+.ha-tax__featured-pub-title {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:30px; line-height:1.2; letter-spacing:-.01em;
+  color:var(--ha-charcoal); margin:0 0 14px;
+}
+.ha-tax__featured-pub-desc {
+  font-size:16px; line-height:1.65; color:rgba(47,62,70,.85);
+  margin:0 0 22px;
+}
+.ha-tax__featured-pub-meta {
+  font-size:13px; color:rgba(47,62,70,.6);
+  margin-bottom:20px;
+}
+.ha-tax__featured-pub-meta strong { color:var(--ha-charcoal); }
+
+/* ===== Pub mini-cards ===== */
+.ha-tax__pub-grid {
+  display:grid; grid-template-columns:repeat(3, 1fr);
+  gap:24px; margin-top:36px;
+}
+@media (max-width:900px) {
+  .ha-tax__pub-grid { grid-template-columns:1fr; gap:20px; }
+}
+.ha-tax__pub-card {
+  background:#fff; border:1px solid var(--ha-rule);
+  border-radius:4px; overflow:hidden;
+  display:flex; flex-direction:column;
+  transition:transform .2s, box-shadow .2s;
+}
+.ha-tax__pub-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(47,62,70,.08); }
+.ha-tax__pub-card-thumb { aspect-ratio:16/9; background:var(--ha-bg); overflow:hidden; }
+.ha-tax__pub-card-thumb img { width:100%; height:100%; object-fit:cover; transition:transform .35s; }
+.ha-tax__pub-card:hover .ha-tax__pub-card-thumb img { transform:scale(1.03); }
+.ha-tax__pub-card-body { padding:18px 20px 22px; display:flex; flex-direction:column; gap:8px; flex:1; }
+.ha-tax__pub-card-meta { font-size:11px; color:rgba(47,62,70,.6); letter-spacing:.08em; text-transform:uppercase; }
+.ha-tax__pub-card-title {
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:17px; line-height:1.3; color:var(--ha-charcoal); margin:0;
+}
+.ha-tax__pub-card-link {
+  margin-top:auto; padding-top:10px;
+  font-size:13px; font-weight:600; color:var(--ha-teal-deep);
+  display:inline-flex; align-items:center; gap:5px;
+}
+
+/* ===== News strip ===== */
+.ha-tax__news-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:32px; max-width:1200px; margin:0 auto;
+}
+@media (max-width:800px) {
+  .ha-tax__news-grid { grid-template-columns:1fr; gap:28px; }
+}
+.ha-tax__news-card {
+  background:#fff; border:1px solid var(--ha-rule);
+  border-radius:4px; padding:28px 30px;
+}
+.ha-tax__news-eyebrow {
+  font-size:11px; font-weight:600;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ha-teal-deep); margin-bottom:10px;
+}
+.ha-tax__news-title {
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:20px; color:var(--ha-charcoal); margin:0 0 8px;
+  line-height:1.3;
+}
+.ha-tax__news-meta { font-size:13px; color:rgba(47,62,70,.6); margin-bottom:12px; }
+.ha-tax__news-excerpt { font-size:15px; line-height:1.6; color:rgba(47,62,70,.82); margin:0 0 16px; }
+.ha-tax__news-link {
+  font-size:14px; font-weight:600; color:var(--ha-teal-deep);
+  text-decoration:none; display:inline-flex; align-items:center; gap:6px;
+}
+.ha-tax__news-link:hover { gap:9px; }
+</style>
+
+<section class="ha-tax">
+
+  <!-- ===================================
+       HERO
+       =================================== -->
+  <header class="ha-tax__hero">
+    <div class="ha-tax__hero-inner">
+      <div class="ha-tax__hero-eyebrow">Issues · Taxes &amp; Budget</div>
+      <h1>How Hawaiʻi funds <br>our shared future.</h1>
+      <div class="ha-tax__hero-stat">
+        <div>
+          <div class="ha-tax__hero-stat-fy">FY 2025</div>
+          <div class="ha-tax__hero-stat-num">$11.08&nbsp;billion</div>
+          <div class="ha-tax__hero-stat-label">collected from state taxes</div>
+        </div>
+      </div>
+      <p class="ha-tax__hero-sub">
+        Taxes are the engine of state government — funding healthcare, schools, housing, and the programs Hawaiʻi families rely on. Here's how our tax system works, where the money goes, and the reforms we're advancing to make it fairer.
+      </p>
+    </div>
+  </header>
+
+  <!-- ===================================
+       WHERE THE MONEY COMES FROM
+       =================================== -->
+  <section class="ha-tax__revenue">
+    <div class="ha-tax__section-head">
+      <div class="ha-tax__eyebrow">Where it comes from</div>
+      <h2 class="ha-tax__h2">A diverse tax base</h2>
+      <div class="ha-tax__h2-rule"></div>
+      <p class="ha-tax__lede">
+        Hawaiʻi raises revenue from a mix of taxes — on consumer purchases, personal and corporate income, hotel stays, and more. Click any slice or legend item to learn how it works.
+      </p>
+    </div>
+    <div class="ha-tax__revenue-grid">
+      <div>
+        <div class="ha-tax__chart-wrap">
+          <canvas id="ha-tax-pie"></canvas>
+        </div>
+        <div class="ha-tax__legend" id="ha-tax-legend"></div>
+      </div>
+      <div class="ha-tax__desc" id="ha-tax-desc">
+        <div class="ha-tax__desc-name">Click a slice to explore</div>
+        <p class="ha-tax__desc-text">
+          The interactive pie chart shows the share of state revenue each major tax contributes. Property taxes are collected at the county level and aren't shown here.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================
+       WHERE THE MONEY GOES
+       =================================== -->
+  <section class="ha-tax__section">
+    <div class="ha-tax__section-head">
+      <div class="ha-tax__eyebrow">Where it goes</div>
+      <h2 class="ha-tax__h2">Taxes fund our communities</h2>
+      <div class="ha-tax__h2-rule"></div>
+      <p class="ha-tax__lede">
+        Most of Hawaiʻi's tax revenue goes to the general fund and special funds — the accounts that pay for healthcare, schools, housing, and food security.
+      </p>
+    </div>
+    <div class="ha-tax__services">
+      <div class="ha-tax__service">
+        <div class="ha-tax__service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-2 2-3 2-5 0-3-2-5-5-5-2 0-3 1-4 3-1-2-2-3-4-3-3 0-5 2-5 5 0 2 .5 3 2 5l7 7Z"/></svg>
+        </div>
+        <div class="ha-tax__service-body">
+          <p class="ha-tax__service-title">Healthcare</p>
+          <p class="ha-tax__service-cost">$1.83 billion</p>
+          <p class="ha-tax__service-desc">Health coverage for 441,000 children and adults across the state.</p>
+        </div>
+      </div>
+      <div class="ha-tax__service">
+        <div class="ha-tax__service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="ha-tax__service-body">
+          <p class="ha-tax__service-title">Affordable Housing</p>
+          <p class="ha-tax__service-cost">$305+ million</p>
+          <p class="ha-tax__service-desc">Building affordable units, rental assistance, and homelessness programs.</p>
+        </div>
+      </div>
+      <div class="ha-tax__service">
+        <div class="ha-tax__service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1 4 3 6 3s6-2 6-3v-5"/></svg>
+        </div>
+        <div class="ha-tax__service-body">
+          <p class="ha-tax__service-title">Public K-12 Schools</p>
+          <p class="ha-tax__service-cost">$1.76 billion</p>
+          <p class="ha-tax__service-desc">Education for 165,000+ students across 296 schools statewide.</p>
+        </div>
+      </div>
+      <div class="ha-tax__service">
+        <div class="ha-tax__service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2l1 5h10l1-5"/><path d="M5 7v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7Z"/><path d="M9 12h6"/></svg>
+        </div>
+        <div class="ha-tax__service-body">
+          <p class="ha-tax__service-title">Food Security</p>
+          <p class="ha-tax__service-cost">$30+ million</p>
+          <p class="ha-tax__service-desc">School meals for 78,000 students and SNAP administration for over 163,000 people.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================
+       WHO PAYS MORE (equity bar chart)
+       =================================== -->
+  <section class="ha-tax__equity">
+    <div class="ha-tax__equity-inner">
+      <div class="ha-tax__section-head">
+        <div class="ha-tax__eyebrow">Tax Fairness</div>
+        <h2 class="ha-tax__h2">Lower-income families pay more</h2>
+        <div class="ha-tax__h2-rule"></div>
+        <p class="ha-tax__lede">
+          Effective tax rate — the share of total income paid in state and local taxes — falls as income rises. Hawaiʻi's poorest 20% pay 14.1% of their income; the wealthiest 20% pay just 10.7%.
+        </p>
+      </div>
+      <div class="ha-tax__bar-yaxis">Effective Tax Rate (% of Income)</div>
+      <div class="ha-tax__bars" id="ha-tax-bars">
+        <div class="ha-tax__bar-col">
+          <div class="ha-tax__bar" style="height:71%"><div class="ha-tax__bar-value">14.1%</div></div>
+          <div class="ha-tax__bar-label">Lowest 20%</div>
+          <div class="ha-tax__bar-range">Under $21,900</div>
+        </div>
+        <div class="ha-tax__bar-col">
+          <div class="ha-tax__bar" style="height:68%"><div class="ha-tax__bar-value">13.7%</div></div>
+          <div class="ha-tax__bar-label">Second 20%</div>
+          <div class="ha-tax__bar-range">$21,900–$44,200</div>
+        </div>
+        <div class="ha-tax__bar-col">
+          <div class="ha-tax__bar" style="height:71%"><div class="ha-tax__bar-value">14.2%</div></div>
+          <div class="ha-tax__bar-label">Middle 20%</div>
+          <div class="ha-tax__bar-range">$44,200–$80,100</div>
+        </div>
+        <div class="ha-tax__bar-col">
+          <div class="ha-tax__bar" style="height:67%"><div class="ha-tax__bar-value">13.4%</div></div>
+          <div class="ha-tax__bar-label">Fourth 20%</div>
+          <div class="ha-tax__bar-range">$80,100–$136,600</div>
+        </div>
+        <div class="ha-tax__bar-col">
+          <div class="ha-tax__bar" style="height:53%"><div class="ha-tax__bar-value">10.7%</div></div>
+          <div class="ha-tax__bar-label">Top 20%</div>
+          <div class="ha-tax__bar-range">Over $136,600</div>
+        </div>
+      </div>
+      <p class="ha-tax__bar-note">Source: Institute on Taxation and Economic Policy, <em>Who Pays?</em> — Hawaiʻi state and local taxes, 2024.</p>
+
+      <div class="ha-tax__callout">
+        <div class="ha-tax__callout-eyebrow">Why this happens</div>
+        <h3 class="ha-tax__callout-q">The General Excise Tax hits low-income families hardest.</h3>
+        <p class="ha-tax__callout-body">
+          A family earning $21,900 spends nearly all of it on essentials — food, rent, gas — every one taxed by the GET. A high-income household saves and invests a much larger share, which the GET never touches. <em>Same tax, very different impact.</em>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================
+       LEGISLATIVE & POLICY PRIORITIES
+       =================================== -->
+  <section class="ha-tax__section">
+    <div class="ha-tax__section-head">
+      <div class="ha-tax__eyebrow">2026 Legislative Priorities</div>
+      <h2 class="ha-tax__h2">The ultra-wealthy should pay their fair share</h2>
+      <div class="ha-tax__h2-rule"></div>
+      <p class="ha-tax__lede">
+        Three areas where Hawaiʻi can build a more equitable tax system and invest in the communities that need it most.
+      </p>
+    </div>
+    <div class="ha-tax__priorities">
+      <article class="ha-tax__priority">
+        <div class="ha-tax__priority-head">
+          <span class="ha-tax__priority-num">1</span>
+          <div>
+            <h3 class="ha-tax__priority-title">Income</h3>
+            <div class="ha-tax__priority-sub">Tax on Multi-Millionaires</div>
+          </div>
+        </div>
+        <p class="ha-tax__priority-desc">
+          Hawaiʻi has 1,800 people who earn more than $1 million a year. They are not struggling to pay their bills — and they should be taxed at a higher rate than everyone else.
+        </p>
+        <div class="ha-tax__priority-stat">
+          <div class="ha-tax__priority-stat-num">$71M+</div>
+          <div class="ha-tax__priority-stat-label">per year from a 2% surcharge on income above $1 million</div>
+        </div>
+        <div class="ha-tax__priority-bills">
+          <a class="ha-tax__priority-bill" href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=2008&year=2026" target="_blank" rel="noopener">HB 2008 →</a>
+        </div>
+      </article>
+
+      <article class="ha-tax__priority">
+        <div class="ha-tax__priority-head">
+          <span class="ha-tax__priority-num">2</span>
+          <div>
+            <h3 class="ha-tax__priority-title">Investments</h3>
+            <div class="ha-tax__priority-sub">Tax Wealth Like Work</div>
+          </div>
+        </div>
+        <p class="ha-tax__priority-desc">
+          Capital gains — profit from investments — are taxed at just 7.25% in Hawaiʻi, well below the 11% top rate on wages. This loophole almost entirely benefits the rich.
+        </p>
+        <div class="ha-tax__priority-stat">
+          <div class="ha-tax__priority-stat-num">79.4%</div>
+          <div class="ha-tax__priority-stat-label">of capital gains income goes to the top 7.7% of earners ($400K+)</div>
+        </div>
+        <div class="ha-tax__priority-bills">
+          <a class="ha-tax__priority-bill" href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=1850&year=2026" target="_blank" rel="noopener">HB 1850 →</a>
+          <a class="ha-tax__priority-bill" href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=SB&billnumber=2587&year=2026" target="_blank" rel="noopener">SB 2587 →</a>
+        </div>
+      </article>
+
+      <article class="ha-tax__priority">
+        <div class="ha-tax__priority-head">
+          <span class="ha-tax__priority-num">3</span>
+          <div>
+            <h3 class="ha-tax__priority-title">Real Estate</h3>
+            <div class="ha-tax__priority-sub">Conveyance Tax Reform</div>
+          </div>
+        </div>
+        <p class="ha-tax__priority-desc">
+          The conveyance tax is paid once, when property changes hands. Despite soaring luxury values, expensive properties pay just 0.5%–1.25%.
+        </p>
+        <div class="ha-tax__priority-stat">
+          <div class="ha-tax__priority-stat-num">$300–400M</div>
+          <div class="ha-tax__priority-stat-label">annually if rates rise to 2%–6% for homes worth $2M+</div>
+        </div>
+        <div class="ha-tax__priority-bills">
+          <a class="ha-tax__priority-bill" href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=2306&year=2026" target="_blank" rel="noopener">HB 2306 →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================================
+       CTA STRIP
+       =================================== -->
+  <section class="ha-tax__cta-strip">
+    <div class="ha-tax__cta-inner">
+      <h2 class="ha-tax__cta-h">Join the fight for a fairer tax code.</h2>
+      <p class="ha-tax__cta-sub">Get email alerts when bills move, action campaigns open, and we publish new research.</p>
+      <div class="ha-tax__cta-actions">
+        <a class="ha-tax__btn ha-tax__btn--primary" href="https://www.quorum.us/grassroots-action/signup/Hawaii-Appleseed-Center-for-Law-and-Economic-Justice/" target="_blank" rel="noopener">
+          Subscribe to Tax &amp; Budget alerts
+        </a>
+        <a class="ha-tax__btn ha-tax__btn--ghost" href="https://www.quorum.us/action_center/126458/" target="_blank" rel="noopener">
+          Take action now
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================
+       FEATURED PUBLICATION
+       =================================== -->
+  <section class="ha-tax__section">
+    <div class="ha-tax__section-head">
+      <div class="ha-tax__eyebrow">Featured Publication</div>
+      <h2 class="ha-tax__h2">Our latest research</h2>
+      <div class="ha-tax__h2-rule"></div>
+    </div>
+    <article class="ha-tax__featured-pub" id="ha-tax-featured">
+      <!-- Filled in by JS once publications.json loads -->
+    </article>
+    <div class="ha-tax__pub-grid" id="ha-tax-pubs">
+      <!-- Filled in by JS -->
+    </div>
+  </section>
+
+  <!-- ===================================
+       LATEST BLOG / NEWS
+       =================================== -->
+  <section class="ha-tax__section ha-tax__section--tight" style="background:var(--ha-bg);max-width:none;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="ha-tax__section-head">
+        <div class="ha-tax__eyebrow">From the blog &amp; press</div>
+        <h2 class="ha-tax__h2">In the news</h2>
+        <div class="ha-tax__h2-rule"></div>
+      </div>
+      <div class="ha-tax__news-grid">
+        <article class="ha-tax__news-card">
+          <div class="ha-tax__news-eyebrow">Latest Blog Post</div>
+          <h3 class="ha-tax__news-title">Highlights from House Bill 1800</h3>
+          <div class="ha-tax__news-meta">April 17, 2026 · By Devin Thomas</div>
+          <p class="ha-tax__news-excerpt">
+            The single most consequential bill of the 2026 session — what's in the House budget proposal, what's missing, and where the conference committee may take it next.
+          </p>
+          <a class="ha-tax__news-link" href="https://hiappleseed.org/blog" target="_blank" rel="noopener">
+            Read the full post
+            <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+          </a>
+        </article>
+        <article class="ha-tax__news-card">
+          <div class="ha-tax__news-eyebrow">In the Press</div>
+          <h3 class="ha-tax__news-title">The Sunshine Blog</h3>
+          <div class="ha-tax__news-meta">April 26, 2026 · Honolulu Civil Beat</div>
+          <p class="ha-tax__news-excerpt">
+            Coverage of Hawaiʻi Appleseed's analysis of the legislature's tax proposals and the trade-offs facing lawmakers as they finalize the FY26–27 budget.
+          </p>
+          <a class="ha-tax__news-link" href="https://www.civilbeat.org" target="_blank" rel="noopener">
+            Read on Civil Beat
+            <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+<script>
+(function() {
+  // ===== Pie chart data =====
+  const taxData = [
+    { name:'General Excise Tax (GET)', pct:40, amount:'$4.63 billion', color:'#2F3E46',
+      desc:'A tax on almost all business sales in Hawaiʻi — built into the price of nearly everything you buy. It is the state\'s single largest source of revenue.',
+      rate:'GET rate: 4.5% (incl. county surcharge)'
+    },
+    { name:'Individual Income Tax', pct:29, amount:'$3.29 billion', color:'#354F52',
+      desc:'The tax people pay on wages and other earned income. Rates range from <strong>1.4% to 11%</strong> across nine brackets. Capital gains income is taxed at a <strong>maximum of 7.25%</strong> — far below the top wage rate.',
+      rate:'Wage rate: 1.4%–11% · Capital gains: max 7.25%'
+    },
+    { name:'Transient Accommodations Tax', pct:7, amount:'$816 million', color:'#52796F',
+      desc:'A tax on short-term stays like hotel rooms and vacation rentals. Closely tied to tourism — helps the state raise revenue from visitors.',
+      rate:'TAT rate: 10.25% + 3% county'
+    },
+    { name:'Corporate Income Tax', pct:3, amount:'$400 million', color:'#84A98C',
+      desc:'Tax on corporate profits. Large C-corporations pay 4.4%–6.4% depending on income; smaller S-corporations generally pass profits through to owners and aren\'t taxed directly.',
+      rate:'C-corp: 4.4%–6.4%'
+    },
+    { name:'Other Taxes & Fees', pct:21, amount:'$1.95 billion', color:'#CAD2C5',
+      desc:'A mix of smaller taxes and fees — fuel, alcohol, tobacco, conveyance, insurance premiums, and others. Each is small, but together they make up a meaningful share of state revenue.<br><br><em>Note: Property taxes are collected by the counties and aren\'t shown here.</em>',
+      rate:''
+    }
+  ];
+
+  // ===== Pie chart =====
+  function initPie() {
+    if (typeof Chart === 'undefined') return;
+    const ctx = document.getElementById('ha-tax-pie').getContext('2d');
+    const chart = new Chart(ctx, {
+      type:'doughnut',
+      data:{
+        labels: taxData.map(d => d.name),
+        datasets: [{
+          data: taxData.map(d => d.pct),
+          backgroundColor: taxData.map(d => d.color),
+          borderColor:'#fff', borderWidth:3,
+          hoverOffset:14
+        }]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        cutout:'58%',
+        plugins:{
+          legend:{ display:false },
+          tooltip:{
+            callbacks:{
+              label: ctx => ctx.label + ': ' + ctx.parsed + '%'
+            }
+          }
+        },
+        onClick:(e, els) => { if (els.length) showDesc(els[0].index); }
+      }
+    });
+    buildLegend();
+    showDesc(0);
+  }
+
+  function buildLegend() {
+    const wrap = document.getElementById('ha-tax-legend');
+    wrap.innerHTML = '';
+    taxData.forEach((d, i) => {
+      const el = document.createElement('button');
+      el.className = 'ha-tax__legend-item';
+      el.onclick = () => showDesc(i);
+      el.innerHTML = `
+        <span class="ha-tax__legend-swatch" style="background:${d.color}"></span>
+        <span class="ha-tax__legend-label">${d.name}</span>
+        <span class="ha-tax__legend-pct">${d.pct}%</span>
+      `;
+      wrap.appendChild(el);
+    });
+  }
+
+  function showDesc(i) {
+    const d = taxData[i];
+    const el = document.getElementById('ha-tax-desc');
+    el.style.borderLeftColor = d.color;
+    el.innerHTML = `
+      <div class="ha-tax__desc-name">${d.name}</div>
+      <div class="ha-tax__desc-pct" style="color:${d.color}">${d.pct}%</div>
+      <div class="ha-tax__desc-amount">${d.amount}</div>
+      <div class="ha-tax__desc-text">${d.desc}</div>
+      ${d.rate ? `<span class="ha-tax__rate-chip">${d.rate}</span>` : ''}
+    `;
+    document.querySelectorAll('.ha-tax__legend-item').forEach((b, idx) => {
+      b.classList.toggle('active', idx === i);
+    });
+  }
+
+  // ===== Publications loader (Taxes & Budget only) =====
+  function formatDate(ts) {
+    if (!ts) return '';
+    const d = new Date(ts);
+    return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+  }
+  function stripHtml(s) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = s || '';
+    return tmp.textContent || '';
+  }
+
+  async function loadPubs() {
+    try {
+      const r = await fetch('publications.json');
+      if (!r.ok) throw new Error('fetch failed');
+      const data = await r.json();
+      const items = (data.items || []).filter(i =>
+        (i.categories || []).some(c => /tax/i.test(c) || /budget/i.test(c))
+      ).sort((a,b) => (b.publishOn||0) - (a.publishOn||0));
+
+      if (!items.length) return;
+
+      // Featured = most recent
+      const f = items[0];
+      const fUrl = f.fullUrl ? 'https://hiappleseed.org' + f.fullUrl : '#';
+      const fImg = f.assetUrl ? `${f.assetUrl}?format=900w` : '';
+      document.getElementById('ha-tax-featured').innerHTML = `
+        <div class="ha-tax__featured-pub-thumb">${fImg ? `<img src="${fImg}" alt="">` : ''}</div>
+        <div class="ha-tax__featured-pub-body">
+          <div class="ha-tax__featured-pub-eyebrow">Featured Report</div>
+          <h3 class="ha-tax__featured-pub-title"><a href="${fUrl}" target="_blank" rel="noopener" style="text-decoration:none">${f.title || 'Untitled'}</a></h3>
+          <p class="ha-tax__featured-pub-desc">${stripHtml(f.excerpt)}</p>
+          <div class="ha-tax__featured-pub-meta">${formatDate(f.publishOn)}${f.author ? ` · <strong>By ${f.author}</strong>` : ''}</div>
+          <a class="ha-tax__btn ha-tax__btn--primary" style="background:var(--ha-teal-deep);color:#fff" href="${fUrl}" target="_blank" rel="noopener">Read publication →</a>
+        </div>
+      `;
+
+      // Remaining 3 in a strip
+      const grid = document.getElementById('ha-tax-pubs');
+      grid.innerHTML = items.slice(1, 4).map(i => {
+        const url = i.fullUrl ? 'https://hiappleseed.org' + i.fullUrl : '#';
+        const img = i.assetUrl ? `${i.assetUrl}?format=500w` : '';
+        return `
+          <article class="ha-tax__pub-card">
+            <a href="${url}" target="_blank" rel="noopener" style="text-decoration:none;display:contents">
+              <div class="ha-tax__pub-card-thumb">${img ? `<img src="${img}" alt="">` : ''}</div>
+              <div class="ha-tax__pub-card-body">
+                <div class="ha-tax__pub-card-meta">${formatDate(i.publishOn)}</div>
+                <h3 class="ha-tax__pub-card-title">${i.title || 'Untitled'}</h3>
+                <span class="ha-tax__pub-card-link">Read →</span>
+              </div>
+            </a>
+          </article>
+        `;
+      }).join('');
+    } catch (e) {
+      console.warn('publications.json load failed:', e);
+    }
+  }
+
+  // ===== Init =====
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => { initPie(); loadPubs(); });
+  } else {
+    initPie(); loadPubs();
+  }
+})();
+</script>
+
+<!-- END ha-tax -->
+
+<!-- PREVIEW-ONLY: footer -->
+<footer class="px-footer">
+  <div class="px-foot-grid">
+    <div>
+      <h4>Hawaiʻi Appleseed</h4>
+      <p style="color:#CAD2C5;margin:0 0 16px;font-size:13px;line-height:1.7;">
+        Center for Law &amp; Economic Justice — research, policy, and advocacy for a more just Hawaiʻi.
+      </p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <a href="our-story.html">Our Story</a>
+      <a href="our-mission.html">Our Mission</a>
+      <a href="our-team.html">Our Team</a>
+      <a href="publications.html">Publications</a>
+    </div>
+    <div>
+      <h4>Get involved</h4>
+      <a href="#">Subscribe</a>
+      <a href="#">Donate</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="px-foot-bottom">
+    <span>© 2026 Hawaiʻi Appleseed Center for Law &amp; Economic Justice</span>
+    <span><a href="#" style="display:inline;margin:0 8px 0 0">Privacy</a> · <a href="#" style="display:inline;margin:0 0 0 8px">Terms</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
