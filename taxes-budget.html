@@ -134,9 +134,14 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-tax * { box-sizing:border-box; }
 .ha-tax img { max-width:100%; }
 
+/* ===== Hero + tab-bar wrapper (single continuous gradient) ===== */
+.ha-tax__top {
+  background:linear-gradient(135deg, var(--ha-charcoal) 0%, var(--ha-slate) 100%);
+}
+
 /* ===== Hero (compact) ===== */
 .ha-tax__hero {
-  background:linear-gradient(135deg, var(--ha-charcoal) 0%, var(--ha-slate) 100%);
+  background:transparent;
   color:#fff;
   padding:54px 28px 48px;
   text-align:center;
@@ -167,14 +172,10 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
 /* ===== Tab bar (extends hero, dark) ===== */
 .ha-tax__tab-bar {
-  background:linear-gradient(135deg, var(--ha-charcoal) 0%, var(--ha-slate) 100%);
+  background:transparent;
   padding:0 28px 32px;
   display:flex; justify-content:center;
   position:relative;
-}
-.ha-tax__tab-bar::after {
-  content:""; position:absolute; left:0; right:0; bottom:0;
-  height:1px; background:rgba(255,255,255,.06);
 }
 .ha-tax__tabs {
   --tab-w: 170px;
@@ -990,6 +991,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 <section class="ha-tax">
 
   <!-- ===================================
+       TOP — hero + tab bar wrapper (single dark gradient)
+       =================================== -->
+  <div class="ha-tax__top">
+
+  <!-- ===================================
        HERO (compact: eyebrow + title + intro + quick-pills)
        =================================== -->
   <header class="ha-tax__hero" id="ha-tax-hero">
@@ -1030,13 +1036,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     </div>
   </header>
 
-  <!-- ===================================
-       DRAWER — Vision / Overview / Opportunities panels
-       (Tab pills live at the top of this section so content is
-        visually attached to the pills.)
-       =================================== -->
-  <div class="ha-tax__panels">
-
     <div class="ha-tax__tab-bar">
       <div class="ha-tax__tabs" role="tablist" aria-label="Section">
         <span class="ha-tax__tabs-indicator" aria-hidden="true"></span>
@@ -1045,6 +1044,13 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <button class="ha-tax__tab" data-panel="opportunities" role="tab" aria-selected="false" aria-controls="ha-tax-panel-opportunities">Opportunities</button>
       </div>
     </div>
+
+  </div><!-- /.ha-tax__top -->
+
+  <!-- ===================================
+       DRAWER — Vision / Overview / Opportunities panels
+       =================================== -->
+  <div class="ha-tax__panels">
 
   <!-- =========== VISION PANEL =========== -->
   <section class="ha-tax__panel active" id="ha-tax-panel-vision" role="tabpanel">
