@@ -389,14 +389,15 @@
   .ha-mission .ha-five{position:relative;}
   .ha-mission .ha-five-track{
     position:relative;
-    /* Track length tunes the scrub speed. 3 phases (A→B→C) in ~1.2 viewports of scrub. */
-    height:220vh;
+    /* Track length tunes the scrub speed. Extra height adds a "settle" buffer at the
+       end so the eyebrow is still readable before the sticky stage releases. */
+    height:260vh;
   }
   .ha-mission .ha-five-stage{
     position:sticky;top:0;
     height:100vh;min-height:680px;
     display:flex;align-items:center;
-    padding-top:110px; /* clear the fixed announce + nav so headline isn't covered */
+    padding-top:150px; /* clear the fixed announce + nav with extra buffer so the eyebrow stays visible while the section unsticks */
     overflow:hidden;isolation:isolate;
   }
   .ha-mission .ha-five-bg{position:absolute;inset:0;z-index:-2;}
