@@ -450,7 +450,7 @@
   .data-tools-head p{
     font-size:16px;line-height:1.6;color:var(--ha-slate);max-width:52ch;
   }
-  .data-tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+  .data-tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
   .data-card{
     background:var(--ha-white);border-radius:4px;
     overflow:hidden;display:flex;flex-direction:column;
@@ -460,44 +460,13 @@
   }
   .data-card:hover{transform:translateY(-5px);box-shadow:0 18px 52px rgba(47,62,70,.14);}
   .data-card-visual{
-    height:200px;position:relative;
-    display:flex;align-items:center;justify-content:center;overflow:hidden;
+    height:200px;position:relative;overflow:hidden;
   }
-  /* Budget visual — dark ring */
-  .dt-visual-budget{background:var(--ha-charcoal);}
-  .dt-ring{
-    width:118px;height:118px;border-radius:50%;
-    border:15px solid rgba(255,255,255,.1);
-    position:absolute;
+  .data-card-visual img{
+    width:100%;height:100%;object-fit:cover;object-position:top left;
+    display:block;transition:transform .4s ease;
   }
-  .dt-ring::before{
-    content:'';position:absolute;inset:-15px;border-radius:50%;
-    border:15px solid transparent;
-    border-top-color:var(--ha-teal);
-    border-right-color:var(--ha-teal-deep);
-    transform:rotate(-20deg);
-  }
-  .dt-ring::after{
-    content:'';position:absolute;inset:-15px;border-radius:50%;
-    border:15px solid transparent;
-    border-bottom-color:rgba(202,210,197,.3);
-    border-left-color:rgba(132,169,140,.45);
-  }
-  .dt-center-text{position:relative;z-index:1;text-align:center;}
-  .dt-big{display:block;font-family:'Manrope',sans-serif;font-weight:800;font-size:26px;color:var(--ha-white);letter-spacing:-0.02em;}
-  .dt-sub{display:block;font-family:'Poppins',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ha-teal);margin-top:5px;}
-  /* Timeline visual — teal bars */
-  .dt-visual-timeline{background:var(--ha-teal-deep);}
-  .dt-bars{display:flex;align-items:flex-end;gap:9px;height:110px;}
-  .dt-bar{width:22px;background:rgba(255,255,255,.25);border-radius:2px 2px 0 0;}
-  .dt-bars .dt-bar:nth-child(2){background:rgba(255,255,255,.5);}
-  .dt-bars .dt-bar:nth-child(4){background:var(--ha-teal);}
-  .dt-bars .dt-bar:nth-child(6){background:var(--ha-ash);opacity:.75;}
-  .dt-vis-label{
-    position:absolute;bottom:14px;left:20px;
-    font-family:'Poppins',sans-serif;font-size:10px;
-    letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.65);
-  }
+  .data-card:hover .data-card-visual img{transform:scale(1.04);}
   /* Card body */
   .data-card-body{padding:24px 28px 28px;flex:1;display:flex;flex-direction:column;}
   .data-card-tag{
@@ -540,6 +509,9 @@
     .scroll-cue{left:28px}
     .data-tools{padding:72px 20px;}
     .data-tools-grid{grid-template-columns:1fr;}
+  }
+  @media(max-width:980px) and (min-width:601px){
+    .data-tools-grid{grid-template-columns:repeat(2,1fr);}
   }
 </style>
 </head>
@@ -790,40 +762,41 @@
     </div>
     <div class="data-tools-grid">
 
-      <!-- Card 1: Taxes & Budget -->
+      <!-- Card 1: Hawaiʻi Budget Tracker -->
       <a class="data-card" href="taxes-budget.html">
-        <div class="data-card-visual dt-visual-budget">
-          <div class="dt-ring"></div>
-          <div class="dt-center-text">
-            <span class="dt-big">$11.1B</span>
-            <span class="dt-sub">State Revenue</span>
-          </div>
+        <div class="data-card-visual">
+          <img src="assets/data/hawaii-budget-tracker.png" alt="Hawaiʻi Budget Tracker screenshot">
         </div>
         <div class="data-card-body">
           <span class="data-card-tag">Taxes &amp; Budget</span>
-          <h3>Hawaiʻi Budget Explorer</h3>
-          <p>How is $11.1 billion in state revenue collected and spent? Explore tax sources, spending priorities, and year-over-year trends with interactive charts.</p>
+          <h3>Hawaiʻi Budget Tracker</h3>
+          <p>Compare the Governor's, House's, and Senate's budget proposals side by side. Track program-level changes across all state departments.</p>
           <span class="data-card-cta">Explore the data →</span>
         </div>
       </a>
 
-      <!-- Card 2: Benefits Timeline -->
+      <!-- Card 2: SNAP & Medicaid Timeline -->
       <a class="data-card" href="publications.html">
-        <div class="data-card-visual dt-visual-timeline">
-          <div class="dt-bars">
-            <div class="dt-bar" style="height:42%"></div>
-            <div class="dt-bar" style="height:60%"></div>
-            <div class="dt-bar" style="height:50%"></div>
-            <div class="dt-bar" style="height:82%"></div>
-            <div class="dt-bar" style="height:68%"></div>
-            <div class="dt-bar" style="height:95%"></div>
-          </div>
-          <span class="dt-vis-label">SNAP &amp; Medicaid Enrollment</span>
+        <div class="data-card-visual">
+          <img src="assets/data/snap-medicaid-timeline.png" alt="SNAP and Medicaid timeline screenshot">
         </div>
         <div class="data-card-body">
           <span class="data-card-tag">Benefits &amp; Tax Programs</span>
-          <h3>Benefits Enrollment Timeline</h3>
-          <p>Track SNAP, Medicaid, and state tax credit enrollment across counties and years. See how policy changes affected participation over time.</p>
+          <h3>SNAP &amp; Medicaid Timeline</h3>
+          <p>Track how federal policy changes affect Hawaiʻi residents' access to SNAP and Medicaid — with cost estimates and eligibility impacts.</p>
+          <span class="data-card-cta">Explore the data →</span>
+        </div>
+      </a>
+
+      <!-- Card 3: Economic Justice Dashboard -->
+      <a class="data-card" href="#">
+        <div class="data-card-visual">
+          <img src="assets/data/economic-justice-dashboard.png" alt="Economic Justice Dashboard screenshot">
+        </div>
+        <div class="data-card-body">
+          <span class="data-card-tag">Economic Justice</span>
+          <h3>Data Justice Dashboard</h3>
+          <p>Explore ALICE household data, food insecurity, and economic security indicators mapped across Hawaiʻi's districts and counties.</p>
           <span class="data-card-cta">Explore the data →</span>
         </div>
       </a>
