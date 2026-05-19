@@ -284,62 +284,72 @@
     --section-bg: #E2E8E8;           /* pale slate — cool, infrastructural */
     --section-accent: var(--ha-slate);
   }
-  /* Section-accent color cascades to eyebrow underline + focus bullets */
+  /* Section-accent color cascades to eyebrow underline + focus number */
   .ha-issues .ha-deep .ha-eyebrow{color:var(--section-accent);}
   .ha-issues .ha-deep .ha-eyebrow::before{background:var(--section-accent);}
   .ha-issues .ha-deep .ha-deep-num{color:var(--section-accent);}
-  .ha-issues .ha-deep .ha-focus li::before{
-    background:var(--section-accent);
-    box-shadow:0 0 0 4px color-mix(in srgb, var(--section-accent) 20%, transparent);
-  }
+  .ha-issues .ha-deep .ha-focus li::before{color:var(--section-accent);}
   .ha-issues .ha-deep .ha-deep-sub::before{background:var(--section-accent);}
 
-  .ha-issues .ha-deep-head{margin-bottom:36px;}
+  /* ===== Deep-dive head — area title is the focus ===== */
+  .ha-issues .ha-deep-head{margin-bottom:40px;}
   .ha-issues .ha-deep-num{
     font-family:'Manrope',sans-serif;font-weight:600;
     font-size:13px;letter-spacing:.32em;color:var(--ha-teal-deep);
-    opacity:.7;margin-bottom:18px;display:block;
+    opacity:.75;margin-bottom:14px;display:block;
   }
   .ha-issues .ha-deep h2{
-    font-family:'Manrope',sans-serif;font-weight:700;
-    font-size:clamp(32px, 4.6vw, 56px);line-height:1.05;letter-spacing:-0.025em;
-    color:var(--ha-charcoal);margin-bottom:12px;
+    font-family:'Manrope',sans-serif;font-weight:800;
+    font-size:clamp(42px, 6vw, 76px);line-height:1;letter-spacing:-0.035em;
+    color:var(--ha-charcoal);margin:0 0 14px;
+  }
+  .ha-issues .ha-deep-tagline{
+    font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:400;
+    font-size:clamp(18px, 1.9vw, 24px);line-height:1.3;
+    color:var(--ha-charcoal);opacity:.72;
+    margin:0 0 4px;max-width:36ch;
   }
   .ha-issues .ha-deep-body{max-width:760px;}
   .ha-issues .ha-deep-lead{
     font-family:'Manrope',sans-serif;font-weight:500;
-    font-size:clamp(18px, 1.9vw, 22px);line-height:1.45;
-    color:var(--ha-charcoal);margin:24px 0 18px;
+    font-size:clamp(17px, 1.7vw, 20px);line-height:1.5;
+    color:var(--ha-charcoal);margin:0 0 16px;
     letter-spacing:-0.005em;
   }
   .ha-issues .ha-deep p{
-    font-family:'Poppins',sans-serif;font-size:16px;line-height:1.75;
+    font-family:'Poppins',sans-serif;font-size:15.5px;line-height:1.75;
     color:var(--ha-charcoal);opacity:.85;margin-bottom:14px;
   }
-  /* ===== Prose card ===== */
+
+  /* ===== Stat-anchored prose card ===== */
   .ha-issues .ha-prose-card{
     background:#fff;
     border-left:4px solid var(--section-accent, var(--ha-teal-deep));
     border-radius:0 4px 4px 0;
-    padding:10px 36px 32px;
+    padding:32px 36px;
     margin-bottom:44px;
     box-shadow:0 2px 16px rgba(47,62,70,.07),0 0 0 1px rgba(47,62,70,.05);
     position:relative;
   }
-  .ha-issues .ha-prose-card::before{
-    content:'\201C';
-    font-family:'Fraunces',Georgia,serif;
-    font-style:italic;
-    font-size:96px;
-    line-height:.85;
-    color:var(--section-accent, var(--ha-teal-deep));
-    opacity:.22;
-    display:block;
-    margin-bottom:4px;
-    pointer-events:none;
-  }
   .ha-issues .ha-prose-card .ha-deep-lead{margin-top:0;}
   .ha-issues .ha-prose-card p:last-child{margin-bottom:0;}
+
+  .ha-issues .ha-stat-anchor{
+    display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 20px;
+    padding-bottom:22px;margin-bottom:24px;
+    border-bottom:1px solid color-mix(in srgb, var(--section-accent) 22%, transparent);
+  }
+  .ha-issues .ha-stat-num{
+    font-family:'Manrope',sans-serif;font-weight:800;
+    font-size:clamp(44px, 6vw, 68px);line-height:.95;letter-spacing:-0.045em;
+    color:var(--section-accent, var(--ha-teal-deep));
+    flex-shrink:0;
+  }
+  .ha-issues .ha-stat-label{
+    font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;
+    line-height:1.4;color:var(--ha-charcoal);opacity:.72;
+    letter-spacing:.005em;max-width:28ch;
+  }
 
   .ha-issues .ha-deep-sub{
     font-family:'Manrope',sans-serif;font-weight:700;
@@ -351,22 +361,40 @@
     content:"";width:32px;height:1px;background:var(--ha-teal);
   }
 
-  /* Focus list */
+  /* ===== Focus list — numbered cards ===== */
   .ha-issues .ha-focus{
-    display:grid;gap:16px;
+    display:grid;gap:12px;
     grid-template-columns:1fr;
+    counter-reset:focus-item;
+    list-style:none;padding:0;
   }
-  @media (min-width:680px){.ha-issues .ha-focus{grid-template-columns:repeat(2,1fr);gap:14px 28px;}}
+  @media (min-width:680px){.ha-issues .ha-focus{grid-template-columns:repeat(2,1fr);gap:12px 14px;}}
   .ha-issues .ha-focus li{
-    display:flex;align-items:flex-start;gap:14px;
-    font-family:'Poppins',sans-serif;font-size:15px;line-height:1.55;
-    color:var(--ha-charcoal);opacity:.85;
+    counter-increment:focus-item;
+    display:flex;align-items:center;gap:18px;
+    padding:18px 22px;
+    background:#fff;
+    border:1px solid color-mix(in srgb, var(--section-accent) 16%, transparent);
+    border-radius:3px;
+    font-family:'Manrope',sans-serif;font-size:15px;font-weight:500;line-height:1.35;
+    color:var(--ha-charcoal);
+    transition:background .2s, border-color .2s, transform .2s, box-shadow .2s;
   }
   .ha-issues .ha-focus li::before{
-    content:"";flex-shrink:0;
-    width:8px;height:8px;border-radius:50%;
-    background:var(--ha-teal);margin-top:9px;
-    box-shadow:0 0 0 4px rgba(132,169,140,.18);
+    content:counter(focus-item, decimal-leading-zero);
+    font-family:'Manrope',sans-serif;font-weight:700;
+    font-size:17px;letter-spacing:.02em;
+    color:var(--section-accent, var(--ha-teal-deep));
+    flex-shrink:0;width:auto;height:auto;border-radius:0;
+    background:transparent;box-shadow:none;margin:0;
+    padding-right:16px;
+    border-right:1px solid color-mix(in srgb, var(--section-accent) 28%, transparent);
+  }
+  .ha-issues .ha-focus li:hover{
+    background:color-mix(in srgb, var(--section-accent) 5%, white);
+    border-color:var(--section-accent);
+    transform:translateY(-1px);
+    box-shadow:0 4px 14px rgba(47,62,70,.08);
   }
 
   /* Featured pubs row (inside deep dives) */
@@ -812,12 +840,17 @@
   <section class="ha-deep" id="food-security" data-color="food" data-fade>
     <div class="ha-wrap">
       <div class="ha-deep-head">
-        <span class="ha-deep-num">01 · Food Security</span>
-        <h2>Healthy, accessible food for every Hawaiʻi family.</h2>
+        <span class="ha-deep-num">01</span>
+        <h2>Food Security</h2>
+        <p class="ha-deep-tagline">Healthy, accessible food for every Hawaiʻi family.</p>
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
         <div class="ha-prose-card">
+          <div class="ha-stat-anchor">
+            <span class="ha-stat-num">85%</span>
+            <span class="ha-stat-label">of Hawaiʻi's food is imported, leaving islands vulnerable to supply-chain shocks</span>
+          </div>
           <p class="ha-deep-lead">Hawaiʻi imports nearly 85 percent of the food it consumes, leaving our islands vulnerable to supply-chain shocks and high prices. Meanwhile, one in eight residents — including one in five keiki — struggles to consistently put food on the table.</p>
           <p>We work alongside farmers, food hubs, schools, and grassroots coalitions to advance policies that expand access to fresh, culturally significant food and strengthen Hawaiʻi's local food economy. From universal school meals to SNAP modernization, our advocacy makes sure every family — and the farms that feed them — can thrive.</p>
         </div>
@@ -841,12 +874,17 @@
   <section class="ha-deep" id="housing" data-color="housing" data-fade>
     <div class="ha-wrap">
       <div class="ha-deep-head">
-        <span class="ha-deep-num">02 · Affordable Housing</span>
-        <h2>Homes Hawaiʻi's families can actually afford.</h2>
+        <span class="ha-deep-num">02</span>
+        <h2>Affordable Housing</h2>
+        <p class="ha-deep-tagline">Homes Hawaiʻi's families can actually afford.</p>
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
         <div class="ha-prose-card">
+          <div class="ha-stat-anchor">
+            <span class="ha-stat-num">1 in 4</span>
+            <span class="ha-stat-label">Hawaiʻi households are severely rent-burdened, paying more than half their income on housing</span>
+          </div>
           <p class="ha-deep-lead">Hawaiʻi is the most expensive place to rent or buy a home in the United States. One in four households is severely rent-burdened, and tens of thousands of working families have been priced out of the islands they call home.</p>
           <p>We research and advocate for housing policies that put residents first — from tenant protections and rent stabilization to expanding supply through social housing models like ALOHA Homes. Our work centers the experiences of renters, working families, and those displaced by escalating costs and climate disasters.</p>
         </div>
@@ -870,12 +908,17 @@
   <section class="ha-deep" id="transportation" data-color="transit" data-fade>
     <div class="ha-wrap">
       <div class="ha-deep-head">
-        <span class="ha-deep-num">03 · Transportation</span>
-        <h2>Safer streets, smarter transit, lower costs.</h2>
+        <span class="ha-deep-num">03</span>
+        <h2>Transportation</h2>
+        <p class="ha-deep-tagline">Safer streets, smarter transit, lower costs.</p>
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
         <div class="ha-prose-card">
+          <div class="ha-stat-anchor">
+            <span class="ha-stat-num">17%</span>
+            <span class="ha-stat-label">of the average Hawaiʻi household budget goes to transportation — the second-largest cost</span>
+          </div>
           <p class="ha-deep-lead">For too many Hawaiʻi residents, getting to work, school, or the doctor depends on owning a car — a financial burden that eats up an outsized share of household budgets and leaves seniors, students, and low-income families isolated.</p>
           <p>We advocate for transportation policy that connects communities and protects pedestrians, with a focus on fare-free transit for youth, complete-streets design, and equitable traffic enforcement. Our research highlights how smart investment in transit and walkability lowers costs, cuts emissions, and builds healthier neighborhoods.</p>
         </div>
@@ -899,12 +942,17 @@
   <section class="ha-deep" id="tax-budget" data-color="tax-budget" data-fade>
     <div class="ha-wrap">
       <div class="ha-deep-head">
-        <span class="ha-deep-num">04 · Tax &amp; Budget</span>
-        <h2>A fairer tax code for a thriving Hawaiʻi.</h2>
+        <span class="ha-deep-num">04</span>
+        <h2>Tax &amp; Budget</h2>
+        <p class="ha-deep-tagline">A fairer tax code for a thriving Hawaiʻi.</p>
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
         <div class="ha-prose-card">
+          <div class="ha-stat-anchor">
+            <span class="ha-stat-num">Top 10</span>
+            <span class="ha-stat-label">most regressive state tax codes in the U.S. — Hawaiʻi's working families pay more than the wealthiest</span>
+          </div>
           <p class="ha-deep-lead">Hawaiʻi has one of the most regressive tax structures in the country. Working families pay a larger share of their income in state and local taxes than the wealthiest households — and many essential services remain underfunded as a result.</p>
           <p>We push for progressive revenue policies that ask those who can afford it most to pay their fair share, while strengthening the budget process so public dollars reach the people who need them. From our annual Budget Primer to deep analyses of credits and exemptions, our research equips lawmakers, advocates, and the public to demand a tax code that funds a thriving Hawaiʻi.</p>
         </div>
