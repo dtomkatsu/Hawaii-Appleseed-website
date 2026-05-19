@@ -56,7 +56,7 @@
 </style>
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400&family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap">
 </head>
 <body>
 
@@ -316,6 +316,31 @@
     font-family:'Poppins',sans-serif;font-size:16px;line-height:1.75;
     color:var(--ha-charcoal);opacity:.85;margin-bottom:14px;
   }
+  /* ===== Prose card ===== */
+  .ha-issues .ha-prose-card{
+    background:#fff;
+    border-left:4px solid var(--section-accent, var(--ha-teal-deep));
+    border-radius:0 4px 4px 0;
+    padding:10px 36px 32px;
+    margin-bottom:44px;
+    box-shadow:0 2px 16px rgba(47,62,70,.07),0 0 0 1px rgba(47,62,70,.05);
+    position:relative;
+  }
+  .ha-issues .ha-prose-card::before{
+    content:'\201C';
+    font-family:'Fraunces',Georgia,serif;
+    font-style:italic;
+    font-size:96px;
+    line-height:.85;
+    color:var(--section-accent, var(--ha-teal-deep));
+    opacity:.22;
+    display:block;
+    margin-bottom:4px;
+    pointer-events:none;
+  }
+  .ha-issues .ha-prose-card .ha-deep-lead{margin-top:0;}
+  .ha-issues .ha-prose-card p:last-child{margin-bottom:0;}
+
   .ha-issues .ha-deep-sub{
     font-family:'Manrope',sans-serif;font-weight:700;
     font-size:13px;letter-spacing:.16em;text-transform:uppercase;
@@ -792,8 +817,10 @@
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
-        <p class="ha-deep-lead">Hawaiʻi imports nearly 85 percent of the food it consumes, leaving our islands vulnerable to supply-chain shocks and high prices. Meanwhile, one in eight residents — including one in five keiki — struggles to consistently put food on the table.</p>
-        <p>We work alongside farmers, food hubs, schools, and grassroots coalitions to advance policies that expand access to fresh, culturally significant food and strengthen Hawaiʻi's local food economy. From universal school meals to SNAP modernization, our advocacy makes sure every family — and the farms that feed them — can thrive.</p>
+        <div class="ha-prose-card">
+          <p class="ha-deep-lead">Hawaiʻi imports nearly 85 percent of the food it consumes, leaving our islands vulnerable to supply-chain shocks and high prices. Meanwhile, one in eight residents — including one in five keiki — struggles to consistently put food on the table.</p>
+          <p>We work alongside farmers, food hubs, schools, and grassroots coalitions to advance policies that expand access to fresh, culturally significant food and strengthen Hawaiʻi's local food economy. From universal school meals to SNAP modernization, our advocacy makes sure every family — and the farms that feed them — can thrive.</p>
+        </div>
 
         <h4 class="ha-deep-sub">What we focus on</h4>
         <ul class="ha-focus">
@@ -819,8 +846,10 @@
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
-        <p class="ha-deep-lead">Hawaiʻi is the most expensive place to rent or buy a home in the United States. One in four households is severely rent-burdened, and tens of thousands of working families have been priced out of the islands they call home.</p>
-        <p>We research and advocate for housing policies that put residents first — from tenant protections and rent stabilization to expanding supply through social housing models like ALOHA Homes. Our work centers the experiences of renters, working families, and those displaced by escalating costs and climate disasters.</p>
+        <div class="ha-prose-card">
+          <p class="ha-deep-lead">Hawaiʻi is the most expensive place to rent or buy a home in the United States. One in four households is severely rent-burdened, and tens of thousands of working families have been priced out of the islands they call home.</p>
+          <p>We research and advocate for housing policies that put residents first — from tenant protections and rent stabilization to expanding supply through social housing models like ALOHA Homes. Our work centers the experiences of renters, working families, and those displaced by escalating costs and climate disasters.</p>
+        </div>
 
         <h4 class="ha-deep-sub">What we focus on</h4>
         <ul class="ha-focus">
@@ -846,8 +875,10 @@
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
-        <p class="ha-deep-lead">For too many Hawaiʻi residents, getting to work, school, or the doctor depends on owning a car — a financial burden that eats up an outsized share of household budgets and leaves seniors, students, and low-income families isolated.</p>
-        <p>We advocate for transportation policy that connects communities and protects pedestrians, with a focus on fare-free transit for youth, complete-streets design, and equitable traffic enforcement. Our research highlights how smart investment in transit and walkability lowers costs, cuts emissions, and builds healthier neighborhoods.</p>
+        <div class="ha-prose-card">
+          <p class="ha-deep-lead">For too many Hawaiʻi residents, getting to work, school, or the doctor depends on owning a car — a financial burden that eats up an outsized share of household budgets and leaves seniors, students, and low-income families isolated.</p>
+          <p>We advocate for transportation policy that connects communities and protects pedestrians, with a focus on fare-free transit for youth, complete-streets design, and equitable traffic enforcement. Our research highlights how smart investment in transit and walkability lowers costs, cuts emissions, and builds healthier neighborhoods.</p>
+        </div>
 
         <h4 class="ha-deep-sub">What we focus on</h4>
         <ul class="ha-focus">
@@ -873,8 +904,10 @@
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
-        <p class="ha-deep-lead">Hawaiʻi has one of the most regressive tax structures in the country. Working families pay a larger share of their income in state and local taxes than the wealthiest households — and many essential services remain underfunded as a result.</p>
-        <p>We push for progressive revenue policies that ask those who can afford it most to pay their fair share, while strengthening the budget process so public dollars reach the people who need them. From our annual Budget Primer to deep analyses of credits and exemptions, our research equips lawmakers, advocates, and the public to demand a tax code that funds a thriving Hawaiʻi.</p>
+        <div class="ha-prose-card">
+          <p class="ha-deep-lead">Hawaiʻi has one of the most regressive tax structures in the country. Working families pay a larger share of their income in state and local taxes than the wealthiest households — and many essential services remain underfunded as a result.</p>
+          <p>We push for progressive revenue policies that ask those who can afford it most to pay their fair share, while strengthening the budget process so public dollars reach the people who need them. From our annual Budget Primer to deep analyses of credits and exemptions, our research equips lawmakers, advocates, and the public to demand a tax code that funds a thriving Hawaiʻi.</p>
+        </div>
 
         <h4 class="ha-deep-sub">What we focus on</h4>
         <ul class="ha-focus">
