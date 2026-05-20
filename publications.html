@@ -356,10 +356,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   background:var(--ha-teal-deep); border-color:var(--ha-teal-deep);
   color:var(--ha-white);
 }
-.ha-pub__pill--more {
-  border-style:dashed; color:rgba(47,62,70,.5);
-}
-.ha-pub__pill--more:hover { color:var(--ha-teal-deep); border-color:var(--ha-teal); border-style:dashed; }
 
 @media (max-width:700px) {
   .ha-pub__toolbar { padding:16px 20px; top:0; }
@@ -655,10 +651,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     'Food Equity',
     'Taxes & Budget',
     'Transportation Equity',
-  ];
-  const CATEGORIES_SECONDARY = [
-    'Health',
-    'Native Hawaiian Equity',
     'Wages & Labor',
   ];
 
@@ -685,8 +677,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
   /* ── build filter pills ── */
   function buildFilters() {
-    let moreExpanded = false;
-
     const allPill = document.createElement('button');
     allPill.className = 'ha-pub__pill active';
     allPill.dataset.cat = '';
@@ -702,43 +692,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       pill.addEventListener('click', () => setCategory(cat));
       filters.appendChild(pill);
     });
-
-    // Secondary pills (hidden by default)
-    const secondaryWrap = document.createElement('span');
-    secondaryWrap.className = 'ha-pub__filters-secondary';
-    secondaryWrap.style.display = 'none';
-    secondaryWrap.style.display = 'contents';
-    CATEGORIES_SECONDARY.forEach(cat => {
-      const pill = document.createElement('button');
-      pill.className = 'ha-pub__pill ha-pub__pill--secondary';
-      pill.dataset.cat = cat;
-      pill.textContent = cat;
-      pill.style.display = 'none';
-      pill.addEventListener('click', () => setCategory(cat));
-      secondaryWrap.appendChild(pill);
-    });
-    filters.appendChild(secondaryWrap);
-
-    // More / Less toggle
-    const moreBtn = document.createElement('button');
-    moreBtn.className = 'ha-pub__pill ha-pub__pill--more';
-    moreBtn.textContent = 'More +';
-    moreBtn.addEventListener('click', () => {
-      moreExpanded = !moreExpanded;
-      secondaryWrap.querySelectorAll('.ha-pub__pill--secondary').forEach(p => {
-        p.style.display = moreExpanded ? '' : 'none';
-      });
-      moreBtn.textContent = moreExpanded ? 'Less −' : 'More +';
-    });
-    filters.appendChild(moreBtn);
   }
 
   function setCategory(cat) {
     activeCategory = cat;
     filters.querySelectorAll('.ha-pub__pill').forEach(p => {
-      if (!p.classList.contains('ha-pub__pill--more')) {
-        p.classList.toggle('active', (p.dataset.cat || null) === cat);
-      }
+      p.classList.toggle('active', (p.dataset.cat || null) === cat);
     });
     render();
   }
