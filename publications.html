@@ -28,23 +28,27 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .px-announce .x { position:absolute; right:14px; top:50%; transform:translateY(-50%); opacity:.7; cursor:pointer; }
 
 .px-nav {
-  background:#fff; border-bottom:1px solid rgba(53,79,82,.18);
-  padding:18px 28px; display:flex; align-items:center; gap:32px;
+  background:#fff; border-bottom:1px solid rgba(53,79,82,.15);
+  padding:16px 28px; display:flex; align-items:center; justify-content:space-between; gap:24px;
   position:fixed; top:38px; left:0; right:0; z-index:49;
   font-family:'Poppins',sans-serif;
 }
-.px-nav .px-logo {
-  display:flex; align-items:center; gap:12px;
-  font-family:'Manrope',sans-serif; font-weight:800;
-  font-size:20px; color:#52796F; letter-spacing:.05em;
-}
-.px-nav .px-logo svg { width:36px; height:36px; }
-.px-nav .px-spacer { flex:1; }
-.px-nav .px-links { display:none; gap:28px; font-size:14px; font-weight:500; color:#2F3E46; }
+.px-nav .px-brand { display:flex; align-items:center; gap:12px; flex:none; }
+.px-nav .px-brand-mark { width:40px; height:40px; flex:none; }
+.px-nav .px-brand-mark svg { width:100%; height:100%; display:block; }
+.px-nav .px-brand-text { line-height:1; }
+.px-nav .px-brand-name { font-family:'Poppins',sans-serif; font-weight:700; letter-spacing:.14em; font-size:18px; color:#52796F; }
+.px-nav .px-brand-tag { font-family:'Poppins',sans-serif; font-size:9px; letter-spacing:.26em; color:#52796F; margin-top:3px; }
+.px-nav .px-links { display:none; gap:20px; font-size:14px; font-weight:500; color:#2F3E46; flex:1; justify-content:flex-end; flex-wrap:nowrap; white-space:nowrap; }
 .px-nav .px-links a { color:inherit; text-decoration:none; }
 .px-nav .px-links a:hover { color:#52796F; }
 .px-nav .px-links a.active { color:#52796F; font-weight:600; }
 @media (min-width:900px) { .px-nav .px-links { display:flex; } }
+.px-nav-right { display:flex; align-items:center; gap:14px; flex:none; }
+.px-social { display:flex; gap:10px; color:#2F3E46; }
+.px-social svg { width:16px; height:16px; }
+.px-donate-btn { background:#2F3E46; color:#fff; padding:9px 20px; font-family:'Poppins',sans-serif; font-weight:500; font-size:14px; border-radius:2px; text-decoration:none; }
+.px-donate-btn:hover { background:#52796F; }
 
 .px-footer {
   background:#2F3E46; color:#CAD2C5; padding:60px 28px 40px;
@@ -100,7 +104,9 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <a href="our-story.html">Our Story</a>
     <a href="our-mission.html">Our Mission</a>
     <a href="our-team.html">Our Team</a>
+    <a href="board-of-directors.html">Board</a>
     <a href="issues.html">Issues</a>
+    <a href="#">News</a>
     <a href="publications.html" class="active">Publications</a>
     <a href="#">Donate</a>
   </div>

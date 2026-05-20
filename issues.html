@@ -680,6 +680,33 @@
   }
   .ha-issues .ha-deep-see-all:hover::after { transform:translateX(4px); }
 
+  /* ===== TIER 0: "Explore standalone page" filled pill ===== */
+  .ha-issues .ha-deep-page-link {
+    display:inline-flex; align-items:center; gap:10px;
+    margin-top:28px; margin-bottom:4px;
+    font-family:'Manrope',sans-serif; font-weight:700;
+    font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:#fff;
+    padding:11px 22px; border-radius:999px;
+    border:none;
+    background:var(--section-accent, var(--ha-teal-deep));
+    text-decoration:none; cursor:pointer;
+    transition:background .25s, gap .25s, box-shadow .25s, transform .2s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .ha-issues .ha-deep-page-link::after {
+    content:"→";
+    font-size:14px; line-height:1;
+    transition:transform .25s;
+  }
+  .ha-issues .ha-deep-page-link:hover {
+    background:color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 80%, #000);
+    gap:14px;
+    box-shadow:0 4px 18px color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 30%, transparent);
+    transform:translateY(-1px);
+  }
+  .ha-issues .ha-deep-page-link:hover::after { transform:translateX(4px); }
+
   /* Dynamic pub-row empty state (while loading) */
   .ha-issues .ha-pub-row[data-area-pubs]:empty {
     min-height:200px;
@@ -921,6 +948,7 @@
           </div>
           <p class="ha-deep-lead">Hawaiʻi has one of the most regressive tax structures in the country. Working families pay a larger share of their income in state and local taxes than the wealthiest households — and many essential services remain underfunded as a result.</p>
           <p>We push for progressive revenue policies that ask those who can afford it most to pay their fair share, while strengthening the budget process so public dollars reach the people who need them. From our annual Budget Primer to deep analyses of credits and exemptions, our research equips lawmakers, advocates, and the public to demand a tax code that funds a thriving Hawaiʻi.</p>
+          <a class="ha-deep-page-link" href="taxes-budget.html">Explore Taxes &amp; Budget</a>
         </div>
 
         <h4 class="ha-deep-sub">What we focus on</h4>
