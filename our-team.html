@@ -39,6 +39,18 @@
   .px-nav .px-links a:hover{color:#52796F}
   .px-nav .px-links a.active{color:#52796F;font-weight:600;}
   @media (min-width:900px){ .px-nav .px-links{display:flex} }
+
+.px-dropdown{position:relative;}
+.px-dropdown-trigger{background:none;border:none;cursor:pointer;padding:0;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;color:#2F3E46;display:flex;align-items:center;gap:5px;line-height:1;}
+.px-dropdown-trigger:hover,.px-dropdown-trigger.active{color:#52796F;}
+.px-dropdown-trigger.active{font-weight:600;}
+.px-chevron{font-size:9px;transition:transform .2s;display:inline-block;margin-top:1px;}
+.px-dropdown.is-open .px-chevron{transform:rotate(180deg);}
+.px-dropdown-menu{display:none;position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid rgba(53,79,82,.12);border-radius:3px;box-shadow:0 8px 24px rgba(47,62,70,.12);min-width:170px;z-index:100;padding:6px 0;}
+.px-dropdown.is-open .px-dropdown-menu{display:block;}
+.px-dropdown-menu a{display:block;padding:9px 18px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;color:#2F3E46;text-decoration:none;white-space:nowrap;transition:background .15s,color .15s;}
+.px-dropdown-menu a:hover{background:rgba(132,169,140,.1);color:#52796F;}
+.px-dropdown-menu a.active{color:#52796F;font-weight:600;}
   .px-nav-right{display:flex;align-items:center;gap:14px;flex:none;}
   .px-social{display:flex;gap:10px;color:#2F3E46;}
   .px-social svg{width:16px;height:16px;}
@@ -86,9 +98,16 @@
   </div>
   <div class="px-links">
     <a href="index.html">Home</a>
-    <a href="our-story.html">Our Story</a>
-    <a href="our-mission.html">Our Mission</a>
-    <a href="our-team.html" style="color:#52796F;font-weight:600">Our Team</a>
+    <div class="px-dropdown">
+      <button class="px-dropdown-trigger active" aria-haspopup="true" aria-expanded="false">About <span class="px-chevron" aria-hidden="true">▾</span></button>
+      <div class="px-dropdown-menu">
+      <a href="our-mission.html">Our Mission</a>
+      <a href="our-story.html">Our Story</a>
+      <a href="our-team.html" class="active">Our Team</a>
+      <a href="board-of-directors.html">Board</a>
+      </div>
+    </div>
+    </div>
     <a href="issues.html">Issues</a>
     <a href="#">News</a>
     <a href="publications.html">Research</a>
@@ -503,10 +522,12 @@
           <h2>Will White</h2>
           <div class="ha-ed-role">Executive Director</div>
           <div class="ha-ed-bio">
-            <p>Will is an experienced advocate, community organizer, and all-around policy wonk, who has dedicated his professional career to advancing equitable public policy for communities across the United States.</p>
+            <p>Will is a seasoned advocate, community organizer, and policy analyst who has dedicated his career working for equitable public policy — especially for those too often left out of the conversation. Driven by a deep belief that systems can and must change, Will brings both the lived experience of someone who knows what's at stake and the professional expertise to actually move the needle.</p>
             <div class="ha-ed-bio-more" id="ed-bio-more">
-              <p>A graduate of Kamehameha Schools and proud son of Kalihi Valley, Will spent the last 20 years on the U.S. continent working as a community organizer, policy advocate (and sometimes nightclub doorman) in both New York City and the San Francisco Bay Area.</p>
-              <p>For seven years, Will served as the Senior Director of Policy and Government Affairs at United Way Bay Area, where he worked to increase the minimum wage, improve access to healthcare for undocumented immigrants, and expand tax credits for working families. Having returned home in 2021, Will has had the opportunity to serve in the Hawaiʻi State Governor's Office and the State Department of Budget and Finance before joining Hawaiʻi Appleseed. Will holds a bachelor's degree in history from New York University and a master's in urban policy analysis and management from The New School.</p>
+              <p>A proud son of Kalihi Valley and graduate of Kamehameha Schools, Will brings a deeply rooted sense of place and purpose to his work. Having spent two decades on the continent — organizing communities, advancing pro-worker legislation, and occasionally working as a New York City nightclub doorman — Will has built the kind of cross-sector experience that makes him an effective advocate.</p>
+              <p>For seven years, Will served as Senior Director of Policy and Government Affairs at United Way Bay Area in San Francisco, where he led campaigns to raise the minimum wage, expand healthcare access for undocumented immigrants, and strengthen tax credits for working families. His work consistently bridged grassroots organizing with institutional change — translating community power into lasting policy wins.</p>
+              <p>After returning home to Hawaiʻi in 2021, Will brought that experience to the Hawaiʻi State Governor's Office and the State Department of Budget and Finance before joining Hawaiʻi Appleseed Center for Law &amp; Economic Justice. Here, he continues the work he has always done — this time, for the place and people he calls home. For Will, this isn't just a job. It's a homecoming with purpose.</p>
+              <p>Will holds a bachelor's degree in History from New York University and a master's in Urban Policy Analysis and Management from The New School.</p>
             </div>
           </div>
           <div class="ha-ed-actions">
@@ -846,5 +867,16 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  document.querySelectorAll('.px-dropdown').forEach(function(d){
+    var btn=d.querySelector('.px-dropdown-trigger');
+    btn.addEventListener('click',function(e){e.stopPropagation();var o=d.classList.toggle('is-open');btn.setAttribute('aria-expanded',o);});
+  });
+  document.addEventListener('click',function(){
+    document.querySelectorAll('.px-dropdown').forEach(function(d){d.classList.remove('is-open');var b=d.querySelector('.px-dropdown-trigger');if(b)b.setAttribute('aria-expanded','false');});
+  });
+})();
+</script>
 </body>
 </html>

@@ -101,10 +101,16 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   </div>
   <div class="px-links">
     <a href="index.html">Home</a>
-    <a href="our-story.html">Our Story</a>
-    <a href="our-mission.html">Our Mission</a>
-    <a href="our-team.html">Our Team</a>
-    <a href="board-of-directors.html">Board</a>
+    <div class="px-dropdown">
+      <button class="px-dropdown-trigger" aria-haspopup="true" aria-expanded="false">About <span class="px-chevron" aria-hidden="true">▾</span></button>
+      <div class="px-dropdown-menu">
+      <a href="our-mission.html">Our Mission</a>
+      <a href="our-story.html">Our Story</a>
+      <a href="our-team.html">Our Team</a>
+      <a href="board-of-directors.html">Board</a>
+      </div>
+    </div>
+    </div>
     <a href="issues.html">Issues</a>
     <a href="#">News</a>
     <a href="publications.html" class="active">Research</a>
@@ -903,5 +909,16 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   </div>
 </footer>
 
+<script>
+(function(){
+  document.querySelectorAll('.px-dropdown').forEach(function(d){
+    var btn=d.querySelector('.px-dropdown-trigger');
+    btn.addEventListener('click',function(e){e.stopPropagation();var o=d.classList.toggle('is-open');btn.setAttribute('aria-expanded',o);});
+  });
+  document.addEventListener('click',function(){
+    document.querySelectorAll('.px-dropdown').forEach(function(d){d.classList.remove('is-open');var b=d.querySelector('.px-dropdown-trigger');if(b)b.setAttribute('aria-expanded','false');});
+  });
+})();
+</script>
 </body>
 </html>

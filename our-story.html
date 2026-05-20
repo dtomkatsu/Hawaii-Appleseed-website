@@ -41,6 +41,18 @@
   .px-nav .px-links a:hover{color:#52796F}
   .px-nav .px-links a.active{color:#52796F;font-weight:600;}
   @media (min-width:900px){ .px-nav .px-links{display:flex} }
+
+.px-dropdown{position:relative;}
+.px-dropdown-trigger{background:none;border:none;cursor:pointer;padding:0;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;color:#2F3E46;display:flex;align-items:center;gap:5px;line-height:1;}
+.px-dropdown-trigger:hover,.px-dropdown-trigger.active{color:#52796F;}
+.px-dropdown-trigger.active{font-weight:600;}
+.px-chevron{font-size:9px;transition:transform .2s;display:inline-block;margin-top:1px;}
+.px-dropdown.is-open .px-chevron{transform:rotate(180deg);}
+.px-dropdown-menu{display:none;position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid rgba(53,79,82,.12);border-radius:3px;box-shadow:0 8px 24px rgba(47,62,70,.12);min-width:170px;z-index:100;padding:6px 0;}
+.px-dropdown.is-open .px-dropdown-menu{display:block;}
+.px-dropdown-menu a{display:block;padding:9px 18px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;color:#2F3E46;text-decoration:none;white-space:nowrap;transition:background .15s,color .15s;}
+.px-dropdown-menu a:hover{background:rgba(132,169,140,.1);color:#52796F;}
+.px-dropdown-menu a.active{color:#52796F;font-weight:600;}
   .px-nav-right{display:flex;align-items:center;gap:14px;flex:none;}
   .px-social{display:flex;gap:10px;color:#2F3E46;}
   .px-social svg{width:16px;height:16px;}
@@ -88,9 +100,16 @@
   </div>
   <div class="px-links">
     <a href="index.html">Home</a>
-    <a href="our-story.html" style="color:#52796F;font-weight:600">Our Story</a>
-    <a href="our-mission.html">Our Mission</a>
-    <a href="our-team.html">Our Team</a>
+    <div class="px-dropdown">
+      <button class="px-dropdown-trigger active" aria-haspopup="true" aria-expanded="false">About <span class="px-chevron" aria-hidden="true">▾</span></button>
+      <div class="px-dropdown-menu">
+      <a href="our-mission.html">Our Mission</a>
+      <a href="our-story.html" class="active">Our Story</a>
+      <a href="our-team.html">Our Team</a>
+      <a href="board-of-directors.html">Board</a>
+      </div>
+    </div>
+    </div>
     <a href="issues.html">Issues</a>
     <a href="#">News</a>
     <a href="publications.html">Research</a>
@@ -884,5 +903,16 @@
   });
 </script>
 
+<script>
+(function(){
+  document.querySelectorAll('.px-dropdown').forEach(function(d){
+    var btn=d.querySelector('.px-dropdown-trigger');
+    btn.addEventListener('click',function(e){e.stopPropagation();var o=d.classList.toggle('is-open');btn.setAttribute('aria-expanded',o);});
+  });
+  document.addEventListener('click',function(){
+    document.querySelectorAll('.px-dropdown').forEach(function(d){d.classList.remove('is-open');var b=d.querySelector('.px-dropdown-trigger');if(b)b.setAttribute('aria-expanded','false');});
+  });
+})();
+</script>
 </body>
 </html>
