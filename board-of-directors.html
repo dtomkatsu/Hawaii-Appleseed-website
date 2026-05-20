@@ -146,8 +146,52 @@
   }
   .ha-board .ha-eyebrow::before{content:"";width:42px;height:1px;background:var(--ha-teal);}
 
+  /* ===== PRESIDENT SPOTLIGHT ===== */
+  .ha-board .ha-president-wrap{
+    background:var(--ha-charcoal);padding:80px 0 72px;
+  }
+  .ha-board .ha-president-inner{
+    display:flex;align-items:flex-start;gap:48px;
+    max-width:700px;margin:0 auto;padding:0 28px;
+  }
+  .ha-board .ha-president-inner .ha-photo{
+    flex:0 0 220px;width:220px;
+  }
+  .ha-board .ha-president-inner .ha-photo img{
+    width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;
+    border-radius:2px;filter:grayscale(15%);
+  }
+  .ha-board .ha-president-inner .ha-info{flex:1;padding-top:8px;}
+  .ha-board .ha-president-inner .ha-role{
+    font-family:'Poppins',sans-serif;font-size:10.5px;font-weight:600;
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ha-teal);margin-bottom:10px;
+  }
+  .ha-board .ha-president-inner .ha-role::before{display:none;}
+  .ha-board .ha-president-inner .ha-name{
+    font-family:'Manrope',sans-serif;font-weight:800;
+    font-size:clamp(28px,4vw,40px);line-height:1.1;
+    color:#fff;margin-bottom:6px;
+  }
+  .ha-board .ha-president-inner .ha-org{
+    font-family:'Poppins',sans-serif;font-size:13px;font-weight:400;
+    color:var(--ha-ash);opacity:.75;margin-bottom:20px;
+  }
+  .ha-board .ha-president-inner .ha-teaser{
+    font-family:'Manrope',sans-serif;font-size:15px;line-height:1.65;
+    color:var(--ha-ash);margin-bottom:0;
+  }
+  .ha-board .ha-president-inner .ha-bio-more p{color:var(--ha-ash);opacity:.85;}
+  .ha-board .ha-president-inner .ha-read{color:var(--ha-ash);border-color:rgba(202,210,197,.3);}
+  .ha-board .ha-president-inner .ha-read::after{background:rgba(202,210,197,.3);}
+  .ha-board .ha-president-inner .ha-read:hover{color:#fff;}
+  @media (max-width:600px){
+    .ha-board .ha-president-inner{flex-direction:column;gap:24px;}
+    .ha-board .ha-president-inner .ha-photo{flex:none;width:100%;max-width:220px;}
+  }
+
   /* ===== BOARD GRID ===== */
-  .ha-board .ha-grid-wrap{background:var(--ha-white);padding:120px 0;}
+  .ha-board .ha-grid-wrap{background:var(--ha-white);padding:100px 0;}
   .ha-board .ha-grid{
     display:grid;gap:64px 32px;margin-top:48px;
     grid-template-columns:repeat(auto-fit, 300px);
@@ -325,6 +369,34 @@
 
 <div class="ha-board">
 
+  <!-- PRESIDENT SPOTLIGHT -->
+  <section class="ha-president-wrap">
+    <div class="ha-president-inner ha-wrap">
+      <div class="ha-photo">
+        <img src="assets/board/enos-kanoe.jpg"
+             alt="Portrait of Kanoe Enos." loading="lazy" decoding="async">
+      </div>
+      <div class="ha-info">
+        <div class="ha-role">Board President</div>
+        <h2 class="ha-name">Kanoe Enos</h2>
+        <div class="ha-org">ʻAʻaliʻi Alliance</div>
+        <p class="ha-teaser">Kanoe Enos is a member of the consulting group ʻAʻaliʻi Alliance — culturally-grounded leaders dedicated to systemic change and a Hawaiʻi that is the beacon of hope for the world.</p>
+        <div class="ha-bio-more" id="bio-enos">
+          <div class="ha-bio-more-inner">
+            <p>Kanoe brings over 10 years of experience as a social worker to create a better life for residents of Hawaiʻi. Growing up at the Cultural Learning Center at Kaʻala Farms in Waiʻanae Moku, Oʻahu, has helped Kanoe bring a culturally grounded approach to his many roles as a case manager, youth development worker, collective impact convener, and educator.</p>
+            <p>Kanoe has a degree in Hawaiian Studies from the University of Hawaiʻi at Mānoa, a Master's Degree in Social Work, and currently teaches social work in the University of Hawaiʻi System. Kanoe serves on numerous boards, community groups, and collective impact initiatives.</p>
+          </div>
+        </div>
+        <button class="ha-read" type="button" aria-expanded="false" aria-controls="bio-enos">
+          <span class="label">Read More</span>
+          <svg class="icon" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
   <!-- BOARD GRID -->
   <section class="ha-grid-wrap">
     <div class="ha-wrap">
@@ -348,30 +420,6 @@
             </div>
           </div>
           <button class="ha-read" type="button" aria-expanded="false" aria-controls="bio-byrne">
-            <span class="label">Read More</span>
-            <svg class="icon" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </article>
-
-        <!-- ENOS, Kanoe -->
-        <article class="ha-member" data-fade>
-          <div class="ha-photo">
-            <img src="assets/board/enos-kanoe.jpg"
-                 alt="Portrait of Kanoe Enos." loading="lazy" decoding="async">
-          </div>
-          <h3 class="ha-name">Kanoe Enos</h3>
-          <div class="ha-role">President</div>
-          <div class="ha-org">ʻAʻaliʻi Alliance</div>
-          <p class="ha-teaser">Kanoe Enos is a member of the consulting group ʻAʻaliʻi Alliance — culturally-grounded leaders dedicated to systemic change and a Hawaiʻi that is the beacon of hope for the world.</p>
-          <div class="ha-bio-more" id="bio-enos">
-            <div class="ha-bio-more-inner">
-              <p>Kanoe brings over 10 years of experience as a social worker to create a better life for residents of Hawaiʻi. Growing up at the Cultural Learning Center at Kaʻala Farms in Waiʻanae Moku, Oʻahu, has helped Kanoe bring a culturally grounded approach to his many roles as a case manager, youth development worker, collective impact convener, and educator.</p>
-              <p>Kanoe has a degree in Hawaiian Studies from the University of Hawaiʻi at Mānoa, a Master's Degree in Social Work, and currently teaches social work in the University of Hawaiʻi System. Kanoe serves on numerous boards, community groups, and collective impact initiatives.</p>
-            </div>
-          </div>
-          <button class="ha-read" type="button" aria-expanded="false" aria-controls="bio-enos">
             <span class="label">Read More</span>
             <svg class="icon" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
