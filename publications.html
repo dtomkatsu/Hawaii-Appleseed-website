@@ -506,6 +506,73 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   font-family:'Poppins',sans-serif;
 }
 .ha-pub__sync-note a { color:var(--ha-teal-deep); text-decoration:underline; }
+
+/* ===== Dashboard spotlight band (between hero and views) ===== */
+.ha-pub__spotlight {
+  background:var(--ha-bg);
+  border-bottom:1px solid var(--ha-rule);
+  padding:52px 36px;
+}
+.ha-pub__spotlight-inner {
+  max-width:1140px; margin:0 auto;
+  display:grid; grid-template-columns:1.08fr .92fr;
+  gap:52px; align-items:center;
+}
+.ha-pub a.ha-pub__spotlight-media {
+  display:block;
+  border-radius:7px; overflow:hidden;
+  border:1px solid var(--ha-rule);
+  box-shadow:0 22px 50px rgba(47,62,70,.18);
+  aspect-ratio:16/10;
+}
+.ha-pub__spotlight-media img {
+  width:100%; height:100%;
+  object-fit:cover; object-position:top left;
+  transition:transform .6s ease;
+}
+.ha-pub__spotlight-media:hover img { transform:scale(1.035); }
+.ha-pub__spotlight-eyebrow {
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:'Poppins',sans-serif;
+  text-transform:uppercase; letter-spacing:.2em;
+  font-size:11px; font-weight:600;
+  color:var(--ha-teal-deep);
+  margin-bottom:16px;
+}
+.ha-pub__spotlight-eyebrow::before {
+  content:""; width:22px; height:1px; background:var(--ha-teal);
+}
+.ha-pub__spotlight-title {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:clamp(30px,3.6vw,42px); line-height:1.08;
+  letter-spacing:-.025em; color:var(--ha-charcoal);
+  margin:0 0 16px;
+}
+.ha-pub__spotlight-desc {
+  font-family:'Manrope',sans-serif;
+  font-size:16px; line-height:1.62; color:rgba(47,62,70,.78);
+  margin:0 0 26px;
+}
+.ha-pub a.ha-pub__spotlight-link {
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--ha-teal-deep); color:#fff;
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:15px; letter-spacing:.01em;
+  padding:14px 28px; border-radius:999px;
+  text-decoration:none;
+  transition:background .2s, gap .2s, transform .2s, box-shadow .2s;
+}
+.ha-pub a.ha-pub__spotlight-link:hover {
+  background:var(--ha-slate); gap:14px;
+  transform:translateY(-2px);
+  box-shadow:0 10px 26px rgba(82,121,111,.34);
+}
+.ha-pub__spotlight-link svg { width:15px; height:15px; }
+@media (max-width:860px) {
+  .ha-pub__spotlight { padding:36px 20px; }
+  .ha-pub__spotlight-inner { grid-template-columns:1fr; gap:26px; }
+  .ha-pub__spotlight-title { font-size:28px; }
+}
 </style>
 
 <div class="ha-pub">
@@ -522,6 +589,28 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     </h1>
     <p class="ha-pub__hero-sub" id="ha-pub-hero-sub">Reports, briefs, and analyses</p>
   </header>
+
+  <!-- ============ DASHBOARD SPOTLIGHT ============ -->
+  <section class="ha-pub__spotlight" aria-label="Featured data tool">
+    <div class="ha-pub__spotlight-inner">
+      <a class="ha-pub__spotlight-media" href="https://hiappleseed.org/data-dashboard" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+        <img src="assets/data/economic-justice-dashboard.png" alt="" loading="eager">
+      </a>
+      <div class="ha-pub__spotlight-body">
+        <span class="ha-pub__spotlight-eyebrow">Featured Data Tool</span>
+        <h2 class="ha-pub__spotlight-title">Economic Justice Data Dashboard</h2>
+        <p class="ha-pub__spotlight-desc">
+          Explore economic security, food security, and housing &amp; transportation indicators across Hawaiʻi — by county, House district, Senate district, or census tract. Variables include ALICE households, poverty rate, food insecurity, cost-burdened renters, and more.
+        </p>
+        <a class="ha-pub__spotlight-link" href="https://hiappleseed.org/data-dashboard" target="_blank" rel="noopener">
+          Open the dashboard
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M1 6h10M7 2l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- ============ PUBLICATIONS VIEW ============ -->
   <section class="ha-pub__view active" id="ha-pub-view-publications" role="tabpanel">
@@ -567,29 +656,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <!-- ============ DATA VIEW ============ -->
   <section class="ha-pub__view" id="ha-pub-view-data" role="tabpanel" hidden>
     <div class="ha-pub__data-grid">
-
-      <article class="ha-pub__data-card">
-        <a href="https://hiappleseed.org/data-dashboard" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <div class="ha-pub__data-card-thumb">
-            <img src="assets/data/economic-justice-dashboard.png" alt="" loading="lazy">
-          </div>
-        </a>
-        <div class="ha-pub__data-card-body">
-          <span class="ha-pub__data-card-eyebrow">Interactive Map</span>
-          <h2 class="ha-pub__data-card-title">
-            <a href="https://hiappleseed.org/data-dashboard" target="_blank" rel="noopener">Economic Justice Data Dashboard</a>
-          </h2>
-          <p class="ha-pub__data-card-desc">
-            Explore economic security, food security, and housing &amp; transportation indicators across Hawaiʻi — by county, House district, Senate district, or census tract. Variables include ALICE households, poverty rate, food insecurity, cost-burdened renters, and more.
-          </p>
-          <a class="ha-pub__data-card-link" href="https://hiappleseed.org/data-dashboard" target="_blank" rel="noopener">
-            Open dashboard
-            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M1 6h10M7 2l4 4-4 4"/>
-            </svg>
-          </a>
-        </div>
-      </article>
 
       <article class="ha-pub__data-card">
         <a href="https://hiappleseed.org/hibudget" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
