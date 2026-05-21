@@ -273,7 +273,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   .ha-tax a.ha-tax__bar-pill { display:none; }
 }
 .ha-tax__tabs {
-  --tab-w: 170px;
+  --tab-w: 150px;
   position:relative;
   display:inline-flex; align-items:center;
   padding:4px;
@@ -384,8 +384,14 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 
 @media (max-width:700px) {
-  .ha-tax__tabs { --tab-w: 105px; flex-wrap:nowrap; }
-  .ha-tax button.ha-tax__tab { font-size:13px; height:40px; }
+  .ha-tax__tabs {
+    --tab-w: 112px; flex-wrap:nowrap;
+    max-width:100%; overflow-x:auto;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  .ha-tax__tabs::-webkit-scrollbar { display:none; }
+  .ha-tax button.ha-tax__tab { font-size:13px; height:40px; flex-shrink:0; }
+  .ha-tax__tab-bar { padding-left:16px; padding-right:16px; }
 }
 
 /* ===== Hub strip (3-up command center under hero) ===== */
@@ -664,6 +670,72 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   text-align:center; max-width:760px; margin:0 auto 48px;
 }
 
+/* ===== Impact panel — timeline ===== */
+.ha-tax__impact {
+  max-width:1200px; margin:0 auto;
+  padding:56px 36px;
+}
+.ha-tax__timeline {
+  max-width:720px; margin:0 auto;
+  position:relative;
+  padding-left:42px;
+}
+.ha-tax__timeline::before {
+  content:""; position:absolute;
+  left:8px; top:8px; bottom:8px; width:2px;
+  background:linear-gradient(to bottom,
+    var(--ha-teal-deep) 0%, rgba(82,121,111,.22) 100%);
+}
+.ha-tax__milestone {
+  position:relative;
+  padding-bottom:34px;
+}
+.ha-tax__milestone:last-child { padding-bottom:0; }
+.ha-tax__milestone::before {
+  content:""; position:absolute;
+  left:-42px; top:3px;
+  width:18px; height:18px; border-radius:50%;
+  background:#fff;
+  border:3px solid var(--ha-teal-deep);
+  box-sizing:border-box;
+}
+.ha-tax__milestone--current::before {
+  background:var(--ha-teal-deep);
+  box-shadow:0 0 0 5px rgba(132,169,140,.28);
+}
+.ha-tax__milestone-year {
+  display:block;
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:13px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ha-teal-deep);
+  margin-bottom:8px;
+}
+.ha-tax__milestone-card {
+  background:#fff;
+  border:1px solid var(--ha-rule);
+  border-left:4px solid var(--ha-teal-deep);
+  border-radius:4px;
+  padding:20px 24px;
+  transition:box-shadow .2s, transform .2s;
+}
+.ha-tax__milestone-card:hover {
+  box-shadow:0 8px 24px rgba(47,62,70,.09);
+  transform:translateY(-2px);
+}
+.ha-tax__milestone-title {
+  font-family:'Manrope',sans-serif; font-weight:800;
+  font-size:18px; line-height:1.32; letter-spacing:-.01em;
+  color:var(--ha-charcoal);
+  margin:0 0 8px;
+}
+.ha-tax__milestone-desc {
+  font-size:15px; line-height:1.66; color:rgba(47,62,70,.8);
+  margin:0;
+}
+.ha-tax__milestone-desc strong {
+  font-weight:700; color:var(--ha-teal-deep);
+}
+
 @media (max-width:700px) {
   .ha-tax__hero { padding:56px 20px 48px; }
   .ha-tax__hero h1 { font-size:48px; letter-spacing:-.03em; margin-bottom:18px; }
@@ -675,6 +747,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   .ha-tax__stat-headline { padding:48px 20px 16px; }
   .ha-tax__stat-headline h2 { font-size:30px; }
   .ha-tax__opps { padding:56px 20px; }
+  .ha-tax__impact { padding:56px 20px; }
+  .ha-tax__timeline { padding-left:32px; }
+  .ha-tax__timeline::before { left:7px; }
+  .ha-tax__milestone::before { left:-32px; width:15px; height:15px; }
+  .ha-tax__milestone-card { padding:16px 18px; }
+  .ha-tax__milestone-title { font-size:16.5px; }
 }
 
 /* ===== Section frame ===== */
@@ -1582,6 +1660,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <button class="ha-tax__stuck-tab active" data-panel="vision" role="tab" aria-selected="true">Vision</button>
     <button class="ha-tax__stuck-tab" data-panel="overview" role="tab" aria-selected="false">Overview</button>
     <button class="ha-tax__stuck-tab" data-panel="opportunities" role="tab" aria-selected="false">Opportunities</button>
+    <button class="ha-tax__stuck-tab" data-panel="impact" role="tab" aria-selected="false">Impact</button>
   </div>
 
   <!-- ===================================
@@ -1616,6 +1695,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <button class="ha-tax__tab active" data-panel="vision" role="tab" aria-selected="true" aria-controls="ha-tax-panel-vision">Vision</button>
         <button class="ha-tax__tab" data-panel="overview" role="tab" aria-selected="false" aria-controls="ha-tax-panel-overview">Overview</button>
         <button class="ha-tax__tab" data-panel="opportunities" role="tab" aria-selected="false" aria-controls="ha-tax-panel-opportunities">Opportunities</button>
+        <button class="ha-tax__tab" data-panel="impact" role="tab" aria-selected="false" aria-controls="ha-tax-panel-impact">Impact</button>
       </div>
       <a class="ha-tax__bar-pill" href="#ha-tax-research-news">
         Research &amp; News
@@ -1990,6 +2070,71 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     </div>
   </section><!-- /#ha-tax-panel-opportunities -->
 
+  <!-- ===================================
+       IMPACT panel — milestone timeline
+       =================================== -->
+  <section class="ha-tax__panel" id="ha-tax-panel-impact" role="tabpanel" hidden>
+    <div class="ha-tax__impact">
+    <div class="ha-tax__opps-head">
+      <div class="ha-tax__eyebrow">A Record of Results</div>
+      <h2 class="ha-tax__h2">Our Impact</h2>
+      <div class="ha-tax__h2-rule"></div>
+      <p class="ha-tax__lede">
+        Nearly a decade of tax and budget wins — from establishing the state's Earned Income Tax Credit to stopping a billion-dollar tax giveaway.
+      </p>
+    </div>
+    <div class="ha-tax__timeline">
+
+      <article class="ha-tax__milestone">
+        <span class="ha-tax__milestone-year">2017</span>
+        <div class="ha-tax__milestone-card">
+          <h3 class="ha-tax__milestone-title">Established the state Earned Income Tax Credit (EITC)</h3>
+          <p class="ha-tax__milestone-desc">Delivering <strong>$20 million</strong> in annual tax relief to working families.</p>
+        </div>
+      </article>
+
+      <article class="ha-tax__milestone">
+        <span class="ha-tax__milestone-year">2018</span>
+        <div class="ha-tax__milestone-card">
+          <h3 class="ha-tax__milestone-title">Joined the State Priorities Partnership</h3>
+          <p class="ha-tax__milestone-desc">Leveraging new resources to become the go-to policy think tank for tax and budget policy in the State of Hawaiʻi.</p>
+        </div>
+      </article>
+
+      <article class="ha-tax__milestone">
+        <span class="ha-tax__milestone-year">2022</span>
+        <div class="ha-tax__milestone-card">
+          <h3 class="ha-tax__milestone-title">Expanded the EITC to $40 million annually</h3>
+          <p class="ha-tax__milestone-desc">Better targeting the families who need help most.</p>
+        </div>
+      </article>
+
+      <article class="ha-tax__milestone">
+        <span class="ha-tax__milestone-year">2023 – Present</span>
+        <div class="ha-tax__milestone-card">
+          <h3 class="ha-tax__milestone-title">Leading the work to establish a State Child Tax Credit</h3>
+          <p class="ha-tax__milestone-desc">A targeted investment that helps low-income families cope with Hawaiʻi's high cost of raising a family. The failure of low-wage jobs to provide economic stability perpetuates intergenerational poverty — and a Child Tax Credit is a proven intervention that helps children ladder up to economic success.</p>
+        </div>
+      </article>
+
+      <article class="ha-tax__milestone ha-tax__milestone--current">
+        <span class="ha-tax__milestone-year">2026</span>
+        <div class="ha-tax__milestone-card">
+          <h3 class="ha-tax__milestone-title">Reversed a harmful 2024 state tax policy</h3>
+          <p class="ha-tax__milestone-desc">If fully phased in, Act 46 (2024) would have hollowed out the state budget — costing <strong>$1.4 billion per year</strong> in foregone revenue to give tax breaks primarily to upper-income households. The new tax policy preserves tax cuts for low- and middle-income households, stops future tax cuts for high-income households, and creates a new 13% income tax rate on very wealthy households. These changes increase the overall equity of the state's tax code while preserving <strong>$367–$650 million</strong> in revenue for the state to invest in our communities.</p>
+        </div>
+      </article>
+
+    </div>
+    </div>
+    <div class="ha-tax__panel-close-wrap">
+      <button class="ha-tax__panel-close" aria-label="Close section">
+        <svg viewBox="0 0 14 9"><path d="M1 8l6-7 6 7"/></svg>
+        Close
+      </button>
+    </div>
+  </section><!-- /#ha-tax-panel-impact -->
+
   </div><!-- /.ha-tax__panels -->
 
   <!-- ===================================
@@ -2228,7 +2373,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     const indicator = document.querySelector('.ha-tax__tabs-indicator');
     if (!tabs.length || !panels.length) return;
 
-    const VALID_TABS = ['vision', 'overview', 'opportunities'];
+    const VALID_TABS = ['vision', 'overview', 'opportunities', 'impact'];
     let pieInitialized = false;
 
     function setTab(name, opts) {
@@ -2240,6 +2385,14 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         t.setAttribute('aria-selected', active ? 'true' : 'false');
         if (active && indicator) {
           indicator.style.transform = `translateX(${t.offsetLeft - 4}px)`;
+          // Keep the active tab visible when the pill scrolls (mobile)
+          const pill = t.parentElement;
+          if (pill.scrollWidth > pill.clientWidth) {
+            pill.scrollTo({
+              left: t.offsetLeft - (pill.clientWidth - t.offsetWidth) / 2,
+              behavior: 'smooth'
+            });
+          }
         }
       });
       // Sync stuck-bar tabs
@@ -2344,6 +2497,16 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     }
     applyHash();
     window.addEventListener('hashchange', applyHash);
+
+    // Re-sync the scrollable tab pill once fonts/layout settle (mobile deep-link)
+    window.addEventListener('load', () => {
+      const active = document.querySelector('.ha-tax__tab.active');
+      if (!active) return;
+      const pill = active.parentElement;
+      if (pill.scrollWidth > pill.clientWidth) {
+        pill.scrollTo({ left: active.offsetLeft - (pill.clientWidth - active.offsetWidth) / 2 });
+      }
+    });
 
     // Sticky tab bar: show stuck bar when main tab bar scrolls out
     const stuckBar = document.querySelector('.ha-tax__stuck-bar');
