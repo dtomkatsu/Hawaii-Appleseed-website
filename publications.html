@@ -50,6 +50,30 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .px-donate-btn { background:#2F3E46; color:#fff; padding:9px 20px; font-family:'Poppins',sans-serif; font-weight:500; font-size:14px; border-radius:2px; text-decoration:none; }
 .px-donate-btn:hover { background:#52796F; }
 
+.px-dropdown { position:relative; }
+.px-dropdown-trigger {
+  background:none; border:none; padding:0; margin:0; cursor:pointer;
+  font-family:'Poppins',sans-serif; font-size:14px; font-weight:500;
+  color:#2F3E46; display:inline-flex; align-items:center; gap:4px;
+}
+.px-dropdown-trigger:hover { color:#52796F; }
+.px-chevron { font-style:normal; font-size:10px; display:inline-block; transition:transform .18s ease; }
+.px-dropdown.is-open .px-chevron { transform:rotate(180deg); }
+.px-dropdown-menu {
+  display:none;
+  position:absolute; top:calc(100% + 10px); right:0;
+  background:#fff; border:1px solid rgba(53,79,82,.12);
+  border-radius:6px; box-shadow:0 8px 24px rgba(47,62,70,.14);
+  min-width:160px; padding:6px 0; z-index:100;
+}
+.px-dropdown.is-open .px-dropdown-menu { display:block; }
+.px-dropdown-menu a {
+  display:block; padding:9px 18px;
+  font-family:'Poppins',sans-serif; font-size:13.5px; font-weight:400;
+  color:#2F3E46; text-decoration:none; white-space:nowrap;
+}
+.px-dropdown-menu a:hover { background:rgba(82,121,111,.08); color:#52796F; }
+
 .px-footer {
   background:#2F3E46; color:#CAD2C5; padding:60px 28px 40px;
   font-family:'Poppins',sans-serif; font-size:14px; line-height:1.7;
@@ -511,12 +535,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-pub__spotlight {
   background:var(--ha-bg);
   border-bottom:1px solid var(--ha-rule);
-  padding:52px 36px;
+  padding:32px 36px;
 }
 .ha-pub__spotlight-inner {
   max-width:1140px; margin:0 auto;
   display:grid; grid-template-columns:1.08fr .92fr;
-  gap:52px; align-items:center;
+  gap:36px; align-items:center;
 }
 .ha-pub a.ha-pub__spotlight-media {
   display:block;
@@ -544,9 +568,9 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 .ha-pub__spotlight-title {
   font-family:'Manrope',sans-serif; font-weight:800;
-  font-size:clamp(30px,3.6vw,42px); line-height:1.08;
+  font-size:clamp(22px,2.6vw,30px); line-height:1.08;
   letter-spacing:-.025em; color:var(--ha-charcoal);
-  margin:0 0 16px;
+  margin:0 0 12px;
 }
 .ha-pub__spotlight-desc {
   font-family:'Manrope',sans-serif;
@@ -569,9 +593,9 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 .ha-pub__spotlight-link svg { width:15px; height:15px; }
 @media (max-width:860px) {
-  .ha-pub__spotlight { padding:36px 20px; }
-  .ha-pub__spotlight-inner { grid-template-columns:1fr; gap:26px; }
-  .ha-pub__spotlight-title { font-size:28px; }
+  .ha-pub__spotlight { padding:24px 20px; }
+  .ha-pub__spotlight-inner { grid-template-columns:1fr; gap:20px; }
+  .ha-pub__spotlight-title { font-size:22px; }
 }
 </style>
 

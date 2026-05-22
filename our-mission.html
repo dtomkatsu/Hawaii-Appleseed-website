@@ -443,7 +443,7 @@
   .ha-mission .ha-five-bg{position:absolute;inset:0;z-index:-2;}
   .ha-mission .ha-five-bg-white{position:absolute;inset:0;background:var(--ha-white);}
   .ha-mission .ha-five-bg-slate{
-    position:absolute;inset:0;background:var(--ha-slate);
+    position:absolute;inset:0;background:#EBF0ED;
     opacity:0;will-change:opacity;
   }
   .ha-mission .ha-five-bg-slate::before{
@@ -452,7 +452,7 @@
     top:-260px;right:-200px;filter:blur(40px);pointer-events:none;
   }
   .ha-mission .ha-five-bg-ash{
-    position:absolute;inset:0;background:var(--ha-ash);
+    position:absolute;inset:0;background:#F2F4F0;
     opacity:0;will-change:opacity;
   }
   .ha-mission .ha-five-inner{position:relative;width:100%;}
@@ -475,7 +475,6 @@
     margin:0 0 36px;
     transition:color .5s ease;
   }
-  .ha-mission .ha-five.is-dark .ha-five-h{color:#fff;}
   .ha-mission .ha-five-fixed{display:block;}
   .ha-mission .ha-five-tail-stack{position:relative;display:block;}
   .ha-mission .ha-five-tail{display:block;}
@@ -501,22 +500,15 @@
     color:var(--ha-teal-deep);
     font-weight:600;
   }
-  /* On the slate phase, switch the accent to the lighter teal for contrast
-     (covers desktop scrolly when .is-dark is toggled by JS, plus mobile's
-     static slate panel which never gets the class) */
-  .ha-mission .ha-five.is-dark .ha-five-noun,
-  .ha-mission .ha-five-mobile-break-c .ha-five-noun{
-    color:var(--ha-teal);
-  }
-
   /* Body stack — list & grid share the same slot, crossfade */
   .ha-mission .ha-five-bodies{position:relative;min-height:340px;}
   .ha-mission .ha-five-body{
     position:absolute;left:0;right:0;top:0;
     will-change:opacity,transform;
   }
-  .ha-mission .ha-five-body-b,
-  .ha-mission .ha-five-body-c{transform:translateY(28px);}
+  /* Shared-box alignment: body-b reserves the same vertical slot that body-c's
+     section-lead occupies, so both card grids land at the same Y and overlap. */
+  .ha-mission .ha-five-lead-spacer{height:54px;margin-bottom:26px;}
 
   /* Steps list inside body-a */
   .ha-mission .ha-five-body-a .ha-steps{
@@ -541,7 +533,8 @@
   /* Focus grid inside body-b */
   .ha-mission .ha-five-body-c .ha-section-lead{
     font-family:'Poppins',sans-serif;font-size:16px;line-height:1.65;
-    color:var(--ha-ash);max-width:54ch;margin-bottom:32px;
+    color:var(--ha-charcoal);opacity:.72;
+    max-width:54ch;min-height:54px;margin:0 0 26px;
   }
   .ha-mission .ha-five-body-c .ha-focus-grid{
     display:grid;grid-template-columns:repeat(5,1fr);gap:14px;
@@ -550,16 +543,14 @@
     .ha-mission .ha-five-body-c .ha-focus-grid{grid-template-columns:repeat(2,1fr);}
   }
   .ha-mission .ha-five-body-c .ha-focus-card{
-    position:relative;background:rgba(255,255,255,.04);
-    border:1px solid var(--ha-rule-dark);
-    padding:22px 20px 20px;border-radius:6px;
+    position:relative;background:#fff;
+    border:1px solid var(--ha-rule);
+    padding:20px 18px;border-radius:6px;min-height:160px;
     transition:background .35s, border-color .35s, transform .35s;
     overflow:hidden;
   }
   .ha-mission .ha-five-body-c .ha-focus-card:hover{
-    background:rgba(132,169,140,.10);
     border-color:var(--ha-teal);
-    transform:translateY(-3px);
   }
   .ha-mission .ha-five-body-c .ha-focus-card .ha-focus-icon{
     width:34px;height:34px;border-radius:50%;
@@ -573,7 +564,7 @@
   }
   .ha-mission .ha-five-body-c .ha-focus-card h3{
     font-family:'Manrope',sans-serif;font-weight:600;font-size:15.5px;
-    color:#fff;letter-spacing:-0.005em;line-height:1.25;
+    color:var(--ha-charcoal);letter-spacing:-0.005em;line-height:1.25;
   }
 
   /* Values grid inside body-c (on ash background) */
@@ -584,7 +575,7 @@
     .ha-mission .ha-five-body-b .ha-values-grid{grid-template-columns:repeat(2,1fr);}
   }
   .ha-mission .ha-five-body-b .ha-value-card{
-    background:#fff;border-radius:6px;padding:20px 18px;
+    background:#fff;border-radius:6px;padding:20px 18px;min-height:160px;
     border:1px solid var(--ha-rule);
     position:relative;overflow:hidden;
     opacity:1;transform:none; /* override the original card's hidden-default */
@@ -644,11 +635,9 @@
     width:8px;height:8px;border-radius:50%;
     background:rgba(53,79,82,.25);transition:background .35s, transform .35s;
   }
-  .ha-mission .ha-five.is-dark .ha-five-dot{background:rgba(202,210,197,.25);}
   .ha-mission .ha-five-dot.is-active{
     background:var(--ha-teal-deep);transform:scale(1.4);
   }
-  .ha-mission .ha-five.is-dark .ha-five-dot.is-active{background:var(--ha-teal);}
   @media (max-width:900px){ .ha-mission .ha-five-dots{display:none;} }
 
   /* Hide both mobile-break elements by default — overridden in the ≤700px media query below */
@@ -738,10 +727,15 @@
     /* Mobile-only break: introduces panel B (values, ash background) between body-a and body-b */
     .ha-mission .ha-five-mobile-break{
       display:block;
-      background:var(--ha-ash);
+      background:#F2F4F0;
       margin:48px -20px 0;
       padding:48px 20px 8px;
     }
+    /* Desktop-only shared-box spacer — not needed in the stacked mobile layout */
+    .ha-mission .ha-five-lead-spacer{display:none;}
+    .ha-mission .ha-five-body-b .ha-value-card,
+    .ha-mission .ha-five-body-c .ha-focus-card{min-height:0;}
+    .ha-mission .ha-five-body-c .ha-section-lead{min-height:0;margin-bottom:20px;}
     .ha-mission .ha-five-mobile-break .ha-eyebrow{
       display:inline-flex;margin-bottom:14px;
     }
@@ -749,7 +743,7 @@
       color:var(--ha-charcoal);font-size:28px;line-height:1.1;margin:0;
     }
     .ha-mission .ha-five-body-b{
-      background:var(--ha-ash);
+      background:#F2F4F0;
       margin:0 -20px;padding:24px 20px 48px;
     }
     .ha-mission .ha-five-body-b .ha-values-grid{grid-template-columns:1fr;gap:10px;}
@@ -757,7 +751,7 @@
     /* Mobile-only break + body for panel C (fronts, slate background) */
     .ha-mission .ha-five-mobile-break-c{
       display:block;
-      background:var(--ha-slate);color:#fff;
+      background:#EBF0ED;color:var(--ha-charcoal);
       margin:0 -20px;
       padding:48px 20px 8px;
     }
@@ -765,10 +759,10 @@
       display:inline-flex;margin-bottom:14px;
     }
     .ha-mission .ha-five-mobile-break-c .ha-five-h{
-      color:#fff;font-size:28px;line-height:1.1;margin:0;
+      color:var(--ha-charcoal);font-size:28px;line-height:1.1;margin:0;
     }
     .ha-mission .ha-five-body-c{
-      background:var(--ha-slate);color:#fff;
+      background:#EBF0ED;color:var(--ha-charcoal);
       margin:0 -20px;padding:24px 20px 48px;
       transform:none;
     }
@@ -821,7 +815,7 @@
           <div class="ha-five-eb-stack">
             <span class="ha-eyebrow ha-five-eb ha-five-eb-a">How We Work</span>
             <span class="ha-eyebrow ha-five-eb ha-five-eb-b">Our Values</span>
-            <span class="ha-eyebrow on-dark ha-five-eb ha-five-eb-c">What We Focus On</span>
+            <span class="ha-eyebrow ha-five-eb ha-five-eb-c">What We Focus On</span>
           </div>
 
           <!-- Heading: "Five" pinned on top line, tail crossfades on line 2 (A → B → C) -->
@@ -859,6 +853,7 @@
             </div>
 
             <div class="ha-five-body ha-five-body-b" aria-hidden="true">
+              <div class="ha-five-lead-spacer" aria-hidden="true"></div>
               <div class="ha-values-grid">
                 <div class="ha-value-card is-in">
                   <h3>People First</h3>
@@ -894,7 +889,7 @@
 
             <!-- Mobile-only break: introduces the third (slate) section between body-b and body-c -->
             <div class="ha-five-mobile-break-c" aria-hidden="true">
-              <span class="ha-eyebrow on-dark">What We Focus On</span>
+              <span class="ha-eyebrow">What We Focus On</span>
               <h2 class="ha-five-h"><span class="ha-five-fixed">Five</span> <span class="ha-five-tail"><span class="ha-five-noun">fronts</span> for change.</span></h2>
             </div>
 
@@ -1064,31 +1059,29 @@
       ebB.style.opacity = Math.min(ebBin, ebBout);
       ebC.style.opacity = clamp((p - 0.62) / 0.18, 0, 1);
 
-      // ----- Bodies -----
-      const aOp = clamp(1 - (p - 0.12) / 0.26, 0, 1);
+      // ----- Bodies (list → shared card grid) -----
+      // Sequential A→B: the list clears before the grid arrives, so the two
+      // differently-shaped layouts don't ghost through each other mid-fade.
+      const aOp = clamp(1 - (p - 0.10) / 0.14, 0, 1);
       bodyA.style.opacity = aOp;
-      const bIn  = clamp((p - 0.17) / 0.21, 0, 1);
-      const bOut = clamp(1 - (p - 0.55) / 0.22, 0, 1);
-      const bOp  = Math.min(bIn, bOut);
+      const gridIn = clamp((p - 0.24) / 0.16, 0, 1);
+      // body-b (values) and body-c (focus) render identical card boxes in the
+      // same slot, so this crossfade reads as the content swapping inside
+      // stationary boxes rather than two separate sets of boxes.
+      const toC = clamp((p - 0.58) / 0.20, 0, 1);
+      const bOp = gridIn * (1 - toC);
+      const cOp = gridIn * toC;
       bodyB.style.opacity = bOp;
-      bodyB.style.transform = 'translateY(' + (28 * (1 - bIn)) + 'px)';
-      const cIn = clamp((p - 0.60) / 0.22, 0, 1);
-      bodyC.style.opacity = cIn;
-      bodyC.style.transform = 'translateY(' + (28 * (1 - cIn)) + 'px)';
-      // Only the most-visible body should receive pointer events — otherwise
-      // the topmost absolutely-positioned body intercepts hover on the cards.
+      bodyC.style.opacity = cOp;
       bodyA.style.pointerEvents = aOp > 0.5 ? 'auto' : 'none';
       bodyB.style.pointerEvents = bOp > 0.5 ? 'auto' : 'none';
-      bodyC.style.pointerEvents = cIn > 0.5 ? 'auto' : 'none';
+      bodyC.style.pointerEvents = cOp > 0.5 ? 'auto' : 'none';
 
-      // ----- Backgrounds (white base; ash covers mid for values; slate covers final for fronts) -----
-      const aIn  = clamp((p - 0.20) / 0.18, 0, 1);
-      const aOut2 = clamp(1 - (p - 0.60) / 0.18, 0, 1);
-      bgAsh.style.opacity = Math.min(aIn, aOut2);
-      bgSlate.style.opacity = clamp((p - 0.65) / 0.18, 0, 1);
-
-      // ----- Heading color: white only during the slate phase (now the final phase) -----
-      five.classList.toggle('is-dark', p >= 0.68);
+      // ----- Backgrounds — wide, slow washes so the color shift stays gentle -----
+      const ashIn  = clamp((p - 0.14) / 0.30, 0, 1);
+      const ashOut = clamp(1 - (p - 0.56) / 0.30, 0, 1);
+      bgAsh.style.opacity = Math.min(ashIn, ashOut);
+      bgSlate.style.opacity = clamp((p - 0.54) / 0.30, 0, 1);
 
       // ----- Word stagger -----
       const stagger = (words, start, span, klass) => {
