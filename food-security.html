@@ -13,14 +13,18 @@
   footer) MUST be made on all four pages in the same commit.
   Differences belong in *content*, not *structure*.
 
-  TODO (content team):
-  - Research & News right column has hardcoded clippings;
-    replace with food-equity press hits.
+  Research & News right column is now auto-synced from
+  hiappleseed.org/blog and hiappleseed.org/in-the-news via
+  news.json (built nightly by scripts/sync-news.py). The page
+  filters to Food-Equity-tagged items via the matchesCategory
+  predicate near loadPubs/loadNews. No content team task here
+  until a structural change is wanted.
 
   Removed earlier (no longer applicable):
   - Tax-revenue pie chart (didn't apply to this issue area)
   - Equity vertical bar chart + state-comparison bars
     (both were structural carryovers from the tax page)
+  - Hardcoded press clippings (replaced by news.json auto-sync)
   ============================================================
 -->
 
@@ -2145,54 +2149,13 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         </a>
       </div>
 
-      <!-- RIGHT: Press & Blog -->
+      <!-- RIGHT: Press & Blog (auto-synced from news.json — see
+           scripts/sync-news.py and the loadNews() function below) -->
       <div id="ha-food-news-col">
         <div class="ha-food__combined-col-head">Press &amp; Blog</div>
-        <div class="ha-food__news-stack">
-          <article class="ha-food__news-clipping">
-            <div class="ha-food__news-anchor" aria-hidden="true">HA</div>
-            <div class="ha-food__news-body">
-              <div class="ha-food__news-source">
-                <span class="ha-food__news-source-tag">Blog</span>
-                Hawaiʻi Appleseed
-              </div>
-              <h3 class="ha-food__news-title">Highlights from House Bill 1800</h3>
-              <p class="ha-food__news-excerpt">
-                The single most consequential bill of the 2026 session — what's in the House budget proposal, what's missing, and where the conference committee may take it next.
-              </p>
-              <div class="ha-food__news-byline">
-                Apr 17, 2026
-                <span class="ha-food__news-byline-sep"></span>
-                <strong>Devin Thomas</strong>
-              </div>
-              <a class="ha-food__news-link" href="https://hiappleseed.org/blog" target="_blank" rel="noopener">
-                Read the full post
-                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
-              </a>
-            </div>
-          </article>
-          <article class="ha-food__news-clipping">
-            <div class="ha-food__news-anchor ha-food__news-anchor--press" aria-hidden="true">CB</div>
-            <div class="ha-food__news-body">
-              <div class="ha-food__news-source">
-                <span class="ha-food__news-source-tag">Press</span>
-                Honolulu Civil Beat
-              </div>
-              <h3 class="ha-food__news-title">The Sunshine Blog</h3>
-              <p class="ha-food__news-excerpt">
-                Coverage of Hawaiʻi Appleseed's analysis of the legislature's tax proposals and the trade-offs facing lawmakers as they finalize the FY26–27 budget.
-              </p>
-              <div class="ha-food__news-byline">
-                Apr 26, 2026
-                <span class="ha-food__news-byline-sep"></span>
-                <strong>Honolulu Civil Beat</strong>
-              </div>
-              <a class="ha-food__news-link" href="https://www.civilbeat.org" target="_blank" rel="noopener">
-                Read on Civil Beat
-                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
-              </a>
-            </div>
-          </article>
+        <div class="ha-food__news-stack" id="ha-food-news-stack">
+          <!-- Populated dynamically by loadNews() from news.json,
+               filtered to Food-Equity-tagged items. -->
         </div>
       </div>
     </div>
@@ -2227,13 +2190,18 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     const d = new Date(ts);
     return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
   }
+  // ===== Per-page category filter (single source of truth used by
+  // both loadPubs and loadNews). Matches "Food Equity" categories on
+  // hiappleseed.org. =====
+  function matchesCategory(c) { return /food/i.test(c); }
+
   async function loadPubs() {
     try {
       const r = await fetch('publications.json');
       if (!r.ok) throw new Error('fetch failed');
       const data = await r.json();
       const items = (data.items || []).filter(i =>
-        (i.categories || []).some(c => /tax/i.test(c) || /budget/i.test(c))
+        (i.categories || []).some(matchesCategory)
       ).sort((a,b) => (b.publishOn||0) - (a.publishOn||0));
 
       if (!items.length) return;
@@ -2259,6 +2227,102 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       }).join('');
     } catch (e) {
       console.warn('publications.json load failed:', e);
+    }
+  }
+
+  // ===== News loader (Press & Blog right column) =====
+  // Pulls from news.json (auto-synced nightly from hiappleseed.org/blog
+  // and hiappleseed.org/in-the-news via scripts/sync-news.py). Renders
+  // the newest blog post + newest press mention tagged with this page's
+  // issue area into #ha-food-news-stack. Markup matches the original
+  // hardcoded clippings so the existing .ha-food__news-* CSS applies.
+  const NEWS_OUTLET_CODE = {
+    'Honolulu Civil Beat':       'CB',
+    'Hawaiʻi Public Radio':      'HP',
+    'Hawaii Public Radio':       'HP',
+    'Honolulu Star-Advertiser':  'SA',
+    'PBS Hawaiʻi':               'PB',
+    'PBS Hawaii':                'PB',
+    'KHON2':                     'KH',
+    'Hawaii News Now':           'HN',
+  };
+  function stripNewsHtml(s) {
+    const d = document.createElement('div');
+    d.innerHTML = s || '';
+    return (d.textContent || d.innerText || '').trim();
+  }
+  function newsAnchorFor(bio) {
+    const name = stripNewsHtml(bio);
+    if (NEWS_OUTLET_CODE[name]) return NEWS_OUTLET_CODE[name];
+    const words = name.split(/\s+/).filter(Boolean);
+    return (words.slice(-2).map(w => w[0]).join('') || 'XX').toUpperCase();
+  }
+  function newsBlogHtml(b) {
+    const author = stripNewsHtml((b.author && b.author.displayName) || '') || 'Hawaiʻi Appleseed';
+    const url = b.fullUrl ? 'https://hiappleseed.org' + b.fullUrl : 'https://hiappleseed.org/blog';
+    return `
+      <article class="ha-food__news-clipping">
+        <div class="ha-food__news-anchor" aria-hidden="true">HA</div>
+        <div class="ha-food__news-body">
+          <div class="ha-food__news-source">
+            <span class="ha-food__news-source-tag">Blog</span>
+            Hawaiʻi Appleseed
+          </div>
+          <h3 class="ha-food__news-title">${stripNewsHtml(b.title)}</h3>
+          <p class="ha-food__news-excerpt">${stripNewsHtml(b.excerpt)}</p>
+          <div class="ha-food__news-byline">
+            ${formatDate(b.publishOn)}
+            <span class="ha-food__news-byline-sep"></span>
+            <strong>${author}</strong>
+          </div>
+          <a class="ha-food__news-link" href="${url}" target="_blank" rel="noopener">
+            Read the full post
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </a>
+        </div>
+      </article>`;
+  }
+  function newsPressHtml(p) {
+    const outlet = p.outlet || stripNewsHtml((p.author && p.author.bio) || '') || 'Press';
+    const code   = newsAnchorFor(p.outlet || (p.author && p.author.bio) || '');
+    const url    = p.sourceUrl || (p.fullUrl ? 'https://hiappleseed.org' + p.fullUrl : '#');
+    return `
+      <article class="ha-food__news-clipping">
+        <div class="ha-food__news-anchor ha-food__news-anchor--press" aria-hidden="true">${code}</div>
+        <div class="ha-food__news-body">
+          <div class="ha-food__news-source">
+            <span class="ha-food__news-source-tag">Press</span>
+            ${outlet}
+          </div>
+          <h3 class="ha-food__news-title">${stripNewsHtml(p.title)}</h3>
+          <p class="ha-food__news-excerpt">${stripNewsHtml(p.excerpt)}</p>
+          <div class="ha-food__news-byline">
+            ${formatDate(p.publishOn)}
+            <span class="ha-food__news-byline-sep"></span>
+            <strong>${outlet}</strong>
+          </div>
+          <a class="ha-food__news-link" href="${url}" target="_blank" rel="noopener">
+            Read on ${outlet}
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+          </a>
+        </div>
+      </article>`;
+  }
+  async function loadNews() {
+    try {
+      const r = await fetch('news.json');
+      if (!r.ok) throw new Error('fetch failed');
+      const data = await r.json();
+      const pickFirst = items => (items || [])
+        .filter(i => (i.categories || []).some(matchesCategory))
+        .sort((a,b) => (b.publishOn||0) - (a.publishOn||0))[0];
+      const blog  = pickFirst(data.blog);
+      const press = pickFirst(data.press);
+      const stack = document.getElementById('ha-food-news-stack');
+      if (!stack) return;
+      stack.innerHTML = (blog ? newsBlogHtml(blog) : '') + (press ? newsPressHtml(press) : '');
+    } catch (e) {
+      console.warn('news.json load failed:', e);
     }
   }
 
@@ -2458,9 +2522,9 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
   // ===== Init =====
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { initTabs(); loadPubs(); });
+    document.addEventListener('DOMContentLoaded', () => { initTabs(); loadPubs(); loadNews(); });
   } else {
-    initTabs(); loadPubs();
+    initTabs(); loadPubs(); loadNews();
   }
 })();
 </script>
