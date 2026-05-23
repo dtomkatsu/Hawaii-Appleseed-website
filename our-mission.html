@@ -495,31 +495,28 @@
   .ha-mission .ha-five-tail-stack{position:relative;display:block;}
   .ha-mission .ha-five-tail{display:block;}
   .ha-mission .ha-five-tail-b{position:absolute;left:0;top:0;}
-  /* Blur-to-focus text motion: words enter softly out of focus and resolve
-     to crisp. Reads as 'coming into focus' rather than mechanical translate.
-     Easing is ease-out-expo (cubic-bezier(.16,1,.3,1)) — settles fast then
-     glides into its final state, which pairs well with the blur decay.
-     Blur scaled back from 8px -> 3px and scale from .96 -> .98 so the
-     headline stays legible through the bulk of the transition. */
+  /* Word reveal motion: opacity + a 2% scale settling. Blur was tried
+     here (8px -> 3px in two prior passes) and dropped — at any meaningful
+     value it read as overbearing, and at small values it just added noise
+     without adding signal. The scale alone gives enough sense of "settling
+     into place." Easing is ease-out-expo (cubic-bezier(.16,1,.3,1)). */
   .ha-mission .ha-five-tail .ha-w{
     display:inline-block;opacity:0;
     transform:scale(.98);
-    filter:blur(3px);
     transition:opacity .6s cubic-bezier(.16,1,.3,1),
-               transform .6s cubic-bezier(.16,1,.3,1),
-               filter .6s cubic-bezier(.16,1,.3,1);
-    will-change:opacity,transform,filter;
+               transform .6s cubic-bezier(.16,1,.3,1);
+    will-change:opacity,transform;
   }
-  .ha-mission .ha-five-tail-a .ha-w{opacity:1;transform:scale(1);filter:blur(0);}
+  .ha-mission .ha-five-tail-a .ha-w{opacity:1;transform:scale(1);}
   .ha-mission .ha-five-tail-c{position:absolute;left:0;top:0;}
   .ha-mission .ha-five-tail-b .ha-w.is-in,
-  .ha-mission .ha-five-tail-c .ha-w.is-in{opacity:1;transform:scale(1);filter:blur(0);}
+  .ha-mission .ha-five-tail-c .ha-w.is-in{opacity:1;transform:scale(1);}
   /* is-out declared AFTER is-in so it wins when both classes are present (tail-b mid → tail-c).
      Exit overshoots scale slightly (1.02) so the departure reads as 'lifting away'
-     rather than the same blur-collapse as the entry. */
+     rather than the same collapse as the entry. */
   .ha-mission .ha-five-tail-a .ha-w.is-out,
   .ha-mission .ha-five-tail-b .ha-w.is-out,
-  .ha-mission .ha-five-tail-c .ha-w.is-out{opacity:0;transform:scale(1.02);filter:blur(3px);}
+  .ha-mission .ha-five-tail-c .ha-w.is-out{opacity:0;transform:scale(1.02);}
 
   /* Noun emphasis — practices / fronts / values get italic teal accent
      (matches the .ha-mark pattern used elsewhere on the page). */
@@ -629,11 +626,10 @@
   .ha-mission .ha-five-body-c .ha-focus-card h3{
     font-family:'Manrope',sans-serif;font-weight:600;font-size:15.5px;
     color:var(--ha-charcoal);letter-spacing:-0.005em;line-height:1.25;
-    /* Title blur-to-focus, gated by --morph crossing 0.35 (icon settles first).
-       Blur scaled back from 6px -> 2px and lift from 4px -> 2px so the title
-       stays readable while the icon morph completes. */
+    /* Title arrival, gated by --morph crossing 0.35 (icon settles first).
+       Blur was here too and got dropped — the opacity ramp + 2px Y rise are
+       enough to register the title's arrival without softening the letters. */
     opacity:clamp(0, calc((var(--morph) - 0.35) * 2.5), 1);
-    filter:blur(calc(2px * (1 - clamp(0, calc((var(--morph) - 0.35) * 2.5), 1))));
     transform:translateY(calc(2px * (1 - clamp(0, calc((var(--morph) - 0.35) * 2.5), 1))));
   }
   /* Reduced-motion + mobile fallback: skip the morph entirely, show final state */
@@ -1112,7 +1108,7 @@
                 </div>
                 <div class="ha-value-card is-in" data-pair="3">
                   <h3>Equity</h3>
-                  <p>We name the structural inequities rooted in racism, colonialism, and oppression.</p>
+                  <p>We name structural inequities — racism, colonialism, oppression.</p>
                 </div>
                 <div class="ha-value-card is-in" data-pair="4">
                   <h3>Courage</h3>
