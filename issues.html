@@ -287,6 +287,10 @@
     --section-bg: #E2E8E8;           /* pale slate — cool, infrastructural */
     --section-accent: var(--ha-slate);
   }
+  .ha-issues .ha-deep[data-color="wages-labor"]{
+    --section-bg: #EDEDE5;           /* warm neutral — work, dignity */
+    --section-accent: var(--ha-teal-deep);
+  }
   /* Section-accent color cascades to eyebrow underline + focus number */
   .ha-issues .ha-deep .ha-eyebrow{color:var(--section-accent);}
   .ha-issues .ha-deep .ha-eyebrow::before{background:var(--section-accent);}
@@ -473,6 +477,7 @@
   .ha-issues .ha-pub-cat[data-cat="food"]{background:rgba(82,121,111,.14);color:var(--ha-teal-deep);}
   .ha-issues .ha-pub-cat[data-cat="housing"]{background:rgba(132,169,140,.22);color:var(--ha-teal-deep);}
   .ha-issues .ha-pub-cat[data-cat="transit"]{background:rgba(47,62,70,.10);color:var(--ha-charcoal);}
+  .ha-issues .ha-pub-cat[data-cat="wages-labor"]{background:rgba(82,121,111,.14);color:var(--ha-teal-deep);}
   .ha-issues .ha-pub-date{font-weight:500;}
   .ha-issues .ha-pub-title{
     font-family:'Manrope',sans-serif;font-weight:600;
@@ -778,6 +783,7 @@
     <a class="ha-nav-pill" href="#housing" data-target="housing">Housing</a>
     <a class="ha-nav-pill" href="#transportation" data-target="transportation">Transportation</a>
     <a class="ha-nav-pill" href="#tax-budget" data-target="tax-budget">Tax &amp; Budget</a>
+    <a class="ha-nav-pill" href="#wages-labor" data-target="wages-labor">Wages &amp; Labor</a>
   </nav>
 
   <!-- HERO + ISSUE CARDS (merged so cards are visible immediately) -->
@@ -840,6 +846,19 @@
             </svg>
           </div>
           <h3>Tax &amp; Budget</h3>
+        </a>
+
+        <!-- Wages & Labor -->
+        <a class="ha-card" href="#wages-labor" data-fade>
+          <div class="ha-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 11h20v17H6z"/>
+              <path d="M12 11V7a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v4"/>
+              <path d="M6 18h20"/>
+              <circle cx="16" cy="18" r="1.5"/>
+            </svg>
+          </div>
+          <h3>Wages &amp; Labor</h3>
         </a>
 
       </div>
@@ -983,6 +1002,41 @@
     </div>
   </section>
 
+  <!-- ========== DEEP DIVE 5: WAGES & LABOR ========== -->
+  <section class="ha-deep" id="wages-labor" data-color="wages-labor" data-fade>
+    <div class="ha-wrap">
+      <div class="ha-deep-head">
+        <span class="ha-deep-num">05</span>
+        <h2>Wages &amp; Labor</h2>
+        <p class="ha-deep-tagline">Pay and protections that <span class="ha-deep-tagline-key">match</span> the cost of living here.</p>
+        <span class="ha-deep-rule" aria-hidden="true"></span>
+      </div>
+      <div class="ha-deep-body">
+        <div class="ha-prose-card">
+          <div class="ha-stat-anchor">
+            <span class="ha-stat-num">50%+</span>
+            <span class="ha-stat-label">of Hawaiʻi households live paycheck to paycheck — one financial shock away from poverty</span>
+          </div>
+          <p class="ha-deep-lead">More than half of Hawaiʻi households live paycheck to paycheck, squeezed between stagnant wages and a relentless cost of living. The 2022 minimum-wage law &mdash; bringing the floor to $18/hour by 2028 &mdash; delivered $1 billion in additional annual wages to over 200,000 workers, but the floor still falls short of basic costs once illness or caregiving forces a missed paycheck.</p>
+          <p>We work to lift the wage floor in pace with the cost of living, establish a statewide paid family and medical leave program, and close the 40-year gap between earnings and the price of housing, food, and health care. Because if you work hard and play by the rules, you should be able to afford a decent life and a roof over your head.</p>
+          <a class="ha-deep-page-link" href="wages-labor.html">Explore Wages &amp; Labor</a>
+        </div>
+
+        <h4 class="ha-deep-sub">What we focus on</h4>
+        <ul class="ha-focus">
+          <li>Minimum-wage increases pegged to cost of living</li>
+          <li>Statewide paid family &amp; medical leave</li>
+          <li>Child-care affordability for working parents</li>
+          <li>Defending the safety net through downturns</li>
+        </ul>
+
+        <h4 class="ha-deep-sub">Featured research</h4>
+        <div class="ha-pub-row" data-area-pubs="wages-labor"></div>
+        <a class="ha-deep-see-all" data-area="wages-labor" href="#latest-research">See all Wages &amp; Labor publications</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== LATEST PUBLICATIONS ========== -->
   <section class="ha-pubs-wrap" id="latest-research">
     <div class="ha-wrap">
@@ -998,6 +1052,7 @@
         <button class="ha-chip" data-filter="food" role="tab">Food Security</button>
         <button class="ha-chip" data-filter="housing" role="tab">Affordable Housing</button>
         <button class="ha-chip" data-filter="transit" role="tab">Transportation</button>
+        <button class="ha-chip" data-filter="wages-labor" role="tab">Wages &amp; Labor</button>
       </div>
 
       <div class="ha-pub-grid" id="ha-latest-grid">
@@ -1225,10 +1280,11 @@
 
   // === Issue-area mapping (slug → category, filter, label) ===
   var AREA_MAP = {
-    'food':       { category:'Food Equity',           filter:'food',       label:'Food Equity'         },
-    'housing':    { category:'Affordable Housing',    filter:'housing',    label:'Affordable Housing'  },
-    'transit':    { category:'Transportation Equity', filter:'transit',    label:'Transportation'      },
-    'tax-budget': { category:'Taxes & Budget',        filter:'tax-budget', label:'Tax & Budget'        }
+    'food':        { category:'Food Equity',           filter:'food',        label:'Food Equity'         },
+    'housing':     { category:'Affordable Housing',    filter:'housing',     label:'Affordable Housing'  },
+    'transit':     { category:'Transportation Equity', filter:'transit',     label:'Transportation'      },
+    'tax-budget':  { category:'Taxes & Budget',        filter:'tax-budget',  label:'Tax & Budget'        },
+    'wages-labor': { category:'Wages & Labor',         filter:'wages-labor', label:'Wages & Labor'       }
   };
 
   // === Dynamic Featured Research (pulls from publications.json) ===

@@ -19,14 +19,15 @@
 
 ## Issue deep-dive pages — MIRROR FORMAT
 
-The four issue deep-dive pages share a single canonical format:
+The five issue deep-dive pages share a single canonical format:
 
 - `taxes-budget.html`
 - `housing.html`
 - `food-security.html`
 - `transportation.html`
+- `wages-labor.html`
 
-**Structural mirror requirement:** any structural change (tabs added/removed/renamed, section reorder, hero treatment, CTA placement, footer columns) made to *one* issue page must be applied to *all four* in the same commit. The four pages should always share:
+**Structural mirror requirement:** any structural change (tabs added/removed/renamed, section reorder, hero treatment, CTA placement, footer columns) made to *one* issue page must be applied to *all five* in the same commit. The pages should always share:
 
 1. **Same nav + announcement bar** (the `px-*` chrome at top)
 2. **Same hero structure**: eyebrow + h1 + lead paragraph + tabs row
@@ -43,7 +44,7 @@ What *differs* between pages (and SHOULD differ):
 - Per-page accent color from the brand palette (but stay within Ash / Teal / Teal-deep / Slate / Charcoal)
 - SVG icons / charts specific to the issue
 
-**When in doubt about a format change:** ask "would this make sense if applied to all four pages?" If no, the change probably belongs in a *content* block (where pages diverge), not the *structure*.
+**When in doubt about a format change:** ask "would this make sense if applied to all five pages?" If no, the change probably belongs in a *content* block (where pages diverge), not the *structure*.
 
 ## When touching layout / type / padding
 
