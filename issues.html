@@ -702,32 +702,71 @@
   }
   .ha-issues .ha-deep-see-all:hover::after { transform:translateX(4px); }
 
-  /* ===== TIER 0: "Explore standalone page" filled pill ===== */
+  /* ===== TIER 0: "Explore standalone page" filled pill =====
+     This is the primary CTA per deep-dive section — it sends visitors
+     to the full issue page. Sized and weighted to be the most visually
+     prominent button on the deep-dive page so it doesn't get lost in
+     the prose card. */
   .ha-issues .ha-deep-page-link {
-    display:inline-flex; align-items:center; gap:10px;
-    margin-top:28px; margin-bottom:4px;
-    font-family:'Manrope',sans-serif; font-weight:700;
-    font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+    display:inline-flex; align-items:center; gap:14px;
+    margin-top:34px; margin-bottom:6px;
+    font-family:'Manrope',sans-serif; font-weight:800;
+    font-size:14.5px; letter-spacing:.12em; text-transform:uppercase;
     color:#fff;
-    padding:11px 22px; border-radius:999px;
+    padding:17px 30px; border-radius:999px;
     border:none;
     background:var(--section-accent, var(--ha-teal-deep));
     text-decoration:none; cursor:pointer;
-    transition:background .25s, gap .25s, box-shadow .25s, transform .2s;
+    /* Persistent accent-tinted shadow so the button reads as a lifted
+       element even before hover — the eye picks it up as a separate
+       UI layer from the prose around it. */
+    box-shadow:
+      0 2px 0 color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 60%, #000),
+      0 10px 24px color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 30%, transparent);
+    transition:background .25s cubic-bezier(.22,.61,.36,1),
+               gap .25s cubic-bezier(.22,.61,.36,1),
+               box-shadow .25s cubic-bezier(.22,.61,.36,1),
+               transform .2s cubic-bezier(.22,.61,.36,1);
     -webkit-tap-highlight-color:transparent;
   }
-  .ha-issues .ha-deep-page-link::after {
-    content:"→";
-    font-size:14px; line-height:1;
-    transition:transform .25s;
+  .ha-issues .ha-deep-page-link-arrow {
+    width:22px; height:14px; flex-shrink:0;
+    transition:transform .25s cubic-bezier(.22,.61,.36,1);
   }
-  .ha-issues .ha-deep-page-link:hover {
-    background:color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 80%, #000);
-    gap:14px;
-    box-shadow:0 4px 18px color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 30%, transparent);
-    transform:translateY(-1px);
+  .ha-issues .ha-deep-page-link:hover,
+  .ha-issues .ha-deep-page-link:focus-visible {
+    background:color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 82%, #000);
+    gap:18px;
+    box-shadow:
+      0 2px 0 color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 70%, #000),
+      0 16px 36px color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 42%, transparent);
+    transform:translateY(-2px);
   }
-  .ha-issues .ha-deep-page-link:hover::after { transform:translateX(4px); }
+  .ha-issues .ha-deep-page-link:hover .ha-deep-page-link-arrow,
+  .ha-issues .ha-deep-page-link:focus-visible .ha-deep-page-link-arrow {
+    transform:translateX(5px);
+  }
+  .ha-issues .ha-deep-page-link:focus-visible {
+    outline:3px solid color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 50%, transparent);
+    outline-offset:3px;
+  }
+  .ha-issues .ha-deep-page-link:active {
+    transform:translateY(0);
+    box-shadow:
+      0 1px 0 color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 70%, #000),
+      0 4px 12px color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 30%, transparent);
+  }
+  @media (max-width:700px){
+    .ha-issues .ha-deep-page-link {
+      font-size:13px; padding:14px 24px; gap:10px;
+    }
+    .ha-issues .ha-deep-page-link-arrow { width:18px; height:12px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ha-issues .ha-deep-page-link,
+    .ha-issues .ha-deep-page-link-arrow { transition:none; }
+    .ha-issues .ha-deep-page-link:hover { transform:none; }
+  }
 
   /* Dynamic pub-row empty state (while loading) */
   .ha-issues .ha-pub-row[data-area-pubs]:empty {
@@ -882,6 +921,12 @@
           </div>
           <p class="ha-deep-lead">Hawaiʻi imports nearly 85 percent of the food it consumes, leaving our islands vulnerable to supply-chain shocks and high prices. Meanwhile, one in eight residents — including one in five keiki — struggles to consistently put food on the table.</p>
           <p>We work alongside farmers, food hubs, schools, and grassroots coalitions to advance policies that expand access to fresh, culturally significant food and strengthen Hawaiʻi's local food economy. From universal school meals to SNAP modernization, our advocacy makes sure every family — and the farms that feed them — can thrive.</p>
+          <a class="ha-deep-page-link" href="food-security.html">
+            Explore Food Equity
+            <svg class="ha-deep-page-link-arrow" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 7h19M14 1l6 6-6 6"/>
+            </svg>
+          </a>
         </div>
 
         <h4 class="ha-deep-sub">What we focus on</h4>
@@ -916,6 +961,12 @@
           </div>
           <p class="ha-deep-lead">Hawaiʻi is the most expensive place to rent or buy a home in the United States. One in four households is severely rent-burdened, and tens of thousands of working families have been priced out of the islands they call home.</p>
           <p>We research and advocate for housing policies that put residents first — from tenant protections and rent stabilization to expanding supply through social housing models like ALOHA Homes. Our work centers the experiences of renters, working families, and those displaced by escalating costs and climate disasters.</p>
+          <a class="ha-deep-page-link" href="housing.html">
+            Explore Affordable Housing
+            <svg class="ha-deep-page-link-arrow" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 7h19M14 1l6 6-6 6"/>
+            </svg>
+          </a>
         </div>
 
         <h4 class="ha-deep-sub">What we focus on</h4>
@@ -950,6 +1001,12 @@
           </div>
           <p class="ha-deep-lead">For too many Hawaiʻi residents, getting to work, school, or the doctor depends on owning a car — a financial burden that eats up an outsized share of household budgets and leaves seniors, students, and low-income families isolated.</p>
           <p>We advocate for transportation policy that connects communities and protects pedestrians, with a focus on fare-free transit for youth, complete-streets design, and equitable traffic enforcement. Our research highlights how smart investment in transit and walkability lowers costs, cuts emissions, and builds healthier neighborhoods.</p>
+          <a class="ha-deep-page-link" href="transportation.html">
+            Explore Transportation Equity
+            <svg class="ha-deep-page-link-arrow" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 7h19M14 1l6 6-6 6"/>
+            </svg>
+          </a>
         </div>
 
         <h4 class="ha-deep-sub">What we focus on</h4>
@@ -984,7 +1041,12 @@
           </div>
           <p class="ha-deep-lead">Hawaiʻi has one of the most regressive tax structures in the country. Working families pay a larger share of their income in state and local taxes than the wealthiest households — and many essential services remain underfunded as a result.</p>
           <p>We push for progressive revenue policies that ask those who can afford it most to pay their fair share, while strengthening the budget process so public dollars reach the people who need them. From our annual Budget Primer to deep analyses of credits and exemptions, our research equips lawmakers, advocates, and the public to demand a tax code that funds a thriving Hawaiʻi.</p>
-          <a class="ha-deep-page-link" href="taxes-budget.html">Explore Taxes &amp; Budget</a>
+          <a class="ha-deep-page-link" href="taxes-budget.html">
+            Explore Taxes &amp; Budget
+            <svg class="ha-deep-page-link-arrow" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 7h19M14 1l6 6-6 6"/>
+            </svg>
+          </a>
         </div>
 
         <h4 class="ha-deep-sub">What we focus on</h4>
@@ -1019,7 +1081,12 @@
           </div>
           <p class="ha-deep-lead">More than half of Hawaiʻi households live paycheck to paycheck, squeezed between stagnant wages and a relentless cost of living. The 2022 minimum-wage law &mdash; bringing the floor to $18/hour by 2028 &mdash; delivered $1 billion in additional annual wages to over 200,000 workers, but the floor still falls short of basic costs once illness or caregiving forces a missed paycheck.</p>
           <p>We work to lift the wage floor in pace with the cost of living, establish a statewide paid family and medical leave program, and close the 40-year gap between earnings and the price of housing, food, and health care. Because if you work hard and play by the rules, you should be able to afford a decent life and a roof over your head.</p>
-          <a class="ha-deep-page-link" href="wages-labor.html">Explore Wages &amp; Labor</a>
+          <a class="ha-deep-page-link" href="wages-labor.html">
+            Explore Wages &amp; Labor
+            <svg class="ha-deep-page-link-arrow" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 7h19M14 1l6 6-6 6"/>
+            </svg>
+          </a>
         </div>
 
         <h4 class="ha-deep-sub">What we focus on</h4>
