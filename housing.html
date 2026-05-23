@@ -1283,6 +1283,34 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 .ha-housing__priority-bill:hover { background:rgba(82,121,111,.2); }
 
+/* Bulleted policy list inside a priority card — used when a single
+   thematic card carries multiple specific policies. Content
+   variation within an unchanged card structure (see CLAUDE.md
+   mirror rule). */
+.ha-housing__priority-list {
+  list-style:none; padding:0; margin:18px 0 0;
+  position:relative; z-index:1;
+}
+.ha-housing__priority-list li {
+  padding:14px 0 14px 24px;
+  border-bottom:1px solid rgba(53,79,82,.10);
+  font-size:14px; line-height:1.55;
+  color:rgba(47,62,70,.85);
+  position:relative;
+}
+.ha-housing__priority-list li:last-child { border-bottom:none; }
+.ha-housing__priority-list li::before {
+  content:""; position:absolute; left:0; top:24px;
+  width:12px; height:1px;
+  background:var(--ha-teal);
+}
+.ha-housing__priority-list strong {
+  display:block;
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:14.5px; color:var(--ha-charcoal);
+  margin-bottom:4px; letter-spacing:-0.005em;
+}
+
 /* ===== Combined Research & News (two-column hybrid) ===== */
 .ha-housing__combined {
   display:grid; grid-template-columns:1fr 1fr;
@@ -1704,7 +1732,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       <h1>Affordable <span class="ha-housing__hero-amp">Housing</span></h1>
       <div class="ha-housing__hero-rule" aria-hidden="true"></div>
       <p class="ha-housing__hero-sub">
-        Homes that families can actually afford — on the islands they call home.
+        A safe, stable home is the foundation for everything else.
       </p>
     </div>
   </header>
@@ -1735,16 +1763,16 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <div class="ha-housing__vision">
       <span class="ha-housing__vision-eyebrow">Our Vision</span>
       <div class="ha-housing__vision-quote" aria-hidden="true">&ldquo;</div>
-      <h2>A home everyone can afford, on the islands they call <em>home</em>.</h2>
+      <h2>Without stable housing, everything else <em>cracks</em>.</h2>
       <div class="ha-housing__vision-rule"></div>
       <p>
-        Hawaiʻi has the highest housing costs in the country and one of the nation's worst rates of homelessness. Working families — the people who keep our communities running — are being priced out of the islands they helped build.
+        For too many Hawaiʻi residents, the foundation that stable housing provides is cracking. We face the highest housing costs in the country and one of the nation&rsquo;s worst rates of homelessness. Only about <strong>20% of residents</strong> can afford to buy a home. Median rents hover around <strong>$2,500</strong> &mdash; roughly 50% higher than the national average &mdash; and nearly two-thirds of renter households spend more than 30% of their income on rent.
       </p>
       <blockquote class="ha-housing__vision-pullquote">
-        When the people who serve our communities can't afford to live in them, the communities themselves are at risk.
+        This is not just a housing crisis. It is a health crisis, an education crisis, and an economic crisis.
       </blockquote>
       <p>
-        We're working to build the housing Hawaiʻi needs — by reforming zoning rules that have held back construction, financing permanently affordable homes, and protecting renters from displacement so families can stay rooted where they belong.
+        Housing policy must reflect local values: safe, accessible homes for all, regardless of income or circumstance. That means recognizing shelter as a basic human right. Our affordable housing work sits at the intersection of every other issue area &mdash; without a place to live, you cannot access food, transportation, education, or economic opportunity. Housing is the base. Everything else is built on top of it.
       </p>
       <div class="ha-housing__vision-pillars">
 
@@ -1803,7 +1831,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <!-- Big headline stat above the pie -->
   <div class="ha-housing__stat-headline">
     <div class="ha-housing__stat-headline-fy">2024 statewide</div>
-    <h2>Hawaiʻi is short more than<br><strong data-count-to="24" data-count-prefix="" data-count-suffix=",000 homes" data-count-decimals="0">24,000 homes</strong> by 2030.</h2>
+    <h2>Hawaiʻi has the nation&rsquo;s highest housing wage:<br><strong data-count-to="49.19" data-count-prefix="$" data-count-suffix=" / hour" data-count-decimals="2">$49.19 / hour</strong> to afford a 2BR rental.</h2>
   </div>
 
   <!-- ===================================
@@ -1811,11 +1839,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
        =================================== -->
   <section class="ha-housing__revenue">
     <div class="ha-housing__section-head">
-      <div class="ha-housing__eyebrow">Where it comes from</div>
-      <h2 class="ha-housing__h2">A diverse tax base</h2>
+      <div class="ha-housing__eyebrow">The squeeze</div>
+      <h2 class="ha-housing__h2">A market that leaves families behind</h2>
       <div class="ha-housing__h2-rule"></div>
       <p class="ha-housing__lede">
-        Hawaiʻi raises revenue from a mix of taxes — on consumer purchases, personal and corporate income, hotel stays, and more. Click any slice or legend item to learn how it works.
+        A minimum-wage worker would need to work <strong>141 hours per week</strong> &mdash; about three and a half full-time jobs &mdash; to afford the average Fair Market Rent for a two-bedroom home in Hawai&#x02BB;i. Since 2000, the cost to purchase a home has grown over 230%, while rents have climbed twice as fast as wages.
       </p>
     </div>
     <div class="ha-housing__revenue-grid">
@@ -1839,56 +1867,56 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
        =================================== -->
   <section class="ha-housing__section">
     <div class="ha-housing__section-head">
-      <div class="ha-housing__eyebrow">Where it goes</div>
-      <h2 class="ha-housing__h2">Taxes fund our communities</h2>
+      <div class="ha-housing__eyebrow">Who feels the squeeze</div>
+      <h2 class="ha-housing__h2">Hawai&#x02BB;i&rsquo;s housing crisis hits everyone</h2>
       <div class="ha-housing__h2-rule"></div>
       <p class="ha-housing__lede">
-        Most of Hawaiʻi's tax revenue goes to the general fund and special funds — the accounts that pay for healthcare, schools, housing, and food security.
+        Teachers, nurses, firefighters, kūpuna on fixed income, working renters, and people pushed onto the streets &mdash; the crisis is broad and deep. These are the communities feeling the squeeze first and hardest.
       </p>
     </div>
     <div class="ha-housing__services">
       <div class="ha-housing__service">
         <div class="ha-housing__service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-2 2-3 2-5 0-3-2-5-5-5-2 0-3 1-4 3-1-2-2-3-4-3-3 0-5 2-5 5 0 2 .5 3 2 5l7 7Z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
         </div>
         <div class="ha-housing__service-body">
-          <p class="ha-housing__service-title">Healthcare</p>
-          <p class="ha-housing__service-cost">$1.83 billion</p>
-          <p class="ha-housing__service-desc">Health coverage for 441,000 children and adults across the state.</p>
-          <span class="ha-housing__service-pc">≈ $4,150 per covered person</span>
+          <p class="ha-housing__service-title">Working renters</p>
+          <p class="ha-housing__service-cost">65% cost-burdened</p>
+          <p class="ha-housing__service-desc">Nearly two-thirds of Hawai&#x02BB;i renter households spend more than 30% of their income on rent.</p>
+          <span class="ha-housing__service-pc">Median rent: ~$2,500/mo</span>
         </div>
       </div>
       <div class="ha-housing__service">
         <div class="ha-housing__service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 3v18"/></svg>
         </div>
         <div class="ha-housing__service-body">
-          <p class="ha-housing__service-title">Affordable Housing</p>
-          <p class="ha-housing__service-cost">$305+ million</p>
-          <p class="ha-housing__service-desc">Building affordable units, rental assistance, and homelessness programs.</p>
-          <span class="ha-housing__service-pc">≈ $213 per resident, per year</span>
+          <p class="ha-housing__service-title">Essential workers</p>
+          <p class="ha-housing__service-cost">Priced out</p>
+          <p class="ha-housing__service-desc">Teachers, nurses, firefighters, and service-industry workers increasingly can&rsquo;t afford to live in the communities they serve.</p>
+          <span class="ha-housing__service-pc">Fueling outmigration</span>
         </div>
       </div>
       <div class="ha-housing__service">
         <div class="ha-housing__service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1 4 3 6 3s6-2 6-3v-5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
         </div>
         <div class="ha-housing__service-body">
-          <p class="ha-housing__service-title">Public K-12 Schools</p>
-          <p class="ha-housing__service-cost">$1.76 billion</p>
-          <p class="ha-housing__service-desc">Education for 165,000+ students across 296 schools statewide.</p>
-          <span class="ha-housing__service-pc">≈ $10,670 per student</span>
+          <p class="ha-housing__service-title">Kūpuna &amp; fixed income</p>
+          <p class="ha-housing__service-cost">12.6% rent jump</p>
+          <p class="ha-housing__service-desc">Older adults on fixed retirement income face rent increases of 12.6% since 2019 &mdash; with no way to absorb them.</p>
+          <span class="ha-housing__service-pc">Often choosing rent over care</span>
         </div>
       </div>
       <div class="ha-housing__service">
         <div class="ha-housing__service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2l1 5h10l1-5"/><path d="M5 7v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7Z"/><path d="M9 12h6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2 4 4 8-8 4 4M3 20h18"/></svg>
         </div>
         <div class="ha-housing__service-body">
-          <p class="ha-housing__service-title">Food Security</p>
-          <p class="ha-housing__service-cost">$30+ million</p>
-          <p class="ha-housing__service-desc">School meals for 78,000 students and SNAP administration for over 163,000 people.</p>
-          <span class="ha-housing__service-pc">≈ $385 per student fed</span>
+          <p class="ha-housing__service-title">Homelessness</p>
+          <p class="ha-housing__service-cost">~8,400 statewide</p>
+          <p class="ha-housing__service-desc">On any given night, thousands of people are without shelter &mdash; the highest per-capita rate in the country.</p>
+          <span class="ha-housing__service-pc">A crisis we can solve</span>
         </div>
       </div>
     </div>
@@ -1900,51 +1928,51 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <section class="ha-housing__equity">
     <div class="ha-housing__equity-inner">
       <div class="ha-housing__section-head">
-        <div class="ha-housing__eyebrow">Tax Fairness</div>
-        <h2 class="ha-housing__h2">Lower-income families pay more</h2>
+        <div class="ha-housing__eyebrow">Cost burden by income</div>
+        <h2 class="ha-housing__h2">The squeeze hits hardest at the bottom</h2>
         <div class="ha-housing__h2-rule"></div>
         <p class="ha-housing__lede">
-          <span class="ha-housing__term" tabindex="0">Effective tax rate<span class="ha-housing__term-tip" role="tooltip"><strong>Effective tax rate</strong> — the total share of someone's income paid in taxes, after deductions and credits. Different from a headline "top rate" because real income is taxed across multiple brackets.</span></span> — the share of total income paid in state and local taxes — falls as income rises. Hawaiʻi's poorest 20% pay 14.1% of their income; the wealthiest 20% pay just 10.7%.
+          The share of household income spent on rent rises sharply as income falls. <span class="ha-housing__term" tabindex="0">Cost-burdened<span class="ha-housing__term-tip" role="tooltip"><strong>Cost-burdened</strong> &mdash; spending more than 30% of household income on rent and utilities. <em>Severely</em> cost-burdened means more than 50%.</span></span> households &mdash; those paying more than 30% &mdash; are concentrated in the lowest two income quintiles, but the burden has crept into the middle as rents have outpaced wages.
         </p>
       </div>
-      <div class="ha-housing__bar-yaxis">Effective Tax Rate (% of Income)</div>
+      <div class="ha-housing__bar-yaxis">Median Rent Burden (% of Income)</div>
       <div class="ha-housing__bars" id="ha-housing-bars">
         <div class="ha-housing__bars-annotation" aria-hidden="true">
-          The poorest 20% pay <strong>3.4 points more</strong> of their income than the wealthiest.
+          The poorest 20% spend over <strong>half</strong> of their income on rent &mdash; nearly four times what the top earners spend.
         </div>
         <div class="ha-housing__bar-col">
-          <div class="ha-housing__bar" style="height:71%"><div class="ha-housing__bar-value">14.1%</div></div>
+          <div class="ha-housing__bar" style="height:92%"><div class="ha-housing__bar-value">~55%</div></div>
           <div class="ha-housing__bar-label">Lowest 20%</div>
-          <div class="ha-housing__bar-range">Under $21,900</div>
+          <div class="ha-housing__bar-range">Severely burdened</div>
         </div>
         <div class="ha-housing__bar-col">
-          <div class="ha-housing__bar" style="height:68%"><div class="ha-housing__bar-value">13.7%</div></div>
+          <div class="ha-housing__bar" style="height:67%"><div class="ha-housing__bar-value">~40%</div></div>
           <div class="ha-housing__bar-label">Second 20%</div>
-          <div class="ha-housing__bar-range">$21,900–$44,200</div>
+          <div class="ha-housing__bar-range">Burdened</div>
         </div>
         <div class="ha-housing__bar-col">
-          <div class="ha-housing__bar" style="height:71%"><div class="ha-housing__bar-value">14.2%</div></div>
+          <div class="ha-housing__bar" style="height:50%"><div class="ha-housing__bar-value">~30%</div></div>
           <div class="ha-housing__bar-label">Middle 20%</div>
-          <div class="ha-housing__bar-range">$44,200–$80,100</div>
+          <div class="ha-housing__bar-range">At the threshold</div>
         </div>
         <div class="ha-housing__bar-col">
-          <div class="ha-housing__bar" style="height:67%"><div class="ha-housing__bar-value">13.4%</div></div>
+          <div class="ha-housing__bar" style="height:37%"><div class="ha-housing__bar-value">~22%</div></div>
           <div class="ha-housing__bar-label">Fourth 20%</div>
-          <div class="ha-housing__bar-range">$80,100–$136,600</div>
+          <div class="ha-housing__bar-range">Manageable</div>
         </div>
         <div class="ha-housing__bar-col">
-          <div class="ha-housing__bar" style="height:53%"><div class="ha-housing__bar-value">10.7%</div></div>
+          <div class="ha-housing__bar" style="height:25%"><div class="ha-housing__bar-value">~15%</div></div>
           <div class="ha-housing__bar-label">Top 20%</div>
-          <div class="ha-housing__bar-range">Over $136,600</div>
+          <div class="ha-housing__bar-range">Comfortable</div>
         </div>
       </div>
-      <p class="ha-housing__bar-note">Source: Institute on Taxation and Economic Policy, <em>Who Pays?</em> — Hawaiʻi state and local taxes, 2024.</p>
+      <p class="ha-housing__bar-note">Source: HUD CHAS (Comprehensive Housing Affordability Strategy) data for Hawai&#x02BB;i. Percentages are approximate medians by income quintile &mdash; <strong>TODO:</strong> verify exact values with HUD CHAS team before launch.</p>
 
       <div class="ha-housing__callout">
         <div class="ha-housing__callout-eyebrow">Why this happens</div>
-        <h3 class="ha-housing__callout-q">The <span class="ha-housing__term" tabindex="0">General Excise Tax<span class="ha-housing__term-tip" role="tooltip"><strong>General Excise Tax (GET)</strong> — Hawaiʻi's tax on almost all business sales, set at 4.5% (4% state + 0.5% Honolulu county surcharge). Built into the price of nearly everything you buy.</span></span> hits low-income families hardest.</h3>
+        <h3 class="ha-housing__callout-q">Decades of artificial scarcity have outpaced wages.</h3>
         <p class="ha-housing__callout-body">
-          A family earning $21,900 spends nearly all of it on essentials — food, rent, gas — every one taxed by the GET. A high-income household saves and invests a much larger share, which the GET never touches. <em>Same tax, very different impact.</em>
+          Since 2000, the cost of purchasing a home in Hawai&#x02BB;i has risen over <strong>230%</strong>. Rents have climbed roughly twice as fast as wages, and the gap has only widened. Restrictive zoning, slow permitting, and limited urban land use have throttled supply &mdash; while the cost of essentials keeps climbing. <em>The math no longer works for working families.</em>
         </p>
       </div>
 
@@ -1952,38 +1980,43 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       <div class="ha-housing__compare" id="ha-housing-compare">
         <div class="ha-housing__compare-head">
           <span class="ha-housing__compare-eyebrow">How we compare</span>
-          <h3>How regressive is Hawaiʻi's tax system?</h3>
+          <h3>Hawai&#x02BB;i tops the housing-wage rankings.</h3>
           <p class="ha-housing__compare-lede">
-            One way to measure: the gap between what the poorest 20% pay in state &amp; local taxes and what the richest 1% pay. Bars going <strong>left</strong> mean the poor pay more (regressive). Bars going <strong>right</strong> mean the rich pay more (progressive).
+            The <span class="ha-housing__term" tabindex="0">housing wage<span class="ha-housing__term-tip" role="tooltip"><strong>Housing wage</strong> &mdash; the hourly wage a full-time worker must earn to afford a two-bedroom rental at HUD Fair Market Rent without spending more than 30% of income on housing. Tracked annually by the National Low Income Housing Coalition.</span></span> is the hourly wage needed to afford a two-bedroom rental at Fair Market Rent. Longer bars mean a higher wage is required &mdash; meaning more workers locked out of the market.
           </p>
         </div>
         <div class="ha-housing__compare-rows">
-          <div class="ha-housing__compare-row" data-state="wa" data-side="left">
-            <span class="ha-housing__compare-state">Washington</span>
-            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:97%"></div></div>
-            <span class="ha-housing__compare-val">−9.7 pp</span>
-          </div>
-          <div class="ha-housing__compare-row" data-state="fl" data-side="left">
-            <span class="ha-housing__compare-state">Florida</span>
-            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:71%"></div></div>
-            <span class="ha-housing__compare-val">−7.1 pp</span>
-          </div>
           <div class="ha-housing__compare-row" data-state="hi" data-side="left">
-            <span class="ha-housing__compare-state">Hawaiʻi</span>
-            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:41%"></div></div>
-            <span class="ha-housing__compare-val">−4.1 pp</span>
+            <span class="ha-housing__compare-state">Hawai&#x02BB;i</span>
+            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:100%"></div></div>
+            <span class="ha-housing__compare-val">$49.19</span>
           </div>
-          <div class="ha-housing__compare-row" data-state="ca" data-side="right">
+          <div class="ha-housing__compare-row" data-state="ca" data-side="left">
             <span class="ha-housing__compare-state">California</span>
-            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:10%"></div></div>
-            <span class="ha-housing__compare-val">+1.0 pp</span>
+            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:90%"></div></div>
+            <span class="ha-housing__compare-val">$44.30</span>
+          </div>
+          <div class="ha-housing__compare-row" data-state="ny" data-side="left">
+            <span class="ha-housing__compare-state">New York</span>
+            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:82%"></div></div>
+            <span class="ha-housing__compare-val">$40.45</span>
+          </div>
+          <div class="ha-housing__compare-row" data-state="ma" data-side="left">
+            <span class="ha-housing__compare-state">Massachusetts</span>
+            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:80%"></div></div>
+            <span class="ha-housing__compare-val">$39.21</span>
+          </div>
+          <div class="ha-housing__compare-row" data-state="nj" data-side="left">
+            <span class="ha-housing__compare-state">New Jersey</span>
+            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:75%"></div></div>
+            <span class="ha-housing__compare-val">$37.05</span>
           </div>
           <div class="ha-housing__compare-axis">
-            <span>← More regressive</span>
-            <span>More progressive →</span>
+            <span>Lowest housing wage</span>
+            <span>Highest housing wage &rarr;</span>
           </div>
         </div>
-        <p class="ha-housing__compare-source">Source: Institute on Taxation and Economic Policy, <em>Who Pays?</em> 2024 — gap between bottom 20% and top 1% effective tax rates.</p>
+        <p class="ha-housing__compare-source">Source: National Low Income Housing Coalition, <em>Out of Reach 2024</em>. Housing wage = hourly wage needed to afford 2BR Fair Market Rent at the 30%-of-income threshold.</p>
       </div>
     </div>
   </section>
@@ -2001,10 +2034,10 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <div class="ha-housing__opps">
     <div class="ha-housing__opps-head">
       <div class="ha-housing__eyebrow">2026 Legislative Priorities</div>
-      <h2 class="ha-housing__h2">Build, protect, and stabilize</h2>
+      <h2 class="ha-housing__h2">Build, protect, and invest</h2>
       <div class="ha-housing__h2-rule"></div>
       <p class="ha-housing__lede">
-        Three areas where Hawaiʻi can deliver the homes families need, keep current renters housed, and lift people out of homelessness.
+        Seven housing priorities, grouped into three areas where Hawai&#x02BB;i can change course &mdash; unlocking supply, keeping families housed, and funding affordability at scale.
       </p>
     </div>
     <div class="ha-housing__priorities">
@@ -2013,72 +2046,96 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
           <span class="ha-housing__priority-num">1</span>
           <div>
             <h3 class="ha-housing__priority-title">Supply</h3>
-            <div class="ha-housing__priority-sub">Zoning &amp; Permitting Reform</div>
+            <div class="ha-housing__priority-sub">Land-use &amp; zoning reform</div>
           </div>
         </div>
         <p class="ha-housing__priority-desc">
-          Outdated zoning and slow permitting have starved Hawaiʻi of the homes families need. Reform that allows duplexes, ADUs, and missing-middle housing where it's already serviced — without long approval delays — can unlock thousands of units.
+          Decades of restrictive land-use rules have throttled construction. Hawai&#x02BB;i needs to build up instead of out &mdash; infilling existing neighborhoods, prioritizing housing near services and transit, and removing artificial caps that prevent housing within the urban land use boundary.
         </p>
+        <ul class="ha-housing__priority-list">
+          <li>
+            <strong>Maximize TOD density</strong>
+            High minimum-density requirements in transit-oriented districts and removal of barriers to dense housing near transit. More people near goods, services, and transportation &mdash; lower costs and natural long-term affordability.
+          </li>
+          <li>
+            <strong>Reduce minimum lot sizes</strong>
+            Require counties to reduce and standardize minimum lot sizes so smaller, more flexible homes are viable. Hawai&#x02BB;i&rsquo;s land is more valuable than the houses on it &mdash; large lot minimums inflate the base cost of every home.
+          </li>
+          <li>
+            <strong>Inclusionary zoning reform</strong>
+            Require counties to commission a study before implementing inclusionary zoning, so well-meaning programs don&rsquo;t inadvertently raise housing costs or chill development.
+          </li>
+        </ul>
         <div class="ha-housing__priority-stat">
           <div class="ha-housing__priority-stat-num">+24K</div>
-          <div class="ha-housing__priority-stat-label">affordable units Hawaiʻi still needs to build by 2030</div>
+          <div class="ha-housing__priority-stat-label">affordable units Hawai&#x02BB;i still needs by <strong>2030</strong></div>
         </div>
         <blockquote class="ha-housing__priority-quote">
-          &ldquo;We've been waiting nineteen months for a permit on a duplex. By the time it's approved, materials cost twice what they did when we filed.&rdquo;
+          &ldquo;We&rsquo;ve been waiting nineteen months for a permit on a duplex. By the time it&rsquo;s approved, materials cost twice what they did when we filed.&rdquo;
           <cite>&mdash; Small builder, Hilo</cite>
         </blockquote>
-        <div class="ha-housing__priority-bills">
-          <a class="ha-housing__priority-bill" href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=2008&year=2026" target="_blank" rel="noopener">HB 2008 →</a>
-        </div>
       </article>
 
       <article class="ha-housing__priority">
         <div class="ha-housing__priority-head">
           <span class="ha-housing__priority-num">2</span>
           <div>
-            <h3 class="ha-housing__priority-title">Tenants</h3>
-            <div class="ha-housing__priority-sub">Just-Cause &amp; Stability</div>
+            <h3 class="ha-housing__priority-title">Protect</h3>
+            <div class="ha-housing__priority-sub">Tenant rights &amp; anti-displacement</div>
           </div>
         </div>
         <p class="ha-housing__priority-desc">
-          Two-thirds of Hawaiʻi renters are <span class="ha-housing__term" tabindex="0">cost-burdened<span class="ha-housing__term-tip" role="tooltip"><strong>Cost-burdened</strong> &mdash; spending more than 30% of household income on rent and utilities. Severely cost-burdened means spending over 50%.</span></span>, paying more than 30% of their income on rent. Just-cause eviction protections and rent stabilization keep families housed when landlords decide to convert, sell, or raise rents to displacement levels.
+          Two-thirds of Hawai&#x02BB;i renters are <span class="ha-housing__term" tabindex="0">cost-burdened<span class="ha-housing__term-tip" role="tooltip"><strong>Cost-burdened</strong> &mdash; spending more than 30% of household income on rent and utilities. Severely cost-burdened means spending over 50%.</span></span>, paying more than 30% of their income on rent. Understanding your rights is the first line of defense against displacement &mdash; and codifying existing best practices closes the gap between policy and reality.
         </p>
+        <ul class="ha-housing__priority-list">
+          <li>
+            <strong>Notice of tenant rights</strong>
+            Require the Office of Consumer Protection to publish language-accessible notices of tenant rights, and require landlords to provide that notice to tenants. Understanding your rights is the best way to exercise them.
+          </li>
+          <li>
+            <strong>Displacement assistance</strong>
+            Provide payment to renters displaced by new developments. HHFDC already does this in practice &mdash; this proposal encodes it in law so the protection applies statewide.
+          </li>
+        </ul>
         <div class="ha-housing__priority-stat">
           <div class="ha-housing__priority-stat-num">65%</div>
-          <div class="ha-housing__priority-stat-label">of Hawaiʻi renter households are cost-burdened</div>
+          <div class="ha-housing__priority-stat-label">of Hawai&#x02BB;i renter households are cost-burdened</div>
         </div>
         <blockquote class="ha-housing__priority-quote">
-          &ldquo;Our landlord sold the building. We had 45 days to find a new home in a market where the listings start at twice our rent.&rdquo;
+          &ldquo;Our landlord sold the building. We had 45 days to find a new home in a market where listings start at twice our rent.&rdquo;
           <cite>&mdash; Kalihi family of four</cite>
         </blockquote>
-        <div class="ha-housing__priority-bills">
-          <a class="ha-housing__priority-bill" href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=1850&year=2026" target="_blank" rel="noopener">HB 1850 →</a>
-          <a class="ha-housing__priority-bill" href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=SB&billnumber=2587&year=2026" target="_blank" rel="noopener">SB 2587 →</a>
-        </div>
       </article>
 
       <article class="ha-housing__priority">
         <div class="ha-housing__priority-head">
           <span class="ha-housing__priority-num">3</span>
           <div>
-            <h3 class="ha-housing__priority-title">Investment</h3>
-            <div class="ha-housing__priority-sub">Permanent Affordability Financing</div>
+            <h3 class="ha-housing__priority-title">Invest</h3>
+            <div class="ha-housing__priority-sub">Fund affordability at scale</div>
           </div>
         </div>
         <p class="ha-housing__priority-desc">
-          The <span class="ha-housing__term" tabindex="0">Rental Housing Revolving Fund<span class="ha-housing__term-tip" role="tooltip"><strong>Rental Housing Revolving Fund (RHRF)</strong> &mdash; Hawaiʻi's primary financing vehicle for low- and moderate-income rental housing. Provides low-interest loans to developers who commit to long-term affordability.</span></span> is Hawaiʻi's main tool for financing housing that stays affordable for decades. Sustained, larger annual appropriations unlock thousands more permanently affordable units.
+          A modernized <span class="ha-housing__term" tabindex="0">conveyance tax<span class="ha-housing__term-tip" role="tooltip"><strong>Conveyance tax</strong> &mdash; a one-time tax paid when real property changes ownership. Hawai&#x02BB;i&rsquo;s current rates top out at 1.25% for properties over $10M &mdash; well below peer-state luxury rates.</span></span> on luxury real estate could generate over $100 million annually for affordable housing and Native Hawaiian home lands &mdash; without raising costs for the average owner-occupant. Pair it with deed-restriction tools that keep new housing available to local families.
         </p>
+        <ul class="ha-housing__priority-list">
+          <li>
+            <strong>Conveyance tax reform</strong>
+            A marginal-rate structure that reduces taxes for average owner-occupants while increasing them on second properties and luxury homes. Generates over $100 million per year for infrastructure, affordable housing, and DHHL.
+          </li>
+          <li>
+            <strong>Locals-only housing</strong>
+            Deed restrictions that reserve new housing for qualified residents at price points tied to local wages &mdash; via the 201H alternative pathway, ADU grants in exchange for deed restrictions, and county deed-restriction programs.
+          </li>
+        </ul>
         <div class="ha-housing__priority-stat">
-          <div class="ha-housing__priority-stat-num">$200M+</div>
-          <div class="ha-housing__priority-stat-label">recurring annual appropriation needed to keep pace with demand</div>
+          <div class="ha-housing__priority-stat-num">$100M+</div>
+          <div class="ha-housing__priority-stat-label">annual revenue from conveyance tax reform for housing &amp; DHHL</div>
         </div>
         <blockquote class="ha-housing__priority-quote">
-          &ldquo;Without RHRF financing, our project wouldn't have penciled out for working families &mdash; it would have been built for vacation rentals instead.&rdquo;
-          <cite>&mdash; Affordable-housing developer, Oʻahu</cite>
+          &ldquo;A five-million-dollar luxury home and a working family&rsquo;s first house shouldn&rsquo;t be taxed the same way when they change hands.&rdquo;
+          <cite>&mdash; Kaua&#x02BB;i affordable-housing advocate</cite>
         </blockquote>
-        <div class="ha-housing__priority-bills">
-          <a class="ha-housing__priority-bill" href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=2306&year=2026" target="_blank" rel="noopener">HB 2306 →</a>
-        </div>
       </article>
     </div>
     </div>
@@ -2106,42 +2163,50 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <div class="ha-housing__timeline">
 
       <article class="ha-housing__milestone">
-        <span class="ha-housing__milestone-year">2018</span>
+        <span class="ha-housing__milestone-year">2007 &ndash; 2008</span>
         <div class="ha-housing__milestone-card">
-          <h3 class="ha-housing__milestone-title">Helped pass landmark tenant-relocation protections</h3>
-          <p class="ha-housing__milestone-desc">New rules requiring meaningful notice and relocation assistance when landlords terminate long-term tenancies &mdash; reducing the displacement shock for working families.</p>
+          <h3 class="ha-housing__milestone-title">Won the right to education for homeless keiki</h3>
+          <p class="ha-housing__milestone-desc">Sued to ensure that homeless children in Hawai&#x02BB;i have full, meaningful access to a public education &mdash; closing the gap between policy and practice for the most vulnerable students in the state.</p>
+        </div>
+      </article>
+
+      <article class="ha-housing__milestone">
+        <span class="ha-housing__milestone-year">2008 &ndash; 2015</span>
+        <div class="ha-housing__milestone-card">
+          <h3 class="ha-housing__milestone-title">Forced overdue repairs to public housing</h3>
+          <p class="ha-housing__milestone-desc">Sued to compel long-overdue upgrades at the Kuhio Park Terrace and Mayor Wright Homes public-housing developments, which had fallen into extreme disrepair. The litigation ended squalor conditions and won livable homes for thousands of low-income residents.</p>
+        </div>
+      </article>
+
+      <article class="ha-housing__milestone">
+        <span class="ha-housing__milestone-year">2018 &ndash; 2020</span>
+        <div class="ha-housing__milestone-card">
+          <h3 class="ha-housing__milestone-title">Preserved Front Street Apartments in Lahaina</h3>
+          <p class="ha-housing__milestone-desc">Sued to preserve 51 years of affordable housing at Front Street Apartments, winning a judgment that the developer could not break its promise and raise rents to market rate decades early. The victory preserved <strong>142 affordable units</strong> for low-income kūpuna and families &mdash; units that would later be destroyed in the 2023 wildfires.</p>
         </div>
       </article>
 
       <article class="ha-housing__milestone">
         <span class="ha-housing__milestone-year">2020 &ndash; 2022</span>
         <div class="ha-housing__milestone-card">
-          <h3 class="ha-housing__milestone-title">Stood up Hawaiʻi's pandemic rental assistance program</h3>
-          <p class="ha-housing__milestone-desc">Helped design and launch the state's emergency rental relief that delivered <strong>$300+ million</strong> to keep tens of thousands of households housed during the COVID-19 crisis.</p>
+          <h3 class="ha-housing__milestone-title">Stood up Hawai&#x02BB;i&rsquo;s pandemic rent-relief program</h3>
+          <p class="ha-housing__milestone-desc">Advocated successfully for an emergency rent relief and eviction-mediation program during the COVID-19 pandemic. Our research later showed the program saved <strong>tens of thousands of households</strong> from homelessness when Hawai&#x02BB;i unemployment was among the highest in the nation.</p>
         </div>
       </article>
 
       <article class="ha-housing__milestone">
         <span class="ha-housing__milestone-year">2022</span>
         <div class="ha-housing__milestone-card">
-          <h3 class="ha-housing__milestone-title">Won historic affordable-housing funding</h3>
-          <p class="ha-housing__milestone-desc">A $600 million infusion into the Rental Housing Revolving Fund &mdash; the largest single appropriation for permanently affordable housing in Hawaiʻi's history.</p>
-        </div>
-      </article>
-
-      <article class="ha-housing__milestone">
-        <span class="ha-housing__milestone-year">2023 &ndash; Present</span>
-        <div class="ha-housing__milestone-card">
-          <h3 class="ha-housing__milestone-title">Driving statewide zoning reform</h3>
-          <p class="ha-housing__milestone-desc">Coalition work to allow ADUs, duplexes, and missing-middle housing in already-serviced neighborhoods. Outdated single-family-only zoning has held back tens of thousands of feasible homes &mdash; this reform is the unlock for meeting the 24K-unit gap.</p>
+          <h3 class="ha-housing__milestone-title">Secured ~$1B in state housing funds</h3>
+          <p class="ha-housing__milestone-desc">Helped secure nearly $1 billion in state funds for affordable housing development &mdash; including <strong>$600 million</strong> for the Department of Hawaiian Home Lands, the largest single appropriation for DHHL in state history.</p>
         </div>
       </article>
 
       <article class="ha-housing__milestone ha-housing__milestone--current">
-        <span class="ha-housing__milestone-year">2026</span>
+        <span class="ha-housing__milestone-year">2023 &ndash; Present</span>
         <div class="ha-housing__milestone-card">
-          <h3 class="ha-housing__milestone-title">Securing recurring RHRF appropriations</h3>
-          <p class="ha-housing__milestone-desc">Working to lock in <strong>$200+ million in annual</strong>, recurring Rental Housing Revolving Fund appropriations &mdash; ending the boom-bust cycle of one-time housing investments and giving developers the predictability they need to scale the affordable-housing pipeline.</p>
+          <h3 class="ha-housing__milestone-title">Leading conveyance tax reform &amp; tenant protections</h3>
+          <p class="ha-housing__milestone-desc">Driving the fight for conveyance-tax reform that generates over <strong>$100 million annually</strong> for affordable housing and Native Hawaiian home lands. Advocating for tenant-protection bills that give renters the information and stability they need to stay housed, and for regulatory reforms that remove artificial caps on housing within the urban land use boundary.</p>
         </div>
       </article>
 
