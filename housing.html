@@ -14,14 +14,13 @@
   Differences belong in *content*, not *structure*.
 
   TODO (content team):
-  - Pie chart taxData array in inline <script> still contains
-    tax-revenue data; needs housing-specific dataset.
-  - Equity bar chart values still show effective tax rate by
-    income tier; replace with housing-cost-burden by tier.
-  - "Where it goes" services list still shows state spending;
-    replace with housing program spend breakdown.
   - Research & News right column has hardcoded clippings;
-    replace with housing-specific press hits.
+    replace with affordable housing-specific press hits.
+
+  Removed earlier (no longer applicable):
+  - Tax-revenue pie chart (didn't apply to this issue area)
+  - Equity vertical bar chart + state-comparison bars
+    (both were structural carryovers from the tax page)
   ============================================================
 -->
 
@@ -1834,36 +1833,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <h2>Hawaiʻi has the nation&rsquo;s highest housing wage:<br><strong data-count-to="49.19" data-count-prefix="$" data-count-suffix=" / hour" data-count-decimals="2">$49.19 / hour</strong> to afford a 2BR rental.</h2>
   </div>
 
-  <!-- ===================================
-       WHERE THE MONEY COMES FROM
-       =================================== -->
-  <section class="ha-housing__revenue">
-    <div class="ha-housing__section-head">
-      <div class="ha-housing__eyebrow">The squeeze</div>
-      <h2 class="ha-housing__h2">A market that leaves families behind</h2>
-      <div class="ha-housing__h2-rule"></div>
-      <p class="ha-housing__lede">
-        A minimum-wage worker would need to work <strong>141 hours per week</strong> &mdash; about three and a half full-time jobs &mdash; to afford the average Fair Market Rent for a two-bedroom home in Hawai&#x02BB;i. Since 2000, the cost to purchase a home has grown over 230%, while rents have climbed twice as fast as wages.
-      </p>
-    </div>
-    <div class="ha-housing__revenue-grid">
-      <div>
-        <div class="ha-housing__chart-wrap">
-          <canvas id="ha-housing-pie"></canvas>
-        </div>
-        <div class="ha-housing__legend" id="ha-housing-legend"></div>
-      </div>
-      <div class="ha-housing__desc" id="ha-housing-desc">
-        <div class="ha-housing__desc-name">Click a slice to explore</div>
-        <p class="ha-housing__desc-text">
-          The interactive pie chart shows the share of state revenue each major tax contributes. Property taxes are collected at the county level and aren't shown here.
-        </p>
-      </div>
-    </div>
-  </section>
+  <!-- (Pie chart section removed — the taxData breakdown didn't apply
+       to this issue area. Section now flows: stat headline -> services
+       grid -> opportunities. See git history for the prior tax pie.) -->
 
   <!-- ===================================
-       WHERE THE MONEY GOES
+       WHO FEELS THE SQUEEZE (services grid)
        =================================== -->
   <section class="ha-housing__section">
     <div class="ha-housing__section-head">
@@ -1922,104 +1897,9 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     </div>
   </section>
 
-  <!-- ===================================
-       WHO PAYS MORE (equity bar chart)
-       =================================== -->
-  <section class="ha-housing__equity">
-    <div class="ha-housing__equity-inner">
-      <div class="ha-housing__section-head">
-        <div class="ha-housing__eyebrow">Cost burden by income</div>
-        <h2 class="ha-housing__h2">The squeeze hits hardest at the bottom</h2>
-        <div class="ha-housing__h2-rule"></div>
-        <p class="ha-housing__lede">
-          The share of household income spent on rent rises sharply as income falls. <span class="ha-housing__term" tabindex="0">Cost-burdened<span class="ha-housing__term-tip" role="tooltip"><strong>Cost-burdened</strong> &mdash; spending more than 30% of household income on rent and utilities. <em>Severely</em> cost-burdened means more than 50%.</span></span> households &mdash; those paying more than 30% &mdash; are concentrated in the lowest two income quintiles, but the burden has crept into the middle as rents have outpaced wages.
-        </p>
-      </div>
-      <div class="ha-housing__bar-yaxis">Median Rent Burden (% of Income)</div>
-      <div class="ha-housing__bars" id="ha-housing-bars">
-        <div class="ha-housing__bars-annotation" aria-hidden="true">
-          The poorest 20% spend over <strong>half</strong> of their income on rent &mdash; nearly four times what the top earners spend.
-        </div>
-        <div class="ha-housing__bar-col">
-          <div class="ha-housing__bar" style="height:92%"><div class="ha-housing__bar-value">~55%</div></div>
-          <div class="ha-housing__bar-label">Lowest 20%</div>
-          <div class="ha-housing__bar-range">Severely burdened</div>
-        </div>
-        <div class="ha-housing__bar-col">
-          <div class="ha-housing__bar" style="height:67%"><div class="ha-housing__bar-value">~40%</div></div>
-          <div class="ha-housing__bar-label">Second 20%</div>
-          <div class="ha-housing__bar-range">Burdened</div>
-        </div>
-        <div class="ha-housing__bar-col">
-          <div class="ha-housing__bar" style="height:50%"><div class="ha-housing__bar-value">~30%</div></div>
-          <div class="ha-housing__bar-label">Middle 20%</div>
-          <div class="ha-housing__bar-range">At the threshold</div>
-        </div>
-        <div class="ha-housing__bar-col">
-          <div class="ha-housing__bar" style="height:37%"><div class="ha-housing__bar-value">~22%</div></div>
-          <div class="ha-housing__bar-label">Fourth 20%</div>
-          <div class="ha-housing__bar-range">Manageable</div>
-        </div>
-        <div class="ha-housing__bar-col">
-          <div class="ha-housing__bar" style="height:25%"><div class="ha-housing__bar-value">~15%</div></div>
-          <div class="ha-housing__bar-label">Top 20%</div>
-          <div class="ha-housing__bar-range">Comfortable</div>
-        </div>
-      </div>
-      <p class="ha-housing__bar-note">Source: HUD CHAS (Comprehensive Housing Affordability Strategy) data for Hawai&#x02BB;i. Percentages are approximate medians by income quintile &mdash; <strong>TODO:</strong> verify exact values with HUD CHAS team before launch.</p>
-
-      <div class="ha-housing__callout">
-        <div class="ha-housing__callout-eyebrow">Why this happens</div>
-        <h3 class="ha-housing__callout-q">Decades of artificial scarcity have outpaced wages.</h3>
-        <p class="ha-housing__callout-body">
-          Since 2000, the cost of purchasing a home in Hawai&#x02BB;i has risen over <strong>230%</strong>. Rents have climbed roughly twice as fast as wages, and the gap has only widened. Restrictive zoning, slow permitting, and limited urban land use have throttled supply &mdash; while the cost of essentials keeps climbing. <em>The math no longer works for working families.</em>
-        </p>
-      </div>
-
-      <!-- State comparison: how regressive is Hawaiʻi? -->
-      <div class="ha-housing__compare" id="ha-housing-compare">
-        <div class="ha-housing__compare-head">
-          <span class="ha-housing__compare-eyebrow">How we compare</span>
-          <h3>Hawai&#x02BB;i tops the housing-wage rankings.</h3>
-          <p class="ha-housing__compare-lede">
-            The <span class="ha-housing__term" tabindex="0">housing wage<span class="ha-housing__term-tip" role="tooltip"><strong>Housing wage</strong> &mdash; the hourly wage a full-time worker must earn to afford a two-bedroom rental at HUD Fair Market Rent without spending more than 30% of income on housing. Tracked annually by the National Low Income Housing Coalition.</span></span> is the hourly wage needed to afford a two-bedroom rental at Fair Market Rent. Longer bars mean a higher wage is required &mdash; meaning more workers locked out of the market.
-          </p>
-        </div>
-        <div class="ha-housing__compare-rows">
-          <div class="ha-housing__compare-row" data-state="hi" data-side="left">
-            <span class="ha-housing__compare-state">Hawai&#x02BB;i</span>
-            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:100%"></div></div>
-            <span class="ha-housing__compare-val">$49.19</span>
-          </div>
-          <div class="ha-housing__compare-row" data-state="ca" data-side="left">
-            <span class="ha-housing__compare-state">California</span>
-            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:90%"></div></div>
-            <span class="ha-housing__compare-val">$44.30</span>
-          </div>
-          <div class="ha-housing__compare-row" data-state="ny" data-side="left">
-            <span class="ha-housing__compare-state">New York</span>
-            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:82%"></div></div>
-            <span class="ha-housing__compare-val">$40.45</span>
-          </div>
-          <div class="ha-housing__compare-row" data-state="ma" data-side="left">
-            <span class="ha-housing__compare-state">Massachusetts</span>
-            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:80%"></div></div>
-            <span class="ha-housing__compare-val">$39.21</span>
-          </div>
-          <div class="ha-housing__compare-row" data-state="nj" data-side="left">
-            <span class="ha-housing__compare-state">New Jersey</span>
-            <div class="ha-housing__compare-track"><div class="ha-housing__compare-fill" style="--w:75%"></div></div>
-            <span class="ha-housing__compare-val">$37.05</span>
-          </div>
-          <div class="ha-housing__compare-axis">
-            <span>Lowest housing wage</span>
-            <span>Highest housing wage &rarr;</span>
-          </div>
-        </div>
-        <p class="ha-housing__compare-source">Source: National Low Income Housing Coalition, <em>Out of Reach 2024</em>. Housing wage = hourly wage needed to afford 2BR Fair Market Rent at the 30%-of-income threshold.</p>
-      </div>
-    </div>
-  </section>
+  <!-- (Equity bar chart + state-comparison bars removed — both were
+       structural carryovers from the tax page's regressivity charts.
+       The Overview now lands cleanly on the services grid above.) -->
 
     <div class="ha-housing__panel-close-wrap">
       <button class="ha-housing__panel-close" aria-label="Close section">
@@ -2320,96 +2200,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
 <script>
 (function() {
-  // ===== Pie chart data =====
-  const taxData = [
-    { name:'General Excise Tax (GET)', pct:40, amount:'$4.63 billion', color:'#2F3E46',
-      desc:'A tax on almost all business sales in Hawaiʻi — built into the price of nearly everything you buy. It is the state\'s single largest source of revenue.',
-      rate:'GET rate: 4.5% (incl. county surcharge)'
-    },
-    { name:'Individual Income Tax', pct:29, amount:'$3.29 billion', color:'#354F52',
-      desc:'The tax people pay on wages and other earned income. Rates range from <strong>1.4% to 11%</strong> across nine brackets. Capital gains income is taxed at a <strong>maximum of 7.25%</strong> — far below the top wage rate.',
-      rate:'Wage rate: 1.4%–11% · Capital gains: max 7.25%'
-    },
-    { name:'Transient Accommodations Tax', pct:7, amount:'$816 million', color:'#52796F',
-      desc:'A tax on short-term stays like hotel rooms and vacation rentals. Closely tied to tourism — helps the state raise revenue from visitors.',
-      rate:'TAT rate: 10.25% + 3% county'
-    },
-    { name:'Corporate Income Tax', pct:3, amount:'$400 million', color:'#84A98C',
-      desc:'Tax on corporate profits. Large C-corporations pay 4.4%–6.4% depending on income; smaller S-corporations generally pass profits through to owners and aren\'t taxed directly.',
-      rate:'C-corp: 4.4%–6.4%'
-    },
-    { name:'Other Taxes & Fees', pct:21, amount:'$1.95 billion', color:'#CAD2C5',
-      desc:'A mix of smaller taxes and fees — fuel, alcohol, tobacco, conveyance, insurance premiums, and others. Each is small, but together they make up a meaningful share of state revenue.<br><br><em>Note: Property taxes are collected by the counties and aren\'t shown here.</em>',
-      rate:''
-    }
-  ];
+  // Pie chart data + init/legend/showDesc removed — the tax-revenue
+  // breakdown didn't apply to this issue area. See git history if
+  // you need the original block.
 
-  // ===== Pie chart =====
-  function initPie() {
-    if (typeof Chart === 'undefined') return;
-    const ctx = document.getElementById('ha-housing-pie').getContext('2d');
-    const chart = new Chart(ctx, {
-      type:'doughnut',
-      data:{
-        labels: taxData.map(d => d.name),
-        datasets: [{
-          data: taxData.map(d => d.pct),
-          backgroundColor: taxData.map(d => d.color),
-          borderColor:'#fff', borderWidth:3,
-          hoverOffset:14
-        }]
-      },
-      options:{
-        responsive:true, maintainAspectRatio:false,
-        cutout:'58%',
-        plugins:{
-          legend:{ display:false },
-          tooltip:{
-            callbacks:{
-              label: ctx => ctx.label + ': ' + ctx.parsed + '%'
-            }
-          }
-        },
-        onClick:(e, els) => { if (els.length) showDesc(els[0].index); }
-      }
-    });
-    buildLegend();
-    showDesc(0);
-  }
-
-  function buildLegend() {
-    const wrap = document.getElementById('ha-housing-legend');
-    wrap.innerHTML = '';
-    taxData.forEach((d, i) => {
-      const el = document.createElement('button');
-      el.className = 'ha-housing__legend-item';
-      el.onclick = () => showDesc(i);
-      el.innerHTML = `
-        <span class="ha-housing__legend-swatch" style="background:${d.color}"></span>
-        <span class="ha-housing__legend-label">${d.name}</span>
-        <span class="ha-housing__legend-pct">${d.pct}%</span>
-      `;
-      wrap.appendChild(el);
-    });
-  }
-
-  function showDesc(i) {
-    const d = taxData[i];
-    const el = document.getElementById('ha-housing-desc');
-    el.style.borderLeftColor = d.color;
-    el.innerHTML = `
-      <div class="ha-housing__desc-name">${d.name}</div>
-      <div class="ha-housing__desc-pct" style="color:${d.color}">${d.pct}%</div>
-      <div class="ha-housing__desc-amount">${d.amount}</div>
-      <div class="ha-housing__desc-text">${d.desc}</div>
-      ${d.rate ? `<span class="ha-housing__rate-chip">${d.rate}</span>` : ''}
-    `;
-    document.querySelectorAll('.ha-housing__legend-item').forEach((b, idx) => {
-      b.classList.toggle('active', idx === i);
-    });
-  }
-
-  // ===== Publications loader (Taxes & Budget only) =====
+  // ===== Publications loader =====
   function formatDate(ts) {
     if (!ts) return '';
     const d = new Date(ts);
@@ -2459,7 +2254,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     if (!tabs.length || !panels.length) return;
 
     const VALID_TABS = ['vision', 'overview', 'opportunities', 'impact'];
-    let pieInitialized = false;
 
     function setTab(name, opts) {
       opts = opts || {};
@@ -2492,9 +2286,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         if (active) p.removeAttribute('hidden');
         else p.setAttribute('hidden', '');
       });
-      if (name === 'overview' && !pieInitialized) {
-        requestAnimationFrame(() => { initPie(); pieInitialized = true; });
-      }
       if (name === 'overview') {
         runCountUps();
       }
