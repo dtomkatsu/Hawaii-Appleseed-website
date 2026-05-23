@@ -597,9 +597,38 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   .ha-pub__spotlight-inner { grid-template-columns:1fr; gap:20px; }
   .ha-pub__spotlight-title { font-size:22px; }
 }
+
+/* ===== Compact spotlight — applied only on the Publications/Research tab
+   so the search bar + first row of cards stay above the fold on desktop.
+   The Interactive Data tab keeps the full-size featured band. ===== */
+.ha-pub.is-view-publications .ha-pub__spotlight { padding:18px 36px; }
+.ha-pub.is-view-publications .ha-pub__spotlight-inner {
+  grid-template-columns:200px 1fr; gap:28px; align-items:center;
+}
+.ha-pub.is-view-publications a.ha-pub__spotlight-media {
+  box-shadow:0 6px 18px rgba(47,62,70,.14);
+}
+.ha-pub.is-view-publications .ha-pub__spotlight-eyebrow {
+  margin-bottom:8px; font-size:10.5px;
+}
+.ha-pub.is-view-publications .ha-pub__spotlight-title {
+  font-size:20px; margin:0 0 12px; line-height:1.2;
+}
+.ha-pub.is-view-publications .ha-pub__spotlight-desc { display:none; }
+.ha-pub.is-view-publications a.ha-pub__spotlight-link {
+  padding:11px 22px; font-size:13.5px;
+}
+@media (max-width:860px) {
+  .ha-pub.is-view-publications .ha-pub__spotlight { padding:18px 20px; }
+  .ha-pub.is-view-publications .ha-pub__spotlight-inner {
+    grid-template-columns:1fr; gap:14px;
+  }
+  .ha-pub.is-view-publications a.ha-pub__spotlight-media { max-width:260px; }
+  .ha-pub.is-view-publications .ha-pub__spotlight-title { font-size:19px; }
+}
 </style>
 
-<div class="ha-pub">
+<div class="ha-pub is-view-publications">
 
   <!-- Hero -->
   <header class="ha-pub__hero">
@@ -918,6 +947,13 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       t.classList.toggle('active', isActive);
       t.setAttribute('aria-selected', isActive ? 'true' : 'false');
     });
+    // Toggle a root class so the spotlight band renders compact on the
+    // Publications/Research tab and full-size on the Interactive Data tab.
+    const root = document.querySelector('.ha-pub');
+    if (root) {
+      root.classList.remove('is-view-publications', 'is-view-data');
+      root.classList.add('is-view-' + view);
+    }
     moveIndicator(view);
     document.querySelectorAll('.ha-pub__view').forEach(v => {
       const isActive = v.id === 'ha-pub-view-' + view;
