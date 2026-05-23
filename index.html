@@ -287,33 +287,59 @@
     max-width:62ch; font-size:17px; line-height:1.6;
     color:var(--ha-slate);
   }
-  .reveal-media{
+  /* Methodology + commitment feature block — replaces the prior
+     placeholder-image .reveal-media. Renders as a brand-gradient
+     banner with four methodology tags above an editorial italic
+     commitment statement. No 16:7 aspect-ratio constraint — height
+     is content-driven so the block stays in proportion to the
+     statement length. */
+  .reveal-feature{
     margin-top:48px;
     position:relative; border-radius:4px; overflow:hidden;
-    aspect-ratio: 16/7;
+    padding:54px 56px;
     background: linear-gradient(135deg, var(--ha-ash), var(--ha-teal) 50%, var(--ha-teal-deep));
+    text-align:center;
   }
-  .reveal-media .badges{
-    position:absolute; top:22px; left:50%; transform:translateX(-50%);
-    display:flex; gap:10px; flex-wrap:wrap;
+  .reveal-feature::before{
+    /* Subtle 135deg stripe overlay echoing the prior visual texture
+       at much lower opacity (5% instead of 6% over a tighter pitch). */
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background-image: repeating-linear-gradient(135deg,
+      rgba(255,255,255,.05) 0 18px,
+      rgba(255,255,255,0)  18px 36px);
   }
-  .reveal-media .card{
-    position:absolute; right:32px; bottom:32px;
-    background:var(--ha-white); padding:22px 26px; max-width:340px;
-    box-shadow:0 6px 32px rgba(47,62,70,.18);
+  .reveal-feature-tags{
+    display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+    margin-bottom:32px; position:relative;
   }
-  .reveal-media .card p{
-    margin:0 0 14px; font-size:14px; line-height:1.55; color:var(--ha-charcoal);
+  .reveal-tag{
+    background:var(--ha-white); padding:8px 14px; border-radius:2px;
+    font-family:'Poppins',sans-serif; font-size:11px; font-weight:600;
+    letter-spacing:.22em; text-transform:uppercase;
+    color:var(--ha-teal-deep);
   }
-  .reveal-media .card a{
-    font-family:'Poppins',sans-serif; font-size:12px; letter-spacing:.22em;
-    text-transform:uppercase; font-weight:600; color:var(--ha-teal-deep);
-    border-bottom:2px solid var(--ha-teal); padding-bottom:4px;
+  .reveal-feature-quote{
+    position:relative;
+    margin:0 auto 28px; max-width:38ch;
+    font-family:'Fraunces',Georgia,serif; font-weight:500;
+    font-size:clamp(22px, 2.4vw, 30px); line-height:1.35;
+    color:var(--ha-white);
   }
-  .reveal-media .ph-label{
-    position:absolute; inset:auto 0 0 0; padding:18px 24px;
-    font-family:'JetBrains Mono', ui-monospace, monospace; font-size:12px;
-    color: rgba(255,255,255,.7); letter-spacing:.06em;
+  .reveal-feature-quote em{
+    font-style:italic; color:var(--ha-ash);
+  }
+  .reveal-feature-cta{
+    position:relative;
+    display:inline-block;
+    font-family:'Poppins',sans-serif; font-size:12px; font-weight:600;
+    letter-spacing:.22em; text-transform:uppercase;
+    color:var(--ha-white);
+    border-bottom:2px solid rgba(255,255,255,.45);
+    padding-bottom:6px;
+    transition: border-color .2s, transform .2s;
+  }
+  .reveal-feature-cta:hover{
+    border-color:var(--ha-white);
   }
 
   /* ========== ISSUES TABS ========== */
@@ -336,98 +362,106 @@
     max-width:38ch; font-size:16px;line-height:1.55; color:var(--ha-slate);
   }
 
-  .tabs-bar{
-    display:flex; gap:10px; flex-wrap:wrap;
-    padding-bottom:22px;
-    border-bottom:1px solid var(--ha-rule);
-    margin-bottom:36px;
+  /* ========== IMPACT STATS BAND (between Reveal and Issues) ========== */
+  .impact-band{
+    background: var(--ha-charcoal);
+    padding: 56px 72px;
+    position:relative; z-index:10;
   }
-  .tab{
-    font-family:'Poppins',sans-serif;
-    font-size:13px; letter-spacing:.18em; text-transform:uppercase;
-    font-weight:500;
-    background:var(--ha-white); color:var(--ha-charcoal);
+  .impact-band-inner{
+    max-width:1200px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:24px;
+    align-items:center;
+  }
+  .impact-stat{
+    text-align:center;
+    padding:0 8px;
+    border-right:1px solid rgba(202,210,197,.18);
+  }
+  .impact-stat:last-child{ border-right:none; }
+  .impact-num{
+    display:block;
+    font-family:'Manrope',sans-serif; font-weight:800;
+    font-size:clamp(40px, 5vw, 64px); line-height:1;
+    letter-spacing:-0.04em; color:var(--ha-ash);
+    margin-bottom:10px;
+  }
+  .impact-lbl{
+    display:block;
+    font-family:'Poppins',sans-serif; font-size:11px; font-weight:600;
+    letter-spacing:.22em; text-transform:uppercase;
+    color: rgba(202,210,197,.72);
+  }
+
+  /* ========== ISSUE CARD GRID (replaces tabs+panels) ========== */
+  .issues-grid{
+    display:grid; grid-template-columns:repeat(2,1fr);
+    gap:24px;
+  }
+  .issue-card{
+    position:relative;
+    display:flex; flex-direction:column;
+    background:var(--ha-white);
     border:1px solid var(--ha-rule);
-    padding:12px 22px; border-radius:999px;
-    cursor:pointer; transition: all .2s;
-    display:inline-flex; align-items:center; gap:10px;
+    border-top:4px solid var(--ha-teal-deep);
+    border-radius:4px;
+    padding:32px 32px 28px;
+    text-decoration:none;
+    transition: transform .25s cubic-bezier(.22,.61,.36,1),
+                box-shadow .25s cubic-bezier(.22,.61,.36,1),
+                border-color .25s;
   }
-  .tab .num{
-    font-family:'Poppins',sans-serif; font-size:11px;
-    color: var(--ha-teal-deep); letter-spacing:.08em; font-weight:600;
+  .issue-card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgba(47,62,70,.10);
+    border-color: var(--ha-teal);
+    border-top-color: var(--ha-teal-deep);
   }
-  .tab:hover{border-color:var(--ha-teal); color:var(--ha-teal-deep)}
-  .tab[aria-selected="true"]{
-    background:var(--ha-teal-deep); color:var(--ha-white); border-color:var(--ha-teal-deep);
+  .issue-card-num{
+    display:block;
+    font-family:'Poppins',sans-serif; font-size:11px; font-weight:600;
+    letter-spacing:.32em; text-transform:uppercase;
+    color:var(--ha-teal-deep); opacity:.7;
+    margin-bottom:14px;
   }
-  .tab[aria-selected="true"] .num{color:var(--ha-ash)}
-
-  .panel{
-    display:grid; grid-template-columns: 1.1fr .9fr;
-    gap:56px;
-    animation: panelIn .5s ease both;
+  .issue-card h3{
+    font-family:'Manrope',sans-serif; font-weight:800;
+    font-size:clamp(26px, 2.6vw, 34px);
+    line-height:1.1; letter-spacing:-0.025em;
+    color:var(--ha-charcoal);
+    margin:0 0 14px;
   }
-  @keyframes panelIn{
-    from{opacity:0; transform:translateY(8px)}
-    to  {opacity:1; transform:translateY(0)}
+  .issue-card p{
+    font-family:'Fraunces',Georgia,serif; font-style:italic; font-weight:500;
+    font-size:17px; line-height:1.4;
+    color:var(--ha-teal-deep);
+    margin:0 0 24px;
   }
-  .panel.hidden{display:none}
-  .panel h3{
-    font-family:'Manrope',sans-serif; font-weight:700;
-    font-size: clamp(30px, 3.2vw, 46px);
-    letter-spacing:-0.025em; line-height:1.05;
-    margin:0 0 20px; color:var(--ha-charcoal);
-  }
-  .panel p{
-    font-size:16px; line-height:1.65; color:var(--ha-slate);
-    max-width:56ch; margin:0 0 18px;
-  }
-  .panel .stats{
-    display:grid; grid-template-columns: repeat(2, 1fr);
-    gap: 28px 48px; margin-top: 36px; padding-top:30px;
+  .issue-card-stat{
+    display:flex; align-items:baseline; gap:14px;
+    padding-top:20px;
     border-top:1px solid var(--ha-rule);
+    margin-bottom:22px;
   }
-  .panel .stat .num{
-    font-family:'Manrope',sans-serif; font-weight:800; font-size:42px;
-    color:var(--ha-teal-deep); line-height:1; margin-bottom:6px;
-    letter-spacing:-0.025em;
+  .issue-card-stat-num{
+    font-family:'Manrope',sans-serif; font-weight:800;
+    font-size:36px; line-height:1; letter-spacing:-0.03em;
+    color:var(--ha-teal-deep);
+    flex-shrink:0;
   }
-  .panel .stat .lbl{
-    font-size:13px; color:var(--ha-slate); line-height:1.45;
-  }
-  .panel-links{margin-top:34px; display:flex; gap:14px; flex-wrap:wrap}
-  .pill-link{
+  .issue-card-stat-lbl{
     font-family:'Poppins',sans-serif; font-size:13px;
-    letter-spacing:.05em; color:var(--ha-teal-deep);
-    border-bottom:1.5px solid var(--ha-teal);
-    padding:4px 0;
+    line-height:1.4; color:var(--ha-slate);
+    max-width:24ch;
   }
-  .pill-link:hover{color:var(--ha-charcoal); border-color:var(--ha-teal-deep)}
-
-  .panel-media{
-    position:relative; min-height:420px; border-radius:4px;
-    overflow:hidden;
-    background: linear-gradient(135deg, var(--ha-teal), var(--ha-teal-deep));
-    display:flex; align-items:flex-end; padding:28px;
+  .issue-card-cta{
+    font-family:'Poppins',sans-serif; font-size:12px; font-weight:600;
+    letter-spacing:.22em; text-transform:uppercase;
+    color:var(--ha-teal-deep);
+    margin-top:auto;
+    transition: gap .2s;
   }
-  .panel-media .tag{
-    background:var(--ha-white); padding:10px 16px;
-    font-family:'Poppins',sans-serif; font-size:12px;
-    letter-spacing:.22em; text-transform:uppercase; color:var(--ha-teal-deep);
-    font-weight:600;
-  }
-  .panel-media .ph-stripes{
-    position:absolute; inset:0;
-    background-image: repeating-linear-gradient(135deg,
-      rgba(255,255,255,.06) 0 14px,
-      rgba(255,255,255,0)  14px 28px);
-  }
-  .panel-media .ph-caption{
-    position:absolute; top:22px; left:24px;
-    font-family:'JetBrains Mono', ui-monospace, monospace;
-    font-size:11px; color:rgba(255,255,255,.8);
-    letter-spacing:.08em;
-  }
+  .issue-card:hover .issue-card-cta{ color:var(--ha-charcoal); }
 
   /* ========== DATA TOOLS ========== */
   .data-tools{
@@ -501,8 +535,22 @@
   @media (max-width: 980px){
     .hero{padding:72px 22px 90px}
     .reveal,.issues{padding:72px 28px}
-    .panel{grid-template-columns:1fr}
-    .panel-media{min-height:280px}
+    .reveal-feature{padding:40px 28px;}
+    .reveal-feature-quote{font-size:clamp(20px,2.2vw,26px);}
+    .impact-band{padding:40px 28px;}
+    .impact-band-inner{
+      grid-template-columns:repeat(2,1fr); gap:32px 16px;
+    }
+    .impact-stat:nth-child(2){ border-right:none; }
+    .impact-stat{
+      padding-bottom:32px; border-bottom:1px solid rgba(202,210,197,.18);
+    }
+    .impact-stat:nth-child(3),
+    .impact-stat:nth-child(4){
+      padding-bottom:0; border-bottom:none;
+    }
+    .issues-grid{grid-template-columns:1fr; gap:18px;}
+    .issue-card{padding:26px 24px 22px;}
     .nav{padding:14px 20px}
     .nav-links{display:none}
     footer{padding:40px 24px}
@@ -629,18 +677,44 @@
   <h2>Changing systems to address inequality and foster greater opportunity.</h2>
   <p class="sub">Hawaiʻi Appleseed is a nonpartisan, nonprofit law and policy center. We research the conditions holding local families back and advocate for the rules, budgets, and programs that can change them — at the Capitol, in the courts, and in community.</p>
 
-  <div class="reveal-media" aria-label="Community photo placeholder">
-    <div class="ph-stripes" style="position:absolute;inset:0;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.06) 0 16px,rgba(255,255,255,0) 16px 32px)"></div>
-    <div class="badges">
-      <span class="tag" style="background:var(--ha-white);padding:8px 14px;font-family:Poppins;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--ha-teal-deep)">Research</span>
-      <span class="tag" style="background:var(--ha-white);padding:8px 14px;font-family:Poppins;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--ha-teal-deep)">Advocacy</span>
-      <span class="tag" style="background:var(--ha-white);padding:8px 14px;font-family:Poppins;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--ha-teal-deep)">Coalition</span>
-      <span class="tag" style="background:var(--ha-white);padding:8px 14px;font-family:Poppins;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--ha-teal-deep)">Litigation</span>
+  <!-- Methodology + commitment block. Replaces the prior community-photo
+       placeholder. Renders as a brand-gradient banner with the four
+       methodology tags and a Fraunces italic commitment statement —
+       no placeholder text, no "drop-in" caption. -->
+  <div class="reveal-feature" aria-label="Our approach">
+    <div class="reveal-feature-tags">
+      <span class="reveal-tag">Research</span>
+      <span class="reveal-tag">Advocacy</span>
+      <span class="reveal-tag">Coalition</span>
+      <span class="reveal-tag">Litigation</span>
     </div>
-    <div class="ph-label">&nbsp;[ drop-in: community photograph · 1600×700 ]</div>
-    <div class="card">
-      <p>Since 2004, Hawaiʻi Appleseed has led policy wins on SNAP, the EITC, minimum wage, rent relief, and school meals — reaching hundreds of thousands of residents.</p>
-      <a href="#">Read our 2026 priorities →</a>
+    <p class="reveal-feature-quote">
+      Since 2004, we&rsquo;ve led policy wins on <em>SNAP, the EITC, minimum wage, rent relief, and school meals</em> &mdash; reaching hundreds of thousands of residents across Hawai&#x02BB;i.
+    </p>
+    <a class="reveal-feature-cta" href="#issues">Read our 2026 priorities &rarr;</a>
+  </div>
+</section>
+
+<!-- ===== IMPACT BAND (by-the-numbers credibility strip) =====
+     NOTE: These numbers are placeholders. Verify with comms team and
+     update before launch. -->
+<section class="impact-band" aria-label="By the numbers">
+  <div class="impact-band-inner">
+    <div class="impact-stat">
+      <span class="impact-num">20+</span>
+      <span class="impact-lbl">Years of advocacy</span>
+    </div>
+    <div class="impact-stat">
+      <span class="impact-num">50+</span>
+      <span class="impact-lbl">Legislative wins</span>
+    </div>
+    <div class="impact-stat">
+      <span class="impact-num">500K+</span>
+      <span class="impact-lbl">Residents impacted</span>
+    </div>
+    <div class="impact-stat">
+      <span class="impact-num">4</span>
+      <span class="impact-lbl">Issue areas</span>
     </div>
   </div>
 </section>
@@ -652,103 +726,56 @@
     <p class="mini">Each of our issue areas addresses a cost squeezing local families — and each has concrete policy levers at the state and county level.</p>
   </div>
 
-  <div class="tabs-bar" role="tablist" aria-label="Issue areas">
-    <button class="tab" role="tab" aria-selected="true"  data-tab="housing">       <span class="num">01</span> Housing</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="food">          <span class="num">02</span> Food Security</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="transportation"><span class="num">03</span> Transportation</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="taxes">         <span class="num">04</span> Taxes</button>
-  </div>
+  <!-- 4-card grid replaces the prior tabs+panels UX. Each card links to
+       its anchor on issues.html for the deep dive (which already exists
+       and is properly designed), so the home page doesn't duplicate the
+       per-area depth. -->
+  <div class="issues-grid">
 
-  <!-- HOUSING -->
-  <div class="panel" data-panel="housing">
-    <div>
-      <h3>A home everyone can afford, on the islands they call home.</h3>
-      <p>Hawaiʻi has the highest housing costs in the country and one of the nation's worst rates of homelessness. We push for zoning reform, public financing for permanently affordable homes, and stronger tenant protections to keep kūpuna and keiki housed.</p>
-      <div class="stats">
-        <div class="stat"><div class="num">65%</div><div class="lbl">of renter households in Hawaiʻi are cost-burdened</div></div>
-        <div class="stat"><div class="num">$1.1M</div><div class="lbl">median single-family home price statewide</div></div>
-        <div class="stat"><div class="num">+24k</div><div class="lbl">affordable homes still needed by 2030</div></div>
-        <div class="stat"><div class="num">4</div><div class="lbl">housing bills Appleseed helped pass last session</div></div>
+    <a class="issue-card" href="issues.html#housing">
+      <span class="issue-card-num">01</span>
+      <h3>Housing</h3>
+      <p>A home everyone can afford, on the islands they call home.</p>
+      <div class="issue-card-stat">
+        <span class="issue-card-stat-num">65%</span>
+        <span class="issue-card-stat-lbl">of renters are cost-burdened</span>
       </div>
-      <div class="panel-links">
-        <a href="#" class="pill-link">Read the housing brief →</a>
-        <a href="#" class="pill-link">See our testimony →</a>
-      </div>
-    </div>
-    <div class="panel-media">
-      <div class="ph-stripes"></div>
-      <div class="ph-caption">IMG · housing policy hearing</div>
-      <span class="tag">Housing</span>
-    </div>
-  </div>
+      <span class="issue-card-cta">Explore the issue &rarr;</span>
+    </a>
 
-  <!-- FOOD -->
-  <div class="panel hidden" data-panel="food">
-    <div>
-      <h3>A full pantry, from Hawaiʻi soil.</h3>
-      <p>One in three island households can't consistently afford enough food. We work to expand SNAP, universal school meals, and double-up incentives at farmers' markets — strengthening the link between local agriculture and local tables.</p>
-      <div class="stats">
-        <div class="stat"><div class="num">33%</div><div class="lbl">of households are food-insecure</div></div>
-        <div class="stat"><div class="num">90%</div><div class="lbl">of food consumed is imported</div></div>
-        <div class="stat"><div class="num">150k</div><div class="lbl">keiki eligible for free school meals</div></div>
-        <div class="stat"><div class="num">$47M</div><div class="lbl">in DA BUX produce spending since 2019</div></div>
+    <a class="issue-card" href="issues.html#food-security">
+      <span class="issue-card-num">02</span>
+      <h3>Food Security</h3>
+      <p>A full pantry, from Hawai&#x02BB;i soil.</p>
+      <div class="issue-card-stat">
+        <span class="issue-card-stat-num">1 in 3</span>
+        <span class="issue-card-stat-lbl">households are food-insecure</span>
       </div>
-      <div class="panel-links">
-        <a href="#" class="pill-link">Food security report →</a>
-        <a href="#" class="pill-link">DA BUX program →</a>
-      </div>
-    </div>
-    <div class="panel-media">
-      <div class="ph-stripes"></div>
-      <div class="ph-caption">IMG · farmers market in Hilo</div>
-      <span class="tag">Food Security</span>
-    </div>
-  </div>
+      <span class="issue-card-cta">Explore the issue &rarr;</span>
+    </a>
 
-  <!-- TRANSPORTATION -->
-  <div class="panel hidden" data-panel="transportation">
-    <div>
-      <h3>Getting to work, school, and the beach — without a car payment.</h3>
-      <p>Transportation is the second-largest cost for most families. We advocate for frequent bus service, safer streets, and complete communities so that a car isn't the price of admission to island life.</p>
-      <div class="stats">
-        <div class="stat"><div class="num">17%</div><div class="lbl">of household income spent on transportation</div></div>
-        <div class="stat"><div class="num">43%</div><div class="lbl">of traffic deaths are pedestrians or cyclists</div></div>
-        <div class="stat"><div class="num">2x</div><div class="lbl">bus frequency under proposed transit plan</div></div>
-        <div class="stat"><div class="num">24</div><div class="lbl">new complete-streets projects in the pipeline</div></div>
+    <a class="issue-card" href="issues.html#transportation">
+      <span class="issue-card-num">03</span>
+      <h3>Transportation</h3>
+      <p>Getting around without a car payment.</p>
+      <div class="issue-card-stat">
+        <span class="issue-card-stat-num">17%</span>
+        <span class="issue-card-stat-lbl">of income spent on transportation</span>
       </div>
-      <div class="panel-links">
-        <a href="#" class="pill-link">Complete streets coalition →</a>
-        <a href="#" class="pill-link">Transit policy brief →</a>
-      </div>
-    </div>
-    <div class="panel-media">
-      <div class="ph-stripes"></div>
-      <div class="ph-caption">IMG · TheBus stop at dawn</div>
-      <span class="tag">Transportation</span>
-    </div>
-  </div>
+      <span class="issue-card-cta">Explore the issue &rarr;</span>
+    </a>
 
-  <!-- TAXES -->
-  <div class="panel hidden" data-panel="taxes">
-    <div>
-      <h3>A tax code that works for working families.</h3>
-      <p>Hawaiʻi has one of the most regressive tax structures in the country. We champion an expanded Earned Income Tax Credit, a refundable child tax credit, and reforms that stop taxing families into poverty.</p>
-      <div class="stats">
-        <div class="stat"><div class="num">13.5%</div><div class="lbl">of income paid in taxes by the lowest 20%</div></div>
-        <div class="stat"><div class="num">8.9%</div><div class="lbl">paid by the top 1%</div></div>
-        <div class="stat"><div class="num">$122M</div><div class="lbl">returned to families via the expanded EITC</div></div>
-        <div class="stat"><div class="num">2024</div><div class="lbl">year Hawaiʻi's historic tax cut passed</div></div>
+    <a class="issue-card" href="issues.html#tax-budget">
+      <span class="issue-card-num">04</span>
+      <h3>Taxes &amp; Budget</h3>
+      <p>A tax code that works for working families.</p>
+      <div class="issue-card-stat">
+        <span class="issue-card-stat-num">13.5%</span>
+        <span class="issue-card-stat-lbl">paid by the lowest 20%</span>
       </div>
-      <div class="panel-links">
-        <a href="#" class="pill-link">Tax Fairness Coalition →</a>
-        <a href="#" class="pill-link">EITC explainer →</a>
-      </div>
-    </div>
-    <div class="panel-media">
-      <div class="ph-stripes"></div>
-      <div class="ph-caption">IMG · State Capitol rotunda</div>
-      <span class="tag">Taxes</span>
-    </div>
+      <span class="issue-card-cta">Explore the issue &rarr;</span>
+    </a>
+
   </div>
 </section>
 
@@ -811,15 +838,8 @@
 </footer>
 
 <script>
-  // ======== Issue tabs ========
-  const tabs = document.querySelectorAll('.tab');
-  const panels = document.querySelectorAll('.panel');
-  tabs.forEach(t => {
-    t.addEventListener('click', () => {
-      tabs.forEach(x => x.setAttribute('aria-selected', x === t ? 'true' : 'false'));
-      panels.forEach(p => p.classList.toggle('hidden', p.dataset.panel !== t.dataset.tab));
-    });
-  });
+  // Issue tabs JS removed — section converted to a 4-card grid linking
+  // to issues.html anchors. No tab toggling needed.
 
   // ======== Scroll zoom for "affordable" ========
   const wrap         = document.getElementById('zoom-wrap');
