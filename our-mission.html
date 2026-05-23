@@ -1048,12 +1048,18 @@
       if (total <= 0) return;
       const p = clamp(-rect.top, 0, total) / total; // 0..1
 
-      // ----- Eyebrows -----
-      ebA.style.opacity = clamp(1 - (p - 0.15) / 0.18, 0, 1);
-      const ebBin  = clamp((p - 0.22) / 0.18, 0, 1);
-      const ebBout = clamp(1 - (p - 0.55) / 0.18, 0, 1);
-      ebB.style.opacity = Math.min(ebBin, ebBout);
-      ebC.style.opacity = clamp((p - 0.62) / 0.18, 0, 1);
+      // ----- Eyebrows ----- (eb-b/eb-c are guarded — they were removed
+      // from the DOM when the "Our Values" and "What We Focus On" labels
+      // were stripped. Without the guards, a null deref here aborts the
+      // whole update() before the body opacities are assigned, leaving
+      // body-a/b/c stacked at full opacity.)
+      if (ebA) ebA.style.opacity = clamp(1 - (p - 0.15) / 0.18, 0, 1);
+      if (ebB) {
+        const ebBin  = clamp((p - 0.22) / 0.18, 0, 1);
+        const ebBout = clamp(1 - (p - 0.55) / 0.18, 0, 1);
+        ebB.style.opacity = Math.min(ebBin, ebBout);
+      }
+      if (ebC) ebC.style.opacity = clamp((p - 0.62) / 0.18, 0, 1);
 
       // ----- Bodies (list → shared card grid) -----
       // Sequential A→B: the list clears before the grid arrives, so the two
