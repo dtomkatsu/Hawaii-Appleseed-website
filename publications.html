@@ -533,10 +533,23 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
 /* ===== Dashboard spotlight band (between hero and views) ===== */
 .ha-pub__spotlight {
+  position:relative;
   background:linear-gradient(90deg,#F6F8F5 0%,#EEF2EC 100%);
-  border-bottom:1px solid var(--ha-rule);
   padding:32px 36px;
-  box-shadow:inset 3px 0 0 var(--ha-teal-deep);
+  /* Layered drop shadow — tight + medium + wide, all low-opacity charcoal,
+     for soft elegant depth that lifts the band off the page. */
+  box-shadow:
+    0 4px 8px  -4px  rgba(47,62,70,.08),
+    0 16px 28px -12px rgba(47,62,70,.10),
+    0 30px 50px -28px rgba(47,62,70,.10);
+}
+/* Left accent stripe — 6px vertical gradient from teal to teal-deep.
+   Sits above content via z-index so the gradient bg can't bleed over it. */
+.ha-pub__spotlight::before {
+  content:''; position:absolute;
+  left:0; top:0; bottom:0; width:6px;
+  background:linear-gradient(180deg, var(--ha-teal) 0%, var(--ha-teal-deep) 100%);
+  z-index:1;
 }
 .ha-pub__spotlight-inner {
   max-width:1140px; margin:0 auto;
