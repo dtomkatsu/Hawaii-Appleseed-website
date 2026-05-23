@@ -613,11 +613,16 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-pub.is-view-publications .ha-pub__spotlight-media {
   box-shadow:0 6px 18px rgba(47,62,70,.14);
 }
+.ha-pub.is-view-publications .ha-pub__spotlight-head {
+  display:flex; align-items:center; flex-wrap:wrap;
+  gap:14px; margin-bottom:10px;
+}
 .ha-pub.is-view-publications .ha-pub__spotlight-eyebrow {
-  margin-bottom:10px; font-size:10px; padding:4px 9px; letter-spacing:.14em;
+  margin-bottom:0; font-size:10px; padding:4px 9px;
+  letter-spacing:.14em; flex:none;
 }
 .ha-pub.is-view-publications .ha-pub__spotlight-title {
-  font-size:20px; margin:0 0 8px; line-height:1.2;
+  font-size:20px; margin:0; line-height:1.2;
 }
 .ha-pub.is-view-publications .ha-pub__spotlight-desc {
   display:-webkit-box;
@@ -699,8 +704,10 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         </a>
       </div>
       <div class="ha-pub__spotlight-body">
-        <span class="ha-pub__spotlight-eyebrow">Featured Data Tool</span>
-        <h2 class="ha-pub__spotlight-title">Economic Justice Data Dashboard</h2>
+        <div class="ha-pub__spotlight-head">
+          <span class="ha-pub__spotlight-eyebrow">Featured Data Tool</span>
+          <h2 class="ha-pub__spotlight-title">Economic Justice Data Dashboard</h2>
+        </div>
         <p class="ha-pub__spotlight-desc">
           See how Hawaiʻi families are doing on economic security: income, affordable housing, access to transportation, and food security — broken down by county and district.
         </p>
