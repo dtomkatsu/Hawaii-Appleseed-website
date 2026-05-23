@@ -479,20 +479,29 @@
   .ha-mission .ha-five-tail-stack{position:relative;display:block;}
   .ha-mission .ha-five-tail{display:block;}
   .ha-mission .ha-five-tail-b{position:absolute;left:0;top:0;}
+  /* Blur-to-focus text motion: words enter softly out of focus and resolve
+     to crisp. Reads as 'coming into focus' rather than mechanical translate.
+     Easing is ease-out-expo (cubic-bezier(.16,1,.3,1)) — settles fast then
+     glides into its final state, which pairs well with the blur decay. */
   .ha-mission .ha-five-tail .ha-w{
-    display:inline-block;opacity:0;transform:translateY(12px);
-    transition:opacity .45s cubic-bezier(.22,.61,.36,1),
-               transform .45s cubic-bezier(.22,.61,.36,1);
-    will-change:opacity,transform;
+    display:inline-block;opacity:0;
+    transform:scale(.96);
+    filter:blur(8px);
+    transition:opacity .6s cubic-bezier(.16,1,.3,1),
+               transform .6s cubic-bezier(.16,1,.3,1),
+               filter .6s cubic-bezier(.16,1,.3,1);
+    will-change:opacity,transform,filter;
   }
-  .ha-mission .ha-five-tail-a .ha-w{opacity:1;transform:translateY(0);}
+  .ha-mission .ha-five-tail-a .ha-w{opacity:1;transform:scale(1);filter:blur(0);}
   .ha-mission .ha-five-tail-c{position:absolute;left:0;top:0;}
   .ha-mission .ha-five-tail-b .ha-w.is-in,
-  .ha-mission .ha-five-tail-c .ha-w.is-in{opacity:1;transform:translateY(0);}
-  /* is-out declared AFTER is-in so it wins when both classes are present (tail-b mid → tail-c) */
+  .ha-mission .ha-five-tail-c .ha-w.is-in{opacity:1;transform:scale(1);filter:blur(0);}
+  /* is-out declared AFTER is-in so it wins when both classes are present (tail-b mid → tail-c).
+     Exit overshoots scale slightly (1.04) so the departure reads as 'lifting away'
+     rather than the same blur-collapse as the entry. */
   .ha-mission .ha-five-tail-a .ha-w.is-out,
   .ha-mission .ha-five-tail-b .ha-w.is-out,
-  .ha-mission .ha-five-tail-c .ha-w.is-out{opacity:0;transform:translateY(-12px);}
+  .ha-mission .ha-five-tail-c .ha-w.is-out{opacity:0;transform:scale(1.04);filter:blur(8px);}
 
   /* Noun emphasis — practices / fronts / values get italic teal accent
      (matches the .ha-mark pattern used elsewhere on the page). */
@@ -574,19 +583,42 @@
   .ha-mission .ha-five-body-c .ha-focus-card:hover{
     border-color:var(--ha-teal);
   }
+  /* Paired morph (View-Transitions-API-style, scroll-driven):
+     each .ha-focus-card carries data-pair="N" matching the value-card in
+     the same grid slot. During the B→C scroll window, JS sets a per-card
+     CSS var --morph (0..1) that drives the icon scaling out from a small
+     point at the title's anchor — visually, the new icon "blooms" into
+     the spot where the old title sat. Title arrives a beat later via
+     blur-to-focus so the eye registers the icon morph before reading. */
+  .ha-mission .ha-five-body-c .ha-focus-card{ --morph: 1; }
   .ha-mission .ha-five-body-c .ha-focus-card .ha-focus-icon{
     width:34px;height:34px;border-radius:50%;
     background:var(--ha-teal-deep);
     display:flex;align-items:center;justify-content:center;
-    margin-bottom:14px;transition:background .35s;
+    margin-bottom:14px;
+    transform-origin:top center;
+    transform:scale(calc(0.55 + 0.45 * var(--morph)));
+    opacity:var(--morph);
+    transition:background .35s;
   }
   .ha-mission .ha-five-body-c .ha-focus-card:hover .ha-focus-icon{background:var(--ha-teal);}
   .ha-mission .ha-five-body-c .ha-focus-card .ha-focus-icon svg{
     width:17px;height:17px;stroke:#fff;fill:none;stroke-width:1.7;
+    /* Draw-in: dashoffset interpolates from path length to 0 as --morph 0→1 */
+    stroke-dasharray:var(--svg-len, 100);
+    stroke-dashoffset:calc(var(--svg-len, 100) * (1 - var(--morph)));
   }
   .ha-mission .ha-five-body-c .ha-focus-card h3{
     font-family:'Manrope',sans-serif;font-weight:600;font-size:15.5px;
     color:var(--ha-charcoal);letter-spacing:-0.005em;line-height:1.25;
+    /* Title blur-to-focus, gated by --morph crossing 0.35 (icon settles first) */
+    opacity:clamp(0, calc((var(--morph) - 0.35) * 2.5), 1);
+    filter:blur(calc(6px * (1 - clamp(0, calc((var(--morph) - 0.35) * 2.5), 1))));
+    transform:translateY(calc(4px * (1 - clamp(0, calc((var(--morph) - 0.35) * 2.5), 1))));
+  }
+  /* Reduced-motion + mobile fallback: skip the morph entirely, show final state */
+  @media (prefers-reduced-motion: reduce), (max-width: 700px){
+    .ha-mission .ha-five-body-c .ha-focus-card{ --morph: 1 !important; }
   }
 
   /* Values grid inside body-c (on ash background) */
@@ -877,23 +909,23 @@
             <div class="ha-five-body ha-five-body-b" aria-hidden="true">
               <div class="ha-five-lead-spacer" aria-hidden="true"></div>
               <div class="ha-values-grid">
-                <div class="ha-value-card is-in">
+                <div class="ha-value-card is-in" data-pair="1">
                   <h3>People First</h3>
                   <p>Change must center those most adversely impacted by current systems.</p>
                 </div>
-                <div class="ha-value-card is-in">
+                <div class="ha-value-card is-in" data-pair="2">
                   <h3>Equity</h3>
                   <p>We name the structural inequities rooted in racism, colonialism, and oppression.</p>
                 </div>
-                <div class="ha-value-card is-in">
+                <div class="ha-value-card is-in" data-pair="3">
                   <h3>Courage</h3>
                   <p>We speak up against powerful interests for people-first policies.</p>
                 </div>
-                <div class="ha-value-card is-in">
+                <div class="ha-value-card is-in" data-pair="4">
                   <h3>Collaboration</h3>
                   <p>We work with diverse partners to build durable connections.</p>
                 </div>
-                <div class="ha-value-card is-in">
+                <div class="ha-value-card is-in" data-pair="5">
                   <h3>Integrity</h3>
                   <p>Our work is accurate, reliable, and aligned with our stated values.</p>
                 </div>
@@ -917,23 +949,23 @@
             <div class="ha-five-body ha-five-body-c" aria-hidden="true">
               <p class="ha-section-lead" aria-hidden="true"></p>
               <div class="ha-focus-grid">
-                <div class="ha-focus-card is-in">
+                <div class="ha-focus-card is-in" data-pair="1">
                   <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><path d="M3 12L12 4l9 8M5 10v10h14V10"/></svg></div>
                   <h3>Affordable Housing</h3>
                 </div>
-                <div class="ha-focus-card is-in">
+                <div class="ha-focus-card is-in" data-pair="2">
                   <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><path d="M12 3c-3 5-3 9 0 12s3-7 0-12zM6 21h12"/></svg></div>
                   <h3>Food Equity</h3>
                 </div>
-                <div class="ha-focus-card is-in">
+                <div class="ha-focus-card is-in" data-pair="3">
                   <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div>
                   <h3>Wages &amp; Labor</h3>
                 </div>
-                <div class="ha-focus-card is-in">
+                <div class="ha-focus-card is-in" data-pair="4">
                   <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M6 15V9h12v6M3 9h18"/></svg></div>
                   <h3>Transportation Equity</h3>
                 </div>
-                <div class="ha-focus-card is-in">
+                <div class="ha-focus-card is-in" data-pair="5">
                   <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10l7-5 7 5v11"/></svg></div>
                   <h3>Taxes &amp; Budget</h3>
                 </div>
@@ -1034,10 +1066,32 @@
     const dotA   = five.querySelector('.ha-five-dot-a');
     const dotB   = five.querySelector('.ha-five-dot-b');
     const dotC   = five.querySelector('.ha-five-dot-c');
+    // Paired-morph targets: focus cards (C-phase) that grow their SVG icon
+    // out of the same grid slot the value card (B-phase) just occupied.
+    const focusCards = Array.from(five.querySelectorAll('.ha-five-body-c .ha-focus-card'));
 
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
     const mobileMQ = window.matchMedia('(max-width: 700px)');
     const reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    // Pre-measure each SVG's total stroke length so the dasharray/dashoffset
+    // draw-in lands cleanly at --morph=1 (path fully drawn) without estimating.
+    // Each <path> or <circle> inside the icon contributes; we use the largest
+    // single child's length as the per-element dasharray (children inherit it),
+    // which makes all sub-paths animate from "invisible" to "drawn" in unison.
+    focusCards.forEach(card => {
+      const svg = card.querySelector('.ha-focus-icon svg');
+      if (!svg) return;
+      let maxLen = 0;
+      svg.querySelectorAll('path, circle').forEach(el => {
+        if (typeof el.getTotalLength === 'function'){
+          try { maxLen = Math.max(maxLen, el.getTotalLength()); } catch(e) {}
+        }
+      });
+      if (maxLen > 0){
+        svg.style.setProperty('--svg-len', String(Math.ceil(maxLen)));
+      }
+    });
 
     // Reset all dynamic state to the "panel A only" baseline (used when we bail)
     function resetToA(){
@@ -1050,6 +1104,9 @@
       wordsA.forEach(w => w.classList.remove('is-out'));
       wordsB.forEach(w => { w.classList.remove('is-in'); w.classList.remove('is-out'); });
       wordsC.forEach(w => w.classList.remove('is-in'));
+      // Reduced-motion / mobile bypass: leave morph at the final-state value
+      // (handled by the CSS @media fallback). We just clear inline overrides.
+      focusCards.forEach(card => card.style.removeProperty('--morph'));
       five.classList.remove('is-dark');
       if (dotA) dotA.classList.add('is-active');
       if (dotB) dotB.classList.remove('is-active');
@@ -1121,6 +1178,22 @@
       stagger(wordsB, 0.22, 0.18, 'is-in');    // tail-B arrives
       stagger(wordsB, 0.55, 0.16, 'is-out');   // tail-B leaves (overrides is-in via CSS order)
       stagger(wordsC, 0.68, 0.17, 'is-in');    // tail-C arrives
+
+      // ----- Paired-morph: focus icons bloom into the slot the value cards vacated.
+      // Each card animates over MORPH_DUR units of scroll progress, with
+      // PAIR_STAGGER between consecutive cards so the wave reads left-to-right.
+      // Easing: ease-out-expo so the icon snaps into place then settles. The
+      // CSS gates the title's blur-to-focus on --morph crossing 0.35 — icon
+      // arrives first, title resolves after.
+      const MORPH_START = 0.58;
+      const PAIR_STAGGER = 0.04;
+      const MORPH_DUR    = 0.18;
+      focusCards.forEach((card, i) => {
+        const start = MORPH_START + i * PAIR_STAGGER;
+        const sub   = clamp((p - start) / MORPH_DUR, 0, 1);
+        const eased = sub === 0 ? 0 : (sub === 1 ? 1 : 1 - Math.pow(2, -10 * sub));
+        card.style.setProperty('--morph', eased.toFixed(3));
+      });
 
       // ----- Progress dots -----
       if (dotA) dotA.classList.toggle('is-active', p < 0.32);
