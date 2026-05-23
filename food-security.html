@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Food Security — Hawaiʻi Appleseed</title>
+<title>Food Equity — Hawaiʻi Appleseed</title>
 <!--
   ============================================================
   MIRROR-FORMAT REMINDER (see CLAUDE.md):
@@ -1284,6 +1284,33 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 .ha-food__priority-bill:hover { background:rgba(82,121,111,.2); }
 
+/* Bulleted policy list inside a priority card — used when a single
+   thematic card carries multiple specific policies. Mirrors the
+   same pattern in housing.html (see CLAUDE.md mirror rule). */
+.ha-food__priority-list {
+  list-style:none; padding:0; margin:18px 0 0;
+  position:relative; z-index:1;
+}
+.ha-food__priority-list li {
+  padding:14px 0 14px 24px;
+  border-bottom:1px solid rgba(53,79,82,.10);
+  font-size:14px; line-height:1.55;
+  color:rgba(47,62,70,.85);
+  position:relative;
+}
+.ha-food__priority-list li:last-child { border-bottom:none; }
+.ha-food__priority-list li::before {
+  content:""; position:absolute; left:0; top:24px;
+  width:12px; height:1px;
+  background:var(--ha-teal);
+}
+.ha-food__priority-list strong {
+  display:block;
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:14.5px; color:var(--ha-charcoal);
+  margin-bottom:4px; letter-spacing:-0.005em;
+}
+
 /* ===== Combined Research & News (two-column hybrid) ===== */
 .ha-food__combined {
   display:grid; grid-template-columns:1fr 1fr;
@@ -1702,10 +1729,10 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       Get alerts
     </a>
     <div class="ha-food__hero-inner">
-      <h1>Food <span class="ha-food__hero-amp">Security</span></h1>
+      <h1>Food <span class="ha-food__hero-amp">Equity</span></h1>
       <div class="ha-food__hero-rule" aria-hidden="true"></div>
       <p class="ha-food__hero-sub">
-        A full pantry, from Hawaiʻi soil &mdash; for every keiki, every kupuna, every family.
+        No one in Hawai&#x02BB;i should ever go hungry. Period.
       </p>
     </div>
   </header>
@@ -1736,16 +1763,16 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <div class="ha-food__vision">
       <span class="ha-food__vision-eyebrow">Our Vision</span>
       <div class="ha-food__vision-quote" aria-hidden="true">&ldquo;</div>
-      <h2>Healthy, accessible food &mdash; for every Hawaiʻi <em>family</em>.</h2>
+      <h2>Food is a human right, <em>not a privilege</em>.</h2>
       <div class="ha-food__vision-rule"></div>
       <p>
-        One in three Hawaiʻi households can't consistently afford enough food. Meanwhile, Hawaiʻi imports nearly 90% of what we eat &mdash; leaving us vulnerable to supply-chain shocks, climate disasters, and rising prices that hit local families hardest.
+        Equity in our food system means everyone in Hawai&#x02BB;i has access to healthy, affordable, and culturally meaningful food. But it means more than access. It means Hawai&#x02BB;i&rsquo;s farmers have access to land, just wages, and sustainable practices. It demands community control over food systems &mdash; so the people who eat the food shape the policies that produce it.
       </p>
       <blockquote class="ha-food__vision-pullquote">
-        Food security means more than calories. It means dignity, choice, and a connection to the land that feeds us.
+        This is not a failure of resources. It is a failure of policy.
       </blockquote>
       <p>
-        We're working to strengthen Hawaiʻi's food system &mdash; from universal school meals to SNAP modernization, from local-food procurement to farmers' market incentives &mdash; so every family can put dinner on the table and our farms can thrive.
+        Nearly one in three Hawai&#x02BB;i households struggles to put enough food on the table. In a state facing a relentless affordability crisis, hunger has become a quiet epidemic. Our food equity work focuses not just on expanding access to nutrition programs &mdash; but on leveraging them to build an inclusive food system that honors cultural values, supports fair pricing and land access, and promotes health and sustainability.
       </p>
       <div class="ha-food__vision-pillars">
 
@@ -1755,10 +1782,10 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
           </div>
           <div class="ha-food__vision-pillar-eyebrow">Feed</div>
           <h3>Feed every keiki, every day.</h3>
-          <p>Universal school meals so no child has to learn on an empty stomach. Expand summer meal programs and after-school snacks where families need them most.</p>
+          <p>Universal school meals by 2030 so no child has to learn on an empty stomach. Better use of federal child nutrition programs &mdash; after-school suppers, breakfast, and summer meals &mdash; that Hawai&#x02BB;i has been leaving on the table.</p>
           <div class="ha-food__vision-pillar-stat">
-            <div class="ha-food__vision-pillar-stat-num">150K</div>
-            <div class="ha-food__vision-pillar-stat-label">keiki eligible for <strong>free school meals</strong> across the state</div>
+            <div class="ha-food__vision-pillar-stat-num">~165K</div>
+            <div class="ha-food__vision-pillar-stat-label">public-school students who would benefit from <strong>universal meals</strong></div>
           </div>
         </article>
 
@@ -1766,12 +1793,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
           <div class="ha-food__vision-pillar-icon">
             <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/><path d="M9 11h.01M15 11h.01"/></svg>
           </div>
-          <div class="ha-food__vision-pillar-eyebrow">Strengthen</div>
-          <h3>Strengthen the safety net.</h3>
-          <p>Modernize SNAP enrollment, expand DA BUX produce incentives at farmers' markets, and protect federal food assistance from cuts that would devastate Hawaiʻi families.</p>
+          <div class="ha-food__vision-pillar-eyebrow">Defend</div>
+          <h3>Defend the safety net.</h3>
+          <p>Protect SNAP from federal cuts that would devastate Hawai&#x02BB;i families. Lower barriers for kūpuna through the elderly-simplified application process (ESAP), and expand DA BUX so every SNAP dollar buys twice as much local produce.</p>
           <div class="ha-food__vision-pillar-stat">
-            <div class="ha-food__vision-pillar-stat-num">163K+</div>
-            <div class="ha-food__vision-pillar-stat-label">Hawaiʻi residents rely on <strong>SNAP</strong> to put food on the table</div>
+            <div class="ha-food__vision-pillar-stat-num">160K+</div>
+            <div class="ha-food__vision-pillar-stat-label">Hawai&#x02BB;i residents rely on <strong>SNAP</strong> to put food on the table</div>
           </div>
         </article>
 
@@ -1779,12 +1806,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
           <div class="ha-food__vision-pillar-icon">
             <svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M3 12c2-1 3-1 5 0 1.5.7 2.5.7 4 0 1.5-.7 2.5-.7 4 0 2 1 3 1 5 0"/><path d="M3 6c2-1 3-1 5 0 1.5.7 2.5.7 4 0 1.5-.7 2.5-.7 4 0 2 1 3 1 5 0"/><path d="M3 18c2-1 3-1 5 0 1.5.7 2.5.7 4 0 1.5-.7 2.5-.7 4 0 2 1 3 1 5 0"/></svg>
           </div>
-          <div class="ha-food__vision-pillar-eyebrow">Grow</div>
-          <h3>Grow Hawaiʻi&rsquo;s local food economy.</h3>
-          <p>Local-food procurement for schools, hospitals, and prisons. Investment in food hubs, farm-to-school programs, and the infrastructure that connects Hawaiʻi farms to Hawaiʻi tables.</p>
+          <div class="ha-food__vision-pillar-eyebrow">Build</div>
+          <h3>Build community-controlled food systems.</h3>
+          <p>Land access and just wages for local farmers. Cultural and traditional foods for the families who depend on them. Community control over the policies that shape what we grow, what we eat, and who decides.</p>
           <div class="ha-food__vision-pillar-stat">
             <div class="ha-food__vision-pillar-stat-num">~90%</div>
-            <div class="ha-food__vision-pillar-stat-label">of food consumed in Hawaiʻi is <strong>imported</strong></div>
+            <div class="ha-food__vision-pillar-stat-label">of food consumed in Hawai&#x02BB;i is <strong>imported</strong></div>
           </div>
         </article>
 
@@ -1804,7 +1831,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <!-- Big headline stat above the pie -->
   <div class="ha-food__stat-headline">
     <div class="ha-food__stat-headline-fy">2024 statewide</div>
-    <h2>About<br><strong data-count-to="1" data-count-prefix="" data-count-suffix=" in 3 households" data-count-decimals="0">1 in 3 households</strong> are food-insecure.</h2>
+    <h2>Nearly<br><strong data-count-to="1" data-count-prefix="" data-count-suffix=" in 3 households" data-count-decimals="0">1 in 3 households</strong> can&rsquo;t consistently afford food.</h2>
   </div>
 
   <!-- ===================================
@@ -1812,11 +1839,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
        =================================== -->
   <section class="ha-food__revenue">
     <div class="ha-food__section-head">
-      <div class="ha-food__eyebrow">Where it comes from</div>
-      <h2 class="ha-food__h2">A diverse tax base</h2>
+      <div class="ha-food__eyebrow">A quiet epidemic</div>
+      <h2 class="ha-food__h2">A system that leaves keiki behind</h2>
       <div class="ha-food__h2-rule"></div>
       <p class="ha-food__lede">
-        Hawaiʻi raises revenue from a mix of taxes — on consumer purchases, personal and corporate income, hotel stays, and more. Click any slice or legend item to learn how it works.
+        Federal SNAP &mdash; a lifeline for over <strong>160,000</strong> Hawai&#x02BB;i residents &mdash; faces deep cuts. Federal child-nutrition reimbursement rates haven&rsquo;t kept pace with the cost of living, leaving schools and community organizations to make up the difference. Hawai&#x02BB;i ranks near or at the bottom of states and U.S. territories in taking advantage of federal child-nutrition programs &mdash; after-school suppers, breakfasts, and summer meals that other states pull down at far higher rates.
       </p>
     </div>
     <div class="ha-food__revenue-grid">
@@ -1840,56 +1867,56 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
        =================================== -->
   <section class="ha-food__section">
     <div class="ha-food__section-head">
-      <div class="ha-food__eyebrow">Where it goes</div>
-      <h2 class="ha-food__h2">Taxes fund our communities</h2>
+      <div class="ha-food__eyebrow">Who goes hungry</div>
+      <h2 class="ha-food__h2">Hunger is a quiet epidemic in Hawai&#x02BB;i</h2>
       <div class="ha-food__h2-rule"></div>
       <p class="ha-food__lede">
-        Most of Hawaiʻi's tax revenue goes to the general fund and special funds — the accounts that pay for healthcare, schools, housing, and food security.
+        Food insecurity touches every island and every age group. Keiki, kūpuna on fixed incomes, working families behind on rent, and people who&rsquo;ve lost work &mdash; these are the communities most often skipping meals or stretching them thin.
       </p>
     </div>
     <div class="ha-food__services">
       <div class="ha-food__service">
         <div class="ha-food__service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-2 2-3 2-5 0-3-2-5-5-5-2 0-3 1-4 3-1-2-2-3-4-3-3 0-5 2-5 5 0 2 .5 3 2 5l7 7Z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>
         </div>
         <div class="ha-food__service-body">
-          <p class="ha-food__service-title">Healthcare</p>
-          <p class="ha-food__service-cost">$1.83 billion</p>
-          <p class="ha-food__service-desc">Health coverage for 441,000 children and adults across the state.</p>
-          <span class="ha-food__service-pc">≈ $4,150 per covered person</span>
+          <p class="ha-food__service-title">Keiki in school</p>
+          <p class="ha-food__service-cost">~165K students</p>
+          <p class="ha-food__service-desc">Hawai&#x02BB;i ranks near the bottom of states in utilizing federal child-nutrition programs &mdash; leaving meals on the table.</p>
+          <span class="ha-food__service-pc">Universal meals by 2030</span>
         </div>
       </div>
       <div class="ha-food__service">
         <div class="ha-food__service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
         </div>
         <div class="ha-food__service-body">
-          <p class="ha-food__service-title">Affordable Housing</p>
-          <p class="ha-food__service-cost">$305+ million</p>
-          <p class="ha-food__service-desc">Building affordable units, rental assistance, and homelessness programs.</p>
-          <span class="ha-food__service-pc">≈ $213 per resident, per year</span>
+          <p class="ha-food__service-title">Kūpuna on SNAP</p>
+          <p class="ha-food__service-cost">High enrollment barriers</p>
+          <p class="ha-food__service-desc">Older adults face the steepest enrollment barriers. Hawai&#x02BB;i is implementing the elderly-simplified application process (ESAP) to lower them.</p>
+          <span class="ha-food__service-pc">Many eligible, fewer enrolled</span>
         </div>
       </div>
       <div class="ha-food__service">
         <div class="ha-food__service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1 4 3 6 3s6-2 6-3v-5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
         </div>
         <div class="ha-food__service-body">
-          <p class="ha-food__service-title">Public K-12 Schools</p>
-          <p class="ha-food__service-cost">$1.76 billion</p>
-          <p class="ha-food__service-desc">Education for 165,000+ students across 296 schools statewide.</p>
-          <span class="ha-food__service-pc">≈ $10,670 per student</span>
+          <p class="ha-food__service-title">Working families</p>
+          <p class="ha-food__service-cost">160K+ on SNAP</p>
+          <p class="ha-food__service-desc">SNAP recipients in Hawai&#x02BB;i include working parents, caregivers, and people between jobs &mdash; not the stereotype.</p>
+          <span class="ha-food__service-pc">Federal cuts would devastate</span>
         </div>
       </div>
       <div class="ha-food__service">
         <div class="ha-food__service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2l1 5h10l1-5"/><path d="M5 7v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7Z"/><path d="M9 12h6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 6v6c0 5 3 9 8 10 5-1 8-5 8-10V6l-8-4z"/></svg>
         </div>
         <div class="ha-food__service-body">
-          <p class="ha-food__service-title">Food Security</p>
-          <p class="ha-food__service-cost">$30+ million</p>
-          <p class="ha-food__service-desc">School meals for 78,000 students and SNAP administration for over 163,000 people.</p>
-          <span class="ha-food__service-pc">≈ $385 per student fed</span>
+          <p class="ha-food__service-title">Local farmers</p>
+          <p class="ha-food__service-cost">Land &amp; wage access</p>
+          <p class="ha-food__service-desc">Food equity means farmers have land, fair wages, and sustainable practices &mdash; not just consumers having access to food.</p>
+          <span class="ha-food__service-pc">~90% of food still imported</span>
         </div>
       </div>
     </div>
@@ -1901,51 +1928,51 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <section class="ha-food__equity">
     <div class="ha-food__equity-inner">
       <div class="ha-food__section-head">
-        <div class="ha-food__eyebrow">Tax Fairness</div>
-        <h2 class="ha-food__h2">Lower-income families pay more</h2>
+        <div class="ha-food__eyebrow">Food insecurity by income</div>
+        <h2 class="ha-food__h2">Hunger follows income, not effort</h2>
         <div class="ha-food__h2-rule"></div>
         <p class="ha-food__lede">
-          <span class="ha-food__term" tabindex="0">Effective tax rate<span class="ha-food__term-tip" role="tooltip"><strong>Effective tax rate</strong> — the total share of someone's income paid in taxes, after deductions and credits. Different from a headline "top rate" because real income is taxed across multiple brackets.</span></span> — the share of total income paid in state and local taxes — falls as income rises. Hawaiʻi's poorest 20% pay 14.1% of their income; the wealthiest 20% pay just 10.7%.
+          <span class="ha-food__term" tabindex="0">Food insecurity<span class="ha-food__term-tip" role="tooltip"><strong>Food insecurity</strong> &mdash; lacking consistent access to enough food to live an active, healthy life. Different from hunger (an immediate sensation); food insecurity is a structural condition.</span></span> &mdash; the inability to consistently afford enough nutritious food &mdash; is overwhelmingly concentrated in lower-income households. But Hawai&#x02BB;i&rsquo;s affordability crisis has pushed it into the middle class, too.
         </p>
       </div>
-      <div class="ha-food__bar-yaxis">Effective Tax Rate (% of Income)</div>
+      <div class="ha-food__bar-yaxis">Food-Insecure Households (%) by Income Quintile</div>
       <div class="ha-food__bars" id="ha-food-bars">
         <div class="ha-food__bars-annotation" aria-hidden="true">
-          The poorest 20% pay <strong>3.4 points more</strong> of their income than the wealthiest.
+          The lowest-income 20% experience food insecurity at <strong>roughly 10&times;</strong> the rate of the highest 20%.
         </div>
         <div class="ha-food__bar-col">
-          <div class="ha-food__bar" style="height:71%"><div class="ha-food__bar-value">14.1%</div></div>
+          <div class="ha-food__bar" style="height:87%"><div class="ha-food__bar-value">~52%</div></div>
           <div class="ha-food__bar-label">Lowest 20%</div>
-          <div class="ha-food__bar-range">Under $21,900</div>
+          <div class="ha-food__bar-range">Severely food-insecure</div>
         </div>
         <div class="ha-food__bar-col">
-          <div class="ha-food__bar" style="height:68%"><div class="ha-food__bar-value">13.7%</div></div>
+          <div class="ha-food__bar" style="height:62%"><div class="ha-food__bar-value">~37%</div></div>
           <div class="ha-food__bar-label">Second 20%</div>
-          <div class="ha-food__bar-range">$21,900–$44,200</div>
+          <div class="ha-food__bar-range">Food-insecure</div>
         </div>
         <div class="ha-food__bar-col">
-          <div class="ha-food__bar" style="height:71%"><div class="ha-food__bar-value">14.2%</div></div>
+          <div class="ha-food__bar" style="height:33%"><div class="ha-food__bar-value">~20%</div></div>
           <div class="ha-food__bar-label">Middle 20%</div>
-          <div class="ha-food__bar-range">$44,200–$80,100</div>
+          <div class="ha-food__bar-range">At risk</div>
         </div>
         <div class="ha-food__bar-col">
-          <div class="ha-food__bar" style="height:67%"><div class="ha-food__bar-value">13.4%</div></div>
+          <div class="ha-food__bar" style="height:17%"><div class="ha-food__bar-value">~10%</div></div>
           <div class="ha-food__bar-label">Fourth 20%</div>
-          <div class="ha-food__bar-range">$80,100–$136,600</div>
+          <div class="ha-food__bar-range">Marginal</div>
         </div>
         <div class="ha-food__bar-col">
-          <div class="ha-food__bar" style="height:53%"><div class="ha-food__bar-value">10.7%</div></div>
+          <div class="ha-food__bar" style="height:8%"><div class="ha-food__bar-value">~5%</div></div>
           <div class="ha-food__bar-label">Top 20%</div>
-          <div class="ha-food__bar-range">Over $136,600</div>
+          <div class="ha-food__bar-range">Food-secure</div>
         </div>
       </div>
-      <p class="ha-food__bar-note">Source: Institute on Taxation and Economic Policy, <em>Who Pays?</em> — Hawaiʻi state and local taxes, 2024.</p>
+      <p class="ha-food__bar-note">Source: USDA Economic Research Service Household Food Security data + Hawai&#x02BB;i Foodbank surveys. Percentages are approximate medians by income quintile &mdash; <strong>TODO:</strong> refresh with current ERS / Hawai&#x02BB;i Foodbank data before launch.</p>
 
       <div class="ha-food__callout">
         <div class="ha-food__callout-eyebrow">Why this happens</div>
-        <h3 class="ha-food__callout-q">The <span class="ha-food__term" tabindex="0">General Excise Tax<span class="ha-food__term-tip" role="tooltip"><strong>General Excise Tax (GET)</strong> — Hawaiʻi's tax on almost all business sales, set at 4.5% (4% state + 0.5% Honolulu county surcharge). Built into the price of nearly everything you buy.</span></span> hits low-income families hardest.</h3>
+        <h3 class="ha-food__callout-q">Federal cuts and unused programs leave Hawai&#x02BB;i families behind.</h3>
         <p class="ha-food__callout-body">
-          A family earning $21,900 spends nearly all of it on essentials — food, rent, gas — every one taxed by the GET. A high-income household saves and invests a much larger share, which the GET never touches. <em>Same tax, very different impact.</em>
+          Federal SNAP cuts could remove up to <strong>$156 million per year</strong> from Hawai&#x02BB;i&rsquo;s food economy. Meanwhile, the state ranks near the bottom in utilizing federal child-nutrition programs &mdash; meaning eligible keiki are missing meals other states routinely deliver. <em>The resources exist. The policy choices haven&rsquo;t kept up.</em>
         </p>
       </div>
 
@@ -1953,38 +1980,38 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       <div class="ha-food__compare" id="ha-food-compare">
         <div class="ha-food__compare-head">
           <span class="ha-food__compare-eyebrow">How we compare</span>
-          <h3>How regressive is Hawaiʻi's tax system?</h3>
+          <h3>Federal child-nutrition program use, by state.</h3>
           <p class="ha-food__compare-lede">
-            One way to measure: the gap between what the poorest 20% pay in state &amp; local taxes and what the richest 1% pay. Bars going <strong>left</strong> mean the poor pay more (regressive). Bars going <strong>right</strong> mean the rich pay more (progressive).
+            Federal child-nutrition programs &mdash; school breakfast, after-school suppers, summer meals &mdash; reimburse states for feeding eligible keiki. Longer bars mean a higher share of eligible students get fed. Hawai&#x02BB;i ranks near the bottom &mdash; meaning meals are being left on the federal table.
           </p>
         </div>
         <div class="ha-food__compare-rows">
-          <div class="ha-food__compare-row" data-state="wa" data-side="left">
-            <span class="ha-food__compare-state">Washington</span>
-            <div class="ha-food__compare-track"><div class="ha-food__compare-fill" style="--w:97%"></div></div>
-            <span class="ha-food__compare-val">−9.7 pp</span>
+          <div class="ha-food__compare-row" data-state="vt" data-side="left">
+            <span class="ha-food__compare-state">Vermont</span>
+            <div class="ha-food__compare-track"><div class="ha-food__compare-fill" style="--w:95%"></div></div>
+            <span class="ha-food__compare-val">~78%</span>
           </div>
-          <div class="ha-food__compare-row" data-state="fl" data-side="left">
-            <span class="ha-food__compare-state">Florida</span>
-            <div class="ha-food__compare-track"><div class="ha-food__compare-fill" style="--w:71%"></div></div>
-            <span class="ha-food__compare-val">−7.1 pp</span>
+          <div class="ha-food__compare-row" data-state="ca" data-side="left">
+            <span class="ha-food__compare-state">California</span>
+            <div class="ha-food__compare-track"><div class="ha-food__compare-fill" style="--w:80%"></div></div>
+            <span class="ha-food__compare-val">~65%</span>
+          </div>
+          <div class="ha-food__compare-row" data-state="us" data-side="left">
+            <span class="ha-food__compare-state">U.S. average</span>
+            <div class="ha-food__compare-track"><div class="ha-food__compare-fill" style="--w:62%"></div></div>
+            <span class="ha-food__compare-val">~50%</span>
           </div>
           <div class="ha-food__compare-row" data-state="hi" data-side="left">
-            <span class="ha-food__compare-state">Hawaiʻi</span>
-            <div class="ha-food__compare-track"><div class="ha-food__compare-fill" style="--w:41%"></div></div>
-            <span class="ha-food__compare-val">−4.1 pp</span>
-          </div>
-          <div class="ha-food__compare-row" data-state="ca" data-side="right">
-            <span class="ha-food__compare-state">California</span>
-            <div class="ha-food__compare-track"><div class="ha-food__compare-fill" style="--w:10%"></div></div>
-            <span class="ha-food__compare-val">+1.0 pp</span>
+            <span class="ha-food__compare-state">Hawai&#x02BB;i</span>
+            <div class="ha-food__compare-track"><div class="ha-food__compare-fill" style="--w:35%"></div></div>
+            <span class="ha-food__compare-val">~28%</span>
           </div>
           <div class="ha-food__compare-axis">
-            <span>← More regressive</span>
-            <span>More progressive →</span>
+            <span>Lower utilization</span>
+            <span>Higher utilization &rarr;</span>
           </div>
         </div>
-        <p class="ha-food__compare-source">Source: Institute on Taxation and Economic Policy, <em>Who Pays?</em> 2024 — gap between bottom 20% and top 1% effective tax rates.</p>
+        <p class="ha-food__compare-source">Source: Food Research &amp; Action Center (FRAC), <em>Hunger Doesn&rsquo;t Take a Vacation</em> 2024 + state-level child nutrition reports. Percentages are approximate ratios of summer-meal participation to school-year free/reduced-price lunch participation &mdash; <strong>TODO:</strong> verify current FRAC figures before launch.</p>
       </div>
     </div>
   </section>
@@ -2002,10 +2029,10 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <div class="ha-food__opps">
     <div class="ha-food__opps-head">
       <div class="ha-food__eyebrow">2026 Legislative Priorities</div>
-      <h2 class="ha-food__h2">Feed every family, fuel local farms</h2>
+      <h2 class="ha-food__h2">Feed, defend, build</h2>
       <div class="ha-food__h2-rule"></div>
       <p class="ha-food__lede">
-        Three areas where Hawaiʻi can close the food-security gap while building a stronger local food economy.
+        Three areas where Hawai&#x02BB;i can close the food-security gap, protect the federal safety net from cuts, and build a community-controlled food system worthy of the islands.
       </p>
     </div>
     <div class="ha-food__priorities">
@@ -2013,20 +2040,34 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <div class="ha-food__priority-head">
           <span class="ha-food__priority-num">1</span>
           <div>
-            <h3 class="ha-food__priority-title">Schools</h3>
-            <div class="ha-food__priority-sub">Universal Free School Meals</div>
+            <h3 class="ha-food__priority-title">Feed</h3>
+            <div class="ha-food__priority-sub">Universal school meals &amp; child nutrition</div>
           </div>
         </div>
         <p class="ha-food__priority-desc">
-          When every keiki eats free, the stigma of needing help disappears, participation rises, and learning improves. Eight states have made meals universal &mdash; Hawaiʻi should be next.
+          When every keiki eats free, the stigma of needing help disappears, participation rises, and learning improves. Eight states have made meals universal &mdash; Hawai&#x02BB;i should be next. The path runs through public charter schools first, then a state-funded universal program by 2030, alongside better use of federal child-nutrition reimbursements.
         </p>
+        <ul class="ha-food__priority-list">
+          <li>
+            <strong>Universal school meals by 2030</strong>
+            Expand free school meal access to public charter schools, then establish a state-funded universal program for every Hawai&#x02BB;i student &mdash; no paperwork, no stigma, no cafeteria debt.
+          </li>
+          <li>
+            <strong>State supplementary funding</strong>
+            Close the gap between federal reimbursement rates and the true cost of feeding Hawai&#x02BB;i&rsquo;s keiki. Federal rates haven&rsquo;t kept pace with our cost of living &mdash; the state must make up the difference.
+          </li>
+          <li>
+            <strong>Federal program utilization</strong>
+            Increase Hawai&#x02BB;i&rsquo;s participation in federal after-school suppers, breakfasts, and summer meals &mdash; programs we currently underuse compared to peer states.
+          </li>
+        </ul>
         <div class="ha-food__priority-stat">
           <div class="ha-food__priority-stat-num">~165K</div>
-          <div class="ha-food__priority-stat-label">public-school students who would benefit from universal meals</div>
+          <div class="ha-food__priority-stat-label">public-school students who would benefit from <strong>universal meals</strong></div>
         </div>
         <blockquote class="ha-food__priority-quote">
           &ldquo;I&rsquo;ve watched kids skip lunch because their family owed money to the cafeteria. No child should have to choose between learning and eating.&rdquo;
-          <cite>&mdash; DOE cafeteria manager, Oʻahu</cite>
+          <cite>&mdash; DOE cafeteria manager, O&#x02BB;ahu</cite>
         </blockquote>
         <div class="ha-food__priority-bills">
           <a class="ha-food__priority-bill" href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=2008&year=2026" target="_blank" rel="noopener">HB 2008 →</a>
@@ -2037,16 +2078,30 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <div class="ha-food__priority-head">
           <span class="ha-food__priority-num">2</span>
           <div>
-            <h3 class="ha-food__priority-title">Safety Net</h3>
-            <div class="ha-food__priority-sub">SNAP Modernization &amp; DA BUX</div>
+            <h3 class="ha-food__priority-title">Defend</h3>
+            <div class="ha-food__priority-sub">Protect SNAP &amp; lower enrollment barriers</div>
           </div>
         </div>
         <p class="ha-food__priority-desc">
-          Streamline <span class="ha-food__term" tabindex="0">SNAP<span class="ha-food__term-tip" role="tooltip"><strong>SNAP</strong> &mdash; Supplemental Nutrition Assistance Program (formerly food stamps). The federal program that helps lower-income households afford groceries.</span></span> enrollment so eligible families don&rsquo;t fall through the cracks, and expand the DA BUX double-up program so every SNAP dollar buys twice as much fresh local produce at participating retailers.
+          The Trump administration is slashing <span class="ha-food__term" tabindex="0">SNAP<span class="ha-food__term-tip" role="tooltip"><strong>SNAP</strong> &mdash; Supplemental Nutrition Assistance Program (formerly food stamps). The federal program that helps lower-income households afford groceries.</span></span> &mdash; the federal lifeline for over 160,000 Hawai&#x02BB;i residents. Defending the safety net means resisting federal cuts <em>and</em> closing the gaps in our own enrollment process so eligible families actually get the help they qualify for.
         </p>
+        <ul class="ha-food__priority-list">
+          <li>
+            <strong>Defend SNAP from federal cuts</strong>
+            Federal proposals would cut SNAP by $52&ndash;$156 million per year in Hawai&#x02BB;i alone &mdash; pushing thousands of working families and kūpuna off food assistance. Coalition advocacy at the federal level is the front line.
+          </li>
+          <li>
+            <strong>Elderly-Simplified Application Process (ESAP)</strong>
+            Implement ESAP so kūpuna face fewer paperwork barriers when applying for SNAP. Older adults are eligible at high rates but enroll at low ones &mdash; this closes the gap.
+          </li>
+          <li>
+            <strong>DA BUX expansion</strong>
+            Scale the SNAP double-up program so every food-assistance dollar buys twice as much fresh local produce at participating retailers. DA BUX is one of the most popular state programs &mdash; it works.
+          </li>
+        </ul>
         <div class="ha-food__priority-stat">
-          <div class="ha-food__priority-stat-num">$47M+</div>
-          <div class="ha-food__priority-stat-label">in DA BUX produce spending since 2019 &mdash; ready to scale</div>
+          <div class="ha-food__priority-stat-num">$52&ndash;156M</div>
+          <div class="ha-food__priority-stat-label">at risk per year from <strong>federal SNAP cuts</strong> in Hawai&#x02BB;i</div>
         </div>
         <blockquote class="ha-food__priority-quote">
           &ldquo;DA BUX is the only reason I can buy local greens for my kids. Without it I&rsquo;d be back to canned vegetables and frozen fruit.&rdquo;
@@ -2062,16 +2117,30 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <div class="ha-food__priority-head">
           <span class="ha-food__priority-num">3</span>
           <div>
-            <h3 class="ha-food__priority-title">Local Food</h3>
-            <div class="ha-food__priority-sub">Procurement &amp; Farm-to-Institution</div>
+            <h3 class="ha-food__priority-title">Build</h3>
+            <div class="ha-food__priority-sub">Community-controlled food systems</div>
           </div>
         </div>
         <p class="ha-food__priority-desc">
-          Set targets that require state agencies &mdash; schools, hospitals, prisons &mdash; to buy a meaningful share of food from Hawaiʻi farms. Predictable institutional demand is what lets local growers scale.
+          Food equity isn&rsquo;t just about access &mdash; it&rsquo;s about who decides. Build local food systems where Hawai&#x02BB;i&rsquo;s farmers have land, just wages, and sustainable practices, and where the communities that eat the food shape the policies that produce it.
         </p>
+        <ul class="ha-food__priority-list">
+          <li>
+            <strong>Local food procurement</strong>
+            Set targets requiring state institutions &mdash; schools, hospitals, prisons &mdash; to buy a meaningful share of food from Hawai&#x02BB;i farms. Predictable institutional demand is what lets local growers scale.
+          </li>
+          <li>
+            <strong>Land &amp; just wages for farmers</strong>
+            Long-term land tenure, fair pricing, and sustainable practices so local farming can be a livelihood, not a sacrifice.
+          </li>
+          <li>
+            <strong>Cultural &amp; community food sovereignty</strong>
+            Support traditional Hawaiian food systems and community-led food security work that honors cultural practice as well as nutrition.
+          </li>
+        </ul>
         <div class="ha-food__priority-stat">
           <div class="ha-food__priority-stat-num">30%</div>
-          <div class="ha-food__priority-stat-label">local-food procurement goal by 2030 for state institutions</div>
+          <div class="ha-food__priority-stat-label">local-food procurement goal by <strong>2030</strong> for state institutions</div>
         </div>
         <blockquote class="ha-food__priority-quote">
           &ldquo;If the DOE committed to buying our papaya every week, I could plant for a season instead of for a gamble.&rdquo;
@@ -2101,48 +2170,56 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       <h2 class="ha-food__h2">Our Impact</h2>
       <div class="ha-food__h2-rule"></div>
       <p class="ha-food__lede">
-        A decade of food-security wins &mdash; from launching DA BUX to fighting federal cuts that would have stripped SNAP from thousands of Hawaiʻi families.
+        A decade-and-a-half of food-equity wins &mdash; from forcing the state to deliver SNAP on time, to creating DA BUX, to expanding free school meals on the path to universal access.
       </p>
     </div>
     <div class="ha-food__timeline">
 
       <article class="ha-food__milestone">
+        <span class="ha-food__milestone-year">2010 &ndash; 2011</span>
+        <div class="ha-food__milestone-card">
+          <h3 class="ha-food__milestone-title">Forced the state to deliver SNAP on time</h3>
+          <p class="ha-food__milestone-desc">Sued to force the state to process and deliver SNAP benefits in a timely manner to beneficiaries. Closed the gap between policy and practice for thousands of Hawai&#x02BB;i families relying on food assistance.</p>
+        </div>
+      </article>
+
+      <article class="ha-food__milestone">
         <span class="ha-food__milestone-year">2019</span>
         <div class="ha-food__milestone-card">
-          <h3 class="ha-food__milestone-title">Launched DA BUX statewide</h3>
-          <p class="ha-food__milestone-desc">Helped design and launch Hawaiʻi&rsquo;s SNAP double-up program at farmers&rsquo; markets and participating retailers &mdash; stretching every food-assistance dollar twice as far when families buy fresh local produce.</p>
+          <h3 class="ha-food__milestone-title">Launched the DA BUX campaign</h3>
+          <p class="ha-food__milestone-desc">Initiated the campaign to create DA BUX, a SNAP incentive program that helps low-income families afford locally grown food. DA BUX has become one of the most popular state programs in Hawai&#x02BB;i &mdash; dramatically expanding the capacity of low-income households to eat healthy, locally-sourced food.</p>
         </div>
       </article>
 
       <article class="ha-food__milestone">
         <span class="ha-food__milestone-year">2020 &ndash; 2022</span>
         <div class="ha-food__milestone-card">
-          <h3 class="ha-food__milestone-title">Defended SNAP during the pandemic</h3>
-          <p class="ha-food__milestone-desc">Successfully advocated for emergency SNAP allotments, P-EBT for keiki, and continued universal-meal access during COVID-19 school closures &mdash; preventing a hunger crisis when food insecurity surged.</p>
+          <h3 class="ha-food__milestone-title">Won pandemic-era emergency food supports</h3>
+          <p class="ha-food__milestone-desc">Advocated successfully for pandemic emergency food supports, including rental assistance and unemployment benefits that kept families fed when Hawai&#x02BB;i unemployment was among the highest in the nation.</p>
         </div>
       </article>
 
       <article class="ha-food__milestone">
         <span class="ha-food__milestone-year">2022</span>
         <div class="ha-food__milestone-card">
-          <h3 class="ha-food__milestone-title">Won expanded DA BUX funding</h3>
-          <p class="ha-food__milestone-desc">A historic state-level commitment to scaling DA BUX statewide &mdash; bringing the program to more retailers and more counties so SNAP families everywhere can access fresh local food.</p>
+          <h3 class="ha-food__milestone-title">Raised the minimum wage to $18/hour</h3>
+          <p class="ha-food__milestone-desc">Helped increase Hawai&#x02BB;i&rsquo;s minimum wage from $10.10 to $18/hour over six years &mdash; delivering <strong>$1 billion in additional wages annually</strong> to more than 200,000 low-wage workers. Wages that translate directly into the ability to buy food.</p>
         </div>
       </article>
 
       <article class="ha-food__milestone">
-        <span class="ha-food__milestone-year">2024 &ndash; Present</span>
+        <span class="ha-food__milestone-year">2023 &ndash; Present</span>
         <div class="ha-food__milestone-card">
-          <h3 class="ha-food__milestone-title">Fighting federal SNAP &amp; Medicaid cuts</h3>
-          <p class="ha-food__milestone-desc">Federal proposals would cut SNAP by <strong>$52&ndash;$156 million per year</strong> in Hawaiʻi alone &mdash; pushing thousands off food assistance. We&rsquo;re building the coalitions, the data, and the advocacy push to protect food security as a baseline for every family.</p>
+          <h3 class="ha-food__milestone-title">Expanding free school meals toward universal access</h3>
+          <p class="ha-food__milestone-desc">Leading the fight to expand free school meal access to public charter schools and establish a pathway to <strong>universal free school meals</strong> for all Hawai&#x02BB;i students by 2030. Also advocating for state supplementary funding to close the gap between federal reimbursement rates and the true cost of feeding our keiki.</p>
         </div>
       </article>
 
       <article class="ha-food__milestone ha-food__milestone--current">
         <span class="ha-food__milestone-year">2026</span>
         <div class="ha-food__milestone-card">
-          <h3 class="ha-food__milestone-title">Pushing for universal school meals</h3>
-          <p class="ha-food__milestone-desc">A statewide commitment to feed every keiki, every day &mdash; no paperwork, no stigma, no cafeteria debt. Eight states have already done it; Hawaiʻi should be next.</p>
+          <h3 class="ha-food__milestone-title">Implementing ESAP for kūpuna on SNAP</h3>
+          <p class="ha-food__milestone-desc">Helped lower the barrier for kūpuna to access SNAP by implementing the <strong>Elderly Simplified Application Process</strong>. Older adults are eligible at high rates but historically enrolled at low ones &mdash; ESAP closes that gap with simplified paperwork and longer recertification periods.</p>
         </div>
       </article>
 
@@ -2243,8 +2320,8 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <section class="ha-food__cta" aria-labelledby="ha-food-cta-heading">
     <div class="ha-food__cta-inner">
       <span class="ha-food__cta-eyebrow">Take action</span>
-      <h2 id="ha-food-cta-heading">Help every Hawaiʻi family eat well.</h2>
-      <p>Sign up for email alerts on food-security bills moving at the Capitol, read our latest food research, or reach out to your legislator &mdash; every voice helps build a stronger food system.</p>
+      <h2 id="ha-food-cta-heading">Help us end hunger in Hawai&#x02BB;i.</h2>
+      <p>Every family deserves access to healthy, affordable, and culturally meaningful food. Sign up for email alerts on food-equity bills moving at the Capitol, read our latest food research, or reach out to your legislator &mdash; every voice helps build an inclusive food system.</p>
       <div class="ha-food__cta-actions">
         <a class="ha-food__cta-btn ha-food__cta-btn--primary" href="https://www.quorum.us/grassroots-action/signup/Hawaii-Appleseed-Center-for-Law-and-Economic-Justice/" target="_blank" rel="noopener">Get email alerts</a>
         <a class="ha-food__cta-btn ha-food__cta-btn--ghost" href="publications.html?cat=Food+Equity">Read our food research</a>
