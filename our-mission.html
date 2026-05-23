@@ -715,25 +715,76 @@
     opacity:.32;color:var(--ha-teal-deep);
   }
 
-  /* ===== Staggered card crossfade (desktop scrolly only) =====
-     Cards default to opacity:0 and fade to opacity:1 when their parent
-     body has .is-active. The transition-delay is keyed off a --i custom
-     property assigned by JS, so cards cascade left-to-right at 50ms
-     intervals on both enter and exit. */
+  /* ===== Persistent shell chassis (desktop scrolly only) =====
+     Five empty boxes that render once and never change. Sit underneath
+     all three bodies; bodies become transparent layout containers so
+     only their card *contents* animate during the crossfade. The shell
+     border is the visible chassis users see — it never flickers. */
+  .ha-mission .ha-five-shells{
+    position:absolute; left:0; right:0; top:80px; /* lead-spacer offset */
+    display:grid; grid-template-columns:repeat(5,1fr); gap:14px;
+    z-index:0;
+  }
+  .ha-mission .ha-five-shell{
+    background:#fff;
+    border:1px solid var(--ha-rule);
+    border-radius:6px;
+    min-height:160px;
+    transition:border-color .25s cubic-bezier(.22,.61,.36,1);
+  }
+  /* Shell hover is driven by a JS bridge: a mouseenter on any card at
+     position N adds .is-hovered to shell N. Lets us preserve text-selection
+     pointer events on the card content while still getting the chassis-
+     level hover affordance. */
+  .ha-mission .ha-five-shell.is-hovered{
+    border-color:var(--ha-teal);
+  }
+  @media (max-width:1000px){
+    .ha-mission .ha-five-shells{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:700px){
+    /* On mobile the scrolly is disabled — cards regain their own frames
+       via the existing mobile rules, so the shell layer is unused. */
+    .ha-mission .ha-five-shells{ display:none; }
+  }
+
+  /* ===== Staggered card-content crossfade (desktop scrolly only) =====
+     Cards become transparent layout containers; their *children* fade
+     0 -> 1 when the parent body gets .is-active. --i is set on the card
+     and inherits to children via the CSS custom-property cascade, so
+     each card's contents fade as a unit while cards cascade left-to-
+     right at 50ms intervals. */
   @media (min-width:701px){
+    /* Strip the card's own visual frame — the shell layer renders the
+       chassis. Source-order specificity ties the more-specific
+       body-{a,b,c} rules above, so place this block after them. */
     .ha-mission .ha-five-body .ha-step,
     .ha-mission .ha-five-body .ha-value-card,
     .ha-mission .ha-five-body .ha-focus-card{
+      background:transparent;
+      border:none;
+      box-shadow:none;
+    }
+    /* Suppress the value-card top-accent bar — it would float without
+       a frame to anchor to. */
+    .ha-mission .ha-five-body-b .ha-value-card::before{
+      content:none;
+    }
+    /* Children fade — card opacity itself stays 1 (which is the default). */
+    .ha-mission .ha-five-body .ha-step > *,
+    .ha-mission .ha-five-body .ha-value-card > *,
+    .ha-mission .ha-five-body .ha-focus-card > *{
       opacity:0;
       transition:opacity .55s cubic-bezier(.22,.61,.36,1);
       transition-delay:calc(var(--i, 0) * 50ms);
     }
-    .ha-mission .ha-five-body.is-active .ha-step,
-    .ha-mission .ha-five-body.is-active .ha-value-card,
-    .ha-mission .ha-five-body.is-active .ha-focus-card{
+    .ha-mission .ha-five-body.is-active .ha-step > *,
+    .ha-mission .ha-five-body.is-active .ha-value-card > *,
+    .ha-mission .ha-five-body.is-active .ha-focus-card > *{
       opacity:1;
     }
-    /* Pointer-events follow active state so only the visible phase is clickable. */
+    /* Pointer-events follow active state so the JS hover-bridge only
+       fires for the visible phase's cards. */
     .ha-mission .ha-five-body{pointer-events:none;}
     .ha-mission .ha-five-body.is-active{pointer-events:auto;}
   }
@@ -940,6 +991,17 @@
 
           <!-- Body slot: list & grid crossfade in same slot -->
           <div class="ha-five-bodies">
+            <!-- Persistent box chassis. Bodies render their card contents
+                 on top of these; the shells never change classes or styles
+                 during the crossfade, so the visual frame stays rock-solid
+                 from the user's POV — only the contents inside swap. -->
+            <div class="ha-five-shells" aria-hidden="true">
+              <div class="ha-five-shell"></div>
+              <div class="ha-five-shell"></div>
+              <div class="ha-five-shell"></div>
+              <div class="ha-five-shell"></div>
+              <div class="ha-five-shell"></div>
+            </div>
             <div class="ha-five-body ha-five-body-a is-active">
               <div class="ha-five-lead-spacer" aria-hidden="true"></div>
               <div class="ha-steps">
@@ -1128,12 +1190,23 @@
     // out of the same grid slot the value card (B-phase) just occupied.
     const focusCards = Array.from(five.querySelectorAll('.ha-five-body-c .ha-focus-card'));
 
-    // Assign a per-card index custom property so CSS transition-delay
-    // can cascade cards left-to-right (50ms apart). Done once at init.
+    // Per-card init: (1) assign --i for the staggered-cascade delay,
+    // (2) wire a hover bridge so mouseenter on the active body's card at
+    //     position N lights up the matching shell at position N. The
+    //     bridge preserves text selection on card content (vs. the
+    //     alternative of pointer-events:none, which would block it).
+    const shells = Array.from(five.querySelectorAll('.ha-five-shell'));
     [bodyA, bodyB, bodyC].forEach(body => {
       if (!body) return;
       body.querySelectorAll('.ha-step, .ha-value-card, .ha-focus-card')
-          .forEach((card, i) => card.style.setProperty('--i', i));
+          .forEach((card, i) => {
+            card.style.setProperty('--i', i);
+            const shell = shells[i];
+            if (shell) {
+              card.addEventListener('mouseenter', () => shell.classList.add('is-hovered'));
+              card.addEventListener('mouseleave', () => shell.classList.remove('is-hovered'));
+            }
+          });
     });
 
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
