@@ -299,14 +299,14 @@
   .ha-issues .ha-deep .ha-deep-sub::before{background:var(--section-accent);}
 
   /* ===== Deep-dive head — area title is the focus =====
-     Left accent stripe shares the section accent color and matches the
-     prose-card's 4px stripe below, tying head and body visually. The
-     32px left padding lines content up with the prose-card content
-     edge so the stripe reads as a continuous spine down the section. */
+     The head intentionally carries NO left accent stripe — that role
+     belongs to the .ha-prose-card below. The head's accent color is
+     already expressed through the section number, the hairline below
+     it, the anchor word in the tagline, and the tagline color itself,
+     so a stripe here was duplicative with the body card's stripe. The
+     head reads as an airy label *above* the bracketed body. */
   .ha-issues .ha-deep-head{
     margin-bottom:40px;
-    border-left:4px solid var(--section-accent, var(--ha-teal-deep));
-    padding-left:32px;
   }
   /* Number + a 28px hairline below it (via ::after) read as one
      composed unit attached to the title. The hairline is in the
@@ -605,7 +605,7 @@
     .ha-issues .ha-card h3{font-size:18px;}
     .ha-issues .ha-card::after{font-size:18px;}
     .ha-issues .ha-hero-lead{padding:20px 20px 20px 22px;font-size:15px;}
-    .ha-issues .ha-deep-head{margin-bottom:24px;padding-left:18px;}
+    .ha-issues .ha-deep-head{margin-bottom:24px;}
     .ha-issues .ha-deep-sub{margin:36px 0 16px;}
     .ha-issues .ha-eyebrow{font-size:11px;letter-spacing:.24em;}
     .ha-issues .ha-eyebrow::before{width:32px;}
