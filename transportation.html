@@ -1286,6 +1286,32 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 .ha-transit__priority-bill:hover { background:rgba(82,121,111,.2); }
 
+/* Bulleted policy list inside a priority card — same pattern as
+   .ha-housing__priority-list and .ha-food__priority-list. */
+.ha-transit__priority-list {
+  list-style:none; padding:0; margin:18px 0 0;
+  position:relative; z-index:1;
+}
+.ha-transit__priority-list li {
+  padding:14px 0 14px 24px;
+  border-bottom:1px solid rgba(53,79,82,.10);
+  font-size:14px; line-height:1.55;
+  color:rgba(47,62,70,.85);
+  position:relative;
+}
+.ha-transit__priority-list li:last-child { border-bottom:none; }
+.ha-transit__priority-list li::before {
+  content:""; position:absolute; left:0; top:24px;
+  width:12px; height:1px;
+  background:var(--ha-teal);
+}
+.ha-transit__priority-list strong {
+  display:block;
+  font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:14.5px; color:var(--ha-charcoal);
+  margin-bottom:4px; letter-spacing:-0.005em;
+}
+
 /* ===== Combined Research & News (two-column hybrid) ===== */
 .ha-transit__combined {
   display:grid; grid-template-columns:1fr 1fr;
@@ -1707,7 +1733,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       <h1>Transportation <span class="ha-transit__hero-amp">Equity</span></h1>
       <div class="ha-transit__hero-rule" aria-hidden="true"></div>
       <p class="ha-transit__hero-sub">
-        Safer streets, smarter transit, lower costs &mdash; so a car isn&rsquo;t the price of admission to island life.
+        Getting where you need to go should not be a barrier to opportunity.
       </p>
     </div>
   </header>
@@ -1738,16 +1764,16 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <div class="ha-transit__vision">
       <span class="ha-transit__vision-eyebrow">Our Vision</span>
       <div class="ha-transit__vision-quote" aria-hidden="true">&ldquo;</div>
-      <h2>Getting around shouldn&rsquo;t cost a paycheck or a <em>life</em>.</h2>
+      <h2>Put people <em>over pavement</em>.</h2>
       <div class="ha-transit__vision-rule"></div>
       <p>
-        Transportation is the second-largest cost for most Hawaiʻi families &mdash; behind only housing. And too many streets weren&rsquo;t built to keep people walking, biking, or waiting for the bus safe. Working families pay the highest price: in fuel, in time, in lives.
+        All residents &mdash; regardless of age, race, ethnicity, ability, or income &mdash; should be able to navigate our islands safely using modes that build healthier individuals and communities: walking, rolling, biking, and riding transit. Yet our transportation system continues to prioritize cars over people, directing resources toward expanding vehicle capacity while sidewalks, bike lanes, and transit go underfunded.
       </p>
       <blockquote class="ha-transit__vision-pullquote">
-        A car shouldn&rsquo;t be the price of admission to island life. Frequent transit and safe streets are how every family gets a fair shot.
+        For many of our residents, this is not just a minor inconvenience. It is a daily barrier and a matter of equity.
       </blockquote>
       <p>
-        We&rsquo;re working to build a transportation system that doesn&rsquo;t require a car payment to participate &mdash; frequent bus service, complete streets, and communities where work, school, and groceries are close enough to walk or bike to.
+        Transportation connects us to jobs, school, health care, and each other. When that connection is unsafe, unaffordable, inaccessible, or simply absent, opportunity shrinks. Keiki lose independence. Lower-income households spend an outsized share of their budget on car payments, gas, and parking. And those who cannot drive &mdash; whether due to age, disability, or income &mdash; are left behind entirely. Our transportation equity work centers the experiences of communities most affected by an inequitable system.
       </p>
       <div class="ha-transit__vision-pillars">
 
@@ -1755,12 +1781,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
           <div class="ha-transit__vision-pillar-icon">
             <svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M5 8h14"/><path d="M5 8l-2 6h7l-2-6"/><path d="M19 8l-2 6h7l-2-6"/><path d="M9 21h6"/></svg>
           </div>
-          <div class="ha-transit__vision-pillar-eyebrow">Frequent</div>
-          <h3>Make transit truly frequent.</h3>
-          <p>Bus service every 15 minutes &mdash; on every major corridor, all day. Predictable, reliable transit is the only kind people can build a life around.</p>
+          <div class="ha-transit__vision-pillar-eyebrow">Move</div>
+          <h3>Free access for those who can&rsquo;t drive.</h3>
+          <p>Keiki Ride Free &mdash; year-round, fare-free youth transit for everyone 18 and under. Fare-free programs increase ridership, lower household costs, and reconnect young people to school, work, recreation, and each other.</p>
           <div class="ha-transit__vision-pillar-stat">
-            <div class="ha-transit__vision-pillar-stat-num">2&times;</div>
-            <div class="ha-transit__vision-pillar-stat-label">bus frequency under the proposed <strong>Bus Network Redesign</strong></div>
+            <div class="ha-transit__vision-pillar-stat-num">18 &amp; under</div>
+            <div class="ha-transit__vision-pillar-stat-label">would ride <strong>fare-free</strong> year-round under Keiki Ride Free</div>
           </div>
         </article>
 
@@ -1769,11 +1795,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
             <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/><path d="M9 11h.01M15 11h.01"/></svg>
           </div>
           <div class="ha-transit__vision-pillar-eyebrow">Safe</div>
-          <h3>Build safer streets for everyone.</h3>
-          <p>Complete streets that protect pedestrians, cyclists, and kids walking to school. Hawaiʻi has some of the highest pedestrian-fatality rates per capita in the country &mdash; we can change that.</p>
+          <h3>Make every crossing safer.</h3>
+          <p>Leading Pedestrian Intervals (LPIs) and Accessible Pedestrian Signals (APS) are low-cost, proven solutions used by cities worldwide &mdash; and almost entirely absent in Hawai&#x02BB;i. Required installation at state intersections saves lives.</p>
           <div class="ha-transit__vision-pillar-stat">
             <div class="ha-transit__vision-pillar-stat-num">43%</div>
-            <div class="ha-transit__vision-pillar-stat-label">of Hawaiʻi traffic deaths are <strong>pedestrians or cyclists</strong></div>
+            <div class="ha-transit__vision-pillar-stat-label">of Hawai&#x02BB;i traffic deaths are <strong>pedestrians or cyclists</strong></div>
           </div>
         </article>
 
@@ -1781,12 +1807,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
           <div class="ha-transit__vision-pillar-icon">
             <svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M3 12c2-1 3-1 5 0 1.5.7 2.5.7 4 0 1.5-.7 2.5-.7 4 0 2 1 3 1 5 0"/><path d="M3 6c2-1 3-1 5 0 1.5.7 2.5.7 4 0 1.5-.7 2.5-.7 4 0 2 1 3 1 5 0"/><path d="M3 18c2-1 3-1 5 0 1.5.7 2.5.7 4 0 1.5-.7 2.5-.7 4 0 2 1 3 1 5 0"/></svg>
           </div>
-          <div class="ha-transit__vision-pillar-eyebrow">Affordable</div>
-          <h3>Lower the cost of getting around.</h3>
-          <p>For most Hawaiʻi families, transportation is the second-biggest expense after housing. Better transit, complete neighborhoods, and reduced car dependence give households real breathing room.</p>
+          <div class="ha-transit__vision-pillar-eyebrow">Reform</div>
+          <h3>Stop tying shelter to car storage.</h3>
+          <p>Parking mandates inflate housing costs by adding $55,000+ per unit for podium parking in urban Honolulu. Eliminating mandates is one of the most proven ways to lower housing costs &mdash; and gives residents real choices beyond car ownership.</p>
           <div class="ha-transit__vision-pillar-stat">
-            <div class="ha-transit__vision-pillar-stat-num">17%</div>
-            <div class="ha-transit__vision-pillar-stat-label">of household income spent on <strong>transportation</strong></div>
+            <div class="ha-transit__vision-pillar-stat-num">$55K+</div>
+            <div class="ha-transit__vision-pillar-stat-label">added to each new unit by urban Honolulu <strong>parking mandates</strong></div>
           </div>
         </article>
 
@@ -1805,8 +1831,8 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
   <!-- Big headline stat above the pie -->
   <div class="ha-transit__stat-headline">
-    <div class="ha-transit__stat-headline-fy">2024 statewide</div>
-    <h2>Hawaiʻi families spend<br><strong data-count-to="17" data-count-prefix="" data-count-suffix="%" data-count-decimals="0">17%</strong> of income on getting around.</h2>
+    <div class="ha-transit__stat-headline-fy">HDOT FY2019&ndash;FY2024</div>
+    <h2><strong data-count-to="66.3" data-count-prefix="" data-count-suffix="%" data-count-decimals="1">66.3%</strong> of HDOT&rsquo;s budget expanded vehicle capacity. Just <strong>1.5%</strong> went to walking, biking, and transit.</h2>
   </div>
 
   <!-- ===================================
@@ -1814,11 +1840,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
        =================================== -->
   <section class="ha-transit__revenue">
     <div class="ha-transit__section-head">
-      <div class="ha-transit__eyebrow">Where it comes from</div>
-      <h2 class="ha-transit__h2">A diverse tax base</h2>
+      <div class="ha-transit__eyebrow">A system at a crossroads</div>
+      <h2 class="ha-transit__h2">Built for cars, not for people</h2>
       <div class="ha-transit__h2-rule"></div>
       <p class="ha-transit__lede">
-        Hawaiʻi raises revenue from a mix of taxes — on consumer purchases, personal and corporate income, hotel stays, and more. Click any slice or legend item to learn how it works.
+        Rising vehicle travel has contributed to traffic congestion, air pollution, and greenhouse-gas emissions &mdash; while straining infrastructure and limiting mobility for people who don&rsquo;t drive. Between FY2019 and FY2024, two out of every three HDOT capital dollars went to road widening and new lane construction. Just <strong>1.5%</strong> went to alternatives that reduce car dependence.
       </p>
     </div>
     <div class="ha-transit__revenue-grid">
@@ -1842,56 +1868,56 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
        =================================== -->
   <section class="ha-transit__section">
     <div class="ha-transit__section-head">
-      <div class="ha-transit__eyebrow">Where it goes</div>
-      <h2 class="ha-transit__h2">Taxes fund our communities</h2>
+      <div class="ha-transit__eyebrow">Who pays the price</div>
+      <h2 class="ha-transit__h2">A car-centric system has casualties</h2>
       <div class="ha-transit__h2-rule"></div>
       <p class="ha-transit__lede">
-        Most of Hawaiʻi's tax revenue goes to the general fund and special funds — the accounts that pay for healthcare, schools, housing, and food security.
+        The cost of a system built for cars is paid most heavily by those who can&rsquo;t or don&rsquo;t drive &mdash; keiki, kūpuna, people with disabilities, and lower-income residents. These are the communities most affected when sidewalks are absent, transit is sparse, and enforcement falls disproportionately on pedestrians.
       </p>
     </div>
     <div class="ha-transit__services">
       <div class="ha-transit__service">
         <div class="ha-transit__service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-2 2-3 2-5 0-3-2-5-5-5-2 0-3 1-4 3-1-2-2-3-4-3-3 0-5 2-5 5 0 2 .5 3 2 5l7 7Z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="3"/><path d="M5 21v-4a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v4M9 21v-5M15 21v-5"/></svg>
         </div>
         <div class="ha-transit__service-body">
-          <p class="ha-transit__service-title">Healthcare</p>
-          <p class="ha-transit__service-cost">$1.83 billion</p>
-          <p class="ha-transit__service-desc">Health coverage for 441,000 children and adults across the state.</p>
-          <span class="ha-transit__service-pc">≈ $4,150 per covered person</span>
+          <p class="ha-transit__service-title">Keiki without cars</p>
+          <p class="ha-transit__service-cost">Largest non-driver group</p>
+          <p class="ha-transit__service-desc">Young people are the largest demographic of non-drivers &mdash; transit is their direct connection to school, work, recreation, and friends.</p>
+          <span class="ha-transit__service-pc">Keiki Ride Free is the unlock</span>
         </div>
       </div>
       <div class="ha-transit__service">
         <div class="ha-transit__service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l-2 3-4 1 3 3-1 4 4-2 4 2-1-4 3-3-4-1-2-3z"/><path d="M5 22l3-6M19 22l-3-6"/></svg>
         </div>
         <div class="ha-transit__service-body">
-          <p class="ha-transit__service-title">Affordable Housing</p>
-          <p class="ha-transit__service-cost">$305+ million</p>
-          <p class="ha-transit__service-desc">Building affordable units, rental assistance, and homelessness programs.</p>
-          <span class="ha-transit__service-pc">≈ $213 per resident, per year</span>
+          <p class="ha-transit__service-title">Pedestrians &amp; cyclists</p>
+          <p class="ha-transit__service-cost">43% of traffic deaths</p>
+          <p class="ha-transit__service-desc">Signalized intersections are among the most dangerous places &mdash; yet low-cost solutions like LPIs and APS are almost entirely absent here.</p>
+          <span class="ha-transit__service-pc">Fatalities are on the rise</span>
         </div>
       </div>
       <div class="ha-transit__service">
         <div class="ha-transit__service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1 4 3 6 3s6-2 6-3v-5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
         </div>
         <div class="ha-transit__service-body">
-          <p class="ha-transit__service-title">Public K-12 Schools</p>
-          <p class="ha-transit__service-cost">$1.76 billion</p>
-          <p class="ha-transit__service-desc">Education for 165,000+ students across 296 schools statewide.</p>
-          <span class="ha-transit__service-pc">≈ $10,670 per student</span>
+          <p class="ha-transit__service-title">People who walk</p>
+          <p class="ha-transit__service-cost">349 / 100K cited</p>
+          <p class="ha-transit__service-desc">Hawai&#x02BB;i issues jaywalking tickets at 58&times; the rate of Washington state &mdash; disproportionately impacting the lower-income, kūpuna, keiki, and disabled residents who walk out of necessity.</p>
+          <span class="ha-transit__service-pc">A cycle of debt, not safety</span>
         </div>
       </div>
       <div class="ha-transit__service">
         <div class="ha-transit__service-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2l1 5h10l1-5"/><path d="M5 7v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7Z"/><path d="M9 12h6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M4 10h16M8 22V10M16 22V10"/></svg>
         </div>
         <div class="ha-transit__service-body">
-          <p class="ha-transit__service-title">Food Security</p>
-          <p class="ha-transit__service-cost">$30+ million</p>
-          <p class="ha-transit__service-desc">School meals for 78,000 students and SNAP administration for over 163,000 people.</p>
-          <span class="ha-transit__service-pc">≈ $385 per student fed</span>
+          <p class="ha-transit__service-title">Renters &amp; buyers</p>
+          <p class="ha-transit__service-cost">+$55K per unit</p>
+          <p class="ha-transit__service-desc">Parking mandates tie shelter costs to car storage. Podium parking in urban Honolulu adds over $55,000 to each new unit &mdash; pricing families out of homes.</p>
+          <span class="ha-transit__service-pc">Mandates make housing scarcer</span>
         </div>
       </div>
     </div>
@@ -1903,51 +1929,51 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <section class="ha-transit__equity">
     <div class="ha-transit__equity-inner">
       <div class="ha-transit__section-head">
-        <div class="ha-transit__eyebrow">Tax Fairness</div>
-        <h2 class="ha-transit__h2">Lower-income families pay more</h2>
+        <div class="ha-transit__eyebrow">HDOT capital spending</div>
+        <h2 class="ha-transit__h2">Hawai&#x02BB;i builds for cars, not for everyone else</h2>
         <div class="ha-transit__h2-rule"></div>
         <p class="ha-transit__lede">
-          <span class="ha-transit__term" tabindex="0">Effective tax rate<span class="ha-transit__term-tip" role="tooltip"><strong>Effective tax rate</strong> — the total share of someone's income paid in taxes, after deductions and credits. Different from a headline "top rate" because real income is taxed across multiple brackets.</span></span> — the share of total income paid in state and local taxes — falls as income rises. Hawaiʻi's poorest 20% pay 14.1% of their income; the wealthiest 20% pay just 10.7%.
+          Between fiscal years 2019 and 2024, two-thirds of HDOT&rsquo;s capital budget went to projects that <em>expand</em> vehicle capacity &mdash; road widening, new lanes, more pavement. Just 1.5% went toward reducing car dependence through walking, biking, and transit alternatives. The budget makes the priority obvious.
         </p>
       </div>
-      <div class="ha-transit__bar-yaxis">Effective Tax Rate (% of Income)</div>
+      <div class="ha-transit__bar-yaxis">Share of HDOT Capital Budget (FY19&ndash;FY24)</div>
       <div class="ha-transit__bars" id="ha-transit-bars">
         <div class="ha-transit__bars-annotation" aria-hidden="true">
-          The poorest 20% pay <strong>3.4 points more</strong> of their income than the wealthiest.
+          The walking/biking/transit slice is <strong>44&times; smaller</strong> than the vehicle-capacity slice.
         </div>
         <div class="ha-transit__bar-col">
-          <div class="ha-transit__bar" style="height:71%"><div class="ha-transit__bar-value">14.1%</div></div>
-          <div class="ha-transit__bar-label">Lowest 20%</div>
-          <div class="ha-transit__bar-range">Under $21,900</div>
+          <div class="ha-transit__bar" style="height:92%"><div class="ha-transit__bar-value">66.3%</div></div>
+          <div class="ha-transit__bar-label">Vehicle capacity</div>
+          <div class="ha-transit__bar-range">Road widening, new lanes</div>
         </div>
         <div class="ha-transit__bar-col">
-          <div class="ha-transit__bar" style="height:68%"><div class="ha-transit__bar-value">13.7%</div></div>
-          <div class="ha-transit__bar-label">Second 20%</div>
-          <div class="ha-transit__bar-range">$21,900–$44,200</div>
+          <div class="ha-transit__bar" style="height:33%"><div class="ha-transit__bar-value">~20%</div></div>
+          <div class="ha-transit__bar-label">Maintenance</div>
+          <div class="ha-transit__bar-range">Repair existing roads</div>
         </div>
         <div class="ha-transit__bar-col">
-          <div class="ha-transit__bar" style="height:71%"><div class="ha-transit__bar-value">14.2%</div></div>
-          <div class="ha-transit__bar-label">Middle 20%</div>
-          <div class="ha-transit__bar-range">$44,200–$80,100</div>
+          <div class="ha-transit__bar" style="height:17%"><div class="ha-transit__bar-value">~10%</div></div>
+          <div class="ha-transit__bar-label">Bridges &amp; structures</div>
+          <div class="ha-transit__bar-range">Infrastructure</div>
         </div>
         <div class="ha-transit__bar-col">
-          <div class="ha-transit__bar" style="height:67%"><div class="ha-transit__bar-value">13.4%</div></div>
-          <div class="ha-transit__bar-label">Fourth 20%</div>
-          <div class="ha-transit__bar-range">$80,100–$136,600</div>
+          <div class="ha-transit__bar" style="height:5%"><div class="ha-transit__bar-value">~2%</div></div>
+          <div class="ha-transit__bar-label">Other</div>
+          <div class="ha-transit__bar-range">Misc. capital</div>
         </div>
         <div class="ha-transit__bar-col">
-          <div class="ha-transit__bar" style="height:53%"><div class="ha-transit__bar-value">10.7%</div></div>
-          <div class="ha-transit__bar-label">Top 20%</div>
-          <div class="ha-transit__bar-range">Over $136,600</div>
+          <div class="ha-transit__bar" style="height:3%"><div class="ha-transit__bar-value">1.5%</div></div>
+          <div class="ha-transit__bar-label">Walk / bike / transit</div>
+          <div class="ha-transit__bar-range">Reduce car dependence</div>
         </div>
       </div>
-      <p class="ha-transit__bar-note">Source: Institute on Taxation and Economic Policy, <em>Who Pays?</em> — Hawaiʻi state and local taxes, 2024.</p>
+      <p class="ha-transit__bar-note">Source: Hawai&#x02BB;i Department of Transportation budget documents, FY2019&ndash;FY2024 capital expenditures. Vehicle-capacity and walk/bike/transit shares are precise; intermediate categories are approximate &mdash; <strong>TODO:</strong> verify exact shares with HDOT before launch.</p>
 
       <div class="ha-transit__callout">
-        <div class="ha-transit__callout-eyebrow">Why this happens</div>
-        <h3 class="ha-transit__callout-q">The <span class="ha-transit__term" tabindex="0">General Excise Tax<span class="ha-transit__term-tip" role="tooltip"><strong>General Excise Tax (GET)</strong> — Hawaiʻi's tax on almost all business sales, set at 4.5% (4% state + 0.5% Honolulu county surcharge). Built into the price of nearly everything you buy.</span></span> hits low-income families hardest.</h3>
+        <div class="ha-transit__callout-eyebrow">Why this matters</div>
+        <h3 class="ha-transit__callout-q">More lanes don&rsquo;t solve the problem &mdash; they often make it worse.</h3>
         <p class="ha-transit__callout-body">
-          A family earning $21,900 spends nearly all of it on essentials — food, rent, gas — every one taxed by the GET. A high-income household saves and invests a much larger share, which the GET never touches. <em>Same tax, very different impact.</em>
+          Expanding vehicle capacity invites more cars (<em>induced demand</em>), raising congestion, emissions, and the cost of getting around. Meanwhile, mobility needs for residents who don&rsquo;t drive &mdash; keiki, kūpuna, people with disabilities, lower-income households &mdash; go unmet. <em>The way out isn&rsquo;t more pavement; it&rsquo;s a budget that funds the alternatives.</em>
         </p>
       </div>
 
@@ -1955,38 +1981,38 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       <div class="ha-transit__compare" id="ha-transit-compare">
         <div class="ha-transit__compare-head">
           <span class="ha-transit__compare-eyebrow">How we compare</span>
-          <h3>How regressive is Hawaiʻi's tax system?</h3>
+          <h3>Hawai&#x02BB;i issues jaywalking tickets at extreme rates.</h3>
           <p class="ha-transit__compare-lede">
-            One way to measure: the gap between what the poorest 20% pay in state &amp; local taxes and what the richest 1% pay. Bars going <strong>left</strong> mean the poor pay more (regressive). Bars going <strong>right</strong> mean the rich pay more (progressive).
+            Hawai&#x02BB;i averaged <strong>5,028 jaywalking citations per year</strong> from 2018&ndash;2023 &mdash; <strong>349 tickets per 100,000 residents</strong>. Washington state, by comparison, averages 6 tickets per 100,000. Meanwhile, six other states and cities have decriminalized jaywalking entirely, recognizing that the citations fall hardest on those who walk out of necessity &mdash; without making streets safer.
           </p>
         </div>
         <div class="ha-transit__compare-rows">
+          <div class="ha-transit__compare-row" data-state="hi" data-side="left">
+            <span class="ha-transit__compare-state">Hawai&#x02BB;i</span>
+            <div class="ha-transit__compare-track"><div class="ha-transit__compare-fill" style="--w:100%"></div></div>
+            <span class="ha-transit__compare-val">349 / 100K</span>
+          </div>
+          <div class="ha-transit__compare-row" data-state="us" data-side="left">
+            <span class="ha-transit__compare-state">U.S. average</span>
+            <div class="ha-transit__compare-track"><div class="ha-transit__compare-fill" style="--w:12%"></div></div>
+            <span class="ha-transit__compare-val">~40 / 100K</span>
+          </div>
           <div class="ha-transit__compare-row" data-state="wa" data-side="left">
             <span class="ha-transit__compare-state">Washington</span>
-            <div class="ha-transit__compare-track"><div class="ha-transit__compare-fill" style="--w:97%"></div></div>
-            <span class="ha-transit__compare-val">−9.7 pp</span>
+            <div class="ha-transit__compare-track"><div class="ha-transit__compare-fill" style="--w:2%"></div></div>
+            <span class="ha-transit__compare-val">6 / 100K</span>
           </div>
-          <div class="ha-transit__compare-row" data-state="fl" data-side="left">
-            <span class="ha-transit__compare-state">Florida</span>
-            <div class="ha-transit__compare-track"><div class="ha-transit__compare-fill" style="--w:71%"></div></div>
-            <span class="ha-transit__compare-val">−7.1 pp</span>
-          </div>
-          <div class="ha-transit__compare-row" data-state="hi" data-side="left">
-            <span class="ha-transit__compare-state">Hawaiʻi</span>
-            <div class="ha-transit__compare-track"><div class="ha-transit__compare-fill" style="--w:41%"></div></div>
-            <span class="ha-transit__compare-val">−4.1 pp</span>
-          </div>
-          <div class="ha-transit__compare-row" data-state="ca" data-side="right">
-            <span class="ha-transit__compare-state">California</span>
-            <div class="ha-transit__compare-track"><div class="ha-transit__compare-fill" style="--w:10%"></div></div>
-            <span class="ha-transit__compare-val">+1.0 pp</span>
+          <div class="ha-transit__compare-row" data-state="va" data-side="left">
+            <span class="ha-transit__compare-state">Virginia, CA, NV<br>(decriminalized)</span>
+            <div class="ha-transit__compare-track"><div class="ha-transit__compare-fill" style="--w:0.5%"></div></div>
+            <span class="ha-transit__compare-val">0 / 100K</span>
           </div>
           <div class="ha-transit__compare-axis">
-            <span>← More regressive</span>
-            <span>More progressive →</span>
+            <span>Fewer citations</span>
+            <span>More citations &rarr;</span>
           </div>
         </div>
-        <p class="ha-transit__compare-source">Source: Institute on Taxation and Economic Policy, <em>Who Pays?</em> 2024 — gap between bottom 20% and top 1% effective tax rates.</p>
+        <p class="ha-transit__compare-source">Source: Court-records analysis 2018&ndash;2023 (Hawai&#x02BB;i 349/100K, Washington 6/100K verified). U.S. average is approximate &mdash; <strong>TODO:</strong> source / verify before launch. About 52 million Americans now live in places that have decriminalized jaywalking in some form.</p>
       </div>
     </div>
   </section>
@@ -2004,10 +2030,10 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <div class="ha-transit__opps">
     <div class="ha-transit__opps-head">
       <div class="ha-transit__eyebrow">2026 Legislative Priorities</div>
-      <h2 class="ha-transit__h2">Frequent transit, safe streets, complete communities</h2>
+      <h2 class="ha-transit__h2">Move, walk safely, reform</h2>
       <div class="ha-transit__h2-rule"></div>
       <p class="ha-transit__lede">
-        Three areas where Hawaiʻi can lower the cost of getting around and make every commute safer.
+        Five transportation-equity priorities, grouped into three areas where Hawai&#x02BB;i can expand access, protect vulnerable road users, and shift away from car-centric development.
       </p>
     </div>
     <div class="ha-transit__priorities">
@@ -2015,16 +2041,22 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <div class="ha-transit__priority-head">
           <span class="ha-transit__priority-num">1</span>
           <div>
-            <h3 class="ha-transit__priority-title">Transit</h3>
-            <div class="ha-transit__priority-sub">Bus Network Redesign &amp; Operating Support</div>
+            <h3 class="ha-transit__priority-title">Move</h3>
+            <div class="ha-transit__priority-sub">Expand transit access for those who can&rsquo;t drive</div>
           </div>
         </div>
         <p class="ha-transit__priority-desc">
-          Honolulu&rsquo;s Bus Network Redesign proposes 15-minute service on every major corridor &mdash; but it needs sustained operating funding to deliver. State investment in city and county transit operations is the unlock.
+          Young people are the largest demographic of non-drivers, and lower-income households spend the largest share of their budget on transportation. Fare-free programs in cities across the country have increased ridership, boosted local economies, and lowered emissions &mdash; while reconnecting people to jobs, school, and each other.
         </p>
+        <ul class="ha-transit__priority-list">
+          <li>
+            <strong>Keiki Ride Free</strong>
+            Establish a year-round, fare-free youth transit program for individuals 18 and under across the state. Fare-free transit lowers household costs, increases youth access to education and recreation, and reduces emissions and congestion.
+          </li>
+        </ul>
         <div class="ha-transit__priority-stat">
-          <div class="ha-transit__priority-stat-num">2&times;</div>
-          <div class="ha-transit__priority-stat-label">bus frequency under the redesign &mdash; if funded fully</div>
+          <div class="ha-transit__priority-stat-num">18 &amp; under</div>
+          <div class="ha-transit__priority-stat-label">would ride <strong>fare-free</strong> year-round under Keiki Ride Free</div>
         </div>
         <blockquote class="ha-transit__priority-quote">
           &ldquo;I missed three job interviews because the bus came every hour. If it came every fifteen minutes, I&rsquo;d still be working at that company.&rdquo;
@@ -2039,20 +2071,30 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <div class="ha-transit__priority-head">
           <span class="ha-transit__priority-num">2</span>
           <div>
-            <h3 class="ha-transit__priority-title">Streets</h3>
-            <div class="ha-transit__priority-sub">Complete Streets &amp; Safe Routes</div>
+            <h3 class="ha-transit__priority-title">Walk Safely</h3>
+            <div class="ha-transit__priority-sub">Protect vulnerable road users</div>
           </div>
         </div>
         <p class="ha-transit__priority-desc">
-          <span class="ha-transit__term" tabindex="0">Complete streets<span class="ha-transit__term-tip" role="tooltip"><strong>Complete streets</strong> &mdash; roadways designed and built to safely serve all users: people walking, cycling, taking transit, and driving. Includes sidewalks, bike lanes, crossings, lower speeds, and accessibility features.</span></span> design every roadway for pedestrians, cyclists, transit riders, and drivers &mdash; not just cars. Vision Zero, Safe Routes to School, and dedicated bike infrastructure save lives.
+          Pedestrian fatalities are on the rise, and signalized intersections are among the most dangerous places for people walking, biking, and rolling. Low-cost solutions used worldwide are almost entirely absent in Hawai&#x02BB;i. Meanwhile, jaywalking enforcement falls disproportionately on the people who walk out of necessity &mdash; without making streets any safer.
         </p>
+        <ul class="ha-transit__priority-list">
+          <li>
+            <strong>Fund pedestrian head-start upgrades</strong>
+            Require the installation of Leading Pedestrian Intervals (LPIs) and Accessible Pedestrian Signals (APS) at state-owned intersections. These low-cost improvements reduce pedestrian fatalities and serious injuries while making crossings inclusive for people with disabilities.
+          </li>
+          <li>
+            <strong>Reduce pedestrian fines</strong>
+            Decrease jaywalking fines to end the cycle of debt imposed on pedestrians &mdash; a policy that disproportionately impacts people who depend on walking and does little to improve safety. Six other states and cities have already decriminalized jaywalking.
+          </li>
+        </ul>
         <div class="ha-transit__priority-stat">
-          <div class="ha-transit__priority-stat-num">24</div>
-          <div class="ha-transit__priority-stat-label">complete-streets projects already in the statewide pipeline</div>
+          <div class="ha-transit__priority-stat-num">349 / 100K</div>
+          <div class="ha-transit__priority-stat-label">Hawai&#x02BB;i jaywalking citation rate &mdash; <strong>58&times;</strong> Washington state&rsquo;s</div>
         </div>
         <blockquote class="ha-transit__priority-quote">
           &ldquo;My daughter wants to bike to school. I won&rsquo;t let her until there&rsquo;s a protected lane. So I drive her. That&rsquo;s an extra car on the road we don&rsquo;t want.&rdquo;
-          <cite>&mdash; Kāneʻohe parent</cite>
+          <cite>&mdash; Kāne&#x02BB;ohe parent</cite>
         </blockquote>
         <div class="ha-transit__priority-bills">
           <a class="ha-transit__priority-bill" href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=1850&year=2026" target="_blank" rel="noopener">HB 1850 →</a>
@@ -2064,20 +2106,30 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <div class="ha-transit__priority-head">
           <span class="ha-transit__priority-num">3</span>
           <div>
-            <h3 class="ha-transit__priority-title">Land Use</h3>
-            <div class="ha-transit__priority-sub">Transit-Oriented &amp; Complete Communities</div>
+            <h3 class="ha-transit__priority-title">Reform</h3>
+            <div class="ha-transit__priority-sub">End car-centric mandates &amp; biased enforcement</div>
           </div>
         </div>
         <p class="ha-transit__priority-desc">
-          Pair transit investment with housing and zoning reform so people can live close to where they work, learn, and play. Transit-oriented development around rail and high-frequency bus stops is the most cost-effective way to lower transportation costs at scale.
+          Outdated parking mandates tie the cost of shelter to the storage of cars &mdash; making housing scarcer and more expensive. Honolulu&rsquo;s Ordinance 20-41 already eliminated mandates in transit-oriented districts, and the early data is striking: rental projects there now average just 0.75 parking spaces per unit. Pair this reform with transparency in traffic enforcement to surface the biases that shape who gets stopped.
         </p>
+        <ul class="ha-transit__priority-list">
+          <li>
+            <strong>Eliminate or reduce parking mandates</strong>
+            Reduce the amount of parking counties can require on new development &mdash; statewide, in urban districts, and in TOD areas. Eliminating costly parking mandates is one of the most proven ways to lower housing costs and give residents choices beyond car ownership.
+          </li>
+          <li>
+            <strong>Standardize police data collection</strong>
+            Require police to collect socio-demographic data for all traffic stops and provide yearly reports. Transparency reveals biases in local policing and is the foundation for any meaningful enforcement reform.
+          </li>
+        </ul>
         <div class="ha-transit__priority-stat">
-          <div class="ha-transit__priority-stat-num">30%+</div>
-          <div class="ha-transit__priority-stat-label">household transportation savings in transit-rich neighborhoods</div>
+          <div class="ha-transit__priority-stat-num">$55K+</div>
+          <div class="ha-transit__priority-stat-label">added to each new urban-Honolulu unit by <strong>parking mandates</strong></div>
         </div>
         <blockquote class="ha-transit__priority-quote">
           &ldquo;Selling the second car was the biggest raise our family ever got. But it only works because we live close to the rail.&rdquo;
-          <cite>&mdash; ʻAiea family</cite>
+          <cite>&mdash; &#x02BB;Aiea family</cite>
         </blockquote>
         <div class="ha-transit__priority-bills">
           <a class="ha-transit__priority-bill" href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=2306&year=2026" target="_blank" rel="noopener">HB 2306 →</a>
@@ -2103,48 +2155,40 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       <h2 class="ha-transit__h2">Our Impact</h2>
       <div class="ha-transit__h2-rule"></div>
       <p class="ha-transit__lede">
-        A decade of transportation wins &mdash; from complete-streets policy adoption to coalition work on bus network redesign and Vision Zero.
+        Litigation to win language access, and a growing slate of 2023-and-beyond campaigns to expand transit, protect pedestrians, reform parking mandates, and bring transparency to traffic enforcement.
       </p>
     </div>
     <div class="ha-transit__timeline">
 
       <article class="ha-transit__milestone">
-        <span class="ha-transit__milestone-year">2018</span>
+        <span class="ha-transit__milestone-year">2013 &ndash; 2015</span>
         <div class="ha-transit__milestone-card">
-          <h3 class="ha-transit__milestone-title">Helped pass statewide Complete Streets policy</h3>
-          <p class="ha-transit__milestone-desc">A statewide commitment to design and build roads that safely serve everyone &mdash; pedestrians, cyclists, transit riders, and drivers &mdash; not just cars.</p>
-        </div>
-      </article>
-
-      <article class="ha-transit__milestone">
-        <span class="ha-transit__milestone-year">2020</span>
-        <div class="ha-transit__milestone-card">
-          <h3 class="ha-transit__milestone-title">Advanced Vision Zero in Honolulu</h3>
-          <p class="ha-transit__milestone-desc">Coalition work to commit to eliminating traffic deaths and serious injuries &mdash; through design changes, lower speeds in residential areas, and protected infrastructure for vulnerable road users.</p>
-        </div>
-      </article>
-
-      <article class="ha-transit__milestone">
-        <span class="ha-transit__milestone-year">2022</span>
-        <div class="ha-transit__milestone-card">
-          <h3 class="ha-transit__milestone-title">Won Safe Routes to School expansion</h3>
-          <p class="ha-transit__milestone-desc">Funding to bring sidewalks, crossings, and traffic-calming to school zones across the state &mdash; so keiki can walk and bike to school without their parents needing to drive them.</p>
+          <h3 class="ha-transit__milestone-title">Won language access on driver&rsquo;s license tests</h3>
+          <p class="ha-transit__milestone-desc">Sued to force the state to provide language translation on driver&rsquo;s license forms and tests. The litigation opened the path to driving and the economic opportunity that comes with it for thousands of residents with limited English proficiency.</p>
         </div>
       </article>
 
       <article class="ha-transit__milestone">
         <span class="ha-transit__milestone-year">2023 &ndash; Present</span>
         <div class="ha-transit__milestone-card">
-          <h3 class="ha-transit__milestone-title">Supporting Honolulu&rsquo;s Bus Network Redesign</h3>
-          <p class="ha-transit__milestone-desc">A once-in-a-generation overhaul to turn the bus from a coverage system into a frequency system &mdash; with 15-minute service on every major corridor. Coalition work to secure the state operating support that makes the redesign real on the streets.</p>
+          <h3 class="ha-transit__milestone-title">Launching Keiki Ride Free &amp; pedestrian safety upgrades</h3>
+          <p class="ha-transit__milestone-desc">Leading the fight to establish <strong>Keiki Ride Free</strong> &mdash; a year-round, fare-free youth transit program across the state &mdash; and to fund pedestrian head-start upgrades (Leading Pedestrian Intervals and Accessible Pedestrian Signals) at dangerous intersections.</p>
+        </div>
+      </article>
+
+      <article class="ha-transit__milestone">
+        <span class="ha-transit__milestone-year">2023 &ndash; Present</span>
+        <div class="ha-transit__milestone-card">
+          <h3 class="ha-transit__milestone-title">Reforming parking mandates statewide</h3>
+          <p class="ha-transit__milestone-desc">Advocating for the elimination or reduction of parking mandates to make housing more affordable and give residents choices beyond car ownership. Building on the early results of Honolulu&rsquo;s Ordinance 20-41 &mdash; which eliminated mandates in transit-oriented areas and is already producing projects at <strong>0.75 spaces per unit</strong>.</p>
         </div>
       </article>
 
       <article class="ha-transit__milestone ha-transit__milestone--current">
-        <span class="ha-transit__milestone-year">2026</span>
+        <span class="ha-transit__milestone-year">2023 &ndash; Present</span>
         <div class="ha-transit__milestone-card">
-          <h3 class="ha-transit__milestone-title">Aligning transit, housing, and land use</h3>
-          <p class="ha-transit__milestone-desc">Working to pair sustained transit investment with zoning reform around rail and bus stations &mdash; the only combination that meaningfully lowers transportation costs at the household level. The data is unambiguous: transit-rich neighborhoods save households <strong>$3,000&ndash;$5,000 per year</strong> on transportation alone.</p>
+          <h3 class="ha-transit__milestone-title">Equity in traffic enforcement</h3>
+          <p class="ha-transit__milestone-desc">Championing policies to reduce pedestrian fines and standardize police data collection to increase transparency and reduce bias in traffic enforcement. Hawai&#x02BB;i issues jaywalking tickets at <strong>349 per 100,000 residents</strong> &mdash; nearly 60&times; Washington state&rsquo;s rate &mdash; with no demonstrated safety benefit.</p>
         </div>
       </article>
 
@@ -2245,8 +2289,8 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <section class="ha-transit__cta" aria-labelledby="ha-transit-cta-heading">
     <div class="ha-transit__cta-inner">
       <span class="ha-transit__cta-eyebrow">Take action</span>
-      <h2 id="ha-transit-cta-heading">Help us build a Hawaiʻi where everyone can move.</h2>
-      <p>Sign up for email alerts on transportation bills moving at the Capitol, read our latest transit research, or reach out to your legislator &mdash; every voice helps build safer streets and better transit.</p>
+      <h2 id="ha-transit-cta-heading">Help us build a Hawai&#x02BB;i where everyone can move.</h2>
+      <p>How we move through our communities reflects who we value. Sign up for email alerts on transportation-equity bills moving at the Capitol, read our latest research, or reach out to your legislator &mdash; every voice helps build safer streets and a system that works for everyone.</p>
       <div class="ha-transit__cta-actions">
         <a class="ha-transit__cta-btn ha-transit__cta-btn--primary" href="https://www.quorum.us/grassroots-action/signup/Hawaii-Appleseed-Center-for-Law-and-Economic-Justice/" target="_blank" rel="noopener">Get email alerts</a>
         <a class="ha-transit__cta-btn ha-transit__cta-btn--ghost" href="publications.html?cat=Transportation+Equity">Read our transit research</a>
