@@ -534,7 +534,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 /* ===== Dashboard spotlight band (between hero and views) ===== */
 .ha-pub__spotlight {
   position:relative;
-  background:linear-gradient(90deg,#F6F8F5 0%,#EEF2EC 100%);
+  background:linear-gradient(90deg,#FAFBF9 0%,#F1F4EF 100%);
   padding:32px 36px;
   /* Layered drop shadow — tight + medium + wide, all low-opacity charcoal,
      for soft elegant depth that lifts the band off the page. */
@@ -619,23 +619,40 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 /* ===== Compact spotlight — applied only on the Publications/Research tab
    so the search bar + first row of cards stay above the fold on desktop.
    The Interactive Data tab keeps the full-size featured band. ===== */
-.ha-pub.is-view-publications .ha-pub__spotlight { padding:16px 36px; }
+.ha-pub.is-view-publications .ha-pub__spotlight { padding:20px 36px; }
 .ha-pub.is-view-publications .ha-pub__spotlight-inner {
   grid-template-columns:200px 1fr; gap:28px; align-items:center;
 }
 .ha-pub.is-view-publications .ha-pub__spotlight-media {
   box-shadow:0 6px 18px rgba(47,62,70,.14);
 }
+/* Typographic kicker — chip background removed, eyebrow + title sit on
+   one baseline separated by a thin vertical pipe. */
 .ha-pub.is-view-publications .ha-pub__spotlight-head {
-  display:flex; align-items:center; flex-wrap:wrap;
-  gap:14px; margin-bottom:10px;
+  display:flex; align-items:baseline; flex-wrap:wrap;
+  gap:16px; margin-bottom:10px;
 }
 .ha-pub.is-view-publications .ha-pub__spotlight-eyebrow {
-  margin-bottom:0; font-size:10px; padding:4px 9px;
-  letter-spacing:.14em; flex:none;
+  background:none; padding:0; border-radius:0;
+  margin:0; flex:none;
+  font-family:'Poppins',sans-serif;
+  font-size:11px; font-weight:700;
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--ha-teal-deep);
+  position:relative;
+}
+.ha-pub.is-view-publications .ha-pub__spotlight-eyebrow::after {
+  content:''; display:inline-block;
+  width:1px; height:13px;
+  background:rgba(82,121,111,.35);
+  margin-left:16px; vertical-align:-1px;
 }
 .ha-pub.is-view-publications .ha-pub__spotlight-title {
-  font-size:20px; margin:0; line-height:1.2;
+  font-size:22px; margin:0; line-height:1.15;
+  letter-spacing:-.015em;
+}
+.ha-pub.is-view-publications .ha-pub__spotlight-desc {
+  color:rgba(47,62,70,.78);
 }
 .ha-pub.is-view-publications .ha-pub__spotlight-desc {
   display:-webkit-box;
