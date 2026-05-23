@@ -68,7 +68,7 @@
 </style>
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400&family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400..700&family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap">
 </head>
 <body>
 
@@ -308,15 +308,29 @@
     border-left:4px solid var(--section-accent, var(--ha-teal-deep));
     padding-left:32px;
   }
+  /* Number + a 28px hairline below it (via ::after) read as one
+     composed unit attached to the title. The hairline is in the
+     section accent color so the head feels of a piece with the
+     stripe running down the left edge. */
   .ha-issues .ha-deep-num{
     font-family:'Manrope',sans-serif;font-weight:600;
     font-size:13px;letter-spacing:.32em;color:var(--ha-teal-deep);
-    opacity:.75;margin-bottom:14px;display:block;
+    opacity:.75;margin-bottom:10px;display:block;
   }
+  .ha-issues .ha-deep-num::after{
+    content:"";
+    display:block;
+    width:28px;height:1px;
+    background:var(--section-accent, var(--ha-teal-deep));
+    opacity:.55;
+    margin-top:8px;
+  }
+  /* h2 margin-bottom tightened from 14 -> 8 so the tagline reads as a
+     true deck of the title rather than a separate stacked element. */
   .ha-issues .ha-deep h2{
     font-family:'Manrope',sans-serif;font-weight:800;
     font-size:clamp(42px, 6vw, 76px);line-height:1;letter-spacing:-0.035em;
-    color:var(--ha-charcoal);margin:0 0 14px;
+    color:var(--ha-charcoal);margin:0 0 8px;
   }
   .ha-issues .ha-deep-tagline{
     font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;
@@ -324,15 +338,14 @@
     color:var(--section-accent, var(--ha-teal-deep));opacity:1;
     margin:0 0 20px;max-width:36ch;
   }
-  /* Key-word emphasis inside the italic tagline: a single anchor word
-     drops out of Fraunces italic into Manrope 700 charcoal so it lands
-     as a typographic punctuation point. Adds visual rhythm without
-     adding decorative mass. */
+  /* Key-word emphasis inside the italic tagline: the anchor word stays
+     in Fraunces italic (preserves the typographic family of the phrase)
+     and bumps to weight 700 in the section accent color. Reads as a
+     dignified punctuation point inside the italic phrase, rather than
+     interrupting it with a heavy non-italic charcoal word. */
   .ha-issues .ha-deep-tagline-key{
-    font-family:'Manrope',sans-serif;
-    font-style:normal;font-weight:700;
-    color:var(--ha-charcoal);
-    letter-spacing:-0.01em;
+    font-weight:700;
+    color:var(--section-accent, var(--ha-teal-deep));
   }
   .ha-issues .ha-deep-body{max-width:760px;}
   .ha-issues .ha-deep-lead{
