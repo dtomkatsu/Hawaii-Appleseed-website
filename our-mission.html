@@ -472,10 +472,13 @@
 
   /* Eyebrow stack — A & B occupy same slot, crossfade */
   .ha-mission .ha-five-eb-stack{
-    position:relative;display:block;min-height:16px;margin-bottom:18px;
+    position:relative;display:block;margin-bottom:8px;
   }
+  /* eb-a is the only eyebrow left (eb-b/eb-c were removed). Flow naturally
+     so the .ha-five-phases sub-eyebrow can sit beneath it; previously this
+     was position:absolute to support the now-defunct eb crossfade. */
   .ha-mission .ha-five-eb{
-    position:absolute;top:0;left:0;will-change:opacity;
+    position:relative;will-change:opacity;
   }
   .ha-mission .ha-five-eb-b{opacity:0;}
 
