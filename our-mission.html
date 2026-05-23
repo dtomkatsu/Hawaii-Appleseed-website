@@ -698,6 +698,46 @@
   .ha-mission .ha-five-mobile-break,
   .ha-mission .ha-five-mobile-break-c{display:none;}
 
+  /* ===== Phase indicator labels (sub-eyebrow) ===== */
+  .ha-mission .ha-five-phases{
+    display:flex;align-items:center;gap:9px;
+    margin-top:6px;
+    font-family:'Poppins',sans-serif;
+    font-size:11px;font-weight:600;
+    letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ha-teal-deep);
+  }
+  .ha-mission .ha-five-phase{
+    opacity:.28;transition:opacity .35s cubic-bezier(.22,.61,.36,1);
+  }
+  .ha-mission .ha-five-phase.is-active{opacity:1;}
+  .ha-mission .ha-five-phase-sep{
+    opacity:.32;color:var(--ha-teal-deep);
+  }
+
+  /* ===== Staggered card crossfade (desktop scrolly only) =====
+     Cards default to opacity:0 and fade to opacity:1 when their parent
+     body has .is-active. The transition-delay is keyed off a --i custom
+     property assigned by JS, so cards cascade left-to-right at 50ms
+     intervals on both enter and exit. */
+  @media (min-width:701px){
+    .ha-mission .ha-five-body .ha-step,
+    .ha-mission .ha-five-body .ha-value-card,
+    .ha-mission .ha-five-body .ha-focus-card{
+      opacity:0;
+      transition:opacity .55s cubic-bezier(.22,.61,.36,1);
+      transition-delay:calc(var(--i, 0) * 50ms);
+    }
+    .ha-mission .ha-five-body.is-active .ha-step,
+    .ha-mission .ha-five-body.is-active .ha-value-card,
+    .ha-mission .ha-five-body.is-active .ha-focus-card{
+      opacity:1;
+    }
+    /* Pointer-events follow active state so only the visible phase is clickable. */
+    .ha-mission .ha-five-body{pointer-events:none;}
+    .ha-mission .ha-five-body.is-active{pointer-events:auto;}
+  }
+
   /* ===== Mobile refinements ===== */
   @media (max-width: 700px){
     .ha-mission .ha-wrap{ padding:0 20px; }
@@ -867,9 +907,19 @@
 
         <div class="ha-wrap ha-five-inner">
 
-          <!-- Single eyebrow — no crossfade needed -->
+          <!-- Eyebrow + phase indicator. The phase row labels each of the
+               three crossfade phases so the viewer can read the structure
+               at a glance — the active phase is full opacity, the others
+               recede to .25. -->
           <div class="ha-five-eb-stack">
             <span class="ha-eyebrow ha-five-eb ha-five-eb-a">How We Work</span>
+            <div class="ha-five-phases" aria-hidden="true">
+              <span class="ha-five-phase ha-five-phase-a is-active">Practices</span>
+              <span class="ha-five-phase-sep">·</span>
+              <span class="ha-five-phase ha-five-phase-b">Values</span>
+              <span class="ha-five-phase-sep">·</span>
+              <span class="ha-five-phase ha-five-phase-c">Focus Areas</span>
+            </div>
           </div>
 
           <!-- Heading: "Five" pinned on top line, tail crossfades on line 2 (A → B → C) -->
@@ -890,7 +940,7 @@
 
           <!-- Body slot: list & grid crossfade in same slot -->
           <div class="ha-five-bodies">
-            <div class="ha-five-body ha-five-body-a">
+            <div class="ha-five-body ha-five-body-a is-active">
               <div class="ha-five-lead-spacer" aria-hidden="true"></div>
               <div class="ha-steps">
                 <article class="ha-step is-in"><div class="ha-step-num">01</div><h3>Community engagement to surface real barriers and solutions.</h3></article>
@@ -909,21 +959,24 @@
             <div class="ha-five-body ha-five-body-b" aria-hidden="true">
               <div class="ha-five-lead-spacer" aria-hidden="true"></div>
               <div class="ha-values-grid">
+                <!-- Position 1 maps to body-a position 1 ("Community engagement")
+                     as a single-pair test of the position-mapping concept.
+                     The remaining values keep their prior order. -->
                 <div class="ha-value-card is-in" data-pair="1">
+                  <h3>Collaboration</h3>
+                  <p>We work with diverse partners to build durable connections.</p>
+                </div>
+                <div class="ha-value-card is-in" data-pair="2">
                   <h3>People First</h3>
                   <p>Change must center those most adversely impacted by current systems.</p>
                 </div>
-                <div class="ha-value-card is-in" data-pair="2">
+                <div class="ha-value-card is-in" data-pair="3">
                   <h3>Equity</h3>
                   <p>We name the structural inequities rooted in racism, colonialism, and oppression.</p>
                 </div>
-                <div class="ha-value-card is-in" data-pair="3">
+                <div class="ha-value-card is-in" data-pair="4">
                   <h3>Courage</h3>
                   <p>We speak up against powerful interests for people-first policies.</p>
-                </div>
-                <div class="ha-value-card is-in" data-pair="4">
-                  <h3>Collaboration</h3>
-                  <p>We work with diverse partners to build durable connections.</p>
                 </div>
                 <div class="ha-value-card is-in" data-pair="5">
                   <h3>Integrity</h3>
@@ -1066,9 +1119,22 @@
     const dotA   = five.querySelector('.ha-five-dot-a');
     const dotB   = five.querySelector('.ha-five-dot-b');
     const dotC   = five.querySelector('.ha-five-dot-c');
+    // Sub-eyebrow phase labels — toggled in lockstep with bodies + dots so
+    // the viewer can read "which phase am I in?" at a glance.
+    const phaseLabelA = five.querySelector('.ha-five-phase-a');
+    const phaseLabelB = five.querySelector('.ha-five-phase-b');
+    const phaseLabelC = five.querySelector('.ha-five-phase-c');
     // Paired-morph targets: focus cards (C-phase) that grow their SVG icon
     // out of the same grid slot the value card (B-phase) just occupied.
     const focusCards = Array.from(five.querySelectorAll('.ha-five-body-c .ha-focus-card'));
+
+    // Assign a per-card index custom property so CSS transition-delay
+    // can cascade cards left-to-right (50ms apart). Done once at init.
+    [bodyA, bodyB, bodyC].forEach(body => {
+      if (!body) return;
+      body.querySelectorAll('.ha-step, .ha-value-card, .ha-focus-card')
+          .forEach((card, i) => card.style.setProperty('--i', i));
+    });
 
     const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
     const mobileMQ = window.matchMedia('(max-width: 700px)');
@@ -1098,7 +1164,14 @@
       [ebA, ebB, ebC, bodyA, bodyB, bodyC, bgSlate, bgAsh].forEach(el => {
         if (el) el.style.opacity = '';
       });
-      [bodyA, bodyB, bodyC].forEach(el => { if (el) el.style.pointerEvents = ''; });
+      [bodyA, bodyB, bodyC].forEach(el => {
+        if (el) {
+          el.style.pointerEvents = '';
+          el.classList.remove('is-active');
+        }
+      });
+      // Body A is the resting state — mark it active so its cards are visible.
+      if (bodyA) bodyA.classList.add('is-active');
       if (bodyB) bodyB.style.transform = '';
       if (bodyC) bodyC.style.transform = '';
       wordsA.forEach(w => w.classList.remove('is-out'));
@@ -1111,6 +1184,9 @@
       if (dotA) dotA.classList.add('is-active');
       if (dotB) dotB.classList.remove('is-active');
       if (dotC) dotC.classList.remove('is-active');
+      if (phaseLabelA) phaseLabelA.classList.add('is-active');
+      if (phaseLabelB) phaseLabelB.classList.remove('is-active');
+      if (phaseLabelC) phaseLabelC.classList.remove('is-active');
     }
 
     // Phase timings — keep these grouped so they're easy to retune
@@ -1143,23 +1219,24 @@
       }
       if (ebC) ebC.style.opacity = clamp((p - 0.62) / 0.18, 0, 1);
 
-      // ----- Bodies (list → shared card grid) -----
-      // Sequential A→B: the list clears before the grid arrives, so the two
-      // differently-shaped layouts don't ghost through each other mid-fade.
-      const aOp = clamp(1 - (p - 0.10) / 0.14, 0, 1);
-      bodyA.style.opacity = aOp;
-      const gridIn = clamp((p - 0.24) / 0.16, 0, 1);
-      // body-b (values) and body-c (focus) render identical card boxes in the
-      // same slot, so this crossfade reads as the content swapping inside
-      // stationary boxes rather than two separate sets of boxes.
-      const toC = clamp((p - 0.58) / 0.20, 0, 1);
-      const bOp = gridIn * (1 - toC);
-      const cOp = gridIn * toC;
-      bodyB.style.opacity = bOp;
-      bodyC.style.opacity = cOp;
-      bodyA.style.pointerEvents = aOp > 0.5 ? 'auto' : 'none';
-      bodyB.style.pointerEvents = bOp > 0.5 ? 'auto' : 'none';
-      bodyC.style.pointerEvents = cOp > 0.5 ? 'auto' : 'none';
+      // ----- Bodies — phase-discrete class toggle drives a staggered card
+      // cascade via CSS (per-card transition-delay keyed to --i). Each
+      // body's cards crossfade in/out over ~550ms with 50ms steps so the
+      // phase appears to compose itself left-to-right rather than swap
+      // wholesale. Pointer-events follow the active body via CSS.
+      // Thresholds match the progress-dot boundaries so dots, labels,
+      // and cards switch in unison.
+      const phaseA = p < 0.32;
+      const phaseB = p >= 0.32 && p < 0.65;
+      const phaseC = p >= 0.65;
+      bodyA.classList.toggle('is-active', phaseA);
+      bodyB.classList.toggle('is-active', phaseB);
+      bodyC.classList.toggle('is-active', phaseC);
+      // Clear any leftover inline opacity from prior implementations so the
+      // CSS rule wins (relevant only on a stale-cache hot-reload).
+      if (bodyA.style.opacity !== '') bodyA.style.opacity = '';
+      if (bodyB.style.opacity !== '') bodyB.style.opacity = '';
+      if (bodyC.style.opacity !== '') bodyC.style.opacity = '';
 
       // ----- Backgrounds — wide, slow washes so the color shift stays gentle -----
       const ashIn  = clamp((p - 0.14) / 0.30, 0, 1);
@@ -1195,10 +1272,13 @@
         card.style.setProperty('--morph', eased.toFixed(3));
       });
 
-      // ----- Progress dots -----
-      if (dotA) dotA.classList.toggle('is-active', p < 0.32);
-      if (dotB) dotB.classList.toggle('is-active', p >= 0.32 && p < 0.65);
-      if (dotC) dotC.classList.toggle('is-active', p >= 0.65);
+      // ----- Progress dots + phase labels -----
+      if (dotA) dotA.classList.toggle('is-active', phaseA);
+      if (dotB) dotB.classList.toggle('is-active', phaseB);
+      if (dotC) dotC.classList.toggle('is-active', phaseC);
+      if (phaseLabelA) phaseLabelA.classList.toggle('is-active', phaseA);
+      if (phaseLabelB) phaseLabelB.classList.toggle('is-active', phaseB);
+      if (phaseLabelC) phaseLabelC.classList.toggle('is-active', phaseC);
     }
     function onScroll(){
       if (!ticking){ ticking = true; requestAnimationFrame(update); }
