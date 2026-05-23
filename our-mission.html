@@ -71,7 +71,7 @@
 </style>
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Poppins:wght@300;400;500;600;700&display=swap">
 </head>
 <body>
 
@@ -136,9 +136,22 @@
 <!-- BEGIN ha-mission -->
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Poppins:wght@300;400;500;600;700&display=swap">
 
 <style>
+  /* ===== @property: typed custom property for variable font weight =====
+     Without @property registration, font-variation-settings transitions
+     snap between values rather than interpolating. Registering --wght as
+     <number> unlocks smooth 400 -> 600 weight animation on Manrope's
+     variable axis. Supported in Chrome 85+, Safari 16.4+, Firefox 128+
+     (March 2024). Without support, end-state still renders correctly —
+     just no smooth interpolation between states (graceful degradation). */
+  @property --wght {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 600;
+  }
+
   /* ===== Brand-guide palette (scoped) ===== */
   .ha-mission{
     --ha-ash:        #CAD2C5;
@@ -791,6 +804,68 @@
        fires for the visible phase's cards. */
     .ha-mission .ha-five-body{pointer-events:none;}
     .ha-mission .ha-five-body.is-active{pointer-events:auto;}
+  }
+
+  /* ===== Tier-1 subtle text transforms (desktop scrolly only) =====
+     Card titles + paragraphs adopt four layered subtle transforms during
+     the phase crossfade — overriding the simple opacity fade above:
+
+       A. Variable font weight axis: 400 -> 600 via @property --wght
+          (the @property declaration makes font-variation-settings actually
+          interpolate; without it the browser snaps between weights at
+          the transition midpoint).
+       B. Mask-image gradient sweep: a 200%-wide linear gradient slides
+          across the text from left to right, revealing it with a soft
+          feathered edge instead of a flat opacity fade.
+       C. Letter-spacing breathing: -0.04em (tight) -> -0.005em (natural)
+          — text exhales into final shape.
+       D. Color saturation lift: #6E7A7E (washed) -> --ha-charcoal (full)
+          — "ink settling into paper."
+
+     Number circles and SVG icons keep the simple opacity transition above
+     because those treatments don't apply to non-text elements. */
+  @media (min-width:701px){
+    .ha-mission .ha-five-body .ha-step h3,
+    .ha-mission .ha-five-body .ha-value-card h3,
+    .ha-mission .ha-five-body .ha-value-card p,
+    .ha-mission .ha-five-body .ha-focus-card h3 {
+      /* Override the > * opacity:0 — visibility is owned by the mask now */
+      opacity:1;
+      /* A. wght axis */
+      --wght:400;
+      font-variation-settings:"wght" var(--wght);
+      /* C. letter-spacing */
+      letter-spacing:-0.04em;
+      /* D. desaturated charcoal */
+      color:#6E7A7E;
+      /* B. left-to-right gradient mask sweep */
+      -webkit-mask-image:linear-gradient(110deg, #000 0%, #000 60%, transparent 100%);
+      -webkit-mask-size:200% 100%;
+      -webkit-mask-position:-150% 0;
+      -webkit-mask-repeat:no-repeat;
+      mask-image:linear-gradient(110deg, #000 0%, #000 60%, transparent 100%);
+      mask-size:200% 100%;
+      mask-position:-150% 0;
+      mask-repeat:no-repeat;
+
+      transition:
+        --wght .6s cubic-bezier(.22,.61,.36,1),
+        letter-spacing .55s cubic-bezier(.22,.61,.36,1),
+        color .7s cubic-bezier(.22,.61,.36,1),
+        mask-position .75s cubic-bezier(.22,.61,.36,1),
+        -webkit-mask-position .75s cubic-bezier(.22,.61,.36,1);
+      transition-delay:calc(var(--i, 0) * 50ms);
+    }
+    .ha-mission .ha-five-body.is-active .ha-step h3,
+    .ha-mission .ha-five-body.is-active .ha-value-card h3,
+    .ha-mission .ha-five-body.is-active .ha-value-card p,
+    .ha-mission .ha-five-body.is-active .ha-focus-card h3 {
+      --wght:600;
+      letter-spacing:-0.005em;
+      color:var(--ha-charcoal);
+      -webkit-mask-position:0% 0;
+      mask-position:0% 0;
+    }
   }
 
   /* ===== Mobile refinements ===== */
