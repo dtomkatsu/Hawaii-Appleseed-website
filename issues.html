@@ -294,8 +294,16 @@
   .ha-issues .ha-deep .ha-focus li::before{color:var(--section-accent);}
   .ha-issues .ha-deep .ha-deep-sub::before{background:var(--section-accent);}
 
-  /* ===== Deep-dive head — area title is the focus ===== */
-  .ha-issues .ha-deep-head{margin-bottom:40px;}
+  /* ===== Deep-dive head — area title is the focus =====
+     Left accent stripe shares the section accent color and matches the
+     prose-card's 4px stripe below, tying head and body visually. The
+     32px left padding lines content up with the prose-card content
+     edge so the stripe reads as a continuous spine down the section. */
+  .ha-issues .ha-deep-head{
+    margin-bottom:40px;
+    border-left:4px solid var(--section-accent, var(--ha-teal-deep));
+    padding-left:32px;
+  }
   .ha-issues .ha-deep-num{
     font-family:'Manrope',sans-serif;font-weight:600;
     font-size:13px;letter-spacing:.32em;color:var(--ha-teal-deep);
@@ -311,6 +319,16 @@
     font-size:clamp(22px, 2.4vw, 30px);line-height:1.3;
     color:var(--section-accent, var(--ha-teal-deep));opacity:1;
     margin:0 0 20px;max-width:36ch;
+  }
+  /* Key-word emphasis inside the italic tagline: a single anchor word
+     drops out of Fraunces italic into Manrope 700 charcoal so it lands
+     as a typographic punctuation point. Adds visual rhythm without
+     adding decorative mass. */
+  .ha-issues .ha-deep-tagline-key{
+    font-family:'Manrope',sans-serif;
+    font-style:normal;font-weight:700;
+    color:var(--ha-charcoal);
+    letter-spacing:-0.01em;
   }
   .ha-issues .ha-deep-body{max-width:760px;}
   .ha-issues .ha-deep-lead{
@@ -569,7 +587,7 @@
     .ha-issues .ha-card h3{font-size:18px;}
     .ha-issues .ha-card::after{font-size:18px;}
     .ha-issues .ha-hero-lead{padding:20px 20px 20px 22px;font-size:15px;}
-    .ha-issues .ha-deep-head{margin-bottom:24px;}
+    .ha-issues .ha-deep-head{margin-bottom:24px;padding-left:18px;}
     .ha-issues .ha-deep-sub{margin:36px 0 16px;}
     .ha-issues .ha-eyebrow{font-size:11px;letter-spacing:.24em;}
     .ha-issues .ha-eyebrow::before{width:32px;}
@@ -645,31 +663,13 @@
     .ha-issues .ha-nav-pill { padding:6px 12px; font-size:11.5px; }
   }
 
-  /* ===== TIER 1: Diamond rule on deep-dive h2s ===== */
-  .ha-issues .ha-deep h2 { margin-bottom:28px; }
-  .ha-issues .ha-deep-rule {
-    display:block;
-    width:108px; height:8px;
-    margin:22px 0 0;
-    position:relative;
-    background:
-      linear-gradient(to right,
-        var(--section-accent, var(--ha-teal-deep)) 0,
-        var(--section-accent, var(--ha-teal-deep)) 42px,
-        transparent 42px, transparent 66px,
-        var(--section-accent, var(--ha-teal-deep)) 66px,
-        var(--section-accent, var(--ha-teal-deep)) 108px)
-      left center / 100% 1.5px no-repeat;
-  }
-  .ha-issues .ha-deep-rule::after {
-    content:"";
-    position:absolute;
-    top:50%; left:54px;
-    width:7px; height:7px;
-    background:var(--section-accent, var(--ha-teal-deep));
-    transform:translate(-50%, -50%) rotate(45deg);
-    border-radius:1px;
-  }
+  /* ===== Diamond rule retired ============================================
+     Previously each .ha-deep-head ended with a 108x8 CSS-painted divider
+     and a 7px diamond. Replaced with the left accent stripe on
+     .ha-deep-head above. The .ha-deep-rule element is left in the HTML
+     for forward compat (so reverting the design is one rule away) but
+     visually hidden. */
+  .ha-issues .ha-deep-rule { display:none; }
 
   /* ===== TIER 2: "See all" deep-dive → filter link ===== */
   .ha-issues .ha-deep-see-all {
@@ -852,7 +852,7 @@
       <div class="ha-deep-head">
         <span class="ha-deep-num">01</span>
         <h2>Food Security</h2>
-        <p class="ha-deep-tagline">Healthy, accessible food for every Hawaiʻi family.</p>
+        <p class="ha-deep-tagline">Healthy, <span class="ha-deep-tagline-key">accessible</span> food for every Hawaiʻi family.</p>
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
@@ -886,7 +886,7 @@
       <div class="ha-deep-head">
         <span class="ha-deep-num">02</span>
         <h2>Affordable Housing</h2>
-        <p class="ha-deep-tagline">Homes Hawaiʻi's families can actually afford.</p>
+        <p class="ha-deep-tagline">Homes Hawaiʻi's families can <span class="ha-deep-tagline-key">actually</span> afford.</p>
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
@@ -920,7 +920,7 @@
       <div class="ha-deep-head">
         <span class="ha-deep-num">03</span>
         <h2>Transportation</h2>
-        <p class="ha-deep-tagline">Safer streets, smarter transit, lower costs.</p>
+        <p class="ha-deep-tagline">Safer streets, <span class="ha-deep-tagline-key">smarter</span> transit, lower costs.</p>
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
@@ -954,7 +954,7 @@
       <div class="ha-deep-head">
         <span class="ha-deep-num">04</span>
         <h2>Tax &amp; Budget</h2>
-        <p class="ha-deep-tagline">A fairer tax code for a thriving Hawaiʻi.</p>
+        <p class="ha-deep-tagline">A <span class="ha-deep-tagline-key">fairer</span> tax code for a thriving Hawaiʻi.</p>
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
