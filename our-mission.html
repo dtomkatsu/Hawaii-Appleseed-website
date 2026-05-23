@@ -810,16 +810,20 @@
   }
 
   /* ===== Tier-1 subtle text transforms (desktop scrolly only) =====
-     Card titles + paragraphs adopt four layered subtle transforms during
-     the phase crossfade — overriding the simple opacity fade above:
+     Card titles + paragraphs use a compound of four layered transforms
+     during the phase crossfade. The mask-image gradient sweep was tried
+     here and removed — it read as too overt a "wipe." Replaced with a
+     classic editorial fade-up (opacity + 6px Y rise) so the reveal feels
+     like a settling motion rather than a swept reveal.
 
        A. Variable font weight axis: 400 -> 600 via @property --wght
           (the @property declaration makes font-variation-settings actually
           interpolate; without it the browser snaps between weights at
           the transition midpoint).
-       B. Mask-image gradient sweep: a 200%-wide linear gradient slides
-          across the text from left to right, revealing it with a soft
-          feathered edge instead of a flat opacity fade.
+       B. Fade-up reveal: opacity 0 -> 1 paired with translateY(6px -> 0).
+          Total motion is 6 pixels over ~650ms — below the threshold of
+          conscious attention but enough to give the text a sense of
+          settling into place.
        C. Letter-spacing breathing: -0.04em (tight) -> -0.005em (natural)
           — text exhales into final shape.
        D. Color saturation lift: #6E7A7E (washed) -> --ha-charcoal (full)
@@ -832,8 +836,7 @@
     .ha-mission .ha-five-body .ha-value-card h3,
     .ha-mission .ha-five-body .ha-value-card p,
     .ha-mission .ha-five-body .ha-focus-card h3 {
-      /* Override the > * opacity:0 — visibility is owned by the mask now */
-      opacity:1;
+      opacity:0;
       /* A. wght axis */
       --wght:400;
       font-variation-settings:"wght" var(--wght);
@@ -841,33 +844,26 @@
       letter-spacing:-0.04em;
       /* D. desaturated charcoal */
       color:#6E7A7E;
-      /* B. left-to-right gradient mask sweep */
-      -webkit-mask-image:linear-gradient(110deg, #000 0%, #000 60%, transparent 100%);
-      -webkit-mask-size:200% 100%;
-      -webkit-mask-position:-150% 0;
-      -webkit-mask-repeat:no-repeat;
-      mask-image:linear-gradient(110deg, #000 0%, #000 60%, transparent 100%);
-      mask-size:200% 100%;
-      mask-position:-150% 0;
-      mask-repeat:no-repeat;
+      /* B. 6px Y rise (paired with opacity) */
+      transform:translateY(6px);
 
       transition:
         --wght .6s cubic-bezier(.22,.61,.36,1),
         letter-spacing .55s cubic-bezier(.22,.61,.36,1),
         color .7s cubic-bezier(.22,.61,.36,1),
-        mask-position .75s cubic-bezier(.22,.61,.36,1),
-        -webkit-mask-position .75s cubic-bezier(.22,.61,.36,1);
+        opacity .6s cubic-bezier(.22,.61,.36,1),
+        transform .65s cubic-bezier(.22,.61,.36,1);
       transition-delay:calc(var(--i, 0) * 50ms);
     }
     .ha-mission .ha-five-body.is-active .ha-step h3,
     .ha-mission .ha-five-body.is-active .ha-value-card h3,
     .ha-mission .ha-five-body.is-active .ha-value-card p,
     .ha-mission .ha-five-body.is-active .ha-focus-card h3 {
+      opacity:1;
       --wght:600;
       letter-spacing:-0.005em;
       color:var(--ha-charcoal);
-      -webkit-mask-position:0% 0;
-      mask-position:0% 0;
+      transform:translateY(0);
     }
   }
 
@@ -1408,8 +1404,13 @@
       };
       stagger(wordsA, 0.05, 0.24, 'is-out');   // tail-A leaves
       stagger(wordsB, 0.22, 0.18, 'is-in');    // tail-B arrives
-      stagger(wordsB, 0.55, 0.16, 'is-out');   // tail-B leaves (overrides is-in via CSS order)
-      stagger(wordsC, 0.68, 0.17, 'is-in');    // tail-C arrives
+      // tail-B leaves — span tightened 0.16 -> 0.10 so the last word
+      // exits at p=0.65 (the phase-C threshold) instead of 0.71.
+      stagger(wordsB, 0.55, 0.10, 'is-out');
+      // tail-C arrives — start nudged 0.68 -> 0.66 so "areas" appears
+      // just after "values." finishes leaving, preventing the noun-on-
+      // noun collision under "Five" reported during the focus phase.
+      stagger(wordsC, 0.66, 0.16, 'is-in');
 
       // ----- Paired-morph: focus icons bloom into the slot the value cards vacated.
       // Each card animates over MORPH_DUR units of scroll progress, with
