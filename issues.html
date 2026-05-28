@@ -504,61 +504,6 @@
     color:var(--ha-charcoal);opacity:.78;flex:1;
   }
 
-  /* ===== LATEST PUBLICATIONS SECTION ===== */
-  .ha-issues .ha-pubs-wrap{padding:110px 0;background:var(--ha-white);}
-  .ha-issues .ha-pubs-head h2{
-    font-family:'Manrope',sans-serif;font-weight:700;
-    font-size:clamp(30px, 4vw, 48px);line-height:1.1;letter-spacing:-0.02em;
-    color:var(--ha-charcoal);margin:14px 0 8px;max-width:22ch;
-  }
-  .ha-issues .ha-pubs-head p{
-    font-family:'Poppins',sans-serif;font-size:16px;color:var(--ha-charcoal);
-    opacity:.78;max-width:60ch;
-  }
-  .ha-issues .ha-filters{
-    display:flex;flex-wrap:wrap;gap:10px;margin:36px 0 32px;
-  }
-  .ha-issues .ha-chip{
-    display:inline-flex;align-items:center;
-    padding:9px 18px;border-radius:999px;
-    font-family:'Poppins',sans-serif;font-weight:500;font-size:13px;
-    color:var(--ha-charcoal);background:transparent;
-    border:1px solid var(--ha-rule);cursor:pointer;
-    transition:background .3s, color .3s, border-color .3s, transform .3s;
-    -webkit-tap-highlight-color:transparent;
-  }
-  .ha-issues .ha-chip:hover{
-    background:rgba(132,169,140,.10);border-color:var(--ha-teal);
-  }
-  .ha-issues .ha-chip.is-active{
-    background:var(--ha-charcoal);border-color:var(--ha-charcoal);color:#fff;
-  }
-  .ha-issues .ha-chip:focus-visible{outline:2px solid var(--ha-teal);outline-offset:3px;}
-  .ha-issues .ha-pub-grid{
-    display:grid;gap:28px;
-    grid-template-columns:1fr;
-  }
-  @media (min-width:640px){.ha-issues .ha-pub-grid{grid-template-columns:repeat(2,1fr);}}
-  @media (min-width:980px){.ha-issues .ha-pub-grid{grid-template-columns:repeat(3,1fr);}}
-
-  /* Hide pubs that don't match active filter */
-  .ha-issues .ha-pub.is-hidden{
-    display:none;
-  }
-  .ha-issues .ha-more-wrap{margin-top:48px;text-align:center;}
-  .ha-issues .ha-more-link{
-    display:inline-flex;align-items:center;gap:12px;
-    font-family:'Poppins',sans-serif;font-weight:600;font-size:13px;
-    letter-spacing:.14em;text-transform:uppercase;
-    color:var(--ha-teal-deep);
-    padding:14px 24px;border-radius:999px;
-    border:1px solid var(--ha-rule);
-    transition:background .3s, border-color .3s, color .3s, transform .3s;
-  }
-  .ha-issues .ha-more-link::after{content:"→";font-size:16px;letter-spacing:0;transition:transform .3s;}
-  .ha-issues .ha-more-link:hover{background:var(--ha-charcoal);border-color:var(--ha-charcoal);color:#fff;transform:translateY(-2px);}
-  .ha-issues .ha-more-link:hover::after{transform:translateX(4px);}
-
   /* ===== CTA ===== */
   .ha-issues .ha-cta{
     background:var(--ha-charcoal);color:#fff;padding:96px 0;text-align:center;
@@ -597,7 +542,6 @@
     .ha-issues .ha-hero{padding:36px 0 64px;}
     .ha-issues .ha-hero-text{margin-bottom:32px;}
     .ha-issues .ha-deep{padding:72px 0;scroll-margin-top:100px;}
-    .ha-issues .ha-pubs-wrap{padding:72px 0;}
     .ha-issues .ha-cta{padding:64px 0;}
     .ha-issues .ha-card{padding:18px 18px 18px 20px;gap:16px;}
     .ha-issues .ha-card-icon{width:42px;height:42px;}
@@ -611,8 +555,6 @@
     .ha-issues .ha-eyebrow::before{width:32px;}
     .ha-issues .ha-cta-actions{flex-direction:column;width:100%;align-items:stretch;}
     .ha-issues .ha-cta .ha-btn{justify-content:center;width:100%;}
-    .ha-issues .ha-filters{margin:24px 0 24px;gap:8px;}
-    .ha-issues .ha-chip{font-size:12px;padding:8px 14px;}
   }
 
   /* ===== TIER 1: Scroll progress bar ===== */
@@ -689,7 +631,7 @@
      visually hidden. */
   .ha-issues .ha-deep-rule { display:none; }
 
-  /* ===== TIER 2: "See all" deep-dive → filter link ===== */
+  /* ===== "See all" deep-dive → publications page (filtered by topic) ===== */
   .ha-issues .ha-deep-see-all {
     display:inline-flex; align-items:center; gap:10px;
     margin-top:32px;
@@ -795,26 +737,6 @@
     animation:ha-spin .7s linear infinite;
   }
   @keyframes ha-spin { to { transform:rotate(360deg); } }
-
-  /* ===== TIER 1: Filter chip morph transition ===== */
-  .ha-issues .ha-pub-grid .ha-pub {
-    transition:transform .5s cubic-bezier(.22,.61,.36,1),
-               box-shadow .5s cubic-bezier(.22,.61,.36,1),
-               border-color .5s,
-               opacity .3s ease,
-               scale .3s ease;
-  }
-  .ha-issues .ha-pub.is-hiding {
-    opacity:0; scale:.96;
-    pointer-events:none;
-  }
-  .ha-issues .ha-pub.is-showing {
-    animation:ha-pub-show .42s cubic-bezier(.22,.61,.36,1) forwards;
-  }
-  @keyframes ha-pub-show {
-    from { opacity:0; transform:translateY(10px) scale(.96); }
-    to   { opacity:1; transform:translateY(0) scale(1); }
-  }
 
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce){
@@ -952,7 +874,7 @@
 
         <h4 class="ha-deep-sub">Featured research</h4>
         <div class="ha-pub-row" data-area-pubs="food"></div>
-        <a class="ha-deep-see-all" data-area="food" href="#latest-research">See all Food Security publications</a>
+        <a class="ha-deep-see-all" href="publications.html?topic=food">See all Food Security publications</a>
       </div>
     </div>
   </section>
@@ -992,7 +914,7 @@
 
         <h4 class="ha-deep-sub">Featured research</h4>
         <div class="ha-pub-row" data-area-pubs="housing"></div>
-        <a class="ha-deep-see-all" data-area="housing" href="#latest-research">See all Affordable Housing publications</a>
+        <a class="ha-deep-see-all" href="publications.html?topic=housing">See all Affordable Housing publications</a>
       </div>
     </div>
   </section>
@@ -1032,7 +954,7 @@
 
         <h4 class="ha-deep-sub">Featured research</h4>
         <div class="ha-pub-row" data-area-pubs="transit"></div>
-        <a class="ha-deep-see-all" data-area="transit" href="#latest-research">See all Transportation publications</a>
+        <a class="ha-deep-see-all" href="publications.html?topic=transit">See all Transportation publications</a>
       </div>
     </div>
   </section>
@@ -1072,7 +994,7 @@
 
         <h4 class="ha-deep-sub">Featured research</h4>
         <div class="ha-pub-row" data-area-pubs="tax-budget"></div>
-        <a class="ha-deep-see-all" data-area="tax-budget" href="#latest-research">See all Tax &amp; Budget publications</a>
+        <a class="ha-deep-see-all" href="publications.html?topic=tax-budget">See all Tax &amp; Budget publications</a>
       </div>
     </div>
   </section>
@@ -1112,148 +1034,11 @@
 
         <h4 class="ha-deep-sub">Featured research</h4>
         <div class="ha-pub-row" data-area-pubs="wages-labor"></div>
-        <a class="ha-deep-see-all" data-area="wages-labor" href="#latest-research">See all Wages &amp; Labor publications</a>
+        <a class="ha-deep-see-all" href="publications.html?topic=wages-labor">See all Wages &amp; Labor publications</a>
       </div>
     </div>
   </section>
 
-  <!-- ========== LATEST PUBLICATIONS ========== -->
-  <section class="ha-pubs-wrap" id="latest-research">
-    <div class="ha-wrap">
-      <div class="ha-pubs-head" data-fade>
-        <span class="ha-eyebrow">Latest research</span>
-        <h2>Our 10 most recent publications.</h2>
-        <p>Research, briefings, and policy analysis from across our issue areas.</p>
-      </div>
-
-      <div class="ha-filters" data-fade role="tablist" aria-label="Filter publications by issue area">
-        <button class="ha-chip is-active" data-filter="all" role="tab" aria-selected="true">All</button>
-        <button class="ha-chip" data-filter="tax-budget" role="tab">Tax &amp; Budget</button>
-        <button class="ha-chip" data-filter="food" role="tab">Food Security</button>
-        <button class="ha-chip" data-filter="housing" role="tab">Affordable Housing</button>
-        <button class="ha-chip" data-filter="transit" role="tab">Transportation</button>
-        <button class="ha-chip" data-filter="wages-labor" role="tab">Wages &amp; Labor</button>
-      </div>
-
-      <div class="ha-pub-grid" id="ha-latest-grid">
-
-        <article class="ha-pub" data-cat="transit" data-fade>
-          <a class="ha-pub-link" href="https://hiappleseed.org/publications/pedestrian-head-start" target="_blank" rel="noopener">
-            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/4d70babb-d562-4296-b3fc-64cc719a408e/pexels-brcunel-19831125_edit.jpg" alt="" loading="lazy" decoding="async"></div>
-            <div class="ha-pub-body">
-              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="transit">Transportation</span><span class="ha-pub-date">Mar 10, 2026</span></div>
-              <h3 class="ha-pub-title">Pedestrian Head Start</h3>
-              <p class="ha-pub-excerpt">Accessible Pedestrian Signals (APS) and Leading Pedestrian Intervals (LPIs) give people a safer head start and make crossings more inclusive.</p>
-            </div>
-          </a>
-        </article>
-
-        <article class="ha-pub" data-cat="transit" data-fade>
-          <a class="ha-pub-link" href="https://hiappleseed.org/publications/keiki-ride-free" target="_blank" rel="noopener">
-            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1771460253592-XPWUAD8KOMKLLGXDPUC5/iStock-1927073126_web.jpg" alt="" loading="lazy" decoding="async"></div>
-            <div class="ha-pub-body">
-              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="transit">Transportation</span><span class="ha-pub-date">Feb 18, 2026</span></div>
-              <h3 class="ha-pub-title">Keiki Ride Free</h3>
-              <p class="ha-pub-excerpt">Adopting a statewide fare-free transit model for Hawaiʻi's young riders.</p>
-            </div>
-          </a>
-        </article>
-
-        <article class="ha-pub" data-cat="tax-budget" data-fade>
-          <a class="ha-pub-link" href="https://hiappleseed.org/publications/fair-tax-code-thriving-hawaii" target="_blank" rel="noopener">
-            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/4dc08ceb-d243-4cce-9d4e-28a44aca9516/pexels_tanaphong-toochinda-GagC07wVvck-unsplash.jpg" alt="" loading="lazy" decoding="async"></div>
-            <div class="ha-pub-body">
-              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="tax-budget">Tax &amp; Budget</span><span class="ha-pub-date">Jan 28, 2026</span></div>
-              <h3 class="ha-pub-title">A Fairer Tax Code for a Thriving Hawaiʻi</h3>
-              <p class="ha-pub-excerpt">Progressive revenue options to protect and invest in Hawaiʻi's future.</p>
-            </div>
-          </a>
-        </article>
-
-        <article class="ha-pub" data-cat="food" data-fade>
-          <a class="ha-pub-link" href="https://hiappleseed.org/publications/county-leadership-combating-food-insecurity" target="_blank" rel="noopener">
-            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/5e0b2003-0e01-4a52-a4f5-5342a5fc7243/iStock-1430371622.jpg" alt="" loading="lazy" decoding="async"></div>
-            <div class="ha-pub-body">
-              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="food">Food Equity</span><span class="ha-pub-date">Dec 15, 2025</span></div>
-              <h3 class="ha-pub-title">County Leadership in Combating Food Insecurity</h3>
-              <p class="ha-pub-excerpt">Seizing local levers in uncertain times.</p>
-            </div>
-          </a>
-        </article>
-
-        <article class="ha-pub" data-cat="housing" data-fade>
-          <a class="ha-pub-link" href="https://hiappleseed.org/publications/who-pays-climate-disasters" target="_blank" rel="noopener">
-            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/f2958f94-93e2-47d4-b5ca-3ba5f14734c2/pexels-pppsdavid-7924139.jpg" alt="" loading="lazy" decoding="async"></div>
-            <div class="ha-pub-body">
-              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="housing">Affordable Housing</span><span class="ha-pub-date">Dec 1, 2025</span></div>
-              <h3 class="ha-pub-title">Who Pays for Climate Disasters?</h3>
-              <p class="ha-pub-excerpt">Case studies on regulatory responses to climate change-related disasters.</p>
-            </div>
-          </a>
-        </article>
-
-        <article class="ha-pub" data-cat="transit" data-fade>
-          <a class="ha-pub-link" href="https://hiappleseed.org/publications/stalled-parking-mandates-housing-costs" target="_blank" rel="noopener">
-            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/5d105386-6d18-42c1-af34-16e1ce0e81b8/pexels-brett-sayles-1756957.jpg" alt="" loading="lazy" decoding="async"></div>
-            <div class="ha-pub-body">
-              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="transit">Transportation</span><span class="ha-pub-date">Oct 1, 2025</span></div>
-              <h3 class="ha-pub-title">Stalled</h3>
-              <p class="ha-pub-excerpt">How parking mandates drive up housing costs.</p>
-            </div>
-          </a>
-        </article>
-
-        <article class="ha-pub" data-cat="tax-budget" data-fade>
-          <a class="ha-pub-link" href="https://hiappleseed.org/publications/hawaii-budget-primer-fy202526" target="_blank" rel="noopener">
-            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1724720104790-1U925CU7TJUCK559WDB6/pexels-pixabay-415824.jpeg" alt="" loading="lazy" decoding="async"></div>
-            <div class="ha-pub-body">
-              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="tax-budget">Tax &amp; Budget</span><span class="ha-pub-date">Sep 8, 2025</span></div>
-              <h3 class="ha-pub-title">Hawaiʻi Budget Primer FY2025–26</h3>
-              <p class="ha-pub-excerpt">A reader's guide to how Hawaiʻi's state budget works — and how to push for decisions that improve lives.</p>
-            </div>
-          </a>
-        </article>
-
-        <article class="ha-pub" data-cat="food" data-fade>
-          <a class="ha-pub-link" href="https://hiappleseed.org/publications/policy-in-perspective-2025" target="_blank" rel="noopener">
-            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1766015509114-MZAOQ00B4MVC5N7TRMT9/IMG_0851.png" alt="" loading="lazy" decoding="async"></div>
-            <div class="ha-pub-body">
-              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="food">Food Equity</span><span class="ha-pub-date">Sep 8, 2025</span></div>
-              <h3 class="ha-pub-title">Policy in Perspective 2025</h3>
-              <p class="ha-pub-excerpt">A look back at a legislative session shaped by Hawaiʻi's worsening affordability crisis.</p>
-            </div>
-          </a>
-        </article>
-
-        <article class="ha-pub" data-cat="housing" data-fade>
-          <a class="ha-pub-link" href="https://hiappleseed.org/publications/renters-left-behind-hawaii-state-legislature" target="_blank" rel="noopener">
-            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1742434718423-25CNO12WRYYWQ4G1POII/pexels-thirdman-8470839.jpg" alt="" loading="lazy" decoding="async"></div>
-            <div class="ha-pub-body">
-              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="housing">Affordable Housing</span><span class="ha-pub-date">Mar 24, 2025</span></div>
-              <h3 class="ha-pub-title">Renters left behind at the Hawaiʻi State Legislature</h3>
-              <p class="ha-pub-excerpt">38% of Hawaiʻi households rent — yet renters' needs are sidelined at the Capitol.</p>
-            </div>
-          </a>
-        </article>
-
-        <article class="ha-pub" data-cat="transit" data-fade>
-          <a class="ha-pub-link" href="https://hiappleseed.org/publications/beyond-the-ticket" target="_blank" rel="noopener">
-            <div class="ha-pub-img"><img src="https://images.squarespace-cdn.com/content/v1/601374ae84e51e430a1829d8/1740688760009-JVPO0JP6GF5ZDG681SYN/pexels-jess-vide-4601420.jpeg" alt="" loading="lazy" decoding="async"></div>
-            <div class="ha-pub-body">
-              <div class="ha-pub-meta"><span class="ha-pub-cat" data-cat="transit">Transportation</span><span class="ha-pub-date">Mar 3, 2025</span></div>
-              <h3 class="ha-pub-title">Beyond the Ticket</h3>
-              <p class="ha-pub-excerpt">Recommendations for a more equitable traffic enforcement system.</p>
-            </div>
-          </a>
-        </article>
-
-      </div>
-
-      <div class="ha-more-wrap">
-        <a class="ha-more-link" href="https://hiappleseed.org/publications" target="_blank" rel="noopener">View all publications</a>
-      </div>
-    </div>
-  </section>
 
   <!-- CTA -->
   <section class="ha-cta" data-fade>
@@ -1296,54 +1081,6 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
     root.querySelectorAll('[data-fade]').forEach(function(el){ io.observe(el); });
-  }
-
-  // === Filter chips (latest publications section) — morph transition ===
-  var chips = root.querySelectorAll('.ha-chip');
-  var grid = document.getElementById('ha-latest-grid');
-  if (chips.length && grid) {
-    chips.forEach(function(chip){
-      chip.addEventListener('click', function(){
-        if (chip.classList.contains('is-active')) return;
-        var filter = chip.getAttribute('data-filter');
-        chips.forEach(function(c){
-          c.classList.toggle('is-active', c === chip);
-          c.setAttribute('aria-selected', c === chip ? 'true' : 'false');
-        });
-        var pubs = grid.querySelectorAll('.ha-pub');
-        if (reduce) {
-          pubs.forEach(function(pub){
-            var cat = pub.getAttribute('data-cat');
-            pub.classList.toggle('is-hidden', filter !== 'all' && cat !== filter);
-          });
-          return;
-        }
-        // Phase 1: fade out hiding items
-        pubs.forEach(function(pub){
-          var cat = pub.getAttribute('data-cat');
-          var shouldShow = filter === 'all' || cat === filter;
-          if (!shouldShow && !pub.classList.contains('is-hidden')) {
-            pub.classList.add('is-hiding');
-          }
-        });
-        // Phase 2: apply layout change + fade in new items
-        setTimeout(function(){
-          pubs.forEach(function(pub){
-            var cat = pub.getAttribute('data-cat');
-            var shouldShow = filter === 'all' || cat === filter;
-            var wasHidden = pub.classList.contains('is-hidden');
-            pub.classList.remove('is-hiding','is-showing');
-            pub.classList.toggle('is-hidden', !shouldShow);
-            if (shouldShow && wasHidden) {
-              requestAnimationFrame(function(){
-                pub.classList.add('is-showing');
-                setTimeout(function(){ pub.classList.remove('is-showing'); }, 460);
-              });
-            }
-          });
-        }, 300);
-      });
-    });
   }
 
   // === Smooth scroll for issue card links ===
@@ -1443,24 +1180,6 @@
         c.innerHTML = '<p style="opacity:.6;font-size:14px;">Publications unavailable. Visit <a href="publications.html" style="color:var(--ha-teal-deep);">all publications</a>.</p>';
       });
     });
-
-  // === "See all" deep-dive → filter link ===
-  root.querySelectorAll('.ha-deep-see-all').forEach(function(link){
-    link.addEventListener('click', function(e){
-      e.preventDefault();
-      var area = link.getAttribute('data-area');
-      var map = AREA_MAP[area];
-      var target = document.getElementById('latest-research');
-      if (target) target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block:'start' });
-      if (map && map.filter) {
-        var chip = document.querySelector('.ha-chip[data-filter="' + map.filter + '"]');
-        if (chip && !chip.classList.contains('is-active')) {
-          // Wait for smooth scroll to begin before filter morph kicks in
-          setTimeout(function(){ chip.click(); }, reduce ? 0 : 380);
-        }
-      }
-    });
-  });
 
   // === Scroll progress bar ===
   var progress = root.querySelector('.ha-progress');

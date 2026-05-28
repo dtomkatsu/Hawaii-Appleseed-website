@@ -912,6 +912,25 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     render();
   }
 
+  /* ── deep-link from issues.html via ?topic=<slug> ── */
+  const TOPIC_SLUG_TO_CATEGORY = {
+    'food':        'Food Equity',
+    'housing':     'Affordable Housing',
+    'transit':     'Transportation Equity',
+    'tax-budget':  'Taxes & Budget',
+    'wages-labor': 'Wages & Labor',
+  };
+  function applyTopicFromUrl() {
+    const slug = new URLSearchParams(window.location.search).get('topic');
+    const cat = slug && TOPIC_SLUG_TO_CATEGORY[slug];
+    if (cat) {
+      activeCategory = cat;
+      filters.querySelectorAll('.ha-pub__pill').forEach(p => {
+        p.classList.toggle('active', (p.dataset.cat || null) === cat);
+      });
+    }
+  }
+
   /* ── filter + render ── */
   function filteredItems() {
     let items = allItems;
@@ -1074,6 +1093,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       .then(data => {
         allItems = (data.items || []).sort((a, b) => b.publishOn - a.publishOn);
         buildFilters();
+        applyTopicFromUrl();
         render();
         if (data.lastSynced) {
           const d = new Date(data.lastSynced);
