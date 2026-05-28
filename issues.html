@@ -325,14 +325,23 @@
     opacity:.55;
     margin-top:8px;
   }
-  /* h2 margin-bottom tightened from 14 -> 8 so the tagline reads as a
-     true deck of the title rather than a separate stacked element. */
+  /* h2->tagline gap: the 8px set while the tagline was rendering tiny
+     (the old specificity bug) reads cramped now that the tagline is back
+     at its intended 22-30px Fraunces size, so it's opened to 16px — still
+     tight enough to read as a deck of the title, not a detached block. */
+  /* line-height 1.05 (not a hard 1): single-line titles are unaffected
+     visually, but titles that wrap on mobile (e.g. "Affordable Housing"
+     at 375px) no longer pinch descenders against the next line's caps. */
   .ha-issues .ha-deep h2{
     font-family:'Manrope',sans-serif;font-weight:800;
-    font-size:clamp(42px, 6vw, 76px);line-height:1;letter-spacing:-0.035em;
-    color:var(--ha-charcoal);margin:0 0 8px;
+    font-size:clamp(42px, 6vw, 76px);line-height:1.05;letter-spacing:-0.035em;
+    color:var(--ha-charcoal);margin:0 0 16px;
   }
-  .ha-issues .ha-deep-tagline{
+  /* Scoped under .ha-deep (specificity 0,3,0) so it wins over
+     `.ha-issues .ha-deep p` (0,2,1) below — otherwise the tagline
+     silently renders as Poppins 15.5px charcoal instead of the
+     intended Fraunces italic deck, and Fraunces never loads. */
+  .ha-issues .ha-deep .ha-deep-tagline{
     font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;
     font-size:clamp(22px, 2.4vw, 30px);line-height:1.3;
     color:var(--section-accent, var(--ha-teal-deep));opacity:1;
