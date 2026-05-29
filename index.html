@@ -1,1071 +1,715 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Hawaiʻi Appleseed — Making Hawaiʻi more affordable</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900&display=swap">
-<style>
-  /* ------- Hawaiʻi Appleseed brand palette ------- */
-  :root{
-    /* Canonical brand palette */
-    --ha-ash:        #CAD2C5;
-    --ha-teal:       #84A98C;
-    --ha-teal-deep:  #52796F;
-    --ha-slate:      #354F52;
-    --ha-charcoal:   #2F3E46;
-    --ha-white:      #FFFFFF;
-    --ha-rule:       rgba(53,79,82,.18);
-    --ha-rule-dark:  rgba(202,210,197,.18);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hawaiʻi Appleseed — Advancing Economic Justice</title>
+  <meta name="description" content="Hawaiʻi Appleseed Center for Law &amp; Economic Justice — advancing economic justice for and with the people of Hawaiʻi." />
 
-    /* Legacy alias names — map to brand palette. Kept so existing usages
-       resolve to the right brand color without sweeping selector edits. */
-    --sage-50:  #F4F7F2;
-    --sage-100: #E8EEE4;
-    --sage-200: var(--ha-ash);
-    --sage-300: var(--ha-teal);
-    --sage-400: var(--ha-teal);
-    --sage-500: var(--ha-teal-deep);
-    --sage-600: var(--ha-teal-deep);
-    --sage-700: var(--ha-teal-deep);
-    --sage-800: var(--ha-charcoal);
-    --sage-900: var(--ha-charcoal);
-    --appleseed: var(--ha-teal-deep);
-    --cream:    var(--ha-white);
-    --ink:      var(--ha-charcoal);
-    --rule:     var(--ha-rule);
-    --accent:   var(--ha-teal);
-  }
+  <!-- Brand fonts: Fraunces (display + italic accents), Manrope (UI labels), Poppins (body). -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..400&family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
-  *,*::before,*::after{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  html{scroll-behavior:auto}
-  body{
-    font-family:'Manrope', system-ui, -apple-system, Helvetica, Arial, sans-serif;
-    color:var(--ink);
-    background:var(--cream);
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-  }
-  a{color:inherit;text-decoration:none}
-  img{display:block;max-width:100%}
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ========== Announcement bar (retained from original) ========== */
-  .announce{
-    background:var(--ha-charcoal);color:var(--ha-white);
-    font:500 13px/1.4 'Poppins',sans-serif;letter-spacing:.01em;
-    padding:10px 18px;text-align:center;position:fixed;
-    top:0;left:0;right:0;z-index:50;
-  }
-  .announce a{text-decoration:underline}
-  .announce .x{position:absolute;right:14px;top:50%;transform:translateY(-50%);opacity:.7;cursor:pointer}
-
-  /* ========== Nav (height matched to other pages: 73px) ========== */
-  .nav{
-    background:var(--ha-white);
-    border-bottom:1px solid var(--ha-rule);
-    padding:16px 28px;
-    display:flex;align-items:center;justify-content:space-between;
-    gap:24px;
-    position:fixed; top:38px; left:0; right:0; z-index:40;
-  }
-  .brand{display:flex;align-items:center;gap:12px}
-  .brand-mark{width:40px;height:40px;position:relative;flex:none}
-  .brand-mark svg{width:100%;height:100%;display:block}
-  .brand-text{line-height:1}
-  .brand-text .name{
-    font-family:'Poppins',sans-serif;
-    font-weight:700;letter-spacing:.14em;
-    font-size:18px; color:var(--ha-teal-deep);
-  }
-  .brand-text .tag{
-    font-family:'Poppins',sans-serif;
-    font-size:9px; letter-spacing:.26em;
-    color:var(--ha-teal-deep); margin-top:3px;
-  }
-  .nav-links{
-    display:flex; flex-wrap:nowrap; align-items:center;
-    gap:20px; justify-content:flex-end; flex:1;
-    font-family:'Poppins',sans-serif; font-size:14px; font-weight:500;
-    color:var(--ha-charcoal);
-    white-space:nowrap;
-  }
-  @media (max-width:1100px) { .nav-links a:not(:nth-child(-n+5)) { display:none; } }
-  @media (max-width:900px)  { .nav-links { display:none; } }
-  .nav-links a:hover{color:var(--ha-teal-deep)}
-  .nav-right{display:flex;align-items:center;gap:14px}
-  .social{display:flex;gap:10px;color:var(--ha-charcoal)}
-  .social svg{width:16px;height:16px}
-  .donate-btn{
-    background:var(--ha-charcoal);color:var(--ha-white);padding:9px 20px;
-    font-family:'Poppins',sans-serif; font-weight:500; font-size:14px;
-    border-radius:2px;
-  }
-  .donate-btn:hover{background:var(--ha-teal-deep)}
-
-  /* ========== HERO / ZOOM ========== */
-  /* The wrap + stage must be TRANSPARENT — the SVG mask layer (z:8) provides
-     the slate color via its full-viewport rect, and its d-shaped hole reveals
-     the portal-behind (z:1) underneath. Giving the stage its own opaque slate
-     bg would defeat the mask hole. */
-  .hero-zoom-wrap{
-    position:relative;
-    height:380vh;
-    background:transparent;
-  }
-  .hero-zoom-stage{
-    position:fixed;
-    top:0; left:0; right:0;
-    height:100vh;
-    overflow:hidden;
-    background:transparent;
-    z-index:5; /* nav (z:40) sits above; reveal/issues scroll over it */
-  }
-  .zoom-d{ position:relative; display:inline-block; }
-  .d-portal{ display:none; }
-
-  /* Portal reveal: a layer BEHIND the hero that shows through the "d" shaped hole */
-  .portal-behind{
-    position:fixed; inset:0;
-    background: var(--ha-white);
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; padding: 0 40px;
-    z-index: 1; /* below the hero stage (z:5), but visible through the mask hole */
-    pointer-events:none;
-  }
-  .portal-behind .eyebrow{
-    font-family:'Poppins',sans-serif; text-transform:uppercase;
-    letter-spacing:.32em; font-size:12px; color:var(--ha-teal-deep);
-    margin-bottom: 20px;
-  }
-  .portal-behind h2{
-    font-family:'Manrope', sans-serif; font-weight:700;
-    font-size: clamp(38px, 5vw, 72px); line-height:1.05;
-    letter-spacing:-0.025em; color:var(--ha-charcoal);
-    margin:0; max-width: 22ch;
-  }
-  /* SVG mask layer that sits ON TOP of the hero, with a d-shaped hole.
-     Everything outside the hole shows the teal hero overlay; the hole lets the
-     white portal-behind layer show through. */
-  .mask-layer{
-    position:absolute; inset:0;
-    z-index: 8;
-    pointer-events:none;
-  }
-  .mask-layer svg{ width:100%; height:100%; display:block; }
-  /* islands watermark */
-  .hero-islands{
-    position:absolute; inset:0; z-index:0;
-    display:flex; align-items:center; justify-content:center;
-    pointer-events:none;
-    padding: 80px 40px 0;
-  }
-  .hero-islands img{
-    width:58%; height:auto; max-height:80%;
-    object-fit:contain;
-    filter:brightness(0) saturate(100%) invert(86%) sepia(14%) saturate(470%) hue-rotate(42deg) brightness(94%) contrast(88%);
-    opacity:.13;
-  }
-  /* eyebrow — pinned near top, below the sticky nav */
-  .hero-eyebrow{
-    position:absolute; top:110px; left:50%; transform:translateX(-50%);
-    z-index:10; white-space:nowrap;
-    font-family:'Poppins',sans-serif; text-transform:uppercase;
-    letter-spacing:.32em; font-size:12px; color:var(--ha-ash);
-    display:flex; align-items:center; gap:14px;
-  }
-  .hero-eyebrow::before,.hero-eyebrow::after{ content:""; width:36px; height:1px; background:var(--ha-ash); }
-  /* headline — vertically centered, slightly higher */
-  .hero-h1{
-    position:absolute; top:46%; left:50%;
-    transform:translate(-50%,-50%);
-    z-index:10; text-align:center;
-    font-family:'Manrope',sans-serif; font-weight:700;
-    font-size:clamp(38px,5vw,80px); line-height:1.05;
-    letter-spacing:-0.025em; color:#fff;
-    margin:0; padding:0;
-    white-space:nowrap;
-  }
-  .hero-h1 .line{ display:block; }
-  .zoom-word{
-    display:inline-block;
-    /* Render at a large font-size so the browser rasterizes the glyph at high
-       resolution. JS scales it DOWN to displayScale (~headlineSize/400) at rest,
-       then scales UP toward 1 on scroll — by the time it fills the screen we're
-       at or near native resolution, no pixelation. */
-    font-family:'Manrope',sans-serif;
-    font-size: 400px;
-    line-height: 1;
-    /* Center the 400px-rendered word on line-2's midpoint so the scaled-down
-       word visually sits between the two surrounding headline lines. */
-    vertical-align: middle;
-    color:var(--ha-ash); font-weight:700;
-    transform-origin:50% 50%; will-change:transform;
-    font-variant-ligatures:none; -webkit-font-variant-ligatures:none;
-    font-feature-settings:"liga" 0,"calt" 0;
-  }
-  .hero-h1 .line-2{
-    display:block;
-    overflow:visible;
-    /* Lock layout height so the 400px-rendered zoom-word doesn't blow up the
-       h1's box; the scaled-down word overflows visually (origin pinned in JS). */
-    line-height: 1.1em;
-    height: 1.1em;
-  }
-  /* sub-copy — pinned below headline */
-  .hero-sub{
-    position:absolute; top:calc(46% + 160px); left:50%;
-    transform:translateX(-50%);
-    z-index:10; width:100%; max-width:640px;
-    display:flex; flex-direction:column; align-items:center; gap:20px;
-    padding:0 28px;
-  }
-  .hero-sub p{
-    max-width:52ch; font-size:17px; line-height:1.6;
-    color:rgba(255,255,255,.82); margin:0; text-align:center;
-  }
-  .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
-  .btn{
-    display:inline-flex;align-items:center;gap:10px;
-    padding:16px 24px;
-    font-family:'Poppins',sans-serif; font-size:14px;
-    letter-spacing:.04em; font-weight:500;
-    border:1px solid transparent; cursor:pointer;
-    transition:transform .2s, background .2s, color .2s;
-  }
-  .btn-primary{background:var(--ha-white);color:var(--ha-charcoal)}
-  .btn-primary:hover{background:var(--ha-teal);color:var(--ha-charcoal)}
-  .btn-ghost{background:transparent;color:var(--ha-white);border-color:rgba(255,255,255,.4)}
-  .btn-ghost:hover{border-color:var(--ha-white); background:rgba(255,255,255,.08)}
-  .btn svg{width:14px;height:14px}
-
-  /* Hawaii islands illustration — used in issues panels only */
-  .islands{ display:none; }
-
-  /* Scroll cue */
-  .scroll-cue{
-    position:absolute;left:72px;bottom:28px;
-    z-index:10;
-    font-family:'Poppins',sans-serif;font-size:11px;letter-spacing:.3em;
-    text-transform:uppercase;color:rgba(255,255,255,.7);
-    display:flex;align-items:center;gap:10px;
-  }
-  .scroll-cue .dot{
-    width:1px;height:28px;background:rgba(255,255,255,.5);
-    display:inline-block;animation:drop 1.8s infinite;
-  }
-  @keyframes drop{0%{transform:scaleY(.3);transform-origin:top}50%{transform:scaleY(1)}100%{transform:scaleY(.3);transform-origin:bottom}}
-
-  /* ========== ZOOM SECTION (old standalone section — now merged into hero) ========== */
-  .zoom-wrap{ display:none }
-  .zoom-stage{ display:none }
-  .zoom-text{ display:none }
-  /* The portal "o" — plain, no distortion */
-  .portal-o{ display:inline; }
-
-  /* ========== REVEALED SECTION (inside the "d") ========== */
-  .reveal{
-    position:relative; z-index:10;
-    background:var(--ha-white);
-    padding: 90px 72px 40px;
-  }
-  .reveal .eyebrow{
-    font-family:'Poppins',sans-serif;
-    text-transform:uppercase; letter-spacing:.3em;
-    font-size:12px; color:var(--ha-teal-deep);
-    margin-bottom:22px;
-  }
-  .reveal h2{
-    font-family:'Manrope',sans-serif; font-weight:700;
-    font-size: clamp(36px, 4.5vw, 64px);
-    line-height:1.05; letter-spacing:-0.025em;
-    margin:0 0 22px; max-width: 22ch;
-    color:var(--ha-charcoal);
-  }
-  .reveal .sub{
-    max-width:62ch; font-size:17px; line-height:1.6;
-    color:var(--ha-slate);
-  }
-  /* Methodology + commitment feature block — replaces the prior
-     placeholder-image .reveal-media. Renders as a brand-gradient
-     banner with four methodology tags above an editorial italic
-     commitment statement. No 16:7 aspect-ratio constraint — height
-     is content-driven so the block stays in proportion to the
-     statement length. */
-  .reveal-feature{
-    margin-top:48px;
-    position:relative; border-radius:4px; overflow:hidden;
-    padding:54px 56px;
-    background: linear-gradient(135deg, var(--ha-ash), var(--ha-teal) 50%, var(--ha-teal-deep));
-    text-align:center;
-  }
-  .reveal-feature::before{
-    /* Subtle 135deg stripe overlay echoing the prior visual texture
-       at much lower opacity (5% instead of 6% over a tighter pitch). */
-    content:""; position:absolute; inset:0; pointer-events:none;
-    background-image: repeating-linear-gradient(135deg,
-      rgba(255,255,255,.05) 0 18px,
-      rgba(255,255,255,0)  18px 36px);
-  }
-  .reveal-feature-tags{
-    display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
-    margin-bottom:32px; position:relative;
-  }
-  .reveal-tag{
-    background:var(--ha-white); padding:8px 14px; border-radius:2px;
-    font-family:'Poppins',sans-serif; font-size:11px; font-weight:600;
-    letter-spacing:.22em; text-transform:uppercase;
-    color:var(--ha-teal-deep);
-  }
-  .reveal-feature-quote{
-    position:relative;
-    margin:0 auto 28px; max-width:38ch;
-    font-family:'Fraunces',Georgia,serif; font-weight:500;
-    font-size:clamp(22px, 2.4vw, 30px); line-height:1.35;
-    color:var(--ha-white);
-  }
-  .reveal-feature-quote em{
-    font-style:italic; color:var(--ha-ash);
-  }
-  .reveal-feature-cta{
-    position:relative;
-    display:inline-block;
-    font-family:'Poppins',sans-serif; font-size:12px; font-weight:600;
-    letter-spacing:.22em; text-transform:uppercase;
-    color:var(--ha-white);
-    border-bottom:2px solid rgba(255,255,255,.45);
-    padding-bottom:6px;
-    transition: border-color .2s, transform .2s;
-  }
-  .reveal-feature-cta:hover{
-    border-color:var(--ha-white);
-  }
-
-  /* ========== ISSUES TABS ========== */
-  .issues{
-    background:var(--ha-white);
-    position:relative; z-index:10;
-    padding: 120px 72px 140px;
-  }
-  .issues-head{
-    display:flex; align-items:flex-end; justify-content:space-between;
-    gap:40px; margin-bottom:46px; flex-wrap:wrap;
-  }
-  .issues-head h2{
-    font-family:'Manrope',sans-serif; font-weight:700;
-    font-size: clamp(34px, 3.8vw, 52px);
-    letter-spacing:-0.025em; line-height:1.05;
-    margin:0; max-width:18ch; color:var(--ha-charcoal);
-  }
-  .issues-head .mini{
-    max-width:38ch; font-size:16px;line-height:1.55; color:var(--ha-slate);
-  }
-
-  /* ========== IMPACT STATS BAND (between Reveal and Issues) ========== */
-  .impact-band{
-    background: var(--ha-charcoal);
-    padding: 56px 72px;
-    position:relative; z-index:10;
-  }
-  .impact-band-inner{
-    max-width:1200px; margin:0 auto;
-    display:grid; grid-template-columns:repeat(4,1fr); gap:24px;
-    align-items:center;
-  }
-  .impact-stat{
-    text-align:center;
-    padding:0 8px;
-    border-right:1px solid rgba(202,210,197,.18);
-  }
-  .impact-stat:last-child{ border-right:none; }
-  .impact-num{
-    display:block;
-    font-family:'Manrope',sans-serif; font-weight:800;
-    font-size:clamp(40px, 5vw, 64px); line-height:1;
-    letter-spacing:-0.04em; color:var(--ha-ash);
-    margin-bottom:10px;
-  }
-  .impact-lbl{
-    display:block;
-    font-family:'Poppins',sans-serif; font-size:11px; font-weight:600;
-    letter-spacing:.22em; text-transform:uppercase;
-    color: rgba(202,210,197,.72);
-  }
-
-  /* ========== ISSUE CARD GRID (replaces tabs+panels) ========== */
-  .issues-grid{
-    display:grid; grid-template-columns:repeat(2,1fr);
-    gap:24px;
-  }
-  .issue-card{
-    position:relative;
-    display:flex; flex-direction:column;
-    background:var(--ha-white);
-    border:1px solid var(--ha-rule);
-    border-top:4px solid var(--ha-teal-deep);
-    border-radius:4px;
-    padding:32px 32px 28px;
-    text-decoration:none;
-    transition: transform .25s cubic-bezier(.22,.61,.36,1),
-                box-shadow .25s cubic-bezier(.22,.61,.36,1),
-                border-color .25s;
-  }
-  .issue-card:hover{
-    transform: translateY(-3px);
-    box-shadow: 0 14px 36px rgba(47,62,70,.10);
-    border-color: var(--ha-teal);
-    border-top-color: var(--ha-teal-deep);
-  }
-  .issue-card-num{
-    display:block;
-    font-family:'Poppins',sans-serif; font-size:11px; font-weight:600;
-    letter-spacing:.32em; text-transform:uppercase;
-    color:var(--ha-teal-deep); opacity:.7;
-    margin-bottom:14px;
-  }
-  .issue-card h3{
-    font-family:'Manrope',sans-serif; font-weight:800;
-    font-size:clamp(26px, 2.6vw, 34px);
-    line-height:1.1; letter-spacing:-0.025em;
-    color:var(--ha-charcoal);
-    margin:0 0 14px;
-  }
-  .issue-card p{
-    font-family:'Fraunces',Georgia,serif; font-style:italic; font-weight:500;
-    font-size:17px; line-height:1.4;
-    color:var(--ha-teal-deep);
-    margin:0 0 24px;
-  }
-  .issue-card-stat{
-    display:flex; align-items:baseline; gap:14px;
-    padding-top:20px;
-    border-top:1px solid var(--ha-rule);
-    margin-bottom:22px;
-  }
-  .issue-card-stat-num{
-    font-family:'Manrope',sans-serif; font-weight:800;
-    font-size:36px; line-height:1; letter-spacing:-0.03em;
-    color:var(--ha-teal-deep);
-    flex-shrink:0;
-  }
-  .issue-card-stat-lbl{
-    font-family:'Poppins',sans-serif; font-size:13px;
-    line-height:1.4; color:var(--ha-slate);
-    max-width:24ch;
-  }
-  .issue-card-cta{
-    font-family:'Poppins',sans-serif; font-size:12px; font-weight:600;
-    letter-spacing:.22em; text-transform:uppercase;
-    color:var(--ha-teal-deep);
-    margin-top:auto;
-    transition: gap .2s;
-  }
-  .issue-card:hover .issue-card-cta{ color:var(--ha-charcoal); }
-
-  /* ========== DATA TOOLS ========== */
-  .data-tools{
-    background:var(--ha-ash);
-    position:relative; z-index:10;
-    padding:100px 72px;
-  }
-  .data-tools-inner{max-width:1200px;margin:0 auto;}
-  .data-tools-head{margin-bottom:52px;}
-  .data-tools-head .eyebrow{
-    font-family:'Poppins',sans-serif;
-    font-size:11px;letter-spacing:.32em;text-transform:uppercase;
-    color:var(--ha-teal-deep);margin-bottom:14px;display:block;
-  }
-  .data-tools-head h2{
-    font-family:'Manrope',sans-serif;font-weight:700;
-    font-size:clamp(32px,3.4vw,46px);letter-spacing:-0.025em;
-    color:var(--ha-charcoal);margin:0 0 14px;
-  }
-  .data-tools-head p{
-    font-size:16px;line-height:1.6;color:var(--ha-slate);max-width:52ch;
-  }
-  .data-tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  .data-card{
-    background:var(--ha-white);border-radius:4px;
-    overflow:hidden;display:flex;flex-direction:column;
-    text-decoration:none;
-    box-shadow:0 2px 12px rgba(47,62,70,.06);
-    transition:transform .22s ease,box-shadow .22s ease;
-  }
-  .data-card:hover{transform:translateY(-5px);box-shadow:0 18px 52px rgba(47,62,70,.14);}
-  .data-card-visual{
-    height:200px;position:relative;overflow:hidden;
-  }
-  .data-card-visual img{
-    width:100%;height:100%;object-fit:cover;object-position:top left;
-    display:block;transition:transform .4s ease;
-  }
-  .data-card:hover .data-card-visual img{transform:scale(1.04);}
-  /* Card body */
-  .data-card-body{padding:24px 28px 28px;flex:1;display:flex;flex-direction:column;}
-  .data-card-tag{
-    font-family:'Poppins',sans-serif;
-    font-size:10px;letter-spacing:.26em;text-transform:uppercase;
-    color:var(--ha-teal-deep);font-weight:600;display:block;margin-bottom:10px;
-  }
-  .data-card h3{
-    font-family:'Manrope',sans-serif;font-weight:700;
-    font-size:21px;letter-spacing:-0.015em;line-height:1.2;
-    color:var(--ha-charcoal);margin:0 0 10px;
-  }
-  .data-card p{font-size:14px;line-height:1.65;color:var(--ha-slate);margin:0 0 20px;flex:1;}
-  .data-card-cta{
-    font-family:'Poppins',sans-serif;font-size:13px;font-weight:500;
-    letter-spacing:.04em;color:var(--ha-teal-deep);
-    border-bottom:1.5px solid var(--ha-teal);padding-bottom:2px;align-self:flex-start;
-  }
-  .data-card:hover .data-card-cta{color:var(--ha-charcoal);border-color:var(--ha-charcoal);}
-
-  /* ========== FOOTER minimal ========== */
-  footer{
-    position:relative; z-index:10;
-    background:var(--ha-charcoal); color:var(--ha-ash);
-    padding:56px 72px 40px;
-    font-family:'Poppins',sans-serif; font-size:13px;
-    display:flex; justify-content:space-between; gap:40px; flex-wrap:wrap;
-  }
-  footer a:hover{color:var(--ha-white)}
-
-  /* ========== RESPONSIVE ========== */
-  @media (max-width: 980px){
-    .hero{padding:72px 22px 90px}
-    .reveal,.issues{padding:72px 28px}
-    .reveal-feature{padding:40px 28px;}
-    .reveal-feature-quote{font-size:clamp(20px,2.2vw,26px);}
-    .impact-band{padding:40px 28px;}
-    .impact-band-inner{
-      grid-template-columns:repeat(2,1fr); gap:32px 16px;
+    :root {
+      /* Brand palette — Hawaiʻi Appleseed Brand Guide (Ash/Teal/Slate/Charcoal). */
+      --teal:       #84A98C;   /* Muted Teal — primary brand color */
+      --deep-teal:  #52796F;
+      --dark-slate: #354F52;
+      --charcoal:   #2F3E46;
+      --ash:        #CAD2C5;
+      --ash-light:  #E8EDE6;
+      --cream:      #F4F7F5;
+      --white:      #FFFFFF;
     }
-    .impact-stat:nth-child(2){ border-right:none; }
-    .impact-stat{
-      padding-bottom:32px; border-bottom:1px solid rgba(202,210,197,.18);
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', system-ui, -apple-system, Arial, sans-serif;
+      background: var(--white);
+      color: var(--charcoal);
+      overflow-x: hidden;
     }
-    .impact-stat:nth-child(3),
-    .impact-stat:nth-child(4){
-      padding-bottom:0; border-bottom:none;
+
+    /* Anchor targets clear the fixed nav. */
+    section[id] { scroll-margin-top: 124px; }
+
+    /* ─────────────────────────────────────
+       SHARED CHROME (announce + nav) — mirrors support.html / our-mission.html
+    ───────────────────────────────────── */
+    .px-announce{
+      background:#2F3E46;color:#fff;
+      font:500 13px/1.4 'Poppins',sans-serif;letter-spacing:.01em;
+      padding:10px 18px;text-align:center;
+      position:fixed;top:0;left:0;right:0;z-index:50;
     }
-    .issues-grid{grid-template-columns:1fr; gap:18px;}
-    .issue-card{padding:26px 24px 22px;}
-    .nav{padding:14px 20px}
-    .nav-links{display:none}
-    footer{padding:40px 24px}
-    .scroll-cue{left:28px}
-    .data-tools{padding:72px 20px;}
-    .data-tools-grid{grid-template-columns:1fr;}
-  }
-  @media(max-width:980px) and (min-width:601px){
-    .data-tools-grid{grid-template-columns:repeat(2,1fr);}
-  }
-</style>
+    .px-announce a{color:#fff;text-decoration:underline}
+    .px-announce .x{position:absolute;right:14px;top:50%;transform:translateY(-50%);opacity:.7;cursor:pointer}
+    .px-nav{
+      background:#fff;border-bottom:1px solid rgba(53,79,82,.15);
+      padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px;
+      position:fixed;top:38px;left:0;right:0;z-index:49;
+      font-family:'Poppins',sans-serif;
+    }
+    .px-nav .px-brand{display:flex;align-items:center;gap:12px;flex:none;}
+    .px-nav .px-brand-mark{width:40px;height:40px;flex:none;}
+    .px-nav .px-brand-mark svg{width:100%;height:100%;display:block;}
+    .px-nav .px-brand-text{line-height:1;}
+    .px-nav .px-brand-name{font-family:'Poppins',sans-serif;font-weight:700;letter-spacing:.14em;font-size:18px;color:#52796F;}
+    .px-nav .px-brand-tag{font-family:'Poppins',sans-serif;font-size:9px;letter-spacing:.26em;color:#52796F;margin-top:3px;}
+    .px-nav .px-links{display:none;gap:20px;font-size:14px;font-weight:500;color:#2F3E46;flex:1;justify-content:flex-end;flex-wrap:nowrap;white-space:nowrap;}
+    .px-nav .px-links a{color:inherit;text-decoration:none;}
+    .px-nav .px-links a:hover{color:#52796F}
+    .px-nav .px-links a.active{color:#52796F;font-weight:600;}
+    @media (min-width:900px){ .px-nav .px-links{display:flex} }
+
+    .px-dropdown{position:relative;}
+    .px-dropdown-trigger{background:none;border:none;cursor:pointer;padding:0;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;color:#2F3E46;display:flex;align-items:center;gap:5px;line-height:1;}
+    .px-dropdown-trigger:hover,.px-dropdown-trigger.active{color:#52796F;}
+    .px-dropdown-trigger.active{font-weight:600;}
+    .px-chevron{font-size:9px;transition:transform .2s;display:inline-block;margin-top:1px;}
+    .px-dropdown.is-open .px-chevron{transform:rotate(180deg);}
+    .px-dropdown-menu{display:none;position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid rgba(53,79,82,.12);border-radius:3px;box-shadow:0 8px 24px rgba(47,62,70,.12);min-width:170px;z-index:100;padding:6px 0;}
+    .px-dropdown.is-open .px-dropdown-menu{display:block;}
+    .px-dropdown-menu a{display:block;padding:9px 18px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;color:#2F3E46;text-decoration:none;white-space:nowrap;transition:background .15s,color .15s;}
+    .px-dropdown-menu a:hover{background:rgba(132,169,140,.1);color:#52796F;}
+    .px-dropdown-menu a.active{color:#52796F;font-weight:600;}
+    .px-nav-right{display:flex;align-items:center;gap:14px;flex:none;}
+    .px-social{display:flex;gap:10px;color:#2F3E46;}
+    .px-social svg{width:16px;height:16px;}
+    .px-donate-btn{background:#2F3E46;color:#fff;padding:9px 20px;font-family:'Poppins',sans-serif;font-weight:500;font-size:14px;border-radius:2px;text-decoration:none;}
+    .px-donate-btn:hover{background:#52796F;}
+
+    /* ─────────────────────────────────────
+       SHARED PRIMITIVES (from support.html)
+    ───────────────────────────────────── */
+    .btn {
+      display:inline-block;font-family:'Manrope',sans-serif;font-size:0.82rem;font-weight:600;
+      letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;
+      padding:0.95rem 2rem;cursor:pointer;border:none;transition:all 0.28s ease;
+    }
+    .btn-solid { background:var(--teal); color:var(--charcoal); }
+    .btn-solid:hover { background:var(--ash); }
+    .btn-ghost { background:transparent; color:var(--white); border:1px solid rgba(255,255,255,0.28); }
+    .btn-ghost:hover { border-color:var(--teal); color:var(--teal); }
+    .btn-dark { background:var(--charcoal); color:var(--white); }
+    .btn-dark:hover { background:var(--dark-slate); }
+
+    .eyebrow {
+      font-family:'Manrope',sans-serif;font-size:0.7rem;font-weight:600;
+      letter-spacing:0.28em;text-transform:uppercase;color:var(--teal);
+      display:flex;align-items:center;gap:0.85rem;margin-bottom:2rem;
+    }
+    .eyebrow::before { content:''; width:36px; height:1px; background:var(--teal); flex-shrink:0; }
+
+    .section-label {
+      font-family:'Manrope',sans-serif;font-size:0.68rem;font-weight:600;
+      letter-spacing:0.28em;text-transform:uppercase;color:var(--teal);
+      display:flex;align-items:center;gap:0.85rem;margin-bottom:1.1rem;
+    }
+    .section-label::before { content:''; width:28px; height:1px; background:var(--teal); }
+    .section-label.light { color:rgba(202,210,197,0.72); }
+    .section-label.light::before { background:rgba(202,210,197,0.5); }
+
+    .section-title {
+      font-family:'Fraunces',Georgia,serif;font-weight:300;
+      font-size:clamp(2.2rem, 4vw, 3.5rem);line-height:1.15;color:var(--charcoal);
+    }
+    .section-title.on-dark { color:var(--white); }
+
+    .ways-header { display:flex; flex-direction:column; margin-bottom:4rem; }
+
+    .way-link {
+      font-family:'Manrope',sans-serif;font-size:0.72rem;font-weight:600;
+      letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);
+      text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:gap 0.3s ease;
+    }
+    .way-link::after { content:'→'; }
+    .way-link:hover { gap:1rem; }
+
+    /* ─────────────────────────────────────
+       SECTION 1 — HERO (full-screen video)
+    ───────────────────────────────────── */
+    .ha-home__hero {
+      min-height:100vh;background:var(--charcoal);
+      display:flex;flex-direction:column;justify-content:center;
+      position:relative;overflow:hidden;
+    }
+    /* z0: gradient fallback — shows if the video/poster ever fail to load. */
+    .ha-home__hero::before {
+      content:'';position:absolute;inset:0;z-index:0;
+      background:
+        radial-gradient(ellipse 70% 55% at 75% 35%, rgba(132,169,140,0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 70% at 8% 85%,  rgba(82,121,111,0.14)  0%, transparent 55%);
+    }
+    .ha-home__hero-video {
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;z-index:0;
+    }
+    .ha-home__hero-scrim {
+      position:absolute;inset:0;z-index:1;
+      background:linear-gradient(180deg, rgba(47,62,70,0.58) 0%, rgba(47,62,70,0.32) 45%, rgba(47,62,70,0.74) 100%);
+    }
+    .hero-inner { position:relative; z-index:2; padding:9.5rem 8% 6rem; max-width:780px; }
+    .ha-home__hero h1 {
+      font-family:'Fraunces',Georgia,serif;font-weight:300;
+      font-size:clamp(3.2rem, 7.5vw, 6.5rem);line-height:1.04;
+      color:var(--white);margin-bottom:2rem;
+    }
+    .ha-home__hero h1 em { font-style:italic; color:var(--teal); }
+    .hero-sub {
+      font-family:'Poppins',sans-serif;font-size:1.05rem;font-weight:300;line-height:1.75;
+      color:rgba(255,255,255,0.7);max-width:540px;margin-bottom:3rem;
+    }
+    .hero-actions { display:flex; gap:1rem; flex-wrap:wrap; }
+
+    /* ─────────────────────────────────────
+       SECTION 2 — MISSION BAND
+    ───────────────────────────────────── */
+    .ha-home__mission { background:var(--teal); padding:6rem 8%; text-align:center; }
+    .ha-home__mission h2 {
+      font-family:'Fraunces',Georgia,serif;font-weight:400;
+      font-size:clamp(2rem, 3.6vw, 3rem);line-height:1.3;color:var(--charcoal);
+      max-width:26ch;margin:0 auto;
+    }
+    .ha-home__mission h2 em { font-style:italic; color:var(--dark-slate); }
+
+    /* ─────────────────────────────────────
+       SECTION 3 — ISSUE AREAS OVERVIEW (all five)
+    ───────────────────────────────────── */
+    .ha-home__issues { background:var(--white); padding:7rem 8%; }
+    .ha-home__issue-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+    .ha-home__issue-card {
+      --accent:var(--deep-teal);
+      position:relative;display:flex;flex-direction:column;
+      background:var(--white);border:1px solid var(--ash-light);border-radius:4px;
+      padding:2.5rem 2rem;text-decoration:none;overflow:hidden;
+      transition:background .35s ease, border-color .35s ease, transform .25s ease;
+    }
+    .ha-home__issue-card[data-accent="slate"] { --accent:var(--dark-slate); }
+    .ha-home__issue-card::after {
+      content:'';position:absolute;left:0;bottom:0;height:3px;width:0;
+      background:var(--accent);transition:width .4s ease;
+    }
+    .ha-home__issue-card:hover { background:var(--cream); border-color:var(--accent); }
+    .ha-home__issue-card:hover::after { width:100%; }
+    .ha-home__issue-icon {
+      display:inline-flex;width:50px;height:50px;align-items:center;justify-content:center;
+      background:var(--ash-light);border-radius:8px;color:var(--accent);margin-bottom:1.4rem;
+    }
+    .ha-home__issue-icon svg { width:26px; height:26px; }
+    .ha-home__issue-card h3 {
+      font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.5rem;
+      color:var(--charcoal);margin-bottom:0.6rem;line-height:1.2;
+    }
+    .ha-home__issue-card p {
+      font-family:'Poppins',sans-serif;font-size:0.9rem;line-height:1.65;
+      color:var(--deep-teal);margin-bottom:1.4rem;flex:1;
+    }
+    .ha-home__issue-card .way-link { color:var(--accent); }
+
+    /* ─────────────────────────────────────
+       SECTION 4 — IMPACT / DATA FEATURE
+    ───────────────────────────────────── */
+    .ha-home__impact { background:var(--charcoal); padding:7rem 8%; position:relative; overflow:hidden; }
+    .ha-home__impact::before, .ha-home__impact::after {
+      content:'';position:absolute;border-radius:50%;border:1px solid rgba(132,169,140,0.08);
+    }
+    .ha-home__impact::before { width:560px;height:560px;top:-180px;right:-180px; }
+    .ha-home__impact::after  { width:380px;height:380px;bottom:-80px;left:-80px; }
+    .ha-home__impact-head { position:relative; z-index:1; margin-bottom:1rem; }
+    .ha-home__impact-sub {
+      position:relative;z-index:1;font-family:'Poppins',sans-serif;font-size:1rem;font-weight:300;
+      line-height:1.8;color:rgba(255,255,255,0.55);max-width:560px;margin:0 0 3.5rem;
+    }
+    .ha-home__impact-grid {
+      display:grid;grid-template-columns:1fr 1.25fr;gap:4rem;align-items:center;
+      position:relative;z-index:1;
+    }
+    .ha-home__stats { display:grid; grid-template-columns:1fr 1fr; gap:2.6rem 2rem; }
+    .ha-home__stat-num {
+      font-family:'Manrope',sans-serif;font-weight:800;
+      font-size:clamp(2.6rem, 4vw, 3.6rem);line-height:1;letter-spacing:-0.03em;
+      color:var(--ash);display:block;margin-bottom:0.4rem;
+    }
+    .ha-home__stat-lbl {
+      font-family:'Manrope',sans-serif;font-size:0.7rem;font-weight:600;
+      letter-spacing:0.16em;text-transform:uppercase;color:rgba(202,210,197,0.72);
+    }
+    .ha-home__dash {
+      display:block;border:1px solid rgba(132,169,140,0.25);border-radius:4px;overflow:hidden;
+      transition:border-color .3s ease, transform .3s ease;
+    }
+    .ha-home__dash:hover { border-color:rgba(132,169,140,0.55); transform:translateY(-3px); }
+    .ha-home__dash img { width:100%; display:block; }
+    .ha-home__dash-cta {
+      display:block;text-align:center;padding:1rem;background:var(--teal);color:var(--charcoal);
+      font-family:'Manrope',sans-serif;font-weight:600;font-size:0.76rem;letter-spacing:0.1em;text-transform:uppercase;
+    }
+    .ha-home__dash:hover .ha-home__dash-cta { background:var(--ash); }
+
+    /* ─────────────────────────────────────
+       SECTION 5 — STORY / WHO WE ARE
+    ───────────────────────────────────── */
+    .ha-home__story { background:var(--cream); padding:7rem 8%; }
+    .ha-home__story-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+    .ha-home__story-media img {
+      width:100%;height:100%;object-fit:cover;border-radius:4px;aspect-ratio:4/3;display:block;
+    }
+    .ha-home__story-text p {
+      font-family:'Poppins',sans-serif;font-size:1rem;line-height:1.85;
+      color:var(--deep-teal);margin:1.5rem 0 2rem;max-width:48ch;
+    }
+
+    /* ─────────────────────────────────────
+       SECTION 6 — LATEST FROM HAWAIʻI APPLESEED
+    ───────────────────────────────────── */
+    .ha-home__latest { background:var(--white); padding:7rem 8%; }
+    .ha-home__latest-head {
+      display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;
+      flex-wrap:wrap;margin-bottom:3rem;
+    }
+    .ha-home__latest-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+    .ha-home__latest-card {
+      display:flex;flex-direction:column;background:var(--white);
+      border:1px solid var(--ash-light);border-radius:4px;overflow:hidden;text-decoration:none;
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .ha-home__latest-card:hover { transform:translateY(-4px); box-shadow:0 14px 36px rgba(47,62,70,0.1); }
+    .ha-home__latest-thumb { aspect-ratio:16/10; overflow:hidden; background:var(--ash-light); }
+    .ha-home__latest-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+    .ha-home__latest-body { display:flex; flex-direction:column; flex:1; padding:1.6rem 1.5rem 1.8rem; }
+    .ha-home__latest-meta { display:flex; align-items:center; gap:0.75rem; margin-bottom:0.8rem; flex-wrap:wrap; }
+    .ha-home__latest-cat {
+      font-family:'Manrope',sans-serif;font-size:0.65rem;font-weight:600;
+      letter-spacing:0.14em;text-transform:uppercase;color:var(--deep-teal);
+    }
+    .ha-home__latest-date { font-family:'Manrope',sans-serif;font-size:0.7rem;color:rgba(47,62,70,0.5); }
+    .ha-home__latest-card h3 {
+      font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.2rem;line-height:1.25;
+      color:var(--charcoal);margin-bottom:0.6rem;
+    }
+    .ha-home__latest-card p {
+      font-family:'Poppins',sans-serif;font-size:0.85rem;line-height:1.6;
+      color:var(--deep-teal);margin-bottom:1.2rem;flex:1;
+    }
+    .ha-home__latest-loading {
+      grid-column:1 / -1;padding:1.5rem 0;font-family:'Poppins',sans-serif;
+      font-size:0.92rem;color:var(--deep-teal);
+    }
+    .ha-home__latest-loading a { color:var(--deep-teal); }
+
+    /* ─────────────────────────────────────
+       SECTION 7 — GET INVOLVED
+    ───────────────────────────────────── */
+    .ha-home__involve { background:var(--dark-slate); padding:7rem 8%; }
+    .ha-home__involve-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
+    .ha-home__involve-card {
+      position:relative;display:flex;flex-direction:column;
+      border:1px solid rgba(132,169,140,0.22);border-radius:4px;padding:2.6rem 2rem;
+      text-decoration:none;transition:background .35s ease, border-color .35s ease;
+    }
+    .ha-home__involve-card::before {
+      content:'';position:absolute;top:0;left:0;right:0;height:2px;background:transparent;transition:background .35s ease;
+    }
+    .ha-home__involve-card:hover { background:rgba(132,169,140,0.08); border-color:rgba(132,169,140,0.5); }
+    .ha-home__involve-card:hover::before { background:var(--teal); }
+    .ha-home__involve-num {
+      font-family:'Fraunces',Georgia,serif;font-weight:300;font-size:2.6rem;
+      color:rgba(202,210,197,0.6);line-height:1;margin-bottom:1rem;
+    }
+    .ha-home__involve-card h3 {
+      font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:1.5rem;
+      color:var(--white);margin-bottom:0.7rem;
+    }
+    .ha-home__involve-card p {
+      font-family:'Poppins',sans-serif;font-size:0.9rem;line-height:1.7;
+      color:rgba(255,255,255,0.55);margin-bottom:1.4rem;flex:1;
+    }
+    .ha-home__involve-card .way-link { color:var(--teal); }
+
+    /* ─────────────────────────────────────
+       SECTION 8 — FOOTER (px-footer pattern)
+    ───────────────────────────────────── */
+    .px-footer {
+      background:#2F3E46;color:#CAD2C5;padding:60px 28px 40px;
+      font-family:'Poppins',sans-serif;font-size:14px;line-height:1.7;
+    }
+    .px-footer .px-foot-grid { display:grid; grid-template-columns:1fr; gap:32px; max-width:1200px; margin:0 auto 40px; }
+    @media (min-width:760px){ .px-footer .px-foot-grid { grid-template-columns:2fr 1fr 1fr; } }
+    .px-footer h4 {
+      font-family:'Manrope',sans-serif;font-weight:700;color:#fff;margin:0 0 12px;
+      font-size:14px;letter-spacing:.04em;text-transform:uppercase;
+    }
+    .px-footer p { color:#CAD2C5; margin:0 0 16px; font-size:13px; line-height:1.7; max-width:34ch; }
+    .px-footer a { color:#CAD2C5; text-decoration:none; display:block; margin-bottom:6px; }
+    .px-footer a:hover { color:#84A98C; }
+    .px-foot-bottom {
+      max-width:1200px;margin:0 auto;padding-top:24px;border-top:1px solid rgba(202,210,197,.18);
+      display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:12px;
+    }
+
+    /* ─────────────────────────────────────
+       ANIMATION
+    ───────────────────────────────────── */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+    .ha-home__hero .eyebrow      { animation:fadeUp 0.75s ease 0.15s both; }
+    .ha-home__hero h1            { animation:fadeUp 0.75s ease 0.3s both; }
+    .ha-home__hero .hero-sub     { animation:fadeUp 0.75s ease 0.48s both; }
+    .ha-home__hero .hero-actions { animation:fadeUp 0.75s ease 0.62s both; }
+
+    /* ─────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────── */
+    @media (max-width: 900px) {
+      .ha-home__impact-grid,
+      .ha-home__story-grid { grid-template-columns:1fr; gap:3rem; }
+      .ha-home__issue-grid,
+      .ha-home__latest-grid,
+      .ha-home__involve-grid { grid-template-columns:repeat(2,1fr); }
+      .hero-inner { padding:8rem 6% 4rem; }
+    }
+    @media (max-width: 700px) {
+      .ha-home__issues,
+      .ha-home__impact,
+      .ha-home__story,
+      .ha-home__latest,
+      .ha-home__involve { padding:4rem 6%; }
+      .ha-home__mission { padding:4rem 6%; }
+      .ha-home__issue-grid,
+      .ha-home__latest-grid,
+      .ha-home__involve-grid,
+      .ha-home__stats { grid-template-columns:1fr; }
+      .ways-header { margin-bottom:2.5rem; }
+      .ha-home__story-media img { aspect-ratio:16/10; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ===== Announcement bar ===== -->
-<div class="announce">
-  New Data Tool: <a href="#">Hawaiʻi Budget Bill Draft Tracker</a>
-  <span class="x">×</span>
-</div>
-
-<!-- ===== Nav (retained from original Squarespace site) ===== -->
-<nav class="nav">
-  <div class="brand">
-    <div class="brand-mark" aria-hidden="true">
-      <!-- Apple-seed sprout mark -->
-      <svg viewBox="0 0 64 64" fill="none">
-        <path d="M32 54c0-12 6-20 16-22-2 12-8 20-16 22z" fill="#52796F"/>
-        <path d="M32 54c0-12-6-20-16-22 2 12 8 20 16 22z" fill="#84A98C" opacity=".85"/>
-        <path d="M32 54c-1-10 2-18 8-24" stroke="#2F3E46" stroke-width="1.6" stroke-linecap="round" fill="none"/>
-        <ellipse cx="32" cy="56" rx="10" ry="3" fill="#2F3E46" opacity=".15"/>
-      </svg>
-    </div>
-    <div class="brand-text">
-      <div class="name">HAWAIʻI APPLESEED</div>
-      <div class="tag">CENTER FOR LAW &amp; ECONOMIC JUSTICE</div>
-    </div>
+  <!-- PREVIEW-ONLY: announce bar -->
+  <div class="px-announce">
+    New Data Tool: <a href="#">Hawaiʻi Budget Bill Draft Tracker</a>
+    <span class="x">×</span>
   </div>
-  <div class="nav-links">
-    <a href="our-mission.html">About</a>
-    <a href="issues.html">Issues</a>
-    <a href="#">Data</a>
-    <a href="publications.html">Research</a>
-    <a href="#">Blog</a>
-    <a href="#">Media</a>
-    <a href="#">Get Involved</a>
-    <a href="#">Subscribe</a>
-  </div>
-  <div class="nav-right">
-    <div class="social" aria-label="Social">
-      <!-- Instagram -->
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-      <!-- Facebook -->
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-8h3l.5-4H13V7.5c0-1.2.3-2 2-2H17V2h-3c-3 0-5 1.8-5 5v3H6v4h3v8h4z"/></svg>
-      <!-- YouTube -->
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 7.5a3 3 0 00-2-2C18 5 12 5 12 5s-6 0-8 .5a3 3 0 00-2 2C2 9.5 2 12 2 12s0 2.5.1 4.5a3 3 0 002 2C6 19 12 19 12 19s6 0 8-.5a3 3 0 002-2c.1-2 .1-4.5.1-4.5s0-2.5-.1-4.5zM10 15V9l5 3-5 3z"/></svg>
-      <!-- Link -->
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 14a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 10a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg>
-    </div>
-    <a class="donate-btn" href="support.html">Donate</a>
-  </div>
-</nav>
 
-<!-- Portal-behind: plain white layer visible through the d-shaped mask hole.
-     Intentionally has NO text content — the duplicate "Our work / Changing
-     systems..." headline used to live here, which conflicted with the same
-     text in the reveal section below (creating two visible copies during the
-     scroll-up transition through the hold zone). The d-portal now opens to
-     a clean white area; the real reveal section provides the actual content. -->
-<div class="portal-behind" id="portal-behind" aria-hidden="true"></div>
-
-<!-- ===== HERO + ZOOM — combined sticky scroll section ===== -->
-<section class="hero-zoom-wrap" id="zoom-wrap" aria-label="Mission statement">
-  <div class="hero-zoom-stage" id="zoom-stage">
-
-    <!-- Hawaii islands watermark -->
-    <div class="hero-islands" aria-hidden="true">
-      <img src="assets/hawaii.png" alt="">
-    </div>
-
-    <!-- eyebrow — fades as zoom starts -->
-    <div class="hero-eyebrow" id="hero-eyebrow">A Hawaiʻi where everyone thrives</div>
-
-    <!-- Headline — only "affordable" zooms on scroll -->
-    <h1 class="hero-h1" id="hero-headline">
-      <span class="line line-1">Making Hawaiʻi more</span>
-      <span class="line line-2"><span class="zoom-word" id="zoom-inner">affor<span class="zoom-d" id="zoom-d">d<span class="d-portal" id="d-portal" aria-hidden="true"></span></span>able</span></span>
-      <span class="line line-3">for local families.</span>
-    </h1>
-
-    <div class="hero-sub" id="hero-sub">
-      <p>We advocate for systems change — in housing, food, transportation, and tax policy — so that every family in these islands can live, work, and raise kids here with dignity.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="#issues">Our 2026 priorities
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-        <a class="btn btn-ghost" href="#">Subscribe</a>
+  <!-- PREVIEW-ONLY: nav -->
+  <nav class="px-nav">
+    <div class="px-brand">
+      <div class="px-brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none">
+          <path d="M32 54c0-12 6-20 16-22-2 12-8 20-16 22z" fill="#52796F"/>
+          <path d="M32 54c0-12-6-20-16-22 2 12 8 20 16 22z" fill="#84A98C" opacity=".85"/>
+          <path d="M32 54c-1-10 2-18 8-24" stroke="#2F3E46" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+          <ellipse cx="32" cy="56" rx="10" ry="3" fill="#2F3E46" opacity=".15"/>
+        </svg>
+      </div>
+      <div class="px-brand-text">
+        <div class="px-brand-name">HAWAIʻI APPLESEED</div>
+        <div class="px-brand-tag">CENTER FOR LAW &amp; ECONOMIC JUSTICE</div>
       </div>
     </div>
-
-    <div class="scroll-cue"><span class="dot"></span>Scroll to explore</div>
-
-    <!-- Mask layer: sage overlay with a letter "d"-shaped hole that scales with scroll.
-         The transparent "d" shape reveals the cream portal-behind layer. -->
-    <div class="mask-layer" id="mask-layer" aria-hidden="true">
-      <svg id="mask-svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <mask id="d-hole-mask" maskUnits="userSpaceOnUse">
-            <rect x="0" y="0" width="100%" height="100%" fill="white"/>
-            <!-- Ellipse anchored to the d's counter — its growth opens the
-                 portal-behind through the counter, NOT through the d glyph
-                 outline. JS drives cx/cy/rx/ry on scroll. -->
-            <ellipse id="mask-ellipse" cx="0" cy="0" rx="0" ry="0" fill="black"/>
-          </mask>
-        </defs>
-        <rect x="0" y="0" width="100%" height="100%" fill="#52796F" mask="url(#d-hole-mask)"/>
-      </svg>
+    <div class="px-links">
+      <a href="index.html" class="active">Home</a>
+      <div class="px-dropdown">
+        <button class="px-dropdown-trigger" aria-haspopup="true" aria-expanded="false">About <span class="px-chevron" aria-hidden="true">▾</span></button>
+        <div class="px-dropdown-menu">
+          <a href="our-mission.html">Our Mission</a>
+          <a href="our-story.html">Our Story</a>
+          <a href="our-team.html">Our Team</a>
+          <a href="board-of-directors.html">Board</a>
+        </div>
+      </div>
+      <a href="issues.html">Issues</a>
+      <a href="#">News</a>
+      <a href="publications.html">Research</a>
+      <a href="support.html">Donate</a>
     </div>
-  </div>
-</section>
-
-<!-- ===== REVEALED section (continues from the "o") ===== -->
-<section class="reveal" id="reveal">
-  <div class="eyebrow">Our work — in four areas</div>
-  <h2>Changing systems to address inequality and foster greater opportunity.</h2>
-  <p class="sub">Hawaiʻi Appleseed is a nonpartisan, nonprofit law and policy center. We research the conditions holding local families back and advocate for the rules, budgets, and programs that can change them — at the Capitol, in the courts, and in community.</p>
-
-  <!-- Methodology + commitment block. Replaces the prior community-photo
-       placeholder. Renders as a brand-gradient banner with the four
-       methodology tags and a Fraunces italic commitment statement —
-       no placeholder text, no "drop-in" caption. -->
-  <div class="reveal-feature" aria-label="Our approach">
-    <div class="reveal-feature-tags">
-      <span class="reveal-tag">Research</span>
-      <span class="reveal-tag">Advocacy</span>
-      <span class="reveal-tag">Coalition</span>
-      <span class="reveal-tag">Litigation</span>
+    <div class="px-nav-right">
+      <div class="px-social" aria-label="Social">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-8h3l.5-4H13V7.5c0-1.2.3-2 2-2H17V2h-3c-3 0-5 1.8-5 5v3H6v4h3v8h4z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 7.5a3 3 0 00-2-2C18 5 12 5 12 5s-6 0-8 .5a3 3 0 00-2 2C2 9.5 2 12 2 12s0 2.5.1 4.5a3 3 0 002 2C6 19 12 19 12 19s6 0 8-.5a3 3 0 002-2c.1-2 .1-4.5.1-4.5s0-2.5-.1-4.5zM10 15V9l5 3-5 3z"/></svg>
+      </div>
+      <a class="px-donate-btn" href="support.html">Donate</a>
     </div>
-    <p class="reveal-feature-quote">
-      Since 2004, we&rsquo;ve led policy wins on <em>SNAP, the EITC, minimum wage, rent relief, and school meals</em> &mdash; reaching hundreds of thousands of residents across Hawai&#x02BB;i.
+  </nav>
+
+  <!-- ══════════════════ SECTION 1 — HERO ══════════════════ -->
+  <section class="ha-home__hero">
+    <!-- Full-screen background video. Footage to be supplied at assets/video/hero.mp4.
+         Poster + the charcoal gradient (::before) guarantee the hero is never blank. -->
+    <video class="ha-home__hero-video" autoplay muted loop playsinline
+           poster="assets/story/hero-rainbow.webp" aria-hidden="true">
+      <source src="assets/video/hero.mp4" type="video/mp4">
+    </video>
+    <div class="ha-home__hero-scrim" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <span class="eyebrow">Hawaiʻi Appleseed Center for Law &amp; Economic Justice</span>
+      <h1>Building a Hawaiʻi where every family can <em>thrive</em>.</h1>
+      <p class="hero-sub">
+        We work at the intersection of law, policy, and community power to advance economic justice across our islands — and there's a place in that work for you.
+      </p>
+      <div class="hero-actions">
+        <a href="support.html" class="btn btn-solid">Support Our Work</a>
+        <a href="issues.html" class="btn btn-ghost">Explore the Issues</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ SECTION 2 — MISSION BAND ══════════════════ -->
+  <section class="ha-home__mission">
+    <h2>Advancing Economic Justice <em>for and with</em> the people of Hawaiʻi.</h2>
+  </section>
+
+  <!-- ══════════════════ SECTION 3 — ISSUE AREAS ══════════════════ -->
+  <section class="ha-home__issues" id="issues">
+    <div class="ways-header">
+      <div class="section-label">Our Work</div>
+      <h2 class="section-title">Five areas where policy<br>can change everyday life.</h2>
+    </div>
+
+    <div class="ha-home__issue-grid">
+      <a class="ha-home__issue-card" data-accent="teal-deep" href="food-security.html">
+        <span class="ha-home__issue-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="16" cy="17" r="11"/>
+            <path d="M9 17c0-4 3-7 7-7s7 3 7 7"/>
+            <path d="M16 4c-2 3 0 6 3 7-1-4-1-5-3-7z" fill="currentColor"/>
+          </svg>
+        </span>
+        <h3>Food Security</h3>
+        <p>Healthy, accessible food for every Hawaiʻi family.</p>
+        <span class="way-link">Explore</span>
+      </a>
+
+      <a class="ha-home__issue-card" data-accent="teal-deep" href="housing.html">
+        <span class="ha-home__issue-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 15l12-9 12 9v12a2 2 0 01-2 2H6a2 2 0 01-2-2V15z"/>
+            <path d="M12 29V19h8v10"/>
+          </svg>
+        </span>
+        <h3>Affordable Housing</h3>
+        <p>Homes Hawaiʻi's families can actually afford.</p>
+        <span class="way-link">Explore</span>
+      </a>
+
+      <a class="ha-home__issue-card" data-accent="teal-deep" href="wages-labor.html">
+        <span class="ha-home__issue-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 11h20v17H6z"/>
+            <path d="M12 11V7a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v4"/>
+            <path d="M6 18h20"/>
+            <circle cx="16" cy="18" r="1.5"/>
+          </svg>
+        </span>
+        <h3>Wages &amp; Labor</h3>
+        <p>Pay and protections that match the cost of living here.</p>
+        <span class="way-link">Explore</span>
+      </a>
+
+      <a class="ha-home__issue-card" data-accent="slate" href="transportation.html">
+        <span class="ha-home__issue-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="6" width="22" height="16" rx="2"/>
+            <path d="M5 15h22"/>
+            <circle cx="10" cy="25" r="2.5"/>
+            <circle cx="22" cy="25" r="2.5"/>
+            <path d="M9 9h4M19 9h4"/>
+          </svg>
+        </span>
+        <h3>Transportation</h3>
+        <p>Safer streets, smarter transit, lower costs.</p>
+        <span class="way-link">Explore</span>
+      </a>
+
+      <a class="ha-home__issue-card" data-accent="slate" href="taxes-budget.html">
+        <span class="ha-home__issue-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 27h24"/>
+            <rect x="7" y="19" width="4" height="8"/>
+            <rect x="14" y="13" width="4" height="14"/>
+            <rect x="21" y="8" width="4" height="19"/>
+            <path d="M7 15l7-4 7 3 4-7"/>
+          </svg>
+        </span>
+        <h3>Taxes &amp; Budget</h3>
+        <p>A fairer tax code for a thriving Hawaiʻi.</p>
+        <span class="way-link">Explore</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════ SECTION 4 — IMPACT / DATA ══════════════════ -->
+  <section class="ha-home__impact" id="data">
+    <div class="ha-home__impact-head">
+      <div class="section-label light">By the Numbers</div>
+      <h2 class="section-title on-dark">The case for economic justice, in data.</h2>
+    </div>
+    <p class="ha-home__impact-sub">
+      Our Economic Justice Dashboard tracks how Hawaiʻi families are really doing — income, affordable housing, transportation, and food security — broken down by county and district.
     </p>
-    <a class="reveal-feature-cta" href="#issues">Read our 2026 priorities &rarr;</a>
-  </div>
-</section>
 
-<!-- ===== IMPACT BAND (by-the-numbers credibility strip) =====
-     NOTE: These numbers are placeholders. Verify with comms team and
-     update before launch. -->
-<section class="impact-band" aria-label="By the numbers">
-  <div class="impact-band-inner">
-    <div class="impact-stat">
-      <span class="impact-num">20+</span>
-      <span class="impact-lbl">Years of advocacy</span>
-    </div>
-    <div class="impact-stat">
-      <span class="impact-num">50+</span>
-      <span class="impact-lbl">Legislative wins</span>
-    </div>
-    <div class="impact-stat">
-      <span class="impact-num">500K+</span>
-      <span class="impact-lbl">Residents impacted</span>
-    </div>
-    <div class="impact-stat">
-      <span class="impact-num">4</span>
-      <span class="impact-lbl">Issue areas</span>
-    </div>
-  </div>
-</section>
-
-<!-- ===== ISSUES TABS ===== -->
-<section class="issues" id="issues" aria-label="Issue areas">
-  <div class="issues-head">
-    <h2>Four areas where policy can make Hawaiʻi affordable again.</h2>
-    <p class="mini">Each of our issue areas addresses a cost squeezing local families — and each has concrete policy levers at the state and county level.</p>
-  </div>
-
-  <!-- 4-card grid replaces the prior tabs+panels UX. Each card links to
-       its anchor on issues.html for the deep dive (which already exists
-       and is properly designed), so the home page doesn't duplicate the
-       per-area depth. -->
-  <div class="issues-grid">
-
-    <a class="issue-card" href="issues.html#housing">
-      <span class="issue-card-num">01</span>
-      <h3>Housing</h3>
-      <p>A home everyone can afford, on the islands they call home.</p>
-      <div class="issue-card-stat">
-        <span class="issue-card-stat-num">65%</span>
-        <span class="issue-card-stat-lbl">of renters are cost-burdened</span>
+    <div class="ha-home__impact-grid">
+      <div class="ha-home__stats">
+        <div class="ha-home__stat"><span class="ha-home__stat-num">20+</span><span class="ha-home__stat-lbl">Years of advocacy</span></div>
+        <div class="ha-home__stat"><span class="ha-home__stat-num">50+</span><span class="ha-home__stat-lbl">Legislative wins</span></div>
+        <div class="ha-home__stat"><span class="ha-home__stat-num">500K+</span><span class="ha-home__stat-lbl">Residents reached</span></div>
+        <div class="ha-home__stat"><span class="ha-home__stat-num">5</span><span class="ha-home__stat-lbl">Issue areas</span></div>
       </div>
-      <span class="issue-card-cta">Explore the issue &rarr;</span>
-    </a>
 
-    <a class="issue-card" href="issues.html#food-security">
-      <span class="issue-card-num">02</span>
-      <h3>Food Security</h3>
-      <p>A full pantry, from Hawai&#x02BB;i soil.</p>
-      <div class="issue-card-stat">
-        <span class="issue-card-stat-num">1 in 3</span>
-        <span class="issue-card-stat-lbl">households are food-insecure</span>
-      </div>
-      <span class="issue-card-cta">Explore the issue &rarr;</span>
-    </a>
-
-    <a class="issue-card" href="issues.html#transportation">
-      <span class="issue-card-num">03</span>
-      <h3>Transportation</h3>
-      <p>Getting around without a car payment.</p>
-      <div class="issue-card-stat">
-        <span class="issue-card-stat-num">17%</span>
-        <span class="issue-card-stat-lbl">of income spent on transportation</span>
-      </div>
-      <span class="issue-card-cta">Explore the issue &rarr;</span>
-    </a>
-
-    <a class="issue-card" href="issues.html#tax-budget">
-      <span class="issue-card-num">04</span>
-      <h3>Taxes &amp; Budget</h3>
-      <p>A tax code that works for working families.</p>
-      <div class="issue-card-stat">
-        <span class="issue-card-stat-num">13.5%</span>
-        <span class="issue-card-stat-lbl">paid by the lowest 20%</span>
-      </div>
-      <span class="issue-card-cta">Explore the issue &rarr;</span>
-    </a>
-
-  </div>
-</section>
-
-<!-- ===== INTERACTIVE DATA TOOLS ===== -->
-<section class="data-tools" aria-label="Interactive data tools">
-  <div class="data-tools-inner">
-    <div class="data-tools-head">
-      <span class="eyebrow">Explore the numbers</span>
-      <h2>Interactive data tools</h2>
-      <p>Dig into the research behind our policy work. Each tool lets you explore Hawaiʻi's fiscal and social data directly.</p>
-    </div>
-    <div class="data-tools-grid">
-
-      <!-- Card 1: Hawaiʻi Budget Tracker -->
-      <a class="data-card" href="taxes-budget.html">
-        <div class="data-card-visual">
-          <img src="assets/data/hawaii-budget-tracker.png" alt="Hawaiʻi Budget Tracker screenshot">
-        </div>
-        <div class="data-card-body">
-          <span class="data-card-tag">Taxes &amp; Budget</span>
-          <h3>Hawaiʻi Budget Tracker</h3>
-          <p>Compare the Governor's, House's, and Senate's budget proposals side by side. Track program-level changes across all state departments.</p>
-          <span class="data-card-cta">Explore the data →</span>
-        </div>
+      <a class="ha-home__dash" href="https://hiappleseed.org/data-dashboard" target="_blank" rel="noopener">
+        <img src="assets/data/economic-justice-dashboard.png" alt="Hawaiʻi Appleseed Economic Justice Dashboard" loading="lazy">
+        <span class="ha-home__dash-cta">Explore the Data Dashboard →</span>
       </a>
-
-      <!-- Card 2: SNAP & Medicaid Timeline -->
-      <a class="data-card" href="publications.html">
-        <div class="data-card-visual">
-          <img src="assets/data/snap-medicaid-timeline.png" alt="SNAP and Medicaid timeline screenshot">
-        </div>
-        <div class="data-card-body">
-          <span class="data-card-tag">Benefits &amp; Tax Programs</span>
-          <h3>SNAP &amp; Medicaid Timeline</h3>
-          <p>Track how federal policy changes affect Hawaiʻi residents' access to SNAP and Medicaid — with cost estimates and eligibility impacts.</p>
-          <span class="data-card-cta">Explore the data →</span>
-        </div>
-      </a>
-
-      <!-- Card 3: Economic Justice Dashboard -->
-      <a class="data-card" href="#">
-        <div class="data-card-visual">
-          <img src="assets/data/economic-justice-dashboard.png" alt="Economic Justice Dashboard screenshot">
-        </div>
-        <div class="data-card-body">
-          <span class="data-card-tag">Economic Justice</span>
-          <h3>Data Justice Dashboard</h3>
-          <p>Explore ALICE household data, food insecurity, and economic security indicators mapped across Hawaiʻi's districts and counties.</p>
-          <span class="data-card-cta">Explore the data →</span>
-        </div>
-      </a>
-
     </div>
-  </div>
-</section>
+  </section>
 
-<footer>
-  <div>© 2026 Hawaiʻi Appleseed Center for Law &amp; Economic Justice · 733 Bishop St, Honolulu HI</div>
-  <div><a href="#">Subscribe</a> · <a href="support.html">Donate</a> · <a href="#">Contact</a></div>
-</footer>
+  <!-- ══════════════════ SECTION 5 — STORY ══════════════════ -->
+  <section class="ha-home__story" id="story">
+    <div class="ha-home__story-grid">
+      <div class="ha-home__story-media">
+        <img src="assets/story/04-current-pilina-builders.webp" alt="Hawaiʻi Appleseed staff and community partners" loading="lazy">
+      </div>
+      <div class="ha-home__story-text">
+        <div class="section-label">Who We Are</div>
+        <h2 class="section-title">Rooted in Hawaiʻi,<br>built for the long arc.</h2>
+        <p>For over two decades, Hawaiʻi Appleseed has brought together legal expertise, rigorous research, and community partnership to take on the root causes of poverty and inequality. We're a small team with a long view — and we believe the systems that shape everyday life can change.</p>
+        <a href="our-story.html" class="btn btn-dark">Read Our Story</a>
+      </div>
+    </div>
+  </section>
 
-<script>
-  // Issue tabs JS removed — section converted to a 4-card grid linking
-  // to issues.html anchors. No tab toggling needed.
+  <!-- ══════════════════ SECTION 6 — LATEST ══════════════════ -->
+  <section class="ha-home__latest" id="latest">
+    <div class="ha-home__latest-head">
+      <div>
+        <div class="section-label">Latest</div>
+        <h2 class="section-title">Latest from Hawaiʻi Appleseed.</h2>
+      </div>
+      <a href="publications.html" class="btn btn-dark">View All Research</a>
+    </div>
+    <div class="ha-home__latest-grid" id="ha-home-latest-grid" role="list">
+      <div class="ha-home__latest-loading">Loading the latest…</div>
+    </div>
+  </section>
 
-  // ======== Scroll zoom for "affordable" ========
-  const wrap         = document.getElementById('zoom-wrap');
-  const inner        = document.getElementById('zoom-inner');
-  const zoomD        = document.getElementById('zoom-d');
-  const stage        = document.getElementById('zoom-stage');
-  const revealOverlay= document.getElementById('reveal-overlay');
-  const eyebrow      = document.getElementById('hero-eyebrow');
-  const heroSub      = document.getElementById('hero-sub');
-  const scrollCue    = document.querySelector('.scroll-cue');
-  const line1        = document.querySelector('.hero-h1 .line-1');
-  const line3        = document.querySelector('.hero-h1 .line-3');
-  const islands      = document.querySelector('.hero-islands');
-  const portalBehind = document.getElementById('portal-behind');
-  const revealSection= document.getElementById('reveal');
+  <!-- ══════════════════ SECTION 7 — GET INVOLVED ══════════════════ -->
+  <section class="ha-home__involve" id="get-involved">
+    <div class="ways-header">
+      <div class="section-label light">Get Involved</div>
+      <h2 class="section-title on-dark">Justice takes all of us.</h2>
+    </div>
+    <div class="ha-home__involve-grid">
+      <a class="ha-home__involve-card" href="support.html#give">
+        <span class="ha-home__involve-num">01</span>
+        <h3>Give</h3>
+        <p>Your gift funds the research, advocacy, and legal work that moves policy for Hawaiʻi's families.</p>
+        <span class="way-link">Donate</span>
+      </a>
+      <a class="ha-home__involve-card" href="issues.html">
+        <span class="ha-home__involve-num">02</span>
+        <h3>Take Action</h3>
+        <p>Add your voice. Follow the issues, contact lawmakers, and help build the public pressure that wins.</p>
+        <span class="way-link">Advocate</span>
+      </a>
+      <a class="ha-home__involve-card" href="support.html#connect">
+        <span class="ha-home__involve-num">03</span>
+        <h3>Stay Informed</h3>
+        <p>Get our newsletter and action alerts, and be the first to know when your engagement matters most.</p>
+        <span class="way-link">Subscribe</span>
+      </a>
+    </div>
+  </section>
 
-  let baseline = null;
-  let stageHidden = false;
-  // Tracks whether the user has scrolled past the wrap bottom and is now
-  // returning. We use this to apply an ASYMMETRIC opacity fade: going down,
-  // the word stays visible during the growth phase (so the user sees the
-  // d-portal effect develop). Coming back up from past the wrap, the word
-  // stays invisible until near the top — otherwise ghost letters appear at
-  // large scale in the partial-opacity fade window. Reset when scrollY≈0.
-  let pastWrapMode = false;
+  <!-- ══════════════════ SECTION 8 — FOOTER ══════════════════ -->
+  <footer class="px-footer">
+    <div class="px-foot-grid">
+      <div>
+        <h4>Hawaiʻi Appleseed</h4>
+        <p>Advancing Economic Justice for and with the people of Hawaiʻi.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="our-mission.html">Our Mission</a>
+        <a href="our-story.html">Our Story</a>
+        <a href="our-team.html">Our Team</a>
+        <a href="issues.html">Issues</a>
+        <a href="publications.html">Research</a>
+      </div>
+      <div>
+        <h4>Get Involved</h4>
+        <a href="support.html">Donate</a>
+        <a href="support.html#connect">Newsletter</a>
+        <a href="https://hiappleseed.org" target="_blank" rel="noopener">Main Website</a>
+      </div>
+    </div>
+    <div class="px-foot-bottom">
+      <span>© 2026 Hawaiʻi Appleseed Center for Law &amp; Economic Justice</span>
+      <span>733 Bishop St, Honolulu, HI</span>
+    </div>
+  </footer>
 
-  // Counter of lowercase d in Manrope 700. Counter center position (fx, fy)
-  // was measured precisely by rendering the d on a canvas and flood-filling
-  // to detect counter pixels. fw/fh are bumped slightly above the measured
-  // counter size so the portal fully fills the visible bowl interior.
-  const f = { fx: 0.52, fy: 0.74, fw: 0.62, fh: 0.56 };
+  <!-- PREVIEW-ONLY: announce close + nav dropdown -->
+  <script>
+    document.querySelector('.px-announce .x')?.addEventListener('click', e => {
+      e.target.closest('.px-announce').style.display = 'none';
+    });
+  </script>
+  <script>
+  (function(){
+    document.querySelectorAll('.px-dropdown').forEach(function(d){
+      var btn=d.querySelector('.px-dropdown-trigger');
+      btn.addEventListener('click',function(e){e.stopPropagation();var o=d.classList.toggle('is-open');btn.setAttribute('aria-expanded',o);});
+    });
+    document.addEventListener('click',function(){
+      document.querySelectorAll('.px-dropdown').forEach(function(d){d.classList.remove('is-open');var b=d.querySelector('.px-dropdown-trigger');if(b)b.setAttribute('aria-expanded','false');});
+    });
+  })();
+  </script>
 
-  // Manrope 700 metrics — d glyph extents within the line-box, measured from
-  // canvas pixel-tracing of the actual rendered d glyph.
-  const dGlyphTopRatio    = 0.06;  // top of d glyph from top of line-box
-  const dGlyphHeightRatio = 0.74;  // height of d glyph as fraction of line-box
-
-  function measureBaseline(){
-    // Reset transforms so we measure the d at its natural displayed size
-    const line2 = document.querySelector('.hero-h1 .line-2');
-    if (line2) line2.style.transform = '';
-    inner.style.transform = 'none';
-    inner.style.transformOrigin = '50% 50%';
-    void inner.getBoundingClientRect();
-
-    const wordRect = inner.getBoundingClientRect();
-    const dRect = zoomD.getBoundingClientRect();
-
-    // dRect.height is the line-box height (= font-size at line-height:1).
-    // Reconstruct the actual d glyph rect using Manrope font metrics.
-    const lineHeight = dRect.height;
-    const dGlyphTop = dRect.top + lineHeight * dGlyphTopRatio;
-    const dGlyphHeight = lineHeight * dGlyphHeightRatio;
-    const dGlyphLeft = dRect.left;
-    const dGlyphWidth = dRect.width;
-
-    const cPortal = {
-      x: dGlyphLeft + dGlyphWidth  * f.fx,
-      y: dGlyphTop  + dGlyphHeight * f.fy,
-      w: dGlyphWidth  * f.fw,
-      h: dGlyphHeight * f.fh,
-    };
-
-    // Display scale: the word is rendered at a fixed large font-size (400px in
-    // CSS) for crisp rasterization. Scale it down so it visually matches the
-    // headline font-size at rest. As scroll progresses, currentScale grows
-    // toward 1 (native render size) → no pixelation when filling the screen.
-    const h1Rect = document.querySelector('.hero-h1').getBoundingClientRect();
-    const h1FontSize = parseFloat(getComputedStyle(document.querySelector('.hero-h1')).fontSize);
-    const wordFontSize = parseFloat(getComputedStyle(inner).fontSize);
-    const displayScale = h1FontSize / wordFontSize;
-
-    // === Shift .line-2 so that, after scale(displayScale) around the d's
-    // counter, the d's baseline lands on line-2's NATURAL text baseline (where
-    // "affordable" would have sat as plain inline text). This makes the scaled
-    // word read in-line between line-1 and line-3 without visual overlap. ===
-    const line2Rect = line2.getBoundingClientRect();
-    // Manrope ascent ≈ 0.78 of em; line-2 line-height is 1.1em so baseline is
-    // (line-height - em)/2 + 0.78em from the top of the line-box.
-    const ascentRatio = 0.78;
-    const line2NaturalBaseline = line2Rect.top + (line2Rect.height - h1FontSize) / 2 + h1FontSize * ascentRatio;
-    // d-glyph bottom (=baseline) in natural element-local coords:
-    const dBaselineNaturalY = dGlyphTop + dGlyphHeight; // screen y at natural state
-    // After scaling by displayScale around (cPortal.x, cPortal.y), the
-    // d-baseline lands at: cPortal.y + (dBaselineNaturalY - cPortal.y) * displayScale.
-    // Set this == line2NaturalBaseline, solve for shifted counter y:
-    const dBaselineOffsetFromCounter = (dBaselineNaturalY - cPortal.y) * displayScale;
-    const targetCounterY = line2NaturalBaseline - dBaselineOffsetFromCounter;
-    const h1CenterX = h1Rect.left + h1Rect.width / 2;
-    const wordShiftX = h1CenterX - cPortal.x;
-    const wordShiftY = targetCounterY - cPortal.y;
-    if (line2) line2.style.transform = `translate(${wordShiftX}px, ${wordShiftY}px)`;
-    cPortal.x += wordShiftX;
-    cPortal.y += wordShiftY;
-
-    // Pin transform-origin to the counter so the d's counter stays at this
-    // screen position as the word scales. Origin is in pixels relative to
-    // the un-transformed element's top-left — the shift on .line-2 doesn't
-    // change the element-local offset (parent moves with element).
-    const originXpx = cPortal.x - (wordRect.left + wordShiftX);
-    const originYpx = cPortal.y - (wordRect.top + wordShiftY);
-    inner.style.transformOrigin = `${originXpx}px ${originYpx}px`;
-
-    // The on-screen counter center (used for the mask ellipse cx/cy)
-    const clipCX = (cPortal.x / window.innerWidth ) * 100;
-    const clipCY = (cPortal.y / window.innerHeight) * 100;
-
-    baseline = {
-      displayScale,
-      clipCX, clipCY,
-      startRX: cPortal.w / 2,
-      startRY: cPortal.h / 2,
-    };
-
-    // Apply initial scale immediately so the first paint isn't a 400px monster
-    inner.style.transform = `scale(${displayScale})`;
-  }
-
-  const maskEllipse = document.getElementById('mask-ellipse');
-
-  function onScroll(){
-    if (!baseline) return;
-    const endpoint = wrap.offsetTop + wrap.offsetHeight - window.innerHeight;
-    const raw = Math.min(1, Math.max(0, window.scrollY / Math.max(endpoint, 1)));
-
-    const wrapBottom = wrap.offsetTop + wrap.offsetHeight;
-    const shouldHide = window.scrollY >= wrapBottom;
-    if (shouldHide !== stageHidden){
-      stage.style.display = shouldHide ? 'none' : 'block';
-      stageHidden = shouldHide;
+  <!-- Latest publications loader (reads publications.json, newest 3). -->
+  <script>
+  (function(){
+    var grid = document.getElementById('ha-home-latest-grid');
+    if(!grid) return;
+    function stripHtml(h){ var d=document.createElement('div'); d.innerHTML=h||''; return (d.textContent||'').trim(); }
+    function fmtDate(ms){ try { return new Date(ms).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}); } catch(e){ return ''; } }
+    function card(it){
+      var url = it.fullUrl ? ('https://hiappleseed.org'+it.fullUrl) : '#';
+      var cat = (it.categories && it.categories[0]) || 'Research';
+      var thumb = it.assetUrl
+        ? '<div class="ha-home__latest-thumb"><img src="'+it.assetUrl+'?format=500w" alt="" loading="lazy"></div>'
+        : '<div class="ha-home__latest-thumb"></div>';
+      var ex = stripHtml(it.excerpt);
+      if(ex.length > 120) ex = ex.slice(0,120).replace(/\s+\S*$/,'') + '…';
+      return '<a class="ha-home__latest-card" role="listitem" href="'+url+'" target="_blank" rel="noopener">'
+        + thumb
+        + '<div class="ha-home__latest-body">'
+        + '<div class="ha-home__latest-meta"><span class="ha-home__latest-cat">'+cat+'</span>'
+        + '<span class="ha-home__latest-date">'+fmtDate(it.publishOn)+'</span></div>'
+        + '<h3>'+ (it.title || 'Untitled') +'</h3>'
+        + (ex ? '<p>'+ex+'</p>' : '')
+        + '<span class="way-link">Read more</span>'
+        + '</div></a>';
     }
-    // Track pastWrapMode BEFORE the stageHidden early-return so the flag is
-    // updated even while stage is hidden (otherwise pastWrapMode would never
-    // get set to true since the first frame past wrapBottom returns early).
-    if (window.scrollY >= wrapBottom) pastWrapMode = true;
-    else if (window.scrollY < 5) pastWrapMode = false;
-    if (stageHidden) return;
+    fetch('publications.json')
+      .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
+      .then(function(d){
+        var items = (d.items || []).slice().sort(function(a,b){ return b.publishOn - a.publishOn; }).slice(0,3);
+        if(!items.length){ throw new Error('empty'); }
+        grid.innerHTML = items.map(card).join('');
+      })
+      .catch(function(){
+        grid.innerHTML = '<div class="ha-home__latest-loading">See our latest research on the <a href="publications.html">publications page</a>.</div>';
+      });
+  })();
+  </script>
 
-    // Fade surround copy quickly so it doesn't clash with the growing word
-    const surroundFade = Math.max(0, 1 - raw / 0.18);
-    if (line1) line1.style.opacity = surroundFade;
-    if (line3) line3.style.opacity = surroundFade;
-    if (heroSub) heroSub.style.opacity = surroundFade;
-    if (eyebrow) eyebrow.style.opacity = surroundFade;
-    if (scrollCue) scrollCue.style.opacity = Math.max(0, 1 - raw / 0.10);
-
-    // Asymmetric opacity fade:
-    //   First scroll-down (pastWrapMode=false): slow fade — word visible
-    //     during growth, fades to invisible by raw≈0.5 as the d-portal opens.
-    //   Returning from past wrap (pastWrapMode=true): word stays invisible
-    //     for the entire return scroll, only fading in over the last ~30px
-    //     near the top. This prevents ghost letters appearing at large scale
-    //     in the partial-opacity zone during scroll-up.
-    if (pastWrapMode) {
-      inner.style.opacity = Math.max(0, Math.min(1, 1 - window.scrollY / 30));
-    } else {
-      inner.style.opacity = Math.max(0, Math.min(1, 1 - (raw - 0.3) / 0.2));
-    }
-
-    // Fade portal-behind based on how much reveal section is in viewport.
-    // Going DOWN, as reveal slides up into viewport, portal-behind fades out
-    // (so we don't see DUPLICATE "Changing systems..." text in two places).
-    // Going UP, as reveal slides back down out of viewport, portal-behind
-    // fades in — so the d-portal smoothly transitions back to its centered
-    // preview without flashing duplicate content. revealSection.top spans
-    // (windowHeight → 0) as reveal enters viewport from below to top-aligned.
-    if (portalBehind && revealSection){
-      const rt = revealSection.getBoundingClientRect().top;
-      portalBehind.style.opacity = Math.max(0, Math.min(1, rt / window.innerHeight));
-    }
-
-    // ===== Scale the word + sync the mask hole to the d's actual counter =====
-    // The visible word "affordable" grows from display size to ~viewport-fill,
-    // staying anchored on the d's counter (transformOrigin set in measureBaseline).
-    // The mask ellipse rx/ry are kept proportional to the on-screen counter, so the
-    // d's natural counter and the mask hole align — together they form the portal.
-    const cx = window.innerWidth  * baseline.clipCX / 100;
-    const cy = window.innerHeight * baseline.clipCY / 100;
-    const maxCornerDist = Math.max(
-      Math.hypot(cx, cy),
-      Math.hypot(window.innerWidth - cx, cy),
-      Math.hypot(cx, window.innerHeight - cy),
-      Math.hypot(window.innerWidth - cx, window.innerHeight - cy)
-    ) * 1.1;
-    // End-scale: counter's larger axis fills past the furthest viewport corner.
-    // startRX/Y is the natural counter radius (in 400px-rendered pixels), so
-    // endScale = maxCornerDist / startCounterR scales the natural counter to
-    // exactly maxCornerDist on screen — no displayScale multiplier needed.
-    const startCounterR = Math.max(baseline.startRX, baseline.startRY);
-    const endScale = maxCornerDist / startCounterR;
-    // Ease-out: reveal feels snappier near the start, finishes by raw ~0.85
-    const t = Math.min(1, raw / 0.85);
-    const eased = 1 - Math.pow(1 - t, 2);
-    const currentScale = baseline.displayScale + eased * (endScale - baseline.displayScale);
-
-    inner.style.transform = `scale(${currentScale})`;
-
-    if (maskEllipse) {
-      // Mask ellipse on-screen radius = natural counter radius * currentScale,
-      // matching the scaled visual size of the d's counter.
-      maskEllipse.setAttribute('cx', cx);
-      maskEllipse.setAttribute('cy', cy);
-      maskEllipse.setAttribute('rx', baseline.startRX * currentScale);
-      maskEllipse.setAttribute('ry', baseline.startRY * currentScale);
-    }
-
-    if (islands) islands.style.opacity = Math.max(0, 1 - raw / 0.30);
-  }
-
-  if (document.fonts) {
-    document.fonts.ready.then(() => { measureBaseline(); onScroll(); });
-  } else {
-    measureBaseline(); onScroll();
-  }
-
-  let raf = 0;
-  window.addEventListener('scroll', () => {
-    if (raf) return;
-    raf = requestAnimationFrame(() => { onScroll(); raf = 0; });
-  }, {passive: true});
-  window.addEventListener('resize', () => { baseline = null; measureBaseline(); onScroll(); });
-
-  // Dismiss announcement bar
-  document.querySelector('.announce .x')?.addEventListener('click', e => {
-    e.target.closest('.announce').style.display = 'none';
-  });
-</script>
 </body>
 </html>
