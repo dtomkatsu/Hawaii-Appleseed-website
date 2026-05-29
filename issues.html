@@ -68,7 +68,7 @@
 </style>
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400..700&family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap">
 </head>
 <body>
 
@@ -187,14 +187,22 @@
     .ha-issues .ha-hero-lead{max-width:none;}
     .ha-issues .ha-cards{margin-top:52px;}
   }
+  /* Display headline for the hero — the section's prominent title.
+     Upright Fraunces with one italic teal-deep accent word. */
+  .ha-issues .ha-hero-title{
+    font-family:'Fraunces',Georgia,serif;font-weight:400;
+    font-size:clamp(34px, 5vw, 64px);line-height:1.08;letter-spacing:-0.01em;
+    color:var(--ha-charcoal);margin:18px 0 0;max-width:18ch;
+  }
+  .ha-issues .ha-hero-title em{font-style:italic;color:var(--ha-teal-deep);}
+  /* Lead now reads as an open deck beneath the headline — the former
+     tinted box read as a muted/disabled field, so it's been dropped and
+     the type bumped up. */
   .ha-issues .ha-hero-lead{
     font-family:'Poppins',sans-serif;font-weight:400;
-    font-size:clamp(15px, 1.4vw, 18px);line-height:1.7;
-    color:var(--ha-charcoal);max-width:62ch;
-    margin:28px 0 0;
-    padding:24px 28px;
-    background:color-mix(in srgb, var(--ha-teal) 8%, transparent);
-    border-radius:8px;
+    font-size:clamp(16px, 1.5vw, 20px);line-height:1.65;
+    color:var(--ha-charcoal);max-width:58ch;
+    margin:20px 0 0;
   }
 
   /* ===== ISSUE BARS (horizontal, stacked) ===== */
@@ -557,7 +565,8 @@
     .ha-issues .ha-card-icon svg{width:22px;height:22px;}
     .ha-issues .ha-card h3{font-size:18px;}
     .ha-issues .ha-card::after{font-size:18px;}
-    .ha-issues .ha-hero-lead{padding:20px 20px 20px 22px;font-size:15px;}
+    .ha-issues .ha-hero-title{font-size:clamp(30px, 8vw, 40px);margin-top:14px;}
+    .ha-issues .ha-hero-lead{font-size:16px;}
     .ha-issues .ha-deep-head{margin-bottom:24px;}
     .ha-issues .ha-deep-sub{margin:36px 0 16px;}
     .ha-issues .ha-eyebrow{font-size:11px;letter-spacing:.24em;}
@@ -774,6 +783,7 @@
     <div class="ha-wrap">
       <div class="ha-hero-text">
         <span class="ha-eyebrow">Our Impact</span>
+        <h1 class="ha-hero-title">Where economic justice meets <em>everyday life</em>.</h1>
         <p class="ha-hero-lead">
           We fight for a Hawaiʻi where every family has what they need to thrive. That means safe, stable housing; healthy, affordable food; fair wages and labor protections; transportation options that connect us to opportunity; and a tax system that asks the wealthy to pay their share so we can fund our future.
         </p>
