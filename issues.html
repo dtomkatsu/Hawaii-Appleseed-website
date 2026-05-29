@@ -204,6 +204,21 @@
     color:var(--ha-charcoal);max-width:58ch;
     margin:20px 0 0;
   }
+  /* Impact stat band — large Manrope numbers (count up on view via JS). */
+  .ha-issues .ha-hero-stats{
+    display:flex;flex-wrap:wrap;gap:26px 44px;margin-top:34px;
+  }
+  .ha-issues .ha-hero-stat{display:flex;flex-direction:column;gap:5px;}
+  .ha-issues .ha-hero-stat-num{
+    font-family:'Manrope',sans-serif;font-weight:800;
+    font-size:clamp(30px, 3.4vw, 44px);line-height:1;letter-spacing:-0.02em;
+    color:var(--ha-teal-deep);
+  }
+  .ha-issues .ha-hero-stat-lbl{
+    font-family:'Poppins',sans-serif;font-weight:500;
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ha-charcoal);opacity:.66;
+  }
 
   /* ===== ISSUE BARS (horizontal, stacked) ===== */
   .ha-issues .ha-cards{
@@ -223,7 +238,6 @@
                border-color .4s,
                background .4s;
     opacity:0;transform:translateY(16px);
-    will-change:opacity,transform;
     cursor:pointer;
     text-decoration:none;
   }
@@ -270,6 +284,11 @@
   .ha-issues .ha-card[data-accent="charcoal"]:hover .ha-card-icon{background:rgba(47,62,70,.18);}
   .ha-issues .ha-card[data-accent="charcoal"]::after{color:var(--ha-charcoal);}
   .ha-issues .ha-card[data-accent="teal-deep"]{border-left-color:var(--ha-teal-deep);}
+
+  /* Touch press feedback (rec E) — hover never fires on touch, so give taps a tactile press. */
+  .ha-issues .ha-card, .ha-issues .ha-btn, .ha-issues .ha-nav-pill{ -webkit-tap-highlight-color:transparent; }
+  .ha-issues .ha-card:active{ transform:scale(.99); }
+  .ha-issues .ha-btn:active{ transform:scale(.97); }
 
   /* ===== DEEP DIVES ===== */
   /* Each deep-dive section gets its own tinted background from the brand palette.
@@ -787,6 +806,12 @@
         <p class="ha-hero-lead">
           We fight for a Hawaiʻi where every family has what they need to thrive. That means safe, stable housing; healthy, affordable food; fair wages and labor protections; transportation options that connect us to opportunity; and a tax system that asks the wealthy to pay their share so we can fund our future.
         </p>
+        <!-- Impact stat band (rec 2): makes "Our Impact" literal. PLACEHOLDER numbers — verify with comms. -->
+        <div class="ha-hero-stats">
+          <div class="ha-hero-stat"><span class="ha-hero-stat-num" data-count="20" data-suffix="+">20+</span><span class="ha-hero-stat-lbl">Years of advocacy</span></div>
+          <div class="ha-hero-stat"><span class="ha-hero-stat-num" data-count="50" data-suffix="+">50+</span><span class="ha-hero-stat-lbl">Legislative wins</span></div>
+          <div class="ha-hero-stat"><span class="ha-hero-stat-num" data-count="500" data-suffix="K+">500K+</span><span class="ha-hero-stat-lbl">Residents reached</span></div>
+        </div>
       </div>
       <div class="ha-cards">
 
@@ -814,7 +839,7 @@
         </a>
 
         <!-- Transportation -->
-        <a class="ha-card" href="#transportation" data-fade data-accent="charcoal">
+        <a class="ha-card" href="#transportation" data-fade data-accent="slate">
           <div class="ha-card-icon" aria-hidden="true">
             <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <rect x="5" y="6" width="22" height="16" rx="2"/>
@@ -1311,6 +1336,37 @@
   document.addEventListener('click',function(){
     document.querySelectorAll('.px-dropdown').forEach(function(d){d.classList.remove('is-open');var b=d.querySelector('.px-dropdown-trigger');if(b)b.setAttribute('aria-expanded','false');});
   });
+})();
+</script>
+
+<!-- Stat count-up (rec F): animates [data-count] numbers when scrolled into view; respects reduced motion. -->
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nums = [].slice.call(document.querySelectorAll('[data-count]'));
+  if(!nums.length) return;
+  function fmt(v, s){ return v.toLocaleString('en-US') + (s || ''); }
+  function run(el){
+    var target = parseFloat(el.getAttribute('data-count')) || 0;
+    var suffix = el.getAttribute('data-suffix') || '';
+    var dur = 1200, start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(Math.round(target * eased), suffix);
+      if(p < 1){ requestAnimationFrame(step); } else { el.textContent = fmt(target, suffix); }
+    }
+    requestAnimationFrame(step);
+  }
+  if(reduce || !('IntersectionObserver' in window)){
+    nums.forEach(function(el){ el.textContent = fmt(parseFloat(el.getAttribute('data-count')) || 0, el.getAttribute('data-suffix') || ''); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ run(e.target); io.unobserve(e.target); } });
+  }, { threshold: 0.4 });
+  nums.forEach(function(el){ io.observe(el); });
 })();
 </script>
 </body>
