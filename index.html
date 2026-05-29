@@ -23,6 +23,12 @@
       --ash-light:  #E8EDE6;
       --cream:      #F4F7F5;
       --white:      #FFFFFF;
+
+      /* Motion tokens (shared system) */
+      --ease-out: cubic-bezier(.22, .61, .36, 1);
+      --dur-fast: .2s;
+      --dur-base: .4s;
+      --dur-slow: .6s;
     }
 
     html { scroll-behavior: smooth; }
@@ -362,6 +368,34 @@
     .ha-home__hero .hero-actions { animation:fadeUp 0.75s ease 0.62s both; }
 
     /* ─────────────────────────────────────
+       SCROLL-REVEAL (rec B) — GPU-only (opacity + translateY), reveals once.
+       Hidden by default; <noscript> + reduced-motion force visible.
+    ───────────────────────────────────── */
+    .reveal { opacity:0; transform:translateY(18px);
+      transition:opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+    .reveal.is-in { opacity:1; transform:none; }
+    /* staggered group — direct children cascade in */
+    .reveal-group > * { opacity:0; transform:translateY(18px);
+      transition:opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+    .reveal-group.is-in > * { opacity:1; transform:none; }
+    .reveal-group.is-in > *:nth-child(2){ transition-delay:.07s; }
+    .reveal-group.is-in > *:nth-child(3){ transition-delay:.14s; }
+    .reveal-group.is-in > *:nth-child(4){ transition-delay:.21s; }
+    .reveal-group.is-in > *:nth-child(5){ transition-delay:.28s; }
+    .reveal-group.is-in > *:nth-child(6){ transition-delay:.35s; }
+
+    /* ─────────────────────────────────────
+       REDUCED MOTION (rec A) — honor the OS setting site-wide.
+    ───────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after{
+        animation-duration:.01ms!important; animation-iteration-count:1!important;
+        transition-duration:.01ms!important; scroll-behavior:auto!important;
+      }
+      .reveal, .reveal-group > *{ opacity:1!important; transform:none!important; }
+    }
+
+    /* ─────────────────────────────────────
        RESPONSIVE
     ───────────────────────────────────── */
     @media (max-width: 900px) {
@@ -387,6 +421,8 @@
       .ha-home__story-media img { aspect-ratio:16/10; }
     }
   </style>
+  <!-- Fail-safe: if JS is off, reveal elements stay visible. -->
+  <noscript><style>.reveal,.reveal-group>*{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 
@@ -463,17 +499,17 @@
 
   <!-- ══════════════════ SECTION 2 — MISSION BAND ══════════════════ -->
   <section class="ha-home__mission">
-    <h2>Advancing Economic Justice <em>for and with</em> the people of Hawaiʻi.</h2>
+    <h2 class="reveal">Advancing Economic Justice <em>for and with</em> the people of Hawaiʻi.</h2>
   </section>
 
   <!-- ══════════════════ SECTION 3 — ISSUE AREAS ══════════════════ -->
   <section class="ha-home__issues" id="issues">
-    <div class="ways-header">
+    <div class="ways-header reveal">
       <div class="section-label">Our Work</div>
       <h2 class="section-title">Five areas where policy<br>can change everyday life.</h2>
     </div>
 
-    <div class="ha-home__issue-grid">
+    <div class="ha-home__issue-grid reveal-group">
       <a class="ha-home__issue-card" data-accent="teal-deep" href="food-security.html">
         <span class="ha-home__issue-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -547,15 +583,15 @@
 
   <!-- ══════════════════ SECTION 4 — IMPACT / DATA ══════════════════ -->
   <section class="ha-home__impact" id="data">
-    <div class="ha-home__impact-head">
+    <div class="ha-home__impact-head reveal">
       <div class="section-label light">By the Numbers</div>
       <h2 class="section-title on-dark">The case for economic justice, in data.</h2>
     </div>
-    <p class="ha-home__impact-sub">
+    <p class="ha-home__impact-sub reveal">
       Our Economic Justice Dashboard tracks how Hawaiʻi families are really doing — income, affordable housing, transportation, and food security — broken down by county and district.
     </p>
 
-    <div class="ha-home__impact-grid">
+    <div class="ha-home__impact-grid reveal-group">
       <div class="ha-home__stats">
         <div class="ha-home__stat"><span class="ha-home__stat-num">20+</span><span class="ha-home__stat-lbl">Years of advocacy</span></div>
         <div class="ha-home__stat"><span class="ha-home__stat-num">50+</span><span class="ha-home__stat-lbl">Legislative wins</span></div>
@@ -572,7 +608,7 @@
 
   <!-- ══════════════════ SECTION 5 — STORY ══════════════════ -->
   <section class="ha-home__story" id="story">
-    <div class="ha-home__story-grid">
+    <div class="ha-home__story-grid reveal-group">
       <div class="ha-home__story-media">
         <img src="assets/story/04-current-pilina-builders.webp" alt="Hawaiʻi Appleseed staff and community partners" loading="lazy">
       </div>
@@ -587,25 +623,25 @@
 
   <!-- ══════════════════ SECTION 6 — LATEST ══════════════════ -->
   <section class="ha-home__latest" id="latest">
-    <div class="ha-home__latest-head">
+    <div class="ha-home__latest-head reveal">
       <div>
         <div class="section-label">Latest</div>
         <h2 class="section-title">Latest from Hawaiʻi Appleseed.</h2>
       </div>
       <a href="publications.html" class="btn btn-dark">View All Research</a>
     </div>
-    <div class="ha-home__latest-grid" id="ha-home-latest-grid" role="list">
+    <div class="ha-home__latest-grid reveal-group" id="ha-home-latest-grid" role="list">
       <div class="ha-home__latest-loading">Loading the latest…</div>
     </div>
   </section>
 
   <!-- ══════════════════ SECTION 7 — GET INVOLVED ══════════════════ -->
   <section class="ha-home__involve" id="get-involved">
-    <div class="ways-header">
+    <div class="ways-header reveal">
       <div class="section-label light">Get Involved</div>
       <h2 class="section-title on-dark">Justice takes all of us.</h2>
     </div>
-    <div class="ha-home__involve-grid">
+    <div class="ha-home__involve-grid reveal-group">
       <a class="ha-home__involve-card" href="support.html#give">
         <span class="ha-home__involve-num">01</span>
         <h3>Give</h3>
@@ -654,6 +690,25 @@
       <span>733 Bishop St, Honolulu, HI</span>
     </div>
   </footer>
+
+  <!-- Scroll-reveal (rec B): fade/slide sections in on first view; once-only; respects reduced motion. -->
+  <script>
+  (function(){
+    var nodes = [].slice.call(document.querySelectorAll('.reveal, .reveal-group'));
+    if(!nodes.length) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce || !('IntersectionObserver' in window)){
+      nodes.forEach(function(n){ n.classList.add('is-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+    nodes.forEach(function(n){ io.observe(n); });
+  })();
+  </script>
 
   <!-- PREVIEW-ONLY: announce close + nav dropdown -->
   <script>

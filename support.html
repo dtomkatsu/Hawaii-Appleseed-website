@@ -23,6 +23,12 @@
       --ash-light:  #E8EDE6;
       --cream:      #F4F7F5;
       --white:      #FFFFFF;
+
+      /* Motion tokens (shared system) */
+      --ease-out: cubic-bezier(.22, .61, .36, 1);
+      --dur-fast: .2s;
+      --dur-base: .4s;
+      --dur-slow: .6s;
     }
 
     html { scroll-behavior: smooth; }
@@ -720,6 +726,33 @@
     .hero-actions   { animation: fadeUp 0.75s ease 0.62s both; }
 
     /* ─────────────────────────────────────
+       SCROLL-REVEAL (rec B) — GPU-only (opacity + translateY), reveals once.
+       Hidden by default; <noscript> + reduced-motion force visible.
+    ───────────────────────────────────── */
+    .reveal { opacity:0; transform:translateY(18px);
+      transition:opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+    .reveal.is-in { opacity:1; transform:none; }
+    .reveal-group > * { opacity:0; transform:translateY(18px);
+      transition:opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+    .reveal-group.is-in > * { opacity:1; transform:none; }
+    .reveal-group.is-in > *:nth-child(2){ transition-delay:.07s; }
+    .reveal-group.is-in > *:nth-child(3){ transition-delay:.14s; }
+    .reveal-group.is-in > *:nth-child(4){ transition-delay:.21s; }
+    .reveal-group.is-in > *:nth-child(5){ transition-delay:.28s; }
+    .reveal-group.is-in > *:nth-child(6){ transition-delay:.35s; }
+
+    /* ─────────────────────────────────────
+       REDUCED MOTION (rec A) — honor the OS setting site-wide.
+    ───────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after{
+        animation-duration:.01ms!important; animation-iteration-count:1!important;
+        transition-duration:.01ms!important; scroll-behavior:auto!important;
+      }
+      .reveal, .reveal-group > *{ opacity:1!important; transform:none!important; }
+    }
+
+    /* ─────────────────────────────────────
        RESPONSIVE
     ───────────────────────────────────── */
     @media (max-width: 900px) {
@@ -740,6 +773,8 @@
       .footer-nav       { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
     }
   </style>
+  <!-- Fail-safe: if JS is off, reveal elements stay visible. -->
+  <noscript><style>.reveal,.reveal-group>*{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 
@@ -820,7 +855,7 @@
   <!-- ══════════════════════════════════
        MISSION BAND
   ══════════════════════════════════ -->
-  <section class="mission-band">
+  <section class="mission-band reveal-group">
     <h2>Every family in Hawaiʻi deserves economic security, opportunity, and the full protection of the law.</h2>
     <p>For over two decades, Hawaiʻi Appleseed has worked at the intersection of law, policy, and community power to tackle the root causes of poverty and inequality across our islands. This work is sustained entirely by people who believe — like we do — that systems can change. Your support, in whatever form it takes, is what makes that possible.</p>
   </section>
@@ -829,12 +864,12 @@
        WAYS TO SUPPORT
   ══════════════════════════════════ -->
   <section class="ways-section" id="ways">
-    <div class="ways-header">
+    <div class="ways-header reveal">
       <div class="section-label">How to Help</div>
       <h2 class="section-title">There are many ways<br>to be part of this work.</h2>
     </div>
 
-    <div class="ways-grid">
+    <div class="ways-grid reveal-group">
       <div class="way-card">
         <span class="way-num">01</span>
         <h3>Make a Financial Gift</h3>
@@ -869,13 +904,13 @@
        GIVING LEVELS
   ══════════════════════════════════ -->
   <section class="giving-section" id="give">
-    <div class="giving-header">
+    <div class="giving-header reveal">
       <div class="section-label light">Make a Gift</div>
       <h2 class="section-title on-dark" style="margin-bottom: 0;">Your giving level.</h2>
     </div>
-    <p class="giving-subhead">Monthly giving is the most impactful way to sustain this work year-round. Every contribution — no matter the size — goes directly to our mission.</p>
+    <p class="giving-subhead reveal">Monthly giving is the most impactful way to sustain this work year-round. Every contribution — no matter the size — goes directly to our mission.</p>
 
-    <div class="giving-grid">
+    <div class="giving-grid reveal-group">
       <div class="giving-card">
         <div class="giving-amount">$10</div>
         <span class="giving-freq">/ month</span>
@@ -915,7 +950,7 @@
        POLICY PRIORITIES
   ══════════════════════════════════ -->
   <section class="policy-section" id="policy">
-    <div class="policy-header">
+    <div class="policy-header reveal-group">
       <div>
         <div class="section-label">Policy Priorities</div>
         <h2 class="section-title">The issues we're<br>fighting for.</h2>
@@ -926,7 +961,7 @@
       </div>
     </div>
 
-    <div class="issue-list">
+    <div class="issue-list reveal-group">
       <div class="issue-item">
         <div class="issue-tag">Economic Security</div>
         <div>
@@ -973,7 +1008,7 @@
        COMMUNITY VOICE QUOTE
   ══════════════════════════════════ -->
   <section class="voice-section">
-    <div class="voice-inner">
+    <div class="voice-inner reveal">
       <blockquote>
         "The work of justice is never done in isolation. It is <em>collective, persistent, and rooted</em> in the belief that every person deserves to thrive — and that we are strongest when we build together."
       </blockquote>
@@ -985,7 +1020,7 @@
   <!-- ══════════════════════════════════
        STAY CONNECTED / NEWSLETTER
   ══════════════════════════════════ -->
-  <section class="connect-section" id="connect">
+  <section class="connect-section reveal-group" id="connect">
     <div class="connect-text">
       <div class="section-label">Stay Informed</div>
       <h2>Stay rooted in <em>what matters.</em></h2>
@@ -1021,6 +1056,25 @@
       <a href="#give">Donate</a>
     </nav>
   </footer>
+
+  <!-- Scroll-reveal (rec B): fade/slide sections in on first view; once-only; respects reduced motion. -->
+  <script>
+  (function(){
+    var nodes = [].slice.call(document.querySelectorAll('.reveal, .reveal-group'));
+    if(!nodes.length) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce || !('IntersectionObserver' in window)){
+      nodes.forEach(function(n){ n.classList.add('is-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+    nodes.forEach(function(n){ io.observe(n); });
+  })();
+  </script>
 
   <!-- PREVIEW-ONLY: announce close + nav dropdown -->
   <script>
