@@ -213,6 +213,12 @@
     }
     .btn-dark:hover { background: var(--dark-slate); }
 
+    /* Touch press feedback (rec E) — hover never fires on touch. */
+    a, button { -webkit-tap-highlight-color: transparent; }
+    .btn:active, .giving-btn:active { transform: scale(.97); }
+    .way-card:active, .giving-card:active { transform: scale(.99); }
+    .way-link:active { opacity: .65; }
+
     /* ─────────────────────────────────────
        MISSION BAND
     ───────────────────────────────────── */

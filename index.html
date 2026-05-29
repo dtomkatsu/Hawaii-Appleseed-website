@@ -104,6 +104,15 @@
     .btn-dark { background:var(--charcoal); color:var(--white); }
     .btn-dark:hover { background:var(--dark-slate); }
 
+    /* Touch press feedback (rec E) — hover never fires on touch. */
+    a, button { -webkit-tap-highlight-color: transparent; }
+    .btn:active { transform: scale(.97); }
+    .ha-home__issue-card:active,
+    .ha-home__involve-card:active,
+    .ha-home__latest-card:active,
+    .ha-home__dash:active { transform: scale(.99); }
+    .way-link:active { opacity: .65; }
+
     .eyebrow {
       font-family:'Manrope',sans-serif;font-size:0.7rem;font-weight:600;
       letter-spacing:0.28em;text-transform:uppercase;color:var(--teal);
@@ -154,7 +163,10 @@
     .ha-home__hero-video {
       position:absolute;inset:0;width:100%;height:100%;
       object-fit:cover;z-index:0;
+      animation: haKenburns 24s ease-in-out infinite alternate;  /* subtle drift (rec F) */
     }
+    @keyframes haKenburns { from { transform:scale(1); } to { transform:scale(1.08); } }
+    @media (max-width:700px){ .ha-home__hero-video{ animation:none; } }  /* save mobile battery */
     .ha-home__hero-scrim {
       position:absolute;inset:0;z-index:1;
       background:linear-gradient(180deg, rgba(47,62,70,0.58) 0%, rgba(47,62,70,0.32) 45%, rgba(47,62,70,0.74) 100%);
@@ -393,6 +405,7 @@
         transition-duration:.01ms!important; scroll-behavior:auto!important;
       }
       .reveal, .reveal-group > *{ opacity:1!important; transform:none!important; }
+      .ha-home__hero-video{ animation:none!important; transform:none!important; }
     }
 
     /* ─────────────────────────────────────
@@ -593,10 +606,10 @@
 
     <div class="ha-home__impact-grid reveal-group">
       <div class="ha-home__stats">
-        <div class="ha-home__stat"><span class="ha-home__stat-num">20+</span><span class="ha-home__stat-lbl">Years of advocacy</span></div>
-        <div class="ha-home__stat"><span class="ha-home__stat-num">50+</span><span class="ha-home__stat-lbl">Legislative wins</span></div>
-        <div class="ha-home__stat"><span class="ha-home__stat-num">500K+</span><span class="ha-home__stat-lbl">Residents reached</span></div>
-        <div class="ha-home__stat"><span class="ha-home__stat-num">5</span><span class="ha-home__stat-lbl">Issue areas</span></div>
+        <div class="ha-home__stat"><span class="ha-home__stat-num" data-count="20" data-suffix="+">20+</span><span class="ha-home__stat-lbl">Years of advocacy</span></div>
+        <div class="ha-home__stat"><span class="ha-home__stat-num" data-count="50" data-suffix="+">50+</span><span class="ha-home__stat-lbl">Legislative wins</span></div>
+        <div class="ha-home__stat"><span class="ha-home__stat-num" data-count="500" data-suffix="K+">500K+</span><span class="ha-home__stat-lbl">Residents reached</span></div>
+        <div class="ha-home__stat"><span class="ha-home__stat-num" data-count="5" data-suffix="">5</span><span class="ha-home__stat-lbl">Issue areas</span></div>
       </div>
 
       <a class="ha-home__dash" href="https://hiappleseed.org/data-dashboard" target="_blank" rel="noopener">
@@ -763,6 +776,37 @@
       .catch(function(){
         grid.innerHTML = '<div class="ha-home__latest-loading">See our latest research on the <a href="publications.html">publications page</a>.</div>';
       });
+  })();
+  </script>
+
+  <!-- Stat count-up (rec F): animates [data-count] numbers when scrolled into view; respects reduced motion. -->
+  <script>
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var nums = [].slice.call(document.querySelectorAll('[data-count]'));
+    if(!nums.length) return;
+    function fmt(v, s){ return v.toLocaleString('en-US') + (s || ''); }
+    function run(el){
+      var target = parseFloat(el.getAttribute('data-count')) || 0;
+      var suffix = el.getAttribute('data-suffix') || '';
+      var dur = 1200, start = null;
+      function step(ts){
+        if(!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(Math.round(target * eased), suffix);
+        if(p < 1){ requestAnimationFrame(step); } else { el.textContent = fmt(target, suffix); }
+      }
+      requestAnimationFrame(step);
+    }
+    if(reduce || !('IntersectionObserver' in window)){
+      nums.forEach(function(el){ el.textContent = fmt(parseFloat(el.getAttribute('data-count')) || 0, el.getAttribute('data-suffix') || ''); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ run(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.4 });
+    nums.forEach(function(el){ io.observe(el); });
   })();
   </script>
 
