@@ -187,12 +187,15 @@
     .ha-issues .ha-hero-lead{max-width:none;}
     .ha-issues .ha-cards{margin-top:52px;}
   }
-  /* Display headline for the hero — the section's prominent title.
-     Upright Fraunces with one italic teal-deep accent word. */
+  /* Display headline for the hero — the page's prominent title.
+     Upright Fraunces with the second word set in an italic teal-deep
+     accent, echoing the editorial treatment used on each deep-dive
+     head. Scaled up (matches the section h2 ceiling) since the title
+     is now just two words and benefits from the extra presence. */
   .ha-issues .ha-hero-title{
     font-family:'Fraunces',Georgia,serif;font-weight:400;
-    font-size:clamp(34px, 5vw, 64px);line-height:1.08;letter-spacing:-0.01em;
-    color:var(--ha-charcoal);margin:18px 0 0;max-width:18ch;
+    font-size:clamp(44px, 7vw, 80px);line-height:1.02;letter-spacing:-0.02em;
+    color:var(--ha-charcoal);margin:0;
   }
   .ha-issues .ha-hero-title em{font-style:italic;color:var(--ha-teal-deep);}
   /* Lead now reads as an open deck beneath the headline — the former
@@ -584,7 +587,7 @@
     .ha-issues .ha-card-icon svg{width:22px;height:22px;}
     .ha-issues .ha-card h3{font-size:18px;}
     .ha-issues .ha-card::after{font-size:18px;}
-    .ha-issues .ha-hero-title{font-size:clamp(30px, 8vw, 40px);margin-top:14px;}
+    .ha-issues .ha-hero-title{font-size:clamp(40px, 13vw, 52px);margin-top:0;}
     .ha-issues .ha-hero-lead{font-size:16px;}
     .ha-issues .ha-deep-head{margin-bottom:24px;}
     .ha-issues .ha-deep-sub{margin:36px 0 16px;}
@@ -801,8 +804,7 @@
   <section class="ha-hero">
     <div class="ha-wrap">
       <div class="ha-hero-text">
-        <span class="ha-eyebrow">Our Impact</span>
-        <h1 class="ha-hero-title">Where economic justice meets <em>everyday life</em>.</h1>
+        <h1 class="ha-hero-title">Our <em>Impact</em></h1>
         <p class="ha-hero-lead">
           We fight for a Hawaiʻi where every family has what they need to thrive. That means safe, stable housing; healthy, affordable food; fair wages and labor protections; transportation options that connect us to opportunity; and a tax system that asks the wealthy to pay their share so we can fund our future.
         </p>
