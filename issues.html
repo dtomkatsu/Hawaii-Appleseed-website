@@ -188,16 +188,13 @@
     .ha-issues .ha-cards{margin-top:52px;}
   }
   /* Display headline for the hero — the page's prominent title.
-     Upright Fraunces with the second word set in an italic teal-deep
-     accent, echoing the editorial treatment used on each deep-dive
-     head. Scaled up (matches the section h2 ceiling) since the title
-     is now just two words and benefits from the extra presence. */
+     Upright Fraunces, scaled to the section h2 ceiling so the
+     two-word title carries real display presence. */
   .ha-issues .ha-hero-title{
     font-family:'Fraunces',Georgia,serif;font-weight:400;
     font-size:clamp(44px, 7vw, 80px);line-height:1.02;letter-spacing:-0.02em;
     color:var(--ha-charcoal);margin:0;
   }
-  .ha-issues .ha-hero-title em{font-style:italic;color:var(--ha-teal-deep);}
   /* Lead now reads as an open deck beneath the headline — the former
      tinted box read as a muted/disabled field, so it's been dropped and
      the type bumped up. */
@@ -206,21 +203,6 @@
     font-size:clamp(16px, 1.5vw, 20px);line-height:1.65;
     color:var(--ha-charcoal);max-width:58ch;
     margin:20px 0 0;
-  }
-  /* Impact stat band — large Manrope numbers (count up on view via JS). */
-  .ha-issues .ha-hero-stats{
-    display:flex;flex-wrap:wrap;gap:26px 44px;margin-top:34px;
-  }
-  .ha-issues .ha-hero-stat{display:flex;flex-direction:column;gap:5px;}
-  .ha-issues .ha-hero-stat-num{
-    font-family:'Manrope',sans-serif;font-weight:800;
-    font-size:clamp(30px, 3.4vw, 44px);line-height:1;letter-spacing:-0.02em;
-    color:var(--ha-teal-deep);
-  }
-  .ha-issues .ha-hero-stat-lbl{
-    font-family:'Poppins',sans-serif;font-weight:500;
-    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--ha-charcoal);opacity:.66;
   }
 
   /* ===== ISSUE BARS (horizontal, stacked) ===== */
@@ -804,16 +786,10 @@
   <section class="ha-hero">
     <div class="ha-wrap">
       <div class="ha-hero-text">
-        <h1 class="ha-hero-title">Our <em>Impact</em></h1>
+        <h1 class="ha-hero-title">Our Impact</h1>
         <p class="ha-hero-lead">
           We fight for a Hawaiʻi where every family has what they need to thrive. That means safe, stable housing; healthy, affordable food; fair wages and labor protections; transportation options that connect us to opportunity; and a tax system that asks the wealthy to pay their share so we can fund our future.
         </p>
-        <!-- Impact stat band (rec 2): makes "Our Impact" literal. PLACEHOLDER numbers — verify with comms. -->
-        <div class="ha-hero-stats">
-          <div class="ha-hero-stat"><span class="ha-hero-stat-num" data-count="20" data-suffix="+">20+</span><span class="ha-hero-stat-lbl">Years of advocacy</span></div>
-          <div class="ha-hero-stat"><span class="ha-hero-stat-num" data-count="50" data-suffix="+">50+</span><span class="ha-hero-stat-lbl">Legislative wins</span></div>
-          <div class="ha-hero-stat"><span class="ha-hero-stat-num" data-count="500" data-suffix="K+">500K+</span><span class="ha-hero-stat-lbl">Residents reached</span></div>
-        </div>
       </div>
       <div class="ha-cards">
 
@@ -1341,35 +1317,5 @@
 })();
 </script>
 
-<!-- Stat count-up (rec F): animates [data-count] numbers when scrolled into view; respects reduced motion. -->
-<script>
-(function(){
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var nums = [].slice.call(document.querySelectorAll('[data-count]'));
-  if(!nums.length) return;
-  function fmt(v, s){ return v.toLocaleString('en-US') + (s || ''); }
-  function run(el){
-    var target = parseFloat(el.getAttribute('data-count')) || 0;
-    var suffix = el.getAttribute('data-suffix') || '';
-    var dur = 1200, start = null;
-    function step(ts){
-      if(!start) start = ts;
-      var p = Math.min((ts - start) / dur, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = fmt(Math.round(target * eased), suffix);
-      if(p < 1){ requestAnimationFrame(step); } else { el.textContent = fmt(target, suffix); }
-    }
-    requestAnimationFrame(step);
-  }
-  if(reduce || !('IntersectionObserver' in window)){
-    nums.forEach(function(el){ el.textContent = fmt(parseFloat(el.getAttribute('data-count')) || 0, el.getAttribute('data-suffix') || ''); });
-    return;
-  }
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting){ run(e.target); io.unobserve(e.target); } });
-  }, { threshold: 0.4 });
-  nums.forEach(function(el){ io.observe(el); });
-})();
-</script>
 </body>
 </html>
