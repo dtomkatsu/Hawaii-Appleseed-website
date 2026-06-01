@@ -4,7 +4,7 @@
 
 - **Brand palette is canonical**: Ash / Teal / Slate / Charcoal. **NEVER** use the original sage-green prototype colors (`--sage-*`, `--appleseed: #3a7811`) for new work. Migrate sage-green to brand palette when touching any page.
 - **Mobile-first verification at 375px**: every layout / typography / padding change must be verified at 375px mobile width, NOT just desktop. Use ≤700px media queries with tighter padding (64–80px vs 110px), 20px page padding, smaller eyebrows, stacked CTAs.
-- **Brand fonts**: Manrope (body / UI), Poppins (display), Fraunces (editorial accents only). No other fonts.
+- **Brand fonts** (per the Appleseed brand guide): **Manrope** for headings / display (H1–H4, hero titles, captions/labels — approximates Glober), **Poppins** for body text (approximates Source Sans Pro). **No other fonts** — do NOT introduce Fraunces or any serif. Italic editorial accents (taglines, pull-quotes, emphasis words) use **Poppins italic** (Manrope has no real italic on Google Fonts, so it would faux-slant — never set `font-style:italic` on Manrope). Arial is the approved fallback when custom fonts aren't available.
 
 ## Hard rules — engineering
 

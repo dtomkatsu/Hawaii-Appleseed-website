@@ -68,7 +68,7 @@
 </style>
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap">
 </head>
 <body>
 
@@ -188,10 +188,10 @@
     .ha-issues .ha-cards{margin-top:52px;}
   }
   /* Display headline for the hero — the page's prominent title.
-     Upright Fraunces, scaled to the section h2 ceiling so the
-     two-word title carries real display presence. */
+     Upright Manrope (brand display/heading font), scaled to the
+     section h2 ceiling so the two-word title carries presence. */
   .ha-issues .ha-hero-title{
-    font-family:'Fraunces',Georgia,serif;font-weight:400;
+    font-family:'Manrope',sans-serif;font-weight:400;
     font-size:clamp(44px, 7vw, 80px);line-height:1.02;letter-spacing:-0.02em;
     color:var(--ha-charcoal);margin:0;
   }
@@ -339,8 +339,8 @@
   }
   /* h2->tagline gap: the 8px set while the tagline was rendering tiny
      (the old specificity bug) reads cramped now that the tagline is back
-     at its intended 22-30px Fraunces size, so it's opened to 16px — still
-     tight enough to read as a deck of the title, not a detached block. */
+     at its intended 22-30px size, so it's opened to 16px — still tight
+     enough to read as a deck of the title, not a detached block. */
   /* line-height 1.05 (not a hard 1): single-line titles are unaffected
      visually, but titles that wrap on mobile (e.g. "Affordable Housing"
      at 375px) no longer pinch descenders against the next line's caps. */
@@ -351,19 +351,19 @@
   }
   /* Scoped under .ha-deep (specificity 0,3,0) so it wins over
      `.ha-issues .ha-deep p` (0,2,1) below — otherwise the tagline
-     silently renders as Poppins 15.5px charcoal instead of the
-     intended Fraunces italic deck, and Fraunces never loads. */
+     silently renders as upright Poppins 15.5px charcoal instead of
+     the intended Poppins-italic deck. */
   .ha-issues .ha-deep .ha-deep-tagline{
-    font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:500;
+    font-family:'Poppins',sans-serif;font-style:italic;font-weight:500;
     font-size:clamp(22px, 2.4vw, 30px);line-height:1.3;
     color:var(--section-accent, var(--ha-teal-deep));opacity:1;
     margin:0 0 20px;max-width:36ch;
   }
   /* Key-word emphasis inside the italic tagline: the anchor word stays
-     in Fraunces italic (preserves the typographic family of the phrase)
-     and bumps to weight 700 in the section accent color. Reads as a
-     dignified punctuation point inside the italic phrase, rather than
-     interrupting it with a heavy non-italic charcoal word. */
+     in the same Poppins italic (preserves the typographic family of the
+     phrase) and bumps to weight 700 in the section accent color. Reads
+     as a dignified punctuation point inside the italic phrase, rather
+     than interrupting it with a heavy upright word. */
   .ha-issues .ha-deep-tagline-key{
     font-weight:700;
     color:var(--section-accent, var(--ha-teal-deep));
