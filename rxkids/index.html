@@ -867,7 +867,7 @@
         .tfc-step:not(:last-child)::after {
             content: "";
             position: absolute;
-            top: 86px;
+            top: 37px;
             right: -32px;
             width: 32px;
             height: 3px;
@@ -885,20 +885,22 @@
         }
 
         .tfc-step-number {
-            width: 56px;
-            height: 56px;
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            width: 46px;
+            height: 46px;
             background: linear-gradient(135deg, #E57373, #EF5350);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            margin: 0 auto 18px;
+            margin: 0;
             font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
-            position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
         .tfc-step-title {
@@ -1628,17 +1630,26 @@
             flex-direction: column;
         }
 
-        .tfc-stat-chip {
+        .tfc-stat-icon {
             align-self: flex-start;
-            font-size: 0.68rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: #C62828;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
             background: #FFEBEE;
-            padding: 3px 10px;
-            border-radius: 20px;
-            margin-bottom: 12px;
+            color: #C62828;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+
+        .tfc-stat-icon svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .tfc-stat-icon--empty {
+            background: transparent;
         }
 
         .tfc-stat-value {
@@ -1834,37 +1845,37 @@
 
                             <div class="tfc-flint-stats-grid">
                                 <div class="tfc-stat-block">
-                                    <span class="tfc-stat-chip">Hardship</span>
+                                    <span class="tfc-stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 11 9 5l7 6"/><path d="M4 10v9h10v-9"/><path d="M19.5 9v8.5"/><path d="m16.5 14.5 3 3 3-3"/></svg></span>
                                     <div class="tfc-stat-value">13.0%</div>
                                     <div class="tfc-stat-desc">Reduction in owing back rent or mortgage</div>
                                 </div>
 
                                 <div class="tfc-stat-block">
-                                    <span class="tfc-stat-chip">Hardship</span>
+                                    <span class="tfc-stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.5s7.5-3.7 7.5-9.5V5.5L12 2.7 4.5 5.5V12c0 5.8 7.5 9.5 7.5 9.5Z"/><path d="M8 12.4 12 8.6l4 3.8"/><path d="M9.3 11.4v5.1h5.4v-5.1"/></svg></span>
                                     <div class="tfc-stat-value">4.2%</div>
                                     <div class="tfc-stat-desc">Reduction in eviction risk after birth</div>
                                 </div>
 
                                 <div class="tfc-stat-block">
-                                    <span class="tfc-stat-chip">Hardship</span>
+                                    <span class="tfc-stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2.5V7"/><path d="M9 2.5V7"/><path d="M6 7c0 1.6 1 2.5 2.2 2.6"/><path d="M9 7c0 1.6-1 2.5-2.2 2.6"/><path d="M7.5 9.6V21.5"/><path d="M17 2.5c-1.9.7-3 2.8-3 5.3 0 2 1.2 3.4 3 3.7"/><path d="M17 2.5v19"/></svg></span>
                                     <div class="tfc-stat-value">14.0%</div>
                                     <div class="tfc-stat-desc">Reduction in food insecurity</div>
                                 </div>
 
                                 <div class="tfc-stat-block">
-                                    <span class="tfc-stat-chip">Hardship</span>
+                                    <span class="tfc-stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="13" height="9" rx="1.5"/><circle cx="9" cy="10.5" r="2"/><path d="M19.5 8v8.5"/><path d="m16.5 13.5 3 3 3-3"/></svg></span>
                                     <div class="tfc-stat-value">$1,004</div>
                                     <div class="tfc-stat-desc">Less back rent/mortgage owed on average</div>
                                 </div>
 
                                 <div class="tfc-stat-block">
-                                    <span class="tfc-stat-chip">Mental Health</span>
+                                    <span class="tfc-stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9.5" r="6"/><path d="M12 12.6c-2-1.3-3.3-2.5-3.3-4 0-1 .8-1.7 1.7-1.7.7 0 1.3.4 1.6 1 .3-.6.9-1 1.6-1 .9 0 1.7.7 1.7 1.7 0 1.5-1.3 2.7-3.3 4Z"/></svg></span>
                                     <div class="tfc-stat-value">14.0%</div>
                                     <div class="tfc-stat-desc">Reduction in screening positive for postpartum depression</div>
                                 </div>
 
                                 <div class="tfc-stat-block">
-                                    <span class="tfc-stat-chip">Mental Health</span>
+                                    <span class="tfc-stat-icon tfc-stat-icon--empty" aria-hidden="true"></span>
                                     <div class="tfc-stat-value">6.0%</div>
                                     <div class="tfc-stat-desc">Reduction in uncontrollable worrying</div>
                                 </div>
