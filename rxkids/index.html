@@ -1690,6 +1690,174 @@
                 gap: 14px;
             }
         }
+
+        /* ===== How TANF works ===== */
+        .tfc-tanf-compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            max-width: 900px;
+            margin: 0 auto 56px;
+        }
+
+        .tfc-tanf-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px 30px;
+            box-shadow: 0 4px 20px rgba(42, 58, 77, 0.08);
+            border-top: 5px solid #B0BEC5;
+            text-align: left;
+        }
+
+        .tfc-tanf-card--free {
+            border-top-color: #43A047;
+        }
+
+        .tfc-tanf-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            background: #ECEFF1;
+            color: #607D8B;
+        }
+
+        .tfc-tanf-card--free .tfc-tanf-icon {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .tfc-tanf-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .tfc-tanf-card h3 {
+            font-size: 1.4rem;
+            color: #2A3A4D;
+            margin-bottom: 10px;
+        }
+
+        .tfc-tanf-tag {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            background: #ECEFF1;
+            color: #546E7A;
+        }
+
+        .tfc-tanf-tag--good {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .tfc-tanf-option-num {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #90A4AE;
+            margin-bottom: 10px;
+        }
+
+        .tfc-tanf-card--free .tfc-tanf-option-num {
+            color: #43A047;
+        }
+
+        .tfc-tanf-card p {
+            font-size: 1.02rem;
+            color: #4a5568;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Funding split bar */
+        .tfc-tanf-split {
+            max-width: 820px;
+            margin: 0 auto 48px;
+            text-align: center;
+        }
+
+        .tfc-tanf-split h3 {
+            font-size: 1.6rem;
+            color: #2A3A4D;
+            margin-bottom: 12px;
+        }
+
+        .tfc-tanf-split p {
+            font-size: 1.08rem;
+            color: #4a5568;
+            line-height: 1.6;
+            max-width: 680px;
+            margin: 0 auto 28px;
+        }
+
+        .tfc-tanf-bar {
+            display: flex;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(42, 58, 77, 0.1);
+            min-height: 96px;
+        }
+
+        .tfc-tanf-seg {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 16px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.02rem;
+            line-height: 1.3;
+        }
+
+        .tfc-tanf-seg span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.92;
+            margin-top: 6px;
+        }
+
+        .tfc-tanf-seg--tanf {
+            flex: 4;
+            background: linear-gradient(135deg, #43A047, #2E7D32);
+        }
+
+        .tfc-tanf-seg--state {
+            flex: 8;
+            background: linear-gradient(135deg, #5C6BC0, #3949AB);
+        }
+
+        .tfc-tanf-note {
+            max-width: 720px;
+            margin: 28px auto 0;
+            font-size: 0.92rem;
+            color: #718096;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .tfc-tanf-compare {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .tfc-tanf-bar {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2025,6 +2193,67 @@
             </div>
 
             <p class="tfc-steps-note">Payment amounts mirror the Flint, Michigan model and are illustrative for a proposed Hawai&#699;i program.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How TANF works -->
+        <div class="tfc-full-width tfc-bg-white tfc-reveal">
+            <div class="tfc-content-container">
+                <div class="tfc-section" style="margin-bottom: 0;">
+                    <h2 class="tfc-section-title">How TANF helps pay for RxKids</h2>
+                    <p class="tfc-section-subtitle">TANF (Temporary Assistance for Needy Families) is a federal program that gives each state a pot of money to help families with children who are struggling to get by. States get to decide a lot about how to spend it &mdash; and helping families care for their kids at home is exactly what it&rsquo;s meant for.</p>
+
+                    <h3 style="text-align:center; color:#2A3A4D; font-size:1.5rem; margin: 0 0 28px;">TANF can give money in two very different ways</h3>
+
+                    <div class="tfc-tanf-compare">
+                        <div class="tfc-tanf-card">
+                            <span class="tfc-tanf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/><path d="M12 15v2"/></svg></span>
+                            <h3>Ongoing aid</h3>
+                            <span class="tfc-tanf-tag">Comes with strings</span>
+                            <p>Monthly cash meant to cover a family&rsquo;s needs over the long term. To get it, families must follow rules &mdash; time limits, work requirements, and paperwork &mdash; and it can shrink other help like food assistance.</p>
+                        </div>
+                        <div class="tfc-tanf-card tfc-tanf-card--free">
+                            <span class="tfc-tanf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.5-2.6"/><path d="M12 15v2"/></svg></span>
+                            <h3>Short-term help</h3>
+                            <span class="tfc-tanf-tag tfc-tanf-tag--good">No strings</span>
+                            <p>A brief payment for one specific moment &mdash; like welcoming a new baby. As long as it lasts no more than a few months, it counts as short-term help: no time limits, no work requirements, no strings attached.</p>
+                        </div>
+                    </div>
+
+                    <div class="tfc-tanf-split">
+                        <h3>How RxKids uses TANF</h3>
+                        <p>RxKids uses the no-strings, short-term kind of TANF to cover the most important early stretch &mdash; the payment during pregnancy and the first few months after birth. The later months are paid for with state and other funds. TANF helps pay for the start; it isn&rsquo;t the whole engine.</p>
+                        <div class="tfc-tanf-bar">
+                            <div class="tfc-tanf-seg tfc-tanf-seg--tanf">Pregnancy &amp; first months<span>TANF &middot; no strings</span></div>
+                            <div class="tfc-tanf-seg tfc-tanf-seg--state">Later months<span>State &amp; other funds</span></div>
+                        </div>
+                    </div>
+
+                    <h3 style="text-align:center; color:#2A3A4D; font-size:1.5rem; margin: 56px 0 16px;">The choice that keeps it &ldquo;no strings&rdquo;</h3>
+                    <p class="tfc-section-subtitle" style="margin-bottom:32px;">There&rsquo;s a catch: TANF&rsquo;s no-strings help only lasts about four months. If TANF pays for more than that, the law treats it as ongoing aid &mdash; and the strings come back. (Just limiting it to lower-income families doesn&rsquo;t change that &mdash; what matters is keeping TANF to those first few months.) That leaves Hawai&#699;i two ways to build the program:</p>
+
+                    <div class="tfc-tanf-compare">
+                        <div class="tfc-tanf-card">
+                            <span class="tfc-tanf-option-num">Option 1</span>
+                            <h3>Use TANF for everything</h3>
+                            <span class="tfc-tanf-tag">Strings come back</span>
+                            <p>For families who qualify, TANF could pay for all 12 months. It&rsquo;s simpler to fund &mdash; but because the help now lasts longer than a few months, the law counts it as ongoing aid. That brings back time limits, work requirements, child-support rules, and smaller food and housing benefits.</p>
+                        </div>
+                        <div class="tfc-tanf-card tfc-tanf-card--free">
+                            <span class="tfc-tanf-option-num">Option 2 &middot; Recommended</span>
+                            <h3>&ldquo;Braided&rdquo; funding</h3>
+                            <span class="tfc-tanf-tag tfc-tanf-tag--good">Stays no strings</span>
+                            <p>TANF pays only for the first few months, where it&rsquo;s truly no-strings. State and other funds cover the rest &mdash; plus the families who don&rsquo;t qualify for TANF. Everyone is covered, and the whole program stays no-strings. This is how RxKids already runs in Michigan.</p>
+                        </div>
+                    </div>
+
+                    <p class="tfc-tanf-note">Hawai&#699;i&rsquo;s bill (HB2006) already limits TANF money to families on Medicaid or under 300% of the poverty line &mdash; but it doesn&rsquo;t yet cap TANF to those first few months. Adding that cap is the key to keeping the program no-strings. It&rsquo;s also why some state officials have warned about work rules, child support, and reduced benefits &mdash; those concerns are real under Option 1, but largely disappear under Option 2.</p>
+
+                    <div class="tfc-highlight-box" style="margin-bottom:0;">
+                        <h3>The bottom line</h3>
+                        <p>TANF pays for the start. Hawai&#699;i pays for the rest. Families get help right when they need it most &mdash; with no strings attached.</p>
+                    </div>
                 </div>
             </div>
         </div>
