@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Free School Meals — Hawaiʻi Appleseed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <style>
+        :root {
+            --ufsm-charcoal: #4A4A4A;
+            --ufsm-ink: #555555;
+            --ufsm-muted: #7C8A80;
+            --ufsm-green: #61B973;
+            --ufsm-green-deep: #46985A;
+            --ufsm-green-bright: #79C98A;
+            --ufsm-green-light: #9CC88F;
+            --ufsm-green-pale: #C7E0B8;
+            --ufsm-green-tint: #EAF1E3;
+            --ufsm-band: #D9D5D6;
+            --ufsm-light: #F8F9F8;
+            --ufsm-white: #FFFFFF;
+            /* chart accents */
+            --c-federal: #6FA86A;
+            --c-general: #9CC88F;
+            --c-copay: #3FA0A0;
+            --c-blue-1: #1F6F8B;
+            --c-blue-2: #3FA0C0;
+            --c-blue-3: #A9DCE0;
+            --ufsm-alert: #BC6C25;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', system-ui, -apple-system, Arial, sans-serif;
+            color: var(--ufsm-ink);
+            background: var(--ufsm-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            color: var(--ufsm-charcoal);
+            margin-top: 0;
+            line-height: 1.15;
+        }
+
+        .ufsm-container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Full-bleed bands */
+        .ufsm-full-width {
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+            padding: 72px 0;
+        }
+        .ufsm-bg-white { background: var(--ufsm-white); }
+        .ufsm-bg-light { background: var(--ufsm-light); }
+        .ufsm-bg-band { background: var(--ufsm-band); }
+        .ufsm-bg-green { background: var(--ufsm-green-tint); }
+
+        /* Footnote tooltips */
+        .ufsm-fn {
+            display: inline-block; position: relative; cursor: help;
+            color: var(--ufsm-green-deep); font-weight: 700; font-size: 0.66em;
+            vertical-align: super; line-height: 0; margin-left: 1px;
+        }
+        .ufsm-fn:focus, .ufsm-tipword:focus { outline: none; }
+        .ufsm-tipword {
+            position: relative; cursor: help; font-weight: 700; color: var(--ufsm-green-deep);
+            text-decoration: none;
+        }
+        a.ufsm-tipword { cursor: pointer; }
+        .ufsm-tipword-i {
+            font-size: 0.6em; vertical-align: super; margin-left: 2px;
+            color: var(--ufsm-green); font-weight: 700;
+        }
+        .ufsm-fn::after, .ufsm-tipword::after {
+            content: attr(data-tip);
+            position: absolute; bottom: 160%; left: 50%; transform: translateX(-50%);
+            width: 252px; max-width: 72vw;
+            background: #fff; color: var(--ufsm-ink); text-align: left;
+            font-family: 'Poppins', sans-serif; font-size: 12.5px; font-weight: 400; line-height: 1.5;
+            letter-spacing: 0; text-transform: none;
+            padding: 13px 15px; border-radius: 12px; border-left: 4px solid var(--ufsm-green);
+            box-shadow: 0 12px 30px rgba(63, 74, 74, 0.20);
+            opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.16s ease; z-index: 70;
+        }
+        .ufsm-fn:hover::after, .ufsm-fn:focus::after,
+        .ufsm-tipword:hover::after, .ufsm-tipword:focus::after { opacity: 1; visibility: visible; }
+        .ufsm-fn--right::after { left: auto; right: 0; transform: none; }
+        .ufsm-tipword::after { left: 0; transform: none; }
+
+        /* Scroll reveal */
+        .ufsm-reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .ufsm-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .ufsm-eyebrow {
+            display: inline-block;
+            font-family: 'Manrope', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ufsm-green-deep);
+            margin-bottom: 10px;
+        }
+
+        .ufsm-section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 14px;
+            letter-spacing: -0.5px;
+        }
+        .ufsm-section-title--green { color: var(--ufsm-green); text-transform: uppercase; }
+
+        .ufsm-section-intro {
+            font-size: 1.12rem;
+            color: var(--ufsm-ink);
+            max-width: 760px;
+            margin: 0 0 40px;
+        }
+
+        /* ===== HERO ("Equity on the menu") ===== */
+        .ufsm-hero { background: var(--ufsm-band); }
+        .ufsm-hero .ufsm-container {
+            padding-top: 56px; padding-bottom: 56px;
+            display: flex; gap: 40px; align-items: center; flex-wrap: wrap;
+        }
+        .ufsm-hero-text { flex: 1 1 440px; }
+        .ufsm-hero h1 {
+            font-size: 3.4rem; color: var(--ufsm-charcoal); line-height: 1.0; margin: 0;
+            letter-spacing: -0.5px;
+        }
+        .ufsm-hero h1 .ufsm-hero-sub {
+            display: block;
+            color: var(--ufsm-green);
+            font-family: 'Poppins', sans-serif;
+            font-style: italic;
+            font-weight: 600;
+            font-size: 2.3rem;
+            letter-spacing: 0;
+            margin-top: 2px;
+        }
+        .ufsm-hero-def {
+            font-size: 1.2rem; color: var(--ufsm-ink); max-width: 560px; margin: 24px 0 0;
+        }
+        .ufsm-hero-tag {
+            display: inline-block; margin-top: 20px;
+            font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 1.4rem;
+            color: var(--ufsm-green);
+        }
+        .ufsm-hero-tag .ufsm-hash { color: var(--ufsm-green-deep); }
+        .ufsm-hero-art {
+            flex: 0 0 240px; display: flex; align-items: center; justify-content: center;
+        }
+        .ufsm-hero-art svg { width: 230px; height: 230px; }
+
+        /* ===== WHY WE NEED — 3 cards ===== */
+        .ufsm-why-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+        .ufsm-why-card {
+            background: transparent;
+            padding: 8px 10px;
+            text-align: center;
+            position: relative;
+        }
+        .ufsm-why-card h3 {
+            font-size: 1.4rem;
+            color: var(--ufsm-green-deep);
+            margin-bottom: 16px;
+        }
+        .ufsm-why-card p { margin: 0 0 14px; color: var(--ufsm-ink); font-size: 1rem; }
+        .ufsm-why-card p:last-child { margin-bottom: 0; }
+
+        /* 5 reasons — open 2-column list with the title in the left column (matches PDF) */
+        .ufsm-reasons-2col { display: grid; grid-template-columns: 1fr; gap: 30px 56px; align-items: start; }
+        .ufsm-reasons-col { display: flex; flex-direction: column; gap: 28px; }
+        .ufsm-reasons-title { margin-bottom: 4px; }
+        .ufsm-reasons-kicker {
+            font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 1.85rem;
+            line-height: 1.04; text-transform: uppercase; color: var(--ufsm-charcoal); letter-spacing: -0.5px;
+        }
+        .ufsm-reasons-head {
+            font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 3rem;
+            line-height: 0.97; text-transform: uppercase; color: var(--ufsm-green); letter-spacing: -1px; margin-top: 8px;
+        }
+        .ufsm-reasons-head .ufsm-rh-line { display: block; }
+        .ufsm-reason h3 { color: var(--ufsm-green); font-size: 1.3rem; margin-bottom: 8px; }
+        .ufsm-reason p { margin: 0; color: var(--ufsm-ink); font-size: 1.04rem; }
+
+        /* Title intro animations (play once the section reveals) */
+        @keyframes ufsmWipeRight { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
+        @keyframes ufsmFadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        .ufsm-reasons-kicker { opacity: 0; }
+        .ufsm-reasons-head .ufsm-rh-line { opacity: 0; }
+        .ufsm-reasons-2col .ufsm-reason { opacity: 0; }
+        .ufsm-reveal.active .ufsm-reasons-kicker { animation: ufsmWipeRight 0.45s ease-out forwards; }
+        .ufsm-reveal.active .ufsm-rh-1 { animation: ufsmFadeUp 0.5s ease-out 0.35s forwards; }
+        .ufsm-reveal.active .ufsm-rh-2 { animation: ufsmFadeUp 0.5s ease-out 0.65s forwards; }
+        .ufsm-reveal.active .ufsm-reasons-col:nth-child(1) .ufsm-reason { animation: ufsmFadeUp 0.5s ease-out 1.0s forwards; }
+        .ufsm-reveal.active .ufsm-reasons-col:nth-child(2) .ufsm-reason { animation: ufsmFadeUp 0.5s ease-out 1.15s forwards; }
+        @media (prefers-reduced-motion: reduce) {
+            .ufsm-reasons-kicker, .ufsm-reasons-head .ufsm-rh-line, .ufsm-reasons-2col .ufsm-reason { opacity: 1; animation: none; }
+        }
+
+        /* "2 of 3" people icons */
+        .ufsm-bigstat {
+            font-family: 'Manrope', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--ufsm-green-deep);
+            margin: 4px 0 6px;
+        }
+        .ufsm-quotemark { font-family: Georgia, serif; font-size: 3.4rem; line-height: 0.8; color: var(--ufsm-green-light); height: 34px; }
+        .ufsm-people { display: flex; gap: 6px; justify-content: center; margin-bottom: 10px; }
+        .ufsm-person { width: 48px; height: 48px; }
+        .ufsm-person.on { fill: var(--ufsm-green); }
+        .ufsm-person.off { fill: var(--ufsm-green-pale); }
+
+        /* income gap mini-bars */
+        .ufsm-gap { text-align: left; margin: 14px 0 4px; }
+        .ufsm-gap-row { margin-bottom: 12px; }
+        .ufsm-gap-label { font-size: 0.86rem; font-weight: 600; color: var(--ufsm-muted); display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .ufsm-gap-track { height: 26px; background: #EDEFEC; border-radius: 13px; overflow: hidden; }
+        .ufsm-gap-fill {
+            height: 100%; width: 0; border-radius: 13px;
+            transition: width 1.1s ease-out;
+            display: flex; align-items: center; justify-content: flex-end;
+            padding-right: 10px; color: #fff; font-weight: 700; font-size: 0.8rem;
+        }
+        .ufsm-gap-fill.qualify { background: linear-gradient(90deg, #BDA13A, #9C842A); }
+        .ufsm-gap-fill.survive { background: linear-gradient(90deg, var(--ufsm-green), var(--ufsm-green-deep)); }
+
+        /* Gauge */
+        .ufsm-gauge-wrap { position: relative; width: 220px; margin: 6px auto 8px; }
+        .ufsm-gauge-num {
+            position: absolute; bottom: 6px; left: 0; right: 0; text-align: center;
+            font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 2.6rem; color: var(--ufsm-green-deep);
+        }
+        .ufsm-gauge-arc { transition: stroke-dashoffset 1.4s ease-out; }
+
+        /* ===== ACCORDION (5 reasons / dropdowns) ===== */
+        .ufsm-accordion { max-width: 860px; margin: 0 auto; }
+        .ufsm-acc-item { border-radius: 14px; background: #fff; box-shadow: 0 4px 18px rgba(63,74,74,0.07); margin-bottom: 14px; overflow: hidden; }
+        .ufsm-acc-btn {
+            width: 100%; text-align: left; border: none; background: #fff; cursor: pointer;
+            padding: 22px 24px; display: flex; align-items: center; gap: 16px;
+            font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 1.15rem; color: var(--ufsm-charcoal);
+            transition: background 0.2s ease;
+        }
+        .ufsm-acc-btn:hover { background: var(--ufsm-green-tint); }
+        .ufsm-acc-btn .ufsm-acc-icon {
+            flex: 0 0 42px; width: 42px; height: 42px; border-radius: 50%;
+            background: var(--ufsm-green-tint); color: var(--ufsm-green-deep);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .ufsm-acc-btn .ufsm-acc-icon svg { width: 24px; height: 24px; }
+        .ufsm-acc-btn .ufsm-acc-label { flex: 1; }
+        .ufsm-acc-btn .ufsm-acc-chev {
+            flex: 0 0 auto; transition: transform 0.3s ease; color: var(--ufsm-green); font-size: 1rem;
+        }
+        .ufsm-acc-btn.active .ufsm-acc-chev { transform: rotate(180deg); }
+        .ufsm-acc-panel {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+        }
+        .ufsm-acc-panel-inner { padding: 0 24px 24px 82px; color: var(--ufsm-ink); }
+        .ufsm-acc-panel-inner p { margin: 0; }
+
+        /* generic dropdown (tables/sources) */
+        .ufsm-drop { max-width: 900px; margin: 28px auto 0; }
+        .ufsm-drop-btn {
+            width: 100%; border: 1px solid var(--ufsm-green); background: #fff; cursor: pointer;
+            border-radius: 12px; padding: 16px 22px; display: flex; align-items: center; justify-content: space-between;
+            font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 1.02rem; color: var(--ufsm-green-deep);
+            transition: background 0.2s ease;
+        }
+        .ufsm-drop-btn:hover { background: var(--ufsm-green-tint); }
+        .ufsm-drop-btn .ufsm-acc-chev { transition: transform 0.3s ease; }
+        .ufsm-drop-btn.active .ufsm-acc-chev { transform: rotate(180deg); }
+        .ufsm-drop-panel { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .ufsm-drop-panel-inner { padding-top: 18px; }
+
+        /* ===== Costs: charts + tables ===== */
+        .ufsm-cost-grid {
+            display: grid; grid-template-columns: 1fr; gap: 36px; align-items: center;
+        }
+        .ufsm-chart-box { position: relative; height: 320px; }
+        .ufsm-chart-caption { text-align: center; font-size: 0.85rem; color: var(--ufsm-muted); margin-top: 12px; }
+        .ufsm-cost-subtitle {
+            font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 1.5rem;
+            color: var(--ufsm-green); line-height: 1.25; max-width: 680px; margin: 0 0 36px;
+        }
+        .ufsm-cost-table .rowlabel { font-family: 'Manrope', sans-serif; font-weight: 700; color: var(--ufsm-green-deep); }
+        .ufsm-table.ufsm-cost-table { font-size: 1.1rem; }
+        .ufsm-table.ufsm-cost-table th, .ufsm-table.ufsm-cost-table td { padding: 8px 14px; }
+        .ufsm-table.ufsm-cost-table thead th { font-size: 0.98rem; text-align: center; }
+        .ufsm-table.ufsm-cost-table thead th:first-child { text-align: left; }
+        .ufsm-table.ufsm-cost-table td.num { color: var(--ufsm-ink); text-align: center; }
+
+        .ufsm-callout {
+            background: var(--ufsm-green-tint);
+            border-left: 5px solid var(--ufsm-green);
+            border-radius: 10px; padding: 18px 22px; margin-bottom: 22px;
+        }
+        .ufsm-callout strong { color: var(--ufsm-green-deep); }
+
+        /* legend */
+        .ufsm-legend { list-style: none; padding: 0; margin: 18px 0 0; }
+        .ufsm-legend li {
+            display: flex; align-items: center; gap: 10px; padding: 8px 0;
+            font-size: 0.98rem; color: var(--ufsm-ink);
+        }
+        .ufsm-legend .dot { width: 14px; height: 14px; border-radius: 3px; flex: 0 0 auto; }
+        .ufsm-legend .amt { margin-left: auto; font-weight: 700; font-family: 'Manrope', sans-serif; color: var(--ufsm-charcoal); }
+
+        /* tables */
+        .ufsm-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .ufsm-table {
+            width: 100%; border-collapse: collapse; min-width: 460px;
+            font-size: 0.98rem;
+        }
+        .ufsm-table th, .ufsm-table td { padding: 14px 16px; text-align: right; }
+        .ufsm-table th:first-child, .ufsm-table td:first-child { text-align: left; }
+        .ufsm-table thead th {
+            font-family: 'Manrope', sans-serif; color: var(--ufsm-green-deep); font-weight: 700;
+            border-bottom: 2px solid var(--ufsm-green-tint); font-size: 0.88rem;
+        }
+        .ufsm-table tbody tr { border-bottom: 1px solid #EDEFEC; }
+        .ufsm-table tbody tr:last-child { border-bottom: none; }
+        .ufsm-table .total td { font-weight: 800; color: var(--ufsm-charcoal); border-top: 2px solid var(--ufsm-green-tint); }
+        .ufsm-table td.num { font-variant-numeric: tabular-nums; }
+
+        /* ===== Phased step timeline ===== */
+        /* Green chevron-arrow process flow (matches the PDF) */
+        .ufsm-flow { display: flex; gap: 5px; align-items: stretch; margin-top: 10px; }
+        .ufsm-flow-step { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
+        .ufsm-flow-chev {
+            color: #fff; text-align: center; padding: 20px 14px 20px 28px;
+            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%, 20px 50%);
+        }
+        .ufsm-flow-step:first-child .ufsm-flow-chev {
+            padding-left: 18px;
+            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%);
+        }
+        .ufsm-flow-chev .yr { display: block; font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 1.3rem; line-height: 1.05; }
+        .ufsm-flow-chev .ph { display: block; font-size: 0.82rem; font-weight: 600; opacity: 0.96; margin-top: 4px; }
+        .ufsm-flow-step:nth-child(1) .ufsm-flow-chev { background: var(--ufsm-green-deep); }
+        .ufsm-flow-step:nth-child(2) .ufsm-flow-chev { background: var(--ufsm-green); }
+        .ufsm-flow-step:nth-child(3) .ufsm-flow-chev { background: var(--ufsm-green-bright); }
+        .ufsm-flow-step:nth-child(4) .ufsm-flow-chev { background: var(--ufsm-green-light); }
+
+        .ufsm-flow-amt { text-align: center; position: relative; }
+        .ufsm-flow-amt--top { padding-bottom: 24px; }
+        .ufsm-flow-amt--bot { padding-top: 24px; }
+        .ufsm-flow-amt--top.pin::before { content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 2px; height: 15px; background: var(--ufsm-green); }
+        .ufsm-flow-amt--top.pin::after { content: ""; position: absolute; bottom: 11px; left: 50%; transform: translateX(-50%); width: 9px; height: 9px; border-radius: 50%; background: #fff; border: 2px solid var(--ufsm-green); }
+        .ufsm-flow-amt--bot.pin::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 2px; height: 15px; background: var(--ufsm-green); }
+        .ufsm-flow-amt--bot.pin::after { content: ""; position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 9px; height: 9px; border-radius: 50%; background: #fff; border: 2px solid var(--ufsm-green); }
+        .ufsm-flow-amt .v { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 1.35rem; color: var(--ufsm-charcoal); line-height: 1.1; }
+        .ufsm-flow-amt .v.alt { color: var(--ufsm-green); }
+        .ufsm-flow-amt .lbl { display: block; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ufsm-muted); margin-top: 3px; }
+
+        .ufsm-note { text-align: center; font-size: 0.9rem; color: var(--ufsm-muted); font-style: italic; max-width: 680px; margin: 30px auto 0; }
+
+        /* ===== Funding levers ===== */
+        .ufsm-levers { display: grid; grid-template-columns: 1fr; gap: 22px; margin-bottom: 8px; }
+        .ufsm-lever {
+            background: #fff; border-radius: 16px; padding: 26px 26px 22px;
+            box-shadow: 0 6px 22px rgba(63,74,74,0.08); border-top: 5px solid var(--ufsm-green);
+        }
+        .ufsm-lever h4 { font-size: 1.1rem; color: var(--ufsm-charcoal); margin-bottom: 6px; }
+        .ufsm-lever .ufsm-lever-amt { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 2.6rem; color: var(--ufsm-green-deep); line-height: 1; margin: 8px 0 4px; }
+        .ufsm-lever .ufsm-lever-sub { font-size: 0.9rem; color: var(--ufsm-muted); }
+        .ufsm-lever-track { height: 14px; background: #EDEFEC; border-radius: 7px; overflow: hidden; margin-top: 14px; }
+        .ufsm-lever-fill { height: 100%; width: 0; border-radius: 7px; background: linear-gradient(90deg, var(--ufsm-green-bright), var(--ufsm-green-deep)); transition: width 1.2s ease-out; }
+
+        /* states table inside dropdown */
+        .ufsm-states-table td:first-child { width: 64%; }
+        .ufsm-states-table .state { font-weight: 700; color: var(--ufsm-green-deep); font-family: 'Manrope', sans-serif; }
+
+        /* Funding section (page-1 layout) */
+        .ufsm-fund-title {
+            font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 2.5rem;
+            text-transform: uppercase; color: var(--ufsm-green); letter-spacing: -0.5px;
+            line-height: 1.04; margin: 0 0 34px;
+        }
+        .ufsm-fund-grid { display: grid; grid-template-columns: 1fr; gap: 34px; }
+        .ufsm-fund-head { color: var(--ufsm-green); font-size: 1.45rem; margin-bottom: 22px; }
+        .ufsm-fund-levers { display: grid; grid-template-columns: 1fr; gap: 26px; }
+        .ufsm-fund-lever .lead { font-size: 0.95rem; color: var(--ufsm-charcoal); margin: 0 0 6px; line-height: 1.42; }
+        .ufsm-fund-lever .lead strong { font-weight: 700; }
+        .ufsm-fund-lever .amt { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 2.6rem; color: var(--ufsm-green); line-height: 1; }
+        .ufsm-fund-lever .note { font-size: 0.9rem; color: var(--ufsm-ink); margin: 4px 0 0; }
+        .ufsm-fund-foot { font-size: 0.82rem; color: var(--ufsm-muted); margin: 32px 0 0; line-height: 1.6; }
+
+        /* sources */
+        .ufsm-sources { list-style: none; padding: 0; margin: 0; font-size: 0.86rem; color: var(--ufsm-muted); }
+        .ufsm-sources li { margin-bottom: 8px; }
+        .ufsm-sources sup { color: var(--ufsm-green-deep); font-weight: 700; }
+
+        /* CTA */
+        .ufsm-cta {
+            text-align: center; background: linear-gradient(135deg, var(--ufsm-green), var(--ufsm-green-deep));
+            color: #fff; border-radius: 20px; padding: 50px 32px; margin-top: 40px;
+        }
+        .ufsm-cta h3 { color: #fff; font-size: 1.8rem; margin-bottom: 10px; }
+        .ufsm-cta p { margin: 0 auto 24px; max-width: 540px; color: #EAF3E6; }
+        .ufsm-btn {
+            display: inline-block; background: #fff; color: var(--ufsm-green-deep); font-weight: 700;
+            font-family: 'Manrope', sans-serif; text-decoration: none; padding: 14px 34px; border-radius: 30px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .ufsm-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.18); }
+        .ufsm-cta-tag { margin-top: 22px; font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 1.1rem; color: #fff; }
+
+        /* footer credit */
+        .ufsm-credit { text-align: center; padding: 30px 24px 50px; color: var(--ufsm-muted); font-size: 0.85rem; }
+
+        /* ===== Desktop ===== */
+        @media (min-width: 768px) {
+            .ufsm-section-title { font-size: 3.1rem; }
+            .ufsm-hero h1 { font-size: 4.6rem; }
+            .ufsm-hero h1 .ufsm-hero-sub { font-size: 3rem; }
+            .ufsm-why-grid { grid-template-columns: repeat(3, 1fr); gap: 40px; }
+            .ufsm-cost-grid { grid-template-columns: 1fr 1fr; }
+            .ufsm-levers { grid-template-columns: repeat(3, 1fr); }
+            .ufsm-fund-title { font-size: 3.4rem; }
+            .ufsm-fund-grid { grid-template-columns: 1.05fr 1fr; gap: 48px; }
+            .ufsm-fund-right { border-left: 1px solid #C9C9C9; padding-left: 48px; }
+            .ufsm-fund-levers { grid-template-columns: 1fr 1fr; gap: 28px; }
+            .ufsm-reasons-2col { grid-template-columns: 1fr 1fr; }
+            .ufsm-reasons-kicker { font-size: 2.15rem; }
+            .ufsm-reasons-head { font-size: 3.7rem; }
+            /* dotted green vertical dividers between the Why columns */
+            .ufsm-why-card + .ufsm-why-card::before {
+                content: ""; position: absolute; left: -20px; top: 6px; bottom: 6px; width: 5px;
+                background-image: radial-gradient(circle, var(--ufsm-green) 2.2px, transparent 2.6px);
+                background-size: 5px 18px; background-repeat: repeat-y;
+            }
+        }
+        @media (max-width: 767px) {
+            .ufsm-full-width { padding: 52px 0; }
+            .ufsm-hero h1 { font-size: 2.8rem; }
+            .ufsm-hero h1 .ufsm-hero-sub { font-size: 1.7rem; }
+            .ufsm-hero-art svg { width: 150px; height: 150px; }
+            .ufsm-acc-panel-inner { padding-left: 24px; }
+            /* chevron flow stacks into flat bars on mobile */
+            .ufsm-flow { flex-direction: column; gap: 8px; }
+            .ufsm-flow-chev,
+            .ufsm-flow-step:first-child .ufsm-flow-chev {
+                clip-path: none; border-radius: 10px; padding: 16px 18px;
+            }
+            .ufsm-flow-amt--top { padding-bottom: 8px; }
+            .ufsm-flow-amt--bot { padding-top: 8px; }
+            .ufsm-flow-amt--top.pin::before, .ufsm-flow-amt--top.pin::after,
+            .ufsm-flow-amt--bot.pin::before, .ufsm-flow-amt--bot.pin::after { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== 5 BIG REASONS ===== -->
+    <section class="ufsm-full-width ufsm-bg-light ufsm-reveal">
+        <div class="ufsm-container">
+            <div class="ufsm-reasons-2col">
+                <div class="ufsm-reasons-col">
+                    <div class="ufsm-reasons-title">
+                        <div class="ufsm-reasons-kicker">5 Big Reasons to Support</div>
+                        <div class="ufsm-reasons-head"><span class="ufsm-rh-line ufsm-rh-1">Universal Free</span><span class="ufsm-rh-line ufsm-rh-2">School Meals</span></div>
+                    </div>
+                    <div class="ufsm-reason">
+                        <h3>Support ALICE families</h3>
+                        <p>UFSM supports <span class="ufsm-tipword" tabindex="0" data-tip="ALICE — Asset Limited, Income Constrained, Employed — describes households that earn above the federal poverty level but still can't afford life's basic necessities. In 2024, 41% of Hawaiʻi households were below the ALICE threshold.">ALICE households<span class="ufsm-tipword-i">&#9432;</span></span> in Hawaiʻi struggling to stretch their budgets. It makes sure that every child has access to nutritious meals regardless of ability to pay.</p>
+                    </div>
+                    <div class="ufsm-reason">
+                        <h3>Improve academic performance</h3>
+                        <p>Studies of UFSM in other states have shown large test score improvements and improved academic performance.</p>
+                    </div>
+                </div>
+                <div class="ufsm-reasons-col">
+                    <div class="ufsm-reason">
+                        <h3>Improve nutrition &amp; reduce food insecurity</h3>
+                        <p>For many students, <a class="ufsm-tipword" href="https://frac.org/reach-report-2025" target="_blank" rel="noopener" data-tip="FRAC Reach Report, 2025 (national): school breakfast — nearly 15.4M children participated; 12.2M received a free or reduced-price breakfast, up 900,000 (8%) over last year. School lunch — nearly 29.4M participated; 21.1M free or reduced-price, up 1.3M (6.8%). Click to read the report.">school breakfast and lunch<span class="ufsm-tipword-i">&#9432;</span></a> are the only full, balanced meals they receive in a day. UFSM is a proven strategy to improve nutrition and food security.</p>
+                    </div>
+                    <div class="ufsm-reason">
+                        <h3>Eliminate social stigma</h3>
+                        <p>Hawaiʻi still allows schools to deny meals to students who have a negative meal balance, making students not only hungry, but also ashamed. UFSM creates a <a class="ufsm-tipword" href="https://www.childnourishlab.org/_files/ugd/383bcd_45ee5fed8e224ffd8639f0f498086e31.pdf" target="_blank" rel="noopener" data-tip="When Massachusetts made school meals free for all (2022), a survey of 284 households found 84%—across all income levels—believed meals should be free for everyone, and at least 80% said the policy saved money and time, reduced stress, and improved student behavior and achievement. Families said ending it would hurt their ability to afford enough food, and 42% of those eligible for free or reduced-price meals said their child would be less likely to eat a school meal if it weren't free for all—showing stigma would return. Click to read the study.">more inclusive and supportive school environment<span class="ufsm-tipword-i">&#9432;</span></a>.</p>
+                    </div>
+                    <div class="ufsm-reason">
+                        <h3>Support locally grown food</h3>
+                        <p>UFSM supports Farm-to-School initiatives and local farmers by incorporating fresh, locally grown produce into school meals. This provides students with healthier, more sustainable food options.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ESTIMATED COSTS — funding sources ===== -->
+    <section class="ufsm-full-width ufsm-bg-band ufsm-reveal" data-anim="pie">
+        <div class="ufsm-container">
+            <h2 class="ufsm-section-title">Estimated Program Costs to the State</h2>
+            <p class="ufsm-cost-subtitle">This bill would cover the cost of student co-payments for school meals&mdash;an estimated $16.3M.</p>
+
+            <div class="ufsm-cost-grid">
+                <div>
+                    <div class="ufsm-chart-box"><canvas id="ufsm-pie"></canvas></div>
+                    <div class="ufsm-chart-caption">DOE School Food Services Branch Revenues by Funding Source, FY2025</div>
+                </div>
+                <div>
+                    <div class="ufsm-table-scroll">
+                        <table class="ufsm-table ufsm-cost-table">
+                            <thead><tr><th></th><th>Current Participation Levels</th><th>Projected Participation Rates<span class="ufsm-fn ufsm-fn--right" tabindex="0" data-tip="Assumes a 10% increase for breakfast and lunch over the SY24-25 average daily participation rates.">1</span></th></tr></thead>
+                            <tbody>
+                                <tr><td class="rowlabel">HIDOE Schools only</td><td class="num">$16,319,370</td><td class="num">$31,182,471</td></tr>
+                                <tr><td class="rowlabel">Public Charter Schools only</td><td class="num">$1,368,947</td><td class="num">N/A</td></tr>
+                                <tr class="total"><td class="rowlabel">Total</td><td class="num">$17,688,317</td><td class="num">$32,551,418</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FUNDING ===== -->
+    <section class="ufsm-full-width ufsm-bg-light ufsm-reveal">
+        <div class="ufsm-container">
+            <h2 class="ufsm-fund-title">Funding Universal Free School Meals</h2>
+            <div class="ufsm-fund-grid">
+                <div class="ufsm-fund-left">
+                    <h3 class="ufsm-fund-head">How Can Hawaiʻi Fund UFSM?</h3>
+                    <div class="ufsm-fund-levers">
+                        <div class="ufsm-fund-lever">
+                            <p class="lead"><strong>By taxing wealth like work,</strong> closing the capital gains tax loophole for individuals and corporations would bring in up to</p>
+                            <div class="amt">$85M</div>
+                            <p class="note">in annual revenue.<span class="ufsm-fn" tabindex="0" data-tip="Institute on Taxation and Economic Policy, January 2025.">2</span></p>
+                        </div>
+                        <div class="ufsm-fund-lever">
+                            <p class="lead"><strong>By raising the corporate income tax</strong> to a flat 9%, the state could bring in up to</p>
+                            <div class="amt">$185M</div>
+                            <p class="note">in annual revenue.<span class="ufsm-fn" tabindex="0" data-tip="Hawaiʻi Appleseed, Funding Hawaiʻi&rsquo;s Future, October 2023, p. 8.">3</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ufsm-fund-right">
+                    <h3 class="ufsm-fund-head">How Have Other States Funded UFSM?</h3>
+                    <table class="ufsm-table ufsm-states-table">
+                        <tbody>
+                            <tr><td>General Funds (Education Fund Appropriation)</td><td class="state">CA, ME, MI, MN, NM</td></tr>
+                            <tr><td>Voter-passed tax measure that reduces income tax deductions available to households earning $300,000 or more</td><td class="state">CO</td></tr>
+                            <tr><td>Voter-approved 4% tax on incomes over $1 million</td><td class="state">MA</td></tr>
+                            <tr><td>$0.03 property tax rate increase</td><td class="state">VT</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ESTIMATED COSTS — phased-in ===== -->
+    <section class="ufsm-full-width ufsm-bg-green ufsm-reveal">
+        <div class="ufsm-container">
+            <div class="ufsm-eyebrow">Estimated Costs</div>
+            <h2 class="ufsm-section-title">A 3-year phased-in approach</h2>
+            <p class="ufsm-section-intro">A phased approach toward free school meals for every public school student. Amounts above each phase are the cost at current participation; below, with a 10% participation increase.</p>
+
+            <div class="ufsm-flow">
+                <div class="ufsm-flow-step">
+                    <div class="ufsm-flow-amt ufsm-flow-amt--top pin"><span class="v">$563,751</span><span class="lbl">Current participation</span></div>
+                    <div class="ufsm-flow-chev"><span class="yr">SY 25&ndash;26</span><span class="ph">Reduced price only</span></div>
+                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v alt">$620,126</span><span class="lbl">With +10% participation</span></div>
+                </div>
+                <div class="ufsm-flow-step">
+                    <div class="ufsm-flow-amt ufsm-flow-amt--top pin"><span class="v">$3,304,347</span><span class="lbl">Current participation</span></div>
+                    <div class="ufsm-flow-chev"><span class="yr">SY 26&ndash;27</span><span class="ph">300% FPL</span></div>
+                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v alt">$3,634,781</span><span class="lbl">With +10% participation</span></div>
+                </div>
+                <div class="ufsm-flow-step">
+                    <div class="ufsm-flow-amt ufsm-flow-amt--top pin"><span class="v">$20,479,277</span><span class="lbl">Current participation</span></div>
+                    <div class="ufsm-flow-chev"><span class="yr">SY 27&ndash;28</span><span class="ph">Free for all</span></div>
+                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v alt">$22,527,204</span><span class="lbl">With +10% participation</span></div>
+                </div>
+            </div>
+            <p class="ufsm-note">*The HIDOE has only committed up to phase 2 (300% FPL) so far.</p>
+        </div>
+    </section>
+
+    <!-- ===== HERO ===== -->
+    <header class="ufsm-full-width ufsm-hero">
+        <div class="ufsm-container">
+            <div class="ufsm-hero-text">
+                <h1>Equity<span class="ufsm-hero-sub">on the menu</span></h1>
+                <p class="ufsm-hero-def">Universal Free School Meal (UFSM) programs offer up to two free, nutritious meals to all students &mdash; regardless of their financial situation.</p>
+                <div class="ufsm-hero-tag">Hungry keiki can't learn. <span class="ufsm-hash">#Meals4AllHI</span></div>
+            </div>
+            <div class="ufsm-hero-art" aria-hidden="true">
+                <svg viewBox="0 0 200 200" fill="none">
+                    <circle cx="100" cy="100" r="96" fill="#fff"/>
+                    <circle cx="100" cy="100" r="96" stroke="var(--ufsm-green-pale)" stroke-width="3"/>
+                    <!-- apple -->
+                    <path d="M100 70c-10-14-34-12-42 4-9 18 2 50 18 64 7 6 14 6 24 0 16-14 27-46 18-64-8-16-30-18-42-4z" fill="var(--ufsm-green)"/>
+                    <path d="M100 70c4-12 14-20 26-20" stroke="var(--ufsm-green-deep)" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M104 56c10-10 26-8 30-2-2 10-18 16-30 2z" fill="var(--ufsm-green-light)"/>
+                    <circle cx="86" cy="104" r="6" fill="#fff" opacity="0.55"/>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== WHY WE NEED UFSM ===== -->
+    <section class="ufsm-full-width ufsm-bg-white ufsm-reveal" data-anim="why">
+        <div class="ufsm-container">
+            <div class="ufsm-eyebrow">The Problem</div>
+            <h2 class="ufsm-section-title">Why do we need universal free school meals?</h2>
+            <p class="ufsm-section-intro">Struggling Hawaiʻi households still have to pay for school meals, eligible families fall through the cracks, and teachers cover the gap out of pocket.</p>
+
+            <div class="ufsm-why-grid">
+                <!-- Card 1: eligibility thresholds -->
+                <div class="ufsm-why-card">
+                    <h3>Strict eligibility thresholds</h3>
+                    <div class="ufsm-people">
+                        <svg class="ufsm-person on" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4.2"/><path d="M3.5 22c0-5 3.8-8.5 8.5-8.5s8.5 3.5 8.5 8.5z"/></svg>
+                        <svg class="ufsm-person on" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4.2"/><path d="M3.5 22c0-5 3.8-8.5 8.5-8.5s8.5 3.5 8.5 8.5z"/></svg>
+                        <svg class="ufsm-person off" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4.2"/><path d="M3.5 22c0-5 3.8-8.5 8.5-8.5s8.5 3.5 8.5 8.5z"/></svg>
+                    </div>
+                    <div class="ufsm-bigstat">2 out of 3</div>
+                    <p>struggling Hawaiʻi households still have to pay for school meals.<span class="ufsm-fn" tabindex="0" data-tip="American Community Survey, U.S. Census Bureau, Age by Ratio of Income to Poverty Level in the Past 12 Months.">1</span></p>
+                    <div class="ufsm-gap">
+                        <div class="ufsm-gap-row">
+                            <div class="ufsm-gap-label"><span>Income to qualify for free lunch</span><span>$47K</span></div>
+                            <div class="ufsm-gap-track"><div class="ufsm-gap-fill qualify" data-target="42%">$47K</div></div>
+                        </div>
+                        <div class="ufsm-gap-row">
+                            <div class="ufsm-gap-label"><span>Income a family of 4 needs to survive</span><span>$107K</span></div>
+                            <div class="ufsm-gap-track"><div class="ufsm-gap-fill survive" data-target="100%">$107K</div></div>
+                        </div>
+                    </div>
+                    <p>A family of four making $47,000 doesn't qualify for free lunch<span class="ufsm-fn" tabindex="0" data-tip="Hawaiʻi Public Schools, Free and Reduced Price Meals Program, 2024.">2</span> &mdash; yet Hawaiʻi's cost of living requires that same family to make over $107,000 just to survive.<span class="ufsm-fn" tabindex="0" data-tip="United For ALICE, An Update On Financial Hardship in Hawaiʻi, 2024.">3</span></p>
+                </div>
+
+                <!-- Card 2: missed applications + gauge -->
+                <div class="ufsm-why-card">
+                    <h3>Missed school meal applications</h3>
+                    <div class="ufsm-gauge-wrap" data-anim="gauge">
+                        <svg viewBox="0 0 220 120" width="220" height="120" aria-hidden="true">
+                            <path d="M 16 110 A 94 94 0 0 1 204 110" fill="none" stroke="#E3EADF" stroke-width="18" stroke-linecap="round"/>
+                            <path id="ufsm-gauge-arc" class="ufsm-gauge-arc" d="M 16 110 A 94 94 0 0 1 204 110" fill="none" stroke="#5F9E5B" stroke-width="18" stroke-linecap="round"/>
+                        </svg>
+                        <div class="ufsm-gauge-num" id="ufsm-gauge-num">0%</div>
+                    </div>
+                    <p>of students nationally who were denied free or reduced-price meals were actually eligible to receive them.<span class="ufsm-fn" tabindex="0" data-tip="U.S. Department of Agriculture, Third Access, Participation, Eligibility, and Certification Study, September 2021.">4</span></p>
+                    <p>Language barriers, problems providing income records, and fear of disclosing information can prevent families from completing the application accurately &mdash; or at all.</p>
+                </div>
+
+                <!-- Card 3: teachers -->
+                <div class="ufsm-why-card">
+                    <h3>Teachers are affected, too</h3>
+                    <div class="ufsm-quotemark" aria-hidden="true">&ldquo;</div>
+                    <p>When students don't eat, teachers often have to provide their own snacks &mdash; paid for out of pocket.</p>
+                    <p style="font-style:italic; color:var(--ufsm-charcoal); background:var(--ufsm-green-tint); border-radius:12px; padding:18px 20px;">"Every classroom in every school I have worked in has a snack drawer&hellip; the contents provided by the teacher. The teachers see a need to provide food and nourishment for students, so they do."<span class="ufsm-fn" tabindex="0" data-tip="Sarah Fukuzono, educational assistant at a Hawaiʻi public school, in testimony before the Hawaiʻi State House Committee on Education, 2023.">5</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SB1300 / WHO QUALIFIES ===== -->
+    <section class="ufsm-full-width ufsm-bg-green ufsm-reveal" data-anim="bar">
+        <div class="ufsm-container">
+            <div class="ufsm-eyebrow">SB 1300 &middot; Who Qualifies</div>
+            <h2 class="ufsm-section-title">How far do the income cutoffs reach?</h2>
+            <p class="ufsm-section-intro">SB 1300 phases in eligibility for families under 300% of the Federal Poverty Level &mdash; a step toward free school meals for all. Today's cutoff sits far below what a family of four needs to survive in Hawaiʻi (the ALICE survival budget, <strong>$107,796</strong>); only at the full 300% FPL phase does eligibility finally reach it.</p>
+
+            <div class="ufsm-chart-box" style="height:340px;"><canvas id="ufsm-bar"></canvas></div>
+            <div class="ufsm-chart-caption">Household income to qualify for free meals (family of 4), by school year. Dashed line = ALICE survival budget ($107,796).</div>
+
+            <div class="ufsm-flow" style="margin-top:44px;">
+                <div class="ufsm-flow-step">
+                    <div class="ufsm-flow-chev"><span class="yr">SY 24&ndash;25</span><span class="ph">Current</span></div>
+                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v">$46,644</span><span class="lbl">income cutoff</span></div>
+                </div>
+                <div class="ufsm-flow-step">
+                    <div class="ufsm-flow-chev"><span class="yr">SY 25&ndash;26</span><span class="ph">Reduced price only</span></div>
+                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v">$66,378</span><span class="lbl">income cutoff</span></div>
+                </div>
+                <div class="ufsm-flow-step">
+                    <div class="ufsm-flow-chev"><span class="yr">SY 26&ndash;27</span><span class="ph">300% FPL</span></div>
+                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v">~$110,940</span><span class="lbl">income cutoff</span></div>
+                </div>
+                <div class="ufsm-flow-step">
+                    <div class="ufsm-flow-chev"><span class="yr">SY 27&ndash;28</span><span class="ph">Free for all?</span></div>
+                    <div class="ufsm-flow-amt ufsm-flow-amt--bot"><span class="v alt">No cutoff</span><span class="lbl">universal goal</span></div>
+                </div>
+            </div>
+            <p class="ufsm-note">Household income to qualify for free meals (family of 4). *SB 1300 only covers up to SY 26&ndash;27.</p>
+        </div>
+    </section>
+
+    <!-- ===== CTA + SOURCES ===== -->
+    <section class="ufsm-full-width ufsm-bg-white ufsm-reveal">
+        <div class="ufsm-container">
+            <div class="ufsm-cta">
+                <h3>Hungry keiki can't learn.</h3>
+                <p>Universal free school meals are a proven, fundable way to make sure every Hawaiʻi student is fed and ready to learn.</p>
+                <a class="ufsm-btn" href="https://hiappleseed.org/universal-free-school-meals" target="_blank" rel="noopener">Learn more at hiappleseed.org</a>
+                <div class="ufsm-cta-tag">#Meals4AllHI</div>
+            </div>
+        </div>
+        <div class="ufsm-credit">Hawaiʻi Appleseed Center for Law &amp; Economic Justice &middot; Interactive dashboard adapted from the <em>Benefits of UFSM</em> infographic.</div>
+    </section>
+
+    <script>
+    (function () {
+        'use strict';
+
+        /* ---------- Accordion (5 reasons: single-open) ---------- */
+        window.toggleAccordion = function (btn) {
+            var item = btn.parentElement;
+            var panel = item.querySelector('.ufsm-acc-panel');
+            var isOpen = btn.classList.contains('active');
+            // close siblings
+            document.querySelectorAll('.ufsm-acc-btn.active').forEach(function (b) {
+                if (b !== btn) { collapse(b, b.parentElement.querySelector('.ufsm-acc-panel')); }
+            });
+            if (isOpen) { collapse(btn, panel); } else { expand(btn, panel); }
+        };
+
+        /* ---------- Generic dropdown ---------- */
+        window.toggleDrop = function (btn) {
+            var panel = btn.nextElementSibling;
+            if (btn.classList.contains('active')) { collapse(btn, panel); }
+            else { expand(btn, panel); }
+        };
+
+        function expand(btn, panel) {
+            btn.classList.add('active');
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+            var release = function () {
+                if (btn.classList.contains('active')) { panel.style.maxHeight = 'none'; }
+            };
+            panel.addEventListener('transitionend', release, { once: true });
+            setTimeout(release, 450);
+        }
+        function collapse(btn, panel) {
+            btn.classList.remove('active');
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+            void panel.offsetHeight; // reflow
+            panel.style.maxHeight = '0';
+        }
+
+        /* ---------- Animations ---------- */
+        function animateGauge() {
+            var arc = document.getElementById('ufsm-gauge-arc');
+            var numEl = document.getElementById('ufsm-gauge-num');
+            if (!arc) return;
+            var len = arc.getTotalLength();
+            arc.style.strokeDasharray = len;
+            arc.style.strokeDashoffset = len;
+            // force layout then animate to 34%
+            void arc.getBoundingClientRect();
+            requestAnimationFrame(function () {
+                arc.style.strokeDashoffset = len * (1 - 0.34);
+            });
+            // count up the number
+            var start = null, dur = 1400;
+            function step(ts) {
+                if (!start) start = ts;
+                var p = Math.min((ts - start) / dur, 1);
+                numEl.textContent = Math.round(p * 34) + '%';
+                if (p < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+
+        function animateFills(scope) {
+            (scope || document).querySelectorAll('.ufsm-gap-fill, .ufsm-lever-fill').forEach(function (el) {
+                var t = el.getAttribute('data-target');
+                if (t) el.style.width = t;
+            });
+        }
+
+        /* ---------- Chart.js ---------- */
+        var pieDone = false, barDone = false;
+        function initPie() {
+            if (pieDone || typeof Chart === 'undefined') return;
+            var ctx = document.getElementById('ufsm-pie');
+            if (!ctx) return;
+            pieDone = true;
+            // Clockwise from top: co-pays, then the small "other" sliver, then Federal, then General.
+            // Per source: the small sliver + the $16.3M co-pay slice together = $20,042,347
+            // (so the sliver = $3,742,347).
+            var labels = ['Student co-pays', 'Other', 'Federal funds', 'General funds'];
+            var values = [16.3, 3.742347, 41.6, 63.3];
+            var colors = [getVar('--c-copay'), '#3F7E3F', getVar('--c-federal'), getVar('--c-general')];
+            var hasLabels = (typeof ChartDataLabels !== 'undefined');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: colors,
+                        borderColor: '#fff', borderWidth: 2, hoverOffset: 6,
+                        offset: function (c) { return c.dataIndex === 0 ? 20 : 0; } // explode the co-pays slice
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    layout: { padding: 34 },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function (c) { return c.label + ': $' + c.parsed.toFixed(1) + 'M'; } } },
+                        datalabels: hasLabels ? {
+                            display: function (c) { return c.dataset.data[c.dataIndex] >= 10; },
+                            textAlign: 'center',
+                            color: function (c) { return c.dataIndex === 0 ? '#1B6E6E' : '#3F4A4A'; },
+                            backgroundColor: function (c) { return c.dataIndex === 0 ? '#FFFFFF' : null; },
+                            borderColor: function (c) { return c.dataIndex === 0 ? getVar('--c-copay') : null; },
+                            borderWidth: function (c) { return c.dataIndex === 0 ? 1.5 : 0; },
+                            borderRadius: 7,
+                            padding: function (c) { return c.dataIndex === 0 ? 6 : 0; },
+                            font: function (c) { return { family: 'Poppins, sans-serif', weight: c.dataIndex === 0 ? '700' : '600', size: c.dataIndex === 0 ? 13 : 12.5 }; },
+                            anchor: function (c) { return c.dataset.data[c.dataIndex] < 25 ? 'end' : 'center'; },
+                            align: function (c) { return c.dataset.data[c.dataIndex] < 25 ? 'end' : 'center'; },
+                            offset: function (c) { return c.dataIndex === 0 ? 10 : 6; },
+                            formatter: function (v, c) { return c.chart.data.labels[c.dataIndex] + '\n$' + v + 'M'; }
+                        } : undefined
+                    }
+                },
+                plugins: hasLabels ? [ChartDataLabels] : []
+            });
+        }
+
+        function initBar() {
+            if (barDone || typeof Chart === 'undefined') return;
+            var ctx = document.getElementById('ufsm-bar');
+            if (!ctx) return;
+            barDone = true;
+            var ALICE = 107796;
+            var aliceLine = {
+                id: 'aliceLine',
+                afterDraw: function (chart) {
+                    var x = chart.scales.x.getPixelForValue(ALICE);
+                    var top = chart.chartArea.top, bot = chart.chartArea.bottom;
+                    var c = chart.ctx;
+                    c.save();
+                    c.beginPath(); c.setLineDash([6, 5]); c.lineWidth = 2; c.strokeStyle = getVar('--ufsm-alert');
+                    c.moveTo(x, top); c.lineTo(x, bot); c.stroke();
+                    c.setLineDash([]); c.fillStyle = getVar('--ufsm-alert');
+                    c.font = '600 12px Poppins, sans-serif'; c.textAlign = 'center';
+                    c.fillText('ALICE survival budget $107,796', x, top - 6);
+                    c.restore();
+                }
+            };
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['SY 24-25 (Current) — Free', 'SY 25-26 — Reduced price', 'SY 26-27 — 300% FPL'],
+                    datasets: [{
+                        label: 'Income cutoff (family of 4)',
+                        data: [46644, 66378, 110940],
+                        backgroundColor: [getVar('--c-blue-1'), getVar('--c-blue-2'), getVar('--c-blue-3')],
+                        borderRadius: 6, barThickness: 38
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                    layout: { padding: { top: 24 } },
+                    scales: {
+                        x: { beginAtZero: true, suggestedMax: 120000, ticks: { callback: function (v) { return '$' + (v / 1000) + 'K'; } }, grid: { color: '#EEE' } },
+                        y: { grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function (c) { return '$' + c.parsed.x.toLocaleString(); } } }
+                    }
+                },
+                plugins: [aliceLine]
+            });
+        }
+
+        function getVar(name) {
+            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        }
+
+        /* ---------- Scroll reveal + triggers ---------- */
+        function triggerAnim(el) {
+            var anim = el.getAttribute('data-anim');
+            if (anim === 'pie') initPie();
+            if (anim === 'bar') initBar();
+            if (anim === 'why') { animateFills(el); animateGauge(); }
+            if (anim === 'levers') { animateFills(el); }
+        }
+
+        var observer = new IntersectionObserver(function (entries, obs) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                triggerAnim(entry.target);
+                obs.unobserve(entry.target);
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.ufsm-reveal').forEach(function (el) { observer.observe(el); });
+
+        // Charts live in always-open sections — initialize on load (robust; guarded).
+        window.addEventListener('load', function () {
+            setTimeout(function () { initPie(); initBar(); }, 150);
+
+            // Safety net: never leave at/above-the-fold content hidden if the
+            // observer somehow doesn't fire. Below-fold sections still wait for scroll.
+            setTimeout(function () {
+                document.querySelectorAll('.ufsm-reveal:not(.active)').forEach(function (el) {
+                    if (el.getBoundingClientRect().top < window.innerHeight) {
+                        el.classList.add('active');
+                        triggerAnim(el);
+                    }
+                });
+            }, 1200);
+        });
+    })();
+    </script>
+</body>
+</html>
