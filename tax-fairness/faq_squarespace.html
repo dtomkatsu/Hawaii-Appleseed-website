@@ -1,275 +1,352 @@
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 /* ============================================================
-   SB 3125 &mdash; Frequently Asked Questions (Squarespace injection)
-   Self-contained factsheet. All styles scoped under .tfc-faq
+   SB 3125 / Act 24 - Frequently Asked Questions
+   Self-contained Squarespace injection. Scoped under .tfc-faq
    ============================================================ */
-.tfc-faq * { margin: 0; padding: 0; box-sizing: border-box; }
 .tfc-faq {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: #1a202c;
-    line-height: 1.6;
-    max-width: 920px;
-    margin: 0 auto;
-    padding: 8px 16px 40px;
-    -webkit-font-smoothing: antialiased;
-}
+    --navy: #16314e;
+    --navy-deep: #0e2236;
+    --blue: #2f6fb0;
+    --ink: #1a2433;
+    --ink-soft: #566476;
+    --muted: #8a98a8;
+    --line: #e7ecf2;
+    --line-strong: #d7dee7;
+    --bg: #f6f8fb;
+    --amber: #e8920c;
+    --amber-ink: #b9710a;
+    --green: #1f9d6b;
+    --green-ink: #197a53;
+    --red: #d6453d;
+    --shadow-sm: 0 1px 2px rgba(16,40,60,.05);
+    --shadow-md: 0 10px 30px rgba(16,40,60,.07);
 
-/* ---------- Hero band ---------- */
-.tfc-faq-hero {
-    background: linear-gradient(135deg, #243551 0%, #3a5278 100%);
-    color: #fff;
-    border-radius: 18px;
-    padding: 40px 36px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(36, 53, 81, 0.25);
-    margin-bottom: 12px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--ink);
+    line-height: 1.62;
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 8px 18px 48px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
-.tfc-faq-hero .eyebrow {
-    display: inline-block;
+.tfc-faq *, .tfc-faq *::before, .tfc-faq *::after { box-sizing: border-box; }
+.tfc-faq p { margin: 0 0 14px; }
+.tfc-faq p:last-child { margin-bottom: 0; }
+
+/* ---------- Hero ---------- */
+.tfc-faq-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    padding: 56px 46px;
+    color: #fff;
+    background:
+        radial-gradient(115% 130% at 88% -15%, rgba(47,111,176,.55) 0%, rgba(47,111,176,0) 55%),
+        linear-gradient(135deg, #0e2236 0%, #16314e 52%, #1c4a73 100%);
+    box-shadow: 0 24px 60px rgba(14,34,54,.30);
+}
+.tfc-faq-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 30%);
+    pointer-events: none;
+}
+.tfc-faq-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 15px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.20);
     font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-weight: 600;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #bcd0ec;
-    margin-bottom: 12px;
+    color: #e3eefb;
+    backdrop-filter: blur(4px);
+}
+.tfc-faq-kicker .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #57d3a2;
+    box-shadow: 0 0 0 4px rgba(87,211,162,.20);
 }
 .tfc-faq-hero h1 {
-    font-size: 2.3rem;
+    margin: 20px 0 0;
+    font-size: 2.6rem;
     font-weight: 800;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+    line-height: 1.08;
+    letter-spacing: -0.032em;
 }
 .tfc-faq-hero p {
-    margin-top: 12px;
-    font-size: 1.05rem;
-    color: #dbe6f5;
-    max-width: 620px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 16px 0 0;
+    font-size: 1.08rem;
+    color: #cdddf0;
+    max-width: 640px;
 }
 
-/* ---------- Q section card ---------- */
+/* ---------- Section card ---------- */
 .tfc-faq-section {
     background: #fff;
-    border: 1px solid rgba(36, 53, 81, 0.12);
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(36, 53, 81, 0.08);
-    padding: 32px 34px;
-    margin-top: 28px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow-md);
+    padding: 34px 38px;
+    margin-top: 26px;
 }
 .tfc-faq-qhead {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 16px;
-    margin-bottom: 18px;
+    padding-bottom: 20px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--line);
 }
 .tfc-faq-qnum {
     flex: 0 0 auto;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #243551 0%, #3a5278 100%);
+    width: 44px; height: 44px;
+    border-radius: 13px;
+    background: linear-gradient(140deg, #16314e, #1c4a73);
     color: #fff;
-    font-weight: 800;
-    font-size: 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 10px rgba(36, 53, 81, 0.25);
+    font-weight: 700;
+    font-size: 1.12rem;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 18px rgba(22,49,78,.30);
+}
+.tfc-faq-qkick {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 3px;
 }
 .tfc-faq-q {
+    margin: 0;
     font-size: 1.5rem;
     font-weight: 700;
-    color: #243551;
-    line-height: 1.25;
-    letter-spacing: -0.01em;
-    padding-top: 4px;
+    color: var(--navy);
+    line-height: 1.22;
+    letter-spacing: -0.02em;
 }
-.tfc-faq-body p { color: #334155; font-size: 1.02rem; margin-bottom: 14px; }
-.tfc-faq-body p:last-child { margin-bottom: 0; }
-.tfc-faq-body strong { color: #1a202c; }
+.tfc-faq-body { font-size: 1.04rem; color: var(--ink-soft); }
+.tfc-faq-body strong { color: var(--ink); font-weight: 700; }
+.tfc-faq-lead-first::first-letter { /* reserved */ }
 
-/* ---------- Stat callouts ---------- */
+/* ---------- Stat cards ---------- */
 .tfc-faq-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
     gap: 14px;
-    margin: 22px 0 4px;
+    margin: 24px 0 4px;
 }
 .tfc-faq-stat {
-    background: linear-gradient(135deg, #f8fafc 0%, #eef2f7 100%);
-    border: 1px solid #e2e8f0;
-    border-left: 4px solid #243551;
-    border-radius: 12px;
-    padding: 16px 18px;
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
 }
-.tfc-faq-stat.amber { border-left-color: #f59e0b; }
-.tfc-faq-stat.green { border-left-color: #38a169; }
+.tfc-faq-stat::before {
+    content: '';
+    display: block;
+    width: 30px; height: 4px;
+    border-radius: 3px;
+    background: var(--navy);
+    margin-bottom: 15px;
+}
+.tfc-faq-stat.amber::before { background: var(--amber); }
+.tfc-faq-stat.green::before { background: var(--green); }
 .tfc-faq-stat .num {
-    font-size: 1.7rem;
+    font-size: 1.85rem;
     font-weight: 800;
-    color: #243551;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
+    color: var(--navy);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    font-variant-numeric: tabular-nums;
 }
-.tfc-faq-stat.amber .num { color: #c2710c; }
-.tfc-faq-stat.green .num { color: #2f855a; }
-.tfc-faq-stat .lbl {
-    margin-top: 6px;
-    font-size: 0.82rem;
-    color: #4a5568;
-    line-height: 1.4;
-}
+.tfc-faq-stat.amber .num { color: var(--amber-ink); }
+.tfc-faq-stat.green .num { color: var(--green-ink); }
+.tfc-faq-stat .lbl { margin-top: 9px; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.4; }
 
-/* ---------- Q2 "what the bill does" cards ---------- */
-.tfc-faq-does { display: grid; gap: 14px; margin: 6px 0 18px; }
+/* ---------- "What the bill does" rows ---------- */
+.tfc-faq-does { display: grid; gap: 12px; margin: 8px 0 18px; }
 .tfc-faq-doe {
     display: flex;
-    gap: 14px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 16px 18px;
+    gap: 15px;
+    align-items: flex-start;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 17px 19px;
 }
 .tfc-faq-doe .tick {
     flex: 0 0 auto;
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: #243551;
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    background: linear-gradient(140deg, #16314e, #1c4a73);
     color: #fff;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     display: flex; align-items: center; justify-content: center;
 }
-.tfc-faq-doe .txt { font-size: 0.97rem; color: #334155; }
-.tfc-faq-doe .txt strong { color: #243551; }
+.tfc-faq-doe .txt { font-size: 0.97rem; color: var(--ink-soft); }
+.tfc-faq-doe .txt strong { color: var(--navy); }
 
-.tfc-faq-source-callout {
-    background: #ebf2fb;
-    border: 1px solid #cfe0f3;
-    border-radius: 12px;
-    padding: 16px 18px;
-    font-size: 0.97rem;
-    color: #2d3e54;
+/* ---------- Attribution callout ---------- */
+.tfc-faq-callout {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px 22px;
+    font-size: 0.98rem;
+    color: var(--ink-soft);
+    background: linear-gradient(180deg, #f4f8fc, #ffffff);
 }
-.tfc-faq-source-callout strong { color: #243551; }
-.tfc-faq-source-callout .tag {
-    display: inline-block;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #3b6fb0;
-    margin-bottom: 6px;
+.tfc-faq-callout.navy { border-color: #d3e0ee; }
+.tfc-faq-callout strong { color: var(--navy); }
+.tfc-faq-callout .tag {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 9px;
 }
+.tfc-faq-callout .tag::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--blue); }
 
 /* ---------- Charts ---------- */
-.tfc-faq-chart { margin: 22px 0 8px; }
-.tfc-faq-chart-title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #243551;
-    margin-bottom: 4px;
-}
-.tfc-faq-chart-sub { font-size: 0.84rem; color: #718096; margin-bottom: 18px; }
+.tfc-faq-chart { margin: 26px 0 8px; }
+.tfc-faq-chart-title { font-size: 1.06rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; letter-spacing: -0.01em; }
+.tfc-faq-chart-sub { font-size: 0.84rem; color: var(--muted); margin-bottom: 20px; }
+
+.tfc-faq-bars { display: flex; flex-direction: column; gap: 15px; }
 
 /* simple left-anchored bars (Q1) */
-.tfc-faq-bars { display: flex; flex-direction: column; gap: 16px; }
-.tfc-faq-bar-row {
-    display: grid;
-    grid-template-columns: 130px 1fr auto;
-    align-items: center;
-    gap: 12px;
-}
-.tfc-faq-bar-label { font-size: 0.84rem; font-weight: 600; color: #4a5568; text-align: right; line-height: 1.25; }
-.tfc-faq-bar-track { height: 30px; background: #eef2f7; border-radius: 7px; overflow: hidden; }
-.tfc-faq-bar {
-    height: 100%;
-    width: 0;
-    background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
-    border-radius: 7px;
-    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.tfc-faq-bar.lite { background: linear-gradient(90deg, #9fb2cc 0%, #c3d0e2 100%); }
-.tfc-faq-bar-val { font-size: 0.95rem; font-weight: 800; color: #243551; white-space: nowrap; }
+.tfc-faq-bar-row { display: grid; grid-template-columns: 132px 1fr auto; align-items: center; gap: 14px; }
+.tfc-faq-bar-label { font-size: 0.85rem; font-weight: 600; color: var(--ink-soft); text-align: right; line-height: 1.25; }
+.tfc-faq-bar-track { height: 30px; background: #eef2f7; border-radius: 8px; overflow: hidden; }
+.tfc-faq-bar { height: 100%; width: 0; border-radius: 8px; background: linear-gradient(90deg, #1c4a73, #16314e); transition: width 1s cubic-bezier(.22,.61,.36,1); }
+.tfc-faq-bar.lite { background: linear-gradient(90deg, #aebfd4, #c8d4e4); }
+.tfc-faq-bar-val { font-size: 0.98rem; font-weight: 800; color: var(--navy); white-space: nowrap; font-variant-numeric: tabular-nums; }
 
 /* diverging-from-zero bars (Q3) */
-.tfc-faq-dbar-row {
-    display: grid;
-    grid-template-columns: 150px 1fr 66px;
-    align-items: center;
-    gap: 12px;
-}
+.tfc-faq-dbar-row { display: grid; grid-template-columns: 152px 1fr 66px; align-items: center; gap: 14px; }
 .tfc-faq-grp { text-align: right; line-height: 1.2; }
-.tfc-faq-grp .g-name { font-size: 0.84rem; font-weight: 700; color: #2A3A4D; display: block; }
-.tfc-faq-grp .g-range { font-size: 0.7rem; color: #94a3b8; display: block; }
-.tfc-faq-dtrack {
-    position: relative;
-    height: 28px;
-    background: #f1f5f9;
-    border-radius: 6px;
+.tfc-faq-grp .g-name { font-size: 0.85rem; font-weight: 700; color: var(--ink); display: block; }
+.tfc-faq-grp .g-range { font-size: 0.7rem; color: var(--muted); display: block; }
+.tfc-faq-dtrack { position: relative; height: 27px; background: #f1f5f9; border-radius: 7px; }
+.tfc-faq-zero { position: absolute; top: -5px; bottom: -5px; width: 2px; background: var(--line-strong); z-index: 2; }
+.tfc-faq-dbar { position: absolute; top: 0; height: 100%; width: 0; border-radius: 6px; transition: width 1s cubic-bezier(.22,.61,.36,1); z-index: 1; }
+.tfc-faq-dbar.cut { background: linear-gradient(90deg, #2f6fb0, #16314e); }
+.tfc-faq-dbar.inc { background: linear-gradient(90deg, #f7b733, #e8870b); }
+.tfc-faq-dval { font-size: 0.87rem; font-weight: 800; text-align: left; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tfc-faq-dval.cut { color: var(--green-ink); }
+.tfc-faq-dval.inc { color: var(--amber-ink); }
+.tfc-faq-axis { display: flex; justify-content: space-between; font-size: 0.72rem; font-weight: 600; color: var(--muted); margin-top: 14px; padding: 0 66px 0 152px; }
+
+.tfc-faq-note { margin-top: 18px; font-size: 0.78rem; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--line); padding-top: 14px; }
+
+/* ---------- Q4: protected vs pared-back split ---------- */
+.tfc-faq-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0 6px; }
+.tfc-faq-col { border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
+.tfc-faq-col.keep { background: linear-gradient(180deg, #f0faf5, #ffffff); border-color: #cfeadd; }
+.tfc-faq-col.pare { background: linear-gradient(180deg, #fdf6ea, #ffffff); border-color: #f1ddbb; }
+.tfc-faq-col h4 { margin: 0 0 4px; font-size: 1.04rem; font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 9px; letter-spacing: -0.01em; }
+.tfc-faq-col h4 .pill { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; }
+.tfc-faq-col.keep .pill { background: #d8f3e7; color: var(--green-ink); }
+.tfc-faq-col.pare .pill { background: #fbe6c4; color: var(--amber-ink); }
+.tfc-faq-col .csub { font-size: 0.82rem; color: var(--ink-soft); margin: 0 0 16px; }
+.tfc-faq-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.tfc-faq-col li { font-size: 0.92rem; color: var(--ink); padding-left: 24px; position: relative; }
+.tfc-faq-col li strong { font-weight: 700; }
+.tfc-faq-col li .meta { display: block; font-size: 0.77rem; color: var(--muted); margin-top: 2px; }
+.tfc-faq-col li::before { position: absolute; left: 0; top: 0; font-weight: 800; }
+.tfc-faq-col.keep li::before { content: '\2713'; color: var(--green); }
+.tfc-faq-col.pare li::before { content: '\2192'; color: var(--amber); }
+
+/* ---------- Q4: RETITC spotlight ---------- */
+.tfc-faq-spot {
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--amber);
+    border-radius: 16px;
+    padding: 24px;
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+    margin: 20px 0 6px;
 }
-.tfc-faq-zero { position: absolute; top: -5px; bottom: -5px; width: 2px; background: #94a3b8; z-index: 2; }
-.tfc-faq-dbar {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 0;
-    border-radius: 5px;
-    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1;
+.tfc-faq-spot h4 { margin: 0 0 4px; font-size: 1.06rem; color: var(--navy); font-weight: 700; }
+.tfc-faq-spot .ssub { font-size: 0.85rem; color: var(--ink-soft); margin: 0 0 16px; }
+.tfc-faq-spot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
+.tfc-faq-spot-grid .f .n { font-size: 1.1rem; font-weight: 800; color: var(--navy); letter-spacing: -0.01em; }
+.tfc-faq-spot-grid .f .t { font-size: 0.79rem; color: var(--ink-soft); margin-top: 4px; line-height: 1.4; }
+
+/* ---------- Q4: sunset glide-path timeline ---------- */
+.tfc-faq-tl-title { font-size: 1.02rem; font-weight: 700; color: var(--navy); margin: 26px 0 18px; }
+.tfc-faq-timeline { position: relative; display: flex; }
+.tfc-faq-timeline::before { content: ''; position: absolute; top: 13px; left: 10%; right: 10%; height: 2px; background: var(--line-strong); }
+.tfc-faq-tl-step { flex: 1; text-align: center; position: relative; padding-top: 36px; }
+.tfc-faq-tl-step::after {
+    content: ''; position: absolute; top: 7px; left: 50%; transform: translateX(-50%);
+    width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid var(--blue);
+    box-shadow: 0 0 0 4px rgba(47,111,176,.12);
 }
-.tfc-faq-dbar.cut { background: linear-gradient(90deg, #3a5278 0%, #243551 100%); }
-.tfc-faq-dbar.inc { background: linear-gradient(90deg, #f7b733 0%, #e8870b 100%); }
-.tfc-faq-dval { font-size: 0.86rem; font-weight: 800; text-align: left; white-space: nowrap; }
-.tfc-faq-dval.cut { color: #2f855a; }
-.tfc-faq-dval.inc { color: #c2710c; }
-.tfc-faq-axis {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.74rem;
-    font-weight: 600;
-    color: #94a3b8;
-    margin-top: 12px;
-    padding: 0 66px 0 150px;
+.tfc-faq-tl-step.end::after { border-color: var(--amber); box-shadow: 0 0 0 4px rgba(232,146,12,.14); }
+.tfc-faq-tl-step .yr { font-size: 1.05rem; font-weight: 800; color: var(--navy); }
+.tfc-faq-tl-step .ev { font-size: 0.78rem; color: var(--ink-soft); margin-top: 5px; padding: 0 8px; line-height: 1.35; }
+
+/* ---------- Q4: at-a-glance table ---------- */
+.tfc-faq-table-wrap { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; margin: 24px 0 6px; }
+.tfc-faq-table-scroll { overflow-x: auto; }
+.tfc-faq-table { width: 100%; border-collapse: collapse; min-width: 580px; font-size: 0.9rem; }
+.tfc-faq-table thead th {
+    text-align: left; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); font-weight: 700; padding: 14px 18px; background: var(--bg); border-bottom: 1px solid var(--line);
 }
-.tfc-faq-note {
-    margin-top: 16px;
-    font-size: 0.78rem;
-    color: #94a3b8;
-    line-height: 1.45;
-    border-top: 1px solid #edf1f6;
-    padding-top: 12px;
+.tfc-faq-table td { padding: 14px 18px; border-bottom: 1px solid var(--line); color: var(--ink-soft); vertical-align: top; }
+.tfc-faq-table tr:last-child td { border-bottom: none; }
+.tfc-faq-table .credit { color: var(--ink); font-weight: 600; }
+.tfc-faq-table .timing { white-space: nowrap; color: var(--navy); font-weight: 600; }
+.sdot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+.sdot.g { background: var(--green); }
+.sdot.a { background: var(--amber); }
+.sdot.r { background: var(--red); }
+
+/* ---------- Sources ---------- */
+.tfc-faq-sources { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; margin-top: 18px; }
+.tfc-faq-sources .lead { font-size: 0.64rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.tfc-faq-sources a {
+    font-size: 0.78rem; color: var(--blue); text-decoration: none;
+    border: 1px solid var(--line); border-radius: 999px; padding: 5px 13px; transition: background .15s ease, border-color .15s ease;
 }
+.tfc-faq-sources a:hover { background: var(--bg); border-color: var(--line-strong); }
 
 /* ---------- Footer ---------- */
-.tfc-faq-footer {
-    text-align: center;
-    color: #94a3b8;
-    font-size: 0.82rem;
-    margin-top: 30px;
-    padding-top: 18px;
-    border-top: 1px solid #e2e8f0;
-}
+.tfc-faq-footer { text-align: center; color: var(--muted); font-size: 0.82rem; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 700px) {
-    .tfc-faq { padding: 6px 12px 32px; }
-    .tfc-faq-hero { padding: 30px 22px; border-radius: 14px; }
-    .tfc-faq-hero h1 { font-size: 1.7rem; }
-    .tfc-faq-hero p { font-size: 0.95rem; }
-    .tfc-faq-section { padding: 22px 18px; }
-    .tfc-faq-q { font-size: 1.2rem; }
-    .tfc-faq-qnum { width: 38px; height: 38px; font-size: 1.05rem; }
-    .tfc-faq-bar-row { grid-template-columns: 96px 1fr auto; gap: 8px; }
-    .tfc-faq-bar-label { font-size: 0.76rem; }
-    .tfc-faq-dbar-row { grid-template-columns: 96px 1fr 54px; gap: 8px; }
+    .tfc-faq { padding: 6px 13px 36px; }
+    .tfc-faq-hero { padding: 36px 24px; border-radius: 18px; }
+    .tfc-faq-hero h1 { font-size: 1.85rem; }
+    .tfc-faq-hero p { font-size: 0.97rem; }
+    .tfc-faq-section { padding: 24px 19px; border-radius: 16px; }
+    .tfc-faq-q { font-size: 1.22rem; }
+    .tfc-faq-qnum { width: 40px; height: 40px; font-size: 1rem; }
+    .tfc-faq-bar-row { grid-template-columns: 98px 1fr auto; gap: 9px; }
+    .tfc-faq-bar-label { font-size: 0.77rem; }
+    .tfc-faq-dbar-row { grid-template-columns: 96px 1fr 54px; gap: 9px; }
     .tfc-faq-grp .g-name { font-size: 0.76rem; }
     .tfc-faq-grp .g-range { font-size: 0.64rem; }
     .tfc-faq-dval { font-size: 0.76rem; }
     .tfc-faq-axis { padding: 0 54px 0 96px; font-size: 0.66rem; }
-    .tfc-faq-stat .num { font-size: 1.4rem; }
+    .tfc-faq-stat .num { font-size: 1.55rem; }
+    .tfc-faq-split { grid-template-columns: 1fr; }
+    .tfc-faq-timeline { flex-direction: column; gap: 16px; }
+    .tfc-faq-timeline::before { top: 7px; bottom: 7px; left: 6px; right: auto; width: 2px; height: auto; }
+    .tfc-faq-tl-step { text-align: left; padding: 0 0 0 28px; }
+    .tfc-faq-tl-step::after { left: 6px; top: 3px; transform: none; }
 }
 </style>
 
@@ -277,23 +354,25 @@
 
     <!-- ===================== HERO ===================== -->
     <div class="tfc-faq-hero">
-        <span class="eyebrow">Hawai&#699;i &middot; 2026 Legislative Session</span>
+        <span class="tfc-faq-kicker"><span class="dot"></span>Signed into law &middot; Act 24, 2026</span>
         <h1>SB 3125: Frequently Asked Questions</h1>
-        <p>What the bill does, why it moved, and how it changes income taxes for residents at every income level.</p>
+        <p>What the bill does, why it moved, how it changes income taxes across the income scale, and which tax credits it touches.</p>
     </div>
 
     <!-- ===================== Q1 ===================== -->
     <section class="tfc-faq-section">
         <div class="tfc-faq-qhead">
             <div class="tfc-faq-qnum">1</div>
-            <h2 class="tfc-faq-q">Why did the Legislature consider SB 3125?</h2>
+            <div>
+                <div class="tfc-faq-qkick">Question 01</div>
+                <h2 class="tfc-faq-q">Why did the Legislature consider SB 3125?</h2>
+            </div>
         </div>
         <div class="tfc-faq-body">
             <p>Because the income-tax cuts already on the books &mdash; passed as <strong>Act 46 in 2024</strong> &mdash; overwhelmingly benefit the wealthiest residents, at a cost the state budget can't sustain.</p>
             <p>As it stands, Act 46 delivers far larger tax cuts to the wealthy than to everyone else. By 2031, the richest 1% will receive average cuts of over <strong>$12,800 a year</strong>, while the lowest-income 20% will see only about <strong>$469</strong>. The law is expected to cost <strong>$240 million in 2025</strong> and more than <strong>$1.4 billion a year by 2031</strong> &mdash; roughly <strong>12% of Hawai&#699;i's total tax revenue</strong>. Because income taxes make up about a third of the state's budget, losing that much revenue could force deep cuts to the programs and services that local families depend on.</p>
         </div>
 
-        <!-- Q1 mini comparison chart -->
         <div class="tfc-faq-chart">
             <div class="tfc-faq-chart-title">Act 46 average tax cut by 2031 &mdash; who benefits</div>
             <div class="tfc-faq-chart-sub">Average annual income-tax cut per household, fully phased in</div>
@@ -313,22 +392,10 @@
         </div>
 
         <div class="tfc-faq-stats">
-            <div class="tfc-faq-stat amber">
-                <div class="num">$240M</div>
-                <div class="lbl">cost of the Act 46 cuts in 2025</div>
-            </div>
-            <div class="tfc-faq-stat amber">
-                <div class="num">$1.4B+/yr</div>
-                <div class="lbl">projected annual cost by 2031</div>
-            </div>
-            <div class="tfc-faq-stat amber">
-                <div class="num">&asymp;12%</div>
-                <div class="lbl">of Hawai&#699;i's total tax revenue</div>
-            </div>
-            <div class="tfc-faq-stat">
-                <div class="num">&asymp;&#8531;</div>
-                <div class="lbl">share of the state budget funded by income taxes</div>
-            </div>
+            <div class="tfc-faq-stat amber"><div class="num">$240M</div><div class="lbl">cost of the Act 46 cuts in 2025</div></div>
+            <div class="tfc-faq-stat amber"><div class="num">$1.4B+/yr</div><div class="lbl">projected annual cost by 2031</div></div>
+            <div class="tfc-faq-stat amber"><div class="num">&asymp;12%</div><div class="lbl">of Hawai&#699;i's total tax revenue</div></div>
+            <div class="tfc-faq-stat"><div class="num">&asymp;&#8531;</div><div class="lbl">share of the state budget funded by income taxes</div></div>
         </div>
     </section>
 
@@ -336,26 +403,20 @@
     <section class="tfc-faq-section">
         <div class="tfc-faq-qhead">
             <div class="tfc-faq-qnum">2</div>
-            <h2 class="tfc-faq-q">What is SB 3125?</h2>
+            <div>
+                <div class="tfc-faq-qkick">Question 02</div>
+                <h2 class="tfc-faq-q">What is SB 3125?</h2>
+            </div>
         </div>
         <div class="tfc-faq-body">
-            <p>SB 3125 moved forward with a package that:</p>
+            <p>SB 3125 &mdash; now <strong>Act 24 (2026)</strong> &mdash; moved forward with a package that:</p>
         </div>
         <div class="tfc-faq-does">
-            <div class="tfc-faq-doe">
-                <div class="tick">&#10003;</div>
-                <div class="txt"><strong>Preserves the 2024 income-tax cuts</strong> for joint filers earning under about $350,000 and single filers under about $175,000.</div>
-            </div>
-            <div class="tfc-faq-doe">
-                <div class="tick">&#10003;</div>
-                <div class="txt"><strong>Lets tax cuts for the very highest-income households fall away</strong> and creates a new top income-tax bracket around <strong>13 percent</strong> for single filers above $500,000 and joint filers above $1 million.</div>
-            </div>
-            <div class="tfc-faq-doe">
-                <div class="tick">&#10003;</div>
-                <div class="txt"><strong>Phases out or caps several expensive tax credits</strong> &mdash; especially in renewable energy and high-tech &mdash; to help close the budget gap.</div>
-            </div>
+            <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Preserves the 2024 income-tax cuts</strong> for joint filers earning under about $350,000 and single filers under about $175,000.</div></div>
+            <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Lets tax cuts for the very highest-income households fall away</strong> and creates a new top income-tax bracket around <strong>13 percent</strong> for single filers above $500,000 and joint filers above $1 million.</div></div>
+            <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Phases out or caps several expensive tax credits</strong> &mdash; especially in renewable energy and high-tech &mdash; to help close the budget gap.</div></div>
         </div>
-        <div class="tfc-faq-source-callout">
+        <div class="tfc-faq-callout">
             <span class="tag">Reported by Civil Beat</span>
             <div>The deal would save the state about <strong>$680 million over five years</strong>, mostly by ending or limiting tax credits, while preserving the main tax cuts for low- and middle-income residents.</div>
         </div>
@@ -365,7 +426,10 @@
     <section class="tfc-faq-section">
         <div class="tfc-faq-qhead">
             <div class="tfc-faq-qnum">3</div>
-            <h2 class="tfc-faq-q">How will SB 3125 affect Hawai&#699;i taxpayers?</h2>
+            <div>
+                <div class="tfc-faq-qkick">Question 03</div>
+                <h2 class="tfc-faq-q">How will SB 3125 affect Hawai&#699;i taxpayers?</h2>
+            </div>
         </div>
         <div class="tfc-faq-body">
             <p>The charts below show how SB 3125's <strong>income-tax-bracket changes</strong> affect residents at different income levels, compared with today's tax law and fully phased in by 2031. Nearly everyone keeps a tax cut &mdash; while the top 1%, who would have received the largest Act 46 windfall, instead pays more.</p>
@@ -415,24 +479,11 @@
             <div class="tfc-faq-axis"><span>&larr; families pay less</span><span>top earners pay more &rarr;</span></div>
         </div>
 
-        <!-- Stat strip -->
         <div class="tfc-faq-stats">
-            <div class="tfc-faq-stat green">
-                <div class="num">77%</div>
-                <div class="lbl">of residents get a tax cut</div>
-            </div>
-            <div class="tfc-faq-stat amber">
-                <div class="num">99.9%</div>
-                <div class="lbl">of the tax increase falls on the top 1%</div>
-            </div>
-            <div class="tfc-faq-stat amber">
-                <div class="num">+$7,051</div>
-                <div class="lbl">average increase for the top 1%</div>
-            </div>
-            <div class="tfc-faq-stat green">
-                <div class="num">$850</div>
-                <div class="lbl">average cut for the middle 20%</div>
-            </div>
+            <div class="tfc-faq-stat green"><div class="num">77%</div><div class="lbl">of residents get a tax cut</div></div>
+            <div class="tfc-faq-stat amber"><div class="num">99.9%</div><div class="lbl">of the tax increase falls on the top 1%</div></div>
+            <div class="tfc-faq-stat amber"><div class="num">+$7,051</div><div class="lbl">average increase for the top 1%</div></div>
+            <div class="tfc-faq-stat green"><div class="num">$850</div><div class="lbl">average cut for the middle 20%</div></div>
         </div>
 
         <!-- Chart B: % of income -->
@@ -482,8 +533,110 @@
         <div class="tfc-faq-note">Reflects SB 3125's income-tax-bracket changes only (not the bill's tax-credit changes). Figures compare projected 2031 taxes with current (2026) law. Source: Institute on Taxation and Economic Policy, May 2026.</div>
     </section>
 
+    <!-- ===================== Q4 ===================== -->
+    <section class="tfc-faq-section">
+        <div class="tfc-faq-qhead">
+            <div class="tfc-faq-qnum">4</div>
+            <div>
+                <div class="tfc-faq-qkick">Question 04</div>
+                <h2 class="tfc-faq-q">How are tax credits affected?</h2>
+            </div>
+        </div>
+        <div class="tfc-faq-body">
+            <p>SB 3125 (now Act 24, 2026) keeps most of the 2024 low- and middle-income tax relief in place &mdash; and it pays for that partly by <strong>tightening and sunsetting a series of tax credits</strong>, especially in renewable energy, capital investment, and high-tech. The breakdown below focuses on the credits side, not the bracket and rate changes.</p>
+            <p>In policy terms, the bill shifts value away from relatively open-ended, investment-type credits toward more targeted relief for low- and middle-income households, plus a narrower, capped renewables incentive.</p>
+        </div>
+
+        <!-- Protected vs pared-back -->
+        <div class="tfc-faq-split">
+            <div class="tfc-faq-col keep">
+                <h4>Household relief <span class="pill">Protected</span></h4>
+                <p class="csub">Enhanced refundable credits from Act 163 (2023) are extended past their original sunset.</p>
+                <ul>
+                    <li><strong>Earned Income Tax Credit</strong> (state EITC)<span class="meta">Act 163 enhancement extended</span></li>
+                    <li><strong>Food / General Excise Tax Credit</strong><span class="meta">Act 163 enhancement extended</span></li>
+                    <li><strong>Child &amp; Dependent Care Credit</strong><span class="meta">Act 163 enhancement extended</span></li>
+                </ul>
+            </div>
+            <div class="tfc-faq-col pare">
+                <h4>Business &amp; investment credits <span class="pill">Pared back</span></h4>
+                <p class="csub">Capped, given new sunset dates, or fully repealed on a schedule.</p>
+                <ul>
+                    <li><strong>Renewable Energy (RETITC)</strong><span class="meta">Annual cap + income limits; ends 2031</span></li>
+                    <li><strong>Capital Goods Excise Credit</strong><span class="meta">New sunset date added</span></li>
+                    <li><strong>Renewable Fuels Production Credit</strong><span class="meta">New sunset date added</span></li>
+                    <li><strong>Tech Infrastructure Renovation</strong><span class="meta">Repealed from 2028</span></li>
+                    <li><strong>High-Tech Business Investment</strong><span class="meta">Repealed from 2029</span></li>
+                    <li><strong>Research Activities (R&amp;D)</strong><span class="meta">Repealed from 2029</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- RETITC spotlight -->
+        <div class="tfc-faq-spot">
+            <h4>Spotlight: the renewable energy credit (RETITC)</h4>
+            <p class="ssub">This is where the most visible change lands &mdash; especially for solar and storage.</p>
+            <div class="tfc-faq-spot-grid">
+                <div class="f"><div class="n">&asymp;$40M/yr</div><div class="t">statewide annual cap from 2027 &mdash; less than half of recent spending</div></div>
+                <div class="f"><div class="n">Income limits</div><div class="t">new thresholds reduce or exclude higher-income claimants</div></div>
+                <div class="f"><div class="n">Certification</div><div class="t">projects need pre-approval to claim a spot under the cap</div></div>
+                <div class="f"><div class="n">Ends 2031</div><div class="t">full sunset; no safe harbor for projects already underway</div></div>
+            </div>
+            <div class="tfc-faq-note" style="margin-top:18px;">Industry reporting warns that projects already underway in 2027 will compete for a smaller pot, and some commercial solar racing federal deadlines may no longer pencil out.</div>
+        </div>
+
+        <!-- Sunset glide-path timeline -->
+        <div class="tfc-faq-tl-title">The sunset glide path</div>
+        <div class="tfc-faq-timeline">
+            <div class="tfc-faq-tl-step"><div class="yr">2027</div><div class="ev">RETITC &asymp;$40M/yr cap begins</div></div>
+            <div class="tfc-faq-tl-step"><div class="yr">2028</div><div class="ev">Tech Infrastructure Renovation Credit repealed</div></div>
+            <div class="tfc-faq-tl-step"><div class="yr">2029</div><div class="ev">High-Tech Investment &amp; R&amp;D credits repealed</div></div>
+            <div class="tfc-faq-tl-step end"><div class="yr">2031</div><div class="ev">RETITC fully eliminated</div></div>
+        </div>
+
+        <!-- At-a-glance table -->
+        <div class="tfc-faq-table-wrap">
+            <div class="tfc-faq-table-scroll">
+                <table class="tfc-faq-table">
+                    <thead>
+                        <tr><th>Credit</th><th>Treatment under SB 3125</th><th>Timing</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="credit"><span class="sdot g"></span>State EITC</td><td>Extends enhanced Act 163 version (delays sunset)</td><td class="timing">Extended</td></tr>
+                        <tr><td class="credit"><span class="sdot g"></span>Food / GET credit</td><td>Extends Act 163 enhancements</td><td class="timing">Extended</td></tr>
+                        <tr><td class="credit"><span class="sdot g"></span>Child &amp; dependent care</td><td>Extends Act 163 enhancements</td><td class="timing">Extended</td></tr>
+                        <tr><td class="credit"><span class="sdot a"></span>Renewable Energy (RETITC)</td><td>Adds &asymp;$40M/yr cap, income limits &amp; certification; full sunset</td><td class="timing">Cap 2027 &middot; ends 2031</td></tr>
+                        <tr><td class="credit"><span class="sdot a"></span>Capital Goods Excise</td><td>Adds a sunset date (finite life)</td><td class="timing">Sunset added</td></tr>
+                        <tr><td class="credit"><span class="sdot a"></span>Renewable Fuels Production</td><td>Adds a sunset date</td><td class="timing">Sunset added</td></tr>
+                        <tr><td class="credit"><span class="sdot r"></span>Tech Infrastructure Renovation</td><td>Fully repealed</td><td class="timing">From 1/1/2028</td></tr>
+                        <tr><td class="credit"><span class="sdot r"></span>High-Tech Business Investment</td><td>Fully repealed</td><td class="timing">From 1/1/2029</td></tr>
+                        <tr><td class="credit"><span class="sdot r"></span>Research Activities (R&amp;D)</td><td>Fully repealed</td><td class="timing">From 1/1/2029</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tfc-faq-note" style="border-top:none;padding-top:6px;">
+            <span class="sdot g"></span>Protected / extended &nbsp;&nbsp; <span class="sdot a"></span>Capped or sunset added &nbsp;&nbsp; <span class="sdot r"></span>Fully repealed
+        </div>
+
+        <!-- Fiscal context -->
+        <div class="tfc-faq-callout navy" style="margin-top:22px;">
+            <span class="tag">Fiscal &amp; policy context</span>
+            <div>The Governor's office describes Act 24 as a response to a projected nearly <strong>$3 billion</strong> revenue shortfall tied partly to federal changes. Revenue is raised more from business and investment credits than from rolling back household relief &mdash; the law preserves the <strong>vast majority of Act 46 relief</strong> for low- and middle-income residents while protecting programs like SNAP and healthcare.</div>
+        </div>
+
+        <div class="tfc-faq-sources">
+            <span class="lead">Sources</span>
+            <a href="https://governor.hawaii.gov/newsroom/office-of-the-governor-news-release-governor-green-signs-bills-to-strengthen-and-protect-essential-public-services/" target="_blank" rel="noopener">Governor's Office</a>
+            <a href="https://civilbeat.digitaldemocracy.org/bills/hi_20250sb3125" target="_blank" rel="noopener">Civil Beat</a>
+            <a href="https://www.hawaiipublicradio.org/text/local-news/2026-05-14/hawaii-solar-companies-say-state-tax-credit-changes-could-cripple-their-industry" target="_blank" rel="noopener">Hawai&#699;i Public Radio</a>
+            <a href="https://legiscan.com/HI/text/SB3125/id/3348982" target="_blank" rel="noopener">LegiScan</a>
+            <a href="https://www.law360.com/tax-authority/articles/2481146/to-plug-budget-holes-hawaii-ends-tax-credits" target="_blank" rel="noopener">Law360</a>
+        </div>
+    </section>
+
     <div class="tfc-faq-footer">
-        Sources: Institute on Taxation and Economic Policy (May 2026) &middot; Civil Beat &middot; Hawai&#699;i Tax Fairness Coalition (hitaxfairness.org)
+        Sources: Institute on Taxation and Economic Policy (May 2026) &middot; Civil Beat &middot; Hawai&#699;i Public Radio &middot; LegiScan &middot; Law360 &middot; Office of the Governor &middot; Hawai&#699;i Tax Fairness Coalition (hitaxfairness.org)
     </div>
 </div>
 
@@ -499,10 +652,7 @@
     if ('IntersectionObserver' in window) {
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    animate(entry.target);
-                    io.unobserve(entry.target);
-                }
+                if (entry.isIntersecting) { animate(entry.target); io.unobserve(entry.target); }
             });
         }, { threshold: 0.25 });
         charts.forEach(function (c) { io.observe(c); });
