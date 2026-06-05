@@ -1426,7 +1426,7 @@ header .header-nav-folder-content a,
 const BillTrackerWidget = (function() {
     'use strict';
     const CONFIG = {
-        proxyUrl: 'https://verdant-dango-b7d425.netlify.app/.netlify/functions/rss-proxy',
+        corsProxy: 'https://api.allorigins.win/raw?url=',
         defaultYear: '2026',
         refreshInterval: 3600000,
         cachePrefix: 'btw_cache_',
@@ -1452,7 +1452,8 @@ const BillTrackerWidget = (function() {
         if (cached) { return cached; }
         
         year = year || CONFIG.defaultYear;
-        const url = `${CONFIG.proxyUrl}?bill=${billType}${billNumber}&year=${year}`;
+        const rssUrl = `https://www.capitol.hawaii.gov/sessions/session${year}/rss/${billType}${billNumber}.xml`;
+        const url = CONFIG.corsProxy + encodeURIComponent(rssUrl);
         
         try {
             const response = await fetchWithTimeout(url, CONFIG.fetchTimeout);
@@ -1947,12 +1948,13 @@ async function loadBillStatusTable() {
     const statusContent = document.getElementById('bill-status-content');
     if (!statusContent) return;
     
-    const proxyUrl = 'https://verdant-dango-b7d425.netlify.app/.netlify/functions/rss-proxy';
+    const corsProxy = 'https://api.allorigins.win/raw?url=';
     const billStatuses = [];
     
     for (const bill of bills) {
         try {
-            const url = `${proxyUrl}?bill=${bill.type}${bill.number}&year=${bill.year}`;
+            const rssUrl = `https://www.capitol.hawaii.gov/sessions/session${bill.year}/rss/${bill.type}${bill.number}.xml`;
+            const url = corsProxy + encodeURIComponent(rssUrl);
             const response = await fetch(url);
             if (!response.ok) continue;
             

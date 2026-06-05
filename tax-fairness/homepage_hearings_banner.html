@@ -191,7 +191,7 @@
 (function() {
     'use strict';
     
-    const PROXY_URL = 'https://verdant-dango-b7d425.netlify.app/.netlify/functions/rss-proxy';
+    const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
     const BILLS = [
         { type: 'HB', number: '1850', year: '2026' },
         { type: 'HB', number: '2010', year: '2026' },
@@ -214,7 +214,8 @@
         
         for (const bill of BILLS) {
             try {
-                const url = `${PROXY_URL}?bill=${bill.type}${bill.number}&year=${bill.year}`;
+                const rssUrl = `https://www.capitol.hawaii.gov/sessions/session${bill.year}/rss/${bill.type}${bill.number}.xml`;
+                const url = CORS_PROXY + encodeURIComponent(rssUrl);
                 const response = await fetch(url);
                 
                 if (!response.ok) continue;
