@@ -411,6 +411,26 @@
         .ufsm-states-table td:first-child { width: 64%; }
         .ufsm-states-table .state { font-weight: 700; color: var(--ufsm-green-deep); font-family: 'Manrope', sans-serif; }
 
+        /* Other-states funding: KPI headline + state-badge rows */
+        .ufsm-states-kpi { font-size: 1rem; color: var(--ufsm-ink); margin: 0 0 18px; line-height: 1.4; }
+        .ufsm-states-kpi .num {
+            font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 2.2rem;
+            color: var(--ufsm-green); margin-right: 4px; vertical-align: -2px;
+        }
+        .ufsm-states-list { display: flex; flex-direction: column; }
+        .ufsm-state-row {
+            display: flex; align-items: center; justify-content: space-between; gap: 16px;
+            padding: 12px 0; border-bottom: 1px solid rgba(74, 74, 74, 0.1);
+        }
+        .ufsm-state-row:last-child { border-bottom: none; }
+        .ufsm-state-mech { font-size: 0.95rem; color: var(--ufsm-ink); flex: 1; line-height: 1.4; }
+        .ufsm-state-badges { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; }
+        .ufsm-state-badges span {
+            font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 0.8rem;
+            color: var(--ufsm-green-deep); background: var(--ufsm-green-tint);
+            border-radius: 6px; padding: 3px 8px; letter-spacing: 0.3px;
+        }
+
         /* Funding section (page-1 layout) */
         .ufsm-fund-title {
             font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 2.5rem;
@@ -517,7 +537,7 @@
                     </div>
                     <div class="ufsm-reason">
                         <h3>Eliminate social stigma</h3>
-                        <p>Hawaiʻi still allows schools to deny meals to students who have a negative meal balance, making students not only hungry, but also ashamed. UFSM creates a <a class="ufsm-tipword" href="https://www.childnourishlab.org/_files/ugd/383bcd_45ee5fed8e224ffd8639f0f498086e31.pdf" target="_blank" rel="noopener" data-tip="When Massachusetts made school meals free for all (2022), a survey of 284 households found 84%—across all income levels—believed meals should be free for everyone, and at least 80% said the policy saved money and time, reduced stress, and improved student behavior and achievement. Families said ending it would hurt their ability to afford enough food, and 42% of those eligible for free or reduced-price meals said their child would be less likely to eat a school meal if it weren't free for all—showing stigma would return. Click to read the study.">more inclusive and supportive school environment</a>.</p>
+                        <p>Hawaiʻi still allows schools to deny meals to students who have a negative meal balance, making students not only hungry, but also ashamed. UFSM creates a <a class="ufsm-tipword" href="https://www.childnourishlab.org/_files/ugd/383bcd_45ee5fed8e224ffd8639f0f498086e31.pdf" target="_blank" rel="noopener" data-tip="In Massachusetts, where school meals are free for all, 84% of families say they should stay free — and ending it would revive stigma: 42% of lower-income students would be less likely to eat. Click to read the study.">more inclusive and supportive school environment</a>.</p>
                     </div>
                     <div class="ufsm-reason">
                         <h3>Support locally grown food</h3>
@@ -577,14 +597,25 @@
                 </div>
                 <div class="ufsm-fund-right">
                     <h3 class="ufsm-fund-head">How Have Other States Funded UFSM?</h3>
-                    <table class="ufsm-table ufsm-states-table">
-                        <tbody>
-                            <tr><td>General Funds (Education Fund Appropriation)</td><td class="state">CA, ME, MI, MN, NM</td></tr>
-                            <tr><td>Voter-passed tax measure that reduces income tax deductions available to households earning $300,000 or more</td><td class="state">CO</td></tr>
-                            <tr><td>Voter-approved 4% tax on incomes over $1 million</td><td class="state">MA</td></tr>
-                            <tr><td>$0.03 property tax rate increase</td><td class="state">VT</td></tr>
-                        </tbody>
-                    </table>
+                    <p class="ufsm-states-kpi"><span class="num">8</span> states have made school meals universal &mdash; funded in several ways:</p>
+                    <div class="ufsm-states-list">
+                        <div class="ufsm-state-row">
+                            <span class="ufsm-state-mech">General funds (education appropriation)</span>
+                            <span class="ufsm-state-badges"><span>CA</span><span>ME</span><span>MI</span><span>MN</span><span>NM</span></span>
+                        </div>
+                        <div class="ufsm-state-row">
+                            <span class="ufsm-state-mech">Voter-passed measure trimming income-tax deductions for households earning $300K+</span>
+                            <span class="ufsm-state-badges"><span>CO</span></span>
+                        </div>
+                        <div class="ufsm-state-row">
+                            <span class="ufsm-state-mech">Voter-approved 4% tax on incomes over $1 million</span>
+                            <span class="ufsm-state-badges"><span>MA</span></span>
+                        </div>
+                        <div class="ufsm-state-row">
+                            <span class="ufsm-state-mech">$0.03 property tax rate increase</span>
+                            <span class="ufsm-state-badges"><span>VT</span></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -599,9 +630,9 @@
 
             <div class="ufsm-flow">
                 <div class="ufsm-flow-step">
-                    <div class="ufsm-flow-amt ufsm-flow-amt--top pin"><span class="v">$563,751</span><span class="lbl">Current participation</span></div>
+                    <div class="ufsm-flow-amt ufsm-flow-amt--top pin"><span class="v">$563,751</span></div>
                     <div class="ufsm-flow-chev"><span class="yr">SY 25&ndash;26</span><span class="ph">Reduced price only</span></div>
-                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v alt">$620,126</span><span class="lbl">With +10% participation</span></div>
+                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v alt">$620,126</span></div>
                 </div>
                 <div class="ufsm-flow-step">
                     <div class="ufsm-flow-amt ufsm-flow-amt--top pin"><span class="v">$3,304,347</span></div>
@@ -706,13 +737,7 @@
             <div class="ufsm-chart-box" style="height:340px;"><canvas id="ufsm-bar"></canvas></div>
             <div class="ufsm-chart-caption">Household income to qualify for free meals (family of 4), by school year. Dashed line = ALICE survival budget ($107,796).</div>
 
-            <div class="ufsm-flow" style="margin-top:44px;">
-                <div class="ufsm-flow-step"><div class="ufsm-flow-chev"><span class="yr">SY 24&ndash;25</span><span class="ph">Current</span></div></div>
-                <div class="ufsm-flow-step"><div class="ufsm-flow-chev"><span class="yr">SY 25&ndash;26</span><span class="ph">Reduced price only</span></div></div>
-                <div class="ufsm-flow-step"><div class="ufsm-flow-chev"><span class="yr">SY 26&ndash;27</span><span class="ph">300% FPL</span></div></div>
-                <div class="ufsm-flow-step"><div class="ufsm-flow-chev"><span class="yr">SY 27&ndash;28</span><span class="ph">Free for all?</span></div></div>
-            </div>
-            <p class="ufsm-note">*SB 1300 only covers up to SY 26&ndash;27.</p>
+            <p class="ufsm-note">SB 1300 only covers up to SY 26&ndash;27; see <em>The Path Forward</em> above for the full phase-in schedule and costs.</p>
         </div>
     </section>
 
@@ -813,6 +838,41 @@
             var values = [16.3, 3.742347, 41.6, 63.3];
             var colors = [getVar('--c-copay'), '#3F7E3F', getVar('--c-federal'), getVar('--c-general')];
             var hasLabels = (typeof ChartDataLabels !== 'undefined');
+            var teal = getVar('--c-copay'), tealDeep = '#1B6E6E';
+            function roundRect(c, x, y, w, h, r) {
+                if (c.roundRect) { c.beginPath(); c.roundRect(x, y, w, h, r); return; }
+                c.beginPath(); c.moveTo(x + r, y);
+                c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
+                c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
+            }
+            // Soft callout chip for the co-pays slice (white chip + shadow, $ dominant, leader line)
+            var copayCallout = {
+                id: 'copayCallout',
+                afterDatasetsDraw: function (chart) {
+                    var arc = chart.getDatasetMeta(0).data[0];
+                    if (!arc) return;
+                    var p = arc.getProps(['x', 'y', 'startAngle', 'endAngle', 'outerRadius'], true);
+                    var mid = (p.startAngle + p.endAngle) / 2;
+                    var ex = p.x + Math.cos(mid) * p.outerRadius;
+                    var ey = p.y + Math.sin(mid) * p.outerRadius;
+                    var c = chart.ctx, w = 124, h = 44, pad = 6, top = 6;
+                    var cx = Math.min(Math.max(ex, pad + w / 2), chart.width - pad - w / 2);
+                    var left = cx - w / 2;
+                    c.save();
+                    c.strokeStyle = teal; c.lineWidth = 1.5;
+                    c.beginPath(); c.moveTo(ex, ey); c.lineTo(cx, top + h); c.stroke();
+                    c.fillStyle = teal; c.beginPath(); c.arc(ex, ey, 3, 0, Math.PI * 2); c.fill();
+                    c.shadowColor = 'rgba(63,74,74,0.22)'; c.shadowBlur = 12; c.shadowOffsetY = 4;
+                    c.fillStyle = '#fff'; roundRect(c, left, top, w, h, 11); c.fill();
+                    c.shadowColor = 'transparent'; c.shadowBlur = 0; c.shadowOffsetY = 0;
+                    c.textAlign = 'center';
+                    c.fillStyle = '#7C8A80'; c.font = '600 9.5px Poppins, sans-serif';
+                    c.fillText('STUDENT CO-PAYS', cx, top + 17);
+                    c.fillStyle = tealDeep; c.font = '800 20px Manrope, sans-serif';
+                    c.fillText('$16.3M', cx, top + 37);
+                    c.restore();
+                }
+            };
             new Chart(ctx, {
                 type: 'pie',
                 data: {
@@ -821,33 +881,24 @@
                         data: values,
                         backgroundColor: colors,
                         borderColor: '#fff', borderWidth: 2, hoverOffset: 6,
-                        offset: function (c) { return c.dataIndex === 0 ? 20 : 0; } // explode the co-pays slice
+                        offset: function (c) { return c.dataIndex === 0 ? 18 : 0; } // explode the co-pays slice
                     }]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    layout: { padding: 34 },
+                    layout: { padding: { top: 54, right: 20, bottom: 18, left: 20 } },
                     plugins: {
                         legend: { display: false },
                         tooltip: { callbacks: { label: function (c) { return c.label + ': $' + c.parsed.toFixed(1) + 'M'; } } },
                         datalabels: hasLabels ? {
-                            display: function (c) { return c.dataset.data[c.dataIndex] >= 10; },
-                            textAlign: 'center',
-                            color: function (c) { return c.dataIndex === 0 ? '#1B6E6E' : '#3F4A4A'; },
-                            backgroundColor: function (c) { return c.dataIndex === 0 ? '#FFFFFF' : null; },
-                            borderColor: function (c) { return c.dataIndex === 0 ? getVar('--c-copay') : null; },
-                            borderWidth: function (c) { return c.dataIndex === 0 ? 1.5 : 0; },
-                            borderRadius: 7,
-                            padding: function (c) { return c.dataIndex === 0 ? 6 : 0; },
-                            font: function (c) { return { family: 'Poppins, sans-serif', weight: c.dataIndex === 0 ? '700' : '600', size: c.dataIndex === 0 ? 13 : 12.5 }; },
-                            anchor: function (c) { return c.dataset.data[c.dataIndex] < 25 ? 'end' : 'center'; },
-                            align: function (c) { return c.dataset.data[c.dataIndex] < 25 ? 'end' : 'center'; },
-                            offset: function (c) { return c.dataIndex === 0 ? 10 : 6; },
+                            display: function (c) { return c.dataIndex !== 0 && c.dataset.data[c.dataIndex] >= 10; },
+                            textAlign: 'center', color: '#3F4A4A', anchor: 'center', align: 'center',
+                            font: { family: 'Poppins, sans-serif', weight: '600', size: 12.5 },
                             formatter: function (v, c) { return c.chart.data.labels[c.dataIndex] + '\n$' + v + 'M'; }
                         } : undefined
                     }
                 },
-                plugins: hasLabels ? [ChartDataLabels] : []
+                plugins: (hasLabels ? [ChartDataLabels] : []).concat([copayCallout])
             });
         }
 
