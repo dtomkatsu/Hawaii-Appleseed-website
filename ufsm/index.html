@@ -361,8 +361,15 @@
         .ufsm-flow { display: flex; gap: 5px; align-items: stretch; margin-top: 10px; }
         .ufsm-flow-step { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
         .ufsm-flow-chev {
+            position: relative;
             color: #fff; text-align: center; padding: 20px 14px 20px 28px;
             clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%, 20px 50%);
+        }
+        .ufsm-flow-chev > span { position: relative; z-index: 1; }
+        /* "proposed / not yet committed" phase: subtle diagonal hatch overlay */
+        .ufsm-flow-step--proposed .ufsm-flow-chev::after {
+            content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+            background: repeating-linear-gradient(45deg, transparent 0 8px, rgba(255, 255, 255, 0.28) 8px 10px);
         }
         .ufsm-flow-step:first-child .ufsm-flow-chev {
             padding-left: 18px;
@@ -586,7 +593,7 @@
     <!-- ===== ESTIMATED COSTS — phased-in ===== -->
     <section class="ufsm-full-width ufsm-bg-green ufsm-reveal">
         <div class="ufsm-container">
-            <div class="ufsm-eyebrow">Estimated Costs</div>
+            <div class="ufsm-eyebrow">The Path Forward</div>
             <h2 class="ufsm-section-title">A 3-year phased-in approach</h2>
             <p class="ufsm-section-intro">A phased approach toward free school meals for every public school student. Amounts above each phase are the cost at current participation; below, with a 10% participation increase.</p>
 
@@ -597,14 +604,14 @@
                     <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v alt">$620,126</span><span class="lbl">With +10% participation</span></div>
                 </div>
                 <div class="ufsm-flow-step">
-                    <div class="ufsm-flow-amt ufsm-flow-amt--top pin"><span class="v">$3,304,347</span><span class="lbl">Current participation</span></div>
+                    <div class="ufsm-flow-amt ufsm-flow-amt--top pin"><span class="v">$3,304,347</span></div>
                     <div class="ufsm-flow-chev"><span class="yr">SY 26&ndash;27</span><span class="ph">300% FPL</span></div>
-                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v alt">$3,634,781</span><span class="lbl">With +10% participation</span></div>
+                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v alt">$3,634,781</span></div>
                 </div>
-                <div class="ufsm-flow-step">
-                    <div class="ufsm-flow-amt ufsm-flow-amt--top pin"><span class="v">$20,479,277</span><span class="lbl">Current participation</span></div>
-                    <div class="ufsm-flow-chev"><span class="yr">SY 27&ndash;28</span><span class="ph">Free for all</span></div>
-                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v alt">$22,527,204</span><span class="lbl">With +10% participation</span></div>
+                <div class="ufsm-flow-step ufsm-flow-step--proposed">
+                    <div class="ufsm-flow-amt ufsm-flow-amt--top pin"><span class="v">$20,479,277</span></div>
+                    <div class="ufsm-flow-chev"><span class="yr">SY 27&ndash;28</span><span class="ph">Free for all*</span></div>
+                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v alt">$22,527,204</span></div>
                 </div>
             </div>
             <p class="ufsm-note">*The HIDOE has only committed up to phase 2 (300% FPL) so far.</p>
@@ -700,24 +707,12 @@
             <div class="ufsm-chart-caption">Household income to qualify for free meals (family of 4), by school year. Dashed line = ALICE survival budget ($107,796).</div>
 
             <div class="ufsm-flow" style="margin-top:44px;">
-                <div class="ufsm-flow-step">
-                    <div class="ufsm-flow-chev"><span class="yr">SY 24&ndash;25</span><span class="ph">Current</span></div>
-                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v">$46,644</span><span class="lbl">income cutoff</span></div>
-                </div>
-                <div class="ufsm-flow-step">
-                    <div class="ufsm-flow-chev"><span class="yr">SY 25&ndash;26</span><span class="ph">Reduced price only</span></div>
-                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v">$66,378</span><span class="lbl">income cutoff</span></div>
-                </div>
-                <div class="ufsm-flow-step">
-                    <div class="ufsm-flow-chev"><span class="yr">SY 26&ndash;27</span><span class="ph">300% FPL</span></div>
-                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v">~$110,940</span><span class="lbl">income cutoff</span></div>
-                </div>
-                <div class="ufsm-flow-step">
-                    <div class="ufsm-flow-chev"><span class="yr">SY 27&ndash;28</span><span class="ph">Free for all?</span></div>
-                    <div class="ufsm-flow-amt ufsm-flow-amt--bot"><span class="v alt">No cutoff</span><span class="lbl">universal goal</span></div>
-                </div>
+                <div class="ufsm-flow-step"><div class="ufsm-flow-chev"><span class="yr">SY 24&ndash;25</span><span class="ph">Current</span></div></div>
+                <div class="ufsm-flow-step"><div class="ufsm-flow-chev"><span class="yr">SY 25&ndash;26</span><span class="ph">Reduced price only</span></div></div>
+                <div class="ufsm-flow-step"><div class="ufsm-flow-chev"><span class="yr">SY 26&ndash;27</span><span class="ph">300% FPL</span></div></div>
+                <div class="ufsm-flow-step"><div class="ufsm-flow-chev"><span class="yr">SY 27&ndash;28</span><span class="ph">Free for all?</span></div></div>
             </div>
-            <p class="ufsm-note">Household income to qualify for free meals (family of 4). *SB 1300 only covers up to SY 26&ndash;27.</p>
+            <p class="ufsm-note">*SB 1300 only covers up to SY 26&ndash;27.</p>
         </div>
     </section>
 
