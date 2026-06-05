@@ -79,13 +79,16 @@
         }
         .ufsm-fn:focus, .ufsm-tipword:focus { outline: none; }
         .ufsm-tipword {
-            position: relative; cursor: help; font-weight: 700; color: var(--ufsm-green-deep);
+            position: relative; cursor: help; font-weight: 600; color: var(--ufsm-ink);
             text-decoration: none;
+            background: linear-gradient(transparent 52%, rgba(97, 185, 115, 0.42) 52%);
+            -webkit-box-decoration-break: clone; box-decoration-break: clone;
+            padding: 0 1px;
+            transition: background 0.18s ease;
         }
         a.ufsm-tipword { cursor: pointer; }
-        .ufsm-tipword-i {
-            font-size: 0.6em; vertical-align: super; margin-left: 2px;
-            color: var(--ufsm-green); font-weight: 700;
+        .ufsm-tipword:hover, .ufsm-tipword:focus {
+            background: linear-gradient(transparent 50%, rgba(97, 185, 115, 0.62) 50%);
         }
         .ufsm-fn::after, .ufsm-tipword::after {
             content: attr(data-tip);
@@ -493,7 +496,7 @@
                     </div>
                     <div class="ufsm-reason">
                         <h3>Support ALICE families</h3>
-                        <p>UFSM supports <span class="ufsm-tipword" tabindex="0" data-tip="ALICE — Asset Limited, Income Constrained, Employed — describes households that earn above the federal poverty level but still can't afford life's basic necessities. In 2024, 41% of Hawaiʻi households were below the ALICE threshold.">ALICE households<span class="ufsm-tipword-i">&#9432;</span></span> in Hawaiʻi struggling to stretch their budgets. It makes sure that every child has access to nutritious meals regardless of ability to pay.</p>
+                        <p>UFSM supports <span class="ufsm-tipword" tabindex="0" data-tip="ALICE — Asset Limited, Income Constrained, Employed — describes households that earn above the federal poverty level but still can't afford life's basic necessities. In 2024, 41% of Hawaiʻi households were below the ALICE threshold.">ALICE households</span> in Hawaiʻi struggling to stretch their budgets. It makes sure that every child has access to nutritious meals regardless of ability to pay.</p>
                     </div>
                     <div class="ufsm-reason">
                         <h3>Improve academic performance</h3>
@@ -503,11 +506,11 @@
                 <div class="ufsm-reasons-col">
                     <div class="ufsm-reason">
                         <h3>Improve nutrition &amp; reduce food insecurity</h3>
-                        <p>For many students, <a class="ufsm-tipword" href="https://frac.org/reach-report-2025" target="_blank" rel="noopener" data-tip="FRAC Reach Report, 2025 (national): school breakfast — nearly 15.4M children participated; 12.2M received a free or reduced-price breakfast, up 900,000 (8%) over last year. School lunch — nearly 29.4M participated; 21.1M free or reduced-price, up 1.3M (6.8%). Click to read the report.">school breakfast and lunch<span class="ufsm-tipword-i">&#9432;</span></a> are the only full, balanced meals they receive in a day. UFSM is a proven strategy to improve nutrition and food security.</p>
+                        <p>For many students, <a class="ufsm-tipword" href="https://frac.org/reach-report-2025" target="_blank" rel="noopener" data-tip="FRAC Reach Report, 2025 (national): school breakfast — nearly 15.4M children participated; 12.2M received a free or reduced-price breakfast, up 900,000 (8%) over last year. School lunch — nearly 29.4M participated; 21.1M free or reduced-price, up 1.3M (6.8%). Click to read the report.">school breakfast and lunch</a> are the only full, balanced meals they receive in a day. UFSM is a proven strategy to improve nutrition and food security.</p>
                     </div>
                     <div class="ufsm-reason">
                         <h3>Eliminate social stigma</h3>
-                        <p>Hawaiʻi still allows schools to deny meals to students who have a negative meal balance, making students not only hungry, but also ashamed. UFSM creates a <a class="ufsm-tipword" href="https://www.childnourishlab.org/_files/ugd/383bcd_45ee5fed8e224ffd8639f0f498086e31.pdf" target="_blank" rel="noopener" data-tip="When Massachusetts made school meals free for all (2022), a survey of 284 households found 84%—across all income levels—believed meals should be free for everyone, and at least 80% said the policy saved money and time, reduced stress, and improved student behavior and achievement. Families said ending it would hurt their ability to afford enough food, and 42% of those eligible for free or reduced-price meals said their child would be less likely to eat a school meal if it weren't free for all—showing stigma would return. Click to read the study.">more inclusive and supportive school environment<span class="ufsm-tipword-i">&#9432;</span></a>.</p>
+                        <p>Hawaiʻi still allows schools to deny meals to students who have a negative meal balance, making students not only hungry, but also ashamed. UFSM creates a <a class="ufsm-tipword" href="https://www.childnourishlab.org/_files/ugd/383bcd_45ee5fed8e224ffd8639f0f498086e31.pdf" target="_blank" rel="noopener" data-tip="When Massachusetts made school meals free for all (2022), a survey of 284 households found 84%—across all income levels—believed meals should be free for everyone, and at least 80% said the policy saved money and time, reduced stress, and improved student behavior and achievement. Families said ending it would hurt their ability to afford enough food, and 42% of those eligible for free or reduced-price meals said their child would be less likely to eat a school meal if it weren't free for all—showing stigma would return. Click to read the study.">more inclusive and supportive school environment</a>.</p>
                     </div>
                     <div class="ufsm-reason">
                         <h3>Support locally grown food</h3>
