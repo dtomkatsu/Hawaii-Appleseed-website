@@ -105,6 +105,8 @@
         .ufsm-tipword:hover::after, .ufsm-tipword:focus::after { opacity: 1; visibility: visible; }
         .ufsm-fn--right::after { left: auto; right: 0; transform: none; }
         .ufsm-tipword::after { left: 0; transform: none; }
+        /* flip below when there isn't room above (set by JS near top of viewport) */
+        .ufsm-fn.ufsm-tip-flip::after, .ufsm-tipword.ufsm-tip-flip::after { top: 160%; bottom: auto; }
 
         /* Scroll reveal */
         .ufsm-reveal {
@@ -423,7 +425,9 @@
             padding: 12px 0; border-bottom: 1px solid rgba(74, 74, 74, 0.1);
         }
         .ufsm-state-row:last-child { border-bottom: none; }
-        .ufsm-state-mech { font-size: 0.95rem; color: var(--ufsm-ink); flex: 1; line-height: 1.4; }
+        .ufsm-state-mech { flex: 1; line-height: 1.35; }
+        .ufsm-state-mech strong { display: block; font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 1rem; color: var(--ufsm-charcoal); }
+        .ufsm-state-mech .sub { display: block; font-size: 0.82rem; color: var(--ufsm-muted); margin-top: 1px; }
         .ufsm-state-badges { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; }
         .ufsm-state-badges span {
             font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 0.8rem;
@@ -533,7 +537,7 @@
                 <div class="ufsm-reasons-col">
                     <div class="ufsm-reason">
                         <h3>Improve nutrition &amp; reduce food insecurity</h3>
-                        <p>For many students, <a class="ufsm-tipword" href="https://frac.org/reach-report-2025" target="_blank" rel="noopener" data-tip="FRAC Reach Report, 2025 (national): school breakfast — nearly 15.4M children participated; 12.2M received a free or reduced-price breakfast, up 900,000 (8%) over last year. School lunch — nearly 29.4M participated; 21.1M free or reduced-price, up 1.3M (6.8%). Click to read the report.">school breakfast and lunch</a> are the only full, balanced meals they receive in a day. UFSM is a proven strategy to improve nutrition and food security.</p>
+                        <p>For many students, school breakfast and lunch are the only full, balanced meals they receive in a day. UFSM is a proven strategy to <a class="ufsm-tipword" href="https://frac.org/reach-report-2025" target="_blank" rel="noopener" data-tip="FRAC Reach Report, 2025 (national): school breakfast — nearly 15.4M children participated; 12.2M received a free or reduced-price breakfast, up 900,000 (8%) over last year. School lunch — nearly 29.4M participated; 21.1M free or reduced-price, up 1.3M (6.8%). Click to read the report.">improve nutrition and food security</a>.</p>
                     </div>
                     <div class="ufsm-reason">
                         <h3>Eliminate social stigma</h3>
@@ -600,19 +604,19 @@
                     <p class="ufsm-states-kpi"><span class="num">8</span> states have made school meals universal &mdash; funded in several ways:</p>
                     <div class="ufsm-states-list">
                         <div class="ufsm-state-row">
-                            <span class="ufsm-state-mech">General funds (education appropriation)</span>
+                            <span class="ufsm-state-mech"><strong>General funds</strong><span class="sub">education appropriation</span></span>
                             <span class="ufsm-state-badges"><span>CA</span><span>ME</span><span>MI</span><span>MN</span><span>NM</span></span>
                         </div>
                         <div class="ufsm-state-row">
-                            <span class="ufsm-state-mech">Voter-passed measure trimming income-tax deductions for households earning $300K+</span>
+                            <span class="ufsm-state-mech"><strong>Income-tax deductions</strong><span class="sub">limited for $300K+ households (voter-passed)</span></span>
                             <span class="ufsm-state-badges"><span>CO</span></span>
                         </div>
                         <div class="ufsm-state-row">
-                            <span class="ufsm-state-mech">Voter-approved 4% tax on incomes over $1 million</span>
+                            <span class="ufsm-state-mech"><strong>Millionaire tax</strong><span class="sub">4% on incomes over $1M (voter-approved)</span></span>
                             <span class="ufsm-state-badges"><span>MA</span></span>
                         </div>
                         <div class="ufsm-state-row">
-                            <span class="ufsm-state-mech">$0.03 property tax rate increase</span>
+                            <span class="ufsm-state-mech"><strong>Property tax</strong><span class="sub">+$0.03 rate increase</span></span>
                             <span class="ufsm-state-badges"><span>VT</span></span>
                         </div>
                     </div>
@@ -973,6 +977,13 @@
         }, { threshold: 0.12 });
 
         document.querySelectorAll('.ufsm-reveal').forEach(function (el) { observer.observe(el); });
+
+        // Tooltips open above by default; flip below when too close to the top of the viewport.
+        document.querySelectorAll('.ufsm-tipword, .ufsm-fn').forEach(function (el) {
+            function place() { el.classList.toggle('ufsm-tip-flip', el.getBoundingClientRect().top < 200); }
+            el.addEventListener('mouseenter', place);
+            el.addEventListener('focus', place);
+        });
 
         // Charts live in always-open sections — initialize on load (robust; guarded).
         window.addEventListener('load', function () {
