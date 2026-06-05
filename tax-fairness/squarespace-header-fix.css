@@ -1,0 +1,62 @@
+/* 
+ * Squarespace Header Fix for Home Page
+ * 
+ * Header scrolls naturally with page content (not fixed/sticky).
+ * Transparent with white text.
+ * 
+ * HOW TO ADD TO SQUARESPACE:
+ * Go to Home page > Settings (gear icon) > Advanced > Page Header Code Injection
+ * Copy everything below (including the <style> tags)
+ */
+
+/* --------------------------------------------------------
+   COPY EVERYTHING BELOW INTO PAGE HEADER CODE INJECTION
+   --------------------------------------------------------
+
+<style>
+header.header,
+.header {
+    position: absolute !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+header .header-title-text a,
+header .header-nav-item a,
+header .header-nav-folder-title,
+.header .header-title-text a,
+.header .header-nav-item a,
+.header .header-nav-wrapper a {
+    color: #ffffff !important;
+}
+
+header .header-burger .burger-inner div,
+.header .header-burger .burger-inner div {
+    background-color: #ffffff !important;
+}
+
+.header-nav-folder-content,
+.header .header-nav-folder-content,
+header .header-nav-folder-content {
+    background-color: rgba(42, 58, 77, 0.9) !important;
+    background: rgba(42, 58, 77, 0.9) !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.header-nav-folder-content a,
+.header .header-nav-folder-content a,
+header .header-nav-folder-content a,
+.header-nav-folder-item a {
+    color: #ffffff !important;
+}
+
+.header-nav-folder-content a:hover,
+.header-nav-folder-item a:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+</style>
+
+-------------------------------------------------------- */ 

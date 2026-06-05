@@ -1,0 +1,104 @@
+<!-- Hero Section from home_page_squarespace.html -->
+<!-- Transparent background, no blur - paste into Squarespace code block -->
+
+<style>
+.tfc-hero-section {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: transparent;
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: #ffffff;
+}
+
+.tfc-hero-flex-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 32px;
+}
+
+.tfc-hero-text-column {
+    flex: 0 1 auto;
+    text-align: left;
+    max-width: 850px;
+}
+
+.tfc-hero-section h1 {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 5rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    line-height: 1.1;
+}
+
+.tfc-hero-subtitle-wrapper {
+    margin-bottom: 32px;
+    max-width: 550px;
+}
+
+.tfc-hero-subtitle-text {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    line-height: 1.5;
+}
+
+.tfc-hero-btn-wrapper {
+    flex: 0 0 auto;
+    padding-bottom: 8px;
+}
+
+.tfc-hero-btn {
+    display: inline-block;
+    background-color: white;
+    color: #1a202c !important;
+    padding: 16px 32px;
+    border-radius: 50px;
+    text-decoration: none !important;
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #e2e8f0;
+}
+
+.tfc-hero-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color: #f7fafc;
+}
+
+@media (max-width: 768px) {
+    .tfc-hero-flex-container {
+        flex-direction: column;
+        gap: 24px;
+    }
+    
+    .tfc-hero-section h1 {
+        font-size: 2.5rem;
+    }
+    
+    .tfc-hero-subtitle-text {
+        font-size: 1.2rem;
+    }
+}
+</style>
+
+<div class="tfc-hero-section">
+    <div class="tfc-hero-flex-container">
+        <div class="tfc-hero-text-column">
+            <h1>Let's Fund<br>Hawai'i's Future.</h1>
+            <div class="tfc-hero-subtitle-wrapper">
+                <div class="tfc-hero-subtitle-text">The Hawai'i Tax Fairness Coalition is working to reclaim our economy so our communities—not the wealthy few—can thrive.</div>
+            </div>
+        </div>
+        <div class="tfc-hero-btn-wrapper">
+            <a href="/ways-to-get-involved" class="tfc-hero-btn">TAKE ACTION</a>
+        </div>
+    </div>
+</div>

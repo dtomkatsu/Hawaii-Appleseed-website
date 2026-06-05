@@ -1,0 +1,126 @@
+<!-- Category Cards Only - from taxes_pay_for_section.html -->
+<!-- Transparent background, no blur - paste into Squarespace code block -->
+
+<style>
+.tfc-icon-grid {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.tfc-icon-card {
+    text-align: center;
+    padding: 6px 8px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tfc-icon-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(36, 53, 81, 0.15);
+}
+
+.tfc-symbol {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 8px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tfc-symbol img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.tfc-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2a3a4d;
+    margin-bottom: 4px;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.tfc-card-cost-wrapper {
+    display: block;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.tfc-card-cost {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #8fbfaa;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+.tfc-card-desc {
+    color: #4a5568;
+    font-size: 0.9rem;
+    background: #f7fafc;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #edf2f7;
+    margin-top: 6px;
+}
+
+@media (max-width: 900px) {
+    .tfc-icon-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .tfc-icon-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<div class="tfc-icon-grid">
+    <div class="tfc-icon-card">
+        <div class="tfc-symbol">
+            <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/5d9c3cf1-6bab-4db3-8f24-86cd6ed58a3b/generated-image+%289%29.png?format=2500w" alt="Healthcare Icon">
+        </div>
+        <div class="tfc-card-title">Healthcare</div>
+        <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$1.83 billion</div></div>
+        <div class="tfc-card-desc">Health coverage for 441,000 children and adults</div>
+    </div>
+
+    <div class="tfc-icon-card">
+        <div class="tfc-symbol">
+            <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/c052bdbb-1660-4f88-b32b-936ad43a65ef/generated-image+%2814%29.png?format=1500w" alt="Housing Icon">
+        </div>
+        <div class="tfc-card-title">Affordable Housing</div>
+        <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$305+ million</div></div>
+        <div class="tfc-card-desc">Building affordable units, rental assistance, and homelessness programs</div>
+    </div>
+
+    <div class="tfc-icon-card">
+        <div class="tfc-symbol">
+            <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/fe9369a0-3681-47a9-a26d-803f7670b0d5/generated-image+%2810%29.png?format=1500w" alt="Education Icon">
+        </div>
+        <div class="tfc-card-title">Public K-12 Schools</div>
+        <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$1.76 billion</div></div>
+        <div class="tfc-card-desc">Education for 165,000+ students across 296 schools</div>
+    </div>
+
+    <div class="tfc-icon-card">
+        <div class="tfc-symbol">
+            <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/3a6214a4-d3b6-47b7-b560-b3815fd78f7d/generated-image+%2813%29.png?format=1500w" alt="Food Security Icon">
+        </div>
+        <div class="tfc-card-title">Food Security</div>
+        <div class="tfc-card-cost-wrapper"><div class="tfc-card-cost">$30+ million</div></div>
+        <div class="tfc-card-desc">Free and reduced-price school meals for 78,000 students and SNAP administration for over 163,000 people.</div>
+    </div>
+</div>

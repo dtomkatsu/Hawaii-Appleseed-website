@@ -1,0 +1,2232 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ========== BILL TRACKER WIDGET STYLES (INLINE) ========== */
+.tfc-bill-tracker {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 1px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    padding: 20px;
+    margin-top: -1px;
+    position: relative;
+}
+.tfc-bill-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+.tfc-bill-col {
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+.tfc-bill-col:hover {
+    background: rgba(36, 53, 81, 0.05);
+}
+.tfc-bill-col.active {
+    background: rgba(36, 53, 81, 0.1);
+    border: 1px solid rgba(36, 53, 81, 0.2);
+}
+.tfc-bill-col h4 {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 8px 0;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+}
+.tfc-bill-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #243551;
+}
+.tfc-bill-number a {
+    color: #243551;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.tfc-bill-number a:hover {
+    color: #3b82f6;
+    text-decoration: underline;
+}
+.tfc-status-section {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.tfc-bill-status-section {
+    padding: 12px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+.tfc-bill-status-section:last-child {
+    border-bottom: none;
+}
+.tfc-bill-status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+.tfc-bill-status-header strong {
+    color: #243551;
+    font-weight: 700;
+}
+.tfc-bill-latest {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #4a5568;
+}
+.tfc-status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+.tfc-status-header:hover {
+    background: #f1f5f9;
+}
+.tfc-status-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+.tfc-status-toggle {
+    font-size: 0.75rem;
+    color: #3a5278;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.tfc-status-toggle::after {
+    content: '\25BC';
+    font-size: 0.6rem;
+    transition: transform 0.3s ease;
+}
+.tfc-status-section.expanded .tfc-status-toggle::after {
+    transform: rotate(180deg);
+}
+.tfc-status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    background: #ebf8ff;
+    color: #2b6cb0;
+    margin-left: 8px;
+}
+.tfc-badge-enacted { background: #c6f6d5; color: #22543d; }
+.tfc-badge-passed { background: #c6f6d5; color: #276749; }
+.tfc-badge-progress { background: #bee3f8; color: #ffffff; }
+.tfc-badge-hearing { background: #feebc8; color: #c05621; }
+.tfc-badge-referred { background: #e9d8fd; color: #6b46c1; }
+.tfc-badge-deferred { background: #fed7d7; color: #c53030; }
+.tfc-badge-new { background: #e2e8f0; color: #4a5568; }
+.tfc-badge-update { background: #ebf8ff; color: #2b6cb0; }
+.tfc-latest-update {
+    padding: 16px;
+    font-size: 0.85rem;
+    color: #2d3748;
+    line-height: 1.5;
+    border-top: 1px solid #e2e8f0;
+}
+.tfc-status-date {
+    display: block;
+    font-size: 0.7rem;
+    color: #718096;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+.tfc-loading {
+    color: #718096;
+    font-style: italic;
+}
+.tfc-status-history {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    padding: 0 16px;
+}
+.tfc-status-section.expanded .tfc-status-history {
+    max-height: 400px;
+    padding: 0 16px 16px;
+    overflow-y: auto;
+}
+.tfc-history-item {
+    padding: 12px;
+    border-left: 2px solid #cbd5e0;
+    margin-left: 8px;
+    position: relative;
+    font-size: 0.8rem;
+    color: #4a5568;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+.tfc-history-item::before {
+    content: '';
+    position: absolute;
+    left: -7px;
+    top: 14px;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border: 2px solid #cbd5e0;
+    border-radius: 50%;
+}
+.tfc-history-item:last-child {
+    border-left-color: transparent;
+    margin-bottom: 0;
+}
+.tfc-tracker-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+}
+.tfc-last-updated {
+    font-size: 0.65rem;
+    color: #a0aec0;
+}
+.tfc-refresh-btn {
+    background: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    color: #718096;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.tfc-refresh-btn:hover {
+    background: #f7fafc;
+    border-color: #cbd5e0;
+    color: #4a5568;
+}
+.tfc-card-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+.tfc-card-wrapper .tfc-card {
+    border-radius: 16px 16px 0 0;
+    margin-bottom: 0;
+}
+.tfc-card-wrapper .tfc-bill-tracker {
+    border-radius: 0 0 16px 16px;
+}
+.tfc-legislation-header {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #243551;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 12px 0;
+    border-bottom: 2px solid #e2e8f0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+.tfc-legislation-header:hover {
+    color: #3a5278;
+    background: rgba(36, 53, 81, 0.03);
+    margin: 0 -20px;
+    padding: 12px 20px;
+    border-radius: 8px;
+}
+.tfc-legislation-toggle-icon::after {
+    content: '\25BC';
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+.tfc-bill-tracker.expanded .tfc-legislation-toggle-icon::after {
+    transform: rotate(180deg);
+}
+.tfc-tracker-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease-out, opacity 0.3s ease, margin-top 0.3s ease;
+    margin-top: 0;
+}
+.tfc-bill-tracker.expanded .tfc-tracker-content {
+    max-height: 800px;
+    opacity: 1;
+    margin-top: 16px;
+}
+.tfc-status-history::-webkit-scrollbar { width: 6px; }
+.tfc-status-history::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 3px; }
+.tfc-status-history::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 3px; }
+.tfc-status-history::-webkit-scrollbar-thumb:hover { background: #a0aec0; }
+.tfc-sample-testimony {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-top: 1px solid #f1f5f9;
+    border-radius: 0 0 16px 16px;
+    margin-top: -1px;
+    transition: background 0.2s ease;
+    gap: 16px;
+}
+.tfc-sample-testimony:hover { background: #f8fafc; }
+.tfc-sample-testimony-content {
+    display: flex;
+    flex-direction: column;
+}
+.tfc-sample-testimony-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+}
+.tfc-sample-testimony a.tfc-testimony-link {
+    color: #3a5278;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+}
+.tfc-sample-testimony a.tfc-testimony-link:hover { color: #243551; }
+.tfc-sample-testimony a.tfc-testimony-link::after {
+    content: '\2192';
+    font-size: 1rem;
+    transition: transform 0.2s ease;
+}
+.tfc-sample-testimony a.tfc-testimony-link:hover::after { transform: translateX(4px); }
+.tfc-sample-testimony .tfc-more-btn {
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
+    color: #fff !important;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    border-radius: 8px;
+    text-align: center;
+    border: none;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+.tfc-sample-testimony .tfc-more-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(36, 53, 81, 0.3);
+}
+.tfc-card-wrapper .tfc-bill-tracker.has-testimony {
+    border-radius: 0;
+    border-bottom: none;
+}
+.tfc-policy-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 16px;
+    padding-left: 16px;
+    border-left: 1px solid #e2e8f0;
+}
+.tfc-policy-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.tfc-policy-toggle {
+    display: inline-flex;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e0;
+}
+.tfc-policy-toggle-btn {
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    color: #475569;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+.tfc-policy-toggle-btn:hover:not(.active) {
+    color: #475569;
+    background: rgba(255, 255, 255, 0.5);
+}
+.tfc-policy-toggle-btn.active {
+    background: #fff;
+    color: #243551;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.tfc-card-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.tfc-card-title-row .tfc-card-title { margin-bottom: 0; }
+.tfc-hearings-widget {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    width: 480px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    max-height: calc(100vh - 120px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.tfc-hearings-header {
+    padding: 16px;
+    background: linear-gradient(135deg, #243551 0%, #3a5278 100%);
+    color: #fff;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.tfc-hearings-title { font-size: 1.1rem; font-weight: 700; margin: 0; color: #fff; }
+.tfc-hearings-toggle {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+.tfc-hearings-widget.collapsed .tfc-hearings-toggle { transform: rotate(180deg); }
+.tfc-hearings-content {
+    max-height: 500px;
+    overflow-y: auto;
+    transition: max-height 0.3s ease;
+}
+.tfc-hearings-widget.collapsed .tfc-hearings-content { max-height: 0; overflow: hidden; }
+.tfc-hearing-item {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s ease;
+}
+.tfc-hearing-item:hover { background: #f8fafc; }
+.tfc-hearing-item:last-child { border-bottom: none; }
+.tfc-hearing-bill { font-size: 0.95rem; font-weight: 700; color: #243551; margin-bottom: 6px; }
+.tfc-hearing-bill a {
+    color: #243551;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.tfc-hearing-bill a:hover {
+    color: #3b82f6;
+    text-decoration: underline;
+}
+.tfc-hearing-date {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.tfc-hearing-date::before { content: '\1F4C5'; font-size: 0.8rem; }
+.tfc-hearing-desc { font-size: 0.9rem; color: #475569; line-height: 1.5; }
+.tfc-hearings-empty { padding: 24px 16px; text-align: center; color: #94a3b8; font-size: 0.8rem; }
+.tfc-hearings-loading { padding: 24px 16px; text-align: center; color: #94a3b8; font-size: 0.8rem; font-style: italic; }
+.tfc-hearings-content::-webkit-scrollbar { width: 6px; }
+.tfc-hearings-content::-webkit-scrollbar-track { background: #f1f5f9; }
+.tfc-hearings-content::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 3px; }
+.tfc-hearings-content::-webkit-scrollbar-thumb:hover { background: #a0aec0; }
+
+/* Bill Status Table Styles */
+.tfc-bill-status-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+.tfc-bill-status-table thead {
+    background: #f8fafc;
+    border-bottom: 2px solid #e2e8f0;
+}
+.tfc-bill-status-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.tfc-bill-status-table tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s ease;
+}
+.tfc-bill-status-table tbody tr:hover {
+    background: #f8fafc;
+}
+.tfc-bill-status-table tbody tr.has-hearing {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+}
+.tfc-bill-status-table tbody tr.has-hearing:hover {
+    background: #fde68a;
+}
+.tfc-bill-status-table td {
+    padding: 14px 16px;
+    color: #334155;
+    vertical-align: top;
+}
+.tfc-bill-status-table td.bill-number {
+    font-weight: 600;
+    color: #243551;
+    white-space: nowrap;
+}
+.tfc-bill-status-table td.bill-number a {
+    color: #243551;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.tfc-bill-status-table td.bill-number a:hover {
+    color: #3b82f6;
+    text-decoration: underline;
+}
+.tfc-bill-status-table td.issue-area {
+    font-weight: 500;
+    color: #475569;
+}
+.tfc-bill-status-table td.latest-status {
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.5;
+}
+.tfc-bill-status-table td.latest-status .status-date {
+    font-weight: 600;
+    color: #475569;
+    margin-right: 6px;
+}
+.tfc-bill-status-table .hearing-indicator {
+    display: inline-block;
+    background: #f59e0b;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+@media (max-width: 768px) {
+    .tfc-bill-status-table {
+        font-size: 0.8rem;
+    }
+    .tfc-bill-status-table th,
+    .tfc-bill-status-table td {
+        padding: 10px 12px;
+    }
+    .tfc-bill-status-table td.latest-status {
+        font-size: 0.75rem;
+    }
+}
+@media (max-width: 600px) {
+    .tfc-policy-wrapper {
+        margin-left: 0;
+        padding-left: 0;
+        border-left: none;
+        margin-top: 8px;
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+@media (max-width: 1024px) {
+    .tfc-hearings-widget {
+        position: static;
+        width: 100%;
+        margin: 20px auto;
+        max-width: 95%;
+    }
+}
+@media (max-width: 480px) {
+    .tfc-container {
+        padding: 12px;
+    }
+    .tfc-bill-columns { grid-template-columns: 1fr; gap: 8px; }
+    .tfc-bill-col { padding: 10px; }
+    .tfc-bill-tracker { padding: 16px; margin-left: 0; margin-right: 0; }
+    .tfc-card-title-row { flex-direction: column; align-items: flex-start; }
+    .tfc-card {
+        padding: 16px;
+        padding-top: 20px;
+    }
+    .tfc-policy-toggle {
+        width: 100%;
+    }
+    .tfc-policy-toggle-btn {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+}
+/* ========== END BILL TRACKER WIDGET STYLES ========== */
+
+/* Squarespace Header Fix - Black font for light background pages */
+header.header,
+.header {
+    position: absolute !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+header .header-title-text a,
+header .header-nav-item a,
+header .header-nav-folder-title,
+.header .header-title-text a,
+.header .header-nav-item a,
+.header .header-nav-wrapper a {
+    color: #2A3A4D !important;
+}
+
+header .header-burger .burger-inner div,
+.header .header-burger .burger-inner div {
+    background-color: #2A3A4D !important;
+}
+
+.header-nav-folder-content,
+.header .header-nav-folder-content,
+header .header-nav-folder-content {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(42, 58, 77, 0.1) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.header-nav-folder-content a,
+.header .header-nav-folder-content a,
+header .header-nav-folder-content a,
+.header-nav-folder-item a {
+    color: #2A3A4D !important;
+}
+
+.header-nav-folder-content a:hover,
+.header-nav-folder-item a:hover {
+    background-color: rgba(42, 58, 77, 0.05) !important;
+    color: #2A3A4D !important;
+}
+
+
+.tfc-container {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    max-width: 2400px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #1a202c;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.tfc-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.tfc-header h1 {
+    color: #1a202c;
+    margin: 0 0 12px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.tfc-header p {
+    color: #4a5568;
+    font-size: 1.125rem;
+    font-weight: 400;
+    margin: 0;
+}
+
+.tfc-summary {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+.tfc-summary-card {
+    background: linear-gradient(135deg, #f0f4f8 0%, #e1e7ef 100%);
+    border-radius: 16px;
+    padding: 24px 32px;
+    box-shadow: 0 4px 16px rgba(36, 53, 81, 0.12);
+    border: 1px solid rgba(36, 53, 81, 0.12);
+    text-align: center;
+    max-width: 320px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tfc-summary-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(36, 53, 81, 0.2);
+}
+
+/* Particle container */
+.tfc-particle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.tfc-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(72, 187, 120, 0.7);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleFloat 1.5s ease-out forwards;
+}
+
+@keyframes particleFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-60px) scale(0.3);
+    }
+}
+
+.tfc-summary-card h3 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 8px 0;
+}
+
+.tfc-summary-card .value {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #1a202c;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.tfc-summary-card .label {
+    font-size: 0.875rem;
+    color: #718096;
+    font-weight: 500;
+}
+
+.tfc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin: 32px 0;
+    position: relative;
+    min-height: 600px;
+    perspective: 1500px; /* Increased perspective for 3D peel effect */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tfc-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    padding-top: 32px; /* Extra space for top bar */
+    box-shadow: 0 4px 20px rgba(36, 53, 81, 0.08);
+    border: 1px solid rgba(36, 53, 81, 0.12);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
+    opacity: 1;
+    /* Paper texture */
+    background-image: 
+        linear-gradient(90deg, rgba(0,0,0,0.01) 1px, transparent 1px),
+        linear-gradient(rgba(0,0,0,0.01) 1px, transparent 1px),
+        linear-gradient(to bottom, #ffffff 0%, #fafafa 100%);
+    background-size: 20px 20px, 20px 20px, 100% 100%;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+
+/* Top accent bar - conforms to rounded corners */
+.tfc-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
+    border-radius: 16px 16px 0 0;
+}
+
+.tfc-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(36, 53, 81, 0.15);
+}
+
+.tfc-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a202c;
+    margin: 0 0 10px 0;
+    line-height: 1.3;
+}
+
+.tfc-card-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #243551;
+    background: #eef2f7;
+    padding: 5px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tfc-card-revenue {
+    display: inline-block;
+    color: #38a169;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    padding: 6px 12px;
+    background: rgba(56, 161, 105, 0.1);
+    border: 1px solid rgba(56, 161, 105, 0.3);
+    border-radius: 20px;
+}
+
+.tfc-card-revenue.unknown {
+    color: #9f7aea;
+    background: rgba(159, 122, 234, 0.1);
+    border: 1px solid rgba(159, 122, 234, 0.3);
+}
+
+.tfc-card-desc {
+    font-size: 0.95rem;
+    color: #4a5568;
+    margin-bottom: 50px; /* Space for bottom-right button */
+    flex-grow: 1;
+}
+
+/* Button positioned in bottom-right, revealed by peel */
+.tfc-card-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    padding: 8px 16px;
+    background: transparent;
+    color: #243551 !important;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #243551;
+    transition: all 0.25s ease;
+    z-index: 5;
+}
+
+.tfc-card-btn:hover {
+    background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
+    color: #fff !important;
+    border-color: transparent;
+    transform: scale(1.05);
+}
+
+/* When card is hovered, emphasize the button */
+.tfc-card:hover .tfc-card-btn {
+    background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
+    color: #fff !important;
+    border-color: transparent;
+}
+
+/* Bar Chart Styles */
+.tfc-chart-container {
+    max-width: 700px;
+    margin: 0 auto 32px auto;
+    padding: 24px;
+    background: transparent;
+}
+
+.tfc-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.tfc-bar-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 70px;
+    align-items: center;
+    gap: 12px;
+}
+
+.tfc-bar-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #4a5568;
+    text-align: right;
+}
+
+.tfc-bar-track {
+    height: 28px;
+    background: #eef2f7;
+    border-radius: 6px;
+    overflow: visible;
+}
+
+.tfc-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
+    border-radius: 6px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.tfc-bar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(36, 53, 81, 0.3);
+    filter: brightness(1.15);
+}
+
+.tfc-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border-radius: 6px;
+}
+
+.tfc-bar:hover::after {
+    opacity: 1;
+}
+
+.tfc-bar-value {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #48bb78;
+}
+
+@media (max-width: 600px) {
+    .tfc-bar-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+    .tfc-bar-label {
+        text-align: left;
+    }
+    .tfc-bar-track {
+        height: 24px;
+    }
+}
+
+.tfc-footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #718096;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+    .tfc-container {
+        padding: 16px;
+    }
+    .tfc-header h1 {
+        font-size: 2rem;
+    }
+    .tfc-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .tfc-card {
+        padding: 20px;
+        padding-top: 24px;
+    }
+    .tfc-card-wrapper {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+/* Bill Tracker Styles */
+.tfc-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.tfc-bill-tracker {
+    background: #f8fafc;
+    border: 1px solid rgba(36, 53, 81, 0.12);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    padding: 20px;
+    margin-top: -20px; /* Overlap with card above */
+    padding-top: 36px; /* Extra padding to account for overlap */
+    position: relative;
+    z-index: 0; /* Below the main card */
+    font-family: 'Inter', sans-serif;
+    margin-left: 10px; /* Slight inset to look like it's sliding out */
+    margin-right: 10px;
+}
+
+/* Ensure main card stays on top */
+.tfc-card {
+    z-index: 2;
+    position: relative;
+}
+
+.tfc-bill-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.tfc-bill-col {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.tfc-bill-col:hover {
+    background: rgba(36, 53, 81, 0.05);
+}
+
+.tfc-bill-col.active {
+    background: rgba(36, 53, 81, 0.1);
+    border: 1px solid rgba(36, 53, 81, 0.2);
+}
+
+.tfc-bill-col h4 {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 8px 0;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+}
+
+.tfc-bill-number {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #243551;
+}
+
+.tfc-status-section {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 16px;
+}
+
+.tfc-status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.tfc-status-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.tfc-status-toggle {
+    font-size: 0.75rem;
+    color: #3a5278;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tfc-status-toggle::after {
+    content: '\25BC';
+    font-size: 0.6rem;
+    transition: transform 0.3s ease;
+}
+
+.tfc-status-section.expanded .tfc-status-toggle::after {
+    transform: rotate(180deg);
+}
+
+.tfc-latest-update {
+    margin-top: 12px;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #2d3748;
+    position: relative;
+}
+
+.tfc-status-date {
+    display: block;
+    font-size: 0.7rem;
+    color: #718096;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.tfc-status-history {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    margin-top: 0;
+}
+
+.tfc-status-section.expanded .tfc-status-history {
+    max-height: 400px;
+    margin-top: 12px;
+    overflow-y: auto;
+}
+
+.tfc-history-item {
+    padding: 12px;
+    border-left: 2px solid #cbd5e0;
+    margin-left: 8px;
+    position: relative;
+    font-size: 0.8rem;
+    color: #4a5568;
+    padding-bottom: 16px;
+}
+
+.tfc-history-item::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 16px;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border: 2px solid #cbd5e0;
+    border-radius: 50%;
+}
+
+.tfc-history-item:last-child {
+    border-left-color: transparent;
+}
+
+.tfc-status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    background: #ebf8ff;
+    color: #2b6cb0;
+    margin-left: 8px;
+}
+</style>
+
+<div class="tfc-container">
+    <div class="tfc-header">
+        <h1></h1>
+        <p></p>
+    </div>
+
+    <div class="tfc-summary">
+        <div class="tfc-summary-card">
+            <h3>Total Potential Revenue</h3>
+            <div class="value">$1.1 billion+</div>
+            <div class="label"></div>
+        </div>
+    </div>
+
+    <!-- Revenue Comparison Bar Chart -->
+    <div class="tfc-chart-container">
+        <div class="tfc-chart">
+            <div class="tfc-bar-row">
+                <span class="tfc-bar-label">Stop Tax Cuts for the Wealthy <span style="font-size: 0.7rem; color: #64748b;">(SB 3125)</span></span>
+                <div class="tfc-bar-track">
+                    <div class="tfc-bar" data-value="588.3" style="--bar-width: 100%;"></div>
+                </div>
+                <span class="tfc-bar-value">Up to $588.3M</span>
+            </div>
+            <div class="tfc-bar-row">
+                <span class="tfc-bar-label">Tax Wealth Like Work</span>
+                <div class="tfc-bar-track">
+                    <div class="tfc-bar" data-value="84" style="--bar-width: 28.38%;"></div>
+                </div>
+                <span class="tfc-bar-value">$84M</span>
+            </div>
+            <div class="tfc-bar-row">
+                <span class="tfc-bar-label">Millionaire's Income Tax</span>
+                <div class="tfc-bar-track">
+                    <div class="tfc-bar" data-value="71" style="--bar-width: 23.98%;"></div>
+                </div>
+                <span class="tfc-bar-value">$71M</span>
+            </div>
+            <div class="tfc-bar-row">
+                <span class="tfc-bar-label">Tweak the Conveyance Tax <span style="font-size: 0.7rem; color: #64748b;">(HD3 SD1)</span></span>
+                <div class="tfc-bar-track">
+                    <div class="tfc-bar" data-value="286.7" style="--bar-width: 96.86%;"></div>
+                </div>
+                <span class="tfc-bar-value">$270.8M - $302.6M</span>
+            </div>
+            <div class="tfc-bar-row">
+                <span class="tfc-bar-label">Closing the Real Estate Investment Trust Loophole</span>
+                <div class="tfc-bar-track">
+                    <div class="tfc-bar" data-value="48" style="--bar-width: 16.22%;"></div>
+                </div>
+                <span class="tfc-bar-value">$36-60M</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bill Status Table Widget -->
+    <div class="tfc-hearings-widget" id="bill-status-widget" style="position: static; margin: 40px auto; max-width: 1800px;">
+        <div class="tfc-hearings-header">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <h3 class="tfc-hearings-title">Bill Status Tracker</h3>
+                <button class="tfc-hearings-toggle" onclick="toggleBillStatusWidget()" aria-label="Toggle bill status">&#9660;</button>
+            </div>
+            <div style="margin-top: 12px; padding: 8px 12px; background: rgba(255, 255, 255, 0.1); border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #fbbf24; cursor: pointer; font-weight: 500;">
+                    <input type="checkbox" id="alive-filter" checked onchange="filterBillStatus()" style="cursor: pointer; transform: scale(1.1);">
+                    <span>Alive Only</span>
+                </label>
+            </div>
+        </div>
+        <div class="tfc-hearings-content" id="bill-status-content">
+            <div class="tfc-hearings-loading">Loading bill statuses...</div>
+        </div>
+    </div>
+
+    <div class="tfc-grid">
+        <div class="tfc-card-wrapper">
+            <div class="tfc-card">
+                <div class="tfc-card-title">Stop Tax Cuts for the Wealthy</div>
+                <div class="tfc-card-revenue">Up to $588.3M Revenue <span style="font-size: 0.75rem; color: #64748b; font-weight: 400;">(SB 3125)</span></div>
+                <div class="tfc-card-desc">The State passed huge tax breaks with Act 46 in 2024, and the top 1% of taxpayers will benefit the most. These tax cuts for taxpayers at the top should be frozen. </div>
+            </div>
+            <!-- Bill Tracker Component - Auto-updating Widget -->
+            <div class="tfc-bill-tracker has-testimony" 
+                 data-tracker-id="freezing-act-46"
+                 data-hb="2306"
+                 data-sb="3125"
+                 data-year="2026">
+            </div>
+            <!-- Sample Testimony -->
+            <div class="tfc-sample-testimony">
+                <div class="tfc-sample-testimony-content">
+                    <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1x6RC45EZWsuJ635lJxaelMWXOJXjL4imspQuKxo7UdM/edit?tab=t.0" target="_blank">View Testimony Template (HB 2306)</a>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1c8cL2kAzi3CDyqd_QxMfWaBNRp8ChXOHcHx6cmlxv34/edit?tab=t.0" target="_blank" style="margin-top: 4px; display: block;">View Testimony Template (SB 3125)</a>
+                </div>
+                <a href="https://www.hitaxfairness.org/act-46" class="tfc-more-btn" target="_blank">More Info</a>
+            </div>
+        </div>
+
+        <div class="tfc-card-wrapper">
+            <div class="tfc-card" id="capital-gains-card">
+                <div class="tfc-card-title-row">
+                    <div class="tfc-card-title">Tax Wealth Like Work</div>
+                    <div class="tfc-policy-wrapper">
+                        <span class="tfc-policy-label">Options</span>
+                        <div class="tfc-policy-toggle">
+                            <button class="tfc-policy-toggle-btn active" data-policy="ordinary" onclick="switchCapGainsPolicy('ordinary')">Ordinary Income</button>
+                            <button class="tfc-policy-toggle-btn" data-policy="9pct" onclick="switchCapGainsPolicy('9pct')">Max 9%</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tfc-card-revenue" id="capgains-revenue">$84M Revenue</div>
+                <div class="tfc-card-desc" id="capgains-desc">Income from investments should not be taxed at lower rates than income from regular work. This proposal would tax capital gains fairly, at the same rate as ordinary income from a job.</div>
+            </div>
+            <!-- Bill Tracker Component -->
+            <div class="tfc-bill-tracker has-testimony" 
+                 id="capgains-tracker"
+                 data-tracker-id="capital-gains"
+                 data-hb="1850"
+                 data-sb="2441"
+                 data-year="2026">
+            </div>
+            <!-- Sample Testimony -->
+            <div class="tfc-sample-testimony" id="capgains-testimony">
+                <div class="tfc-sample-testimony-content">
+                    <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1Gea0SlVUz4dDqaGdZP8acSZ6Z1f1BsoN/template/preview" target="_blank">View Testimony Template</a>
+                </div>
+                <a href="https://www.hitaxfairness.org/capital-gains" class="tfc-more-btn" target="_blank">More Info</a>
+            </div>
+        </div>
+
+        <div class="tfc-card-wrapper">
+            <div class="tfc-card">
+                <div class="tfc-card-title">Tweak the Conveyance Tax</div>
+                <div class="tfc-card-revenue">$270.8M - $302.6M Revenue <span style="font-size: 0.75rem; color: #64748b; font-weight: 400;">(HD3 SD1 Draft)</span></div>
+                <div class="tfc-card-desc">Luxury homes and second homes should be taxed at higher rates when they're sold. This proposal would make the conveyance tax lower for middle-class Hawaii residents, while making it higher for the ultra-wealthy.</div>
+            </div>
+            <!-- Bill Tracker Component -->
+            <div class="tfc-bill-tracker has-testimony" 
+                 data-tracker-id="conveyance-tax"
+                 data-hb="2049"
+                 data-sb="3028"
+                 data-year="2026">
+            </div>
+            <!-- Bottom section with More button -->
+            <div class="tfc-sample-testimony">
+                <div class="tfc-sample-testimony-content">
+                    <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/17ooYF8NjTNidJQRBrFeu70JLmuv5vk9g1fWoPRQPbx8/edit?tab=t.0" target="_blank">View Testimony Template (HB 2049)</a>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1DwZA4jxgptWjw6I8_FZVvm_fFLKM7OybF319XHKoiO4/edit?tab=t.0" target="_blank" style="margin-top: 4px; display: block;">View Testimony Template (SB 3028)</a>
+                </div>
+                <a href="https://www.hitaxfairness.org/conveyance-tax" class="tfc-more-btn" target="_blank">More Info</a>
+            </div>
+        </div>
+
+        <div class="tfc-card-wrapper" style="background: linear-gradient(135deg, rgba(254, 226, 226, 0.3), rgba(252, 231, 243, 0.3)); border-radius: 12px; padding: 2px;">
+            <div class="tfc-card">
+                <div class="tfc-card-title">Closing the Real Estate Investment Trust Loophole <span style="color: #64748b; font-size: 0.8rem; font-weight: 500;">(No Longer Alive)</span></div>
+                <div class="tfc-card-revenue">$36M - $60M Revenue</div>
+                <div class="tfc-card-desc">REITs make millions of dollars off real estate but pay no corporate income tax to our state.</div>
+            </div>
+            <!-- Bill Tracker Component -->
+            <div class="tfc-bill-tracker has-testimony" 
+                 data-tracker-id="reits"
+                 data-hb="2150"
+                 data-sb="2362"
+                 data-year="2026">
+            </div>
+            <!-- Sample Testimony -->
+            <div class="tfc-sample-testimony">
+                <div class="tfc-sample-testimony-content">
+                    <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1uUbeScmkPPU8D25iyVKX3GrAwvq3n1qdmr26jfMbzEs/template/preview" target="_blank">View Testimony Template</a>
+                </div>
+                <a href="https://www.hitaxfairness.org/real-estate-investment-trust-reform" class="tfc-more-btn" target="_blank">More Info</a>
+            </div>
+        </div>
+
+        <div class="tfc-card-wrapper" style="background: linear-gradient(135deg, rgba(254, 226, 226, 0.3), rgba(252, 231, 243, 0.3)); border-radius: 12px; padding: 2px;">
+            <div class="tfc-card" id="millionaires-tax-card">
+                <div class="tfc-card-title-row">
+                    <div class="tfc-card-title">Millionaire's Income Tax <span style="color: #64748b; font-size: 0.8rem; font-weight: 500;">(No Longer Alive)</span></div>
+                    <div class="tfc-policy-wrapper">
+                        <span class="tfc-policy-label">Bill Options</span>
+                        <div class="tfc-policy-toggle">
+                            <button class="tfc-policy-toggle-btn active" data-policy="hb2010" onclick="switchMillionairesTaxPolicy('hb2010')">Income >$1M</button>
+                            <button class="tfc-policy-toggle-btn" data-policy="hb1807" onclick="switchMillionairesTaxPolicy('hb1807')">High-Income Earner</button>
+                            <button class="tfc-policy-toggle-btn" data-policy="hb2008" onclick="switchMillionairesTaxPolicy('hb2008')">High Income Earners (Starting 2030)</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tfc-card-revenue" id="millionaires-revenue">$71M Revenue</div>
+                <div class="tfc-card-desc" id="millionaires-desc">Tax on income over $1 million. The State's top 1 percent can afford to pay more to help secure our state's future.</div>
+            </div>
+            <!-- Bill Tracker Component -->
+            <div class="tfc-bill-tracker has-testimony" 
+                 id="millionaires-tracker"
+                 data-tracker-id="millionaires-tax"
+                 data-hb="2010"
+                 data-sb="2468"
+                 data-year="2026">
+            </div>
+            <!-- Sample Testimony -->
+            <div class="tfc-sample-testimony" id="millionaires-testimony">
+                <div class="tfc-sample-testimony-content">
+                    <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                    <a class="tfc-testimony-link" href="https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/template/preview" target="_blank">View Testimony Template</a>
+                </div>
+                <a href="https://www.hitaxfairness.org/income-tax" class="tfc-more-btn" target="_blank">More Info</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Other Priorities -->
+    <h3 style="text-align: center; margin: 60px 0 20px; color: #4a5568; font-weight: 600;">Other Priorities</h3>
+    
+    <div class="tfc-grid" style="min-height: auto; margin-top: 0;">
+        <div class="tfc-card-wrapper">
+            <div class="tfc-card" style="background: linear-gradient(to bottom, #f0fff4 0%, #e6fffa 100%); border-color: rgba(56, 161, 105, 0.2);">
+                <div class="tfc-card-title">Wealth Proceeds Tax</div>
+                <div class="tfc-card-revenue">$53.9M Revenue</div>
+                <div class="tfc-card-desc">Investors should be fairly taxed on all of their income from investments, including passive income.</div>
+            </div>
+            <!-- Bill Tracker Component -->
+            <div class="tfc-bill-tracker has-testimony" 
+                 data-tracker-id="wealth-proceeds"
+                 data-hb="2623"
+                 data-sb=""
+                 data-year="2026">
+            </div>
+            <!-- Sample Testimony -->
+            <div class="tfc-sample-testimony">
+                <div class="tfc-sample-testimony-content">
+                    <div class="tfc-sample-testimony-label">Sample Testimony</div>
+                    <a class="tfc-testimony-link" href="#" target="_blank">View Testimony Template</a>
+                </div>
+                <a href="https://www.hitaxfairness.org/wealth-proceeds-tax" class="tfc-more-btn" target="_blank">More Info</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="tfc-footer">
+        <p>Data source: Hawai&#699;i Tax Fairness Coalition (hitaxfairness.org)</p>
+    </div>
+</div>
+
+<!-- Bill Tracker Widget (INLINE) -->
+<script>
+const BillTrackerWidget = (function() {
+    'use strict';
+    const CONFIG = {
+        proxyUrl: 'https://verdant-dango-b7d425.netlify.app/.netlify/functions/rss-proxy',
+        defaultYear: '2026',
+        refreshInterval: 3600000,
+        cachePrefix: 'btw_cache_',
+        cacheDuration: 3600000,
+        fetchTimeout: 10000
+    };
+    const trackers = {};
+    async function fetchWithTimeout(url, timeout) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+        try {
+            const response = await fetch(url, { signal: controller.signal });
+            clearTimeout(timeoutId);
+            return response;
+        } catch (error) {
+            clearTimeout(timeoutId);
+            throw error;
+        }
+    }
+    async function fetchRSS(billType, billNumber, year) {
+        const cacheKey = `${CONFIG.cachePrefix}${billType}_${billNumber}_${year}`;
+        const cached = getFromCache(cacheKey);
+        if (cached) { return cached; }
+        
+        year = year || CONFIG.defaultYear;
+        const url = `${CONFIG.proxyUrl}?bill=${billType}${billNumber}&year=${year}`;
+        
+        try {
+            const response = await fetchWithTimeout(url, CONFIG.fetchTimeout);
+            if (!response.ok) { 
+                console.error(`Failed to fetch ${billType}${billNumber}: HTTP ${response.status}`);
+                return null;
+            }
+            
+            const xmlText = await response.text();
+            
+            if (xmlText.includes('<rss') || xmlText.includes('<item>')) {
+                saveToCache(cacheKey, xmlText);
+                console.log(`✓ ${billType}${billNumber} fetched successfully`);
+                return xmlText;
+            }
+            
+            console.error(`Invalid RSS response for ${billType}${billNumber}`);
+            return null;
+        } catch (error) {
+            console.error(`Error fetching ${billType}${billNumber}:`, error.message);
+            return null;
+        }
+    }
+    function getFromCache(key) {
+        try {
+            const item = localStorage.getItem(key);
+            if (!item) return null;
+            const { data, timestamp } = JSON.parse(item);
+            if (Date.now() - timestamp < CONFIG.cacheDuration) { return data; }
+            localStorage.removeItem(key);
+            return null;
+        } catch (e) { return null; }
+    }
+    function saveToCache(key, data) {
+        try { localStorage.setItem(key, JSON.stringify({ data: data, timestamp: Date.now() })); } catch (e) {}
+    }
+    function clearCache() {
+        const keys = Object.keys(localStorage).filter(k => k.startsWith(CONFIG.cachePrefix));
+        keys.forEach(k => localStorage.removeItem(k));
+    }
+    function parseRSS(xmlText) {
+        if (!xmlText) return [];
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+        const parseError = xmlDoc.querySelector('parsererror');
+        if (parseError) { return []; }
+        const items = xmlDoc.getElementsByTagName("item");
+        const updates = [];
+        for (let i = 0; i < items.length; i++) {
+            const titleEl = items[i].getElementsByTagName("title")[0];
+            const pubDateEl = items[i].getElementsByTagName("pubDate")[0];
+            const linkEl = items[i].getElementsByTagName("link")[0];
+            if (!titleEl || !pubDateEl) continue;
+            const title = titleEl.textContent;
+            const pubDate = pubDateEl.textContent;
+            const link = linkEl ? linkEl.textContent : '';
+            let description = title;
+            const parts = title.split(': ');
+            if (parts.length > 1) { description = parts.slice(1).join(': '); }
+            updates.push({
+                title: title,
+                description: description,
+                date: new Date(pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+                rawDate: new Date(pubDate),
+                link: link
+            });
+        }
+        updates.sort((a, b) => b.rawDate - a.rawDate);
+        return updates;
+    }
+    function getStatusBadge(description) {
+        const desc = description.toLowerCase();
+        if (desc.includes('signed by governor') || desc.includes('became law')) return { text: 'Enacted', class: 'enacted' };
+        if (desc.includes('passed third reading') && desc.includes('transmitted')) return { text: 'Passed Chamber', class: 'passed' };
+        if (desc.includes('passed third reading')) return { text: 'Passed', class: 'passed' };
+        if (desc.includes('passed second reading')) return { text: 'Second Reading', class: 'progress' };
+        if (desc.includes('passed first reading')) return { text: 'First Reading', class: 'progress' };
+        if (desc.includes('carried over')) return { text: 'Carried Over', class: 'deferred' };
+        if (desc.includes('deferred')) return { text: 'Deferred', class: 'deferred' };
+        if (desc.includes('hearing')) return { text: 'Hearing', class: 'hearing' };
+        if (desc.includes('referred to')) return { text: 'Referred', class: 'referred' };
+        if (desc.includes('recommitted')) return { text: 'Recommitted', class: 'referred' };
+        if (desc.includes('reported from')) return { text: 'Reported', class: 'progress' };
+        if (desc.includes('introduced')) return { text: 'Introduced', class: 'new' };
+        return { text: 'Update', class: 'update' };
+    }
+    function generateTrackerHTML(trackerId, hbNumbers, sbNumbers, year) {
+        year = year || CONFIG.defaultYear;
+        const hbDisplay = hbNumbers.length > 0 
+            ? `HB <span class="hb-numbers">${hbNumbers.map(num => `<a href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=${num}&year=${year}" target="_blank" onclick="event.stopPropagation()">${num}</a>`).join(', ')}</span>`
+            : 'No Bill';
+        const sbDisplay = sbNumbers.length > 0 
+            ? `SB <span class="sb-numbers">${sbNumbers.map(num => `<a href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=SB&billnumber=${num}&year=${year}" target="_blank" onclick="event.stopPropagation()">${num}</a>`).join(', ')}</span>`
+            : 'No Bill';
+        return `
+            <div class="tfc-legislation-header" onclick="BillTrackerWidget.toggleTracker('${trackerId}')">
+                Legislation <span class="tfc-legislation-toggle-icon"></span>
+            </div>
+            <div class="tfc-tracker-content" id="${trackerId}-content">
+                <div class="tfc-bill-columns">
+                    <div class="tfc-bill-col ${hbNumbers.length > 0 ? 'active' : ''}" data-bill-type="hb" onclick="BillTrackerWidget.switchFeed('${trackerId}', 'hb')">
+                        <h4>House Bill${hbNumbers.length > 1 ? 's' : ''}</h4>
+                        <div class="tfc-bill-number">${hbDisplay}</div>
+                    </div>
+                    <div class="tfc-bill-col ${hbNumbers.length === 0 && sbNumbers.length > 0 ? 'active' : ''}" data-bill-type="sb" onclick="BillTrackerWidget.switchFeed('${trackerId}', 'sb')">
+                        <h4>Senate Bill${sbNumbers.length > 1 ? 's' : ''}</h4>
+                        <div class="tfc-bill-number">${sbDisplay}</div>
+                    </div>
+                </div>
+                <div class="tfc-status-section" id="${trackerId}-status">
+                    <div class="tfc-status-header" onclick="BillTrackerWidget.toggleHistory('${trackerId}')">
+                        <span class="tfc-status-title">Latest Status <span class="tfc-status-badge" id="${trackerId}-badge">Loading...</span></span>
+                        <span class="tfc-status-toggle">History</span>
+                    </div>
+                    <div class="tfc-latest-update" id="${trackerId}-latest"><span class="tfc-loading">Loading bill status...</span></div>
+                    <div class="tfc-status-history" id="${trackerId}-history"></div>
+                </div>
+                <div class="tfc-tracker-meta">
+                    <span class="tfc-last-updated" id="${trackerId}-updated"></span>
+                    <button class="tfc-refresh-btn" onclick="BillTrackerWidget.refresh('${trackerId}')" title="Refresh">&#8635;</button>
+                </div>
+            </div>
+        `;
+    }
+    function updateTrackerUI(trackerId, updates, billType, billNumbers, isMultipleBills = false) {
+        const latestEl = document.getElementById(`${trackerId}-latest`);
+        const badgeEl = document.getElementById(`${trackerId}-badge`);
+        const historyEl = document.getElementById(`${trackerId}-history`);
+        const updatedEl = document.getElementById(`${trackerId}-updated`);
+        if (!latestEl) { return; }
+        if (isMultipleBills && Array.isArray(updates)) {
+            let hasAnyUpdates = false;
+            let hasError = false;
+            let latestOverallBadge = { text: 'N/A', class: 'update' };
+            latestEl.innerHTML = '';
+            if (historyEl) historyEl.innerHTML = '';
+            updates.forEach(billData => {
+                const billUpdates = billData.updates;
+                const billNum = billData.billNum;
+                const billTypeUpper = billType.toUpperCase();
+                if (billUpdates === 'ERROR') {
+                    hasError = true;
+                    const billSection = document.createElement('div');
+                    billSection.className = 'tfc-bill-status-section';
+                    billSection.innerHTML = `<div class="tfc-bill-status-header"><strong>${billTypeUpper} ${billNum}</strong><span class="tfc-status-badge" style="background: #ef4444; color: white;">Error</span></div><div class="tfc-bill-latest"><span style="color: #ef4444; font-weight: 500;">Error: Press Refresh button</span></div>`;
+                    latestEl.appendChild(billSection);
+                } else if (billUpdates && billUpdates.length > 0) {
+                    hasAnyUpdates = true;
+                    const latest = billUpdates[0];
+                    const badge = getStatusBadge(latest.description);
+                    if (badge.class !== 'update') { latestOverallBadge = badge; }
+                    const billSection = document.createElement('div');
+                    billSection.className = 'tfc-bill-status-section';
+                    billSection.innerHTML = `<div class="tfc-bill-status-header"><strong>${billTypeUpper} ${billNum}</strong><span class="tfc-status-badge tfc-badge-${badge.class}">${badge.text}</span></div><div class="tfc-bill-latest"><span class="tfc-status-date">${latest.date}</span>${latest.description}</div>`;
+                    latestEl.appendChild(billSection);
+                    if (historyEl && billUpdates.length > 1) {
+                        for (let i = 1; i < billUpdates.length; i++) {
+                            const update = billUpdates[i];
+                            const div = document.createElement('div');
+                            div.className = 'tfc-history-item';
+                            div.innerHTML = `<strong>${billTypeUpper} ${billNum}:</strong><span class="tfc-status-date">${update.date}</span>${update.description}`;
+                            historyEl.appendChild(div);
+                        }
+                    }
+                } else {
+                    const billSection = document.createElement('div');
+                    billSection.className = 'tfc-bill-status-section';
+                    billSection.innerHTML = `<div class="tfc-bill-status-header"><strong>${billTypeUpper} ${billNum}</strong><span class="tfc-status-badge">N/A</span></div><div class="tfc-bill-latest"><span style="color: #718096;">No status updates available</span></div>`;
+                    latestEl.appendChild(billSection);
+                }
+            });
+            if (hasError) { if (badgeEl) { badgeEl.textContent = 'Error'; badgeEl.style.background = '#ef4444'; badgeEl.style.color = 'white'; } }
+            else if (!hasAnyUpdates) { if (badgeEl) badgeEl.textContent = 'N/A'; }
+            else { if (badgeEl) { badgeEl.textContent = latestOverallBadge.text; badgeEl.className = `tfc-status-badge tfc-badge-${latestOverallBadge.class}`; } }
+        } else {
+            if (updates === 'ERROR') {
+                latestEl.innerHTML = '<span style="color: #ef4444; font-weight: 500;">Error: Press Refresh button</span>';
+                if (badgeEl) { badgeEl.textContent = 'Error'; badgeEl.style.background = '#ef4444'; badgeEl.style.color = 'white'; }
+                return;
+            }
+            if (!updates || updates.length === 0) {
+                latestEl.innerHTML = '<span style="color: #718096;">No status updates available</span>';
+                if (badgeEl) badgeEl.textContent = 'N/A';
+                return;
+            }
+            const latest = updates[0];
+            const badge = getStatusBadge(latest.description);
+            latestEl.innerHTML = `<span class="tfc-status-date">${latest.date}</span>${latest.description}`;
+            if (badgeEl) { badgeEl.textContent = badge.text; badgeEl.className = `tfc-status-badge tfc-badge-${badge.class}`; }
+            if (historyEl) {
+                historyEl.innerHTML = '';
+                for (let i = 1; i < updates.length; i++) {
+                    const update = updates[i];
+                    const div = document.createElement('div');
+                    div.className = 'tfc-history-item';
+                    div.innerHTML = `<span class="tfc-status-date">${update.date}</span>${update.description}`;
+                    historyEl.appendChild(div);
+                }
+            }
+        }
+        if (updatedEl) { updatedEl.textContent = `Updated: ${new Date().toLocaleTimeString()}`; }
+    }
+    class Tracker {
+        constructor(config) {
+            this.id = config.trackerId;
+            this.element = config.element;
+            this.hbNumbers = config.hbNumbers || [];
+            this.sbNumbers = config.sbNumbers || [];
+            this.year = config.year || CONFIG.defaultYear;
+            this.refreshInterval = config.refreshInterval || CONFIG.refreshInterval;
+            this.currentType = this.hbNumbers.length > 0 ? 'hb' : 'sb';
+            this.feeds = { hb: {}, sb: {} };
+            this.intervalId = null;
+        }
+        async init() {
+            this.element.innerHTML = generateTrackerHTML(this.id, this.hbNumbers, this.sbNumbers, this.year);
+            await this.loadFeeds();
+            this.startAutoRefresh();
+        }
+        async loadFeeds() {
+            const hbPromises = this.hbNumbers.map(async billNum => {
+                const xmlText = await fetchRSS('HB', billNum, this.year);
+                if (xmlText === null) {
+                    this.feeds.hb[billNum] = 'ERROR';
+                } else {
+                    this.feeds.hb[billNum] = parseRSS(xmlText);
+                }
+            });
+            const sbPromises = this.sbNumbers.map(async billNum => {
+                const xmlText = await fetchRSS('SB', billNum, this.year);
+                if (xmlText === null) {
+                    this.feeds.sb[billNum] = 'ERROR';
+                } else {
+                    this.feeds.sb[billNum] = parseRSS(xmlText);
+                }
+            });
+            await Promise.all([...hbPromises, ...sbPromises]);
+            this.updateDisplay();
+        }
+        updateDisplay() {
+            const numbers = this.currentType === 'hb' ? this.hbNumbers : this.sbNumbers;
+            if (numbers.length === 0) { updateTrackerUI(this.id, [], this.currentType, numbers); return; }
+            if (numbers.length > 1) {
+                const billsData = numbers.map(billNum => {
+                    const feedData = this.feeds[this.currentType][billNum];
+                    return { billNum: billNum, updates: feedData === 'ERROR' ? 'ERROR' : (feedData || []) };
+                });
+                updateTrackerUI(this.id, billsData, this.currentType, numbers, true);
+            } else {
+                const feedData = this.feeds[this.currentType][numbers[0]];
+                const updates = feedData === 'ERROR' ? 'ERROR' : (feedData || []);
+                updateTrackerUI(this.id, updates, this.currentType, numbers, false);
+            }
+        }
+        switchFeed(billType) {
+            this.currentType = billType;
+            const cols = this.element.querySelectorAll('.tfc-bill-col');
+            cols.forEach(col => { col.classList.remove('active'); if (col.dataset.billType === billType) { col.classList.add('active'); } });
+            this.updateDisplay();
+        }
+        toggleHistory() {
+            const section = document.getElementById(`${this.id}-status`);
+            if (section) { section.classList.toggle('expanded'); }
+        }
+        async refresh() {
+            const refreshBtn = this.element.querySelector('.tfc-refresh-btn');
+            const updatedEl = document.getElementById(`${this.id}-updated`);
+            
+            if (refreshBtn) {
+                refreshBtn.disabled = true;
+                refreshBtn.style.opacity = '0.5';
+                refreshBtn.innerHTML = '&#8635;';
+                refreshBtn.classList.add('spinning');
+            }
+            
+            for (const billNum of this.hbNumbers) { const key = `${CONFIG.cachePrefix}HB_${billNum}_${this.year}`; localStorage.removeItem(key); }
+            for (const billNum of this.sbNumbers) { const key = `${CONFIG.cachePrefix}SB_${billNum}_${this.year}`; localStorage.removeItem(key); }
+            
+            await this.loadFeeds();
+            
+            if (refreshBtn) {
+                refreshBtn.disabled = false;
+                refreshBtn.style.opacity = '1';
+                refreshBtn.classList.remove('spinning');
+            }
+            
+            if (updatedEl) {
+                const now = new Date();
+                updatedEl.textContent = `Updated: ${now.toLocaleTimeString()}`;
+            }
+        }
+        startAutoRefresh() {
+            if (this.intervalId) { clearInterval(this.intervalId); }
+            this.intervalId = setInterval(() => { this.refresh(); }, this.refreshInterval);
+        }
+        stopAutoRefresh() { if (this.intervalId) { clearInterval(this.intervalId); this.intervalId = null; } }
+        destroy() { this.stopAutoRefresh(); delete trackers[this.id]; }
+    }
+    return {
+        init: function(config) { const tracker = new Tracker(config); trackers[config.trackerId] = tracker; tracker.init(); return tracker; },
+        initAll: function() {
+            const elements = document.querySelectorAll('[data-tracker-id]');
+            elements.forEach(element => {
+                const trackerId = element.dataset.trackerId;
+                const hbNumbers = element.dataset.hb ? element.dataset.hb.split(',').map(n => n.trim()).filter(n => n) : [];
+                const sbNumbers = element.dataset.sb ? element.dataset.sb.split(',').map(n => n.trim()).filter(n => n) : [];
+                const year = element.dataset.year || CONFIG.defaultYear;
+                this.init({ trackerId: trackerId, element: element, hbNumbers: hbNumbers, sbNumbers: sbNumbers, year: year });
+            });
+        },
+        switchFeed: function(trackerId, billType) { const tracker = trackers[trackerId]; if (tracker) { tracker.switchFeed(billType); } },
+        toggleHistory: function(trackerId) { const tracker = trackers[trackerId]; if (tracker) { tracker.toggleHistory(); } },
+        toggleTracker: function(trackerId) {
+            const content = document.getElementById(`${trackerId}-content`);
+            const tracker = document.querySelector(`[data-tracker-id="${trackerId}"]`);
+            if (content && tracker) {
+                tracker.classList.toggle('expanded');
+            }
+        },
+        refresh: function(trackerId) { const tracker = trackers[trackerId]; if (tracker) { tracker.refresh(); } },
+        reinit: function(trackerId) {
+            const existingTracker = trackers[trackerId];
+            if (existingTracker) { existingTracker.destroy(); }
+            const element = document.querySelector(`[data-tracker-id="${trackerId}"]`);
+            if (!element) { return; }
+            const hbNumbers = element.dataset.hb ? element.dataset.hb.split(',').map(n => n.trim()).filter(n => n) : [];
+            const sbNumbers = element.dataset.sb ? element.dataset.sb.split(',').map(n => n.trim()).filter(n => n) : [];
+            const year = element.dataset.year || CONFIG.defaultYear;
+            this.init({ trackerId: trackerId, element: element, hbNumbers: hbNumbers, sbNumbers: sbNumbers, year: year });
+        },
+        refreshAll: function() { Object.values(trackers).forEach(tracker => tracker.refresh()); },
+        clearCache: clearCache,
+        getTracker: function(trackerId) { return trackers[trackerId]; },
+        configure: function(options) { Object.assign(CONFIG, options); },
+        getConfig: function() { return { ...CONFIG }; }
+    };
+})();
+if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', () => BillTrackerWidget.initAll()); }
+else { BillTrackerWidget.initAll(); }
+</script>
+
+<script>
+// Capital Gains Policy Toggle Configuration
+const capGainsPolicies = {
+    ordinary: {
+        revenue: '$84M Revenue',
+        description: 'Income from investments should not be taxed at lower rates than income from regular work. This proposal would tax capital gains fairly&mdash;at the same rate as ordinary income from a job.',
+        hbNumbers: '1850',
+        sbNumbers: '2441',
+        testimonyUrl: 'https://docs.google.com/document/d/1weY-NTvH7Ljl6eAn7_LQVv7gHS5a9nFIjqW7il-3XuE/edit?tab=t.0'
+    },
+    '9pct': {
+        revenue: '$44M Revenue',
+        description: 'Income from investments should not be taxed at lower rates than income from regular work. This proposal would raise the maximum capital gains rate from 7.25% to 9%, making sure that investment income receives less preferential treatment.',
+        hbNumbers: '',
+        sbNumbers: '2587',
+        testimonyUrl: 'https://docs.google.com/document/d/1TAW1-_Vd5M1CV-Rlu1ltPFdkoI0qd70X/template/preview'
+    }
+};
+
+function switchCapGainsPolicy(policy) {
+    const config = capGainsPolicies[policy];
+    if (!config) return;
+    
+    // Update toggle button states
+    document.querySelectorAll('.tfc-policy-toggle-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`[data-policy="${policy}"]`).classList.add('active');
+    
+    // Update revenue
+    const revenueEl = document.getElementById('capgains-revenue');
+    if (revenueEl) {
+        revenueEl.textContent = config.revenue;
+    }
+    
+    // Update description using innerHTML for HTML entities
+    const descEl = document.getElementById('capgains-desc');
+    if (descEl) {
+        descEl.innerHTML = config.description;
+    }
+    
+    // Update bill tracker
+    const trackerEl = document.getElementById('capgains-tracker');
+    if (trackerEl && typeof BillTrackerWidget !== 'undefined') {
+        trackerEl.setAttribute('data-hb', config.hbNumbers);
+        trackerEl.setAttribute('data-sb', config.sbNumbers);
+        // Reinitialize tracker with new bills
+        BillTrackerWidget.reinit('capital-gains');
+    }
+    
+    // Update testimony link
+    const testimonyEl = document.getElementById('capgains-testimony');
+    if (testimonyEl) {
+        const link = testimonyEl.querySelector('a');
+        if (link) {
+            link.href = config.testimonyUrl;
+        }
+    }
+}
+
+// Millionaire's Tax Policy Toggle Configuration
+const millionairesTaxPolicies = {
+    hb2010: {
+        revenue: '$71M Revenue',
+        description: 'Tax on income over $1 million. The State\'s top 1 percent can afford to pay more to help secure our state\'s future.',
+        hbNumbers: '2010',
+        sbNumbers: '2468',
+        testimonyUrl: 'https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/template/preview'
+    },
+    hb1807: {
+        revenue: 'Revenue Unknown',
+        description: 'Tax on high-income earners (joint filers over $1 million). The State\'s top 1 percent can afford to pay more to help secure our state\'s future.',
+        hbNumbers: '1807',
+        sbNumbers: '',
+        testimonyUrl: 'https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/template/preview'
+    },
+    hb2008: {
+        revenue: 'Revenue Unknown',
+        description: 'Tax on high-income earners starting in 2030. The State\'s top 1 percent can afford to pay more to help secure our state\'s future.',
+        hbNumbers: '2008',
+        sbNumbers: '',
+        testimonyUrl: 'https://docs.google.com/document/d/1NoC90rJSm6lpOzB575frU6ag0W7bs0zgcS1aB1j4dpY/template/preview'
+    }
+};
+
+function switchMillionairesTaxPolicy(policy) {
+    const config = millionairesTaxPolicies[policy];
+    if (!config) return;
+    
+    // Update toggle button states
+    document.querySelectorAll('#millionaires-tax-card .tfc-policy-toggle-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`#millionaires-tax-card [data-policy="${policy}"]`).classList.add('active');
+    
+    // Update revenue
+    const revenueEl = document.getElementById('millionaires-revenue');
+    if (revenueEl) {
+        revenueEl.textContent = config.revenue;
+    }
+    
+    // Update description using innerHTML for HTML entities
+    const descEl = document.getElementById('millionaires-desc');
+    if (descEl) {
+        descEl.innerHTML = config.description;
+    }
+    
+    // Update bill tracker
+    const trackerEl = document.getElementById('millionaires-tracker');
+    if (trackerEl && typeof BillTrackerWidget !== 'undefined') {
+        trackerEl.setAttribute('data-hb', config.hbNumbers);
+        trackerEl.setAttribute('data-sb', config.sbNumbers);
+        // Reinitialize tracker with new bills
+        BillTrackerWidget.reinit('millionaires-tax');
+    }
+    
+    // Update testimony link
+    const testimonyEl = document.getElementById('millionaires-testimony');
+    if (testimonyEl) {
+        const link = testimonyEl.querySelector('a');
+        if (link) {
+            link.href = config.testimonyUrl;
+        }
+    }
+}
+
+// Toggle bill status widget
+function toggleBillStatusWidget() {
+    const widget = document.getElementById('bill-status-widget');
+    if (widget) {
+        widget.classList.toggle('collapsed');
+    }
+}
+
+// Bill Status Table functionality
+async function loadBillStatusTable() {
+    const bills = [
+        { type: 'SB', number: '3125', year: '2026', issueArea: 'Stop Tax Cuts for the Wealthy' },
+        { type: 'SB', number: '2441', year: '2026', issueArea: 'Tax Wealth Like Work' },
+        { type: 'SB', number: '2587', year: '2026', issueArea: 'Tax Wealth Like Work' },
+        { type: 'HB', number: '2010', year: '2026', issueArea: 'Millionaires Tax' },
+        { type: 'SB', number: '2468', year: '2026', issueArea: 'Millionaires Tax' },
+        { type: 'HB', number: '1807', year: '2026', issueArea: 'Millionaires Tax' },
+        { type: 'HB', number: '2008', year: '2026', issueArea: 'Millionaires Tax' },
+        { type: 'HB', number: '2049', year: '2026', issueArea: 'Conveyance Tax' },
+        { type: 'SB', number: '3028', year: '2026', issueArea: 'Conveyance Tax' },
+        { type: 'HB', number: '2150', year: '2026', issueArea: 'Closing REIT Loophole' },
+        { type: 'HB', number: '2623', year: '2026', issueArea: 'Wealth Proceeds Tax' }
+    ];
+    
+    const statusContent = document.getElementById('bill-status-content');
+    if (!statusContent) return;
+    
+    const proxyUrl = 'https://verdant-dango-b7d425.netlify.app/.netlify/functions/rss-proxy';
+    const billStatuses = [];
+    
+    for (const bill of bills) {
+        try {
+            const url = `${proxyUrl}?bill=${bill.type}${bill.number}&year=${bill.year}`;
+            const response = await fetch(url);
+            if (!response.ok) continue;
+            
+            const xmlText = await response.text();
+            if (!xmlText.includes('<rss') && !xmlText.includes('<item>')) continue;
+            
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+            const items = xmlDoc.getElementsByTagName('item');
+            
+            let latestStatus = '';
+            let latestDate = '';
+            let hasScheduledHearing = false;
+            let isDeferred = false;
+            let hasHadHearing = false;
+            
+            if (items.length > 0) {
+                const updates = [];
+                for (let i = 0; i < items.length; i++) {
+                    const titleEl = items[i].getElementsByTagName('title')[0];
+                    const pubDateEl = items[i].getElementsByTagName('pubDate')[0];
+                    if (titleEl && pubDateEl) {
+                        updates.push({
+                            title: titleEl.textContent,
+                            date: new Date(pubDateEl.textContent)
+                        });
+                    }
+                }
+                updates.sort((a, b) => b.date - a.date);
+                
+                // Check for scheduled hearings (future hearings) and if bill has had any hearings
+                for (const update of updates) {
+                    const titleLower = update.title.toLowerCase();
+                    const isHearing = titleLower.includes('hearing') || 
+                                     titleLower.includes('scheduled') ||
+                                     titleLower.includes('notice') ||
+                                     titleLower.includes('decision') ||
+                                     titleLower.includes('public') ||
+                                     titleLower.includes('hold');
+                    
+                    if (isHearing) {
+                        hasHadHearing = true;
+                        // Try to extract date from title
+                        const dateMatch = update.title.match(/(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})/);
+                        if (dateMatch) {
+                            try {
+                                const parts = dateMatch[1].split(/[-\/]/);
+                                if (parts.length === 3) {
+                                    const month = parseInt(parts[0]) - 1;
+                                    const day = parseInt(parts[1]);
+                                    const year = parts[2].length === 2 ? 2000 + parseInt(parts[2]) : parseInt(parts[2]);
+                                    const hearingDate = new Date(year, month, day);
+                                    hearingDate.setHours(0, 0, 0, 0);
+                                    
+                                    const now = new Date();
+                                    now.setHours(0, 0, 0, 0);
+                                    
+                                    if (hearingDate >= now) {
+                                        hasScheduledHearing = true;
+                                        break;
+                                    }
+                                }
+                            } catch (e) {}
+                        }
+                    }
+                }
+                
+                if (updates.length > 0) {
+                    const latestTitle = updates[0].title.toLowerCase();
+                    latestDate = updates[0].date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    
+                    // Parse description from title
+                    let desc = updates[0].title;
+                    const colonIdx = desc.indexOf(':');
+                    if (colonIdx !== -1) desc = desc.substring(colonIdx + 1).trim();
+                    
+                    // Remove voting details - look for patterns like "with Representative(s) ... voting"
+                    desc = desc.replace(/\s*with\s+Representative\(s\)[^.]*\./g, '');
+                    desc = desc.replace(/\s*with\s+Senator\(s\)[^.]*\./g, '');
+                    desc = desc.replace(/\s*voting\s+[^.]*\./g, '');
+                    
+                    // Clean up any extra whitespace
+                    desc = desc.replace(/\s+/g, ' ').trim();
+                    
+                    latestStatus = desc;
+                    
+                    // Check if bill is deferred
+                    if (latestTitle.includes('deferred') || latestTitle.includes('carried over')) {
+                        isDeferred = true;
+                    }
+                }
+            }
+            
+            billStatuses.push({
+                bill: `${bill.type} ${bill.number}`,
+                type: bill.type,
+                number: bill.number,
+                year: bill.year,
+                issueArea: bill.issueArea,
+                latestStatus: latestStatus || 'No updates available',
+                latestDate: latestDate,
+                hasScheduledHearing: hasScheduledHearing,
+                isDeferred: isDeferred,
+                hasHadHearing: hasHadHearing
+            });
+        } catch (error) {
+            console.error(`Error checking status for ${bill.type} ${bill.number}:`, error);
+        }
+    }
+    
+    if (billStatuses.length === 0) {
+        statusContent.innerHTML = '<div class="tfc-hearings-empty">Unable to load bill statuses</div>';
+        return;
+    }
+    
+    // Build table HTML
+    let tableHTML = `
+        <table class="tfc-bill-status-table">
+            <thead>
+                <tr>
+                    <th>Bill Number</th>
+                    <th>Issue Area</th>
+                    <th>Latest Status</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    
+    billStatuses.forEach(bill => {
+        const capitolUrl = `https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=${bill.type}&billnumber=${bill.number}&year=${bill.year}`;
+        const rowClass = bill.hasScheduledHearing ? 'has-hearing' : '';
+        const hearingIndicator = bill.hasScheduledHearing ? '<span class="hearing-indicator">Hearing Scheduled</span>' : '';
+        
+        // Determine if bill is "alive" (not deferred and has had a hearing)
+        const isAlive = !bill.isDeferred && bill.hasHadHearing;
+        
+        tableHTML += `
+            <tr class="${rowClass}" data-alive="${isAlive}" data-deferred="${bill.isDeferred}" data-has-hearing="${bill.hasHadHearing}">
+                <td class="bill-number">
+                    <a href="${capitolUrl}" target="_blank">${bill.bill}</a>
+                    ${hearingIndicator}
+                </td>
+                <td class="issue-area">${bill.issueArea}</td>
+                <td class="latest-status">
+                    ${bill.latestDate ? `<span class="status-date">${bill.latestDate}</span>` : ''}
+                    ${bill.latestStatus}
+                </td>
+            </tr>
+        `;
+    });
+    
+    tableHTML += `
+            </tbody>
+        </table>
+    `;
+    
+    statusContent.innerHTML = tableHTML;
+    
+    // Apply initial filter (show only alive bills by default)
+    filterBillStatus();
+}
+
+// Filter bill status table based on "Alive Only" checkbox
+function filterBillStatus() {
+    const checkbox = document.getElementById('alive-filter');
+    const rows = document.querySelectorAll('#bill-status-content tbody tr');
+    
+    if (!checkbox || !rows.length) return;
+    
+    const showAliveOnly = checkbox.checked;
+    
+    rows.forEach(row => {
+        if (showAliveOnly) {
+            // Show only alive bills (not deferred and has had a hearing)
+            const isAlive = row.getAttribute('data-alive') === 'true';
+            row.style.display = isAlive ? '' : 'none';
+        } else {
+            // Show all bills
+            row.style.display = '';
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Load bill status table
+    loadBillStatusTable();
+    
+    
+    // Particle effect that follows cursor on summary card hover
+    const summaryCard = document.querySelector('.tfc-summary-card');
+    if (summaryCard) {
+        // Create particle container
+        const particleContainer = document.createElement('div');
+        particleContainer.className = 'tfc-particle-container';
+        summaryCard.appendChild(particleContainer);
+        
+        let isHovering = false;
+        let particleInterval;
+        
+        summaryCard.addEventListener('mouseenter', () => {
+            isHovering = true;
+        });
+        
+        summaryCard.addEventListener('mouseleave', () => {
+            isHovering = false;
+        });
+        
+        summaryCard.addEventListener('mousemove', (e) => {
+            if (isHovering) {
+                const rect = summaryCard.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                createParticle(particleContainer, x, y);
+            }
+        });
+    }
+    
+    function createParticle(container, x, y) {
+        const particle = document.createElement('div');
+        particle.className = 'tfc-particle';
+        // Position at cursor with slight random offset
+        particle.style.left = (x + (Math.random() - 0.5) * 20) + 'px';
+        particle.style.top = (y + (Math.random() - 0.5) * 20) + 'px';
+        particle.style.background = `rgba(${72 + Math.random() * 30}, ${160 + Math.random() * 40}, ${100 + Math.random() * 40}, 0.7)`;
+        container.appendChild(particle);
+        
+        // Remove particle after animation
+        setTimeout(() => {
+            particle.remove();
+        }, 1500);
+    }
+    
+    const valueElement = document.querySelector('.tfc-summary-card .value');
+    if (!valueElement) return;
+
+    // Set initial value to 0
+    valueElement.textContent = '$0M+';
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateValue(valueElement, 0, 1100, 1500);
+                // Also animate bars when summary card is visible
+                animateBars();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    observer.observe(valueElement);
+    
+    // Bar chart animation - sequential rising bars
+    function animateBars() {
+        const bars = document.querySelectorAll('.tfc-bar');
+        bars.forEach((bar, index) => {
+            setTimeout(() => {
+                bar.style.width = bar.style.getPropertyValue('--bar-width');
+            }, 200 + (index * 150)); // Stagger each bar by 150ms
+        });
+    }
+
+    function animateValue(obj, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const currentVal = Math.floor(progress * (end - start) + start);
+            obj.textContent = '$' + (currentVal === 1100 ? '1.1 billion' : currentVal) + '+';
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+    
+});
+</script>

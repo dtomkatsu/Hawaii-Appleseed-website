@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RxKids</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Halyard+Display:wght@700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            padding-top: 80px;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #E8E6E1; /* Darker beige to match other pages */
+            color: #2A3A4D;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Squarespace Header Fix - Black font for light background pages */
+        header.header,
+        .header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 1000 !important;
+            background-color: rgba(232, 230, 225, 0.95) !important;
+            background: rgba(232, 230, 225, 0.95) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+            backdrop-filter: blur(10px) !important;
+        }
+
+        header .header-title-text a,
+        header .header-nav-item a,
+        header .header-nav-folder-title,
+        .header .header-title-text a,
+        .header .header-nav-item a,
+        .header .header-nav-wrapper a {
+            color: #2A3A4D !important;
+        }
+
+        header .header-burger .burger-inner div,
+        .header .header-burger .burger-inner div {
+            background-color: #2A3A4D !important;
+        }
+
+        .header-nav-folder-content,
+        .header .header-nav-folder-content,
+        header .header-nav-folder-content {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid rgba(42, 58, 77, 0.1) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .header-nav-folder-content a,
+        .header .header-nav-folder-content a,
+        header .header-nav-folder-content a,
+        .header-nav-folder-item a {
+            color: #2A3A4D !important;
+        }
+
+        .header-nav-folder-content a:hover,
+        .header-nav-folder-item a:hover {
+            background-color: rgba(42, 58, 77, 0.05) !important;
+            color: #2A3A4D !important;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        /* Benefits Widget Styles */
+        .tfc-benefits-widget-section {
+            max-width: 900px;
+            margin: 100px auto 60px;
+            text-align: center;
+        }
+
+        /* Scroll Animation Styles */
+        .tfc-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .tfc-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tfc-benefits-display {
+            position: relative;
+            background: #f8f9fa;
+            border-radius: 16px;
+            overflow: hidden;
+            min-height: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .tfc-benefit-tab {
+            background: #37474F;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin: 0 8px 16px;
+        }
+
+        .tfc-benefit-tab.active {
+            background: #263238;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(38, 50, 56, 0.3);
+        }
+
+        /* Full Width Sections */
+        .tfc-full-width {
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+            position: relative;
+            padding: 80px 0 140px; /* Increased bottom padding */
+            box-sizing: border-box;
+            left: auto;
+            right: auto;
+        }
+
+        .tfc-bg-white { background-color: #FFFFFF; }
+        .tfc-bg-blue { background-color: #E8ECF0; }
+
+        .tfc-content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            box-sizing: border-box;
+        }
+
+        .tfc-benefit-content {
+            display: none;
+            padding: 40px;
+            min-height: 500px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            text-align: left;
+            transition: opacity 0.5s ease;
+            box-sizing: border-box;
+        }
+
+        .tfc-benefit-text-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 90%; /* Reduced from 700px to prevent cutoff */
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            margin: auto;
+            box-sizing: border-box;
+        }
+
+        .tfc-benefit-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tfc-benefit-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        .tfc-benefit-list li::before {
+            content: "\2022";
+            color: #E57373;
+            font-weight: bold;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+
+        .tfc-benefit-list a {
+            color: #263238;
+            font-size: 0.85rem;
+            text-decoration: none;
+            opacity: 0.7;
+            margin-left: 6px;
+            font-weight: 600;
+        }
+
+        .tfc-benefit-list a:hover {
+            color: #E57373;
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        /* Main Container */
+        .tfc-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 24px 60px;
+        }
+
+        /* Hero Section */
+        .tfc-hero {
+            display: flex;
+            align-items: center;
+            gap: 120px;
+            padding: 80px 24px;
+            position: relative;
+            background-color: #E8ECF0;
+            width: 100vw;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            left: 50%;
+            right: 50%;
+            box-sizing: border-box;
+        }
+
+        .tfc-hero-content {
+            flex: 1;
+            text-align: left;
+            max-width: 500px;
+            margin-left: 40px;
+        }
+
+        .tfc-hero-image-container {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .tfc-hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #E57373, #EF5350);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+            margin-top: 30px;
+            white-space: nowrap;
+            width: auto;
+            transition: width 0.8s ease-out;
+        }
+
+        .tfc-hero-badge span {
+            opacity: 0;
+            transition: opacity 0.6s ease-in;
+        }
+
+        .tfc-hero-badge span.visible {
+            opacity: 1;
+        }
+
+        .tfc-hero-title {
+            font-size: 7rem;
+            margin-bottom: 0px;
+            color: #E8ECF0;
+            font-weight: 500;
+            background-color: #2A3A4D;
+            display: inline-block;
+            padding: 0 30px;
+            border-radius: 16px;
+            line-height: 1.1;
+        }
+
+        .tfc-hawaii-title {
+            font-size: 5.5rem;
+            font-weight: 400;
+            color: #2A3A4D;
+            -webkit-text-stroke: 0;
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .tfc-hero-subtitle {
+            font-size: 1.2rem;
+            color: #4a5568;
+            margin-top: 16px;
+            line-height: 1.4;
+        }
+
+        .tfc-hero-badge-secondary {
+            margin-top: 12px;
+            background: linear-gradient(135deg, #E57373, #EF5350);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .tfc-hero-badge-secondary span {
+            opacity: 0;
+            transition: opacity 0.6s ease-in;
+        }
+
+        .tfc-hero-badge-secondary span.visible {
+            opacity: 1;
+        }
+
+        .tfc-hero-image {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: opacity 1s ease-in-out;
+        }
+
+        .tfc-scene-container {
+            position: relative;
+            width: 200px; /* Exactly 1/4 of 800px */
+            margin: 0 auto 32px;
+            /* Ensure the heart is visible even if it floats "outside" */
+            overflow: visible;
+            z-index: 5;
+        }
+
+        .tfc-scene-tag {
+            position: absolute;
+            top: 10px;
+            right: -380px;
+            background: white;
+            color: black;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            z-index: 10;
+            max-width: 280px;
+            line-height: 1.3;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tfc-scene-tag:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .tfc-scene-tag-left {
+            right: auto;
+            left: -380px;
+        }
+
+        .tfc-scene-tag-bottom {
+            top: auto;
+            bottom: -150px;
+            right: -380px;
+            left: auto;
+        }
+
+        .tfc-scene-tag-bottom:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .tfc-scene-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2A3A4D;
+            margin: 0 0 8px 0;
+        }
+
+        .tfc-scene-tag p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.4;
+        }
+
+        .tfc-childcare-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+        }
+
+        .tfc-floating-heart {
+            position: absolute;
+            width: 160px; 
+            top: -55px; /* Moved further up */
+            left: 50%; 
+            transform: translateX(-50%);
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+            z-index: 10;
+        }
+
+        @keyframes float {
+            0% { transform: translate(-50%, 0px); }
+            50% { transform: translate(-50%, -15px); }
+            100% { transform: translate(-50%, 0px); }
+        }
+
+        .tfc-hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #E57373;
+            margin-bottom: 24px;
+        }
+
+        .tfc-hero-tagline {
+            font-size: 1.3rem;
+            color: #4a5568;
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+
+        /* Stats Row - Wooden Block Style */
+        .tfc-stats-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+        }
+
+        .tfc-stat-item {
+            text-align: center;
+            padding: 30px 28px 24px;
+            border-radius: 20px;
+            /* Wooden texture using gradients */
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(139, 90, 43, 0.03) 2px,
+                    rgba(139, 90, 43, 0.03) 4px
+                ),
+                linear-gradient(180deg, 
+                    #C4A574 0%, 
+                    #A8895A 15%,
+                    #9B7B4E 50%,
+                    #8B6914 85%,
+                    #7A5D3A 100%
+                );
+            /* Inset frame effect */
+            box-shadow: 
+                inset 0 4px 8px rgba(255, 255, 255, 0.3),
+                inset 0 -4px 8px rgba(0, 0, 0, 0.2),
+                inset 4px 0 8px rgba(255, 255, 255, 0.15),
+                inset -4px 0 8px rgba(0, 0, 0, 0.15),
+                0 6px 20px rgba(0, 0, 0, 0.25),
+                0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 3px solid #6B4423;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+            min-width: 180px;
+        }
+
+        .tfc-stat-item:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 
+                inset 0 4px 8px rgba(255, 255, 255, 0.3),
+                inset 0 -4px 8px rgba(0, 0, 0, 0.2),
+                inset 4px 0 8px rgba(255, 255, 255, 0.15),
+                inset -4px 0 8px rgba(0, 0, 0, 0.15),
+                0 12px 30px rgba(0, 0, 0, 0.3),
+                0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 3D Block Arrow */
+        .tfc-stat-arrow {
+            font-size: 2.5rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tfc-stat-arrow::before {
+            content: "";
+            display: block;
+            width: 30px;
+            height: 12px;
+            background: linear-gradient(180deg, #4A90D9 0%, #2E5A8B 100%);
+            border-radius: 3px;
+            box-shadow: 
+                0 3px 0 #1E3A5B,
+                0 4px 6px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .tfc-stat-arrow::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 0;
+            border-top: 16px solid transparent;
+            border-bottom: 16px solid transparent;
+            border-left: 20px solid #E53935;
+            margin-left: -2px;
+            filter: drop-shadow(0 3px 0 #8B1A1A) drop-shadow(0 4px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        /* 3D Block Numbers */
+        .tfc-stat-number {
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1.1;
+            font-family: 'Arial Black', 'Helvetica', sans-serif;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        /* Colorful 3D text effect */
+        .tfc-stat-item:nth-child(1) .tfc-stat-number {
+            color: #E53935;
+            text-shadow: 
+                2px 2px 0 #FFD54F,
+                4px 4px 0 #B71C1C,
+                5px 5px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .tfc-stat-item:nth-child(3) .tfc-stat-number {
+            color: #FFD54F;
+            text-shadow: 
+                2px 2px 0 #E53935,
+                4px 4px 0 #F9A825,
+                5px 5px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .tfc-stat-item:nth-child(5) .tfc-stat-number {
+            color: #E53935;
+            text-shadow: 
+                2px 2px 0 #FFD54F,
+                4px 4px 0 #B71C1C,
+                5px 5px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .tfc-stat-item:nth-child(5) .tfc-stat-number .million {
+            color: #FFD54F;
+            text-shadow: 
+                2px 2px 0 #E53935,
+                4px 4px 0 #F9A825,
+                5px 5px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .tfc-stat-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #4A3728;
+            margin-top: 4px;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Info Cards */
+        .tfc-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 60px 0;
+        }
+
+        .tfc-info-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 40px 32px;
+            box-shadow: 0 4px 20px rgba(42, 58, 77, 0.08);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tfc-info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(42, 58, 77, 0.12);
+        }
+
+        .tfc-card-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, #FFCDD2, #EF9A9A);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .tfc-card-title {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: #2A3A4D;
+        }
+
+        .tfc-card-text {
+            font-size: 1.05rem;
+            color: #4a5568;
+            line-height: 1.7;
+        }
+
+        /* Section Styles */
+        .tfc-section {
+            margin-bottom: 80px;
+        }
+
+        .tfc-section-title {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            text-align: center;
+            color: #2A3A4D;
+        }
+
+        .tfc-section-subtitle.tfc-subtitle-box {
+            background: linear-gradient(135deg, #E57373, #EF5350);
+            color: white;
+            padding: 24px 32px;
+            border-radius: 16px;
+            display: block;
+            margin: 0 auto 48px;
+            line-height: 1.6;
+            text-align: center;
+            max-width: 700px;
+        }
+
+        .tfc-section-subtitle {
+            font-size: 1.2rem;
+            color: #4a5568;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 48px;
+        }
+
+        /* How It Works */
+        .tfc-steps {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            margin-top: 48px;
+        }
+
+        .tfc-step {
+            flex: 1;
+            min-width: 250px;
+            max-width: 320px;
+            text-align: center;
+            position: relative;
+        }
+
+        .tfc-step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #E57373, #EF5350);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+            font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+        }
+
+        .tfc-step-title {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: #2A3A4D;
+        }
+
+        .tfc-step-text {
+            font-size: 1rem;
+            color: #4a5568;
+        }
+
+        /* Highlight Box */
+        .tfc-highlight-box {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .tfc-highlight-box h3 {
+            font-size: 1.75rem;
+            margin-bottom: 16px;
+            color: #C62828;
+        }
+
+        .tfc-highlight-box p {
+            font-size: 1.15rem;
+            color: #4a5568;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Benefits List */
+        .tfc-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .tfc-benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(42, 58, 77, 0.06);
+        }
+
+        .tfc-benefit-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #FFCDD2, #EF9A9A);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .tfc-benefit-content h4 {
+            font-size: 1.1rem;
+            margin: 0 0 8px;
+            color: #2A3A4D;
+        }
+
+        .tfc-benefit-content p {
+            font-size: 0.95rem;
+            color: #4a5568;
+            margin: 0;
+        }
+
+        /* CTA Section */
+        .tfc-cta-section {
+            background: linear-gradient(135deg, #E57373 0%, #EF5350 100%);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            color: white;
+            margin: 60px 0;
+        }
+
+        .tfc-cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .tfc-cta-section p {
+            font-size: 1.15rem;
+            margin-bottom: 32px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tfc-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: white;
+            color: #E57373;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tfc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .tfc-btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            margin-left: 16px;
+        }
+
+        .tfc-btn-outline:hover {
+            background: white;
+            color: #E57373;
+        }
+
+        /* Quote Section */
+        .tfc-quote-section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 48px;
+            margin: 60px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(42, 58, 77, 0.08);
+        }
+
+        .tfc-quote-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: #4a5568;
+            max-width: 800px;
+            margin: 0 auto 24px;
+            line-height: 1.8;
+        }
+
+        .tfc-quote-author {
+            font-size: 1rem;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        /* Source Link */
+        .tfc-source {
+            display: none;
+        }
+
+        .tfc-source a {
+            color: #E57373;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .tfc-source a:hover {
+            color: #C62828;
+            text-decoration: underline;
+        }
+
+        /* 3D Bar Chart - Using skew technique from Codrops tutorial */
+        .tfc-chart-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 10px 20px;
+        }
+
+        .tfc-3d-chart {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 80px;
+            height: 220px;
+            padding: 10px 0 80px;
+        }
+
+        .tfc-3d-bar-group {
+            position: relative;
+        }
+
+        .tfc-3d-bar {
+            width: 70px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .tfc-3d-bar:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Front face - the main visible bar */
+        .tfc-3d-bar-front {
+            width: 70px;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 12px;
+        }
+
+        /* Top face - skewed horizontally */
+        .tfc-3d-bar-front::after {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 7px;
+            width: 100%;
+            height: 18px;
+            transform: skewX(-45deg);
+        }
+
+        /* Right side face - skewed vertically */
+        .tfc-3d-bar-front::before {
+            content: "";
+            position: absolute;
+            top: -7px;
+            right: -17px;
+            width: 18px;
+            height: 100%;
+            transform: skewY(-45deg);
+        }
+
+        .tfc-3d-bar-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .tfc-3d-bar-label {
+            position: absolute;
+            bottom: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #2A3A4D;
+            white-space: nowrap;
+        }
+
+        /* Green bar - Married Couple */
+        .tfc-3d-bar-group:nth-child(1) .tfc-3d-bar-front {
+            background: linear-gradient(180deg, #66BB6A 0%, #388E3C 100%);
+        }
+        .tfc-3d-bar-group:nth-child(1) .tfc-3d-bar-front::after {
+            background: linear-gradient(135deg, #A5D6A7 0%, #81C784 100%);
+        }
+        .tfc-3d-bar-group:nth-child(1) .tfc-3d-bar-front::before {
+            background: linear-gradient(180deg, #2E7D32 0%, #1B5E20 100%);
+        }
+
+        /* Blue bar - Single Father */
+        .tfc-3d-bar-group:nth-child(2) .tfc-3d-bar-front {
+            background: linear-gradient(180deg, #42A5F5 0%, #1976D2 100%);
+        }
+        .tfc-3d-bar-group:nth-child(2) .tfc-3d-bar-front::after {
+            background: linear-gradient(135deg, #90CAF9 0%, #64B5F6 100%);
+        }
+        .tfc-3d-bar-group:nth-child(2) .tfc-3d-bar-front::before {
+            background: linear-gradient(180deg, #1565C0 0%, #0D47A1 100%);
+        }
+
+        /* Red bar - Single Mother */
+        .tfc-3d-bar-group:nth-child(3) .tfc-3d-bar-front {
+            background: linear-gradient(180deg, #EF5350 0%, #C62828 100%);
+        }
+        .tfc-3d-bar-group:nth-child(3) .tfc-3d-bar-front::after {
+            background: linear-gradient(135deg, #EF9A9A 0%, #E57373 100%);
+        }
+        .tfc-3d-bar-group:nth-child(3) .tfc-3d-bar-front::before {
+            background: linear-gradient(180deg, #C62828 0%, #B71C1C 100%);
+        }
+
+        .tfc-chart-source {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tfc-hero-title {
+                font-size: 2.5rem;
+            }
+
+            .tfc-section-title {
+                font-size: 2rem;
+            }
+
+            .tfc-benefit-content {
+                padding: 24px;
+            }
+
+            .tfc-benefit-text-box {
+                padding: 24px;
+            }
+
+            .tfc-stats-row {
+                gap: 32px;
+            }
+
+            .tfc-stat-number {
+                font-size: 2.5rem;
+            }
+
+            .tfc-cta-section {
+                padding: 40px 24px;
+            }
+
+            .tfc-btn {
+                display: block;
+                margin: 12px auto;
+            }
+
+            .tfc-btn-outline {
+                margin-left: 0;
+            }
+
+            .tfc-quote-text {
+                font-size: 1.25rem;
+            }
+        }
+
+        .tfc-hero-tagline-overlay {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-align: left;
+            z-index: 10;
+        }
+
+        .tfc-hero-tagline-overlay p {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .tfc-underline-text {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tfc-underline-text::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.8s ease-in-out;
+        }
+
+        .tfc-hero-tagline-overlay:hover .tfc-underline-text::after {
+            width: 100%;
+        }
+        /* Staggered Pull-out Quote */
+        .tfc-pullout-quote {
+            margin: 2px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .tfc-pullout-quote .tfc-quote-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #C62828;
+            font-style: italic;
+            line-height: 1.3;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            padding: 0 60px;
+        }
+
+        .tfc-pullout-quote .tfc-quote-text::before,
+        .tfc-pullout-quote .tfc-quote-text::after {
+            content: '"';
+            font-size: 4rem;
+            color: #FFCDD2;
+            position: absolute;
+            font-family: Georgia, serif;
+        }
+
+        .tfc-pullout-quote .tfc-quote-text::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .tfc-pullout-quote .tfc-quote-text::after {
+            content: '"';
+            bottom: -15px;
+            right: 0;
+        }
+
+        @media (max-width: 768px) {
+            .tfc-pullout-quote .tfc-quote-text {
+                font-size: 1.4rem;
+                padding: 0 40px;
+            }
+        }
+
+        /* Flint Expandable Section */
+        .tfc-expandable-section {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        /* What is RxKids */
+        .tfc-carousel-container {
+            position: relative;
+            max-width: 56.25%;
+            margin: 0 auto 60px;
+            overflow: hidden;
+            padding: 0 0 20px 0;
+            background: #FFEBEE;
+            border: 1px solid #FFCDD2;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(229, 57, 53, 0.1);
+            box-sizing: border-box;
+        }
+
+        .tfc-carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .tfc-carousel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 5px 50px;
+        }
+
+        .tfc-carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e2e8f0;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            color: #2A3A4D;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .tfc-carousel-arrow:hover {
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .tfc-carousel-prev { left: 0; }
+        .tfc-carousel-next { right: 0; }
+
+        /* Childcare Chart Styles */
+        .tfc-childcare-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tfc-cost-display {
+            text-align: center;
+            background: #FFF3E0;
+            padding: 12px;
+            border-radius: 16px;
+            margin-bottom: 10px;
+            border: 1px solid #FFE0B2;
+        }
+
+        .tfc-cost-title {
+            color: #E65100;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .tfc-cost-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #2A3A4D;
+            line-height: 1.2;
+        }
+
+        .tfc-cost-monthly {
+            font-size: 1.1rem;
+            color: #5D4037;
+            font-weight: 500;
+        }
+
+        .tfc-income-comparison {
+            display: grid;
+            gap: 12px;
+        }
+
+        .tfc-income-bar-group {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tfc-income-label {
+            font-weight: 700;
+            color: #2A3A4D;
+            margin-bottom: 16px;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .tfc-bar-container {
+            height: 36px;
+            background: #e2e8f0;
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tfc-bar-fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: width 1s ease-out;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        .tfc-bar-fill.single { 
+            background: linear-gradient(90deg, #EF5350, #E53935);
+            width: 0%; /* Will animate to 49% */
+        } 
+
+        .tfc-bar-fill.married { 
+            background: linear-gradient(90deg, #66BB6A, #43A047);
+            width: 0%; /* Will animate to 17.9% */
+        }
+
+        .tfc-expand-btn {
+            background-color: #E53935;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
+        }
+
+        .tfc-expand-btn:hover {
+            background-color: #C62828;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(229, 57, 53, 0.4);
+        }
+
+        .tfc-expand-icon {
+            font-size: 0.8em;
+            transition: transform 0.3s ease;
+        }
+
+        .tfc-expand-btn.active .tfc-expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .tfc-expand-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background: #fff;
+            border-radius: 16px;
+            margin-top: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .tfc-expand-content.active {
+            max-height: 1000px; /* Large enough to fit content */
+        }
+
+        .tfc-flint-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+            text-align: left;
+        }
+
+        .tfc-flint-column h3 {
+            color: #C62828;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #FFCDD2;
+            padding-bottom: 12px;
+        }
+
+        .tfc-flint-intro {
+            color: #4a5568;
+            font-style: italic;
+            margin-bottom: 24px;
+        }
+
+        .tfc-stat-block {
+            background: #FAFAFA;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            border-left: 4px solid #E57373;
+        }
+
+        .tfc-stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #2A3A4D;
+            margin-bottom: 4px;
+        }
+
+        .tfc-stat-desc {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .tfc-flint-source {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #E5E5E5;
+        }
+
+        .tfc-flint-source a {
+            color: #E57373;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .tfc-flint-source a:hover {
+            color: #C62828;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .tfc-flint-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tfc-container">
+        <!-- Hero Section -->
+        <div class="tfc-hero tfc-reveal">
+            <div class="tfc-hero-content">
+                <h1 class="tfc-hero-title">RxKids</h1>
+<h2 class="tfc-hero-title tfc-hawaii-title" style="margin-top: 0px; margin-left: 80px; margin-right: 20px;">Hawai&#699;i</h2>
+                <div class="tfc-hero-badge">Direct cash support for pregnant mothers and their babies</div>
+            </div>
+            <div class="tfc-hero-image-container">
+                <img src="https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/1673931525935-N3GTMH2YO0HVT68BZOA0/unsplash-image-5zp0jym2w9M.jpg?content-type=image%2Fjpeg" alt="RxKids Hero Image" class="tfc-hero-image" id="hero-image">
+            </div>
+        </div>
+
+
+        <!-- What is RxKids -->
+        <div class="tfc-full-width tfc-bg-white tfc-reveal">
+            <div class="tfc-content-container">
+                <div class="tfc-section" style="margin-bottom: 0;">
+                    <h2 class="tfc-section-title">What is RxKids?</h2>
+                    <p class="tfc-section-subtitle tfc-subtitle-box">RxKids is a groundbreaking program that provides no-strings-attached financial support to pregnant mothers. There are successful RxKids programs in cities across Michigan.</p>
+                    
+                    <!-- Childcare Scene -->
+                    <div class="tfc-scene-container">
+                        <img src="https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/7e595665-8ca3-4621-b694-a787aa3f3965/floating+heart.png?content-type=image%2Fpng" alt="Love" class="tfc-floating-heart">
+                        <img src="https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/a493efe8-48df-4068-a64d-a1a8cf2f39a3/Childcare+center.png?content-type=image%2Fpng" alt="Childcare Center" class="tfc-childcare-image">
+                        <div class="tfc-scene-tag tfc-scene-tag-right"><h3 class="tfc-scene-title">No Strings Attached</h3><p>Families decide how to use the funds based on their unique needs&mdash;whether for rent, food, baby supplies, or other essentials.</p></div>
+                        <div class="tfc-scene-tag tfc-scene-tag-left"><h3 class="tfc-scene-title">Universal Support</h3><p>Every pregnant mother in participating communities receives support&mdash;no complicated eligibility requirements or means testing.</p></div>
+                        <div class="tfc-scene-tag tfc-scene-tag-bottom"><h3 class="tfc-scene-title">Critical First Year</h3><p>Monthly payments continue throughout the baby's first year, providing stability during the most important developmental period.</p></div>
+                    </div>
+                    
+                    <div class="tfc-cards-grid">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Proven Benefits Interactive Widget -->
+        <div class="tfc-full-width tfc-bg-blue tfc-reveal">
+            <div class="tfc-content-container">
+                <div class="tfc-section tfc-benefits-widget-section" style="margin: 0 auto;">
+                    <h2 class="tfc-section-title">Benefits of RxKids</h2>
+                
+                <div class="tfc-benefits-tabs">
+                    <button class="tfc-benefit-tab active" onclick="openBenefit(event, 'benefit-health')">Better Health Outcomes</button>
+                    <button class="tfc-benefit-tab" onclick="openBenefit(event, 'benefit-development')">Child Development</button>
+                    <button class="tfc-benefit-tab" onclick="openBenefit(event, 'benefit-housing')">Housing Stability</button>
+                    <button class="tfc-benefit-tab" onclick="openBenefit(event, 'benefit-food')">Food Security</button>
+                    <button class="tfc-benefit-tab" onclick="openBenefit(event, 'benefit-economic')">Economic Mobility</button>
+                    <button class="tfc-benefit-tab" onclick="openBenefit(event, 'benefit-bonding')">Family Bonding</button>
+                </div>
+
+                <div class="tfc-benefits-display">
+                    <!-- Better Health Outcomes -->
+                    <div id="benefit-health" class="tfc-benefit-content active" style="display: flex;">
+                        <div class="tfc-benefit-text-box">
+                            <h3>Better Health Outcomes</h3>
+                            <ul class="tfc-benefit-list">
+                                <li><strong>Preterm births reduced by up to 18%</strong> and low birthweight by 27% <a href="https://www.givedirectly.org/flintstudy2025/" target="_blank">[Source]</a></li>
+                                <li><strong>Infant maltreatment allegations reduced by 32%</strong> <a href="https://rxkids.org/new-rigorous-research-shows-rx-kids-reduced-infant-maltreatment-allegations-in-flint-michigan/" target="_blank">[Source]</a></li>
+                                <li>Postpartum depression screenings dropped by 14 percentage points <a href="https://rxkids.org/new-research-shows-cash-for-moms-and-babies-improves-health-stabilizes-families-and-saves-millions/" target="_blank">[Source]</a></li>
+                                <li><strong>$6.2 million in annual healthcare savings</strong> from improved birth outcomes <a href="https://rxkids.org/new-research-shows-cash-for-moms-and-babies-improves-health-stabilizes-families-and-saves-millions/" target="_blank">[Source]</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Child Development -->
+                    <div id="benefit-development" class="tfc-benefit-content">
+                        <div class="tfc-benefit-text-box">
+                            <h3>Child Development</h3>
+                            <ul class="tfc-benefit-list">
+                                <li><strong>80% of participants</strong> report RxKids helped them become more confident parents <a href="https://rxkids.org/wp-content/uploads/2024/09/RxKids_Research_Brief.pdf" target="_blank">[Source]</a></li>
+                                <li>Reduced NICU admissions establish stronger developmental foundations <a href="https://yourchildrensfoundation.org/2025/09/30/rx-kids-helping-families-thrive-from-the-start/" target="_blank">[Source]</a></li>
+                                <li>Funds enable direct investments in home learning environments and enrichment materials <a href="https://rxkids.org/new-analysis-finds-child-cash-benefits-improve-child-health-and-development-internationally/" target="_blank">[Source]</a></li>
+                                <li>59% found it easier to obtain needed healthcare <a href="https://rxkids.org/wp-content/uploads/2024/09/RxKids_Research_Brief.pdf" target="_blank">[Source]</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Housing Stability -->
+                    <div id="benefit-housing" class="tfc-benefit-content">
+                        <div class="tfc-benefit-text-box">
+                            <h3>Housing Stability</h3>
+                            <ul class="tfc-benefit-list">
+                                <li><strong>91% decrease in evictions</strong> among RxKids participants <a href="https://rxkids.org/impact/" target="_blank">[Source]</a></li>
+                                <li>Average reduction in housing debt of <strong>over $1,000 per family</strong> <a href="https://rxkids.org/new-research-shows-cash-for-moms-and-babies-improves-health-stabilizes-families-and-saves-millions/" target="_blank">[Source]</a></li>
+                                <li>57% of participants used funds explicitly for rent payments <a href="https://rxkids.org/wp-content/uploads/2024/09/RxKids_Research_Brief.pdf" target="_blank">[Source]</a></li>
+                                <li>Represents a <strong>75% income expansion</strong> for lowest-income families <a href="https://yourchildrensfoundation.org/2025/09/30/rx-kids-helping-families-thrive-from-the-start/" target="_blank">[Source]</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Food Security -->
+                    <div id="benefit-food" class="tfc-benefit-content">
+                        <div class="tfc-benefit-text-box">
+                            <h3>Food Security</h3>
+                            <ul class="tfc-benefit-list">
+                                <li><strong>78% of participants</strong> use RxKids funds for food purchases <a href="https://rxkids.org/wp-content/uploads/2024/09/RxKids_Research_Brief.pdf" target="_blank">[Source]</a></li>
+                                <li>8.2% increase in families reporting they have "enough of the kinds of foods we want" <a href="https://rxkids.org/wp-content/uploads/2024/09/RxKids_Research_Brief.pdf" target="_blank">[Source]</a></li>
+                                <li>Cash enables purchase of preferred nutritious foods rather than reliance on emergency assistance</li>
+                                <li>Better nutrition supports improved maternal health and birth outcomes <a href="https://rxkids.org/new-analysis-finds-child-cash-benefits-improve-child-health-and-development-internationally/" target="_blank">[Source]</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Economic Mobility -->
+                    <div id="benefit-economic" class="tfc-benefit-content">
+                        <div class="tfc-benefit-text-box">
+                            <h3>Economic Mobility</h3>
+                            <ul class="tfc-benefit-list">
+                                <li>Economic benefits exceed program costs by <strong>2.4 times</strong> <a href="https://www.upjohn.org/research-highlights/study-finds-rx-kids-program-supports-families-drives-jobs-and-income-growth" target="_blank">[Source]</a></li>
+                                <li>Every dollar invested generates <strong>~$1.60 in local economic activity</strong> <a href="https://www.givedirectly.org/rxkids/" target="_blank">[Source]</a></li>
+                                <li>88% of participants report the program helped them make ends meet and feel financially secure <a href="https://rxkids.org/rx-kids-survey-results-november-2024/" target="_blank">[Source]</a></li>
+                                <li><strong>40% of economic gains</strong> flow to families in the lowest income quintile <a href="https://www.upjohn.org/research-highlights/study-finds-rx-kids-program-supports-families-drives-jobs-and-income-growth" target="_blank">[Source]</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Family Bonding -->
+                    <div id="benefit-bonding" class="tfc-benefit-content">
+                        <div class="tfc-benefit-text-box">
+                            <h3>Family Bonding</h3>
+                            <ul class="tfc-benefit-list">
+                                <li>Mothers report feeling <strong>more loved, valued, empowered, and respected</strong> <a href="https://rxkids.org/impact/" target="_blank">[Source]</a></li>
+                                <li>"My mental space is different, so I'm happy to be happy for my baby" &mdash; Participant <a href="https://rxkids.org/rx-kids-survey-results-november-2024/" target="_blank">[Source]</a></li>
+                                <li>Reduced financial stress enables greater emotional availability for children <a href="https://rxkids.org/new-rigorous-research-shows-rx-kids-reduced-infant-maltreatment-allegations-in-flint-michigan/" target="_blank">[Source]</a></li>
+                                <li>Trust in healthcare institutions rose by 10 percentage points <a href="https://rxkids.org/new-research-shows-cash-for-moms-and-babies-improves-health-stabilizes-families-and-saves-millions/" target="_blank">[Source]</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Example: Flint Michigan Expandable Section -->
+                <div class="tfc-expandable-section">
+                    <button class="tfc-expand-btn" onclick="toggleFlintSection()">
+                    Example: Flint Michigan <span class="tfc-expand-icon">&#9660;</span>
+                </button>
+                <div id="flint-content" class="tfc-expand-content">
+                    <div class="tfc-flint-grid">
+                        <div class="tfc-flint-column">
+                            <h3>Key Hardship Improvements</h3>
+                            <p class="tfc-flint-intro">Among Flint mothers, comparing 2024 (eligible for Rx Kids) to 2023:</p>
+                            
+                            <div class="tfc-stat-block">
+                                <div class="tfc-stat-value">13.0%</div>
+                                <div class="tfc-stat-desc">Reduction in owing back rent or mortgage</div>
+                            </div>
+                            
+                            <div class="tfc-stat-block">
+                                <div class="tfc-stat-value">4.2%</div>
+                                <div class="tfc-stat-desc">Reduction in eviction risk after birth</div>
+                            </div>
+                            
+                            <div class="tfc-stat-block">
+                                <div class="tfc-stat-value">14.0%</div>
+                                <div class="tfc-stat-desc">Reduction in food insecurity</div>
+                            </div>
+                            
+                            <div class="tfc-stat-block">
+                                <div class="tfc-stat-value">$1,004</div>
+                                <div class="tfc-stat-desc">Less back rent/mortgage owed on average</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tfc-flint-column">
+                            <h3>Maternal Mental Health & Well-being</h3>
+                            <p class="tfc-flint-intro">Adjusted estimates for mental health show:</p>
+                            
+                            <div class="tfc-stat-block">
+                                <div class="tfc-stat-value">14.0%</div>
+                                <div class="tfc-stat-desc">Reduction in screening positive for postpartum depression</div>
+                            </div>
+                            
+                            <div class="tfc-stat-block">
+                                <div class="tfc-stat-value">6.0%</div>
+                                <div class="tfc-stat-desc">Reduction in uncontrollable worrying</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Source -->
+                    <div class="tfc-flint-source">
+                        <p>Source: <a href="https://ajph.aphapublications.org/doi/full/10.2105/AJPH.2025.308244" target="_blank">American Journal of Public Health</a></p>
+                    </div>
+                </div>
+            </div>
+            
+            </div>
+        </div>
+
+        <!-- Child Poverty & Childcare Carousel -->
+        <div class="tfc-full-width tfc-bg-white tfc-reveal">
+            <div class="tfc-content-container">
+                <div class="tfc-section" style="margin-bottom: 0;">
+                    <h2 class="tfc-section-title">Why Hawai&#699;i's families need RxKids</h2>
+            
+            <div class="tfc-carousel-container">
+                <button class="tfc-carousel-arrow tfc-carousel-prev" onclick="moveCarousel(-1)">&#10094;</button>
+                <button class="tfc-carousel-arrow tfc-carousel-next" onclick="moveCarousel(1)">&#10095;</button>
+                
+                <div class="tfc-carousel-track" id="statsTrack">
+                    <!-- Slide 1: Child Poverty -->
+                    <div class="tfc-carousel-slide">
+                        <!-- Staggered Pull-out Quote -->
+                        <div class="tfc-pullout-quote" style="margin-top: 0px;">
+                            <p class="tfc-quote-text">In Hawai&#699;i, more than 1 out of 4 children with single mothers are in poverty.</p>
+                        </div>
+                        
+                        <h3 style="text-align: center; color: #2A3A4D; margin-bottom: 10px; margin-top: 40px; font-size: 1.5rem;">Child Poverty in Hawai&#699;i by Household Type</h3>
+                        
+                        <div class="tfc-chart-container" style="margin-top: 80px;">
+                            <div class="tfc-3d-chart">
+                                <!-- Married Couple -->
+                                <div class="tfc-3d-bar-group">
+                                    <div class="tfc-3d-bar">
+                                        <div class="tfc-3d-bar-front" style="height: 64px;">
+                                            <span class="tfc-3d-bar-value">6.4%</span>
+                                        </div>
+                                    </div>
+                                    <div class="tfc-3d-bar-label">Married Couple</div>
+                                </div>
+                                
+                                <!-- Single Father -->
+                                <div class="tfc-3d-bar-group">
+                                    <div class="tfc-3d-bar">
+                                        <div class="tfc-3d-bar-front" style="height: 113px;">
+                                            <span class="tfc-3d-bar-value">11.3%</span>
+                                        </div>
+                                    </div>
+                                    <div class="tfc-3d-bar-label">Single Father</div>
+                                </div>
+                                
+                                <!-- Single Mother -->
+                                <div class="tfc-3d-bar-group">
+                                    <div class="tfc-3d-bar">
+                                        <div class="tfc-3d-bar-front" style="height: 266px;">
+                                            <span class="tfc-3d-bar-value">26.6%</span>
+                                        </div>
+                                    </div>
+                                    <div class="tfc-3d-bar-label">Single Mother</div>
+                                </div>
+                            </div>
+                            <p class="tfc-chart-source">Source: U.S. Census Bureau</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2: Childcare Costs -->
+                    <div class="tfc-carousel-slide">
+                        <h3 style="text-align: center; color: #2A3A4D; margin-bottom: 10px; font-size: 1.5rem;">Center-Based Care in Hawai&#699;i is completely unaffordable to the working class.</h3>
+                        <p class="tfc-section-subtitle"></p>
+
+                        <div class="tfc-childcare-stats">
+                            <div class="tfc-cost-display">
+                                <span class="tfc-cost-title">Annual Center-Based Care Cost (2024)</span>
+                                <div class="tfc-cost-amount">$24,115</div>
+                                <div class="tfc-cost-monthly">($2,010 per month)</div>
+                            </div>
+
+                            <div class="tfc-income-comparison">
+                                <div class="tfc-income-bar-group">
+                                    <span class="tfc-income-label">Percentage of single-parent median income</span>
+                                    <div class="tfc-bar-container">
+                                        <div class="tfc-bar-fill single" id="bar-single">49.0%</div>
+                                    </div>
+                                    <p style="font-size: 0.9rem; color: #718096; margin-top: 8px;">Nearly half of income goes to childcare</p>
+                                </div>
+
+                                <div class="tfc-income-bar-group">
+                                    <span class="tfc-income-label">Percentage of married-couple median income</span>
+                                    <div class="tfc-bar-container">
+                                        <div class="tfc-bar-fill married" id="bar-married">17.9%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tfc-flint-source">
+                            <p>Source: <a href="https://info.childcareaware.org/hubfs/Affordability_Analysis_2024.pdf" target="_blank">Child Care Aware of America 2024 Analysis</a></p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How RxKids would work in Hawai&#699;i -->
+        <div class="tfc-full-width tfc-bg-blue tfc-reveal">
+            <div class="tfc-content-container">
+                <div class="tfc-section" style="margin-bottom: 0;">
+                    <h2 class="tfc-section-title">How RxKids would work in Hawai&#699;i</h2>
+            <p class="tfc-section-subtitle"></p>
+            
+            <div class="tfc-steps">
+                <div class="tfc-step">
+                    <div class="tfc-step-number">1</div>
+                    <h3 class="tfc-step-title">Pregnancy Enrollment</h3>
+                    <p class="tfc-step-text">Pregnant mothers enroll in the program in their third trimester of pregnancy.</p>
+                </div>
+                <div class="tfc-step">
+                    <div class="tfc-step-number">2</div>
+                    <h3 class="tfc-step-title">Initial Payment</h3>
+                    <p class="tfc-step-text">Receive $1,500 during pregnancy to prepare for baby's arrival.</p>
+                </div>
+                <div class="tfc-step">
+                    <div class="tfc-step-number">3</div>
+                    <h3 class="tfc-step-title">Monthly Support</h3>
+                    <p class="tfc-step-text">For the first 6 months after birth, receive $500 a month.</p>
+                </div>
+                <div class="tfc-step">
+                    <div class="tfc-step-number">4</div>
+                    <h3 class="tfc-step-title">Additional Support</h3>
+                    <p class="tfc-step-text">If funds are available, there will be another six monthly payments of $500.</p>
+                </div>
+            </div>
+            
+            <!-- Medicaid Birth Stats -->
+            <div style="display: none;">
+            <h3 style="text-align: center; color: #2A3A4D; margin-top: 60px; margin-bottom: 20px; font-size: 3rem;">Cost</h3>
+            <div class="tfc-stats-row">
+                <div style="display: flex; justify-content: center; align-items: center; max-width: 200px; margin: 0 auto;">
+                    <img src="https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/12021912-4f0c-4807-8707-9b2e8562dd9b/%243%2C000.png?content-type=image%2Fpng" alt="RxKids $3,000 For Each Baby" style="max-width: 100%; height: auto; display: block;">
+                </div>
+                <div class="tfc-stat-arrow"></div>
+                <div style="display: flex; justify-content: center; align-items: center; max-width: 200px; margin: 0 auto;">
+                    <img src="https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/73be8884-8c20-4d4a-a677-591f68e423a8/%23.png?content-type=image%2Fpng" alt="#" style="max-width: 100%; height: auto; display: block;">
+                </div>
+                <div class="tfc-stat-arrow"></div>
+                <div style="display: flex; justify-content: center; align-items: center; max-width: 200px; margin: 0 auto;">
+                    <img src="https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/82ec5774-ca82-4cb2-a31b-facba1cd33de/last+block.png?content-type=image%2Fpng" alt="Last Block" style="max-width: 100%; height: auto; display: block;">
+                </div>
+            </div>
+            </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="tfc-cta-section tfc-reveal" style="margin-bottom: 0;">
+            <h2>Learn More About RxKids</h2>
+            <p>Discover how this innovative program is transforming communities and supporting families across the nation.</p>
+            <a href="https://rxkids.org/" target="_blank" class="tfc-btn">Visit RxKids.org</a>
+            <a href="https://rxkids.org/about/" target="_blank" class="tfc-btn tfc-btn-outline">About the Program</a>
+        </div>
+    </div>
+
+    <script>
+        // Sequential word animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scroll Reveal Animation
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.tfc-reveal').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Animate secondary badge (pregnant mothers and babies)
+            const secondaryBadge = document.querySelector('.tfc-hero-badge-secondary');
+            const secondaryWords = secondaryBadge.querySelectorAll('span');
+            
+            // Show "pregnant mothers" after 1 second
+            setTimeout(() => {
+                secondaryWords[0].classList.add('visible');
+            }, 1000);
+            
+            // Show "babies" after 2 seconds
+            setTimeout(() => {
+                secondaryWords[1].classList.add('visible');
+            }, 2000);
+
+            // Hero image cycling
+            const heroImage = document.getElementById('hero-image');
+            const images = [
+                'https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/1673931525935-N3GTMH2YO0HVT68BZOA0/unsplash-image-5zp0jym2w9M.jpg?content-type=image%2Fjpeg',
+                'https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/1673897743821-9BH2ZEQIFDS2PZ0ITX08/unsplash-image-c274gwQ1aLg.jpg?content-type=image%2Fjpeg',
+                'https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/1674028370383-G4WMD8WDKV6HC5XC93UA/pexels-kampus-production-8925997.jpeg?content-type=image%2Fjpeg'
+            ];
+            let currentImageIndex = 0;
+
+            function cycleImages() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                
+                // Fade out
+                heroImage.style.opacity = '0';
+                
+                // Change image after fade out
+                setTimeout(() => {
+                    heroImage.src = images[currentImageIndex];
+                    // Fade in
+                    setTimeout(() => {
+                        heroImage.style.opacity = '1';
+                    }, 100);
+                }, 1000);
+            }
+
+            // Start cycling after 3 seconds, then every 7 seconds (1s fade + 6s display)
+            setTimeout(() => {
+                cycleImages();
+                setInterval(cycleImages, 7000);
+            }, 3000);
+        });
+
+        function toggleFlintSection() {
+            const btn = document.querySelector('.tfc-expand-btn');
+            const content = document.getElementById('flint-content');
+            
+            btn.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+
+        function openBenefit(evt, benefitName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tfc-benefit-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tfc-benefit-tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(benefitName).style.display = "flex";
+            document.getElementById(benefitName).classList.add("active");
+            evt.currentTarget.className += " active";
+        }
+
+        let currentSlide = 0;
+        const totalSlides = 2;
+
+        function moveCarousel(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = totalSlides - 1;
+            if (currentSlide >= totalSlides) currentSlide = 0;
+            
+            const track = document.getElementById('statsTrack');
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            // Trigger animations if on childcare slide
+            if (currentSlide === 1) {
+                setTimeout(() => {
+                    document.getElementById('bar-single').style.width = '49.0%';
+                    document.getElementById('bar-married').style.width = '17.9%';
+                }, 300);
+            } else {
+                // Reset for re-animation
+                document.getElementById('bar-single').style.width = '0%';
+                document.getElementById('bar-married').style.width = '0%';
+            }
+        }
+    </script>
+</body>
+</html>

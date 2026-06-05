@@ -1,0 +1,106 @@
+<!-- Our Priorities Section from home_page_squarespace.html -->
+<!-- Transparent background, no blur - paste into Squarespace code block -->
+
+<style>
+.tfc-priorities-section {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: transparent;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 24px;
+}
+
+.tfc-priorities-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.tfc-priorities-content {
+    flex: 1;
+    text-align: left;
+}
+
+.tfc-priorities-content h2 {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 2.25rem;
+    color: #2a3a4d;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.tfc-priorities-content p {
+    font-size: 1.25rem;
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+.tfc-priorities-btn {
+    display: inline-block;
+    background-color: #2a3a4d;
+    color: white !important;
+    padding: 16px 32px;
+    border-radius: 8px;
+    text-decoration: none !important;
+    font-weight: 600;
+    margin-top: 24px;
+    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.tfc-priorities-btn:hover {
+    background-color: #3b4c60;
+    transform: translateY(-2px);
+}
+
+.tfc-priorities-image {
+    flex: 0 0 400px;
+    height: 400px;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.tfc-priorities-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.tfc-priorities-image:hover img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 900px) {
+    .tfc-priorities-container {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .tfc-priorities-image {
+        flex: none;
+        width: 100%;
+        height: 300px;
+    }
+}
+</style>
+
+<div class="tfc-priorities-section">
+    <div class="tfc-priorities-container">
+        <div class="tfc-priorities-content">
+            <h2>Our Priorities</h2>
+            <p>In 2026, we're taking our priorities to the State Capitol and demanding action. That means advancing policies that raise the revenue Hawai'i needs to invest these public goods.</p>
+            <p style="margin-top: 16px;">Our five policy priorities center on fair, effective revenue generators that strengthen public services and ease the burden on working families.</p>
+            <a href="/wealth-taxes" class="tfc-priorities-btn">View Our Priorities</a>
+        </div>
+        <div class="tfc-priorities-image">
+            <img src="https://images.squarespace-cdn.com/content/v1/63c215f8a268791349c9f04a/1718673242210-7PLTB9I3JAL4DVPEG3WS/Hawaii+State+Capitol+Rotunda+%285683208622%29.jpeg?format=2500w" alt="Hawaii State Capitol">
+        </div>
+    </div>
+</div>

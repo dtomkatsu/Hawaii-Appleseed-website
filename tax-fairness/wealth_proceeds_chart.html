@@ -1,0 +1,256 @@
+<!-- Wealth Proceeds Tax Chart Snippet -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+.wpt-chart-wrapper {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: transparent;
+    color: #1a202c;
+}
+
+.wpt-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-align: left;
+    font-style: italic;
+    color: #000;
+}
+
+.wpt-chart-container {
+    display: flex;
+    height: 400px;
+    position: relative;
+    padding-bottom: 30px; /* Space for x-axis labels */
+    padding-left: 10px;
+}
+
+.wpt-y-axis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 15px;
+    text-align: right;
+    font-size: 0.85rem;
+    color: #4a5568;
+    height: 100%;
+    position: relative;
+    bottom: 10px; /* Align 0 with bottom line */
+}
+
+.wpt-y-label {
+    transform: translateY(50%);
+}
+
+.wpt-plot-area {
+    flex-grow: 1;
+    position: relative;
+    border-bottom: 1px solid #cbd5e0;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 0 10px;
+}
+
+/* Horizontal Grid Lines */
+.wpt-grid-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #e2e8f0;
+    z-index: 0;
+}
+
+.wpt-bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 12%; /* Adjust based on number of bars */
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    justify-content: flex-end;
+}
+
+.wpt-bar {
+    width: 100%;
+    background: linear-gradient(180deg, #3a5278 0%, #243551 100%);
+    border-radius: 4px 4px 0 0;
+    transition: height 1s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s ease, filter 0.2s ease;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 10px;
+    height: 0; /* Animated to target height */
+}
+
+.wpt-bar:hover {
+    transform: scaleX(1.05);
+    filter: brightness(1.15);
+    box-shadow: 0 4px 12px rgba(36, 53, 81, 0.3);
+}
+
+.wpt-bar-value {
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.5s;
+    white-space: nowrap;
+}
+
+.wpt-bar.visible .wpt-bar-value {
+    opacity: 1;
+}
+
+/* Tooltip for extra info if needed */
+.wpt-bar::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: #1a202c;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 20;
+}
+
+.wpt-bar:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-12px);
+}
+
+.wpt-x-label {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: #1a202c;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .wpt-chart-wrapper {
+        padding: 10px;
+    }
+    .wpt-bar-value {
+        font-size: 0.7rem;
+        transform: rotate(-90deg);
+        margin-top: 15px;
+    }
+    .wpt-x-label {
+        font-size: 0.7rem;
+    }
+    .wpt-title {
+        font-size: 1rem;
+    }
+}
+</style>
+
+<div class="wpt-chart-wrapper">
+    <div class="wpt-title">Figure 2. Wealth Proceeds Tax Revenue, Hawai&#699;i, (2026)<sup>3</sup></div>
+    
+    <div class="wpt-chart-container">
+        <!-- Y Axis -->
+        <div class="wpt-y-axis">
+            <span class="wpt-y-label">300.0 M</span>
+            <span class="wpt-y-label">200.0 M</span>
+            <span class="wpt-y-label">100.0 M</span>
+            <span class="wpt-y-label">0.0 M</span>
+        </div>
+
+        <!-- Plot Area -->
+        <div class="wpt-plot-area">
+            <!-- Grid Lines (Positions calculated: 0%, 33.3%, 66.6%, 100% height) -->
+            <div class="wpt-grid-line" style="bottom: 0%;"></div>
+            <div class="wpt-grid-line" style="bottom: 33.33%;"></div>
+            <div class="wpt-grid-line" style="bottom: 66.66%;"></div>
+            <div class="wpt-grid-line" style="bottom: 100%;"></div>
+
+            <!-- Bars -->
+            <!-- Scale: Max 300M. Height% = (Value / 300) * 100 -->
+            
+            <!-- 1% Rate: 53.9M -> 17.97% -->
+            <div class="wpt-bar-group">
+                <div class="wpt-bar" data-height="17.97%" data-tooltip="Revenue: $53.9 Million">
+                    <span class="wpt-bar-value">53.9 M</span>
+                </div>
+                <div class="wpt-x-label">1% Rate</div>
+            </div>
+
+            <!-- 2% Rate: 106.6M -> 35.53% -->
+            <div class="wpt-bar-group">
+                <div class="wpt-bar" data-height="35.53%" data-tooltip="Revenue: $106.6 Million">
+                    <span class="wpt-bar-value">106.6 M</span>
+                </div>
+                <div class="wpt-x-label">2% Rate</div>
+            </div>
+
+            <!-- 3% Rate: 158.4M -> 52.8% -->
+            <div class="wpt-bar-group">
+                <div class="wpt-bar" data-height="52.8%" data-tooltip="Revenue: $158.4 Million">
+                    <span class="wpt-bar-value">158.4 M</span>
+                </div>
+                <div class="wpt-x-label">3% Rate</div>
+            </div>
+
+            <!-- 4% Rate: 209.2M -> 69.73% -->
+            <div class="wpt-bar-group">
+                <div class="wpt-bar" data-height="69.73%" data-tooltip="Revenue: $209.2 Million">
+                    <span class="wpt-bar-value">209.2 M</span>
+                </div>
+                <div class="wpt-x-label">4% Rate</div>
+            </div>
+
+            <!-- 5% Rate: 259.0M -> 86.33% -->
+            <div class="wpt-bar-group">
+                <div class="wpt-bar" data-height="86.33%" data-tooltip="Revenue: $259.0 Million">
+                    <span class="wpt-bar-value">259.0 M</span>
+                </div>
+                <div class="wpt-x-label">5% Rate</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const bars = document.querySelectorAll('.wpt-bar');
+    
+    // Animate bars on intersection
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                const targetHeight = bar.getAttribute('data-height');
+                
+                // Add a small delay based on index for staggered effect
+                setTimeout(() => {
+                    bar.style.height = targetHeight;
+                    bar.classList.add('visible');
+                }, 100);
+                
+                observer.unobserve(bar);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    bars.forEach((bar, index) => {
+        // Set transition delay for staggered animation
+        bar.style.transitionDelay = `${index * 100}ms`;
+        observer.observe(bar);
+    });
+});
+</script>

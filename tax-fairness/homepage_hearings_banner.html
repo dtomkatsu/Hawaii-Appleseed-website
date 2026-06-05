@@ -1,0 +1,349 @@
+<!-- Homepage Next Bill Hearings Banner Widget -->
+<!-- Copy this entire code block into your Squarespace homepage code injection or code block -->
+
+<style>
+.tfc-homepage-banner {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, rgba(36, 53, 81, 0.6) 0%, rgba(58, 82, 120, 0.55) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 14px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(36, 53, 81, 0.25);
+    max-width: 500px;
+    margin: 20px auto;
+    color: #fff;
+}
+
+.tfc-banner-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.tfc-banner-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tfc-banner-title::before {
+    content: '📅';
+    font-size: 1.3rem;
+}
+
+.tfc-banner-title a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.tfc-banner-title a:hover {
+    color: #93c5fd;
+}
+
+.tfc-banner-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff !important;
+    text-decoration: none !important;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tfc-banner-link:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tfc-banner-link::after {
+    content: '→';
+    transition: transform 0.2s ease;
+}
+
+.tfc-banner-link:hover::after {
+    transform: translateX(4px);
+}
+
+.tfc-banner-hearings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tfc-banner-hearing-item {
+    flex: 1;
+    min-width: 140px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.2s ease;
+}
+
+.tfc-banner-hearing-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.tfc-banner-bill {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.tfc-banner-bill a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.tfc-banner-bill a:hover {
+    color: #93c5fd;
+    text-decoration: underline;
+}
+
+.tfc-banner-date {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.tfc-banner-date::before {
+    content: '🕐';
+    font-size: 0.9rem;
+}
+
+.tfc-banner-desc {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.tfc-banner-empty {
+    text-align: center;
+    padding: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+}
+
+.tfc-banner-loading {
+    text-align: center;
+    padding: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
+@media (max-width: 600px) {
+    .tfc-homepage-banner {
+        padding: 16px 20px;
+        margin: 20px 16px;
+    }
+    
+    .tfc-banner-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .tfc-banner-link {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .tfc-banner-hearing-item {
+        min-width: 100%;
+    }
+}
+</style>
+
+<div class="tfc-homepage-banner">
+    <div class="tfc-banner-header">
+        <h3 class="tfc-banner-title"><a href="https://www.hitaxfairness.org/wealth-taxes" target="_blank">Upcoming Bill Hearings</a></h3>
+    </div>
+    <div class="tfc-banner-hearings" id="homepage-hearings-content">
+        <div class="tfc-banner-loading">Loading upcoming hearings...</div>
+    </div>
+</div>
+
+<script>
+(function() {
+    'use strict';
+    
+    const PROXY_URL = 'https://verdant-dango-b7d425.netlify.app/.netlify/functions/rss-proxy';
+    const BILLS = [
+        { type: 'HB', number: '1850', year: '2026' },
+        { type: 'HB', number: '2010', year: '2026' },
+        { type: 'SB', number: '2468', year: '2026' },
+        { type: 'HB', number: '1807', year: '2026' },
+        { type: 'HB', number: '2008', year: '2026' },
+        { type: 'HB', number: '2306', year: '2026' },
+        { type: 'SB', number: '349', year: '2026' },
+        { type: 'SB', number: '2587', year: '2026' },
+        { type: 'HB', number: '2049', year: '2026' },
+        { type: 'HB', number: '2150', year: '2026' },
+        { type: 'SB', number: '2362', year: '2026' }
+    ];
+    
+    async function loadHomepageHearings() {
+        const contentEl = document.getElementById('homepage-hearings-content');
+        if (!contentEl) return;
+        
+        const allHearings = [];
+        
+        for (const bill of BILLS) {
+            try {
+                const url = `${PROXY_URL}?bill=${bill.type}${bill.number}&year=${bill.year}`;
+                const response = await fetch(url);
+                
+                if (!response.ok) continue;
+                
+                const xmlText = await response.text();
+                if (!xmlText.includes('<rss') && !xmlText.includes('<item>')) continue;
+                
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+                const items = xmlDoc.getElementsByTagName('item');
+                
+                for (let i = 0; i < items.length; i++) {
+                    const titleEl = items[i].getElementsByTagName('title')[0];
+                    const pubDateEl = items[i].getElementsByTagName('pubDate')[0];
+                    
+                    if (!titleEl || !pubDateEl) continue;
+                    
+                    const title = titleEl.textContent;
+                    const pubDate = new Date(pubDateEl.textContent);
+                    const titleLower = title.toLowerCase();
+                    
+                    const isHearing = titleLower.includes('hearing') || 
+                                     titleLower.includes('scheduled') ||
+                                     titleLower.includes('notice') ||
+                                     titleLower.includes('decision') ||
+                                     titleLower.includes('public') ||
+                                     titleLower.includes('hold');
+                    
+                    if (isHearing) {
+                        let hearingDate = null;
+                        let timeStr = '';
+                        
+                        // Extract hearing date
+                        let dateMatch = null;
+                        const hearingPatterns = [
+                            /(?:hearing|heard|scheduled).*?(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})/i,
+                            /(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4}).*?(?:hearing|heard|scheduled)/i,
+                            /(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})\s+\d{1,2}:\d{2}\s*(?:AM|PM)/i
+                        ];
+                        
+                        for (const pattern of hearingPatterns) {
+                            const match = title.match(pattern);
+                            if (match && match[1]) {
+                                dateMatch = match;
+                                break;
+                            }
+                        }
+                        
+                        if (!dateMatch) {
+                            const allDates = title.match(/(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})/g);
+                            if (allDates && allDates.length > 0) {
+                                dateMatch = { 1: allDates[allDates.length - 1] };
+                            }
+                        }
+                        
+                        if (dateMatch) {
+                            try {
+                                const parts = dateMatch[1].split(/[-\/]/);
+                                if (parts.length === 3) {
+                                    const month = parseInt(parts[0]) - 1;
+                                    const day = parseInt(parts[1]);
+                                    const year = parts[2].length === 2 ? 2000 + parseInt(parts[2]) : parseInt(parts[2]);
+                                    hearingDate = new Date(year, month, day);
+                                    hearingDate.setHours(0, 0, 0, 0);
+                                }
+                            } catch (e) {}
+                        }
+                        
+                        // Extract time
+                        const timeMatch = title.match(/(\d{1,2}:\d{2}\s*(?:AM|PM|am|pm))/i);
+                        if (timeMatch) {
+                            timeStr = timeMatch[1].toUpperCase();
+                        }
+                        
+                        if (hearingDate) {
+                            const now = new Date();
+                            now.setHours(0, 0, 0, 0);
+                            // Only show future or today's hearings (not past ones)
+                            if (hearingDate >= now) {
+                                let description = title;
+                                const colonIndex = title.indexOf(':');
+                                if (colonIndex !== -1) {
+                                    description = title.substring(colonIndex + 1).trim();
+                                }
+                                
+                                allHearings.push({
+                                    bill: `${bill.type} ${bill.number}`,
+                                    billType: bill.type,
+                                    billNumber: bill.number,
+                                    date: hearingDate,
+                                    time: timeStr,
+                                    description: description,
+                                    sortDate: hearingDate
+                                });
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error(`Error loading hearings for ${bill.type} ${bill.number}:`, error);
+            }
+        }
+        
+        // Sort by date (upcoming first)
+        allHearings.sort((a, b) => a.sortDate - b.sortDate);
+        
+        // Display hearings (show up to 3)
+        if (allHearings.length === 0) {
+            contentEl.innerHTML = '<div class="tfc-banner-empty">No upcoming hearings scheduled. Check back soon!</div>';
+        } else {
+            contentEl.innerHTML = allHearings.slice(0, 3).map(hearing => {
+                const capitolUrl = `https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=${hearing.billType}&billnumber=${hearing.billNumber}&year=2026`;
+                return `
+                    <div class="tfc-banner-hearing-item">
+                        <div class="tfc-banner-bill">
+                            <a href="${capitolUrl}" target="_blank">${hearing.bill}</a>
+                        </div>
+                        <div class="tfc-banner-date">${hearing.date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}${hearing.time ? ' • ' + hearing.time : ''}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+    
+    // Load hearings when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadHomepageHearings);
+    } else {
+        loadHomepageHearings();
+    }
+})();
+</script>

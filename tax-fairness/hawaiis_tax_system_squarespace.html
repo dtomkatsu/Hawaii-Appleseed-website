@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hawai’i’s Tax System</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Halyard+Display:wght@700&display=swap'); /* Fallback if Halyard not available */
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #E8E6E1; /* Darker beige to match wealth taxes page */
+            color: #2A3A4D;
+            line-height: 1.6;
+        }
+
+        /* Squarespace Header Fix - Black font for light background pages */
+        header.header,
+        .header {
+            position: absolute !important;
+            background-color: transparent !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+        header .header-title-text a,
+        header .header-nav-item a,
+        header .header-nav-folder-title,
+        .header .header-title-text a,
+        .header .header-nav-item a,
+        .header .header-nav-wrapper a {
+            color: #2A3A4D !important;
+        }
+
+        header .header-burger .burger-inner div,
+        .header .header-burger .burger-inner div {
+            background-color: #2A3A4D !important;
+        }
+
+        .header-nav-folder-content,
+        .header .header-nav-folder-content,
+        header .header-nav-folder-content {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid rgba(42, 58, 77, 0.1) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .header-nav-folder-content a,
+        .header .header-nav-folder-content a,
+        header .header-nav-folder-content a,
+        .header-nav-folder-item a {
+            color: #2A3A4D !important;
+        }
+
+        .header-nav-folder-content a:hover,
+        .header-nav-folder-item a:hover {
+            background-color: rgba(42, 58, 77, 0.05) !important;
+            color: #2A3A4D !important;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Halyard Display', 'Oswald', 'Impact', sans-serif;
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        /* Main Container */
+        .tfc-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 24px 60px; /* Top padding for header */
+        }
+
+        /* Title Section */
+        .tfc-page-header {
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tfc-page-title {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            color: #2A3A4D;
+        }
+
+        .tfc-page-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #E57373; /* Brand accent color */
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tfc-intro-text {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #4a5568;
+        }
+
+        /* Section Styles */
+        .tfc-section {
+            margin-bottom: 80px;
+        }
+
+        .tfc-section-title {
+            font-size: 2.5rem;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .tfc-text-block {
+            max-width: 800px;
+            margin: 0 auto 48px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        /* Chart Section */
+        .tfc-chart-container {
+            background: #fff;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(42, 58, 77, 0.05);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .tfc-column-chart-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start; /* Align to top to ensure bar areas line up */
+            height: 480px; /* Increased height for labels */
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            gap: 16px;
+            padding-top: 40px; /* Space for values sticking up */
+        }
+
+        .tfc-col-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            height: 100%;
+            justify-content: flex-start; /* Start from top */
+        }
+
+        .tfc-col-value {
+            font-weight: 700;
+            color: #2A3A4D;
+            font-size: 1.1rem;
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+
+        .tfc-col-bar-area {
+            width: 100%;
+            height: 300px; /* FIXED HEIGHT ensuring perfect alignment */
+            flex-shrink: 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            border-bottom: 1px solid #e2e8f0; /* Optional guide line */
+        }
+
+        .tfc-col-bar {
+            width: 80%;
+            background-color: #5D8F92; /* Teal color similar to image */
+            border-radius: 4px 4px 0 0;
+            transition: height 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+        }
+
+        /* Highlight the Top 20% bar slightly differently if desired, or keep uniform */
+        .tfc-bar-highlight {
+            background-color: #5D8F92; 
+        }
+
+        .tfc-col-label {
+            margin-top: 16px;
+            font-weight: 700;
+            text-align: center;
+            font-size: 1rem;
+            color: #2A3A4D;
+            line-height: 1.2;
+        }
+
+        .tfc-col-sublabel {
+            margin-top: 4px;
+            font-size: 0.85rem;
+            color: #718096;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .tfc-chart-caption {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 0.95rem;
+            color: #718096;
+            font-style: italic;
+        }
+
+        .tfc-chart-source {
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .tfc-chart-source a {
+            color: #4A90E2;
+            text-decoration: underline;
+            font-size: 0.9rem;
+        }
+
+        .tfc-chart-source a:hover {
+            color: #2A5A9E;
+        }
+
+        @media (max-width: 768px) {
+            .tfc-column-chart-wrapper {
+                height: auto;
+                flex-direction: column;
+                align-items: stretch;
+                border-bottom: none;
+                gap: 24px;
+            }
+
+            .tfc-col-group {
+                flex-direction: row;
+                align-items: center;
+                height: auto;
+                justify-content: flex-start;
+                gap: 16px;
+            }
+
+            .tfc-col-bar-area {
+                height: 24px;
+                width: 100%;
+                justify-content: flex-start;
+                order: 2;
+                flex: 1;
+                background: #f7fafc;
+                border-radius: 0 4px 4px 0;
+            }
+
+            .tfc-col-bar {
+                height: 100% !important; /* Override vertical height */
+                width: 0%; /* Start width for animation */
+                border-radius: 0 4px 4px 0;
+            }
+
+            .tfc-col-value {
+                order: 3;
+                width: 50px;
+                margin-bottom: 0;
+                font-size: 0.9rem;
+                text-align: right;
+            }
+            
+            .tfc-col-label {
+                order: 1;
+                width: 80px;
+                text-align: left;
+                margin-top: 0;
+                font-size: 0.9rem;
+            }
+
+            .tfc-col-sublabel {
+                display: none; /* Hide income ranges on mobile to save space, or move below */
+            }
+        }
+
+        /* Two Paths Grid */
+        .tfc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .tfc-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 15px rgba(42, 58, 77, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(42, 58, 77, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tfc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(42, 58, 77, 0.1);
+        }
+
+        .tfc-card-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #C0504D;
+            line-height: 1;
+            margin-bottom: 16px;
+            opacity: 0.85;
+        }
+
+        .tfc-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: #2A3A4D;
+        }
+
+        .tfc-card p {
+            color: #4a5568;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .tfc-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .tfc-link {
+            color: #E57373;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.2s;
+        }
+
+        .tfc-link:hover {
+            color: #c62828;
+        }
+
+        .tfc-link::after {
+            content: '→';
+            margin-left: 6px;
+            transition: transform 0.2s;
+        }
+
+        .tfc-link:hover::after {
+            transform: translateX(4px);
+        }
+
+        @media (max-width: 768px) {
+            .tfc-page-title { font-size: 2.5rem; }
+            .tfc-comparison-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .tfc-label-col { width: 100%; text-align: left; }
+            .tfc-bar-col { width: 100%; }
+        }
+        /* Callout Box */
+        .tfc-callout-box {
+            background: #FFF5F5;
+            border-left: 4px solid #C0504D;
+            padding: 24px;
+            border-radius: 8px;
+            margin: 80px auto 40px;
+            max-width: 800px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .tfc-callout-title {
+            color: #C0504D;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .tfc-callout-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #C0504D;
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            font-family: serif;
+        }
+        
+        /* Red Chart Theme */
+        .tfc-col-bar.red-theme {
+            background-color: #C0504D;
+        }
+        
+        /* Top 20% Grouping */
+        .tfc-group-wrapper {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+        .tfc-group-cols {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            gap: 16px;
+            align-items: flex-start; /* Align to top */
+        }
+        .tfc-group-cols .tfc-col-group {
+            height: 100%;
+            justify-content: flex-start;
+        }
+        .tfc-group-bracket {
+            position: absolute;
+            top: 390px; /* Moved down below labels */
+            left: 0;
+            right: 0;
+            border-top: 1px solid #718096;
+            border-left: 1px solid #718096;
+            border-right: 1px solid #718096;
+            height: 10px;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .tfc-group-label {
+            position: absolute;
+            top: 410px; /* Moved down below bracket */
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #2A3A4D;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        @media (max-width: 768px) {
+            .tfc-group-wrapper {
+                flex: auto;
+                width: 100%;
+            }
+            .tfc-group-cols {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 24px;
+            }
+            .tfc-group-bracket {
+                display: none; /* Hide bracket on mobile */
+            }
+            .tfc-group-label {
+                text-align: left;
+                margin-bottom: 16px;
+                padding-left: 10px;
+                border-left: 4px solid #C0504D;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tfc-container">
+        <!-- Header Section -->
+        <div class="tfc-page-header">
+            <h1 class="tfc-page-title">Hawai’i’s Tax System</h1>
+            <div class="tfc-page-subtitle">Taxes Should Reduce Inequality — Not Deepen It</div>
+            <div class="tfc-intro-text">
+                <p>A fair tax system should help to close the gap between the rich and everyone else. But in Hawai&#699;i, our current system is making inequality worse.</p>
+            </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="tfc-section">
+            <h2 class="tfc-section-title">Who Pays More — and Who Pays Less</h2>
+            <div class="tfc-text-block">
+                <p>Our state’s tax system asks the least from those who have the most. Hawai&#699;i’s wealthiest residents pay the lowest portion of their income on taxes, while low- and moderate-income families pay the highest.</p>
+            </div>
+
+            <div class="tfc-chart-container">
+                <h3 style="text-align: center; margin-bottom: 40px; color: #2A3A4D;">Total Taxes: Share of Family Income</h3>
+                <div class="tfc-column-chart-wrapper">
+                    <!-- Lowest 20% -->
+                    <div class="tfc-col-group">
+                        <div class="tfc-col-bar-area">
+                            <div class="tfc-col-bar" style="height: 0%" data-height="99%">
+                                <span class="tfc-col-value">14.1%</span>
+                            </div>
+                        </div>
+                        <div class="tfc-col-label">Lowest 20%</div>
+                        <div class="tfc-col-sublabel">Less than $21,900</div>
+                    </div>
+
+                    <!-- Second 20% -->
+                    <div class="tfc-col-group">
+                        <div class="tfc-col-bar-area">
+                            <div class="tfc-col-bar" style="height: 0%" data-height="96%">
+                                <span class="tfc-col-value">13.7%</span>
+                            </div>
+                        </div>
+                        <div class="tfc-col-label">Second 20%</div>
+                        <div class="tfc-col-sublabel">$21,900 to $44,200</div>
+                    </div>
+
+                    <!-- Third 20% -->
+                    <div class="tfc-col-group">
+                        <div class="tfc-col-bar-area">
+                            <div class="tfc-col-bar" style="height: 0%" data-height="100%">
+                                <span class="tfc-col-value">14.2%</span>
+                            </div>
+                        </div>
+                        <div class="tfc-col-label">Third 20%</div>
+                        <div class="tfc-col-sublabel">$44,200 to $80,100</div>
+                    </div>
+
+                    <!-- Fourth 20% -->
+                    <div class="tfc-col-group">
+                        <div class="tfc-col-bar-area">
+                            <div class="tfc-col-bar" style="height: 0%" data-height="94%">
+                                <span class="tfc-col-value">13.4%</span>
+                            </div>
+                        </div>
+                        <div class="tfc-col-label">Fourth 20%</div>
+                        <div class="tfc-col-sublabel">$80,100 to $136,600</div>
+                    </div>
+
+                    <!-- Top 20% (Consolidated) -->
+                    <div class="tfc-col-group">
+                        <div class="tfc-col-bar-area">
+                            <div class="tfc-col-bar tfc-bar-highlight" style="height: 0%" data-height="77%">
+                                <span class="tfc-col-value">11.0%</span>
+                            </div>
+                        </div>
+                        <div class="tfc-col-label">Top 20%</div>
+                        <div class="tfc-col-sublabel">Over $136,600</div>
+                    </div>
+                </div>
+                <div class="tfc-chart-caption">
+                    Share of family income spent on state and local taxes. Middle and lower income families pay a higher percentage than the top 20%.
+                </div>
+                <div class="tfc-chart-source">
+                    <a href="https://itep.org/whopays/hawaii-who-pays-7th-edition/" target="_blank">ITEP: Who Pays 7th Edition</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Regressivity Callout -->
+        <div class="tfc-callout-box">
+            <div class="tfc-callout-title">
+                <span class="tfc-callout-icon">i</span>
+                What is a "Regressive" Tax?
+            </div>
+            <p style="margin: 0; color: #4a5568;">
+                A regressive tax system is one where lower-income families pay a higher percentage of their income in taxes than wealthy families. This often happens because flat taxes on things like groceries take up a bigger chunk of a working family's budget.
+            </p>
+        </div>
+
+        <!-- Sales & Excise Taxes Chart -->
+        <div class="tfc-section">
+            <div class="tfc-chart-container">
+                <h3 style="text-align: center; margin-bottom: 40px; color: #2A3A4D;">Sales & Excise Taxes: Share of Family Income</h3>
+                <div class="tfc-column-chart-wrapper">
+                    <!-- Lowest 20% -->
+                    <div class="tfc-col-group">
+                        <div class="tfc-col-bar-area">
+                            <div class="tfc-col-bar red-theme" style="height: 0%" data-height="100%">
+                                <span class="tfc-col-value">8.8%</span>
+                            </div>
+                        </div>
+                        <div class="tfc-col-label">Lowest 20%</div>
+                        <div class="tfc-col-sublabel">Less than $21,900</div>
+                    </div>
+
+                    <!-- Second 20% -->
+                    <div class="tfc-col-group">
+                        <div class="tfc-col-bar-area">
+                            <div class="tfc-col-bar red-theme" style="height: 0%" data-height="97.7%">
+                                <span class="tfc-col-value">8.6%</span>
+                            </div>
+                        </div>
+                        <div class="tfc-col-label">Second 20%</div>
+                        <div class="tfc-col-sublabel">$21,900 to $44,200</div>
+                    </div>
+
+                    <!-- Third 20% -->
+                    <div class="tfc-col-group">
+                        <div class="tfc-col-bar-area">
+                            <div class="tfc-col-bar red-theme" style="height: 0%" data-height="76.1%">
+                                <span class="tfc-col-value">6.7%</span>
+                            </div>
+                        </div>
+                        <div class="tfc-col-label">Third 20%</div>
+                        <div class="tfc-col-sublabel">$44,200 to $80,100</div>
+                    </div>
+
+                    <!-- Fourth 20% -->
+                    <div class="tfc-col-group">
+                        <div class="tfc-col-bar-area">
+                            <div class="tfc-col-bar red-theme" style="height: 0%" data-height="58.0%">
+                                <span class="tfc-col-value">5.1%</span>
+                            </div>
+                        </div>
+                        <div class="tfc-col-label">Fourth 20%</div>
+                        <div class="tfc-col-sublabel">$80,100 to $136,600</div>
+                    </div>
+
+                    <!-- Top 20% Group -->
+                    <div class="tfc-group-wrapper">
+                        <div class="tfc-group-cols">
+                            <!-- Top 80-95% -->
+                            <div class="tfc-col-group">
+                                <div class="tfc-col-bar-area">
+                                    <div class="tfc-col-bar red-theme" style="height: 0%" data-height="44.3%">
+                                        <span class="tfc-col-value">3.9%</span>
+                                    </div>
+                                </div>
+                                <div class="tfc-col-label">Top 80-95%</div>
+                                <div class="tfc-col-sublabel">$136,600 to $278,200</div>
+                            </div>
+                            
+                            <!-- Top 95-99% -->
+                            <div class="tfc-col-group">
+                                <div class="tfc-col-bar-area">
+                                    <div class="tfc-col-bar red-theme" style="height: 0%" data-height="29.5%">
+                                        <span class="tfc-col-value">2.6%</span>
+                                    </div>
+                                </div>
+                                <div class="tfc-col-label">Top 95-99%</div>
+                                <div class="tfc-col-sublabel">$278,200 to $594,900</div>
+                            </div>
+
+                            <!-- Top 1% -->
+                            <div class="tfc-col-group">
+                                <div class="tfc-col-bar-area">
+                                    <div class="tfc-col-bar red-theme" style="height: 0%" data-height="17.0%">
+                                        <span class="tfc-col-value">1.5%</span>
+                                    </div>
+                                </div>
+                                <div class="tfc-col-label">Top 1%</div>
+                                <div class="tfc-col-sublabel">Over $594,900</div>
+                            </div>
+                        </div>
+                        <div class="tfc-group-bracket"></div>
+                        <div class="tfc-group-label">Top 20%</div>
+                    </div>
+                </div>
+                <div class="tfc-chart-caption">
+                    The General Excise Tax (GET), which is a sales tax, is one of the main reasons why Hawai’i’s tax system is regressive. Higher-income families have more money to spend on groceries, so they don't feel the impact of the GET as much as lower-income families.
+                </div>
+                <div class="tfc-chart-source">
+                    <a href="https://itep.org/whopays/hawaii-who-pays-7th-edition/" target="_blank">ITEP: Who Pays 7th Edition</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Two Paths Section -->
+        <div class="tfc-section">
+            <h2 class="tfc-section-title">Two Paths to a Better Tax System</h2>
+            
+            <div class="tfc-grid">
+                <!-- Card 1 -->
+                <div class="tfc-card">
+                    <div class="tfc-card-number">1</div>
+                    <h3>Tax Credits for Working Families</h3>
+                    <p>Programs like the Child Tax Credit and Earned Income Tax Credit support families that are struggling to survive. They put tax money back in the pockets of these low-income and ALICE households, which helps them pay for their basic needs.</p>
+                    <div class="tfc-links">
+                        <a href="/child-tax-credit" class="tfc-link">Child Tax Credit</a>
+                        <a href="/earned-income-tax-credit" class="tfc-link">Earned Income Tax Credit</a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="tfc-card">
+                    <div class="tfc-card-number">2</div>
+                    <h3>Taxing Corporations and the Wealthy</h3>
+                    <p>The top 1% should pay more towards the programs and services that we all benefit from. Corporations also profit from Hawai’i’s land and culture—while barely giving back to the communities they are located in.</p>
+                    <div class="tfc-links">
+                        <a href="/wealth-taxes" class="tfc-link">Learn more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart animation observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.tfc-col-bar');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const bar = entry.target;
+                        const size = bar.getAttribute('data-height');
+                        
+                        // Check if mobile view
+                        if (window.innerWidth <= 768) {
+                            // On mobile, animate width
+                            setTimeout(() => {
+                                bar.style.width = size;
+                            }, 200);
+                        } else {
+                            // On desktop, animate height
+                            setTimeout(() => {
+                                bar.style.height = size;
+                            }, 200);
+                        }
+                        
+                        observer.unobserve(bar);
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            bars.forEach(bar => observer.observe(bar));
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+/* 
+ * Squarespace Header Fix for Light Background Pages
+ * 
+ * Use this on pages with light/beige backgrounds where the default
+ * white header text is not visible.
+ * 
+ * HOW TO ADD TO SQUARESPACE:
+ * Go to the specific page > Settings (gear icon) > Advanced > Page Header Code Injection
+ * Copy everything below (including the <style> tags)
+ */
+
+/* --------------------------------------------------------
+   COPY EVERYTHING BELOW INTO PAGE HEADER CODE INJECTION
+   -------------------------------------------------------- */
+
+<style>
+header.header,
+.header {
+    position: absolute !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Force nav links to dark color */
+header .header-title-text a,
+header .header-nav-item a,
+header .header-nav-folder-title,
+.header .header-title-text a,
+.header .header-nav-item a,
+.header .header-nav-wrapper a {
+    color: #2A3A4D !important;
+}
+
+/* Burger menu - dark lines */
+header .header-burger .burger-inner div,
+.header .header-burger .burger-inner div {
+    background-color: #2A3A4D !important;
+}
+
+/* Dropdown menu styling */
+.header-nav-folder-content,
+.header .header-nav-folder-content,
+header .header-nav-folder-content {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(42, 58, 77, 0.1) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.header-nav-folder-content a,
+.header .header-nav-folder-content a,
+header .header-nav-folder-content a,
+.header-nav-folder-item a {
+    color: #2A3A4D !important;
+}
+
+.header-nav-folder-content a:hover,
+.header-nav-folder-item a:hover {
+    background-color: rgba(42, 58, 77, 0.05) !important;
+    color: #2A3A4D !important;
+}
+</style>
+
+/* -------------------------------------------------------- */
