@@ -1,0 +1,513 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ============================================================
+   SB 3125 &mdash; Frequently Asked Questions (Squarespace injection)
+   Self-contained factsheet. All styles scoped under .tfc-faq
+   ============================================================ */
+.tfc-faq * { margin: 0; padding: 0; box-sizing: border-box; }
+.tfc-faq {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1a202c;
+    line-height: 1.6;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 8px 16px 40px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Hero band ---------- */
+.tfc-faq-hero {
+    background: linear-gradient(135deg, #243551 0%, #3a5278 100%);
+    color: #fff;
+    border-radius: 18px;
+    padding: 40px 36px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(36, 53, 81, 0.25);
+    margin-bottom: 12px;
+}
+.tfc-faq-hero .eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #bcd0ec;
+    margin-bottom: 12px;
+}
+.tfc-faq-hero h1 {
+    font-size: 2.3rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+.tfc-faq-hero p {
+    margin-top: 12px;
+    font-size: 1.05rem;
+    color: #dbe6f5;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ---------- Q section card ---------- */
+.tfc-faq-section {
+    background: #fff;
+    border: 1px solid rgba(36, 53, 81, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(36, 53, 81, 0.08);
+    padding: 32px 34px;
+    margin-top: 28px;
+}
+.tfc-faq-qhead {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+.tfc-faq-qnum {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #243551 0%, #3a5278 100%);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(36, 53, 81, 0.25);
+}
+.tfc-faq-q {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #243551;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    padding-top: 4px;
+}
+.tfc-faq-body p { color: #334155; font-size: 1.02rem; margin-bottom: 14px; }
+.tfc-faq-body p:last-child { margin-bottom: 0; }
+.tfc-faq-body strong { color: #1a202c; }
+
+/* ---------- Stat callouts ---------- */
+.tfc-faq-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin: 22px 0 4px;
+}
+.tfc-faq-stat {
+    background: linear-gradient(135deg, #f8fafc 0%, #eef2f7 100%);
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #243551;
+    border-radius: 12px;
+    padding: 16px 18px;
+}
+.tfc-faq-stat.amber { border-left-color: #f59e0b; }
+.tfc-faq-stat.green { border-left-color: #38a169; }
+.tfc-faq-stat .num {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #243551;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+}
+.tfc-faq-stat.amber .num { color: #c2710c; }
+.tfc-faq-stat.green .num { color: #2f855a; }
+.tfc-faq-stat .lbl {
+    margin-top: 6px;
+    font-size: 0.82rem;
+    color: #4a5568;
+    line-height: 1.4;
+}
+
+/* ---------- Q2 "what the bill does" cards ---------- */
+.tfc-faq-does { display: grid; gap: 14px; margin: 6px 0 18px; }
+.tfc-faq-doe {
+    display: flex;
+    gap: 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 18px;
+}
+.tfc-faq-doe .tick {
+    flex: 0 0 auto;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #243551;
+    color: #fff;
+    font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center;
+}
+.tfc-faq-doe .txt { font-size: 0.97rem; color: #334155; }
+.tfc-faq-doe .txt strong { color: #243551; }
+
+.tfc-faq-source-callout {
+    background: #ebf2fb;
+    border: 1px solid #cfe0f3;
+    border-radius: 12px;
+    padding: 16px 18px;
+    font-size: 0.97rem;
+    color: #2d3e54;
+}
+.tfc-faq-source-callout strong { color: #243551; }
+.tfc-faq-source-callout .tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #3b6fb0;
+    margin-bottom: 6px;
+}
+
+/* ---------- Charts ---------- */
+.tfc-faq-chart { margin: 22px 0 8px; }
+.tfc-faq-chart-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #243551;
+    margin-bottom: 4px;
+}
+.tfc-faq-chart-sub { font-size: 0.84rem; color: #718096; margin-bottom: 18px; }
+
+/* simple left-anchored bars (Q1) */
+.tfc-faq-bars { display: flex; flex-direction: column; gap: 16px; }
+.tfc-faq-bar-row {
+    display: grid;
+    grid-template-columns: 130px 1fr auto;
+    align-items: center;
+    gap: 12px;
+}
+.tfc-faq-bar-label { font-size: 0.84rem; font-weight: 600; color: #4a5568; text-align: right; line-height: 1.25; }
+.tfc-faq-bar-track { height: 30px; background: #eef2f7; border-radius: 7px; overflow: hidden; }
+.tfc-faq-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #243551 0%, #3a5278 100%);
+    border-radius: 7px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tfc-faq-bar.lite { background: linear-gradient(90deg, #9fb2cc 0%, #c3d0e2 100%); }
+.tfc-faq-bar-val { font-size: 0.95rem; font-weight: 800; color: #243551; white-space: nowrap; }
+
+/* diverging-from-zero bars (Q3) */
+.tfc-faq-dbar-row {
+    display: grid;
+    grid-template-columns: 150px 1fr 66px;
+    align-items: center;
+    gap: 12px;
+}
+.tfc-faq-grp { text-align: right; line-height: 1.2; }
+.tfc-faq-grp .g-name { font-size: 0.84rem; font-weight: 700; color: #2A3A4D; display: block; }
+.tfc-faq-grp .g-range { font-size: 0.7rem; color: #94a3b8; display: block; }
+.tfc-faq-dtrack {
+    position: relative;
+    height: 28px;
+    background: #f1f5f9;
+    border-radius: 6px;
+}
+.tfc-faq-zero { position: absolute; top: -5px; bottom: -5px; width: 2px; background: #94a3b8; z-index: 2; }
+.tfc-faq-dbar {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 0;
+    border-radius: 5px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+}
+.tfc-faq-dbar.cut { background: linear-gradient(90deg, #3a5278 0%, #243551 100%); }
+.tfc-faq-dbar.inc { background: linear-gradient(90deg, #f7b733 0%, #e8870b 100%); }
+.tfc-faq-dval { font-size: 0.86rem; font-weight: 800; text-align: left; white-space: nowrap; }
+.tfc-faq-dval.cut { color: #2f855a; }
+.tfc-faq-dval.inc { color: #c2710c; }
+.tfc-faq-axis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #94a3b8;
+    margin-top: 12px;
+    padding: 0 66px 0 150px;
+}
+.tfc-faq-note {
+    margin-top: 16px;
+    font-size: 0.78rem;
+    color: #94a3b8;
+    line-height: 1.45;
+    border-top: 1px solid #edf1f6;
+    padding-top: 12px;
+}
+
+/* ---------- Footer ---------- */
+.tfc-faq-footer {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.82rem;
+    margin-top: 30px;
+    padding-top: 18px;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 700px) {
+    .tfc-faq { padding: 6px 12px 32px; }
+    .tfc-faq-hero { padding: 30px 22px; border-radius: 14px; }
+    .tfc-faq-hero h1 { font-size: 1.7rem; }
+    .tfc-faq-hero p { font-size: 0.95rem; }
+    .tfc-faq-section { padding: 22px 18px; }
+    .tfc-faq-q { font-size: 1.2rem; }
+    .tfc-faq-qnum { width: 38px; height: 38px; font-size: 1.05rem; }
+    .tfc-faq-bar-row { grid-template-columns: 96px 1fr auto; gap: 8px; }
+    .tfc-faq-bar-label { font-size: 0.76rem; }
+    .tfc-faq-dbar-row { grid-template-columns: 96px 1fr 54px; gap: 8px; }
+    .tfc-faq-grp .g-name { font-size: 0.76rem; }
+    .tfc-faq-grp .g-range { font-size: 0.64rem; }
+    .tfc-faq-dval { font-size: 0.76rem; }
+    .tfc-faq-axis { padding: 0 54px 0 96px; font-size: 0.66rem; }
+    .tfc-faq-stat .num { font-size: 1.4rem; }
+}
+</style>
+
+<div class="tfc-faq">
+
+    <!-- ===================== HERO ===================== -->
+    <div class="tfc-faq-hero">
+        <span class="eyebrow">Hawai&#699;i &middot; 2026 Legislative Session</span>
+        <h1>SB 3125: Frequently Asked Questions</h1>
+        <p>What the bill does, why it moved, and how it changes income taxes for residents at every income level.</p>
+    </div>
+
+    <!-- ===================== Q1 ===================== -->
+    <section class="tfc-faq-section">
+        <div class="tfc-faq-qhead">
+            <div class="tfc-faq-qnum">1</div>
+            <h2 class="tfc-faq-q">Why did the Legislature consider SB 3125?</h2>
+        </div>
+        <div class="tfc-faq-body">
+            <p>Because the income-tax cuts already on the books &mdash; passed as <strong>Act 46 in 2024</strong> &mdash; overwhelmingly benefit the wealthiest residents, at a cost the state budget can't sustain.</p>
+            <p>As it stands, Act 46 delivers far larger tax cuts to the wealthy than to everyone else. By 2031, the richest 1% will receive average cuts of over <strong>$12,800 a year</strong>, while the lowest-income 20% will see only about <strong>$469</strong>. The law is expected to cost <strong>$240 million in 2025</strong> and more than <strong>$1.4 billion a year by 2031</strong> &mdash; roughly <strong>12% of Hawai&#699;i's total tax revenue</strong>. Because income taxes make up about a third of the state's budget, losing that much revenue could force deep cuts to the programs and services that local families depend on.</p>
+        </div>
+
+        <!-- Q1 mini comparison chart -->
+        <div class="tfc-faq-chart">
+            <div class="tfc-faq-chart-title">Act 46 average tax cut by 2031 &mdash; who benefits</div>
+            <div class="tfc-faq-chart-sub">Average annual income-tax cut per household, fully phased in</div>
+            <div class="tfc-faq-bars">
+                <div class="tfc-faq-bar-row">
+                    <span class="tfc-faq-bar-label">Richest 1%</span>
+                    <div class="tfc-faq-bar-track"><div class="tfc-faq-bar" data-w="100%"></div></div>
+                    <span class="tfc-faq-bar-val">$12,800</span>
+                </div>
+                <div class="tfc-faq-bar-row">
+                    <span class="tfc-faq-bar-label">Lowest-income 20%</span>
+                    <div class="tfc-faq-bar-track"><div class="tfc-faq-bar lite" data-w="3.7%"></div></div>
+                    <span class="tfc-faq-bar-val">$469</span>
+                </div>
+            </div>
+            <div class="tfc-faq-note">The richest 1% receive a cut roughly <strong>27 times larger</strong> than the lowest-income 20%.</div>
+        </div>
+
+        <div class="tfc-faq-stats">
+            <div class="tfc-faq-stat amber">
+                <div class="num">$240M</div>
+                <div class="lbl">cost of the Act 46 cuts in 2025</div>
+            </div>
+            <div class="tfc-faq-stat amber">
+                <div class="num">$1.4B+/yr</div>
+                <div class="lbl">projected annual cost by 2031</div>
+            </div>
+            <div class="tfc-faq-stat amber">
+                <div class="num">&asymp;12%</div>
+                <div class="lbl">of Hawai&#699;i's total tax revenue</div>
+            </div>
+            <div class="tfc-faq-stat">
+                <div class="num">&asymp;&#8531;</div>
+                <div class="lbl">share of the state budget funded by income taxes</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== Q2 ===================== -->
+    <section class="tfc-faq-section">
+        <div class="tfc-faq-qhead">
+            <div class="tfc-faq-qnum">2</div>
+            <h2 class="tfc-faq-q">What is SB 3125?</h2>
+        </div>
+        <div class="tfc-faq-body">
+            <p>SB 3125 moved forward with a package that:</p>
+        </div>
+        <div class="tfc-faq-does">
+            <div class="tfc-faq-doe">
+                <div class="tick">&#10003;</div>
+                <div class="txt"><strong>Preserves the 2024 income-tax cuts</strong> for joint filers earning under about $350,000 and single filers under about $175,000.</div>
+            </div>
+            <div class="tfc-faq-doe">
+                <div class="tick">&#10003;</div>
+                <div class="txt"><strong>Lets tax cuts for the very highest-income households fall away</strong> and creates a new top income-tax bracket around <strong>13 percent</strong> for single filers above $500,000 and joint filers above $1 million.</div>
+            </div>
+            <div class="tfc-faq-doe">
+                <div class="tick">&#10003;</div>
+                <div class="txt"><strong>Phases out or caps several expensive tax credits</strong> &mdash; especially in renewable energy and high-tech &mdash; to help close the budget gap.</div>
+            </div>
+        </div>
+        <div class="tfc-faq-source-callout">
+            <span class="tag">Reported by Civil Beat</span>
+            <div>The deal would save the state about <strong>$680 million over five years</strong>, mostly by ending or limiting tax credits, while preserving the main tax cuts for low- and middle-income residents.</div>
+        </div>
+    </section>
+
+    <!-- ===================== Q3 ===================== -->
+    <section class="tfc-faq-section">
+        <div class="tfc-faq-qhead">
+            <div class="tfc-faq-qnum">3</div>
+            <h2 class="tfc-faq-q">How will SB 3125 affect Hawai&#699;i taxpayers?</h2>
+        </div>
+        <div class="tfc-faq-body">
+            <p>The charts below show how SB 3125's <strong>income-tax-bracket changes</strong> affect residents at different income levels, compared with today's tax law and fully phased in by 2031. Nearly everyone keeps a tax cut &mdash; while the top 1%, who would have received the largest Act 46 windfall, instead pays more.</p>
+        </div>
+
+        <!-- Chart A: diverging $ change -->
+        <div class="tfc-faq-chart">
+            <div class="tfc-faq-chart-title">Average annual tax change by income group, 2031</div>
+            <div class="tfc-faq-chart-sub">Change vs. current law, once fully phased in</div>
+            <div class="tfc-faq-bars" id="tfc-faq-chartA">
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Lowest 20%</span><span class="g-range">under $27,900</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:28.571%;"></div><div class="tfc-faq-dbar cut" style="right:71.429%;" data-w="0.35%"></div></div>
+                    <span class="tfc-faq-dval cut">&minus;$37</span>
+                </div>
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Second 20%</span><span class="g-range">$27,900&ndash;$57,000</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:28.571%;"></div><div class="tfc-faq-dbar cut" style="right:71.429%;" data-w="3.93%"></div></div>
+                    <span class="tfc-faq-dval cut">&minus;$413</span>
+                </div>
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Middle 20%</span><span class="g-range">$57,000&ndash;$98,400</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:28.571%;"></div><div class="tfc-faq-dbar cut" style="right:71.429%;" data-w="8.10%"></div></div>
+                    <span class="tfc-faq-dval cut">&minus;$850</span>
+                </div>
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Fourth 20%</span><span class="g-range">$98,400&ndash;$152,000</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:28.571%;"></div><div class="tfc-faq-dbar cut" style="right:71.429%;" data-w="12.13%"></div></div>
+                    <span class="tfc-faq-dval cut">&minus;$1,274</span>
+                </div>
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Next 15%</span><span class="g-range">$152,000&ndash;$345,000</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:28.571%;"></div><div class="tfc-faq-dbar cut" style="right:71.429%;" data-w="16.89%"></div></div>
+                    <span class="tfc-faq-dval cut">&minus;$1,773</span>
+                </div>
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Next 4%</span><span class="g-range">$345,000&ndash;$783,300</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:28.571%;"></div><div class="tfc-faq-dbar cut" style="right:71.429%;" data-w="26.56%"></div></div>
+                    <span class="tfc-faq-dval cut">&minus;$2,789</span>
+                </div>
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Top 1%</span><span class="g-range">$783,300 and up</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:28.571%;"></div><div class="tfc-faq-dbar inc" style="left:28.571%;" data-w="67.15%"></div></div>
+                    <span class="tfc-faq-dval inc">+$7,051</span>
+                </div>
+            </div>
+            <div class="tfc-faq-axis"><span>&larr; families pay less</span><span>top earners pay more &rarr;</span></div>
+        </div>
+
+        <!-- Stat strip -->
+        <div class="tfc-faq-stats">
+            <div class="tfc-faq-stat green">
+                <div class="num">77%</div>
+                <div class="lbl">of residents get a tax cut</div>
+            </div>
+            <div class="tfc-faq-stat amber">
+                <div class="num">99.9%</div>
+                <div class="lbl">of the tax increase falls on the top 1%</div>
+            </div>
+            <div class="tfc-faq-stat amber">
+                <div class="num">+$7,051</div>
+                <div class="lbl">average increase for the top 1%</div>
+            </div>
+            <div class="tfc-faq-stat green">
+                <div class="num">$850</div>
+                <div class="lbl">average cut for the middle 20%</div>
+            </div>
+        </div>
+
+        <!-- Chart B: % of income -->
+        <div class="tfc-faq-chart">
+            <div class="tfc-faq-chart-title">Tax change as a share of income, 2031</div>
+            <div class="tfc-faq-chart-sub">A negative share means a tax cut relative to income</div>
+            <div class="tfc-faq-bars" id="tfc-faq-chartB">
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Lowest 20%</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:70.588%;"></div><div class="tfc-faq-dbar cut" style="right:29.412%;" data-w="15.29%"></div></div>
+                    <span class="tfc-faq-dval cut">&minus;0.26%</span>
+                </div>
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Second 20%</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:70.588%;"></div><div class="tfc-faq-dbar cut" style="right:29.412%;" data-w="58.82%"></div></div>
+                    <span class="tfc-faq-dval cut">&minus;1.00%</span>
+                </div>
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Middle 20%</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:70.588%;"></div><div class="tfc-faq-dbar cut" style="right:29.412%;" data-w="65.88%"></div></div>
+                    <span class="tfc-faq-dval cut">&minus;1.12%</span>
+                </div>
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Fourth 20%</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:70.588%;"></div><div class="tfc-faq-dbar cut" style="right:29.412%;" data-w="60.00%"></div></div>
+                    <span class="tfc-faq-dval cut">&minus;1.02%</span>
+                </div>
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Next 15%</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:70.588%;"></div><div class="tfc-faq-dbar cut" style="right:29.412%;" data-w="47.65%"></div></div>
+                    <span class="tfc-faq-dval cut">&minus;0.81%</span>
+                </div>
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Next 4%</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:70.588%;"></div><div class="tfc-faq-dbar cut" style="right:29.412%;" data-w="34.71%"></div></div>
+                    <span class="tfc-faq-dval cut">&minus;0.59%</span>
+                </div>
+                <div class="tfc-faq-dbar-row">
+                    <span class="tfc-faq-grp"><span class="g-name">Top 1%</span></span>
+                    <div class="tfc-faq-dtrack"><div class="tfc-faq-zero" style="left:70.588%;"></div><div class="tfc-faq-dbar inc" style="left:70.588%;" data-w="21.18%"></div></div>
+                    <span class="tfc-faq-dval inc">+0.36%</span>
+                </div>
+            </div>
+            <div class="tfc-faq-axis"><span>&larr; tax cut</span><span>tax increase &rarr;</span></div>
+        </div>
+
+        <div class="tfc-faq-note">Reflects SB 3125's income-tax-bracket changes only (not the bill's tax-credit changes). Figures compare projected 2031 taxes with current (2026) law. Source: Institute on Taxation and Economic Policy, May 2026.</div>
+    </section>
+
+    <div class="tfc-faq-footer">
+        Sources: Institute on Taxation and Economic Policy (May 2026) &middot; Civil Beat &middot; Hawai&#699;i Tax Fairness Coalition (hitaxfairness.org)
+    </div>
+</div>
+
+<script>
+(function () {
+    function animate(container) {
+        container.querySelectorAll('[data-w]').forEach(function (bar) {
+            bar.style.width = bar.getAttribute('data-w');
+        });
+    }
+    var charts = document.querySelectorAll('.tfc-faq .tfc-faq-chart .tfc-faq-bars');
+    if (!charts.length) return;
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    animate(entry.target);
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.25 });
+        charts.forEach(function (c) { io.observe(c); });
+    } else {
+        charts.forEach(animate);
+    }
+})();
+</script>
