@@ -286,6 +286,20 @@
 .tfc-faq-spot .tfc-faq-does { margin: 14px 0 0; }
 .tfc-faq-spot-rule { height: 1px; background: var(--line); margin: 24px 0 22px; }
 .tfc-faq-spot .tfc-faq-note { margin-top: 20px; }
+.tfc-faq-spot-more {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 18px;
+    background: #fff; border: 1px solid var(--line); border-radius: 999px;
+    padding: 9px 17px; cursor: pointer;
+    font-family: inherit; font-size: 0.82rem; font-weight: 700; color: var(--navy);
+    transition: background .15s ease, border-color .15s ease;
+}
+.tfc-faq-spot-more:hover { background: var(--bg); border-color: var(--line-strong); }
+.tfc-faq-spot-more svg { width: 15px; height: 15px; transition: transform .3s ease; }
+.tfc-faq-spot.open .tfc-faq-spot-more svg { transform: rotate(180deg); }
+.tfc-faq-spot-detail { max-height: 0; overflow: hidden; transition: max-height .45s ease; }
+.tfc-faq-spot.open .tfc-faq-spot-detail { max-height: 1600px; }
+.tfc-faq-spot-detail-inner { padding-top: 4px; }
 
 /* ---------- Q4: sunset glide-path timeline ---------- */
 .tfc-faq-tl-head { margin-bottom: 20px; }
@@ -395,12 +409,15 @@
     .tfc-faq-section { break-inside: auto; }
     .tfc-faq-bar, .tfc-faq-dbar { transition: none !important; }
     .tfc-faq-sources a { border-color: var(--line-strong); }
+    /* Always show the spotlight detail in print */
+    .tfc-faq-spot-more { display: none !important; }
+    .tfc-faq-spot-detail { max-height: none !important; overflow: visible !important; }
 }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
     .tfc-faq { scroll-behavior: auto; }
-    .tfc-faq-bar, .tfc-faq-dbar { transition: none !important; }
+    .tfc-faq-bar, .tfc-faq-dbar, .tfc-faq-spot-detail, .tfc-faq-spot-more svg { transition: none !important; }
 }
 
 /* ---------- Responsive ---------- */
@@ -678,26 +695,36 @@
                 <div class="tfc-faq-stat amber"><div class="num">&asymp;$40M/yr</div><div class="lbl">annual cap from 2027 &mdash; less than half of recent spending</div></div>
                 <div class="tfc-faq-stat green"><div class="num">&asymp;$343M*</div><div class="lbl">estimated 5-year state savings (2027&ndash;2031)</div></div>
             </div>
-            <div class="tfc-faq-does">
-                <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Income limits</strong> &mdash; new AGI thresholds reduce or exclude higher-income claimants.</div></div>
-                <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Certification required</strong> &mdash; projects need pre-approval to claim a spot under the cap.</div></div>
-                <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Sunset in 2031</strong> &mdash; full elimination; no safe harbor for projects already underway.</div></div>
-            </div>
 
-            <div class="tfc-faq-spot-rule"></div>
+            <button class="tfc-faq-spot-more" type="button" aria-expanded="false" aria-controls="retitc-detail">
+                <span class="more-label">More detail</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
 
-            <div class="tfc-faq-tl-head">
-                <h5 class="tfc-faq-tl-title">The sunset glide path</h5>
-                <p class="tfc-faq-tl-sub">RETITC&rsquo;s wind-down (amber) within the bill&rsquo;s broader credit sunsets.</p>
-            </div>
-            <div class="tfc-faq-timeline">
-                <div class="tfc-faq-tl-step ret"><div class="yr">2027</div><div class="ev">RETITC &asymp;$40M/yr cap begins</div></div>
-                <div class="tfc-faq-tl-step"><div class="yr">2028</div><div class="ev">Tech Infrastructure Renovation Credit repealed</div></div>
-                <div class="tfc-faq-tl-step"><div class="yr">2029</div><div class="ev">High-Tech Investment &amp; R&amp;D credits repealed</div></div>
-                <div class="tfc-faq-tl-step ret end"><div class="yr">2031</div><div class="ev">RETITC fully eliminated</div></div>
-            </div>
+            <div class="tfc-faq-spot-detail" id="retitc-detail">
+                <div class="tfc-faq-spot-detail-inner">
+                    <div class="tfc-faq-does">
+                        <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Income limits</strong> &mdash; new AGI thresholds reduce or exclude higher-income claimants.</div></div>
+                        <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Certification required</strong> &mdash; projects need pre-approval to claim a spot under the cap.</div></div>
+                        <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Sunset in 2031</strong> &mdash; full elimination; no safe harbor for projects already underway.</div></div>
+                    </div>
 
-            <div class="tfc-faq-note">*A <strong>modeled estimate</strong>, not an official score &mdash; from the Hawai&#699;i Appleseed / Census-Forecaster RETITC fiscal model (central &ldquo;OBBBA-Mid&rdquo; scenario). The real figure depends on solar demand, how fast existing credits are used, and other assumptions, and could be meaningfully higher or lower. Industry reporting also warns that projects already underway in 2027 will compete for a smaller pot, and some commercial solar racing federal deadlines may no longer pencil out.</div>
+                    <div class="tfc-faq-spot-rule"></div>
+
+                    <div class="tfc-faq-tl-head">
+                        <h5 class="tfc-faq-tl-title">The sunset glide path</h5>
+                        <p class="tfc-faq-tl-sub">RETITC&rsquo;s wind-down (amber) within the bill&rsquo;s broader credit sunsets.</p>
+                    </div>
+                    <div class="tfc-faq-timeline">
+                        <div class="tfc-faq-tl-step ret"><div class="yr">2027</div><div class="ev">RETITC &asymp;$40M/yr cap begins</div></div>
+                        <div class="tfc-faq-tl-step"><div class="yr">2028</div><div class="ev">Tech Infrastructure Renovation Credit repealed</div></div>
+                        <div class="tfc-faq-tl-step"><div class="yr">2029</div><div class="ev">High-Tech Investment &amp; R&amp;D credits repealed</div></div>
+                        <div class="tfc-faq-tl-step ret end"><div class="yr">2031</div><div class="ev">RETITC fully eliminated</div></div>
+                    </div>
+
+                    <div class="tfc-faq-note">*A <strong>modeled estimate</strong>, not an official score &mdash; from the Hawai&#699;i Appleseed / Census-Forecaster RETITC fiscal model (central &ldquo;OBBBA-Mid&rdquo; scenario). The real figure depends on solar demand, how fast existing credits are used, and other assumptions, and could be meaningfully higher or lower. Industry reporting also warns that projects already underway in 2027 will compete for a smaller pot, and some commercial solar racing federal deadlines may no longer pencil out.</div>
+                </div>
+            </div>
         </div>
 
         <!-- RETITC data: who claims it, by income -->
@@ -784,6 +811,17 @@
     }
     // Ensure bars are filled before printing (a fresh print may skip scroll animation).
     window.addEventListener('beforeprint', fillAll);
+
+    // Spotlight "More detail" expand/collapse
+    document.querySelectorAll('.tfc-faq-spot-more').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var spot = btn.closest('.tfc-faq-spot');
+            var open = spot.classList.toggle('open');
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            var label = btn.querySelector('.more-label');
+            if (label) label.textContent = open ? 'Show less' : 'More detail';
+        });
+    });
 
     var charts = document.querySelectorAll('.tfc-faq .tfc-faq-chart .tfc-faq-bars');
     if (!charts.length) return;
