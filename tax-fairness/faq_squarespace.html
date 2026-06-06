@@ -1,3 +1,6 @@
+<!-- Viewport meta: honored when this file is viewed standalone (the parser hoists it
+     into the implicit <head>). Harmless inside Squarespace, which supplies its own. -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
@@ -424,6 +427,23 @@
     .tfc-faq-timeline::before { top: 7px; bottom: 7px; left: 6px; right: auto; width: 2px; height: auto; }
     .tfc-faq-tl-step { text-align: left; padding: 0 0 0 28px; }
     .tfc-faq-tl-step::after { left: 6px; top: 3px; transform: none; }
+
+    /* Responsive table -> stacked cards (no horizontal scroll) */
+    .tfc-faq-table-scroll { overflow-x: visible; }
+    .tfc-faq-table { min-width: 0; }
+    .tfc-faq-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .tfc-faq-table tr { display: block; padding: 15px 18px; border-bottom: 1px solid var(--line); }
+    .tfc-faq-table tr:last-child { border-bottom: none; }
+    .tfc-faq-table td { display: block; padding: 0; border: none; }
+    .tfc-faq-table td.credit { font-size: 1rem; margin-bottom: 8px; }
+    .tfc-faq-table td[data-label] { font-size: 0.86rem; }
+    .tfc-faq-table td[data-label]::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.62rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+        color: var(--muted); margin: 8px 0 1px;
+    }
+    .tfc-faq-table .timing { white-space: normal; }
 }
 </style>
 
@@ -715,12 +735,12 @@
                         <tr><th>Credit</th><th>Treatment under SB 3125</th><th>Timing</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="credit"><span class="sdot a"></span>Renewable Energy (RETITC)</td><td>Adds &asymp;$40M/yr cap, income limits &amp; certification; full sunset</td><td class="timing">Cap 2027 &middot; ends 2031</td></tr>
-                        <tr><td class="credit"><span class="sdot a"></span>Capital Goods Excise</td><td>Adds a sunset date (finite life)</td><td class="timing">Sunset added</td></tr>
-                        <tr><td class="credit"><span class="sdot a"></span>Renewable Fuels Production</td><td>Adds a sunset date</td><td class="timing">Sunset added</td></tr>
-                        <tr><td class="credit"><span class="sdot r"></span>Tech Infrastructure Renovation</td><td>Fully repealed</td><td class="timing">From 1/1/2028</td></tr>
-                        <tr><td class="credit"><span class="sdot r"></span>High-Tech Business Investment</td><td>Fully repealed</td><td class="timing">From 1/1/2029</td></tr>
-                        <tr><td class="credit"><span class="sdot r"></span>Research Activities (R&amp;D)</td><td>Fully repealed</td><td class="timing">From 1/1/2029</td></tr>
+                        <tr><td class="credit"><span class="sdot a"></span>Renewable Energy (RETITC)</td><td data-label="Treatment">Adds &asymp;$40M/yr cap, income limits &amp; certification; full sunset</td><td class="timing" data-label="Timing">Cap 2027 &middot; ends 2031</td></tr>
+                        <tr><td class="credit"><span class="sdot a"></span>Capital Goods Excise</td><td data-label="Treatment">Adds a sunset date (finite life)</td><td class="timing" data-label="Timing">Sunset added</td></tr>
+                        <tr><td class="credit"><span class="sdot a"></span>Renewable Fuels Production</td><td data-label="Treatment">Adds a sunset date</td><td class="timing" data-label="Timing">Sunset added</td></tr>
+                        <tr><td class="credit"><span class="sdot r"></span>Tech Infrastructure Renovation</td><td data-label="Treatment">Fully repealed</td><td class="timing" data-label="Timing">From 1/1/2028</td></tr>
+                        <tr><td class="credit"><span class="sdot r"></span>High-Tech Business Investment</td><td data-label="Treatment">Fully repealed</td><td class="timing" data-label="Timing">From 1/1/2029</td></tr>
+                        <tr><td class="credit"><span class="sdot r"></span>Research Activities (R&amp;D)</td><td data-label="Treatment">Fully repealed</td><td class="timing" data-label="Timing">From 1/1/2029</td></tr>
                     </tbody>
                 </table>
             </div>
