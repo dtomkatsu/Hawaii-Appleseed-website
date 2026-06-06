@@ -249,38 +249,56 @@
 
 .tfc-faq-note { margin-top: 18px; font-size: 0.78rem; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--line); padding-top: 14px; }
 
-/* ---------- Q4: RETITC spotlight ---------- */
+/* ---------- Q4: RETITC spotlight (integrated with sunset glide path) ---------- */
 .tfc-faq-spot {
+    position: relative;
+    overflow: hidden;
     border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 24px 26px;
-    background: linear-gradient(180deg, #fbfcfe, #ffffff);
-    box-shadow: var(--shadow-sm);
+    border-radius: 18px;
+    padding: 26px 28px;
+    background:
+        radial-gradient(130% 80% at 0% 0%, rgba(232,146,12,0.07), rgba(232,146,12,0) 42%),
+        linear-gradient(180deg, #fbfcfe, #ffffff);
+    box-shadow: var(--shadow-md);
     margin: 26px 0 8px;
+}
+.tfc-faq-spot-head { display: flex; align-items: center; gap: 15px; margin-bottom: 6px; }
+.tfc-faq-spot-icon {
+    flex: 0 0 auto;
+    width: 46px; height: 46px;
+    border-radius: 13px;
+    background: linear-gradient(140deg, #f7b733, #e8870b);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 18px rgba(232,146,12,.28);
 }
 .tfc-faq-spot .tag {
     display: inline-flex; align-items: center; gap: 7px;
     font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--amber-ink); margin-bottom: 10px;
+    text-transform: uppercase; color: var(--amber-ink); margin-bottom: 3px;
 }
 .tfc-faq-spot .tag::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--amber); }
-.tfc-faq-spot h4 { margin: 0 0 4px; font-size: 1.06rem; color: var(--navy); font-weight: 700; letter-spacing: -0.01em; }
-.tfc-faq-spot .ssub { font-size: 0.85rem; color: var(--ink-soft); margin: 0 0 4px; }
+.tfc-faq-spot h4 { margin: 0; font-size: 1.14rem; color: var(--navy); font-weight: 700; letter-spacing: -0.01em; }
+.tfc-faq-spot .ssub { font-size: 0.88rem; color: var(--ink-soft); margin: 0; }
 .tfc-faq-spot .tfc-faq-stats { margin: 18px 0 4px; }
 .tfc-faq-spot .tfc-faq-does { margin: 14px 0 0; }
+.tfc-faq-spot-rule { height: 1px; background: var(--line); margin: 24px 0 22px; }
+.tfc-faq-spot .tfc-faq-note { margin-top: 20px; }
 
 /* ---------- Q4: sunset glide-path timeline ---------- */
-.tfc-faq-tl-title { font-size: 1.06rem; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; margin: 26px 0 18px; }
+.tfc-faq-tl-head { margin-bottom: 20px; }
+.tfc-faq-tl-title { font-size: 1.02rem; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; margin: 0 0 3px; }
+.tfc-faq-tl-sub { font-size: 0.82rem; color: var(--muted); margin: 0; }
 .tfc-faq-timeline { position: relative; display: flex; }
 .tfc-faq-timeline::before { content: ''; position: absolute; top: 13px; left: 10%; right: 10%; height: 2px; background: var(--line-strong); }
-.tfc-faq-tl-step { flex: 1; text-align: center; position: relative; padding-top: 36px; }
+.tfc-faq-tl-step { flex: 1; text-align: center; position: relative; padding-top: 38px; }
 .tfc-faq-tl-step::after {
-    content: ''; position: absolute; top: 7px; left: 50%; transform: translateX(-50%);
-    width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 3px solid var(--blue);
+    content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+    width: 15px; height: 15px; border-radius: 50%; background: #fff; border: 3px solid var(--blue);
     box-shadow: 0 0 0 4px rgba(47,111,176,.12);
 }
-.tfc-faq-tl-step.end::after { border-color: var(--amber); box-shadow: 0 0 0 4px rgba(232,146,12,.14); }
-.tfc-faq-tl-step .yr { font-size: 1.05rem; font-weight: 800; color: var(--navy); }
+.tfc-faq-tl-step.ret::after, .tfc-faq-tl-step.end::after { border-color: var(--amber); box-shadow: 0 0 0 4px rgba(232,146,12,.16); }
+.tfc-faq-tl-step .yr { font-size: 1.08rem; font-weight: 800; color: var(--navy); }
+.tfc-faq-tl-step.ret .yr, .tfc-faq-tl-step.end .yr { color: var(--amber-ink); }
 .tfc-faq-tl-step .ev { font-size: 0.78rem; color: var(--ink-soft); margin-top: 5px; padding: 0 8px; line-height: 1.35; }
 
 /* ---------- Q4: at-a-glance table ---------- */
@@ -362,7 +380,7 @@
     .tfc-faq-nav { display: none !important; }
     .tfc-faq-hero, .tfc-faq-kicker, .tfc-faq-qnum, .tfc-faq-bar, .tfc-faq-dbar,
     .tfc-faq-zero, .sdot, .tfc-faq-stat::before, .tfc-faq-tl-step::after,
-    .tfc-faq-dval, .tfc-faq-table thead th {
+    .tfc-faq-spot-icon, .tfc-faq-dval, .tfc-faq-table thead th {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
@@ -621,10 +639,20 @@
             <p>In budget terms, the bill funds the broader low- and middle-income bracket relief largely by scaling back business- and investment-side tax breaks &mdash; capping the renewable energy credit and sunsetting several capital, fuel, and high-tech credits.</p>
         </div>
 
-        <!-- RETITC spotlight -->
+        <!-- RETITC spotlight + sunset glide path (integrated) -->
         <div class="tfc-faq-spot">
-            <span class="tag">Spotlight &middot; Renewable energy credit</span>
-            <h4>The renewable energy credit (RETITC)</h4>
+            <div class="tfc-faq-spot-head">
+                <span class="tfc-faq-spot-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4.2" fill="#fff" stroke="none"></circle>
+                        <path d="M12 1.6v2.6M12 19.8v2.6M3.5 3.5l1.9 1.9M18.6 18.6l1.9 1.9M1.6 12h2.6M19.8 12h2.6M3.5 20.5l1.9-1.9M18.6 5.4l1.9-1.9"></path>
+                    </svg>
+                </span>
+                <div>
+                    <span class="tag">Spotlight &middot; Renewable energy credit</span>
+                    <h4>The renewable energy credit (RETITC)</h4>
+                </div>
+            </div>
             <p class="ssub">This is where the most visible change lands &mdash; especially for solar and storage.</p>
             <div class="tfc-faq-stats">
                 <div class="tfc-faq-stat amber"><div class="num">&asymp;$40M/yr</div><div class="lbl">annual cap from 2027 &mdash; less than half of recent spending</div></div>
@@ -635,6 +663,20 @@
                 <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Certification required</strong> &mdash; projects need pre-approval to claim a spot under the cap.</div></div>
                 <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Sunset in 2031</strong> &mdash; full elimination; no safe harbor for projects already underway.</div></div>
             </div>
+
+            <div class="tfc-faq-spot-rule"></div>
+
+            <div class="tfc-faq-tl-head">
+                <h5 class="tfc-faq-tl-title">The sunset glide path</h5>
+                <p class="tfc-faq-tl-sub">RETITC&rsquo;s wind-down (amber) within the bill&rsquo;s broader credit sunsets.</p>
+            </div>
+            <div class="tfc-faq-timeline">
+                <div class="tfc-faq-tl-step ret"><div class="yr">2027</div><div class="ev">RETITC &asymp;$40M/yr cap begins</div></div>
+                <div class="tfc-faq-tl-step"><div class="yr">2028</div><div class="ev">Tech Infrastructure Renovation Credit repealed</div></div>
+                <div class="tfc-faq-tl-step"><div class="yr">2029</div><div class="ev">High-Tech Investment &amp; R&amp;D credits repealed</div></div>
+                <div class="tfc-faq-tl-step ret end"><div class="yr">2031</div><div class="ev">RETITC fully eliminated</div></div>
+            </div>
+
             <div class="tfc-faq-note">*A <strong>modeled estimate</strong>, not an official score &mdash; from the Hawai&#699;i Appleseed / Census-Forecaster RETITC fiscal model (central &ldquo;OBBBA-Mid&rdquo; scenario). The real figure depends on solar demand, how fast existing credits are used, and other assumptions, and could be meaningfully higher or lower. Industry reporting also warns that projects already underway in 2027 will compete for a smaller pot, and some commercial solar racing federal deadlines may no longer pencil out.</div>
         </div>
 
@@ -663,15 +705,6 @@
                 <div class="tfc-faq-bar-row"><span class="tfc-faq-bar-label">Other</span><div class="tfc-faq-bar-track"><div class="tfc-faq-bar lite" data-w="5.5%"></div></div><span class="tfc-faq-bar-val">$3.2M</span></div>
             </div>
             <div class="tfc-faq-note">Source: Hawai&#699;i Department of Taxation, Tax Year 2023 actuals, via the Hawai&#699;i Appleseed / Census-Forecaster RETITC fiscal model.</div>
-        </div>
-
-        <!-- Sunset glide-path timeline -->
-        <div class="tfc-faq-tl-title">The sunset glide path</div>
-        <div class="tfc-faq-timeline">
-            <div class="tfc-faq-tl-step"><div class="yr">2027</div><div class="ev">RETITC &asymp;$40M/yr cap begins</div></div>
-            <div class="tfc-faq-tl-step"><div class="yr">2028</div><div class="ev">Tech Infrastructure Renovation Credit repealed</div></div>
-            <div class="tfc-faq-tl-step"><div class="yr">2029</div><div class="ev">High-Tech Investment &amp; R&amp;D credits repealed</div></div>
-            <div class="tfc-faq-tl-step end"><div class="yr">2031</div><div class="ev">RETITC fully eliminated</div></div>
         </div>
 
         <!-- At-a-glance table -->
