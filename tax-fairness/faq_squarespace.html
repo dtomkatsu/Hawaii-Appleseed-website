@@ -252,21 +252,25 @@
 /* ---------- Q4: RETITC spotlight ---------- */
 .tfc-faq-spot {
     border: 1px solid var(--line);
-    border-left: 4px solid var(--amber);
     border-radius: 16px;
-    padding: 24px;
-    background: #fff;
+    padding: 24px 26px;
+    background: linear-gradient(180deg, #fbfcfe, #ffffff);
     box-shadow: var(--shadow-sm);
-    margin: 20px 0 6px;
+    margin: 26px 0 8px;
 }
-.tfc-faq-spot h4 { margin: 0 0 4px; font-size: 1.06rem; color: var(--navy); font-weight: 700; }
-.tfc-faq-spot .ssub { font-size: 0.85rem; color: var(--ink-soft); margin: 0 0 16px; }
-.tfc-faq-spot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
-.tfc-faq-spot-grid .f .n { font-size: 1.1rem; font-weight: 800; color: var(--navy); letter-spacing: -0.01em; }
-.tfc-faq-spot-grid .f .t { font-size: 0.79rem; color: var(--ink-soft); margin-top: 4px; line-height: 1.4; }
+.tfc-faq-spot .tag {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--amber-ink); margin-bottom: 10px;
+}
+.tfc-faq-spot .tag::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--amber); }
+.tfc-faq-spot h4 { margin: 0 0 4px; font-size: 1.06rem; color: var(--navy); font-weight: 700; letter-spacing: -0.01em; }
+.tfc-faq-spot .ssub { font-size: 0.85rem; color: var(--ink-soft); margin: 0 0 4px; }
+.tfc-faq-spot .tfc-faq-stats { margin: 18px 0 4px; }
+.tfc-faq-spot .tfc-faq-does { margin: 14px 0 0; }
 
 /* ---------- Q4: sunset glide-path timeline ---------- */
-.tfc-faq-tl-title { font-size: 1.02rem; font-weight: 700; color: var(--navy); margin: 26px 0 18px; }
+.tfc-faq-tl-title { font-size: 1.06rem; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; margin: 26px 0 18px; }
 .tfc-faq-timeline { position: relative; display: flex; }
 .tfc-faq-timeline::before { content: ''; position: absolute; top: 13px; left: 10%; right: 10%; height: 2px; background: var(--line-strong); }
 .tfc-faq-tl-step { flex: 1; text-align: center; position: relative; padding-top: 36px; }
@@ -619,16 +623,19 @@
 
         <!-- RETITC spotlight -->
         <div class="tfc-faq-spot">
-            <h4>Spotlight: the renewable energy credit (RETITC)</h4>
+            <span class="tag">Spotlight &middot; Renewable energy credit</span>
+            <h4>The renewable energy credit (RETITC)</h4>
             <p class="ssub">This is where the most visible change lands &mdash; especially for solar and storage.</p>
-            <div class="tfc-faq-spot-grid">
-                <div class="f"><div class="n">&asymp;$40M/yr</div><div class="t">statewide annual cap from 2027 &mdash; less than half of recent spending</div></div>
-                <div class="f"><div class="n">Income limits</div><div class="t">new thresholds reduce or exclude higher-income claimants</div></div>
-                <div class="f"><div class="n">Certification</div><div class="t">projects need pre-approval to claim a spot under the cap</div></div>
-                <div class="f"><div class="n">Ends 2031</div><div class="t">full sunset; no safe harbor for projects already underway</div></div>
-                <div class="f"><div class="n" style="color:var(--green-ink);">&asymp;$343M*</div><div class="t">estimated 5-year state savings from the RETITC changes (2027&ndash;2031)</div></div>
+            <div class="tfc-faq-stats">
+                <div class="tfc-faq-stat amber"><div class="num">&asymp;$40M/yr</div><div class="lbl">annual cap from 2027 &mdash; less than half of recent spending</div></div>
+                <div class="tfc-faq-stat green"><div class="num">&asymp;$343M*</div><div class="lbl">estimated 5-year state savings (2027&ndash;2031)</div></div>
             </div>
-            <div class="tfc-faq-note" style="margin-top:18px;">*A <strong>modeled estimate</strong>, not an official score &mdash; from the Hawai&#699;i Appleseed / Census-Forecaster RETITC fiscal model (central &ldquo;OBBBA-Mid&rdquo; scenario). The real figure depends on solar demand, how fast existing credits are used, and other assumptions, and could be meaningfully higher or lower. Industry reporting also warns that projects already underway in 2027 will compete for a smaller pot, and some commercial solar racing federal deadlines may no longer pencil out.</div>
+            <div class="tfc-faq-does">
+                <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Income limits</strong> &mdash; new AGI thresholds reduce or exclude higher-income claimants.</div></div>
+                <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Certification required</strong> &mdash; projects need pre-approval to claim a spot under the cap.</div></div>
+                <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Sunset in 2031</strong> &mdash; full elimination; no safe harbor for projects already underway.</div></div>
+            </div>
+            <div class="tfc-faq-note">*A <strong>modeled estimate</strong>, not an official score &mdash; from the Hawai&#699;i Appleseed / Census-Forecaster RETITC fiscal model (central &ldquo;OBBBA-Mid&rdquo; scenario). The real figure depends on solar demand, how fast existing credits are used, and other assumptions, and could be meaningfully higher or lower. Industry reporting also warns that projects already underway in 2027 will compete for a smaller pot, and some commercial solar racing federal deadlines may no longer pencil out.</div>
         </div>
 
         <!-- RETITC data: who claims it, by income -->
