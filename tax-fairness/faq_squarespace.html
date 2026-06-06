@@ -31,6 +31,7 @@
     padding: 8px 18px 48px;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
 }
 .tfc-faq *, .tfc-faq *::before, .tfc-faq *::after { box-sizing: border-box; }
 .tfc-faq p { margin: 0 0 14px; }
@@ -248,24 +249,6 @@
 
 .tfc-faq-note { margin-top: 18px; font-size: 0.78rem; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--line); padding-top: 14px; }
 
-/* ---------- Q4: protected vs pared-back split ---------- */
-.tfc-faq-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0 6px; }
-.tfc-faq-col { border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
-.tfc-faq-col.keep { background: linear-gradient(180deg, #f0faf5, #ffffff); border-color: #cfeadd; }
-.tfc-faq-col.pare { background: linear-gradient(180deg, #fdf6ea, #ffffff); border-color: #f1ddbb; }
-.tfc-faq-col h4 { margin: 0 0 4px; font-size: 1.04rem; font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 9px; letter-spacing: -0.01em; }
-.tfc-faq-col h4 .pill { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; }
-.tfc-faq-col.keep .pill { background: #d8f3e7; color: var(--green-ink); }
-.tfc-faq-col.pare .pill { background: #fbe6c4; color: var(--amber-ink); }
-.tfc-faq-col .csub { font-size: 0.82rem; color: var(--ink-soft); margin: 0 0 16px; }
-.tfc-faq-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
-.tfc-faq-col li { font-size: 0.92rem; color: var(--ink); padding-left: 24px; position: relative; }
-.tfc-faq-col li strong { font-weight: 700; }
-.tfc-faq-col li .meta { display: block; font-size: 0.77rem; color: var(--muted); margin-top: 2px; }
-.tfc-faq-col li::before { position: absolute; left: 0; top: 0; font-weight: 800; }
-.tfc-faq-col.keep li::before { content: '\2713'; color: var(--green); }
-.tfc-faq-col.pare li::before { content: '\2192'; color: var(--amber); }
-
 /* ---------- Q4: RETITC spotlight ---------- */
 .tfc-faq-spot {
     border: 1px solid var(--line);
@@ -322,8 +305,78 @@
 }
 .tfc-faq-sources a:hover { background: var(--bg); border-color: var(--line-strong); }
 
+/* ---------- TL;DR + jump-nav ---------- */
+.tfc-faq-tldr {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: linear-gradient(180deg, #f4f8fc, #ffffff);
+    border: 1px solid #d3e0ee;
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-top: 14px;
+    font-size: 0.96rem;
+    color: var(--ink-soft);
+}
+.tfc-faq-tldr .tl { flex: 0 0 auto; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); padding-top: 3px; }
+.tfc-faq-tldr strong { color: var(--navy); }
+.tfc-faq-nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0 4px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+}
+.tfc-faq-nav a {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--navy);
+    text-decoration: none;
+    padding: 6px 13px;
+    border-radius: 999px;
+    transition: background .15s ease, color .15s ease;
+}
+.tfc-faq-nav a:hover { background: var(--navy); color: #fff; }
+.tfc-faq-nav a .qn { color: var(--blue); font-weight: 800; margin-right: 6px; }
+.tfc-faq-nav a:hover .qn { color: #bcd0ec; }
+.tfc-faq-section { scroll-margin-top: 64px; }
+
 /* ---------- Footer ---------- */
 .tfc-faq-footer { text-align: center; color: var(--muted); font-size: 0.82rem; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); }
+
+/* ---------- Print ---------- */
+@media print {
+    .tfc-faq { max-width: 100%; padding: 0; color: #000; scroll-behavior: auto; }
+    .tfc-faq-nav { display: none !important; }
+    .tfc-faq-hero, .tfc-faq-kicker, .tfc-faq-qnum, .tfc-faq-bar, .tfc-faq-dbar,
+    .tfc-faq-zero, .sdot, .tfc-faq-stat::before, .tfc-faq-tl-step::after,
+    .tfc-faq-dval, .tfc-faq-table thead th {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    .tfc-faq-hero { box-shadow: none; border-radius: 12px; padding: 28px 30px; }
+    .tfc-faq-section { box-shadow: none; border: 1px solid var(--line); margin-top: 16px; }
+    .tfc-faq-stat, .tfc-faq-spot, .tfc-faq-chart, .tfc-faq-callout, .tfc-faq-doe,
+    .tfc-faq-tldr, .tfc-faq-table tr, .tfc-faq-dbar-row, .tfc-faq-bar-row,
+    .tfc-faq-tl-step { break-inside: avoid; page-break-inside: avoid; }
+    .tfc-faq-section { break-inside: auto; }
+    .tfc-faq-bar, .tfc-faq-dbar { transition: none !important; }
+    .tfc-faq-sources a { border-color: var(--line-strong); }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .tfc-faq { scroll-behavior: auto; }
+    .tfc-faq-bar, .tfc-faq-dbar { transition: none !important; }
+}
 
 /* ---------- Responsive ---------- */
 @media (max-width: 700px) {
@@ -342,7 +395,9 @@
     .tfc-faq-dval { font-size: 0.76rem; }
     .tfc-faq-axis { padding: 0 54px 0 96px; font-size: 0.66rem; }
     .tfc-faq-stat .num { font-size: 1.55rem; }
-    .tfc-faq-split { grid-template-columns: 1fr; }
+    .tfc-faq-nav { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 6px; }
+    .tfc-faq-nav a { white-space: nowrap; font-size: 0.76rem; padding: 6px 11px; }
+    .tfc-faq-tldr { font-size: 0.9rem; padding: 14px 16px; }
     .tfc-faq-timeline { flex-direction: column; gap: 16px; }
     .tfc-faq-timeline::before { top: 7px; bottom: 7px; left: 6px; right: auto; width: 2px; height: auto; }
     .tfc-faq-tl-step { text-align: left; padding: 0 0 0 28px; }
@@ -359,8 +414,22 @@
         <p>What the bill does, why it moved, how it changes income taxes across the income scale, and which tax credits it touches.</p>
     </div>
 
+    <!-- TL;DR -->
+    <div class="tfc-faq-tldr">
+        <span class="tl">In short</span>
+        <span>Act 24 <strong>keeps the 2024 income-tax cuts</strong> for low- and middle-income filers, lets the <strong>top-end cuts lapse</strong> and adds a new <strong>~13% bracket</strong> on the highest earners, and pays for it by <strong>capping and sunsetting</strong> business, renewable-energy, and high-tech tax credits.</span>
+    </div>
+
+    <!-- Jump nav -->
+    <nav class="tfc-faq-nav" aria-label="Jump to a question">
+        <a href="#q1"><span class="qn">Q1</span>Why it happened</a>
+        <a href="#q2"><span class="qn">Q2</span>What it is</a>
+        <a href="#q3"><span class="qn">Q3</span>Who it affects</a>
+        <a href="#q4"><span class="qn">Q4</span>Tax credits</a>
+    </nav>
+
     <!-- ===================== Q1 ===================== -->
-    <section class="tfc-faq-section">
+    <section class="tfc-faq-section" id="q1">
         <div class="tfc-faq-qhead">
             <div class="tfc-faq-qnum">1</div>
             <div>
@@ -397,10 +466,11 @@
             <div class="tfc-faq-stat amber"><div class="num">&asymp;12%</div><div class="lbl">of Hawai&#699;i's total tax revenue</div></div>
             <div class="tfc-faq-stat"><div class="num">&asymp;&#8531;</div><div class="lbl">share of the state budget funded by income taxes</div></div>
         </div>
+        <div class="tfc-faq-note">Source: Institute on Taxation and Economic Policy &mdash; Act 46 distributional and revenue estimates.</div>
     </section>
 
     <!-- ===================== Q2 ===================== -->
-    <section class="tfc-faq-section">
+    <section class="tfc-faq-section" id="q2">
         <div class="tfc-faq-qhead">
             <div class="tfc-faq-qnum">2</div>
             <div>
@@ -423,7 +493,7 @@
     </section>
 
     <!-- ===================== Q3 ===================== -->
-    <section class="tfc-faq-section">
+    <section class="tfc-faq-section" id="q3">
         <div class="tfc-faq-qhead">
             <div class="tfc-faq-qnum">3</div>
             <div>
@@ -534,7 +604,7 @@
     </section>
 
     <!-- ===================== Q4 ===================== -->
-    <section class="tfc-faq-section">
+    <section class="tfc-faq-section" id="q4">
         <div class="tfc-faq-qhead">
             <div class="tfc-faq-qnum">4</div>
             <div>
@@ -647,6 +717,14 @@
             bar.style.width = bar.getAttribute('data-w');
         });
     }
+    function fillAll() {
+        document.querySelectorAll('.tfc-faq [data-w]').forEach(function (bar) {
+            bar.style.width = bar.getAttribute('data-w');
+        });
+    }
+    // Ensure bars are filled before printing (a fresh print may skip scroll animation).
+    window.addEventListener('beforeprint', fillAll);
+
     var charts = document.querySelectorAll('.tfc-faq .tfc-faq-chart .tfc-faq-bars');
     if (!charts.length) return;
     if ('IntersectionObserver' in window) {
@@ -657,7 +735,7 @@
         }, { threshold: 0.25 });
         charts.forEach(function (c) { io.observe(c); });
     } else {
-        charts.forEach(animate);
+        fillAll();
     }
 })();
 </script>
