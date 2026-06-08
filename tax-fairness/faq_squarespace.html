@@ -471,6 +471,27 @@
     }
     .tfc-faq-table .timing { white-space: normal; }
 }
+
+/* ============================================================
+   This page only: force the Squarespace site nav to DARK text.
+   Squarespace auto-switches the header to white over this page's
+   dark hero section. Targets the desktop nav links only (not the
+   Subscribe button or social icons). If your template uses other
+   class names this may be a no-op -- see note from the assistant
+   about the Squarespace "section color theme" setting.
+   ============================================================ */
+.header-display-desktop .header-nav-item a,
+.header-display-desktop .header-nav-folder-title,
+.header-display-desktop .header-nav-folder-item a,
+.header .header-nav-item a,
+.Header-nav .Header-nav-item,
+.Header-nav .Header-nav-item a {
+    color: #1a2433 !important;
+}
+.header-display-desktop .header-nav-item a:hover,
+.Header-nav .Header-nav-item:hover {
+    color: #16314e !important;
+}
 </style>
 
 <div class="tfc-faq">
