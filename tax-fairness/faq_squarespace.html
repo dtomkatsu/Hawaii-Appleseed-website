@@ -93,6 +93,17 @@
     color: #cdddf0;
     max-width: 640px;
 }
+/* --- Squarespace embed hardening: keep the hero navy + light text regardless
+       of the site theme's heading/text color rules --- */
+.tfc-faq .tfc-faq-hero {
+    background:
+        radial-gradient(115% 130% at 88% -15%, rgba(47,111,176,.55) 0%, rgba(47,111,176,0) 55%),
+        linear-gradient(135deg, #0e2236 0%, #16314e 52%, #1c4a73 100%) !important;
+    color: #ffffff !important;
+}
+.tfc-faq .tfc-faq-hero h1 { color: #ffffff !important; }
+.tfc-faq .tfc-faq-hero p { color: #cdddf0 !important; }
+.tfc-faq .tfc-faq-hero .tfc-faq-kicker { color: #e3eefb !important; background: rgba(255,255,255,.10) !important; }
 
 /* ---------- Section card ---------- */
 .tfc-faq-section {
@@ -360,16 +371,14 @@
 .tfc-faq-tldr .tl { flex: 0 0 auto; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); padding-top: 3px; }
 .tfc-faq-tldr strong { color: var(--navy); }
 .tfc-faq-nav {
-    position: sticky;
-    top: 0;
-    z-index: 20;
+    /* Non-sticky: a sticky bar collides with Squarespace's own fixed site header. */
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin: 14px 0 4px;
     padding: 10px 12px;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(8px);
+    background: #fff;
     border: 1px solid var(--line);
     border-radius: 12px;
     box-shadow: var(--shadow-sm);
@@ -386,7 +395,7 @@
 .tfc-faq-nav a:hover { background: var(--navy); color: #fff; }
 .tfc-faq-nav a .qn { color: var(--blue); font-weight: 800; margin-right: 6px; }
 .tfc-faq-nav a:hover .qn { color: #bcd0ec; }
-.tfc-faq-section { scroll-margin-top: 64px; }
+.tfc-faq-section { scroll-margin-top: 96px; }
 
 /* ---------- Footer ---------- */
 .tfc-faq-footer { text-align: center; color: var(--muted); font-size: 0.82rem; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); }
