@@ -279,7 +279,7 @@
   /* Each deep-dive section gets its own tinted background from the brand palette.
      All tints are light variations of the brand colors so text contrast stays consistent. */
   .ha-issues .ha-deep{
-    padding:110px 0;scroll-margin-top:120px;
+    padding:76px 0 104px;scroll-margin-top:120px;
     background:var(--section-bg, var(--ha-white));
     position:relative;
   }
@@ -318,7 +318,7 @@
      so a stripe here was duplicative with the body card's stripe. The
      head reads as an airy label *above* the bracketed body. */
   .ha-issues .ha-deep-head{
-    margin-bottom:40px;
+    margin-bottom:32px;
   }
   /* Number + a 28px hairline below it (via ::after) read as one
      composed unit attached to the title. The hairline is in the
@@ -356,7 +356,8 @@
   .ha-issues .ha-deep .ha-deep-tagline{
     font-family:'Poppins',sans-serif;font-style:italic;font-weight:500;
     font-size:clamp(22px, 2.4vw, 30px);line-height:1.3;
-    color:var(--section-accent, var(--ha-teal-deep));opacity:1;
+    letter-spacing:-0.01em;text-wrap:balance;
+    color:color-mix(in srgb, var(--ha-charcoal) 82%, transparent);opacity:1;
     margin:0 0 20px;max-width:36ch;
   }
   /* Key-word emphasis inside the italic tagline: the anchor word stays
@@ -383,31 +384,42 @@
   /* ===== Stat-anchored prose card ===== */
   .ha-issues .ha-prose-card{
     background:#fff;
-    border-left:4px solid var(--section-accent, var(--ha-teal-deep));
-    border-radius:0 4px 4px 0;
-    padding:32px 36px;
+    border:1px solid rgba(47,62,70,.05);
+    border-radius:12px;
+    overflow:hidden;
+    padding:36px 40px;
     margin-bottom:44px;
-    box-shadow:0 2px 16px rgba(47,62,70,.07),0 0 0 1px rgba(47,62,70,.05);
+    box-shadow:0 1px 2px rgba(47,62,70,.04),0 8px 28px rgba(47,62,70,.06);
     position:relative;
+  }
+  /* accent spine — flush to the left edge; corners clipped by the card radius */
+  .ha-issues .ha-prose-card::before{
+    content:"";
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:5px;
+    background:var(--section-accent, var(--ha-teal-deep));
   }
   .ha-issues .ha-prose-card .ha-deep-lead{margin-top:0;}
   .ha-issues .ha-prose-card p:last-child{margin-bottom:0;}
 
   .ha-issues .ha-stat-anchor{
-    display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 20px;
-    padding-bottom:22px;margin-bottom:24px;
+    display:flex;align-items:center;gap:24px;
+    padding-bottom:24px;margin-bottom:26px;
     border-bottom:1px solid color-mix(in srgb, var(--section-accent) 22%, transparent);
   }
   .ha-issues .ha-stat-num{
     font-family:'Manrope',sans-serif;font-weight:800;
-    font-size:clamp(44px, 6vw, 68px);line-height:.95;letter-spacing:-0.045em;
+    font-size:clamp(46px, 5.5vw, 60px);line-height:1;letter-spacing:-0.04em;
     color:var(--section-accent, var(--ha-teal-deep));
     flex-shrink:0;
   }
   .ha-issues .ha-stat-label{
-    font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;
-    line-height:1.4;color:var(--ha-charcoal);opacity:.72;
-    letter-spacing:.005em;max-width:28ch;
+    font-family:'Poppins',sans-serif;font-size:15px;font-weight:500;
+    line-height:1.5;color:var(--ha-charcoal);opacity:.8;
+    letter-spacing:.005em;max-width:34ch;
+    padding-left:24px;
+    border-left:2px solid color-mix(in srgb, var(--section-accent) 28%, transparent);
   }
 
   .ha-issues .ha-deep-sub{
@@ -562,7 +574,7 @@
   @media (max-width:700px){
     .ha-issues .ha-hero{padding:36px 0 64px;}
     .ha-issues .ha-hero-text{margin-bottom:32px;}
-    .ha-issues .ha-deep{padding:72px 0;scroll-margin-top:100px;}
+    .ha-issues .ha-deep{padding:52px 0 64px;scroll-margin-top:100px;}
     .ha-issues .ha-cta{padding:64px 0;}
     .ha-issues .ha-card{padding:18px 18px 18px 20px;gap:16px;}
     .ha-issues .ha-card-icon{width:42px;height:42px;}
@@ -577,6 +589,9 @@
     .ha-issues .ha-eyebrow::before{width:32px;}
     .ha-issues .ha-cta-actions{flex-direction:column;width:100%;align-items:stretch;}
     .ha-issues .ha-cta .ha-btn{justify-content:center;width:100%;}
+    .ha-issues .ha-prose-card{padding:26px 22px;}
+    .ha-issues .ha-stat-anchor{flex-direction:column;align-items:flex-start;gap:12px;}
+    .ha-issues .ha-stat-label{padding-left:0;border-left:0;max-width:none;}
   }
 
   /* ===== TIER 1: Scroll progress bar ===== */
