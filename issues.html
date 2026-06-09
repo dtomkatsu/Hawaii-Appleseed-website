@@ -376,6 +376,16 @@
     letter-spacing:-0.01em;text-wrap:balance;
     color:var(--section-accent, var(--ha-teal-deep));opacity:1;
     margin:0 0 20px;max-width:36ch;
+    /* Very subtle section-accent wash hugging the text — reads as a soft
+       highlight, not a UI chip. Negative left margin keeps the text aligned
+       with the title while the wash bleeds slightly past it. clone keeps the
+       wash tidy when the line wraps on mobile. */
+    display:inline-block;
+    background:color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 7%, transparent);
+    border-radius:7px;
+    padding:3px 12px;
+    margin-left:-12px;
+    -webkit-box-decoration-break:clone;box-decoration-break:clone;
   }
   /* Key-word emphasis inside the italic tagline: the anchor word stays
      in the same Poppins italic (preserves the typographic family of the
