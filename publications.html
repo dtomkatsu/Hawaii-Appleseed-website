@@ -185,29 +185,37 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 /* ===== Page hero ===== */
 .ha-pub__hero {
   background:var(--ha-charcoal);
-  padding:36px 36px 32px;
+  padding:64px 36px 56px;
   text-align:center;
 }
 .ha-pub__hero-eyebrow {
   font-family:'Poppins',sans-serif;
-  text-transform:uppercase; letter-spacing:.32em; font-size:11px;
-  color:var(--ha-ash); margin-bottom:12px;
+  text-transform:uppercase; letter-spacing:.32em; font-size:13px;
+  color:var(--ha-ash); margin-bottom:18px;
   display:flex; align-items:center; justify-content:center; gap:14px;
 }
 .ha-pub__hero-eyebrow::before,
 .ha-pub__hero-eyebrow::after { content:""; width:28px; height:1px; background:var(--ha-ash); opacity:.5; }
-.ha-pub__hero h1 {
+/* Real display title in the site's voice — static across both views, so the
+   eyebrow/sub JS swap is untouched. "Research" carries the teal accent,
+   mirroring the "Our Impact" pattern on the issues page. */
+.ha-pub__hero-title {
   margin:0 0 14px;
-  display:flex; justify-content:center;
   font-family:'Manrope',sans-serif; font-weight:700;
+  font-size:clamp(36px, 5vw, 52px); line-height:1.04; letter-spacing:-0.02em;
+  color:var(--ha-white);
 }
+.ha-pub__hero-accent { color:var(--ha-teal); }
 
 /* ===== Segmented pill switch ===== */
+/* Control scale, not display scale: the switch is now subordinate to the
+   title above it. Mechanics (indicator slide, widths) are unchanged. */
 .ha-pub__switch {
-  --switch-tab-w: 220px;
+  --switch-tab-w: 180px;
   position:relative;
   display:inline-flex;
   align-items:center;
+  margin-top:26px;
   padding:4px;
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.14);
@@ -228,10 +236,10 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-pub__title-tab {
   position:relative; z-index:1;
   background:none; border:none; padding:0;
-  width:var(--switch-tab-w); height:48px;
+  width:var(--switch-tab-w); height:44px;
   cursor:pointer;
-  font-family:'Manrope',sans-serif; font-weight:700;
-  font-size:22px; letter-spacing:-.01em; line-height:1;
+  font-family:'Manrope',sans-serif; font-weight:600;
+  font-size:16px; letter-spacing:-.01em; line-height:1;
   color:rgba(255,255,255,.55);
   border-radius:999px;
   transition:color .22s;
@@ -247,10 +255,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 }
 
 @media (max-width:700px) {
-  .ha-pub__hero { padding:28px 20px 24px; }
-  .ha-pub__hero-eyebrow { font-size:10px; letter-spacing:.22em; }
-  .ha-pub__switch { --switch-tab-w: 145px; }
-  .ha-pub__title-tab { height:40px; font-size:15px; }
+  .ha-pub__hero { padding:44px 20px 40px; }
+  .ha-pub__hero-eyebrow { font-size:11px; letter-spacing:.22em; margin-bottom:14px; }
+  .ha-pub__hero-title { font-size:clamp(30px, 9vw, 40px); }
+  .ha-pub__switch { --switch-tab-w: 145px; margin-top:22px; }
+  .ha-pub__title-tab { height:40px; font-size:14px; }
 }
 
 /* ===== View visibility ===== */
@@ -709,14 +718,13 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   <!-- Hero -->
   <header class="ha-pub__hero">
     <div class="ha-pub__hero-eyebrow" id="ha-pub-hero-eyebrow">Research &amp; Policy</div>
-    <h1>
-      <span class="ha-pub__switch" role="tablist" aria-label="View">
-        <span class="ha-pub__switch-indicator" aria-hidden="true"></span>
-        <button class="ha-pub__title-tab active" data-view="publications" role="tab" aria-selected="true">Publications</button>
-        <button class="ha-pub__title-tab" data-view="data" role="tab" aria-selected="false">Interactive Data</button>
-      </span>
-    </h1>
+    <h1 class="ha-pub__hero-title">Our <span class="ha-pub__hero-accent">Research</span></h1>
     <p class="ha-pub__hero-sub" id="ha-pub-hero-sub">Reports, briefs, and analyses</p>
+    <div class="ha-pub__switch" role="tablist" aria-label="View">
+      <span class="ha-pub__switch-indicator" aria-hidden="true"></span>
+      <button class="ha-pub__title-tab active" data-view="publications" role="tab" aria-selected="true">Publications</button>
+      <button class="ha-pub__title-tab" data-view="data" role="tab" aria-selected="false">Interactive Data</button>
+    </div>
   </header>
 
   <!-- ============ DASHBOARD SPOTLIGHT ============ -->

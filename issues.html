@@ -171,7 +171,7 @@
   /* ===== HERO + ISSUE CARDS (merged) ===== */
   .ha-issues .ha-hero{
     position:relative;
-    padding:44px 0 64px;overflow:hidden;isolation:isolate;
+    padding:44px 0 80px;overflow:hidden;isolation:isolate;
     background:
       radial-gradient(ellipse 90% 60% at 50% 0%, rgba(132,169,140,.14), transparent 70%),
       linear-gradient(180deg, var(--ha-white) 0%, var(--ha-ash-light) 100%);
@@ -181,7 +181,9 @@
   @media (min-width:1024px){
     .ha-issues .ha-hero .ha-wrap{
       display:grid;grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-      gap:56px;align-items:start;
+      /* center: the card stack runs deeper than the text block, so top-aligning
+         left a dead field under the lead. Centering balances the composition. */
+      gap:56px;align-items:center;
     }
     .ha-issues .ha-hero-text{margin-bottom:0;max-width:none;}
     .ha-issues .ha-hero-lead{max-width:none;}
@@ -195,17 +197,21 @@
   .ha-issues .ha-hero-head{
     display:flex;align-items:center;gap:22px;flex-wrap:wrap;
   }
-  /* Eyebrow accent for the headline — the brand's line motif, no kicker text. */
+  /* Eyebrow accent for the headline — the brand's line motif, no kicker text.
+     2px in teal-deep so it reads as deliberate punctuation (1px teal vanished
+     beside the 64px headline) and matches the accented "Impact". */
   .ha-issues .ha-hero-rule{
-    flex:none;width:56px;height:1px;background:var(--ha-teal);
+    flex:none;width:48px;height:2px;background:var(--ha-teal-deep);
   }
   .ha-issues .ha-hero-title{
     font-family:'Manrope',sans-serif;font-weight:400;
     font-size:clamp(38px, 5.6vw, 64px);line-height:1.02;letter-spacing:-0.02em;
     color:var(--ha-charcoal);margin:0;
   }
-  /* Accent the second word so the title reads as a highlighted pairing. */
-  .ha-issues .ha-hero-accent{color:var(--ha-teal-deep);}
+  /* Accent the second word with color AND weight: "Our" stays light, "Impact"
+     carries semibold teal-deep — anchoring the title against the 700/800-weight
+     headings elsewhere without bolding the whole display line. */
+  .ha-issues .ha-hero-accent{color:var(--ha-teal-deep);font-weight:600;}
   /* Lead now reads as an open deck beneath the headline — the former
      tinted box read as a muted/disabled field, so it's been dropped and
      the type bumped up. */
@@ -221,6 +227,10 @@
   .ha-issues .ha-hero-lead-open{
     font-weight:500;color:var(--ha-charcoal);
   }
+  /* The enumeration names exactly the five issues carded below — a touch of
+     weight on each noun lets the paragraph preview the list. Weight only:
+     color on five phrases would read as confetti. */
+  .ha-issues .ha-hero-lead-key{font-weight:500;}
 
   /* ===== ISSUE BARS (horizontal, stacked) ===== */
   .ha-issues .ha-cards{
@@ -261,7 +271,7 @@
     transform:scale(1.08) rotate(-4deg);
     background:rgba(132,169,140,.24);
   }
-  .ha-issues .ha-card-icon svg{width:22px;height:22px;}
+  .ha-issues .ha-card-icon svg{width:22px;height:22px;stroke-width:1.8;}
   .ha-issues .ha-card h3{
     font-family:'Manrope',sans-serif;font-weight:700;
     font-size:clamp(18px, 1.6vw, 22px);line-height:1.2;letter-spacing:-0.015em;
@@ -361,40 +371,28 @@
   /* line-height 1.05 (not a hard 1): single-line titles are unaffected
      visually, but titles that wrap on mobile (e.g. "Affordable Housing"
      at 375px) no longer pinch descenders against the next line's caps. */
+  /* Capped at 60px — just under the page title's 64px — so the page → section
+     hierarchy reads correctly (sections were peaking at 76px and out-shouting
+     the hero). */
   .ha-issues .ha-deep h2{
     font-family:'Manrope',sans-serif;font-weight:800;
-    font-size:clamp(42px, 6vw, 76px);line-height:1.05;letter-spacing:-0.035em;
-    color:var(--ha-charcoal);margin:0 0 16px;
+    font-size:clamp(40px, 5vw, 60px);line-height:1.05;letter-spacing:-0.035em;
+    color:var(--ha-charcoal);margin:0 0 12px;
   }
   /* Scoped under .ha-deep (specificity 0,3,0) so it wins over
      `.ha-issues .ha-deep p` (0,2,1) below — otherwise the tagline
      silently renders as upright Poppins 15.5px charcoal instead of
-     the intended Poppins-italic deck. */
+     the intended Poppins-italic deck.
+     One device, executed plainly: Poppins italic in the section accent,
+     single weight, sized as a deck under the title rather than co-display
+     type. The earlier background wash + bolded key word stacked too many
+     emphasis layers and the wash read as a disabled panel at this size. */
   .ha-issues .ha-deep .ha-deep-tagline{
     font-family:'Poppins',sans-serif;font-style:italic;font-weight:500;
-    font-size:clamp(24px, 2.4vw, 30px);line-height:1.3;
+    font-size:clamp(20px, 2vw, 26px);line-height:1.35;
     letter-spacing:-0.01em;text-wrap:balance;
     color:var(--section-accent, var(--ha-teal-deep));opacity:1;
     margin:0 0 20px;max-width:36ch;
-    /* Very subtle section-accent wash hugging the text — reads as a soft
-       highlight, not a UI chip. Negative left margin keeps the text aligned
-       with the title while the wash bleeds slightly past it. clone keeps the
-       wash tidy when the line wraps on mobile. */
-    display:inline-block;
-    background:color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 7%, transparent);
-    border-radius:7px;
-    padding:3px 12px;
-    margin-left:-12px;
-    -webkit-box-decoration-break:clone;box-decoration-break:clone;
-  }
-  /* Key-word emphasis inside the italic tagline: the anchor word stays
-     in the same Poppins italic (preserves the typographic family of the
-     phrase) and bumps to weight 700 in the section accent color. Reads
-     as a dignified punctuation point inside the italic phrase, rather
-     than interrupting it with a heavy upright word. */
-  .ha-issues .ha-deep-tagline-key{
-    font-weight:700;
-    color:color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 50%, var(--ha-charcoal));
   }
   /* On desktop the head column is wide enough for every tagline to sit on
      a single line — lift the 36ch cap (which is there to force a sensible
@@ -839,7 +837,7 @@
           <h1 class="ha-hero-title">Our <span class="ha-hero-accent">Impact</span></h1>
         </div>
         <p class="ha-hero-lead">
-          <span class="ha-hero-lead-open">We fight for a Hawaiʻi where every family has what they need to thrive.</span> That means safe, stable housing; healthy, affordable food; fair wages and labor protections; transportation options that connect us to opportunity; and a tax system that asks the wealthy to pay their share so we can fund our future.
+          <span class="ha-hero-lead-open">We fight for a Hawaiʻi where every family has what they need to thrive.</span> That means safe, stable <span class="ha-hero-lead-key">housing</span>; healthy, affordable <span class="ha-hero-lead-key">food</span>; fair <span class="ha-hero-lead-key">wages</span> and labor protections; <span class="ha-hero-lead-key">transportation</span> options that connect us to opportunity; and a <span class="ha-hero-lead-key">tax system</span> that asks the wealthy to pay their share so we can fund our future.
         </p>
       </div>
       <div class="ha-cards">
@@ -857,7 +855,7 @@
         </a>
 
         <!-- Affordable Housing -->
-        <a class="ha-card" href="#housing" data-fade>
+        <a class="ha-card" href="#housing" data-fade data-accent="teal-deep">
           <div class="ha-card-icon" aria-hidden="true">
             <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 15l12-9 12 9v12a2 2 0 01-2 2H6a2 2 0 01-2-2V15z"/>
@@ -896,7 +894,7 @@
         </a>
 
         <!-- Wages & Labor -->
-        <a class="ha-card" href="#wages-labor" data-fade>
+        <a class="ha-card" href="#wages-labor" data-fade data-accent="teal-deep">
           <div class="ha-card-icon" aria-hidden="true">
             <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <path d="M6 11h20v17H6z"/>
@@ -918,7 +916,7 @@
       <div class="ha-deep-head">
         <span class="ha-deep-num">01</span>
         <h2>Food Equity</h2>
-        <p class="ha-deep-tagline">Healthy, <span class="ha-deep-tagline-key">culturally rooted</span> food for every Hawaiʻi family.</p>
+        <p class="ha-deep-tagline">Healthy, culturally rooted food for every Hawaiʻi family.</p>
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
@@ -958,7 +956,7 @@
       <div class="ha-deep-head">
         <span class="ha-deep-num">02</span>
         <h2>Affordable Housing</h2>
-        <p class="ha-deep-tagline">Homes Hawaiʻi's families can <span class="ha-deep-tagline-key">actually</span> afford.</p>
+        <p class="ha-deep-tagline">Homes Hawaiʻi's families can actually afford.</p>
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
@@ -998,7 +996,7 @@
       <div class="ha-deep-head">
         <span class="ha-deep-num">03</span>
         <h2>Transportation Equity</h2>
-        <p class="ha-deep-tagline">Safer streets, <span class="ha-deep-tagline-key">smarter</span> transit, lower costs.</p>
+        <p class="ha-deep-tagline">Safer streets, smarter transit, lower costs.</p>
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
@@ -1038,7 +1036,7 @@
       <div class="ha-deep-head">
         <span class="ha-deep-num">04</span>
         <h2>Taxes &amp; Budget</h2>
-        <p class="ha-deep-tagline">A <span class="ha-deep-tagline-key">fairer</span> tax code for a thriving Hawaiʻi.</p>
+        <p class="ha-deep-tagline">A fairer tax code for a thriving Hawaiʻi.</p>
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">
@@ -1078,7 +1076,7 @@
       <div class="ha-deep-head">
         <span class="ha-deep-num">05</span>
         <h2>Wages &amp; Labor</h2>
-        <p class="ha-deep-tagline">Pay and protections that <span class="ha-deep-tagline-key">match</span> the cost of living here.</p>
+        <p class="ha-deep-tagline">Pay and protections that match the cost of living here.</p>
         <span class="ha-deep-rule" aria-hidden="true"></span>
       </div>
       <div class="ha-deep-body">

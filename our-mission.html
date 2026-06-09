@@ -218,8 +218,13 @@
     font-size:clamp(30px, 4.4vw, 58px);
     line-height:1.06;letter-spacing:-0.025em;
     color:#fff;max-width:16ch;
+    text-wrap:balance; /* keeps "for"/"of" from stranding at line ends */
   }
+  /* Italic accents render in Poppins per the brand guide — Manrope has no
+     real italic, so font-style:italic alone faux-slants it (and the synthetic
+     oblique's overhang was eating the word space after "justice"). */
   .ha-mission .ha-hero h1 .ha-mark{
+    font-family:'Poppins',sans-serif;
     color:var(--ha-teal);font-style:italic;font-weight:600;
     position:relative;display:inline-block;
   }
@@ -230,6 +235,7 @@
     color:var(--ha-ash);max-width:52ch;margin-top:24px;
   }
   .ha-mission .ha-hero-lead em{
+    font-family:'Poppins',sans-serif;
     color:var(--ha-teal);font-style:italic;font-weight:600;
   }
   .ha-mission .ha-word{
@@ -250,6 +256,7 @@
     color:var(--ha-charcoal);max-width:24ch;margin:18px auto 0;
   }
   .ha-mission .ha-statement-body em{
+    font-family:'Poppins',sans-serif;
     color:var(--ha-teal-deep);font-style:italic;font-weight:600;
   }
   .ha-mission .ha-statement .ha-eyebrow{justify-content:center;}
@@ -421,7 +428,7 @@
     font-size:clamp(28px, 4vw, 48px);line-height:1.1;letter-spacing:-0.02em;
     color:#fff;max-width:20ch;margin:18px auto 32px;
   }
-  .ha-mission .ha-cta h2 em{color:var(--ha-teal);font-style:italic;font-weight:600;}
+  .ha-mission .ha-cta h2 em{font-family:'Poppins',sans-serif;color:var(--ha-teal);font-style:italic;font-weight:600;}
   .ha-mission .ha-cta-row{
     display:flex;flex-wrap:wrap;gap:14px;justify-content:center;
   }
@@ -449,12 +456,17 @@
   .ha-mission .ha-five-stage{
     position:sticky;top:0;
     height:100vh;min-height:680px;
-    display:flex;align-items:center;
-    padding-top:150px; /* clear the fixed announce + nav with extra buffer so the eyebrow stays visible while the section unsticks */
+    display:flex;align-items:flex-start;
+    /* Pin the header a fixed distance below the fixed announce+nav instead of
+       centering: center + a large pad stacked into a dead band on tall screens
+       and clipped the eyebrow above the fold on short ones. */
+    padding-top:118px;
     overflow:hidden;isolation:isolate;
   }
   .ha-mission .ha-five-bg{position:absolute;inset:0;z-index:-2;}
-  .ha-mission .ha-five-bg-white{position:absolute;inset:0;background:var(--ha-white);}
+  /* Near-invisible ash tint (not pure white) so phase A's white cards have
+     figure-ground from the start instead of only after the plate crossfade. */
+  .ha-mission .ha-five-bg-white{position:absolute;inset:0;background:#F7F9F5;}
   .ha-mission .ha-five-bg-slate{
     position:absolute;inset:0;background:#EBF0ED;
     opacity:0;will-change:opacity;
@@ -472,7 +484,9 @@
 
   /* Eyebrow stack — A & B occupy same slot, crossfade */
   .ha-mission .ha-five-eb-stack{
-    position:relative;display:block;margin-bottom:8px;
+    /* 24px sets the kicker cluster (eyebrow + stepper) apart from the
+       display headline as its own tier; 8px let the two blur together. */
+    position:relative;display:block;margin-bottom:24px;
   }
   /* eb-a is the only eyebrow left (eb-b/eb-c were removed). Flow naturally
      so the .ha-five-phases sub-eyebrow can sit beneath it; previously this
@@ -688,6 +702,7 @@
     color:var(--ha-charcoal);max-width:30ch;margin:0;
   }
   .ha-mission .ha-five-principle-quote em{
+    font-family:'Poppins',sans-serif;
     color:var(--ha-teal-deep);font-style:italic;font-weight:600;
   }
   .ha-mission .ha-five-principle-body{
@@ -715,20 +730,32 @@
   .ha-mission .ha-five-mobile-break-c{display:none;}
 
   /* ===== Phase indicator labels (sub-eyebrow) ===== */
+  /* Progress stepper, deliberately subordinate to the "How We Work" eyebrow:
+     smaller, looser-tracked, slate-toned at rest. The active phase carries a
+     short teal-deep underline and full accent color so it reads as "you are
+     here" — and rhymes with the heading's accent noun — instead of competing
+     with the eyebrow as a second kicker. */
   .ha-mission .ha-five-phases{
     display:flex;align-items:center;gap:9px;
-    margin-top:6px;
+    margin-top:10px;
     font-family:'Poppins',sans-serif;
-    font-size:11px;font-weight:600;
-    letter-spacing:.18em;text-transform:uppercase;
-    color:var(--ha-teal-deep);
+    font-size:10px;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ha-slate);
   }
   .ha-mission .ha-five-phase{
-    opacity:.28;transition:opacity .35s cubic-bezier(.22,.61,.36,1);
+    opacity:.34;
+    padding-bottom:3px;border-bottom:2px solid transparent;
+    transition:opacity .35s cubic-bezier(.22,.61,.36,1),
+               color .35s cubic-bezier(.22,.61,.36,1),
+               border-color .35s cubic-bezier(.22,.61,.36,1);
   }
-  .ha-mission .ha-five-phase.is-active{opacity:1;}
+  .ha-mission .ha-five-phase.is-active{
+    opacity:1;color:var(--ha-teal-deep);
+    border-bottom-color:var(--ha-teal-deep);
+  }
   .ha-mission .ha-five-phase-sep{
-    opacity:.32;color:var(--ha-teal-deep);
+    opacity:.32;color:var(--ha-slate);
   }
 
   /* ===== Persistent shell chassis (desktop scrolly only) =====
