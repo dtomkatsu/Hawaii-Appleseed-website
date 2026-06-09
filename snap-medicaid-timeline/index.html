@@ -458,6 +458,15 @@
                 max-width: 100%;
                 margin-top: 20px;
             }
+            /* Panels inside stacked-cards must fill the (already full-width)
+               stacked container — the generic second-card mobile rule insets
+               them by 70px + calc(100%-80px), shrinking the panel below its
+               content min-width and forcing inner overflow. */
+            .stacked-cards .timeline-card.second-card {
+                width: 100% !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
         }
 
         @media (max-width: 768px) {
@@ -636,12 +645,12 @@
 
         @media (max-width: 768px) {
             .timeline-container {
-                padding-top: 120px;
+                padding-top: 96px;
             }
 
             .timeline-line-container {
                 left: 40px;
-                top: 120px;
+                top: 96px;
             }
 
             .timeline-card {
@@ -695,6 +704,15 @@
                 gap: 8px;
                 overflow-x: auto;
                 max-width: calc(100vw - 140px);
+            }
+            /* The horizontal-scroll mini-nav forces overflow-y:auto, which clips
+               the per-dot month/year labels (.mini-dot::after at top:26px). At
+               mobile width those labels also collide with the adjacent row and
+               hide behind the toggle button. Each timeline card already shows its
+               full date and the dots stay tappable, so hide the labels on mobile
+               for a clean, unclipped mini-nav. */
+            #snap-medicaid-timeline .mini-dot::after {
+                display: none !important;
             }
         }
 
@@ -776,7 +794,7 @@
         @media (max-width: 768px) {
             .snap-parallel-line {
                 left: 62px;
-                top: 120px;
+                top: 96px;
                 margin-left: 0;
             }
         }
@@ -857,32 +875,39 @@
 
         @media (max-width: 768px) {
             .total-cost-medicaid {
-                left: 10px;
+                left: 12px;
+                right: auto;
                 transform: none !important;
-                top: 80px;
+                top: 14px;
                 font-size: 0.7rem;
                 padding: 6px 10px;
+                max-width: calc(50% - 18px);
             }
             .total-cost-medicaid:hover {
                 transform: none !important;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 2px 0 rgba(255,255,255,0.3), inset 0 -2px 0 rgba(0,0,0,0.15);
             }
             .total-cost-snap {
-                left: 10px;
+                left: auto;
+                right: 12px;
                 transform: none !important;
-                top: 40px;
+                top: 14px;
                 font-size: 0.7rem;
                 padding: 6px 10px;
+                max-width: calc(50% - 18px);
             }
             .total-cost-snap:hover {
                 transform: none !important;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 2px 0 rgba(255,255,255,0.3), inset 0 -2px 0 rgba(0,0,0,0.15);
             }
             .total-cost-label {
-                font-size: 0.65rem;
+                font-size: 0.58rem;
+                letter-spacing: 1px;
+                margin-bottom: 3px;
             }
             .total-cost-amount {
-                font-size: 0.75rem;
+                font-size: 0.66rem;
+                white-space: nowrap;
             }
         }
 
@@ -992,7 +1017,12 @@
 
         @media (max-width: 768px) {
             #snap-medicaid-timeline .year-indicator {
-                font-size: 150px;
+                font-size: 110px;
+            }
+            /* Hover-only tooltip: never triggers on touch, and its fixed
+               200px box extends the horizontal overflow — hide on mobile. */
+            .school-tooltip .tooltip-text {
+                display: none !important;
             }
         }
     </style>
