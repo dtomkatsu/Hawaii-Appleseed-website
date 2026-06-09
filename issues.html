@@ -190,19 +190,36 @@
   /* Display headline for the hero — the page's prominent title.
      Upright Manrope (brand display/heading font), scaled to the
      section h2 ceiling so the two-word title carries presence. */
+  /* Eyebrow + title lockup: eyebrow sits to the left of the headline on
+     desktop, stacks above it when the row wraps on narrow screens. */
+  .ha-issues .ha-hero-head{
+    display:flex;align-items:center;gap:22px;flex-wrap:wrap;
+  }
+  /* Eyebrow accent for the headline — the brand's line motif, no kicker text. */
+  .ha-issues .ha-hero-rule{
+    flex:none;width:56px;height:1px;background:var(--ha-teal);
+  }
   .ha-issues .ha-hero-title{
     font-family:'Manrope',sans-serif;font-weight:400;
-    font-size:clamp(44px, 7vw, 80px);line-height:1.02;letter-spacing:-0.02em;
+    font-size:clamp(38px, 5.6vw, 64px);line-height:1.02;letter-spacing:-0.02em;
     color:var(--ha-charcoal);margin:0;
   }
+  /* Accent the second word so the title reads as a highlighted pairing. */
+  .ha-issues .ha-hero-accent{color:var(--ha-teal-deep);}
   /* Lead now reads as an open deck beneath the headline — the former
      tinted box read as a muted/disabled field, so it's been dropped and
      the type bumped up. */
+  /* Lead reads as an open deck: an emphasized opening clause for a focal
+     entry point, then a softer-toned supporting run. Tighter measure +
+     leading gives it rhythm without any decorative box. */
   .ha-issues .ha-hero-lead{
     font-family:'Poppins',sans-serif;font-weight:400;
-    font-size:clamp(16px, 1.5vw, 20px);line-height:1.65;
-    color:var(--ha-charcoal);max-width:58ch;
+    font-size:clamp(16px, 1.5vw, 20px);line-height:1.6;
+    color:#3a4a52;max-width:52ch;
     margin:20px 0 0;
+  }
+  .ha-issues .ha-hero-lead-open{
+    font-weight:500;color:var(--ha-charcoal);
   }
 
   /* ===== ISSUE BARS (horizontal, stacked) ===== */
@@ -355,9 +372,9 @@
      the intended Poppins-italic deck. */
   .ha-issues .ha-deep .ha-deep-tagline{
     font-family:'Poppins',sans-serif;font-style:italic;font-weight:500;
-    font-size:clamp(22px, 2.4vw, 30px);line-height:1.3;
+    font-size:clamp(24px, 2.4vw, 30px);line-height:1.3;
     letter-spacing:-0.01em;text-wrap:balance;
-    color:color-mix(in srgb, var(--ha-charcoal) 82%, transparent);opacity:1;
+    color:var(--section-accent, var(--ha-teal-deep));opacity:1;
     margin:0 0 20px;max-width:36ch;
   }
   /* Key-word emphasis inside the italic tagline: the anchor word stays
@@ -367,7 +384,13 @@
      than interrupting it with a heavy upright word. */
   .ha-issues .ha-deep-tagline-key{
     font-weight:700;
-    color:var(--section-accent, var(--ha-teal-deep));
+    color:color-mix(in srgb, var(--section-accent, var(--ha-teal-deep)) 50%, var(--ha-charcoal));
+  }
+  /* On desktop the head column is wide enough for every tagline to sit on
+     a single line — lift the 36ch cap (which is there to force a sensible
+     wrap on mobile) so the longer ones don't break mid-phrase. */
+  @media (min-width:1024px){
+    .ha-issues .ha-deep .ha-deep-tagline{max-width:none;}
   }
   .ha-issues .ha-deep-body{max-width:760px;}
   .ha-issues .ha-deep-lead{
@@ -801,9 +824,12 @@
   <section class="ha-hero">
     <div class="ha-wrap">
       <div class="ha-hero-text">
-        <h1 class="ha-hero-title">Our Impact</h1>
+        <div class="ha-hero-head">
+          <span class="ha-hero-rule" aria-hidden="true"></span>
+          <h1 class="ha-hero-title">Our <span class="ha-hero-accent">Impact</span></h1>
+        </div>
         <p class="ha-hero-lead">
-          We fight for a Hawaiʻi where every family has what they need to thrive. That means safe, stable housing; healthy, affordable food; fair wages and labor protections; transportation options that connect us to opportunity; and a tax system that asks the wealthy to pay their share so we can fund our future.
+          <span class="ha-hero-lead-open">We fight for a Hawaiʻi where every family has what they need to thrive.</span> That means safe, stable housing; healthy, affordable food; fair wages and labor protections; transportation options that connect us to opportunity; and a tax system that asks the wealthy to pay their share so we can fund our future.
         </p>
       </div>
       <div class="ha-cards">
