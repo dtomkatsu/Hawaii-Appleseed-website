@@ -781,6 +781,16 @@
   </style>
   <!-- Fail-safe: if JS is off, reveal elements stay visible. -->
   <noscript><style>.reveal,.reveal-group>*{opacity:1!important;transform:none!important}</style></noscript>
+<style>
+/* Taller header to match hiappleseed.org (~174px) - desktop only; mobile stays compact */
+@media (min-width:701px){
+  .px-nav{padding-top:42px;padding-bottom:42px;}
+  .px-nav .px-brand-mark{width:52px;height:52px;}
+  .px-nav .px-brand-name{font-size:20px;}
+  .hero-inner{padding-top:12rem;}
+  section[id]{scroll-margin-top:186px;}
+}
+</style>
 </head>
 <body>
 

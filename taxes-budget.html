@@ -88,6 +88,15 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
 .px-spacer-top { height:120px; }
 </style>
+<style>
+/* Taller header to match hiappleseed.org (~174px) - desktop only; mobile stays compact */
+@media (min-width:701px){
+  .px-nav{padding-top:42px;padding-bottom:42px;}
+  .px-nav .px-brand-mark{width:52px;height:52px;}
+  .px-nav .px-brand-name{font-size:20px;}
+  .px-spacer-top{height:180px;}
+}
+</style>
 </head>
 <body>
 
@@ -1525,7 +1534,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 /* ===== TIER 1: Sticky tab bar (compact, appears after main tab bar scrolls out) ===== */
 .ha-tax__stuck-bar {
   position:fixed;
-  top:110px; left:0; right:0;
+  top:174px; left:0; right:0;
   z-index:40;
   background:rgba(255,255,255,.94);
   backdrop-filter:blur(8px);

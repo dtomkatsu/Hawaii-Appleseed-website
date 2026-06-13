@@ -160,13 +160,20 @@
         radial-gradient(ellipse 70% 55% at 75% 35%, rgba(132,169,140,0.18) 0%, transparent 65%),
         radial-gradient(ellipse 45% 70% at 8% 85%,  rgba(82,121,111,0.14)  0%, transparent 55%);
     }
-    .ha-home__hero-video {
+    /* z0a: the rainbow photo — always present; the universal fallback if WebGL is off. */
+    .ha-home__hero-photo {
       position:absolute;inset:0;width:100%;height:100%;
       object-fit:cover;z-index:0;
-      animation: haKenburns 24s ease-in-out infinite alternate;  /* subtle drift (rec F) */
+      animation: haKenburns 26s ease-in-out infinite alternate;  /* subtle drift (fallback path) */
     }
-    @keyframes haKenburns { from { transform:scale(1); } to { transform:scale(1.08); } }
-    @media (max-width:700px){ .ha-home__hero-video{ animation:none; } }  /* save mobile battery */
+    @keyframes haKenburns { from { transform:scale(1.02); } to { transform:scale(1.09); } }
+    @media (max-width:700px){ .ha-home__hero-photo{ animation:none; } }  /* save mobile battery */
+    /* z0b: WebGL "living photo" layer — same image, animated; fades in over the photo (desktop). */
+    .ha-home__hero-canvas {
+      position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;
+      opacity:0;transition:opacity 1.2s ease;pointer-events:none;
+    }
+    .ha-home__hero-canvas.is-ready { opacity:1; }
     .ha-home__hero-scrim {
       position:absolute;inset:0;z-index:1;
       background:linear-gradient(180deg, rgba(47,62,70,0.58) 0%, rgba(47,62,70,0.32) 45%, rgba(47,62,70,0.74) 100%);
@@ -371,6 +378,22 @@
     }
 
     /* ─────────────────────────────────────
+       3D ENHANCEMENTS — desktop pointer only; disabled on touch + reduced motion (JS-gated)
+    ───────────────────────────────────── */
+    /* Issue cards: cursor-tracked 3D tilt. Perspective lives on the grid so cards share a vanishing point. */
+    @media (hover:hover) and (pointer:fine){
+      .ha-home__issue-grid { perspective:1100px; }
+      .ha-home__issue-card { transform-style:preserve-3d; }
+      .ha-home__issue-card.tilt-on {
+        transition:transform .1s linear, background .35s ease, border-color .35s ease;
+        box-shadow:0 24px 50px rgba(47,62,70,.16);
+      }
+    }
+    /* Impact section: decorative rings drift on scroll (transform driven by JS-set --p-ring*). */
+    .ha-home__impact::before { transform:translate3d(0, var(--p-ring1, 0px), 0); will-change:transform; }
+    .ha-home__impact::after  { transform:translate3d(0, var(--p-ring2, 0px), 0); will-change:transform; }
+
+    /* ─────────────────────────────────────
        ANIMATION
     ───────────────────────────────────── */
     @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
@@ -405,7 +428,7 @@
         transition-duration:.01ms!important; scroll-behavior:auto!important;
       }
       .reveal, .reveal-group > *{ opacity:1!important; transform:none!important; }
-      .ha-home__hero-video{ animation:none!important; transform:none!important; }
+      .ha-home__hero-photo{ animation:none!important; transform:none!important; }
     }
 
     /* ─────────────────────────────────────
@@ -436,6 +459,16 @@
   </style>
   <!-- Fail-safe: if JS is off, reveal elements stay visible. -->
   <noscript><style>.reveal,.reveal-group>*{opacity:1!important;transform:none!important}</style></noscript>
+<style>
+/* Taller header to match hiappleseed.org (~174px) - desktop only; mobile stays compact */
+@media (min-width:701px){
+  .px-nav{padding-top:42px;padding-bottom:42px;}
+  .px-nav .px-brand-mark{width:52px;height:52px;}
+  .px-nav .px-brand-name{font-size:20px;}
+  .hero-inner{padding-top:12rem;}
+  section[id]{scroll-margin-top:186px;}
+}
+</style>
 </head>
 <body>
 
@@ -489,12 +522,13 @@
 
   <!-- ══════════════════ SECTION 1 — HERO ══════════════════ -->
   <section class="ha-home__hero">
-    <!-- Full-screen background video. Footage to be supplied at assets/video/hero.mp4.
-         Poster + the charcoal gradient (::before) guarantee the hero is never blank. -->
-    <video class="ha-home__hero-video" autoplay muted loop playsinline
-           poster="assets/story/hero-rainbow.webp" aria-hidden="true">
-      <source src="assets/video/hero.mp4" type="video/mp4">
-    </video>
+    <!-- Hero background: rainbow landscape photo (always shown) + a WebGL "living photo"
+         layer on top (desktop) that adds subtle depth, slow drift, pointer parallax and a
+         teal light bloom. The canvas fades in over the identical photo, so if WebGL is
+         unavailable the photo alone remains. The charcoal gradient (::before) is the final
+         fallback. (Supersedes the never-supplied hero.mp4.) -->
+    <img class="ha-home__hero-photo" src="assets/story/hero-rainbow.webp" alt="" aria-hidden="true">
+    <canvas class="ha-home__hero-canvas" aria-hidden="true"></canvas>
     <div class="ha-home__hero-scrim" aria-hidden="true"></div>
 
     <div class="hero-inner">
@@ -807,6 +841,224 @@
       entries.forEach(function(e){ if(e.isIntersecting){ run(e.target); io.unobserve(e.target); } });
     }, { threshold: 0.4 });
     nums.forEach(function(el){ io.observe(el); });
+  })();
+  </script>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       3D / WebGL ENHANCEMENTS (no dependencies)
+       1) Hero "living photo": WebGL layer over the rainbow image — slow drift,
+          pointer parallax, subtle shimmer, teal light bloom. Desktop only; the
+          plain <img> is the fallback for mobile / reduced-motion / no-WebGL.
+       2) Issue cards: cursor-tracked 3D tilt (desktop pointer only).
+       3) Impact section: decorative rings parallax on scroll.
+       All paths honor prefers-reduced-motion and pause when off-screen / tab hidden.
+  ───────────────────────────────────────────────────────────────── -->
+  <script>
+  (function(){
+    var hero = document.querySelector('.ha-home__hero');
+    var canvas = document.querySelector('.ha-home__hero-canvas');
+    var photo = hero && hero.querySelector('.ha-home__hero-photo');
+    if(!hero || !canvas || !photo) return;
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var mqM = window.matchMedia ? window.matchMedia('(max-width:700px)') : { matches:false };
+    function enabled(){ return !reduce && !mqM.matches; }
+
+    var FRAG = [
+      'precision highp float;',
+      'varying vec2 vUv;',
+      'uniform vec2 uRes; uniform vec2 uImg; uniform float uTime; uniform vec2 uPointer; uniform sampler2D uTex;',
+      'float hash(vec2 p){ p=fract(p*vec2(123.34,345.45)); p+=dot(p,p+34.345); return fract(p.x*p.y); }',
+      'float noise(vec2 p){ vec2 i=floor(p),f=fract(p); float a=hash(i),b=hash(i+vec2(1.0,0.0)),c=hash(i+vec2(0.0,1.0)),d=hash(i+vec2(1.0,1.0)); vec2 u=f*f*(3.0-2.0*f); return mix(mix(a,b,u.x),mix(c,d,u.x),u.y); }',
+      'float fbm(vec2 p){ float v=0.0,a=0.5; for(int i=0;i<4;i++){ v+=a*noise(p); p*=1.9; a*=0.5; } return v; }',
+      'const vec3 TEAL=vec3(0.518,0.663,0.549);',
+      'const vec3 CHARCOAL=vec3(0.184,0.243,0.275);',
+      'void main(){',
+      '  vec2 uv=vUv;',
+      '  float ra=uRes.x/uRes.y, ia=uImg.x/uImg.y;',
+      '  vec2 cuv=uv;',
+      '  if(ra>ia) cuv.y=(uv.y-0.5)*(ia/ra)+0.5; else cuv.x=(uv.x-0.5)*(ra/ia)+0.5;',
+      '  float zoom=1.06+0.025*sin(uTime*0.06);',
+      '  cuv=(cuv-0.5)/zoom+0.5;',
+      '  cuv+=uPointer*vec2(0.012,0.010);',
+      '  vec2 w=vec2(fbm(cuv*3.0+uTime*0.05), fbm(cuv*3.0-uTime*0.04));',
+      '  cuv+=(w-0.5)*0.006;',
+      '  vec3 col=texture2D(uTex, clamp(cuv,0.001,0.999)).rgb;',
+      '  vec2 p=(gl_FragCoord.xy-0.5*uRes)/uRes.y;',
+      '  vec2 gp=vec2(0.45*sin(uTime*0.08), 0.25+0.10*cos(uTime*0.07))+uPointer*0.05;',
+      '  float glow=exp(-3.0*length(p-gp));',
+      '  col+=TEAL*glow*0.10;',
+      '  float vig=smoothstep(1.25,0.25,length(p*vec2(0.9,1.0)));',
+      '  col=mix(col, mix(CHARCOAL,col,0.5), (1.0-vig)*0.35);',
+      '  gl_FragColor=vec4(col,1.0);',
+      '}'
+    ].join('\n');
+    var VERT = 'attribute vec2 aPos; varying vec2 vUv; void main(){ vUv=aPos*0.5+0.5; gl_Position=vec4(aPos,0.0,1.0); }';
+
+    var gl=null, U={}, tex=null, imgW=1, imgH=1;
+    var inited=false, ready=false, running=false, inView=true, rafId=null;
+    var elapsed=0, last=0, tpx=0, tpy=0, px=0, py=0;
+
+    function compile(type, src){ var s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); return gl.getShaderParameter(s,gl.COMPILE_STATUS)?s:null; }
+
+    function initGL(){
+      try { gl = canvas.getContext('webgl',{antialias:false,alpha:true,premultipliedAlpha:false,powerPreference:'low-power'}) || canvas.getContext('experimental-webgl'); } catch(e){ gl=null; }
+      if(!gl) return false;
+      var vs=compile(gl.VERTEX_SHADER,VERT), fs=compile(gl.FRAGMENT_SHADER,FRAG);
+      if(!vs||!fs) return false;
+      var prog=gl.createProgram(); gl.attachShader(prog,vs); gl.attachShader(prog,fs); gl.linkProgram(prog);
+      if(!gl.getProgramParameter(prog,gl.LINK_STATUS)) return false;
+      gl.useProgram(prog);
+      var buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+      gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1, 3,-1, -1,3]),gl.STATIC_DRAW);
+      var aPos=gl.getAttribLocation(prog,'aPos'); gl.enableVertexAttribArray(aPos); gl.vertexAttribPointer(aPos,2,gl.FLOAT,false,0,0);
+      U.res=gl.getUniformLocation(prog,'uRes'); U.img=gl.getUniformLocation(prog,'uImg');
+      U.time=gl.getUniformLocation(prog,'uTime'); U.pointer=gl.getUniformLocation(prog,'uPointer');
+      U.tex=gl.getUniformLocation(prog,'uTex'); gl.uniform1i(U.tex,0);
+      return true;
+    }
+
+    function makeTexture(image){
+      imgW=image.naturalWidth||image.width||1; imgH=image.naturalHeight||image.height||1;
+      tex=gl.createTexture(); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,tex);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
+      try { gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,image); } catch(e){ return false; }
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+      return true;
+    }
+
+    function withImage(cb){
+      if(photo.complete && photo.naturalWidth){ cb(photo); return; }
+      photo.addEventListener('load', function(){ cb(photo); }, {once:true});
+      photo.addEventListener('error', function(){ cb(null); }, {once:true});
+    }
+
+    function resize(){
+      var dpr=Math.min(window.devicePixelRatio||1, 1.5);
+      var w=Math.max(1,Math.round(hero.clientWidth*dpr)), h=Math.max(1,Math.round(hero.clientHeight*dpr));
+      if(canvas.width!==w||canvas.height!==h){ canvas.width=w; canvas.height=h; }
+      if(gl) gl.viewport(0,0,w,h);
+    }
+
+    function draw(t){
+      if(!gl) return;
+      gl.uniform2f(U.res, canvas.width, canvas.height);
+      gl.uniform2f(U.img, imgW, imgH);
+      gl.uniform1f(U.time, t);
+      gl.uniform2f(U.pointer, px, py);
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.drawArrays(gl.TRIANGLES,0,3);
+    }
+
+    function loop(now){
+      if(!running) return;
+      if(!last) last=now;
+      elapsed += Math.min((now-last)/1000, 0.05); last=now;
+      px+=(tpx-px)*0.045; py+=(tpy-py)*0.045;
+      draw(elapsed);
+      rafId=requestAnimationFrame(loop);
+    }
+
+    function ensureInit(cb){
+      if(inited){ cb(true); return; }
+      if(!initGL()){ cb(false); return; }
+      withImage(function(im){
+        if(!im || !makeTexture(im)){ cb(false); return; }
+        inited=true; cb(true);
+      });
+    }
+
+    function start(){
+      if(!enabled() || running) return;
+      ensureInit(function(ok){
+        if(!ok) return;            // WebGL/texture failed → plain <img> remains
+        resize();
+        if(!running){ running=true; last=0; rafId=requestAnimationFrame(loop); }
+        if(!ready){ ready=true; canvas.classList.add('is-ready'); }
+      });
+    }
+    function stop(){ running=false; if(rafId) cancelAnimationFrame(rafId); rafId=null; }
+
+    window.addEventListener('pointermove', function(e){
+      tpx=(e.clientX/window.innerWidth)*2-1;
+      tpy=-((e.clientY/window.innerHeight)*2-1);
+    }, {passive:true});
+
+    window.addEventListener('resize', function(){ resize(); }, {passive:true});
+
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden) stop(); else if(inView) start();
+    });
+
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){
+        inView = es[0].isIntersecting;
+        if(!inView) stop(); else if(!document.hidden) start();
+      }, {threshold:0.01}).observe(hero);
+    }
+
+    var onMq = function(){ if(enabled()) start(); else { stop(); canvas.classList.remove('is-ready'); ready=false; } };
+    if(mqM.addEventListener) mqM.addEventListener('change', onMq);
+    else if(mqM.addListener) mqM.addListener(onMq);
+
+    start();
+  })();
+  </script>
+
+  <!-- Issue cards: cursor-tracked 3D tilt (desktop pointer devices only). -->
+  <script>
+  (function(){
+    var fine = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!fine || reduce) return;
+    var MAX = 6; // degrees
+    document.querySelectorAll('.ha-home__issue-card').forEach(function(card){
+      card.addEventListener('pointermove', function(e){
+        var r = card.getBoundingClientRect();
+        var dx = (e.clientX - r.left)/r.width - 0.5;
+        var dy = (e.clientY - r.top)/r.height - 0.5;
+        card.classList.add('tilt-on');
+        card.style.transform = 'rotateX('+(-dy*MAX).toFixed(2)+'deg) rotateY('+(dx*MAX).toFixed(2)+'deg) translateZ(8px)';
+      });
+      card.addEventListener('pointerleave', function(){
+        card.classList.remove('tilt-on');
+        card.style.transform = '';
+      });
+    });
+  })();
+  </script>
+
+  <!-- Impact section: decorative rings parallax gently on scroll. -->
+  <script>
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce) return;
+    var section = document.querySelector('.ha-home__impact');
+    if(!section) return;
+    var ticking=false, active=false;
+    function update(){
+      ticking=false;
+      var r = section.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var prog = (vh/2 - (r.top + r.height/2)) / (vh/2 + r.height/2);
+      if(prog<-1) prog=-1; if(prog>1) prog=1;
+      section.style.setProperty('--p-ring1', (prog*-46).toFixed(1)+'px');
+      section.style.setProperty('--p-ring2', (prog*60).toFixed(1)+'px');
+    }
+    function onScroll(){ if(!ticking){ ticking=true; requestAnimationFrame(update); } }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){
+        var vis = es[0].isIntersecting;
+        if(vis && !active){ active=true; window.addEventListener('scroll', onScroll, {passive:true}); update(); }
+        else if(!vis && active){ active=false; window.removeEventListener('scroll', onScroll); }
+      }, {rootMargin:'120px 0px 120px 0px'}).observe(section);
+    } else {
+      window.addEventListener('scroll', onScroll, {passive:true}); update();
+    }
+    window.addEventListener('resize', function(){ if(active) update(); }, {passive:true});
   })();
   </script>
 
