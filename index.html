@@ -380,13 +380,14 @@
     /* ─────────────────────────────────────
        3D ENHANCEMENTS — desktop pointer only; disabled on touch + reduced motion (JS-gated)
     ───────────────────────────────────── */
-    /* Issue cards: cursor-tracked 3D tilt. Perspective lives on the grid so cards share a vanishing point. */
+    /* Issue cards: cursor-tracked 3D tilt. Each card carries its OWN perspective() in the
+       transform (set in JS) so every card tilts uniformly regardless of grid position, and
+       the transition is set inline so it overrides the reveal-group's staggered
+       transition-delay (which otherwise lagged every card after the first). */
     @media (hover:hover) and (pointer:fine){
-      .ha-home__issue-grid { perspective:1100px; }
-      .ha-home__issue-card { transform-style:preserve-3d; }
       .ha-home__issue-card.tilt-on {
-        transition:transform .1s linear, background .35s ease, border-color .35s ease;
         box-shadow:0 24px 50px rgba(47,62,70,.16);
+        will-change:transform;
       }
     }
     /* Impact section: decorative rings drift on scroll (transform driven by JS-set --p-ring*). */
@@ -1021,7 +1022,8 @@
         var dx = (e.clientX - r.left)/r.width - 0.5;
         var dy = (e.clientY - r.top)/r.height - 0.5;
         card.classList.add('tilt-on');
-        card.style.transform = 'rotateX('+(-dy*MAX).toFixed(2)+'deg) rotateY('+(dx*MAX).toFixed(2)+'deg) translateZ(8px)';
+        card.style.transition = 'transform .12s ease, background .35s ease, border-color .35s ease';
+        card.style.transform = 'perspective(900px) rotateX('+(-dy*MAX).toFixed(2)+'deg) rotateY('+(dx*MAX).toFixed(2)+'deg) translateZ(8px)';
       });
       card.addEventListener('pointerleave', function(){
         card.classList.remove('tilt-on');
