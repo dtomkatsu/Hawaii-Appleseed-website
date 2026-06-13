@@ -288,19 +288,20 @@
     margin-top:60px;
     padding-left:64px;
   }
+  /* The rail is a living VINE: the fill/progress gradient is masked to a gently
+     wavering ribbon (a repeating SVG wave), so the growing line reads as a climbing
+     stem rather than a straight bar. Dots are 18px wide, so the subtle ±3px waver
+     stays visually "on" the vine. */
   .ha-story .rail::before{
-    content:""; position:absolute; left:14px; top:8px; bottom:8px;
-    width:var(--stem-w, 3px); border-radius:4px;
+    content:""; position:absolute; left:9px; top:8px; bottom:8px;
+    width:14px;
     background:
       linear-gradient(180deg, var(--ha-teal-deep) 0%, var(--ha-teal) 100%)
         top / 100% var(--rail-progress, 0%) no-repeat,
       var(--ha-ash);
+    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 100'><path d='M7 0 C7.8 24 7.8 32 7 50 C6.2 68 6.2 76 7 100' stroke='%23000' stroke-width='3.6' fill='none' stroke-linecap='round'/></svg>") center top / 14px 100px repeat-y;
+            mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 100'><path d='M7 0 C7.8 24 7.8 32 7 50 C6.2 68 6.2 76 7 100' stroke='%23000' stroke-width='3.6' fill='none' stroke-linecap='round'/></svg>") center top / 14px 100px repeat-y;
   }
-  /* The stem matures decade to decade — thicker each era. */
-  .ha-story #era-founding   .rail{ --stem-w:3px; }
-  .ha-story #era-renaming   .rail{ --stem-w:4px; }
-  .ha-story #era-broadening .rail{ --stem-w:5px; }
-  .ha-story #era-current    .rail{ --stem-w:6px; }
 
   .ha-story .milestone{
     position:relative;
@@ -532,7 +533,7 @@
     .ha-story .era-header .era-years{ font-size:15px; }
 
     .ha-story .rail{ padding-left:36px; margin-top:40px; }
-    .ha-story .rail::before{ left:10px; width:2px; }
+    .ha-story .rail::before{ left:10px; width:2px; -webkit-mask:none; mask:none; }
     .ha-story .milestone{ padding:0 0 48px; }
     .ha-story .milestone::before{
       left:-34px; top:4px;
@@ -672,6 +673,20 @@
     .ha-story .sprig--win .leaf:nth-child(n+3){ display:none; }
   }
 
+  /* Vine tendrils — sparse curls/leaflets sprouting along the stem BETWEEN nodes
+     (smaller than the node sprigs so milestones stay the focus). Desktop only. */
+  .ha-story .vine-tendril{
+    position:absolute; left:-58px; bottom:24px; width:26px; height:38px;
+    color:var(--ha-teal-deep); pointer-events:none; z-index:0;
+    transform-origin:bottom right; transform:scale(.2); opacity:0;
+    transition:transform .7s cubic-bezier(.22,.61,.36,1), opacity .55s ease;
+  }
+  .ha-story .vine-tendril svg{ width:100%; height:100%; display:block; }
+  .ha-story .milestone:nth-child(even) .vine-tendril{ bottom:42px; }   /* stagger up the gap */
+  .ha-story .milestone.has-bloomed .vine-tendril{ transform:scale(1); opacity:calc(.78 * var(--rail-mood, 1)); }
+  .ha-story .era.dark .vine-tendril{ color:var(--ha-teal); }
+  @media (max-width:600px){ .ha-story .vine-tendril{ display:none; } }
+
   /* Somber milestones (loss): the rail simply continues — no leaf, no celebratory bloom. */
   .ha-story .milestone[data-register="loss"].is-active::before{
     background:var(--ha-white); box-shadow:0 0 0 4px rgba(202,210,197,.30);
@@ -686,10 +701,14 @@
 
   /* Chapter nav — desktop vertical mini-rail (fixed, fills with --ha-progress). */
   .ha-story .chapnav{
-    position:fixed; left:20px; top:50%; transform:translateY(-50%);
+    position:fixed; left:20px; top:50%;
+    transform:translate(-10px, -50%); opacity:0; visibility:hidden;
+    transition:opacity .5s ease, transform .5s cubic-bezier(.22,.61,.36,1), visibility .5s;
     z-index:40; display:none; flex-direction:column; align-items:flex-start;
   }
   @media (min-width:981px){ .ha-story .chapnav{ display:flex; } }
+  /* revealed only once the reader has scrolled into the timeline (see applyFade) */
+  .ha-story.nav-ready .chapnav{ opacity:1; visibility:visible; transform:translate(0, -50%); }
   .ha-story .chapnav .chapnav-line{
     position:absolute; left:5px; top:8px; bottom:8px; width:2px; border-radius:2px;
     background:
@@ -721,8 +740,10 @@
   .ha-story .chapbar{
     position:fixed; left:0; right:0; bottom:0; height:3px; z-index:40;
     background:rgba(53,79,82,.14); display:block;
+    opacity:0; transition:opacity .5s ease;
   }
   @media (min-width:981px){ .ha-story .chapbar{ display:none; } }
+  .ha-story.nav-ready .chapbar{ opacity:1; }
   .ha-story .chapbar::before{
     content:""; display:block; height:100%;
     width:calc(var(--ha-progress, 0) * 100%);
@@ -781,6 +802,7 @@
     /* node sprigs: present + grown + flat (no 3D, no unfurl) */
     .ha-story .sprig .leaf{ transform: rotate(var(--a,0deg)) scale(var(--leaf-scale,1)); opacity: calc(0.92 * var(--rail-mood, 1)); }
     .ha-story .sprig--build .leaf{ opacity: calc(0.7 * var(--rail-mood, 1)); }
+    .ha-story .vine-tendril{ transform:none; opacity: calc(0.78 * var(--rail-mood, 1)); }
   }
 </style>
 
@@ -1162,6 +1184,8 @@
       const t = timelineEl.getBoundingClientRect();
       const prog = Math.max(0, Math.min(1, (vh * 0.5 - t.top) / Math.max(1, t.height - vh * 0.5)));
       ROOT.style.setProperty('--ha-progress', prog.toFixed(4));
+      // reveal the chapter nav only once the reader has scrolled into the timeline
+      ROOT.classList.toggle('nav-ready', t.top <= vh * 0.5);
     }
     if (navTicks.length && eras.length) {
       let active = 0;
@@ -1227,6 +1251,12 @@
     sprig.innerHTML = html;
     m.classList.add('has-sprig');
     m.insertBefore(sprig, m.firstChild);
+    // a sparse vine tendril in the gap toward the next node
+    var tendril = document.createElement('span');
+    tendril.className = 'vine-tendril';
+    tendril.setAttribute('aria-hidden', 'true');
+    tendril.innerHTML = '<svg viewBox="0 0 26 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 38 C15 32 9 26 12 17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 17 C4 15 1 9 2 1 C10 3 14 10 12 17 Z" fill="currentColor"/><path d="M15 23 C19 20 25 19 25 19 C23 24 19 25 15 23 Z" fill="currentColor" opacity=".7"/></svg>';
+    m.appendChild(tendril);
     if (reduce) m.classList.add('has-bloomed');   // reduced motion: present + grown, no unfurl
   });
 
