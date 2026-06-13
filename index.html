@@ -194,13 +194,35 @@
     /* ─────────────────────────────────────
        SECTION 2 — MISSION BAND
     ───────────────────────────────────── */
-    .ha-home__mission { background:var(--teal); padding:6rem 8%; text-align:center; }
+    .ha-home__mission { position:relative; background:var(--teal); padding:7rem 8% 6.5rem; text-align:center; }
+    /* organic curved top edge — the teal rises up out of the hero landscape */
+    .ha-home__mission::before{
+      content:""; position:absolute; left:-2%; right:-2%; top:-76px; height:78px;
+      background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 1440 78'><path d='M0 78 L0 50 C 380 4 720 60 1040 34 C 1240 18 1360 30 1440 42 L1440 78 Z' fill='%2384A98C'/></svg>") no-repeat center bottom; background-size:100% 100%;
+      pointer-events:none;
+    }
+    /* faint sprout watermark for depth (parallaxes behind the text) */
+    .ha-home__mission-mark{
+      position:absolute; left:50%; top:50%; width:min(52vw,400px); height:auto;
+      transform:translate(-50%,-50%); color:var(--deep-teal); opacity:.14;
+      pointer-events:none; z-index:0; will-change:transform;
+    }
     .ha-home__mission h2 {
+      position:relative; z-index:1;
       font-family:'Manrope',sans-serif;font-weight:400;
       font-size:clamp(2rem, 3.6vw, 3rem);line-height:1.3;color:var(--charcoal);
       max-width:26ch;margin:0 auto;
     }
-    .ha-home__mission h2 em { font-family:'Poppins',sans-serif; font-style:italic; color:var(--dark-slate); }
+    .ha-home__mission h2.reveal{ opacity:1; transform:none; }       /* h2 stays put; lines animate in */
+    .ha-home__mission h2 .ln{ display:inline-block; opacity:0; transform:translateY(20px);
+      transition:opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+    .ha-home__mission h2.is-in .ln{ opacity:1; transform:none; }
+    .ha-home__mission h2.is-in .ln:nth-child(2){ transition-delay:.12s; }
+    .ha-home__mission h2.is-in .ln:nth-child(3){ transition-delay:.24s; }
+    .ha-home__mission h2 em { font-family:'Poppins',sans-serif; font-style:italic; color:var(--dark-slate); position:relative; }
+    .ha-home__mission h2 em::after{ content:""; position:absolute; left:0; right:0; bottom:-.04em; height:2px;
+      background:var(--dark-slate); transform:scaleX(0); transform-origin:left; transition:transform .7s var(--ease-out) .3s; }
+    .ha-home__mission h2.is-in em::after{ transform:scaleX(1); }
 
     /* ─────────────────────────────────────
        SECTION 3 — ISSUE AREAS OVERVIEW (all five)
@@ -398,10 +420,43 @@
        ANIMATION
     ───────────────────────────────────── */
     @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
-    .ha-home__hero .eyebrow      { animation:fadeUp 0.75s ease 0.15s both; }
-    .ha-home__hero h1            { animation:fadeUp 0.75s ease 0.3s both; }
-    .ha-home__hero .hero-sub     { animation:fadeUp 0.75s ease 0.48s both; }
-    .ha-home__hero .hero-actions { animation:fadeUp 0.75s ease 0.62s both; }
+    @keyframes heroFade { from { opacity:0; } to { opacity:1; } }
+    @keyframes heroWordUp { from { opacity:0; transform:translateY(26px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes thriveLeaf { to { transform:scale(1) rotate(0); } }
+
+    /* Hero entrance: eyebrow/sub/actions fade in (opacity only, so the 3D depth survives);
+       the headline rises word-by-word (per-word delays set in the markup). */
+    .ha-home__hero .eyebrow      { animation:heroFade .7s ease .12s both; }
+    .ha-home__hero .hero-sub     { animation:heroFade .8s ease .72s both; }
+    .ha-home__hero .hero-actions { animation:heroFade .8s ease .85s both; }
+    .ha-home__hero h1 .w         { display:inline-block; animation:heroWordUp .6s cubic-bezier(.22,.61,.36,1) both; }
+
+    /* "thrive" — a small teal leaf unfurls at the top-right of the word on load. */
+    .ha-home__hero h1 em { position:relative; }
+    .ha-home__hero h1 em::after{
+      content:""; position:absolute; right:-.54em; top:.04em; width:.42em; height:.62em;
+      background-color:var(--teal); pointer-events:none;
+      -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 40'><path d='M12 40 C3 28 3 12 12 0 C21 12 21 28 12 40 Z' fill='%23000'/></svg>") no-repeat center/contain;
+              mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 40'><path d='M12 40 C3 28 3 12 12 0 C21 12 21 28 12 40 Z' fill='%23000'/></svg>") no-repeat center/contain;
+      transform:scale(0) rotate(-28deg); transform-origin:bottom left;
+      animation:thriveLeaf .7s cubic-bezier(.22,.61,.36,1) 1.0s both;
+    }
+
+    /* Hero CTA buttons: sliding arrow + a snappy transform for the magnetic tilt (JS). */
+    .ha-home__hero .hero-actions .btn{ transition:transform .14s ease, background .28s ease, border-color .28s ease, color .28s ease; will-change:transform; }
+    .ha-home__hero .btn-arr{ display:inline-block; margin-left:.45em; transition:transform .25s ease; }
+    .ha-home__hero .btn-ghost:hover .btn-arr{ transform:translateX(5px); }
+
+    /* Cursor-parallax DEPTH + tilt — desktop pointer, motion-allowed only (perspective would
+       scale the translateZ layers where there's no tilt to justify it). */
+    @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion: no-preference){
+      .ha-home__hero { perspective:1100px; }
+      .ha-home__hero .hero-inner { transform-style:preserve-3d; transition:transform .3s ease; will-change:transform; }
+      .ha-home__hero .eyebrow      { transform:translateZ(8px); }
+      .ha-home__hero h1            { transform:translateZ(40px); }
+      .ha-home__hero .hero-sub     { transform:translateZ(22px); }
+      .ha-home__hero .hero-actions { transform:translateZ(14px); }
+    }
 
     /* ─────────────────────────────────────
        SCROLL-REVEAL (rec B) — GPU-only (opacity + translateY), reveals once.
@@ -534,20 +589,26 @@
 
     <div class="hero-inner">
       <span class="eyebrow">Hawaiʻi Appleseed Center for Law &amp; Economic Justice</span>
-      <h1>Building a Hawaiʻi where every family can <em>thrive</em>.</h1>
+      <h1><span class="w" style="animation-delay:.24s">Building</span> <span class="w" style="animation-delay:.30s">a</span> <span class="w" style="animation-delay:.36s">Hawaiʻi</span> <span class="w" style="animation-delay:.42s">where</span> <span class="w" style="animation-delay:.48s">every</span> <span class="w" style="animation-delay:.54s">family</span> <span class="w" style="animation-delay:.60s">can</span> <span class="w" style="animation-delay:.66s"><em>thrive</em>.</span></h1>
       <p class="hero-sub">
         We work at the intersection of law, policy, and community power to advance economic justice across our islands — and there's a place in that work for you.
       </p>
       <div class="hero-actions">
         <a href="support.html" class="btn btn-solid">Support Our Work</a>
-        <a href="issues.html" class="btn btn-ghost">Explore the Issues</a>
+        <a href="issues.html" class="btn btn-ghost">Explore the Issues<span class="btn-arr">→</span></a>
       </div>
     </div>
   </section>
 
   <!-- ══════════════════ SECTION 2 — MISSION BAND ══════════════════ -->
   <section class="ha-home__mission">
-    <h2 class="reveal">Advancing Economic Justice <em>for and with</em> the people of Hawaiʻi.</h2>
+    <svg class="ha-home__mission-mark" viewBox="0 0 200 122" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 120 C100 84 100 62 100 30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path d="M100 56 C70 56 44 40 28 14 C64 6 92 24 100 56 Z" fill="currentColor"/>
+      <path d="M100 50 C128 50 152 35 168 12 C134 5 108 21 100 50 Z" fill="currentColor"/>
+      <circle cx="100" cy="62" r="4" fill="currentColor"/>
+    </svg>
+    <h2 class="reveal"><span class="ln">Advancing Economic Justice</span> <span class="ln"><em>for and with</em></span> <span class="ln">the people of Hawaiʻi.</span></h2>
   </section>
 
   <!-- ══════════════════ SECTION 3 — ISSUE AREAS ══════════════════ -->
@@ -1064,6 +1125,53 @@
       window.addEventListener('scroll', onScroll, {passive:true}); update();
     }
     window.addEventListener('resize', function(){ if(active) update(); }, {passive:true});
+  })();
+  </script>
+
+  <!-- Hero: cursor-parallax depth/tilt on the text + magnetic 3D-tilt CTA buttons.
+       Desktop pointer only; reduced-motion and touch get the calm static hero. -->
+  <script>
+  (function(){
+    var fine = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!fine || reduce) return;
+    var hero = document.querySelector('.ha-home__hero');
+    var inner = hero && hero.querySelector('.hero-inner');
+    if(!hero || !inner) return;
+    hero.addEventListener('pointermove', function(e){
+      var r = hero.getBoundingClientRect();
+      var px = (e.clientX - r.left)/r.width - 0.5;
+      var py = (e.clientY - r.top)/r.height - 0.5;
+      inner.style.transform = 'rotateY('+(px*4).toFixed(2)+'deg) rotateX('+(-py*4).toFixed(2)+'deg)';
+    });
+    hero.addEventListener('pointerleave', function(){ inner.style.transform = ''; });
+    hero.querySelectorAll('.hero-actions .btn').forEach(function(btn){
+      btn.addEventListener('pointermove', function(e){
+        var r = btn.getBoundingClientRect();
+        var nx = (e.clientX - (r.left + r.width/2)) / (r.width/2);    // -1..1
+        var ny = (e.clientY - (r.top + r.height/2)) / (r.height/2);
+        btn.style.transform = 'perspective(600px) translate('+(nx*6).toFixed(1)+'px,'+(ny*6).toFixed(1)+'px) rotateX('+(-ny*7).toFixed(1)+'deg) rotateY('+(nx*9).toFixed(1)+'deg) scale(1.04)';
+      });
+      btn.addEventListener('pointerleave', function(){ btn.style.transform = ''; });
+    });
+
+    // Mission band: faint sprout watermark + statement parallax on different planes.
+    var mission = document.querySelector('.ha-home__mission');
+    var mark = mission && mission.querySelector('.ha-home__mission-mark');
+    var mh2 = mission && mission.querySelector('h2');
+    if (mission && mark){
+      mission.addEventListener('pointermove', function(e){
+        var r = mission.getBoundingClientRect();
+        var px = (e.clientX - r.left)/r.width - 0.5;
+        var py = (e.clientY - r.top)/r.height - 0.5;
+        mark.style.transform = 'translate(calc(-50% + '+(px*-26).toFixed(1)+'px), calc(-50% + '+(py*-16).toFixed(1)+'px))';
+        if (mh2) mh2.style.transform = 'translate('+(px*6).toFixed(1)+'px,'+(py*4).toFixed(1)+'px)';
+      });
+      mission.addEventListener('pointerleave', function(){
+        mark.style.transform = 'translate(-50%,-50%)';
+        if (mh2) mh2.style.transform = '';
+      });
+    }
   })();
   </script>
 
