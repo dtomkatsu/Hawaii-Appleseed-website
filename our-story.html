@@ -628,6 +628,50 @@
     transform:scale(1); opacity:calc(.7 * var(--rail-mood, 1));
   }
   .ha-story .era.dark .milestone[data-register="build"]::after{ border-color:var(--ha-teal); }
+
+  /* ===== Node foliage — a CSS-3D leaf sprig grows from each non-loss dot when reached.
+     Leaves are mask-shaped blades (brand teal / teal-deep) fanned + tilted in 3D from the dot. ===== */
+  .ha-story .sprig{
+    position:absolute; left:-50px; top:-46px; width:1px; height:60px;
+    perspective:280px; transform-style:preserve-3d;
+    pointer-events:none; z-index:1;
+  }
+  .ha-story .has-sprig[data-register="win"]::after{ display:none; }  /* the sprig replaces the single win leaf */
+  .ha-story .sprig .leaf{
+    position:absolute; left:0; bottom:0; width:14px; height:24px; margin-left:-7px;
+    background-color:var(--ha-teal);
+    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 40'><path d='M12 40 C3 28 3 12 12 0 C21 12 21 28 12 40 Z' fill='%23000'/></svg>") no-repeat center/contain;
+            mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 40'><path d='M12 40 C3 28 3 12 12 0 C21 12 21 28 12 40 Z' fill='%23000'/></svg>") no-repeat center/contain;
+    transform-origin:bottom center;
+    transform: rotate(var(--a,0deg)) rotateX(var(--rx,0deg)) translateZ(var(--tz,0px)) scale(.16);
+    opacity:0;
+    transition: transform .62s cubic-bezier(.22,.61,.36,1), opacity .5s ease;
+  }
+  .ha-story .sprig .leaf:nth-child(even){ background-color:var(--ha-teal-deep); }
+  .ha-story .milestone.has-bloomed .sprig .leaf{
+    transform: rotate(var(--a,0deg)) rotateX(var(--rx,0deg)) translateZ(var(--tz,0px)) scale(var(--leaf-scale,1));
+    opacity: calc(0.92 * var(--rail-mood, 1));
+  }
+  .ha-story .sprig--build .leaf{ width:11px; height:19px; background-color:var(--ha-teal-deep); }
+  .ha-story .milestone.has-bloomed .sprig--build .leaf{ opacity: calc(0.7 * var(--rail-mood, 1)); }
+  .ha-story .era.dark .sprig .leaf{ background-color:var(--ha-teal); }
+  .ha-story .era.dark .sprig .leaf:nth-child(even){ background-color:var(--ha-ash); }
+  /* per-era maturity: later eras grow a touch fuller */
+  .ha-story #era-founding   .rail{ --leaf-scale:.9; }
+  .ha-story #era-renaming   .rail{ --leaf-scale:1.0; }
+  .ha-story #era-broadening .rail{ --leaf-scale:1.08; }
+  .ha-story #era-current    .rail{ --leaf-scale:1.15; }
+  /* inner leaves lead the unfurl */
+  .ha-story .sprig .leaf:nth-child(2){ transition-delay:.06s; }
+  .ha-story .sprig .leaf:nth-child(3){ transition-delay:.12s; }
+  .ha-story .sprig .leaf:nth-child(4){ transition-delay:.18s; }
+  .ha-story .sprig .leaf:nth-child(5){ transition-delay:.24s; }
+  /* mobile: vertical-first — narrow the fan toward the rail and cap leaf count */
+  @media (max-width:600px){
+    .ha-story .sprig{ left:-30px; top:-38px; transform:scaleX(.5); }
+    .ha-story .sprig--win .leaf:nth-child(n+3){ display:none; }
+  }
+
   /* Somber milestones (loss): the rail simply continues — no leaf, no celebratory bloom. */
   .ha-story .milestone[data-register="loss"].is-active::before{
     background:var(--ha-white); box-shadow:0 0 0 4px rgba(202,210,197,.30);
@@ -734,6 +778,9 @@
     .ha-story .closing-canopy .leaf{ transform:none; opacity:1; }
     .ha-story .milestone-fig img{ filter:none; transform:none; }
     .ha-story .milestone-fig::after{ opacity:0; }
+    /* node sprigs: present + grown + flat (no 3D, no unfurl) */
+    .ha-story .sprig .leaf{ transform: rotate(var(--a,0deg)) scale(var(--leaf-scale,1)); opacity: calc(0.92 * var(--rail-mood, 1)); }
+    .ha-story .sprig--build .leaf{ opacity: calc(0.7 * var(--rail-mood, 1)); }
   }
 </style>
 
@@ -1084,6 +1131,7 @@
 
       if (op > 0 && !el.classList.contains('is-in')) el.classList.add('is-in');
       el.classList.toggle('is-active', op > 0.55);
+      if (op > 0.55) el.classList.add('has-bloomed');   // sprig grows once when reached, then stays
     }
 
     // Reading line at 60% of viewport drives the per-rail fill + the gravitas "mood".
@@ -1154,6 +1202,32 @@
       console.warn('[our-story] milestone missing data-register, defaulting to "build":', y.trim());
       m.setAttribute('data-register', 'build');
     }
+  });
+
+  // ===== Node foliage: a CSS-3D leaf sprig grows from each non-loss dot when reached.
+  // win = leaf fan (marquee wins fuller); build = the existing ring + one quiet twig;
+  // loss = nothing injected (tragedy nodes stay bare). Growth fires off .has-bloomed (set once
+  // when the dot is reached, never reset → stays grown); leaf opacity inherits --rail-mood so the
+  // foliage stills over the loss span.
+  var FAN = { marquee:[-78,-54,-32,-12,6], win:[-62,-34,-8], build:[-6] };
+  var RX = [12,-7,15,-4,9], TZ = [0,6,-4,8,-2];
+  ROOT.querySelectorAll('.milestone').forEach(function(m){
+    var reg = m.getAttribute('data-register');
+    if (reg === 'loss') return;
+    var y = (m.querySelector('.year') || {}).textContent || '';
+    var marquee = reg === 'win' && /First Case|Foster Care|Minimum Wage/.test(y);
+    var angles = reg === 'build' ? FAN.build : (marquee ? FAN.marquee : FAN.win);
+    var sprig = document.createElement('span');
+    sprig.className = 'sprig sprig--' + reg + (marquee ? ' sprig--marquee' : '');
+    sprig.setAttribute('aria-hidden', 'true');
+    var html = '';
+    for (var i=0;i<angles.length;i++){
+      html += '<i class="leaf" style="--a:'+angles[i]+'deg;--rx:'+RX[i%RX.length]+'deg;--tz:'+TZ[i%TZ.length]+'px"></i>';
+    }
+    sprig.innerHTML = html;
+    m.classList.add('has-sprig');
+    m.insertBefore(sprig, m.firstChild);
+    if (reduce) m.classList.add('has-bloomed');   // reduced motion: present + grown, no unfurl
   });
 
   // ===== Hero stat count-up (fires once when the stat row enters view).
