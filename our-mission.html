@@ -81,8 +81,136 @@
   .px-spacer-top{height:180px;}
 }
 </style>
+
+<!-- ─────────────────────────────────────
+     MISSION ENHANCEMENTS — page chrome (scroll progress · glass nav · grain),
+     scrollytelling-card cursor spotlight + per-card accent, CTA polish.
+     CSS-only effects; a small script feeds pointer position + magnetic buttons.
+───────────────────────────────────── -->
+<style>
+  /* ---- page chrome ---- */
+  .px-scroll-progress{
+    position:fixed;left:0;top:0;height:3px;width:100%;z-index:60;
+    transform:scaleX(0);transform-origin:0 50%;will-change:transform;pointer-events:none;
+    background:linear-gradient(90deg,#84A98C,#52796F);
+  }
+  .px-nav{transition:padding .3s cubic-bezier(.22,.61,.36,1), background .3s, box-shadow .3s;}
+  .px-nav.is-scrolled{
+    background:rgba(255,255,255,.82);
+    -webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);
+    box-shadow:0 6px 26px rgba(47,62,70,.09);
+  }
+  @media (min-width:701px){
+    .px-nav.is-scrolled{padding-top:22px;padding-bottom:22px;}
+    .px-nav.is-scrolled .px-brand-mark{width:44px;height:44px;}
+  }
+  .px-grain{
+    position:fixed;inset:0;z-index:55;pointer-events:none;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:160px 160px;
+  }
+
+  /* ---- scrollytelling cards: cursor spotlight (all three phases are card grids) ----
+     Each card type has one free pseudo (value/focus already use one for their
+     underline), so the glow rides ::after on steps+values and ::before on focus. */
+  .ha-mission .ha-five-body-a .ha-step::after,
+  .ha-mission .ha-five-body-b .ha-value-card::after,
+  .ha-mission .ha-five-body-c .ha-focus-card::before{
+    content:"";position:absolute;inset:0;z-index:0;border-radius:inherit;pointer-events:none;
+    opacity:0;transition:opacity .35s ease;
+    background:radial-gradient(190px circle at var(--mx,50%) var(--my,50%),
+      color-mix(in srgb, var(--spot,var(--ha-teal)) 20%, transparent), transparent 70%);
+  }
+  .ha-mission .ha-five-body-a .ha-step:hover::after,
+  .ha-mission .ha-five-body-b .ha-value-card:hover::after,
+  .ha-mission .ha-five-body-c .ha-focus-card:hover::before{opacity:1;}
+  /* keep card content above the glow layer */
+  .ha-mission .ha-five-body-a .ha-step > *,
+  .ha-mission .ha-five-body-b .ha-value-card > *,
+  .ha-mission .ha-five-body-c .ha-focus-card > *{position:relative;z-index:1;}
+  /* per-position accent — paired cards share a tint so the morph reads as one object */
+  .ha-mission .ha-five-body-a .ha-step:nth-child(1),
+  .ha-mission .ha-five-body-b .ha-value-card:nth-child(1),
+  .ha-mission .ha-five-body-c .ha-focus-card:nth-child(1){--spot:var(--ha-teal-deep);}
+  .ha-mission .ha-five-body-a .ha-step:nth-child(2),
+  .ha-mission .ha-five-body-b .ha-value-card:nth-child(2),
+  .ha-mission .ha-five-body-c .ha-focus-card:nth-child(2){--spot:var(--ha-slate);}
+  .ha-mission .ha-five-body-a .ha-step:nth-child(3),
+  .ha-mission .ha-five-body-b .ha-value-card:nth-child(3),
+  .ha-mission .ha-five-body-c .ha-focus-card:nth-child(3){--spot:var(--ha-teal);}
+  .ha-mission .ha-five-body-a .ha-step:nth-child(4),
+  .ha-mission .ha-five-body-b .ha-value-card:nth-child(4),
+  .ha-mission .ha-five-body-c .ha-focus-card:nth-child(4){--spot:var(--ha-teal-deep);}
+  .ha-mission .ha-five-body-a .ha-step:nth-child(5),
+  .ha-mission .ha-five-body-b .ha-value-card:nth-child(5),
+  .ha-mission .ha-five-body-c .ha-focus-card:nth-child(5){--spot:var(--ha-slate);}
+
+  /* ---- CTA: arrow slide on the primary button (magnetic nudge added via JS) ---- */
+  .ha-mission .ha-cta .ha-btn-primary svg{transition:transform .25s cubic-bezier(.22,.61,.36,1);}
+  .ha-mission .ha-cta .ha-btn-primary:hover svg{transform:translateX(4px);}
+
+  @media (prefers-reduced-motion: reduce){ .px-scroll-progress{transition:none;} }
+</style>
+
+<!-- hero mark uses three.js, loaded from the locally-vendored module (no CDN) -->
+<script type="importmap">
+{ "imports": { "three": "./assets/vendor/three.module.js" } }
+</script>
+<style>
+  /* ---- hero headline: per-letter 3D unfold + variable-weight settle (C3 + C2) ---- */
+  .ha-mission .ha-hero h1{ perspective:900px; }
+  .ha-mission .ha-wordwrap{ display:inline-block; }
+  .ha-mission .ha-char{
+    display:inline-block; transform-origin:50% 90%;
+    opacity:0; transform:rotateX(-92deg);
+    --wght:330; font-variation-settings:'wght' var(--wght);
+    transition:opacity .55s cubic-bezier(.22,.61,.36,1),
+               transform .7s cubic-bezier(.22,.61,.36,1),
+               --wght .7s cubic-bezier(.22,.61,.36,1);
+    will-change:opacity, transform;
+  }
+  .ha-mission .ha-hero.is-in .ha-char{ opacity:1; transform:none; --wght:700; }
+  .ha-mission .ha-mark-wrap{
+    display:inline-block; opacity:0; transform:translateY(14px);
+    transition:opacity .8s cubic-bezier(.22,.61,.36,1) .3s, transform .8s cubic-bezier(.22,.61,.36,1) .3s;
+  }
+  .ha-mission .ha-hero.is-in .ha-mark-wrap{ opacity:1; transform:none; }
+
+  /* ---- mark fill: flowing teal→ash gradient (C1) — base + WebGL fallback ---- */
+  .ha-mission .ha-hero h1 .ha-mark{
+    background:linear-gradient(100deg, var(--ha-teal) 0%, var(--ha-ash) 48%, var(--ha-teal) 92%);
+    background-size:220% 100%;
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:ha-mark-flow 9s ease-in-out infinite;
+  }
+  @keyframes ha-mark-flow{ 0%,100%{background-position:0 0;} 50%{background-position:100% 0;} }
+  /* WebGL active → the canvas IS the mark; HTML text goes transparent but stays in the DOM (a11y/SEO) */
+  .ha-mission .ha-hero h1 .ha-mark.is-webgl{
+    animation:none; background:none; -webkit-text-fill-color:transparent; color:transparent;
+  }
+  .ha-mission .ha-mark-canvas{
+    position:absolute; pointer-events:none; z-index:1;
+    opacity:0; transition:opacity .7s ease;
+  }
+  .ha-mission .ha-mark-canvas.is-ready{ opacity:1; }
+
+  /* legibility once a video sits behind the hero */
+  .ha-mission .ha-hero h1 .ha-char{ text-shadow:0 1px 16px rgba(18,26,30,.32); }
+  .ha-mission .ha-hero-lead{ text-shadow:0 1px 16px rgba(18,26,30,.28); }
+
+  @media (prefers-reduced-motion: reduce){
+    .ha-mission .ha-char{ transition:none; opacity:1; transform:none; --wght:700; }
+    .ha-mission .ha-mark-wrap{ transition:none; opacity:1; transform:none; }
+    .ha-mission .ha-hero h1 .ha-mark{ animation:none; }
+  }
+</style>
 </head>
 <body>
+
+<!-- enhancements: scroll progress + film grain -->
+<div class="px-scroll-progress" aria-hidden="true"></div>
+<div class="px-grain" aria-hidden="true"></div>
 
 <!-- PREVIEW-ONLY: announce bar -->
 <div class="px-announce">
@@ -1231,28 +1359,34 @@
     const frag = document.createDocumentFragment();
     el.childNodes.forEach(node => {
       if (node.nodeType === Node.TEXT_NODE) {
-        const words = node.textContent.split(/(\s+)/);
-        words.forEach(w => {
-          if (/^\s+$/.test(w)) {
-            frag.appendChild(document.createTextNode(w));
-          } else if (w.length) {
-            const s = document.createElement('span');
-            s.className = 'ha-word';
-            s.textContent = w;
-            frag.appendChild(s);
+        // split into words (preserve spaces); each word's letters become .ha-char
+        node.textContent.split(/(\s+)/).forEach(token => {
+          if (/^\s+$/.test(token)) {
+            frag.appendChild(document.createTextNode(token));
+          } else if (token.length) {
+            const word = document.createElement('span');
+            word.className = 'ha-wordwrap';
+            Array.from(token).forEach(ch => {
+              const c = document.createElement('span');
+              c.className = 'ha-char';
+              c.textContent = ch;
+              word.appendChild(c);
+            });
+            frag.appendChild(word);
           }
         });
       } else {
+        // the .ha-mark span stays whole — it gets the three.js particle/field treatment
         const wrap = document.createElement('span');
-        wrap.className = 'ha-word';
+        wrap.className = 'ha-mark-wrap';
         wrap.appendChild(node.cloneNode(true));
         frag.appendChild(wrap);
       }
     });
     el.innerHTML = '';
     el.appendChild(frag);
-    el.querySelectorAll('.ha-word').forEach((s, i) => {
-      s.style.transitionDelay = (i * 0.05) + 's';
+    el.querySelectorAll('.ha-char').forEach((c, i) => {
+      c.style.transitionDelay = (i * 0.022) + 's';
     });
   });
 
@@ -1530,6 +1664,244 @@
     document.querySelectorAll('.px-dropdown').forEach(function(d){d.classList.remove('is-open');var b=d.querySelector('.px-dropdown-trigger');if(b)b.setAttribute('aria-expanded','false');});
   });
 })();
+</script>
+
+<!-- enhancements: scroll progress + glass nav · card cursor spotlight · magnetic CTA buttons -->
+<script>
+(function(){
+  // scroll progress bar + glass nav
+  var bar = document.querySelector('.px-scroll-progress');
+  var nav = document.querySelector('.px-nav');
+  var ticking = false;
+  function upd(){
+    ticking = false;
+    var d = document.documentElement;
+    var s = window.pageYOffset || d.scrollTop || 0;
+    var m = (d.scrollHeight - window.innerHeight) || 1;
+    var p = Math.min(Math.max(s / m, 0), 1);
+    if(bar) bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+    if(nav) nav.classList.toggle('is-scrolled', s > 12);
+  }
+  function onS(){ if(!ticking){ ticking = true; requestAnimationFrame(upd); } }
+  window.addEventListener('scroll', onS, {passive:true});
+  window.addEventListener('resize', onS, {passive:true});
+  upd();
+
+  var fine = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(fine && !reduce){
+    // card cursor spotlight (feeds --mx/--my to the glow pseudo)
+    document.querySelectorAll('.ha-five-body-a .ha-step, .ha-five-body-b .ha-value-card, .ha-five-body-c .ha-focus-card').forEach(function(card){
+      card.addEventListener('pointermove', function(e){
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left).toFixed(1) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top).toFixed(1) + 'px');
+      }, {passive:true});
+    });
+    // CTA magnetic buttons
+    document.querySelectorAll('.ha-cta .ha-btn').forEach(function(btn){
+      btn.addEventListener('pointermove', function(e){
+        var r = btn.getBoundingClientRect();
+        var nx = (e.clientX - (r.left + r.width/2)) / (r.width/2);
+        var ny = (e.clientY - (r.top + r.height/2)) / (r.height/2);
+        btn.style.transform = 'translate(' + (nx*5).toFixed(1) + 'px,' + (ny*5).toFixed(1) + 'px)';
+      }, {passive:true});
+      btn.addEventListener('pointerleave', function(){ btn.style.transform = ''; });
+    });
+  }
+})();
+</script>
+
+<!-- Hero mark: three.js particles assemble (T1) → settle into a teal generative field
+     clipped to the letterforms (T2). HTML text stays in the DOM (a11y/SEO); on mobile
+     / reduced-motion / no-WebGL the CSS gradient mark (C1) is the experience. -->
+<script type="module">
+  import * as THREE from 'three';
+  (function(){
+    const mark = document.querySelector('.ha-mission .ha-hero h1 .ha-mark');
+    if(!mark) return;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mqM = matchMedia('(max-width:700px)');
+    if(reduce) return;   // reduced-motion → CSS gradient mark (accessibility)
+
+    const PAD = 38;
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    let canvas, renderer, scene, camera, fieldMat, ptMat, points;
+    let maskTex = null, W = 0, H = 0;
+    let running = false, raf = null, elapsed = 0, last = 0, inView = true, built = false;
+
+    function fontStr(cs){ return cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily; }
+
+    function buildMask(boxW, boxH, cs){
+      const m = document.createElement('canvas');
+      m.width = Math.ceil(boxW * DPR); m.height = Math.ceil(boxH * DPR);
+      const g = m.getContext('2d');
+      g.scale(DPR, DPR);
+      g.clearRect(0, 0, boxW, boxH);
+      g.fillStyle = '#fff';
+      g.textBaseline = 'alphabetic';
+      g.font = fontStr(cs);
+      const mm = g.measureText(mark.textContent);
+      const asc = mm.actualBoundingBoxAscent || (parseFloat(cs.fontSize) * 0.8);
+      g.fillText(mark.textContent, PAD, PAD + asc);
+      return m;
+    }
+
+    function samplePoints(maskCanvas){
+      const g = maskCanvas.getContext('2d');
+      const w = maskCanvas.width, h = maskCanvas.height;
+      const data = g.getImageData(0, 0, w, h).data;
+      const stride = Math.max(2, Math.round(3 * DPR));
+      const pts = [];
+      for(let y = 0; y < h; y += stride){
+        for(let x = 0; x < w; x += stride){
+          if(data[(y * w + x) * 4 + 3] > 128){
+            pts.push((x / w) * 2 - 1, -((y / h) * 2 - 1));
+          }
+        }
+      }
+      return pts;
+    }
+
+    function ensureMaterials(){
+      if(!scene){ scene = new THREE.Scene(); camera = new THREE.Camera(); }
+      if(!fieldMat){
+        fieldMat = new THREE.ShaderMaterial({
+          transparent:true, depthWrite:false,
+          uniforms:{ uTime:{value:0}, uMix:{value:0}, uMask:{value:null} },
+          vertexShader:'varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.0,1.0); }',
+          fragmentShader:[
+            'precision highp float; varying vec2 vUv;',
+            'uniform float uTime, uMix; uniform sampler2D uMask;',
+            'float hash(vec2 p){ p=fract(p*vec2(123.34,345.45)); p+=dot(p,p+34.3); return fract(p.x*p.y); }',
+            'float noise(vec2 p){ vec2 i=floor(p),f=fract(p); float a=hash(i),b=hash(i+vec2(1,0)),c=hash(i+vec2(0,1)),d=hash(i+vec2(1,1)); vec2 u=f*f*(3.0-2.0*f); return mix(mix(a,b,u.x),mix(c,d,u.x),u.y); }',
+            'float fbm(vec2 p){ float v=0.0,a=0.5; for(int i=0;i<4;i++){ v+=a*noise(p); p*=1.9; a*=0.5; } return v; }',
+            'const vec3 TEAL=vec3(0.518,0.663,0.549); const vec3 ASH=vec3(0.792,0.824,0.773); const vec3 DEEP=vec3(0.322,0.475,0.435);',
+            'void main(){',
+            '  float m = texture2D(uMask, vUv).a;',
+            '  if(m < 0.01) discard;',
+            '  float n = fbm(vUv*vec2(3.0,6.0) + vec2(uTime*0.16, uTime*0.09));',
+            '  vec3 col = mix(DEEP, TEAL, smoothstep(0.22,0.68,n));',
+            '  col = mix(col, ASH, smoothstep(0.78,1.0,n)*0.35);',
+            '  gl_FragColor = vec4(col, m*uMix);',
+            '}'
+          ].join('\n')
+        });
+        scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2), fieldMat));
+      }
+      if(!ptMat){
+        ptMat = new THREE.ShaderMaterial({
+          transparent:true, depthWrite:false,
+          uniforms:{ uT:{value:0}, uFade:{value:1}, uSize:{value:2.3*DPR} },
+          vertexShader:[
+            'attribute vec2 aScatter; attribute float aSeed;',
+            'uniform float uT, uSize; varying float vSeed;',
+            'void main(){ vSeed=aSeed; vec2 p=mix(aScatter, position.xy, uT); gl_PointSize=uSize; gl_Position=vec4(p,0.0,1.0); }'
+          ].join('\n'),
+          fragmentShader:[
+            'precision mediump float; varying float vSeed; uniform float uFade;',
+            'void main(){ vec2 d=gl_PointCoord-0.5; if(dot(d,d)>0.25) discard;',
+            '  vec3 c=mix(vec3(0.518,0.663,0.549), vec3(0.792,0.824,0.773), vSeed);',
+            '  gl_FragColor=vec4(c, uFade); }'
+          ].join('\n')
+        });
+      }
+    }
+
+    function build(){
+      const cs = getComputedStyle(mark);
+      const rect = mark.getBoundingClientRect();
+      if(!rect.width || !rect.height) return false;
+      W = rect.width + PAD*2; H = rect.height + PAD*2;
+
+      if(!canvas){
+        canvas = document.createElement('canvas');
+        canvas.className = 'ha-mark-canvas';
+        canvas.setAttribute('aria-hidden','true');
+        mark.appendChild(canvas);
+      }
+      canvas.style.left = (-PAD) + 'px';
+      canvas.style.top  = (-PAD) + 'px';
+
+      if(!renderer){
+        try { renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true, powerPreference:'low-power' }); }
+        catch(e){ return false; }
+        renderer.setClearColor(0x000000, 0);
+      }
+      renderer.setPixelRatio(DPR);
+      renderer.setSize(W, H, true);
+
+      ensureMaterials();
+
+      const maskCanvas = buildMask(W, H, cs);
+      if(maskTex) maskTex.dispose();
+      maskTex = new THREE.CanvasTexture(maskCanvas);
+      maskTex.minFilter = THREE.LinearFilter; maskTex.magFilter = THREE.LinearFilter;
+      fieldMat.uniforms.uMask.value = maskTex;
+
+      const pts = samplePoints(maskCanvas);
+      const n = pts.length / 2;
+      const pos = new Float32Array(n*3), scat = new Float32Array(n*2), seed = new Float32Array(n);
+      for(let i=0;i<n;i++){
+        const tx = pts[i*2], ty = pts[i*2+1];
+        pos[i*3]=tx; pos[i*3+1]=ty; pos[i*3+2]=0;
+        const ang = Math.random()*6.2832, rad = 0.6 + Math.random()*1.0;
+        scat[i*2]   = tx + Math.cos(ang)*rad;
+        scat[i*2+1] = ty + Math.sin(ang)*rad;
+        seed[i] = Math.random();
+      }
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(pos,3));
+      g.setAttribute('aScatter', new THREE.BufferAttribute(scat,2));
+      g.setAttribute('aSeed', new THREE.BufferAttribute(seed,1));
+      if(points){ scene.remove(points); points.geometry.dispose(); }
+      points = new THREE.Points(g, ptMat);
+      scene.add(points);
+
+      built = true;
+      mark.classList.add('is-webgl');
+      canvas.classList.add('is-ready');
+      return true;
+    }
+
+    const T_IN = 1.25, T_HAND = 0.6;
+    function render(t){
+      const e = Math.min(t / T_IN, 1);
+      ptMat.uniforms.uT.value = 1 - Math.pow(1 - e, 3);
+      const h = Math.min(Math.max((t - T_IN) / T_HAND, 0), 1);
+      ptMat.uniforms.uFade.value = 1 - h;
+      fieldMat.uniforms.uMix.value = h;
+      fieldMat.uniforms.uTime.value = t;
+      if(points) points.visible = ptMat.uniforms.uFade.value > 0.01;
+      renderer.render(scene, camera);
+    }
+    function frame(now){
+      if(!running) return;
+      if(!last) last = now;
+      elapsed += Math.min((now - last)/1000, 0.05); last = now;
+      render(elapsed);
+      // battery: on touch/mobile, freeze on the settled field instead of looping forever
+      if(mqM.matches && elapsed > T_IN + T_HAND + 0.5){ running = false; raf = null; return; }
+      raf = requestAnimationFrame(frame);
+    }
+    function resume(){ if(running) return; if(!built && !build()) return; running = true; last = 0; raf = requestAnimationFrame(frame); }
+    function pause(){ running = false; if(raf) cancelAnimationFrame(raf); raf = null; }
+
+    // start once the hero is on screen
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(es => {
+        inView = es[0].isIntersecting;
+        if(inView && !document.hidden) resume(); else pause();
+      }, { threshold:0.01 }).observe(mark);
+    } else { resume(); }
+    document.addEventListener('visibilitychange', () => { if(document.hidden) pause(); else if(inView) resume(); });
+
+    // re-measure on resize / font load (debounced); keep the field running
+    let rt = null;
+    function reflow(){ if(rt) clearTimeout(rt); rt = setTimeout(() => { if(built){ built = false; build(); } }, 180); }
+    if('ResizeObserver' in window) new ResizeObserver(reflow).observe(mark);
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(reflow);
+  })();
 </script>
 </body>
 </html>
