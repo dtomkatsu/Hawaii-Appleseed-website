@@ -1858,6 +1858,231 @@
                 flex-direction: column;
             }
         }
+
+        /* ============================================================
+           TOY BLOCK 3D SYSTEM & ANIMATION ENHANCEMENTS
+           ============================================================ */
+
+        /* Hero: allow absolute children */
+        .tfc-hero { position: relative; overflow: visible !important; }
+        .tfc-hero > * { position: relative; z-index: 1; }
+        .tfc-hero-image-container { position: relative; overflow: visible; }
+
+        /* Cube host layer */
+        .tfc-hero-cubes {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: visible;
+            z-index: 2;
+        }
+
+        /* Individual cube wrapper carries perspective */
+        .tfc-toy-cube-wrap {
+            position: absolute;
+            perspective: 260px;
+        }
+
+        /* 3D cube */
+        .tfc-toy-cube {
+            width:  var(--sz, 52px);
+            height: var(--sz, 52px);
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(-22deg) rotateY(32deg);
+            animation:
+                cubeWobble var(--ws, 11s) ease-in-out infinite var(--wd, 0s),
+                cubeFloat  var(--fs, 4.2s) ease-in-out infinite var(--fd, 0s);
+            filter: drop-shadow(0 8px 18px rgba(0,0,0,0.3));
+        }
+
+        /* Six faces */
+        .tfc-toy-cube-face {
+            position: absolute;
+            width:  var(--sz, 52px);
+            height: var(--sz, 52px);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Arial Black', Impact, sans-serif;
+            font-weight: 900;
+            font-size: calc(var(--sz, 52px) * 0.4);
+            color: white;
+            border-radius: calc(var(--sz, 52px) * 0.14);
+            border: 2px solid rgba(255,255,255,0.22);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.45);
+        }
+
+        .tfc-cube-f  { transform: translateZ(calc(var(--sz, 52px) * 0.5)); }
+        .tfc-cube-bk { transform: rotateY(180deg)  translateZ(calc(var(--sz, 52px) * 0.5)); }
+        .tfc-cube-r  { transform: rotateY(90deg)   translateZ(calc(var(--sz, 52px) * 0.5)); }
+        .tfc-cube-l  { transform: rotateY(-90deg)  translateZ(calc(var(--sz, 52px) * 0.5)); }
+        .tfc-cube-tp { transform: rotateX(90deg)   translateZ(calc(var(--sz, 52px) * 0.5)); }
+        .tfc-cube-bt { transform: rotateX(-90deg)  translateZ(calc(var(--sz, 52px) * 0.5)); }
+
+        /* Block color palettes */
+        .tfc-block-red    .tfc-toy-cube-face { background: #C62828; }
+        .tfc-block-red    .tfc-cube-tp       { background: #EF5350; }
+        .tfc-block-red    .tfc-cube-r        { background: #7B1818; }
+        .tfc-block-red    .tfc-cube-l        { background: #B71C1C; }
+        .tfc-block-red    .tfc-cube-bk       { background: #8B1A1A; }
+
+        .tfc-block-blue   .tfc-toy-cube-face { background: #1565C0; }
+        .tfc-block-blue   .tfc-cube-tp       { background: #64B5F6; }
+        .tfc-block-blue   .tfc-cube-r        { background: #0D47A1; }
+        .tfc-block-blue   .tfc-cube-l        { background: #1976D2; }
+        .tfc-block-blue   .tfc-cube-bk       { background: #0A3070; }
+
+        .tfc-block-yellow .tfc-toy-cube-face { background: #F9A825; color: #3E2723; }
+        .tfc-block-yellow .tfc-cube-tp       { background: #FFD54F; color: #3E2723; }
+        .tfc-block-yellow .tfc-cube-r        { background: #E65100; color: white; }
+        .tfc-block-yellow .tfc-cube-l        { background: #F57F17; color: white; }
+        .tfc-block-yellow .tfc-cube-bk       { background: #BF360C; color: white; }
+
+        .tfc-block-green  .tfc-toy-cube-face { background: #2E7D32; }
+        .tfc-block-green  .tfc-cube-tp       { background: #81C784; }
+        .tfc-block-green  .tfc-cube-r        { background: #1B5E20; }
+        .tfc-block-green  .tfc-cube-l        { background: #388E3C; }
+        .tfc-block-green  .tfc-cube-bk       { background: #104010; }
+
+        @keyframes cubeWobble {
+            0%   { transform: rotateX(-22deg) rotateY(32deg); }
+            20%  { transform: rotateX(-14deg) rotateY(58deg); }
+            45%  { transform: rotateX(-28deg) rotateY(20deg); }
+            70%  { transform: rotateX(-16deg) rotateY(50deg); }
+            100% { transform: rotateX(-22deg) rotateY(32deg); }
+        }
+        @keyframes cubeFloat {
+            0%, 100% { translate: 0 0; }
+            50%       { translate: 0 -14px; }
+        }
+
+        /* ---- Stats Row: Block Drop Entrance ---- */
+        .tfc-stats-row { perspective: 1600px; perspective-origin: 50% 100%; }
+
+        @keyframes blockDropIn {
+            0%   { opacity: 0; transform: translateY(-58px) rotateX(74deg) scale(0.82); }
+            55%  { opacity: 1; transform: translateY(10px) rotateX(-8deg) scale(1.04); }
+            75%  { transform: translateY(-4px) rotateX(3deg) scale(0.99); }
+            90%  { transform: translateY(2px) rotateX(0deg); }
+            100% { opacity: 1; transform: translateY(0) rotateX(0) scale(1); }
+        }
+
+        /* Start hidden; JS animates in */
+        .tfc-stat-item {
+            opacity: 0;
+            transform-origin: center bottom;
+        }
+
+        .tfc-stat-item.tfc-block-drop {
+            animation: blockDropIn 0.82s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .tfc-stat-item.tfc-block-settled { opacity: 1; animation: none !important; }
+
+        .tfc-stat-item:hover {
+            transform: translateY(-8px) perspective(500px) rotateX(-6deg) rotateY(5deg) scale(1.04) !important;
+            transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+        }
+
+        /* ---- Step Numbers: Toy Block Style ---- */
+        .tfc-step-number {
+            border-radius: 10px !important;
+            font-family: 'Arial Black', Impact, sans-serif !important;
+            background: linear-gradient(150deg, #EF5350 0%, #C62828 100%) !important;
+            box-shadow:
+                0 5px 0 #7B1818,
+                0 8px 18px rgba(0,0,0,0.32),
+                inset 0 2px 0 rgba(255,255,255,0.22) !important;
+            transform: rotate(-5deg) !important;
+            transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease !important;
+        }
+
+        .tfc-step:hover .tfc-step-number {
+            transform: rotate(5deg) translateY(-2px) !important;
+            box-shadow:
+                0 9px 0 #7B1818,
+                0 14px 24px rgba(0,0,0,0.38),
+                inset 0 2px 0 rgba(255,255,255,0.22) !important;
+        }
+
+        /* ---- Steps: Stagger Entrance ---- */
+        .tfc-steps .tfc-step {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.5s ease, transform 0.55s cubic-bezier(0.34,1.3,0.64,1);
+        }
+
+        .tfc-steps.tfc-visible .tfc-step { opacity: 1; transform: translateY(0); }
+        .tfc-steps.tfc-visible .tfc-step:nth-child(1) { transition-delay: 0.04s; }
+        .tfc-steps.tfc-visible .tfc-step:nth-child(2) { transition-delay: 0.15s; }
+        .tfc-steps.tfc-visible .tfc-step:nth-child(3) { transition-delay: 0.26s; }
+        .tfc-steps.tfc-visible .tfc-step:nth-child(4) { transition-delay: 0.37s; }
+
+        /* ---- Benefit Tabs: Block-Feel Active State ---- */
+        .tfc-benefit-tab {
+            transition: background 0.2s ease, color 0.2s ease,
+                        transform 0.25s cubic-bezier(0.34,1.56,0.64,1),
+                        box-shadow 0.2s ease, border-color 0.2s ease !important;
+        }
+
+        .tfc-benefit-tab.active {
+            box-shadow:
+                0 6px 16px rgba(42,58,77,0.2),
+                0 4px 0 rgba(20,30,50,0.35),
+                inset 0 1px 0 rgba(255,255,255,0.07) !important;
+            transform: translateX(4px) !important;
+        }
+
+        /* ---- Block Divider Strip ---- */
+        .tfc-block-strip {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 5px;
+            overflow: visible;
+        }
+
+        .tfc-block-pip {
+            border-radius: 4px;
+            flex-shrink: 0;
+            box-shadow: 0 3px 0 rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.3);
+            animation: pipBounce 2.8s ease-in-out infinite;
+        }
+
+        @keyframes pipBounce {
+            0%,68%,100% { transform: translateY(0) rotate(0deg); }
+            76%          { transform: translateY(-7px) rotate(-4deg); }
+            83%          { transform: translateY(-7px) rotate(4deg); }
+            89%          { transform: translateY(1px) rotate(0deg); }
+            94%          { transform: translateY(-2px); }
+        }
+
+        /* Stagger the pip bounces */
+        .tfc-block-pip:nth-child(1) { animation-delay: 0s; }
+        .tfc-block-pip:nth-child(2) { animation-delay: 0.12s; }
+        .tfc-block-pip:nth-child(3) { animation-delay: 0.24s; }
+        .tfc-block-pip:nth-child(4) { animation-delay: 0.36s; }
+        .tfc-block-pip:nth-child(5) { animation-delay: 0.48s; }
+        .tfc-block-pip:nth-child(6) { animation-delay: 0.60s; }
+        .tfc-block-pip:nth-child(7) { animation-delay: 0.72s; }
+        .tfc-block-pip:nth-child(8) { animation-delay: 0.84s; }
+        .tfc-block-pip:nth-child(9) { animation-delay: 0.96s; }
+
+        /* ---- Section title slide-up ---- */
+        @keyframes titleSlideUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .tfc-reveal.active .tfc-section-title {
+            animation: titleSlideUp 0.6s ease-out both;
+        }
+
+        /* ---- Mobile: disable heavy 3D ---- */
+        @media (max-width: 768px) {
+            .tfc-hero-cubes { display: none; }
+            .tfc-stat-item  { opacity: 1 !important; animation: none !important; transform: none !important; }
+            .tfc-steps .tfc-step { opacity: 1 !important; transform: none !important; }
+        }
     </style>
 </head>
 <body>
@@ -1871,6 +2096,58 @@
             </div>
             <div class="tfc-hero-image-container">
                 <img src="https://images.squarespace-cdn.com/content/63c215f8a268791349c9f04a/1673931525935-N3GTMH2YO0HVT68BZOA0/unsplash-image-5zp0jym2w9M.jpg?content-type=image%2Fjpeg" alt="RxKids Hero Image" class="tfc-hero-image" id="hero-image">
+
+                <!-- Floating toy block decorations -->
+                <div class="tfc-hero-cubes" aria-hidden="true">
+                    <!-- R block — red, large, top-left corner -->
+                    <div class="tfc-toy-cube-wrap tfc-block-red"
+                         style="--sz:58px;--ws:13s;--wd:0s;--fs:4.4s;--fd:0s;top:-26px;left:-16px;">
+                        <div class="tfc-toy-cube">
+                            <div class="tfc-toy-cube-face tfc-cube-f">R</div>
+                            <div class="tfc-toy-cube-face tfc-cube-bk">1</div>
+                            <div class="tfc-toy-cube-face tfc-cube-r">★</div>
+                            <div class="tfc-toy-cube-face tfc-cube-l">♥</div>
+                            <div class="tfc-toy-cube-face tfc-cube-tp"></div>
+                            <div class="tfc-toy-cube-face tfc-cube-bt"></div>
+                        </div>
+                    </div>
+                    <!-- K block — blue, medium, top-right -->
+                    <div class="tfc-toy-cube-wrap tfc-block-blue"
+                         style="--sz:46px;--ws:10s;--wd:-1.2s;--fs:3.6s;--fd:-1s;top:18px;right:-10px;">
+                        <div class="tfc-toy-cube">
+                            <div class="tfc-toy-cube-face tfc-cube-f">K</div>
+                            <div class="tfc-toy-cube-face tfc-cube-bk">2</div>
+                            <div class="tfc-toy-cube-face tfc-cube-r">i</div>
+                            <div class="tfc-toy-cube-face tfc-cube-l">d</div>
+                            <div class="tfc-toy-cube-face tfc-cube-tp"></div>
+                            <div class="tfc-toy-cube-face tfc-cube-bt"></div>
+                        </div>
+                    </div>
+                    <!-- Heart block — green, medium, bottom-left -->
+                    <div class="tfc-toy-cube-wrap tfc-block-green"
+                         style="--sz:44px;--ws:9s;--wd:-2.1s;--fs:3.8s;--fd:-2s;bottom:22px;left:-10px;">
+                        <div class="tfc-toy-cube">
+                            <div class="tfc-toy-cube-face tfc-cube-f">♥</div>
+                            <div class="tfc-toy-cube-face tfc-cube-bk">3</div>
+                            <div class="tfc-toy-cube-face tfc-cube-r">A</div>
+                            <div class="tfc-toy-cube-face tfc-cube-l">B</div>
+                            <div class="tfc-toy-cube-face tfc-cube-tp"></div>
+                            <div class="tfc-toy-cube-face tfc-cube-bt"></div>
+                        </div>
+                    </div>
+                    <!-- s block — yellow, medium, bottom-right -->
+                    <div class="tfc-toy-cube-wrap tfc-block-yellow"
+                         style="--sz:50px;--ws:12s;--wd:-0.6s;--fs:4.1s;--fd:-3s;bottom:-20px;right:8px;">
+                        <div class="tfc-toy-cube">
+                            <div class="tfc-toy-cube-face tfc-cube-f">s</div>
+                            <div class="tfc-toy-cube-face tfc-cube-bk">4</div>
+                            <div class="tfc-toy-cube-face tfc-cube-r">B</div>
+                            <div class="tfc-toy-cube-face tfc-cube-l">C</div>
+                            <div class="tfc-toy-cube-face tfc-cube-tp"></div>
+                            <div class="tfc-toy-cube-face tfc-cube-bt"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1881,6 +2158,24 @@
                 <div class="tfc-section" style="margin-bottom: 0;">
                     <h2 class="tfc-section-title">What is RxKids?</h2>
                     <p class="tfc-section-subtitle tfc-subtitle-box"><span class="tfc-subtitle-eyebrow">The Program</span>RxKids is a groundbreaking program that provides <strong>no-strings-attached financial support</strong> to pregnant mothers. There are successful RxKids programs in cities across Michigan.</p>
+
+                    <!-- Key Impact Stats — wooden toy blocks -->
+                    <div class="tfc-stats-row" id="impact-stats" style="margin: 48px 0 80px;">
+                        <div class="tfc-stat-item">
+                            <div class="tfc-stat-number" data-count="91" data-suffix="%">91%</div>
+                            <div class="tfc-stat-label">Fewer evictions</div>
+                        </div>
+                        <div class="tfc-stat-arrow" aria-hidden="true"></div>
+                        <div class="tfc-stat-item">
+                            <div class="tfc-stat-number" data-count="18" data-suffix="%">18%</div>
+                            <div class="tfc-stat-label">Fewer preterm births</div>
+                        </div>
+                        <div class="tfc-stat-arrow" aria-hidden="true"></div>
+                        <div class="tfc-stat-item">
+                            <div class="tfc-stat-number" data-count="6.2" data-prefix="$" data-suffix="M">$6.2M</div>
+                            <div class="tfc-stat-label">Annual healthcare savings</div>
+                        </div>
+                    </div>
 
                     <!-- Childcare Scene -->
                     <div class="tfc-scene-container">
@@ -2162,7 +2457,20 @@
                 <span class="tfc-total-sub">over their child's first year</span>
             </div>
 
-            <div class="tfc-steps">
+            <!-- Toy block pip strip -->
+            <div class="tfc-block-strip" aria-hidden="true" style="margin: 28px 0 36px;">
+                <div class="tfc-block-pip" style="width:18px;height:18px;background:#E53935;"></div>
+                <div class="tfc-block-pip" style="width:14px;height:14px;background:#F9A825;"></div>
+                <div class="tfc-block-pip" style="width:20px;height:20px;background:#1E88E5;"></div>
+                <div class="tfc-block-pip" style="width:16px;height:16px;background:#43A047;"></div>
+                <div class="tfc-block-pip" style="width:22px;height:22px;background:#E53935;"></div>
+                <div class="tfc-block-pip" style="width:14px;height:14px;background:#F9A825;"></div>
+                <div class="tfc-block-pip" style="width:18px;height:18px;background:#1E88E5;"></div>
+                <div class="tfc-block-pip" style="width:16px;height:16px;background:#43A047;"></div>
+                <div class="tfc-block-pip" style="width:14px;height:14px;background:#E53935;"></div>
+            </div>
+
+            <div class="tfc-steps" id="steps-row">
                 <div class="tfc-step">
                     <div class="tfc-step-phase">3rd Trimester</div>
                     <div class="tfc-step-number">1</div>
@@ -2382,6 +2690,101 @@
             document.getElementById(benefitName).classList.add("active");
             evt.currentTarget.className += " active";
         }
+
+        // ===== Toy Block Animations =====
+
+        // 1. Stats row: block-drop stagger when scrolled into view
+        (function() {
+            const statsRow = document.getElementById('impact-stats');
+            if (!statsRow) return;
+            const statItems = Array.from(statsRow.querySelectorAll('.tfc-stat-item'));
+            const obs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (!entry.isIntersecting) return;
+                    statItems.forEach(function(item, idx) {
+                        setTimeout(function() {
+                            item.classList.add('tfc-block-drop');
+                            setTimeout(function() {
+                                item.classList.remove('tfc-block-drop');
+                                item.classList.add('tfc-block-settled');
+                            }, 900);
+                        }, idx * 190);
+                    });
+                    obs.unobserve(entry.target);
+                });
+            }, { threshold: 0.25 });
+            obs.observe(statsRow);
+        })();
+
+        // 2. Number counter animation for elements with data-count
+        function animateCounter(el) {
+            var raw = el.getAttribute('data-count');
+            if (!raw) return;
+            var target = parseFloat(raw);
+            var isDecimal = raw.indexOf('.') !== -1;
+            var decimals = isDecimal ? (raw.split('.')[1] || '').length : 0;
+            var prefix = el.getAttribute('data-prefix') || '';
+            var suffix = el.getAttribute('data-suffix') || '';
+            var duration = 1400;
+            var startTime = null;
+            function tick(now) {
+                if (!startTime) startTime = now;
+                var progress = Math.min((now - startTime) / duration, 1);
+                var eased = 1 - Math.pow(1 - progress, 3);
+                var current = target * eased;
+                var formatted = isDecimal ? current.toFixed(decimals) : Math.round(current).toLocaleString();
+                el.textContent = prefix + formatted + suffix;
+                if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        var counterObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    counterObs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.6 });
+
+        document.querySelectorAll('.tfc-stat-number[data-count]').forEach(function(el) {
+            counterObs.observe(el);
+        });
+
+        // 3. Steps stagger when scrolled into view
+        (function() {
+            var stepsEl = document.getElementById('steps-row');
+            if (!stepsEl) return;
+            var stepsObs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('tfc-visible');
+                        stepsObs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            stepsObs.observe(stepsEl);
+        })();
+
+        // 4. Stat block mouse-tilt (desktop only)
+        if (window.matchMedia('(min-width: 769px)').matches) {
+            document.querySelectorAll('.tfc-stat-item').forEach(function(item) {
+                item.addEventListener('mousemove', function(e) {
+                    var rect = item.getBoundingClientRect();
+                    var dx = (e.clientX - rect.left - rect.width  / 2) / (rect.width  / 2);
+                    var dy = (e.clientY - rect.top  - rect.height / 2) / (rect.height / 2);
+                    item.style.transform = 'translateY(-8px) perspective(500px) rotateX(' + (-dy * 8) + 'deg) rotateY(' + (dx * 10) + 'deg) scale(1.04)';
+                    item.style.transition = 'none';
+                });
+                item.addEventListener('mouseleave', function() {
+                    item.style.transform = '';
+                    item.style.transition = '';
+                });
+            });
+        }
+
+        // ===== End Toy Block Animations =====
 
         let currentSlide = 0;
         const totalSlides = 2;
