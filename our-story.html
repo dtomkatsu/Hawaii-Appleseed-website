@@ -711,6 +711,17 @@
   .ha-story .closing-canopy .leaves .leaf:nth-of-type(8){ transition-delay:.49s; }
   .ha-story .closing-canopy .leaves .leaf:nth-of-type(9){ transition-delay:.56s; }
 
+  /* Between-era spore drift — a faint desktop-only WebGL whisper at one safe chapter seam.
+     Zero-height band; the canvas overlaps the empty padding gap so it never speckles text. */
+  .ha-story .ha-seam{ position:relative; height:0; }
+  .ha-story .seam-spores{
+    position:absolute; left:0; right:0; top:-95px; height:150px; width:100%;
+    display:block; pointer-events:none; opacity:0; transition:opacity 1.1s ease; z-index:0;
+  }
+  .ha-story .seam-spores.is-ready{ opacity:1; }
+  @media (max-width:980px){ .ha-story .seam-spores{ display:none; } }        /* desktop-only */
+  @media (prefers-reduced-motion: reduce){ .ha-story .seam-spores{ display:none; } }
+
   /* ===== Reduced motion ===== */
   @media (prefers-reduced-motion: reduce){
     .ha-story *,
@@ -803,6 +814,10 @@
       </article>
     </div>
   </section>
+
+  <!-- Deferred enrichment: a faint between-era spore drift, placed ONLY between the two
+       early loss-free eras (never near the Lahaina/COVID era). Desktop-only, gated. -->
+  <div class="ha-seam" data-seam="early"><canvas class="seam-spores" aria-hidden="true"></canvas></div>
 
   <!-- ERA 2 -->
   <section class="era alt" id="era-renaming">
@@ -1333,6 +1348,86 @@
   document.addEventListener('visibilitychange', ()=>{ if(document.hidden) stopLoop(); else if(inView) startLoop(); });
   if ('IntersectionObserver' in window){
     new IntersectionObserver(es=>{ inView=es[0].isIntersecting; if(!inView) stopLoop(); else if(!document.hidden) startLoop(); }, {threshold:0.01}).observe(hero);
+  }
+})();
+</script>
+
+<!-- Deferred enrichment: faint between-era spore drift (desktop only; off near the loss era).
+     Reuses the hero's cached three@0.160 module via dynamic import. Pauses when off-screen. -->
+<script type="module">
+(async function(){
+  if (!(window.matchMedia && window.matchMedia('(min-width:981px)').matches)) return;   // desktop only
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const canvases = Array.from(document.querySelectorAll('.ha-story .seam-spores'));
+  if (!canvases.length) return;
+  let THREE;
+  try { THREE = await import('https://unpkg.com/three@0.160.0/build/three.module.js'); }
+  catch(e){ return; }                                  // CDN blocked → seam stays empty (harmless)
+  canvases.forEach(initSeam);
+
+  function initSeam(canvas){
+    let gl=null; const attrs={ antialias:true, alpha:true, premultipliedAlpha:true, powerPreference:'low-power' };
+    try { gl = canvas.getContext('webgl2', attrs) || canvas.getContext('webgl', attrs); } catch(e){}
+    let renderer;
+    try { renderer = gl ? new THREE.WebGLRenderer({ canvas, context:gl, antialias:true, alpha:true })
+                        : new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'low-power' }); }
+    catch(e){ return; }
+    const DPR = Math.min(window.devicePixelRatio||1, 1.5);
+    renderer.setPixelRatio(DPR); renderer.setClearColor(0x000000, 0);
+    const scene = new THREE.Scene();
+    const cam = new THREE.OrthographicCamera(-1,1,1,-1,0.1,10); cam.position.z = 2;
+
+    const N = 42;
+    const pos=new Float32Array(N*3), col=new Float32Array(N*3), seed=new Float32Array(N), siz=new Float32Array(N);
+    const TEAL=[0.518,0.663,0.549], ASH=[0.792,0.824,0.773];
+    const mix=(a,b,t)=>[a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];
+    for (let i=0;i<N;i++){
+      pos[i*3]=Math.random()*2-1; pos[i*3+1]=Math.random()*2-1; pos[i*3+2]=0;
+      const c=mix(TEAL,ASH,Math.random()); col[i*3]=c[0]; col[i*3+1]=c[1]; col[i*3+2]=c[2];
+      seed[i]=Math.random(); siz[i]=2+Math.random()*4;
+    }
+    const geo=new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+    geo.setAttribute('aColor', new THREE.BufferAttribute(col,3));
+    geo.setAttribute('aSeed', new THREE.BufferAttribute(seed,1));
+    geo.setAttribute('aSize', new THREE.BufferAttribute(siz,1));
+    const mat=new THREE.ShaderMaterial({
+      transparent:true, depthWrite:false, depthTest:false, blending:THREE.NormalBlending,
+      uniforms:{ uTime:{value:0}, uDpr:{value:DPR} },
+      vertexShader:`attribute vec3 aColor; attribute float aSeed,aSize; uniform float uTime,uDpr; varying vec3 vC; varying float vA;
+        void main(){ vC=aColor;
+          float y = position.y + uTime*0.05 + aSeed*2.0;     // slow rise
+          y = mod(y+1.0, 2.0) - 1.0;                          // wrap
+          float x = position.x + sin(uTime*0.25 + aSeed*6.2831)*0.05;  // gentle sway
+          vA = smoothstep(1.0, 0.5, abs(y));                 // fade at the band edges
+          gl_PointSize = aSize*uDpr;
+          gl_Position = vec4(x, y, 0.0, 1.0);
+        }`,
+      fragmentShader:`precision mediump float; varying vec3 vC; varying float vA;
+        void main(){ vec2 d=gl_PointCoord-0.5; float r=dot(d,d); if(r>0.25) discard;
+          gl_FragColor = vec4(vC, smoothstep(0.25,0.0,r) * vA * 0.45); }`
+    });
+    scene.add(new THREE.Points(geo, mat));
+
+    function resize(){ renderer.setSize(canvas.clientWidth||1, canvas.clientHeight||1, false); }
+    resize(); window.addEventListener('resize', resize, { passive:true });
+
+    let running=false, raf=null, inView=false, last=0, t=0, ready=false;
+    function frame(now){
+      if(!running) return;
+      if(!last) last=now;
+      t += Math.min((now-last)/1000, 0.05); last=now;
+      mat.uniforms.uTime.value = t;
+      renderer.render(scene, cam);
+      if(!ready){ ready=true; canvas.classList.add('is-ready'); }
+      raf=requestAnimationFrame(frame);
+    }
+    function start(){ if(running) return; running=true; last=0; raf=requestAnimationFrame(frame); }
+    function stop(){ running=false; if(raf) cancelAnimationFrame(raf); raf=null; }
+    document.addEventListener('visibilitychange', ()=>{ if(document.hidden) stop(); else if(inView) start(); });
+    if ('IntersectionObserver' in window){
+      new IntersectionObserver(es=>{ inView=es[0].isIntersecting; if(!inView) stop(); else if(!document.hidden) start(); }, { rootMargin:'120px 0px' }).observe(canvas);
+    } else { inView=true; start(); }
   }
 })();
 </script>
