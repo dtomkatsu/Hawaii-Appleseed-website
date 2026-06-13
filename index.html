@@ -525,8 +525,84 @@
   section[id]{scroll-margin-top:186px;}
 }
 </style>
+
+<!-- ─────────────────────────────────────
+     TIER-1 POLISH (additive): scroll progress · glass nav · card spotlight +
+     per-card accents · latest thumb-zoom & skeletons · hero scroll cue.
+     All behind the page's existing reduced-motion / hover gates.
+───────────────────────────────────── -->
+<style>
+  /* 1 — Scroll progress bar (sits over the announce bar) */
+  .px-scroll-progress{
+    position:fixed;left:0;top:0;height:3px;width:100%;z-index:60;
+    transform:scaleX(0);transform-origin:0 50%;will-change:transform;pointer-events:none;
+    background:linear-gradient(90deg,var(--teal),var(--deep-teal));
+  }
+
+  /* 2 — Glass nav once the page scrolls */
+  .px-nav{transition:padding .3s var(--ease-out), background .3s var(--ease-out), box-shadow .3s var(--ease-out);}
+  .px-nav.is-scrolled{
+    background:rgba(255,255,255,.82);
+    -webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);
+    box-shadow:0 6px 26px rgba(47,62,70,.09);
+  }
+  @media (min-width:701px){
+    .px-nav.is-scrolled{padding-top:20px;padding-bottom:20px;}
+    .px-nav.is-scrolled .px-brand-mark{width:42px;height:42px;}
+  }
+
+  /* 3 — Issue-card cursor spotlight + per-card accent tint */
+  .ha-home__issue-card[data-accent="charcoal"]{ --accent:var(--charcoal); }
+  .ha-home__issue-card::before{
+    content:'';position:absolute;inset:0;z-index:0;border-radius:inherit;
+    opacity:0;pointer-events:none;transition:opacity .35s ease;
+    background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),
+      color-mix(in srgb, var(--accent) 16%, transparent), transparent 68%);
+  }
+  .ha-home__issue-card:hover::before{ opacity:1; }
+  /* keep card content above the glow layer */
+  .ha-home__issue-card > *{ position:relative; z-index:1; }
+
+  /* 4 — Latest: thumbnail zoom on hover + skeleton shimmer loaders */
+  .ha-home__latest-thumb img{ transition:transform .5s var(--ease-out); }
+  .ha-home__latest-card:hover .ha-home__latest-thumb img{ transform:scale(1.06); }
+
+  .ha-home__latest-skel{
+    display:flex;flex-direction:column;background:var(--white);
+    border:1px solid var(--ash-light);border-radius:4px;overflow:hidden;
+  }
+  .ha-home__latest-skel .sk{ position:relative;overflow:hidden;background:var(--ash-light); }
+  .ha-home__latest-skel .sk::after{
+    content:'';position:absolute;inset:0;transform:translateX(-100%);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);
+    animation:skShimmer 1.4s ease-in-out infinite;
+  }
+  .ha-home__latest-skel .sk-thumb{ aspect-ratio:16/10; }
+  .ha-home__latest-skel .sk-body{ padding:1.6rem 1.5rem 1.8rem;display:flex;flex-direction:column;gap:.7rem; }
+  .ha-home__latest-skel .sk-line{ height:12px;border-radius:3px; }
+  .ha-home__latest-skel .sk-line.w40{ width:40%; }
+  .ha-home__latest-skel .sk-line.w90{ width:90%;height:18px; }
+  .ha-home__latest-skel .sk-line.w70{ width:70%; }
+  @keyframes skShimmer{ to{ transform:translateX(100%); } }
+
+  /* 5 — Hero scroll cue */
+  .ha-home__hero-cue{
+    position:absolute;left:50%;bottom:30px;transform:translateX(-50%);z-index:2;
+    display:flex;flex-direction:column;align-items:center;gap:9px;
+    color:rgba(255,255,255,.62);
+    font:600 .6rem/1 'Manrope',sans-serif;letter-spacing:.22em;text-transform:uppercase;
+    pointer-events:none;transition:opacity .5s ease;animation:heroFade .8s ease 1.25s both;
+  }
+  .ha-home__hero-cue.is-hidden{ opacity:0; }
+  .ha-home__hero-cue svg{ width:22px;height:22px;animation:cueBounce 2s var(--ease-out) infinite; }
+  @keyframes cueBounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(6px); } }
+  @media (max-width:700px){ .ha-home__hero-cue{ bottom:20px; } }
+</style>
 </head>
 <body>
+
+  <!-- Tier-1: scroll progress indicator -->
+  <div class="px-scroll-progress" aria-hidden="true"></div>
 
   <!-- PREVIEW-ONLY: announce bar -->
   <div class="px-announce">
@@ -598,6 +674,12 @@
         <a href="issues.html" class="btn btn-ghost">Explore the Issues<span class="btn-arr">→</span></a>
       </div>
     </div>
+
+    <!-- Tier-1: scroll cue -->
+    <div class="ha-home__hero-cue" aria-hidden="true">
+      <span>Scroll</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
   </section>
 
   <!-- ══════════════════ SECTION 2 — MISSION BAND ══════════════════ -->
@@ -634,7 +716,7 @@
         <span class="way-link">Explore</span>
       </a>
 
-      <a class="ha-home__issue-card" data-accent="teal-deep" href="housing.html">
+      <a class="ha-home__issue-card" data-accent="charcoal" href="housing.html">
         <span class="ha-home__issue-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 15l12-9 12 9v12a2 2 0 01-2 2H6a2 2 0 01-2-2V15z"/>
@@ -646,7 +728,7 @@
         <span class="way-link">Explore</span>
       </a>
 
-      <a class="ha-home__issue-card" data-accent="teal-deep" href="wages-labor.html">
+      <a class="ha-home__issue-card" data-accent="slate" href="wages-labor.html">
         <span class="ha-home__issue-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 11h20v17H6z"/>
@@ -660,7 +742,7 @@
         <span class="way-link">Explore</span>
       </a>
 
-      <a class="ha-home__issue-card" data-accent="slate" href="transportation.html">
+      <a class="ha-home__issue-card" data-accent="teal-deep" href="transportation.html">
         <span class="ha-home__issue-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <rect x="4" y="6" width="24" height="15" rx="3"/>
@@ -676,7 +758,7 @@
         <span class="way-link">Explore</span>
       </a>
 
-      <a class="ha-home__issue-card" data-accent="slate" href="taxes-budget.html">
+      <a class="ha-home__issue-card" data-accent="charcoal" href="taxes-budget.html">
         <span class="ha-home__issue-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 27h24"/>
@@ -690,6 +772,22 @@
         <p>A fairer tax code for a thriving Hawaiʻi.</p>
         <span class="way-link">Explore</span>
       </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════ LATEST / RESEARCH (moved: directly below Issues) ══════════════════ -->
+  <section class="ha-home__latest" id="latest">
+    <div class="ha-home__latest-head reveal">
+      <div>
+        <div class="section-label">Latest</div>
+        <h2 class="section-title">Latest from Hawaiʻi Appleseed.</h2>
+      </div>
+      <a href="publications.html" class="btn btn-dark">View All Research</a>
+    </div>
+    <div class="ha-home__latest-grid reveal-group" id="ha-home-latest-grid" role="list">
+      <div class="ha-home__latest-skel" aria-hidden="true"><div class="sk sk-thumb"></div><div class="sk-body"><div class="sk sk-line w40"></div><div class="sk sk-line w90"></div><div class="sk sk-line w70"></div></div></div>
+      <div class="ha-home__latest-skel" aria-hidden="true"><div class="sk sk-thumb"></div><div class="sk-body"><div class="sk sk-line w40"></div><div class="sk sk-line w90"></div><div class="sk sk-line w70"></div></div></div>
+      <div class="ha-home__latest-skel" aria-hidden="true"><div class="sk sk-thumb"></div><div class="sk-body"><div class="sk sk-line w40"></div><div class="sk sk-line w90"></div><div class="sk sk-line w70"></div></div></div>
     </div>
   </section>
 
@@ -730,20 +828,6 @@
         <p>For over two decades, Hawaiʻi Appleseed has brought together legal expertise, rigorous research, and community partnership to take on the root causes of poverty and inequality. We're a small team with a long view — and we believe the systems that shape everyday life can change.</p>
         <a href="our-story.html" class="btn btn-dark">Read Our Story</a>
       </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════ SECTION 6 — LATEST ══════════════════ -->
-  <section class="ha-home__latest" id="latest">
-    <div class="ha-home__latest-head reveal">
-      <div>
-        <div class="section-label">Latest</div>
-        <h2 class="section-title">Latest from Hawaiʻi Appleseed.</h2>
-      </div>
-      <a href="publications.html" class="btn btn-dark">View All Research</a>
-    </div>
-    <div class="ha-home__latest-grid reveal-group" id="ha-home-latest-grid" role="list">
-      <div class="ha-home__latest-loading">Loading the latest…</div>
     </div>
   </section>
 
@@ -1085,6 +1169,9 @@
         var r = card.getBoundingClientRect();
         var dx = (e.clientX - r.left)/r.width - 0.5;
         var dy = (e.clientY - r.top)/r.height - 0.5;
+        // cursor spotlight position (px within the card)
+        card.style.setProperty('--mx', (e.clientX - r.left).toFixed(1) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top).toFixed(1) + 'px');
         card.classList.add('tilt-on');
         card.style.transition = 'transform .1s ease, background .35s ease, border-color .35s ease';
         card.style.transform = 'perspective(760px) rotateX('+(-dy*MAX).toFixed(2)+'deg) rotateY('+(dx*MAX).toFixed(2)+'deg) translateZ(16px) scale(1.03)';
@@ -1172,6 +1259,30 @@
         if (mh2) mh2.style.transform = '';
       });
     }
+  })();
+  </script>
+
+  <!-- Tier-1: scroll progress bar, glass nav on scroll, hero scroll-cue auto-hide. -->
+  <script>
+  (function(){
+    var bar = document.querySelector('.px-scroll-progress');
+    var nav = document.querySelector('.px-nav');
+    var cue = document.querySelector('.ha-home__hero-cue');
+    var ticking = false;
+    function update(){
+      ticking = false;
+      var doc = document.documentElement;
+      var scrolled = window.pageYOffset || doc.scrollTop || 0;
+      var max = (doc.scrollHeight - window.innerHeight) || 1;
+      var p = Math.min(Math.max(scrolled / max, 0), 1);
+      if(bar) bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+      if(nav) nav.classList.toggle('is-scrolled', scrolled > 12);
+      if(cue) cue.classList.toggle('is-hidden', scrolled > 40);
+    }
+    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll, {passive:true});
+    update();
   })();
   </script>
 
