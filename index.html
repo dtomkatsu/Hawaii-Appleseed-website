@@ -179,14 +179,17 @@
       background:linear-gradient(180deg, rgba(47,62,70,0.58) 0%, rgba(47,62,70,0.32) 45%, rgba(47,62,70,0.74) 100%);
     }
     .hero-inner { position:relative; z-index:2; padding:0 8%; max-width:1040px; }
-    /* Headline owns the entire first viewport; everything else sits beneath it. */
+    /* Headline owns the entire first viewport; everything else sits beneath it.
+       Top-aligned below the fixed nav so the large headline fills downward and
+       the scroll cue sits directly beneath it (not stranded in empty space). */
     .hero-headline { position:relative; min-height:100vh; min-height:100svh;
-      display:flex; flex-direction:column; justify-content:center; transform-style:preserve-3d; }
+      display:flex; flex-direction:column; justify-content:center;
+      padding-top:12rem; padding-bottom:3rem; transform-style:preserve-3d; }
     .hero-body { padding-bottom:7rem; transform-style:preserve-3d; }
     .ha-home__hero h1 {
       font-family:'Manrope',sans-serif;font-weight:300;
-      font-size:clamp(3.2rem, 6.4vw, 5.8rem);line-height:1.13;
-      color:var(--white);margin-bottom:1.75rem;
+      font-size:clamp(3.8rem, 8.8vw, 8rem);line-height:1.1;
+      color:var(--white);margin-bottom:0;
     }
     .ha-home__hero h1 em { font-family:'Poppins',sans-serif; font-style:italic; color:var(--teal); }
     .hero-sub {
@@ -412,7 +415,7 @@
        transition-delay (which otherwise lagged every card after the first). */
     @media (hover:hover) and (pointer:fine){
       .ha-home__issue-card.tilt-on {
-        box-shadow:0 32px 64px rgba(47,62,70,.24);
+        box-shadow:0 12px 28px rgba(47,62,70,.12);
         will-change:transform; z-index:2;
       }
     }
@@ -503,6 +506,7 @@
       .hero-inner { padding:0 6%; }
     }
     @media (max-width: 700px) {
+      .hero-headline { padding-top:7.5rem; padding-bottom:2rem; }
       .ha-home__issues,
       .ha-home__impact,
       .ha-home__story,
@@ -560,7 +564,7 @@
     content:'';position:absolute;inset:0;z-index:0;border-radius:inherit;
     opacity:0;pointer-events:none;transition:opacity .35s ease;
     background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),
-      color-mix(in srgb, var(--accent) 16%, transparent), transparent 68%);
+      color-mix(in srgb, var(--accent) 8%, transparent), transparent 64%);
   }
   .ha-home__issue-card:hover::before{ opacity:1; }
   /* keep card content above the glow layer */
@@ -590,7 +594,7 @@
 
   /* 5 — Hero scroll cue */
   .ha-home__hero-cue{
-    position:absolute;left:50%;bottom:30px;transform:translateX(-50%);z-index:2;
+    position:relative;z-index:2;margin-top:2.5rem;align-self:flex-start;
     display:flex;flex-direction:column;align-items:center;gap:9px;
     color:rgba(255,255,255,.62);
     font:600 .6rem/1 'Manrope',sans-serif;letter-spacing:.22em;text-transform:uppercase;
@@ -599,7 +603,7 @@
   .ha-home__hero-cue.is-hidden{ opacity:0; }
   .ha-home__hero-cue svg{ width:22px;height:22px;animation:cueBounce 2s var(--ease-out) infinite; }
   @keyframes cueBounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(6px); } }
-  @media (max-width:700px){ .ha-home__hero-cue{ bottom:20px; } }
+  @media (max-width:700px){ .ha-home__hero-cue{ margin-top:2rem; } }
 </style>
 </head>
 <body>
@@ -1170,7 +1174,7 @@
     var fine = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(!fine || reduce) return;
-    var MAX = 11; // degrees
+    var MAX = 4.5; // degrees
     document.querySelectorAll('.ha-home__issue-card').forEach(function(card){
       card.addEventListener('pointermove', function(e){
         var r = card.getBoundingClientRect();
@@ -1181,7 +1185,7 @@
         card.style.setProperty('--my', (e.clientY - r.top).toFixed(1) + 'px');
         card.classList.add('tilt-on');
         card.style.transition = 'transform .1s ease, background .35s ease, border-color .35s ease';
-        card.style.transform = 'perspective(760px) rotateX('+(-dy*MAX).toFixed(2)+'deg) rotateY('+(dx*MAX).toFixed(2)+'deg) translateZ(16px) scale(1.03)';
+        card.style.transform = 'perspective(760px) rotateX('+(-dy*MAX).toFixed(2)+'deg) rotateY('+(dx*MAX).toFixed(2)+'deg) translateZ(6px) scale(1.012)';
       });
       card.addEventListener('pointerleave', function(){
         card.classList.remove('tilt-on');
