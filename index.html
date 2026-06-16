@@ -178,17 +178,19 @@
       position:absolute;inset:0;z-index:1;
       background:linear-gradient(180deg, rgba(47,62,70,0.58) 0%, rgba(47,62,70,0.32) 45%, rgba(47,62,70,0.74) 100%);
     }
-    .hero-inner { position:relative; z-index:2; padding:0 8%; max-width:1040px; }
+    .hero-inner { position:relative; z-index:2; padding:0 8%; max-width:1180px; }
     /* Headline owns the entire first viewport; everything else sits beneath it.
        Top-aligned below the fixed nav so the large headline fills downward and
        the scroll cue sits directly beneath it (not stranded in empty space). */
     .hero-headline { position:relative; min-height:100vh; min-height:100svh;
-      display:flex; flex-direction:column; justify-content:center;
-      padding-top:12rem; padding-bottom:3rem; transform-style:preserve-3d; }
+      display:flex; flex-direction:column; justify-content:flex-start;
+      padding-top:12.5rem; padding-bottom:2rem; transform-style:preserve-3d; }
     .hero-body { padding-bottom:7rem; transform-style:preserve-3d; }
     .ha-home__hero h1 {
       font-family:'Manrope',sans-serif;font-weight:300;
-      font-size:clamp(3.8rem, 8.8vw, 8rem);line-height:1.1;
+      /* Size to the smaller of width/height so the headline fills the first
+         screen on any laptop without overflowing shorter ones. */
+      font-size:clamp(3.4rem, min(10vw, 15.5vh), 9rem);line-height:1.1;
       color:var(--white);margin-bottom:0;
     }
     .ha-home__hero h1 em { font-family:'Poppins',sans-serif; font-style:italic; color:var(--teal); }
@@ -506,7 +508,8 @@
       .hero-inner { padding:0 6%; }
     }
     @media (max-width: 700px) {
-      .hero-headline { padding-top:7.5rem; padding-bottom:2rem; }
+      .hero-headline { padding-top:7.5rem; padding-bottom:2rem; justify-content:center; }
+      .ha-home__hero h1 { font-size:clamp(4rem, 17vw, 5.6rem); }
       .ha-home__issues,
       .ha-home__impact,
       .ha-home__story,
@@ -594,7 +597,7 @@
 
   /* 5 — Hero scroll cue */
   .ha-home__hero-cue{
-    position:relative;z-index:2;margin-top:2.5rem;align-self:flex-start;
+    position:relative;z-index:2;margin-top:1.5rem;align-self:flex-start;
     display:flex;flex-direction:column;align-items:center;gap:9px;
     color:rgba(255,255,255,.62);
     font:600 .6rem/1 'Manrope',sans-serif;letter-spacing:.22em;text-transform:uppercase;
