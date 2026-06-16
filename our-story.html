@@ -1118,6 +1118,23 @@
   const eras        = Array.from(ROOT.querySelectorAll('.era'));
   const timelineEl  = ROOT.querySelector('.timeline-wrap');
   const navTicks    = Array.from(ROOT.querySelectorAll('.chapnav-tick'));
+  const chapLine    = ROOT.querySelector('.chapnav-line');
+  // Fractional position of each chapter dot along the rail's fill range. Measured
+  // from the (fixed) mini-rail so the fill can be made to reach each dot exactly when
+  // its era reaches the reading line — keeping the mini-rail in step with the main
+  // timeline despite the eras' very unequal heights. Empty when the rail isn't laid
+  // out (mobile), in which case the fill falls back to a plain linear progress.
+  let dotFracs = [];
+  function measureDots(){
+    if (!chapLine || !navTicks.length) { dotFracs = []; return; }
+    const lr = chapLine.getBoundingClientRect();
+    if (lr.height <= 0) { dotFracs = []; return; }
+    dotFracs = navTicks.map(function(tk){
+      const d  = tk.querySelector('.dot') || tk;
+      const dr = d.getBoundingClientRect();
+      return (dr.top + dr.height / 2 - lr.top) / lr.height;
+    });
+  }
   const closingEl   = ROOT.querySelector('.closing');
   const railLosses  = rails.map(function(r){ return Array.from(r.querySelectorAll('.milestone[data-register="loss"]')); });
   const railMood    = rails.map(function(){ return 1; });
@@ -1179,18 +1196,45 @@
       rail.style.setProperty('--rail-mood', railMood[i].toFixed(3));
     }
 
-    // One stable whole-page progress signal → chapter-nav fill, active era, mobile bar.
+    // Chapter-nav fill, active era, and mobile bar all driven from ONE reading line
+    // (50% of viewport). On desktop the fill is mapped to the chapter dots so it
+    // reaches each dot exactly as that era crosses the reading line — keeping the
+    // mini-rail aligned with the main timeline despite the eras' unequal heights.
+    // The mobile hairline (no dots laid out) falls back to a plain linear fill.
+    const line = vh * 0.5;
     if (timelineEl) {
       const t = timelineEl.getBoundingClientRect();
-      const prog = Math.max(0, Math.min(1, (vh * 0.5 - t.top) / Math.max(1, t.height - vh * 0.5)));
-      ROOT.style.setProperty('--ha-progress', prog.toFixed(4));
-      // reveal the chapter nav only once the reader has scrolled into the timeline
-      ROOT.classList.toggle('nav-ready', t.top <= vh * 0.5);
+      ROOT.classList.toggle('nav-ready', t.top <= line);
+
+      let prog;
+      if (!dotFracs.length) measureDots();
+      if (eras.length && dotFracs.length === eras.length) {
+        const tops = eras.map(function(e){ return e.getBoundingClientRect().top; });
+        if (line <= tops[0]) {
+          // lead-in: empty rail → first dot as the timeline scrolls up to the reading line
+          prog = dotFracs[0] * Math.max(0, Math.min(1, (line - t.top) / Math.max(1, tops[0] - t.top)));
+        } else {
+          let i = 0;
+          while (i < tops.length - 1 && line >= tops[i + 1]) i++;
+          if (i >= tops.length - 1) {
+            // past the last era's top: ramp from its dot to full over the remaining timeline
+            const seg = Math.max(1, t.bottom - tops[i]);
+            const f = Math.max(0, Math.min(1, (line - tops[i]) / seg));
+            prog = dotFracs[i] + (1 - dotFracs[i]) * f;
+          } else {
+            const f = (line - tops[i]) / Math.max(1, tops[i + 1] - tops[i]);
+            prog = dotFracs[i] + (dotFracs[i + 1] - dotFracs[i]) * f;
+          }
+        }
+      } else {
+        prog = (line - t.top) / Math.max(1, t.height - line);   // fallback (mobile / not yet measured)
+      }
+      ROOT.style.setProperty('--ha-progress', Math.max(0, Math.min(1, prog)).toFixed(4));
     }
     if (navTicks.length && eras.length) {
       let active = 0;
       for (let i = 0; i < eras.length; i++) {
-        if (eras[i].getBoundingClientRect().top <= vh * 0.5) active = i;
+        if (eras[i].getBoundingClientRect().top <= line) active = i;
       }
       for (let i = 0; i < navTicks.length; i++) navTicks[i].classList.toggle('is-current', i === active);
     }
@@ -1203,7 +1247,7 @@
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
+  window.addEventListener('resize', function(){ dotFracs = []; onScroll(); });
   applyFade();
 })();
 </script>
