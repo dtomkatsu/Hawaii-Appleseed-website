@@ -178,7 +178,11 @@
       position:absolute;inset:0;z-index:1;
       background:linear-gradient(180deg, rgba(47,62,70,0.58) 0%, rgba(47,62,70,0.32) 45%, rgba(47,62,70,0.74) 100%);
     }
-    .hero-inner { position:relative; z-index:2; padding:9.5rem 8% 6rem; max-width:1040px; }
+    .hero-inner { position:relative; z-index:2; padding:0 8%; max-width:1040px; }
+    /* Headline owns the entire first viewport; everything else sits beneath it. */
+    .hero-headline { position:relative; min-height:100vh; min-height:100svh;
+      display:flex; flex-direction:column; justify-content:center; transform-style:preserve-3d; }
+    .hero-body { padding-bottom:7rem; transform-style:preserve-3d; }
     .ha-home__hero h1 {
       font-family:'Manrope',sans-serif;font-weight:300;
       font-size:clamp(3.2rem, 6.4vw, 5.8rem);line-height:1.13;
@@ -496,7 +500,7 @@
       .ha-home__issue-grid,
       .ha-home__latest-grid,
       .ha-home__involve-grid { grid-template-columns:repeat(2,1fr); }
-      .hero-inner { padding:8rem 6% 4rem; }
+      .hero-inner { padding:0 6%; }
     }
     @media (max-width: 700px) {
       .ha-home__issues,
@@ -521,7 +525,6 @@
   .px-nav{padding-top:42px;padding-bottom:42px;}
   .px-nav .px-brand-mark{width:52px;height:52px;}
   .px-nav .px-brand-name{font-size:20px;}
-  .hero-inner{padding-top:12rem;}
   section[id]{scroll-margin-top:186px;}
 }
 </style>
@@ -664,21 +667,25 @@
     <div class="ha-home__hero-scrim" aria-hidden="true"></div>
 
     <div class="hero-inner">
-      <span class="eyebrow">Hawaiʻi Appleseed Center for Law &amp; Economic Justice</span>
-      <h1><span class="w" style="animation-delay:.24s">Building</span> <span class="w" style="animation-delay:.30s">a</span> <span class="w" style="animation-delay:.36s">Hawaiʻi</span> <span class="w" style="animation-delay:.42s">where</span> <span class="w" style="animation-delay:.48s">every</span> <span class="w" style="animation-delay:.54s">family</span> <span class="w" style="animation-delay:.60s">can</span> <span class="w" style="animation-delay:.66s"><em>thrive</em>.</span></h1>
-      <p class="hero-sub">
-        Working at the intersection of policy and community power to advance economic justice throughout Hawaiʻi.
-      </p>
-      <div class="hero-actions">
-        <a href="support.html" class="btn btn-solid">Support Our Work</a>
-        <a href="issues.html" class="btn btn-ghost">Explore the Issues<span class="btn-arr">→</span></a>
-      </div>
-    </div>
+      <div class="hero-headline">
+        <h1><span class="w" style="animation-delay:.24s">Building</span> <span class="w" style="animation-delay:.30s">a</span> <span class="w" style="animation-delay:.36s">Hawaiʻi</span> <span class="w" style="animation-delay:.42s">where</span> <span class="w" style="animation-delay:.48s">every</span> <span class="w" style="animation-delay:.54s">family</span> <span class="w" style="animation-delay:.60s">can</span> <span class="w" style="animation-delay:.66s"><em>thrive</em>.</span></h1>
 
-    <!-- Tier-1: scroll cue -->
-    <div class="ha-home__hero-cue" aria-hidden="true">
-      <span>Scroll</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        <!-- Tier-1: scroll cue (anchored to the first viewport) -->
+        <div class="ha-home__hero-cue" aria-hidden="true">
+          <span>Scroll</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <div class="hero-body">
+        <p class="hero-sub">
+          Working at the intersection of policy and community power to advance economic justice throughout Hawaiʻi.
+        </p>
+        <div class="hero-actions">
+          <a href="support.html" class="btn btn-solid">Support Our Work</a>
+          <a href="issues.html" class="btn btn-ghost">Explore the Issues<span class="btn-arr">→</span></a>
+        </div>
+      </div>
     </div>
   </section>
 
