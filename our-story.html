@@ -288,10 +288,10 @@
     margin-top:60px;
     padding-left:64px;
   }
-  /* The rail is a living VINE: the fill/progress gradient is masked to a gently
-     wavering ribbon (a repeating SVG wave), so the growing line reads as a climbing
-     stem rather than a straight bar. Dots are 18px wide, so the subtle ±3px waver
-     stays visually "on" the vine. */
+  /* The rail is a living VINE: the fill/progress gradient is masked to a flowing
+     ribbon (a repeating SVG wave), so the growing line reads as a climbing stem
+     rather than a straight bar. Large ~±4px S-curves over a 130px wavelength;
+     dots are 18px wide so the vine still passes "on" them. */
   .ha-story .rail::before{
     content:""; position:absolute; left:9px; top:8px; bottom:8px;
     width:14px;
@@ -299,8 +299,8 @@
       linear-gradient(180deg, var(--ha-teal-deep) 0%, var(--ha-teal) 100%)
         top / 100% var(--rail-progress, 0%) no-repeat,
       var(--ha-ash);
-    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 100'><path d='M7 0 C7.8 24 7.8 32 7 50 C6.2 68 6.2 76 7 100' stroke='%23000' stroke-width='3.6' fill='none' stroke-linecap='round'/></svg>") center top / 14px 100px repeat-y;
-            mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 100'><path d='M7 0 C7.8 24 7.8 32 7 50 C6.2 68 6.2 76 7 100' stroke='%23000' stroke-width='3.6' fill='none' stroke-linecap='round'/></svg>") center top / 14px 100px repeat-y;
+    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 130'><path d='M7 0 C11 31 11 42 7 65 C3 88 3 99 7 130' stroke='%23000' stroke-width='3.6' fill='none' stroke-linecap='round'/></svg>") center top / 14px 130px repeat-y;
+            mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 130'><path d='M7 0 C11 31 11 42 7 65 C3 88 3 99 7 130' stroke='%23000' stroke-width='3.6' fill='none' stroke-linecap='round'/></svg>") center top / 14px 130px repeat-y;
   }
 
   .ha-story .milestone{
