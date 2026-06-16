@@ -178,19 +178,19 @@
       position:absolute;inset:0;z-index:1;
       background:linear-gradient(180deg, rgba(47,62,70,0.58) 0%, rgba(47,62,70,0.32) 45%, rgba(47,62,70,0.74) 100%);
     }
-    .hero-inner { position:relative; z-index:2; padding:0 8%; max-width:1180px; }
-    /* Headline owns the entire first viewport; everything else sits beneath it.
-       Top-aligned below the fixed nav so the large headline fills downward and
-       the scroll cue sits directly beneath it (not stranded in empty space). */
-    .hero-headline { position:relative; min-height:100vh; min-height:100svh;
-      display:flex; flex-direction:column; justify-content:flex-start;
-      padding-top:12.5rem; padding-bottom:2rem; transform-style:preserve-3d; }
-    .hero-body { padding-bottom:7rem; transform-style:preserve-3d; }
+    /* Hero content fills one viewport: a tall headline, with the subhead +
+       actions pulled up right beneath it (no stranded second screen). The
+       whole group is vertically centered below the fixed nav. */
+    .hero-inner { position:relative; z-index:2; max-width:1000px;
+      min-height:100vh; min-height:100svh;
+      display:flex; flex-direction:column; justify-content:center;
+      padding:11rem 8% 3rem; transform-style:preserve-3d; }
+    .hero-headline { transform-style:preserve-3d; }
+    .hero-body { margin-top:2.5rem; transform-style:preserve-3d; }
     .ha-home__hero h1 {
       font-family:'Manrope',sans-serif;font-weight:300;
-      /* Size to the smaller of width/height so the headline fills the first
-         screen on any laptop without overflowing shorter ones. */
-      font-size:clamp(3.4rem, min(10vw, 15.5vh), 9rem);line-height:1.1;
+      /* Tall, but sized to share the viewport with the subhead + actions. */
+      font-size:clamp(2.8rem, min(8vw, 11.5vh), 6.8rem);line-height:1.08;
       color:var(--white);margin-bottom:0;
     }
     .ha-home__hero h1 em { font-family:'Poppins',sans-serif; font-style:italic; color:var(--teal); }
@@ -198,7 +198,9 @@
       font-family:'Poppins',sans-serif;font-size:1.05rem;font-weight:300;line-height:1.75;
       color:rgba(255,255,255,0.7);max-width:540px;margin-bottom:2.25rem;
     }
-    .hero-actions { display:flex; gap:1rem; flex-wrap:wrap; }
+    .hero-actions { display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+    /* Scroll cue set just to the right of the Explore button. */
+    .hero-actions .ha-home__hero-cue{ margin-left:2.5rem; }
 
     /* ─────────────────────────────────────
        SECTION 2 — MISSION BAND
@@ -508,8 +510,8 @@
       .hero-inner { padding:0 6%; }
     }
     @media (max-width: 700px) {
-      .hero-headline { padding-top:7.5rem; padding-bottom:2rem; justify-content:center; }
-      .ha-home__hero h1 { font-size:clamp(4rem, 17vw, 5.6rem); }
+      .hero-inner { padding-top:7.5rem; padding-bottom:2.5rem; }
+      .ha-home__hero h1 { font-size:clamp(3.4rem, 13vw, 5rem); }
       .ha-home__issues,
       .ha-home__impact,
       .ha-home__story,
@@ -597,8 +599,8 @@
 
   /* 5 — Hero scroll cue */
   .ha-home__hero-cue{
-    position:relative;z-index:2;margin-top:1.5rem;align-self:flex-start;
-    display:flex;flex-direction:column;align-items:center;gap:9px;
+    position:relative;z-index:2;
+    display:flex;flex-direction:column;align-items:center;gap:7px;
     color:rgba(255,255,255,.62);
     font:600 .6rem/1 'Manrope',sans-serif;letter-spacing:.22em;text-transform:uppercase;
     pointer-events:none;transition:opacity .5s ease;animation:heroFade .8s ease 1.25s both;
@@ -606,7 +608,7 @@
   .ha-home__hero-cue.is-hidden{ opacity:0; }
   .ha-home__hero-cue svg{ width:22px;height:22px;animation:cueBounce 2s var(--ease-out) infinite; }
   @keyframes cueBounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(6px); } }
-  @media (max-width:700px){ .ha-home__hero-cue{ margin-top:2rem; } }
+  @media (max-width:700px){ .hero-actions .ha-home__hero-cue{ margin:.6rem 0 0; } }
 </style>
 </head>
 <body>
@@ -676,12 +678,6 @@
     <div class="hero-inner">
       <div class="hero-headline">
         <h1><span class="w" style="animation-delay:.24s">Building</span> <span class="w" style="animation-delay:.30s">a</span> <span class="w" style="animation-delay:.36s">Hawaiʻi</span> <span class="w" style="animation-delay:.42s">where</span> <span class="w" style="animation-delay:.48s">every</span> <span class="w" style="animation-delay:.54s">family</span> <span class="w" style="animation-delay:.60s">can</span> <span class="w" style="animation-delay:.66s"><em>thrive</em>.</span></h1>
-
-        <!-- Tier-1: scroll cue (anchored to the first viewport) -->
-        <div class="ha-home__hero-cue" aria-hidden="true">
-          <span>Scroll</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-        </div>
       </div>
 
       <div class="hero-body">
@@ -691,6 +687,11 @@
         <div class="hero-actions">
           <a href="support.html" class="btn btn-solid">Support Our Work</a>
           <a href="issues.html" class="btn btn-ghost">Explore the Issues<span class="btn-arr">→</span></a>
+          <!-- Tier-1: scroll cue, set beside the Explore button -->
+          <div class="ha-home__hero-cue" aria-hidden="true">
+            <span>Scroll</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
         </div>
       </div>
     </div>
