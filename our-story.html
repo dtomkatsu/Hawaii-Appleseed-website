@@ -290,7 +290,7 @@
   }
   /* The rail is a living VINE: the fill/progress gradient is masked to a flowing
      ribbon (a repeating SVG wave), so the growing line reads as a climbing stem
-     rather than a straight bar. Large ~±4px S-curves over a 130px wavelength;
+     rather than a straight bar. Refined ~±1.6px sway over a 160px wavelength;
      dots are 18px wide so the vine still passes "on" them. */
   .ha-story .rail::before{
     content:""; position:absolute; left:9px; top:8px; bottom:8px;
@@ -299,8 +299,8 @@
       linear-gradient(180deg, var(--ha-teal-deep) 0%, var(--ha-teal) 100%)
         top / 100% var(--rail-progress, 0%) no-repeat,
       var(--ha-ash);
-    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 130'><path d='M7 0 C11 31 11 42 7 65 C3 88 3 99 7 130' stroke='%23000' stroke-width='3.6' fill='none' stroke-linecap='round'/></svg>") center top / 14px 130px repeat-y;
-            mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 130'><path d='M7 0 C11 31 11 42 7 65 C3 88 3 99 7 130' stroke='%23000' stroke-width='3.6' fill='none' stroke-linecap='round'/></svg>") center top / 14px 130px repeat-y;
+    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 160'><path d='M7 0 C8.6 38 8.6 51 7 80 C5.4 109 5.4 122 7 160' stroke='%23000' stroke-width='3.6' fill='none' stroke-linecap='round'/></svg>") center top / 14px 160px repeat-y;
+            mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 160'><path d='M7 0 C8.6 38 8.6 51 7 80 C5.4 109 5.4 122 7 160' stroke='%23000' stroke-width='3.6' fill='none' stroke-linecap='round'/></svg>") center top / 14px 160px repeat-y;
   }
 
   .ha-story .milestone{
