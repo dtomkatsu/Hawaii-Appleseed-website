@@ -159,6 +159,15 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 .ha-acc-panel>.ha-acc-inner{overflow:hidden;min-height:0;}
 @media (prefers-reduced-motion:reduce){.ha-acc-panel{transition:none;}}
 </style>
+<style id="ha-term-css">
+.ha-term{position:relative;display:inline;border-bottom:1px dotted #52796F;cursor:help;color:inherit;font-style:inherit;}
+.ha-term:focus{outline:2px solid #84A98C;outline-offset:2px;border-radius:2px;}
+.ha-term-tip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(4px);z-index:80;width:250px;max-width:76vw;background:#2F3E46;color:#fff;padding:10px 14px;border-radius:6px;font-family:'Poppins',sans-serif;font-style:normal;font-weight:400;font-size:12.5px;letter-spacing:.01em;line-height:1.5;text-align:left;text-transform:none;opacity:0;pointer-events:none;box-shadow:0 10px 26px rgba(47,62,70,.28);transition:opacity .2s,transform .2s;white-space:normal;}
+.ha-term-tip::after{content:"";position:absolute;bottom:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:#2F3E46;}
+.ha-term:hover .ha-term-tip,.ha-term:focus .ha-term-tip{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+.ha-term-tip strong{color:#84A98C;font-weight:700;}
+@media (max-width:700px){.ha-term-tip{width:210px;font-size:12px;}}
+</style>
 </head>
 <body>
 
@@ -1816,7 +1825,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       <h2>Pay and protections that match the cost of <em>living here</em>.</h2>
       <div class="ha-wages__vision-rule"></div>
       <p>
-        More than half of Hawai&#x02BB;i&rsquo;s households live paycheck to paycheck &mdash; one financial hardship away from slipping into poverty. The causes are many, but here in Hawai&#x02BB;i they are driven by our high cost of basic needs (housing, health care, food) combined with the growing share of low-wage, low-opportunity jobs.
+        More than half of Hawai&#x02BB;i&rsquo;s households live <span class="ha-term" tabindex="0">paycheck to paycheck<span class="ha-term-tip" role="tooltip"><strong>Paycheck to paycheck</strong> — little or no savings to absorb an unexpected expense — one financial shock away from crisis.</span></span> &mdash; one financial hardship away from slipping into poverty. The causes are many, but here in Hawai&#x02BB;i they are driven by our high cost of basic needs (housing, health care, food) combined with the growing share of low-wage, low-opportunity jobs.
       </p>
       <blockquote class="ha-wages__vision-pullquote">
         If you work hard and play by the rules, you should be able to afford a decent life and a roof over your head. That is not a radical idea. It is the bare minimum.
