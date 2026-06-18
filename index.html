@@ -250,10 +250,12 @@
         filter:drop-shadow(-8px 0 24px rgba(132,169,140,.32));
         animation:heroMediaFade 1s var(--ease-out) both, heroCurveBreath 13s ease-in-out infinite;
       }
-      /* Seam wrapper: wipes the separating line in from the top on load. */
+      /* Seam wrapper: wipes the separating line in from the top on load. The clip is
+         expanded on the other three sides (negative insets) so it never crops the rim,
+         which is translated left/down and breathes horizontally. */
       .ha-home__hero-arc-wrap{
         z-index:1;
-        -webkit-clip-path:inset(0 0 0 0); clip-path:inset(0 0 0 0);
+        -webkit-clip-path:inset(-50px -50px -50px -50px); clip-path:inset(-50px -50px -50px -50px);
         animation:heroSeamWipe 1.15s var(--ease-out) .12s both;
       }
       /* Teal rim offset behind the viewport — a band parallel to the semicircular curve. */
@@ -277,10 +279,10 @@
       0%,100%{ transform:translate(-22px,18px) scaleX(1); }
       50%{ transform:translate(-24px,18px) scaleX(1.024); }
     }
-    /* Separating line wipes in from the top. */
+    /* Separating line wipes in from the top (sides/bottom expanded so the rim isn't cropped). */
     @keyframes heroSeamWipe{
-      from{ -webkit-clip-path:inset(0 0 100% 0); clip-path:inset(0 0 100% 0); }
-      to{ -webkit-clip-path:inset(0 0 0 0); clip-path:inset(0 0 0 0); }
+      from{ -webkit-clip-path:inset(-50px -50px 100% -50px); clip-path:inset(-50px -50px 100% -50px); }
+      to{ -webkit-clip-path:inset(-50px -50px -50px -50px); clip-path:inset(-50px -50px -50px -50px); }
     }
     @media (prefers-reduced-motion: reduce){
       .ha-home__hero-media, .ha-home__hero-arc, .ha-home__hero-arc-wrap{ animation:none !important; }
