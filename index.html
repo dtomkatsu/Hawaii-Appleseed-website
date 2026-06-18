@@ -552,6 +552,30 @@
     .reveal-group.is-in > *:nth-child(5){ transition-delay:.28s; }
     .reveal-group.is-in > *:nth-child(6){ transition-delay:.35s; }
 
+    /* ── "Five areas" cards: spring-up entrance + self-drawing icons ── */
+    /* B — richer entrance: rise + slight scale with a soft overshoot */
+    .ha-home__issue-grid.reveal-group > *{
+      transform:translateY(32px) scale(.94);
+      transition:opacity .55s var(--ease-out), transform .7s cubic-bezier(.34,1.32,.5,1);
+    }
+    .ha-home__issue-grid.reveal-group.is-in > *{ transform:none; }
+    /* A — icons draw themselves in (JS sets each shape's dash to its own length; the dash
+       is applied instantly, then the reveal transitions the offset back to 0 = "drawing"). */
+    .ha-home__issue-grid.is-in .ha-home__issue-icon svg [data-draw]{
+      stroke-dashoffset:0 !important;
+      transition:stroke-dashoffset .9s var(--ease-out) .15s;
+    }
+    .ha-home__issue-grid.is-in > *:nth-child(2) .ha-home__issue-icon svg [data-draw]{ transition-delay:.22s; }
+    .ha-home__issue-grid.is-in > *:nth-child(3) .ha-home__issue-icon svg [data-draw]{ transition-delay:.29s; }
+    .ha-home__issue-grid.is-in > *:nth-child(4) .ha-home__issue-icon svg [data-draw]{ transition-delay:.36s; }
+    .ha-home__issue-grid.is-in > *:nth-child(5) .ha-home__issue-icon svg [data-draw]{ transition-delay:.43s; }
+    /* A — themed hover motion: the tax bars grow from their baseline */
+    .ha-home__issue-card[href="taxes-budget.html"] .ha-home__issue-icon rect{
+      transform-box:fill-box; transform-origin:50% 100%;
+      transition:transform .45s var(--ease-out);
+    }
+    .ha-home__issue-card[href="taxes-budget.html"]:hover .ha-home__issue-icon rect{ transform:scaleY(1.16); }
+
     /* ─────────────────────────────────────
        REDUCED MOTION (rec A) — honor the OS setting site-wide.
     ───────────────────────────────────── */
@@ -1005,6 +1029,25 @@
       <span>733 Bishop St, Honolulu, HI</span>
     </div>
   </footer>
+
+  <!-- "Five areas" icons: prime each SVG shape's stroke dash to its own length so it can
+       draw itself in when the card reveals. Skipped under reduced motion (icons stay solid). -->
+  <script>
+  (function(){
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.querySelectorAll('.ha-home__issue-icon svg').forEach(function(svg){
+      svg.querySelectorAll('path,rect,circle,line,polyline,polygon').forEach(function(el){
+        if(!el.getTotalLength) return;
+        var len = 0; try { len = el.getTotalLength(); } catch(e){}
+        if(!len) return;
+        len = Math.ceil(len);
+        el.style.strokeDasharray = len;
+        el.style.strokeDashoffset = len;
+        el.setAttribute('data-draw','');
+      });
+    });
+  })();
+  </script>
 
   <!-- Scroll-reveal (rec B): fade/slide sections in on first view; once-only; respects reduced motion. -->
   <script>
