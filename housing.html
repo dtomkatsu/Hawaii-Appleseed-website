@@ -1719,7 +1719,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <button class="ha-housing__stuck-tab active" data-panel="vision" role="tab" aria-selected="true">Vision</button>
     <button class="ha-housing__stuck-tab" data-panel="overview" role="tab" aria-selected="false">Overview</button>
     <button class="ha-housing__stuck-tab" data-panel="opportunities" role="tab" aria-selected="false">Opportunities</button>
-    <button class="ha-housing__stuck-tab" data-panel="impact" role="tab" aria-selected="false">Impact</button>
   </div>
 
   <!-- ===================================
@@ -1754,7 +1753,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <button class="ha-housing__tab active" data-panel="vision" role="tab" aria-selected="true" aria-controls="ha-housing-panel-vision">Vision</button>
         <button class="ha-housing__tab" data-panel="overview" role="tab" aria-selected="false" aria-controls="ha-housing-panel-overview">Overview</button>
         <button class="ha-housing__tab" data-panel="opportunities" role="tab" aria-selected="false" aria-controls="ha-housing-panel-opportunities">Opportunities</button>
-        <button class="ha-housing__tab" data-panel="impact" role="tab" aria-selected="false" aria-controls="ha-housing-panel-impact">Impact</button>
       </div>
       <a class="ha-housing__bar-pill" href="#ha-housing-research-news">
         Research &amp; News
@@ -2031,18 +2029,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       </article>
     </div>
     </div>
-    <div class="ha-housing__panel-close-wrap">
-      <button class="ha-housing__panel-close" aria-label="Close section">
-        <svg viewBox="0 0 14 9"><path d="M1 8l6-7 6 7"/></svg>
-        Close
-      </button>
-    </div>
-  </section><!-- /#ha-housing-panel-opportunities -->
-
-  <!-- ===================================
-       IMPACT panel — milestone timeline
-       =================================== -->
-  <section class="ha-housing__panel" id="ha-housing-panel-impact" role="tabpanel" hidden>
     <div class="ha-housing__impact">
     <div class="ha-housing__opps-head">
       <div class="ha-housing__eyebrow">A Record of Results</div>
@@ -2104,13 +2090,14 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
     </div>
     </div>
+
     <div class="ha-housing__panel-close-wrap">
       <button class="ha-housing__panel-close" aria-label="Close section">
         <svg viewBox="0 0 14 9"><path d="M1 8l6-7 6 7"/></svg>
         Close
       </button>
     </div>
-  </section><!-- /#ha-housing-panel-impact -->
+  </section><!-- /#ha-housing-panel-opportunities -->
 
   </div><!-- /.ha-housing__panels -->
 
@@ -2324,7 +2311,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     const indicator = document.querySelector('.ha-housing__tabs-indicator');
     if (!tabs.length || !panels.length) return;
 
-    const VALID_TABS = ['vision', 'overview', 'opportunities', 'impact'];
+    const VALID_TABS = ['vision', 'overview', 'opportunities'];
 
     function setTab(name, opts) {
       opts = opts || {};

@@ -1718,7 +1718,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <button class="ha-wages__stuck-tab active" data-panel="vision" role="tab" aria-selected="true">Vision</button>
     <button class="ha-wages__stuck-tab" data-panel="overview" role="tab" aria-selected="false">Overview</button>
     <button class="ha-wages__stuck-tab" data-panel="opportunities" role="tab" aria-selected="false">Opportunities</button>
-    <button class="ha-wages__stuck-tab" data-panel="impact" role="tab" aria-selected="false">Impact</button>
   </div>
 
   <!-- ===================================
@@ -1753,7 +1752,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <button class="ha-wages__tab active" data-panel="vision" role="tab" aria-selected="true" aria-controls="ha-wages-panel-vision">Vision</button>
         <button class="ha-wages__tab" data-panel="overview" role="tab" aria-selected="false" aria-controls="ha-wages-panel-overview">Overview</button>
         <button class="ha-wages__tab" data-panel="opportunities" role="tab" aria-selected="false" aria-controls="ha-wages-panel-opportunities">Opportunities</button>
-        <button class="ha-wages__tab" data-panel="impact" role="tab" aria-selected="false" aria-controls="ha-wages-panel-impact">Impact</button>
       </div>
       <a class="ha-wages__bar-pill" href="#ha-wages-research-news">
         Research &amp; News
@@ -2023,18 +2021,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       </article>
     </div>
     </div>
-    <div class="ha-wages__panel-close-wrap">
-      <button class="ha-wages__panel-close" aria-label="Close section">
-        <svg viewBox="0 0 14 9"><path d="M1 8l6-7 6 7"/></svg>
-        Close
-      </button>
-    </div>
-  </section><!-- /#ha-wages-panel-opportunities -->
-
-  <!-- ===================================
-       IMPACT panel — milestone timeline
-       =================================== -->
-  <section class="ha-wages__panel" id="ha-wages-panel-impact" role="tabpanel" hidden>
     <div class="ha-wages__impact">
     <div class="ha-wages__opps-head">
       <div class="ha-wages__eyebrow">A Record of Results</div>
@@ -2080,13 +2066,14 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
     </div>
     </div>
+
     <div class="ha-wages__panel-close-wrap">
       <button class="ha-wages__panel-close" aria-label="Close section">
         <svg viewBox="0 0 14 9"><path d="M1 8l6-7 6 7"/></svg>
         Close
       </button>
     </div>
-  </section><!-- /#ha-wages-panel-impact -->
+  </section><!-- /#ha-wages-panel-opportunities -->
 
   </div><!-- /.ha-wages__panels -->
 
@@ -2300,7 +2287,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     const indicator = document.querySelector('.ha-wages__tabs-indicator');
     if (!tabs.length || !panels.length) return;
 
-    const VALID_TABS = ['vision', 'overview', 'opportunities', 'impact'];
+    const VALID_TABS = ['vision', 'overview', 'opportunities'];
 
     function setTab(name, opts) {
       opts = opts || {};

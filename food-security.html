@@ -1719,7 +1719,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <button class="ha-food__stuck-tab active" data-panel="vision" role="tab" aria-selected="true">Vision</button>
     <button class="ha-food__stuck-tab" data-panel="overview" role="tab" aria-selected="false">Overview</button>
     <button class="ha-food__stuck-tab" data-panel="opportunities" role="tab" aria-selected="false">Opportunities</button>
-    <button class="ha-food__stuck-tab" data-panel="impact" role="tab" aria-selected="false">Impact</button>
   </div>
 
   <!-- ===================================
@@ -1754,7 +1753,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <button class="ha-food__tab active" data-panel="vision" role="tab" aria-selected="true" aria-controls="ha-food-panel-vision">Vision</button>
         <button class="ha-food__tab" data-panel="overview" role="tab" aria-selected="false" aria-controls="ha-food-panel-overview">Overview</button>
         <button class="ha-food__tab" data-panel="opportunities" role="tab" aria-selected="false" aria-controls="ha-food-panel-opportunities">Opportunities</button>
-        <button class="ha-food__tab" data-panel="impact" role="tab" aria-selected="false" aria-controls="ha-food-panel-impact">Impact</button>
       </div>
       <a class="ha-food__bar-pill" href="#ha-food-research-news">
         Research &amp; News
@@ -2050,18 +2048,6 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       </article>
     </div>
     </div>
-    <div class="ha-food__panel-close-wrap">
-      <button class="ha-food__panel-close" aria-label="Close section">
-        <svg viewBox="0 0 14 9"><path d="M1 8l6-7 6 7"/></svg>
-        Close
-      </button>
-    </div>
-  </section><!-- /#ha-food-panel-opportunities -->
-
-  <!-- ===================================
-       IMPACT panel — milestone timeline
-       =================================== -->
-  <section class="ha-food__panel" id="ha-food-panel-impact" role="tabpanel" hidden>
     <div class="ha-food__impact">
     <div class="ha-food__opps-head">
       <div class="ha-food__eyebrow">A Record of Results</div>
@@ -2123,13 +2109,14 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
     </div>
     </div>
+
     <div class="ha-food__panel-close-wrap">
       <button class="ha-food__panel-close" aria-label="Close section">
         <svg viewBox="0 0 14 9"><path d="M1 8l6-7 6 7"/></svg>
         Close
       </button>
     </div>
-  </section><!-- /#ha-food-panel-impact -->
+  </section><!-- /#ha-food-panel-opportunities -->
 
   </div><!-- /.ha-food__panels -->
 
@@ -2344,7 +2331,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     const indicator = document.querySelector('.ha-food__tabs-indicator');
     if (!tabs.length || !panels.length) return;
 
-    const VALID_TABS = ['vision', 'overview', 'opportunities', 'impact'];
+    const VALID_TABS = ['vision', 'overview', 'opportunities'];
 
     function setTab(name, opts) {
       opts = opts || {};
