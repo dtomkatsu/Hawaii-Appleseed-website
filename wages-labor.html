@@ -149,6 +149,16 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   .px-nav .px-dropdown-menu a{padding:9px 4px;white-space:normal;}
 }
 </style>
+<style id="ha-acc-css">
+.ha-acc-btn{display:inline-flex;align-items:center;gap:7px;margin-top:10px;background:none;border:0;cursor:pointer;font-family:'Manrope',sans-serif;font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#52796F;padding:6px 0;}
+.ha-acc-btn:hover{color:#2F3E46;}
+.ha-acc-chev{width:13px;height:13px;flex:none;transition:transform .25s ease;}
+.ha-acc-btn[aria-expanded="true"] .ha-acc-chev{transform:rotate(180deg);}
+.ha-acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s ease;}
+.ha-acc-btn[aria-expanded="true"]+.ha-acc-panel{grid-template-rows:1fr;}
+.ha-acc-panel>.ha-acc-inner{overflow:hidden;min-height:0;}
+@media (prefers-reduced-motion:reduce){.ha-acc-panel{transition:none;}}
+</style>
 </head>
 <body>
 
@@ -1964,12 +1974,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <p class="ha-wages__priority-desc">
           Hawai&#x02BB;i&rsquo;s current minimum-wage law reaches its final scheduled increase to <strong>$18/hour in 2028</strong>. Without new legislation, the floor flatlines while the cost of living keeps climbing. Lock in cost-of-living adjustments now so the next 40 years don&rsquo;t repeat the last 40.
         </p>
-        <ul class="ha-wages__priority-list">
+        <button class="ha-acc-btn" type="button" aria-expanded="false">Policy details<svg class="ha-acc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></button><div class="ha-acc-panel"><div class="ha-acc-inner"><ul class="ha-wages__priority-list">
           <li>
             <strong>Raise the minimum wage after 2028</strong>
             Secure legislation ahead of time to ensure Hawai&#x02BB;i&rsquo;s minimum wage continues to rise to account for cost-of-living increases &mdash; rather than waiting and having to fight the same fight all over again every few years.
           </li>
-        </ul>
+        </ul></div></div>
         <div class="ha-wages__priority-stat">
           <div class="ha-wages__priority-stat-num">$1B+</div>
           <div class="ha-wages__priority-stat-label">in additional annual wages delivered by the <strong>2022 wage hike</strong></div>
@@ -1991,12 +2001,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <p class="ha-wages__priority-desc">
           Workers shouldn&rsquo;t have to choose between caring for a newborn or a sick parent and keeping their job. A statewide paid leave program supports families, reduces turnover, and creates a more stable workforce. It is good for workers. It is good for businesses. And it is long overdue &mdash; 13 states have already enacted programs; Hawai&#x02BB;i has not.
         </p>
-        <ul class="ha-wages__priority-list">
+        <button class="ha-acc-btn" type="button" aria-expanded="false">Policy details<svg class="ha-acc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></button><div class="ha-acc-panel"><div class="ha-acc-inner"><ul class="ha-wages__priority-list">
           <li>
             <strong>Establish statewide paid family &amp; medical leave</strong>
             A program funded through small employer/employee contributions that lets workers take time off for childbirth, caregiving, or their own serious illness without losing income or risking their job. Wage replacement is partial and capped &mdash; designed to be self-sustaining at modest contribution rates.
           </li>
-        </ul>
+        </ul></div></div>
         <div class="ha-wages__priority-stat">
           <div class="ha-wages__priority-stat-num">13 states</div>
           <div class="ha-wages__priority-stat-label">plus DC have a <strong>statewide paid-leave program</strong>. Hawai&#x02BB;i does not.</div>
@@ -2018,7 +2028,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <p class="ha-wages__priority-desc">
           The wage floor and paid leave are essential but not sufficient. Closing Hawai&#x02BB;i&rsquo;s 40-year wage-cost gap requires a sustained policy push &mdash; on child care, on cost-of-living protections for working families, and on the broader workforce supports that turn wage gains into lasting economic security.
         </p>
-        <ul class="ha-wages__priority-list">
+        <button class="ha-acc-btn" type="button" aria-expanded="false">Policy details<svg class="ha-acc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></button><div class="ha-acc-panel"><div class="ha-acc-inner"><ul class="ha-wages__priority-list">
           <li>
             <strong>Child-care affordability</strong>
             Preschool in Honolulu costs ~44% of a low-wage worker&rsquo;s full-time earnings &mdash; the biggest expense after rent. Expanded subsidies and workforce supports for early-childhood educators keep working parents in the workforce.
@@ -2032,7 +2042,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
             Guaranteed, no-strings income for mothers through their baby&rsquo;s first year &mdash; proven in Michigan to cut evictions, food insecurity, and maternal depression.
             <a href="rxkids/" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-weight:700;color:#52796F;text-decoration:none;border-bottom:2px solid #52796F;padding-bottom:1px;">Explore the RxKids Hawai&#x02BB;i proposal &rarr;</a>
           </li>
-        </ul>
+        </ul></div></div>
         <div class="ha-wages__priority-stat">
           <div class="ha-wages__priority-stat-num">66%</div>
           <div class="ha-wages__priority-stat-label">of Hawai&#x02BB;i adults 18&ndash;34 have considered <strong>leaving the islands</strong></div>
@@ -2079,13 +2089,13 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         </div>
       </article>
 
-      <article class="ha-wages__milestone ha-wages__milestone--current">
+      <button class="ha-acc-btn" type="button" aria-expanded="false">Show 1 more milestone<svg class="ha-acc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></button><div class="ha-acc-panel"><div class="ha-acc-inner"><article class="ha-wages__milestone ha-wages__milestone--current">
         <span class="ha-wages__milestone-year">2023 &ndash; Present</span>
         <div class="ha-wages__milestone-card">
           <h3 class="ha-wages__milestone-title">Fighting for paid leave &amp; the next wage increase</h3>
           <p class="ha-wages__milestone-desc">Leading the campaign to establish a <strong>statewide paid family and medical leave program</strong>, so workers don&rsquo;t have to choose between caregiving and a paycheck. Also pushing for legislation to continue raising the minimum wage past 2028, so the floor keeps pace with the cost of living instead of flatlining once the current law expires.</p>
         </div>
-      </article>
+      </article></div></div>
 
     </div>
     </div>
@@ -2553,6 +2563,9 @@ b.addEventListener('click',function(e){e.stopPropagation();var o=n.classList.tog
 n.querySelectorAll('.px-links a').forEach(function(a){a.addEventListener('click',function(){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');});});
 document.addEventListener('click',function(e){if(!n.contains(e.target)){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');}});
 })();
+</script>
+<script id="ha-acc-js">
+document.addEventListener('click',function(e){var b=e.target.closest('.ha-acc-btn');if(!b)return;b.setAttribute('aria-expanded',b.getAttribute('aria-expanded')==='true'?'false':'true');});
 </script>
 </body>
 </html>

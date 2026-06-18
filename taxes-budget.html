@@ -126,6 +126,16 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   .px-nav .px-dropdown-menu a{padding:9px 4px;white-space:normal;}
 }
 </style>
+<style id="ha-acc-css">
+.ha-acc-btn{display:inline-flex;align-items:center;gap:7px;margin-top:10px;background:none;border:0;cursor:pointer;font-family:'Manrope',sans-serif;font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#52796F;padding:6px 0;}
+.ha-acc-btn:hover{color:#2F3E46;}
+.ha-acc-chev{width:13px;height:13px;flex:none;transition:transform .25s ease;}
+.ha-acc-btn[aria-expanded="true"] .ha-acc-chev{transform:rotate(180deg);}
+.ha-acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s ease;}
+.ha-acc-btn[aria-expanded="true"]+.ha-acc-panel{grid-template-rows:1fr;}
+.ha-acc-panel>.ha-acc-inner{overflow:hidden;min-height:0;}
+@media (prefers-reduced-motion:reduce){.ha-acc-panel{transition:none;}}
+</style>
 </head>
 <body>
 
@@ -2130,7 +2140,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         </div>
       </article>
 
-      <article class="ha-tax__milestone">
+      <button class="ha-acc-btn" type="button" aria-expanded="false">Show 2 more milestones<svg class="ha-acc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></button><div class="ha-acc-panel"><div class="ha-acc-inner"><article class="ha-tax__milestone">
         <span class="ha-tax__milestone-year">2023 – Present</span>
         <div class="ha-tax__milestone-card">
           <h3 class="ha-tax__milestone-title">Leading the work to establish a State Child Tax Credit</h3>
@@ -2144,7 +2154,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
           <h3 class="ha-tax__milestone-title">Reversed a harmful 2024 state tax policy</h3>
           <p class="ha-tax__milestone-desc">If fully phased in, Act 46 (2024) would have hollowed out the state budget — costing <strong>$1.4 billion per year</strong> in foregone revenue to give tax breaks primarily to upper-income households. The new tax policy preserves tax cuts for low- and middle-income households, stops future tax cuts for high-income households, and creates a new 13% income tax rate on very wealthy households. These changes increase the overall equity of the state's tax code while preserving <strong>$367–$650 million</strong> in revenue for the state to invest in our communities.</p>
         </div>
-      </article>
+      </article></div></div>
 
     </div>
     </div>
@@ -2701,6 +2711,9 @@ b.addEventListener('click',function(e){e.stopPropagation();var o=n.classList.tog
 n.querySelectorAll('.px-links a').forEach(function(a){a.addEventListener('click',function(){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');});});
 document.addEventListener('click',function(e){if(!n.contains(e.target)){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');}});
 })();
+</script>
+<script id="ha-acc-js">
+document.addEventListener('click',function(e){var b=e.target.closest('.ha-acc-btn');if(!b)return;b.setAttribute('aria-expanded',b.getAttribute('aria-expanded')==='true'?'false':'true');});
 </script>
 </body>
 </html>

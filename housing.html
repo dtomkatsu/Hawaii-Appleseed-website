@@ -148,6 +148,16 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   .px-nav .px-dropdown-menu a{padding:9px 4px;white-space:normal;}
 }
 </style>
+<style id="ha-acc-css">
+.ha-acc-btn{display:inline-flex;align-items:center;gap:7px;margin-top:10px;background:none;border:0;cursor:pointer;font-family:'Manrope',sans-serif;font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#52796F;padding:6px 0;}
+.ha-acc-btn:hover{color:#2F3E46;}
+.ha-acc-chev{width:13px;height:13px;flex:none;transition:transform .25s ease;}
+.ha-acc-btn[aria-expanded="true"] .ha-acc-chev{transform:rotate(180deg);}
+.ha-acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s ease;}
+.ha-acc-btn[aria-expanded="true"]+.ha-acc-panel{grid-template-rows:1fr;}
+.ha-acc-panel>.ha-acc-inner{overflow:hidden;min-height:0;}
+@media (prefers-reduced-motion:reduce){.ha-acc-panel{transition:none;}}
+</style>
 </head>
 <body>
 
@@ -1965,7 +1975,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <p class="ha-housing__priority-desc">
           Decades of restrictive land-use rules have throttled construction. Hawai&#x02BB;i needs to build up instead of out &mdash; infilling existing neighborhoods, prioritizing housing near services and transit, and removing artificial caps that prevent housing within the urban land use boundary.
         </p>
-        <ul class="ha-housing__priority-list">
+        <button class="ha-acc-btn" type="button" aria-expanded="false">Policy details<svg class="ha-acc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></button><div class="ha-acc-panel"><div class="ha-acc-inner"><ul class="ha-housing__priority-list">
           <li>
             <strong>Maximize TOD density</strong>
             High minimum-density requirements in transit-oriented districts and removal of barriers to dense housing near transit. More people near goods, services, and transportation &mdash; lower costs and natural long-term affordability.
@@ -1978,7 +1988,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
             <strong>Inclusionary zoning reform</strong>
             Require counties to commission a study before implementing inclusionary zoning, so well-meaning programs don&rsquo;t inadvertently raise housing costs or chill development.
           </li>
-        </ul>
+        </ul></div></div>
         <div class="ha-housing__priority-stat">
           <div class="ha-housing__priority-stat-num">+24K</div>
           <div class="ha-housing__priority-stat-label">affordable units Hawai&#x02BB;i still needs by <strong>2030</strong></div>
@@ -2000,7 +2010,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <p class="ha-housing__priority-desc">
           Two-thirds of Hawai&#x02BB;i renters are <span class="ha-housing__term" tabindex="0">cost-burdened<span class="ha-housing__term-tip" role="tooltip"><strong>Cost-burdened</strong> &mdash; spending more than 30% of household income on rent and utilities. Severely cost-burdened means spending over 50%.</span></span>, paying more than 30% of their income on rent. Understanding your rights is the first line of defense against displacement &mdash; and codifying existing best practices closes the gap between policy and reality.
         </p>
-        <ul class="ha-housing__priority-list">
+        <button class="ha-acc-btn" type="button" aria-expanded="false">Policy details<svg class="ha-acc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></button><div class="ha-acc-panel"><div class="ha-acc-inner"><ul class="ha-housing__priority-list">
           <li>
             <strong>Notice of tenant rights</strong>
             Require the Office of Consumer Protection to publish language-accessible notices of tenant rights, and require landlords to provide that notice to tenants. Understanding your rights is the best way to exercise them.
@@ -2009,7 +2019,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
             <strong>Displacement assistance</strong>
             Provide payment to renters displaced by new developments. HHFDC already does this in practice &mdash; this proposal encodes it in law so the protection applies statewide.
           </li>
-        </ul>
+        </ul></div></div>
         <div class="ha-housing__priority-stat">
           <div class="ha-housing__priority-stat-num">65%</div>
           <div class="ha-housing__priority-stat-label">of Hawai&#x02BB;i renter households are cost-burdened</div>
@@ -2031,7 +2041,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <p class="ha-housing__priority-desc">
           A modernized <span class="ha-housing__term" tabindex="0">conveyance tax<span class="ha-housing__term-tip" role="tooltip"><strong>Conveyance tax</strong> &mdash; a one-time tax paid when real property changes ownership. Hawai&#x02BB;i&rsquo;s current rates top out at 1.25% for properties over $10M &mdash; well below peer-state luxury rates.</span></span> on luxury real estate could generate over $100 million annually for affordable housing and Native Hawaiian home lands &mdash; without raising costs for the average owner-occupant. Pair it with deed-restriction tools that keep new housing available to local families.
         </p>
-        <ul class="ha-housing__priority-list">
+        <button class="ha-acc-btn" type="button" aria-expanded="false">Policy details<svg class="ha-acc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></button><div class="ha-acc-panel"><div class="ha-acc-inner"><ul class="ha-housing__priority-list">
           <li>
             <strong>Conveyance tax reform</strong>
             A marginal-rate structure that reduces taxes for average owner-occupants while increasing them on second properties and luxury homes. Generates over $100 million per year for infrastructure, affordable housing, and DHHL.
@@ -2040,7 +2050,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
             <strong>Locals-only housing</strong>
             Deed restrictions that reserve new housing for qualified residents at price points tied to local wages &mdash; via the 201H alternative pathway, ADU grants in exchange for deed restrictions, and county deed-restriction programs.
           </li>
-        </ul>
+        </ul></div></div>
         <div class="ha-housing__priority-stat">
           <div class="ha-housing__priority-stat-num">$100M+</div>
           <div class="ha-housing__priority-stat-label">annual revenue from conveyance tax reform for housing &amp; DHHL</div>
@@ -2087,7 +2097,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         </div>
       </article>
 
-      <article class="ha-housing__milestone">
+      <button class="ha-acc-btn" type="button" aria-expanded="false">Show 3 more milestones<svg class="ha-acc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></button><div class="ha-acc-panel"><div class="ha-acc-inner"><article class="ha-housing__milestone">
         <span class="ha-housing__milestone-year">2020 &ndash; 2022</span>
         <div class="ha-housing__milestone-card">
           <h3 class="ha-housing__milestone-title">Stood up Hawai&#x02BB;i&rsquo;s pandemic rent-relief program</h3>
@@ -2109,7 +2119,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
           <h3 class="ha-housing__milestone-title">Leading conveyance tax reform &amp; tenant protections</h3>
           <p class="ha-housing__milestone-desc">Driving the fight for conveyance-tax reform that generates over <strong>$100 million annually</strong> for affordable housing and Native Hawaiian home lands. Advocating for tenant-protection bills that give renters the information and stability they need to stay housed, and for regulatory reforms that remove artificial caps on housing within the urban land use boundary.</p>
         </div>
-      </article>
+      </article></div></div>
 
     </div>
     </div>
@@ -2577,6 +2587,9 @@ b.addEventListener('click',function(e){e.stopPropagation();var o=n.classList.tog
 n.querySelectorAll('.px-links a').forEach(function(a){a.addEventListener('click',function(){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');});});
 document.addEventListener('click',function(e){if(!n.contains(e.target)){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');}});
 })();
+</script>
+<script id="ha-acc-js">
+document.addEventListener('click',function(e){var b=e.target.closest('.ha-acc-btn');if(!b)return;b.setAttribute('aria-expanded',b.getAttribute('aria-expanded')==='true'?'false':'true');});
 </script>
 </body>
 </html>

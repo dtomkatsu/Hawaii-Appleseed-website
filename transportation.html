@@ -148,6 +148,16 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
   .px-nav .px-dropdown-menu a{padding:9px 4px;white-space:normal;}
 }
 </style>
+<style id="ha-acc-css">
+.ha-acc-btn{display:inline-flex;align-items:center;gap:7px;margin-top:10px;background:none;border:0;cursor:pointer;font-family:'Manrope',sans-serif;font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#52796F;padding:6px 0;}
+.ha-acc-btn:hover{color:#2F3E46;}
+.ha-acc-chev{width:13px;height:13px;flex:none;transition:transform .25s ease;}
+.ha-acc-btn[aria-expanded="true"] .ha-acc-chev{transform:rotate(180deg);}
+.ha-acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s ease;}
+.ha-acc-btn[aria-expanded="true"]+.ha-acc-panel{grid-template-rows:1fr;}
+.ha-acc-panel>.ha-acc-inner{overflow:hidden;min-height:0;}
+@media (prefers-reduced-motion:reduce){.ha-acc-panel{transition:none;}}
+</style>
 </head>
 <body>
 
@@ -1963,12 +1973,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <p class="ha-transit__priority-desc">
           Young people are the largest demographic of non-drivers, and lower-income households spend the largest share of their budget on transportation. Fare-free programs in cities across the country have increased ridership, boosted local economies, and lowered emissions &mdash; while reconnecting people to jobs, school, and each other.
         </p>
-        <ul class="ha-transit__priority-list">
+        <button class="ha-acc-btn" type="button" aria-expanded="false">Policy details<svg class="ha-acc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></button><div class="ha-acc-panel"><div class="ha-acc-inner"><ul class="ha-transit__priority-list">
           <li>
             <strong>Keiki Ride Free</strong>
             Establish a year-round, fare-free youth transit program for individuals 18 and under across the state. Fare-free transit lowers household costs, increases youth access to education and recreation, and reduces emissions and congestion.
           </li>
-        </ul>
+        </ul></div></div>
         <div class="ha-transit__priority-stat">
           <div class="ha-transit__priority-stat-num">18 &amp; under</div>
           <div class="ha-transit__priority-stat-label">would ride <strong>fare-free</strong> year-round under Keiki Ride Free</div>
@@ -1993,7 +2003,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <p class="ha-transit__priority-desc">
           Pedestrian fatalities are on the rise, and signalized intersections are among the most dangerous places for people walking, biking, and rolling. Low-cost solutions used worldwide are almost entirely absent in Hawai&#x02BB;i. Meanwhile, jaywalking enforcement falls disproportionately on the people who walk out of necessity &mdash; without making streets any safer.
         </p>
-        <ul class="ha-transit__priority-list">
+        <button class="ha-acc-btn" type="button" aria-expanded="false">Policy details<svg class="ha-acc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></button><div class="ha-acc-panel"><div class="ha-acc-inner"><ul class="ha-transit__priority-list">
           <li>
             <strong>Fund pedestrian head-start upgrades</strong>
             Require the installation of Leading Pedestrian Intervals (LPIs) and Accessible Pedestrian Signals (APS) at state-owned intersections. These low-cost improvements reduce pedestrian fatalities and serious injuries while making crossings inclusive for people with disabilities.
@@ -2002,7 +2012,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
             <strong>Reduce pedestrian fines</strong>
             Decrease jaywalking fines to end the cycle of debt imposed on pedestrians &mdash; a policy that disproportionately impacts people who depend on walking and does little to improve safety. Six other states and cities have already decriminalized jaywalking.
           </li>
-        </ul>
+        </ul></div></div>
         <div class="ha-transit__priority-stat">
           <div class="ha-transit__priority-stat-num">349 / 100K</div>
           <div class="ha-transit__priority-stat-label">Hawai&#x02BB;i jaywalking citation rate &mdash; <strong>58&times;</strong> Washington state&rsquo;s</div>
@@ -2028,7 +2038,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         <p class="ha-transit__priority-desc">
           Outdated parking mandates tie the cost of shelter to the storage of cars &mdash; making housing scarcer and more expensive. Honolulu&rsquo;s Ordinance 20-41 already eliminated mandates in transit-oriented districts, and the early data is striking: rental projects there now average just 0.75 parking spaces per unit. Pair this reform with transparency in traffic enforcement to surface the biases that shape who gets stopped.
         </p>
-        <ul class="ha-transit__priority-list">
+        <button class="ha-acc-btn" type="button" aria-expanded="false">Policy details<svg class="ha-acc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></button><div class="ha-acc-panel"><div class="ha-acc-inner"><ul class="ha-transit__priority-list">
           <li>
             <strong>Eliminate or reduce parking mandates</strong>
             Reduce the amount of parking counties can require on new development &mdash; statewide, in urban districts, and in TOD areas. Eliminating costly parking mandates is one of the most proven ways to lower housing costs and give residents choices beyond car ownership.
@@ -2037,7 +2047,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
             <strong>Standardize police data collection</strong>
             Require police to collect socio-demographic data for all traffic stops and provide yearly reports. Transparency reveals biases in local policing and is the foundation for any meaningful enforcement reform.
           </li>
-        </ul>
+        </ul></div></div>
         <div class="ha-transit__priority-stat">
           <div class="ha-transit__priority-stat-num">$55K+</div>
           <div class="ha-transit__priority-stat-label">added to each new urban-Honolulu unit by <strong>parking mandates</strong></div>
@@ -2087,13 +2097,13 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         </div>
       </article>
 
-      <article class="ha-transit__milestone ha-transit__milestone--current">
+      <button class="ha-acc-btn" type="button" aria-expanded="false">Show 1 more milestone<svg class="ha-acc-chev" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></button><div class="ha-acc-panel"><div class="ha-acc-inner"><article class="ha-transit__milestone ha-transit__milestone--current">
         <span class="ha-transit__milestone-year">2023 &ndash; Present</span>
         <div class="ha-transit__milestone-card">
           <h3 class="ha-transit__milestone-title">Equity in traffic enforcement</h3>
           <p class="ha-transit__milestone-desc">Championing policies to reduce pedestrian fines and standardize police data collection to increase transparency and reduce bias in traffic enforcement. Hawai&#x02BB;i issues jaywalking tickets at <strong>349 per 100,000 residents</strong> &mdash; nearly 60&times; Washington state&rsquo;s rate &mdash; with no demonstrated safety benefit.</p>
         </div>
-      </article>
+      </article></div></div>
 
     </div>
     </div>
@@ -2561,6 +2571,9 @@ b.addEventListener('click',function(e){e.stopPropagation();var o=n.classList.tog
 n.querySelectorAll('.px-links a').forEach(function(a){a.addEventListener('click',function(){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');});});
 document.addEventListener('click',function(e){if(!n.contains(e.target)){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');}});
 })();
+</script>
+<script id="ha-acc-js">
+document.addEventListener('click',function(e){var b=e.target.closest('.ha-acc-btn');if(!b)return;b.setAttribute('aria-expanded',b.getAttribute('aria-expanded')==='true'?'false':'true');});
 </script>
 </body>
 </html>
