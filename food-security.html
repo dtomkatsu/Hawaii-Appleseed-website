@@ -1747,8 +1747,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
   <!-- Sticky tab bar (appears when main tab bar scrolls out) -->
   <div class="ha-food__stuck-bar" role="tablist" aria-label="Section (sticky)">
-    <button class="ha-food__stuck-tab active" data-panel="vision" role="tab" aria-selected="true">Vision</button>
-    <button class="ha-food__stuck-tab" data-panel="overview" role="tab" aria-selected="false">Overview</button>
+    <button class="ha-food__stuck-tab active" data-panel="overview" role="tab" aria-selected="true">Overview</button>
     <button class="ha-food__stuck-tab" data-panel="opportunities" role="tab" aria-selected="false">Opportunities</button>
   </div>
 
@@ -1781,8 +1780,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <div class="ha-food__tab-bar">
       <div class="ha-food__tabs" role="tablist" aria-label="Section">
         <span class="ha-food__tabs-indicator" aria-hidden="true"></span>
-        <button class="ha-food__tab active" data-panel="vision" role="tab" aria-selected="true" aria-controls="ha-food-panel-vision">Vision</button>
-        <button class="ha-food__tab" data-panel="overview" role="tab" aria-selected="false" aria-controls="ha-food-panel-overview">Overview</button>
+        <button class="ha-food__tab active" data-panel="overview" role="tab" aria-selected="true" aria-controls="ha-food-panel-overview">Overview</button>
         <button class="ha-food__tab" data-panel="opportunities" role="tab" aria-selected="false" aria-controls="ha-food-panel-opportunities">Opportunities</button>
       </div>
       <a class="ha-food__bar-pill" href="#ha-food-research-news">
@@ -1798,8 +1796,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
        =================================== -->
   <div class="ha-food__panels">
 
-  <!-- =========== VISION PANEL =========== -->
-  <section class="ha-food__panel active" id="ha-food-panel-vision" role="tabpanel">
+  
+
+  <!-- =========== OVERVIEW PANEL =========== -->
+  <section class="ha-food__panel active" id="ha-food-panel-overview" role="tabpanel">
+
     <div class="ha-food__vision">
       <span class="ha-food__vision-eyebrow">Our Vision</span>
       <div class="ha-food__vision-quote" aria-hidden="true">&ldquo;</div>
@@ -1857,16 +1858,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
       </div>
     </div>
-    <div class="ha-food__panel-close-wrap">
-      <button class="ha-food__panel-close" aria-label="Close section">
-        <svg viewBox="0 0 14 9"><path d="M1 8l6-7 6 7"/></svg>
-        Close
-      </button>
-    </div>
-  </section>
 
-  <!-- =========== OVERVIEW PANEL =========== -->
-  <section class="ha-food__panel" id="ha-food-panel-overview" role="tabpanel" hidden>
 
   <!-- Big headline stat above the pie -->
   <div class="ha-food__stat-headline">
@@ -2362,7 +2354,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     const indicator = document.querySelector('.ha-food__tabs-indicator');
     if (!tabs.length || !panels.length) return;
 
-    const VALID_TABS = ['vision', 'overview', 'opportunities'];
+    const VALID_TABS = ['overview', 'opportunities'];
 
     function setTab(name, opts) {
       opts = opts || {};

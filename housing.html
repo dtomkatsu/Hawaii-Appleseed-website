@@ -1747,8 +1747,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
   <!-- Sticky tab bar (appears when main tab bar scrolls out) -->
   <div class="ha-housing__stuck-bar" role="tablist" aria-label="Section (sticky)">
-    <button class="ha-housing__stuck-tab active" data-panel="vision" role="tab" aria-selected="true">Vision</button>
-    <button class="ha-housing__stuck-tab" data-panel="overview" role="tab" aria-selected="false">Overview</button>
+    <button class="ha-housing__stuck-tab active" data-panel="overview" role="tab" aria-selected="true">Overview</button>
     <button class="ha-housing__stuck-tab" data-panel="opportunities" role="tab" aria-selected="false">Opportunities</button>
   </div>
 
@@ -1781,8 +1780,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     <div class="ha-housing__tab-bar">
       <div class="ha-housing__tabs" role="tablist" aria-label="Section">
         <span class="ha-housing__tabs-indicator" aria-hidden="true"></span>
-        <button class="ha-housing__tab active" data-panel="vision" role="tab" aria-selected="true" aria-controls="ha-housing-panel-vision">Vision</button>
-        <button class="ha-housing__tab" data-panel="overview" role="tab" aria-selected="false" aria-controls="ha-housing-panel-overview">Overview</button>
+        <button class="ha-housing__tab active" data-panel="overview" role="tab" aria-selected="true" aria-controls="ha-housing-panel-overview">Overview</button>
         <button class="ha-housing__tab" data-panel="opportunities" role="tab" aria-selected="false" aria-controls="ha-housing-panel-opportunities">Opportunities</button>
       </div>
       <a class="ha-housing__bar-pill" href="#ha-housing-research-news">
@@ -1798,8 +1796,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
        =================================== -->
   <div class="ha-housing__panels">
 
-  <!-- =========== VISION PANEL =========== -->
-  <section class="ha-housing__panel active" id="ha-housing-panel-vision" role="tabpanel">
+  
+
+  <!-- =========== OVERVIEW PANEL =========== -->
+  <section class="ha-housing__panel active" id="ha-housing-panel-overview" role="tabpanel">
+
     <div class="ha-housing__vision">
       <span class="ha-housing__vision-eyebrow">Our Vision</span>
       <div class="ha-housing__vision-quote" aria-hidden="true">&ldquo;</div>
@@ -1857,16 +1858,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 
       </div>
     </div>
-    <div class="ha-housing__panel-close-wrap">
-      <button class="ha-housing__panel-close" aria-label="Close section">
-        <svg viewBox="0 0 14 9"><path d="M1 8l6-7 6 7"/></svg>
-        Close
-      </button>
-    </div>
-  </section>
 
-  <!-- =========== OVERVIEW PANEL =========== -->
-  <section class="ha-housing__panel" id="ha-housing-panel-overview" role="tabpanel" hidden>
 
   <!-- Big headline stat above the pie -->
   <div class="ha-housing__stat-headline">
@@ -2342,7 +2334,7 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
     const indicator = document.querySelector('.ha-housing__tabs-indicator');
     if (!tabs.length || !panels.length) return;
 
-    const VALID_TABS = ['vision', 'overview', 'opportunities'];
+    const VALID_TABS = ['overview', 'opportunities'];
 
     function setTab(name, opts) {
       opts = opts || {};
