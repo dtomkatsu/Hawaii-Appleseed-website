@@ -241,21 +241,28 @@
     @media (min-width:981px){
       .hero-inner{ width:46%; max-width:680px; padding-right:2.5rem; }
       .ha-home__hero-media,
-      .ha-home__hero-arc{
+      .ha-home__hero-arc-wrap{
         position:absolute; top:0; right:0; bottom:0; height:auto; width:53%;
-        -webkit-clip-path:url(#heroArc); clip-path:url(#heroArc);
       }
       .ha-home__hero-media{
         z-index:2; overflow:hidden; transform-origin:right center;
+        -webkit-clip-path:url(#heroArc); clip-path:url(#heroArc);
         filter:drop-shadow(-8px 0 24px rgba(132,169,140,.32));
         animation:heroMediaFade 1s var(--ease-out) both, heroCurveBreath 13s ease-in-out infinite;
       }
+      /* Seam wrapper: wipes the separating line in from the top on load. */
+      .ha-home__hero-arc-wrap{
+        z-index:1;
+        -webkit-clip-path:inset(0 0 0 0); clip-path:inset(0 0 0 0);
+        animation:heroSeamWipe 1.15s var(--ease-out) .12s both;
+      }
       /* Teal rim offset behind the viewport — a band parallel to the semicircular curve. */
       .ha-home__hero-arc{
-        display:block; z-index:1; transform-origin:right center;
+        display:block; position:absolute; inset:0; transform-origin:right center;
+        -webkit-clip-path:url(#heroArc); clip-path:url(#heroArc);
         transform:translate(-22px,18px);
         background:linear-gradient(176deg, var(--deep-teal) 0%, var(--teal) 50%, var(--deep-teal) 100%);
-        animation:heroMediaFade 1.1s var(--ease-out) both, heroArcBreath 13s ease-in-out infinite;
+        animation:heroArcBreath 13s ease-in-out infinite;
       }
     }
     @media (max-width:980px){
@@ -270,8 +277,14 @@
       0%,100%{ transform:translate(-22px,18px) scaleX(1); }
       50%{ transform:translate(-24px,18px) scaleX(1.024); }
     }
+    /* Separating line wipes in from the top. */
+    @keyframes heroSeamWipe{
+      from{ -webkit-clip-path:inset(0 0 100% 0); clip-path:inset(0 0 100% 0); }
+      to{ -webkit-clip-path:inset(0 0 0 0); clip-path:inset(0 0 0 0); }
+    }
     @media (prefers-reduced-motion: reduce){
-      .ha-home__hero-media, .ha-home__hero-arc{ animation:none !important; }
+      .ha-home__hero-media, .ha-home__hero-arc, .ha-home__hero-arc-wrap{ animation:none !important; }
+      .ha-home__hero-arc-wrap{ -webkit-clip-path:none !important; clip-path:none !important; }
       .ha-home__hero-media{ filter:none; }
     }
 
@@ -835,7 +848,7 @@
          video is ready, drop a <video class="ha-home__hero-video" autoplay muted loop
          playsinline poster="assets/story/hero-rainbow.webp"><source src="…mp4"></video>
          inside .ha-home__hero-media and it will be clipped by the same arc. -->
-    <div class="ha-home__hero-arc" aria-hidden="true"></div>
+    <div class="ha-home__hero-arc-wrap" aria-hidden="true"><div class="ha-home__hero-arc"></div></div>
     <div class="ha-home__hero-media">
       <img class="ha-home__hero-photo" src="assets/story/hero-rainbow.webp" alt="" aria-hidden="true">
       <canvas class="ha-home__hero-canvas" aria-hidden="true"></canvas>
