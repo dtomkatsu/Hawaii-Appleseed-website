@@ -223,20 +223,40 @@
     .ha-home__hero-arc{ display:none; }
     @media (min-width:981px){
       .hero-inner{ width:46%; max-width:680px; padding-right:2.5rem; }
-      .ha-home__hero-media{
-        position:absolute; top:0; right:0; bottom:0; height:auto; width:52%; z-index:2;
+      .ha-home__hero-media,
+      .ha-home__hero-arc{
+        position:absolute; top:0; right:0; bottom:0; height:auto; width:53%;
         -webkit-clip-path:url(#heroArc); clip-path:url(#heroArc);
       }
-      /* concentric teal rim echoing the layered United Way curve */
+      .ha-home__hero-media{
+        z-index:2; overflow:hidden;
+        filter:drop-shadow(-8px 0 24px rgba(132,169,140,.32));
+        animation:heroMediaIn 1.05s var(--ease-out) .18s both;
+      }
+      /* Teal rim offset behind the viewport — reads as a band parallel to the
+         diagonal curve. A bright stop travels along it to accentuate the edge. */
       .ha-home__hero-arc{
-        display:block; position:absolute; top:0; right:0; bottom:0; width:54.5%; z-index:1;
-        background:linear-gradient(165deg, var(--teal) 0%, var(--deep-teal) 100%);
-        -webkit-clip-path:url(#heroArc); clip-path:url(#heroArc);
+        display:block; z-index:1; transform-origin:right center;
+        transform:translate(-22px,18px);
+        background:linear-gradient(176deg, var(--deep-teal) 0%, var(--teal) 24%, #c8ddcd 41%, var(--teal) 58%, var(--deep-teal) 100%);
+        background-size:100% 300%;
+        animation:heroArcIn 1.15s var(--ease-out) .06s both, heroRimSheen 7s linear 1.3s infinite;
       }
     }
     @media (max-width:980px){
       .ha-home__hero{ min-height:auto; }
       .hero-inner{ min-height:auto; padding-top:8.5rem; padding-bottom:2.4rem; }
+    }
+    /* Curve-accent animations (desktop split only) */
+    @keyframes heroMediaIn{ from{ opacity:0; transform:translateX(56px); } to{ opacity:1; transform:translateX(0); } }
+    @keyframes heroArcIn{
+      from{ opacity:0; transform:translate(-22px,18px) scaleX(.84); }
+      to{ opacity:1; transform:translate(-22px,18px) scaleX(1); }
+    }
+    @keyframes heroRimSheen{ from{ background-position:0 0%; } to{ background-position:0 -200%; } }
+    @media (prefers-reduced-motion: reduce){
+      .ha-home__hero-media, .ha-home__hero-arc{ animation:none !important; }
+      .ha-home__hero-media{ filter:none; }
     }
 
     /* ─────────────────────────────────────
@@ -735,7 +755,8 @@
   <!-- Arc that carves the left edge of the video viewport (objectBoundingBox, so it scales). -->
   <svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
     <clipPath id="heroArc" clipPathUnits="objectBoundingBox">
-      <path d="M0.16,0 L1,0 L1,1 L0.16,1 C0.04,0.74 0.04,0.26 0.16,0 Z"/>
+      <!-- Diagonal sweep: fuller at the top, slicing in toward the bottom-left. -->
+      <path d="M0.05,0 L1,0 L1,1 L0.34,1 C0.12,0.66 0.0,0.38 0.05,0 Z"/>
     </clipPath>
   </defs></svg>
 
