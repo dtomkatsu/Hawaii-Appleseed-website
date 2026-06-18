@@ -156,9 +156,12 @@
 /* ---------- Stat cards ---------- */
 .tfc-faq-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
     margin: 24px 0 4px;
+}
+@media (min-width: 860px) {
+    .tfc-faq-stats { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
 }
 .tfc-faq-stat {
     position: relative;
@@ -332,17 +335,31 @@
 .tfc-faq-tl-step .ev { font-size: 0.84rem; color: var(--ink-soft); margin-top: 5px; padding: 0 8px; line-height: 1.35; }
 
 /* ---------- Q4: at-a-glance table ---------- */
-.tfc-faq-table-wrap { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; margin: 24px 0 6px; }
+.tfc-faq-table-wrap { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; margin: 24px 0 6px; box-shadow: var(--shadow-sm); }
 .tfc-faq-table-scroll { overflow-x: auto; }
 .tfc-faq-table { width: 100%; border-collapse: collapse; min-width: 580px; font-size: 0.95rem; }
 .tfc-faq-table thead th {
-    text-align: left; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--muted); font-weight: 700; padding: 14px 18px; background: var(--bg); border-bottom: 1px solid var(--line);
+    text-align: left; font-size: 0.7rem; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--muted); font-weight: 700; padding: 13px 18px; background: var(--bg); border-bottom: 1px solid var(--line);
 }
-.tfc-faq-table td { padding: 14px 18px; border-bottom: 1px solid var(--line); color: var(--ink-soft); vertical-align: top; }
+.tfc-faq-table tbody tr { transition: background .15s ease; }
+.tfc-faq-table tbody tr:nth-child(even) { background: rgba(28,49,78,0.018); }
+.tfc-faq-table tbody tr:hover { background: rgba(28,49,78,0.045); }
+.tfc-faq-table td { padding: 15px 18px; border-bottom: 1px solid var(--line); color: var(--ink-soft); vertical-align: top; }
 .tfc-faq-table tr:last-child td { border-bottom: none; }
-.tfc-faq-table .credit { color: var(--ink); font-weight: 600; }
-.tfc-faq-table .timing { white-space: nowrap; color: var(--navy); font-weight: 600; }
+.tfc-faq-table td.credit {
+    color: var(--ink); font-weight: 700; border-left: 4px solid transparent; padding-left: 18px;
+    width: 38%;
+}
+.tfc-faq-table tr.cap td.credit { border-left-color: var(--amber); }
+.tfc-faq-table tr.repeal td.credit { border-left-color: var(--red); }
+.tfc-faq-table .cstatus {
+    display: block; width: fit-content; margin-top: 7px; font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.03em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
+}
+.tfc-faq-table .cstatus.a { color: var(--amber-ink); background: rgba(232,146,12,0.13); }
+.tfc-faq-table .cstatus.r { color: var(--red); background: rgba(214,69,61,0.12); }
+.tfc-faq-table .timing { white-space: nowrap; color: var(--navy); font-weight: 700; }
 .sdot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
 .sdot.g { background: var(--green); }
 .sdot.a { background: var(--amber); }
@@ -460,10 +477,13 @@
     .tfc-faq-table-scroll { overflow-x: visible; }
     .tfc-faq-table { min-width: 0; }
     .tfc-faq-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-    .tfc-faq-table tr { display: block; padding: 15px 18px; border-bottom: 1px solid var(--line); }
+    .tfc-faq-table tr { display: block; padding: 15px 18px 15px 16px; border-bottom: 1px solid var(--line); border-left: 4px solid transparent; }
+    .tfc-faq-table tr.cap { border-left-color: var(--amber); }
+    .tfc-faq-table tr.repeal { border-left-color: var(--red); }
     .tfc-faq-table tr:last-child { border-bottom: none; }
     .tfc-faq-table td { display: block; padding: 0; border: none; }
-    .tfc-faq-table td.credit { font-size: 1rem; margin-bottom: 8px; }
+    .tfc-faq-table td.credit { font-size: 1.02rem; margin-bottom: 6px; border-left: none; padding-left: 0; width: auto; }
+    .tfc-faq-table .cstatus { margin-top: 7px; }
     .tfc-faq-table td[data-label] { font-size: 0.86rem; }
     .tfc-faq-table td[data-label]::before {
         content: attr(data-label);
@@ -554,7 +574,7 @@
             <div class="tfc-faq-stat amber"><div class="num">$240M</div><div class="lbl">cost of the Act 46 cuts in 2025</div></div>
             <div class="tfc-faq-stat amber"><div class="num">$1.4B+/yr</div><div class="lbl">projected annual cost by 2031</div></div>
             <div class="tfc-faq-stat amber"><div class="num">&asymp;12%</div><div class="lbl">of Hawai&#699;i's total tax revenue</div></div>
-            <div class="tfc-faq-stat"><div class="num">&asymp;&#8531;</div><div class="lbl">share of the state budget funded by income taxes</div></div>
+            <div class="tfc-faq-stat"><div class="num">~33%</div><div class="lbl">of the state budget is funded by income taxes</div></div>
         </div>
         <div class="tfc-faq-note">Source: Institute on Taxation and Economic Policy &mdash; Act 46 distributional and revenue estimates.</div>
     </section>
@@ -753,20 +773,16 @@
                         <tr><th>Credit</th><th>Treatment under SB 3125</th><th>Timing</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td class="credit"><span class="sdot a"></span>Renewable Energy (RETITC)</td><td data-label="Treatment">Adds &asymp;$40M/yr cap, income limits &amp; certification; full sunset</td><td class="timing" data-label="Timing">Cap 2027 &middot; ends 2031</td></tr>
-                        <tr><td class="credit"><span class="sdot a"></span>Capital Goods Excise</td><td data-label="Treatment">Adds a sunset date (finite life)</td><td class="timing" data-label="Timing">Sunset added</td></tr>
-                        <tr><td class="credit"><span class="sdot a"></span>Renewable Fuels Production</td><td data-label="Treatment">Adds a sunset date</td><td class="timing" data-label="Timing">Sunset added</td></tr>
-                        <tr><td class="credit"><span class="sdot r"></span>Tech Infrastructure Renovation</td><td data-label="Treatment">Fully repealed</td><td class="timing" data-label="Timing">From 1/1/2028</td></tr>
-                        <tr><td class="credit"><span class="sdot r"></span>High-Tech Business Investment</td><td data-label="Treatment">Fully repealed</td><td class="timing" data-label="Timing">From 1/1/2029</td></tr>
-                        <tr><td class="credit"><span class="sdot r"></span>Research Activities (R&amp;D)</td><td data-label="Treatment">Fully repealed</td><td class="timing" data-label="Timing">From 1/1/2029</td></tr>
+                        <tr class="cap"><td class="credit">Renewable Energy (RETITC)<span class="cstatus a">Capped &amp; sunset</span></td><td data-label="Treatment">Adds &asymp;$40M/yr cap, income limits &amp; certification; full sunset</td><td class="timing" data-label="Timing">Cap 2027 &middot; ends 2031</td></tr>
+                        <tr class="cap"><td class="credit">Capital Goods Excise<span class="cstatus a">Sunset added</span></td><td data-label="Treatment">Adds a sunset date (finite life)</td><td class="timing" data-label="Timing">Sunset added</td></tr>
+                        <tr class="cap"><td class="credit">Renewable Fuels Production<span class="cstatus a">Sunset added</span></td><td data-label="Treatment">Adds a sunset date</td><td class="timing" data-label="Timing">Sunset added</td></tr>
+                        <tr class="repeal"><td class="credit">Tech Infrastructure Renovation<span class="cstatus r">Repealed</span></td><td data-label="Treatment">Fully repealed</td><td class="timing" data-label="Timing">From 1/1/2028</td></tr>
+                        <tr class="repeal"><td class="credit">High-Tech Business Investment<span class="cstatus r">Repealed</span></td><td data-label="Treatment">Fully repealed</td><td class="timing" data-label="Timing">From 1/1/2029</td></tr>
+                        <tr class="repeal"><td class="credit">Research Activities (R&amp;D)<span class="cstatus r">Repealed</span></td><td data-label="Treatment">Fully repealed</td><td class="timing" data-label="Timing">From 1/1/2029</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="tfc-faq-note" style="border-top:none;padding-top:6px;">
-            <span class="sdot a"></span>Capped or sunset added &nbsp;&nbsp; <span class="sdot r"></span>Fully repealed
-        </div>
-
         <!-- Fiscal context -->
         <div class="tfc-faq-callout navy" style="margin-top:22px;">
             <span class="tag">Fiscal &amp; policy context</span>
