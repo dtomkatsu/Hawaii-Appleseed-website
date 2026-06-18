@@ -778,6 +778,24 @@
       .site-footer      { flex-direction: column; gap: 1.5rem; text-align: center; }
       .footer-nav       { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
     }
+      .px-footer {
+      background:#2F3E46;color:#CAD2C5;padding:60px 28px 40px;
+      font-family:'Poppins',sans-serif;font-size:14px;line-height:1.7;
+    }
+    .px-footer .px-foot-grid { display:grid; grid-template-columns:1fr; gap:32px; max-width:1200px; margin:0 auto 40px; }
+    @media (min-width:760px){ .px-footer .px-foot-grid { grid-template-columns:2fr 1fr 1fr; } }
+    .px-footer h4 {
+      font-family:'Manrope',sans-serif;font-weight:700;color:#fff;margin:0 0 12px;
+      font-size:14px;letter-spacing:.04em;text-transform:uppercase;
+    }
+    .px-footer p { color:#CAD2C5; margin:0 0 16px; font-size:13px; line-height:1.7; max-width:34ch; }
+    .px-footer a { color:#CAD2C5; text-decoration:none; display:block; margin-bottom:6px; }
+    .px-footer a:hover { color:#84A98C; }
+    .px-foot-bottom {
+      max-width:1200px;margin:0 auto;padding-top:24px;border-top:1px solid rgba(202,210,197,.18);
+      display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:12px;
+    }
+
   </style>
   <!-- Fail-safe: if JS is off, reveal elements stay visible. -->
   <noscript><style>.reveal,.reveal-group>*{opacity:1!important;transform:none!important}</style></noscript>
@@ -828,7 +846,7 @@
         </div>
       </div>
       <a href="issues.html">Issues</a>
-      <a href="#">News</a>
+      <a href="https://hiappleseed.org/blog" target="_blank" rel="noopener">News</a>
       <a href="publications.html">Research</a>
       <a href="support.html" class="active">Donate</a>
     </div>
@@ -979,26 +997,10 @@
 
     <div class="issue-list reveal-group">
       <div class="issue-item">
-        <div class="issue-tag">Economic Security</div>
-        <div>
-          <h4>Strengthening the Earned Income Tax Credit</h4>
-          <p>Expanding Hawaiʻi's EITC puts more money directly into the pockets of working families who need it most — with no strings attached. It is one of the most effective anti-poverty tools available.</p>
-        </div>
-      </div>
-
-      <div class="issue-item">
         <div class="issue-tag">Affordable Housing</div>
         <div>
           <h4>Tenant Protections &amp; Housing Stability</h4>
           <p>Rising rents and displacement are crisis-level issues across our islands. We're pushing for stronger tenant protections and more deeply affordable housing so that people can afford to stay in the communities they call home.</p>
-        </div>
-      </div>
-
-      <div class="issue-item">
-        <div class="issue-tag">Wages &amp; Labor</div>
-        <div>
-          <h4>Fair Wages for Hawaiʻi's Workers</h4>
-          <p>A living wage isn't radical — it's a baseline. We support legislation that ensures every worker across our islands can afford to live here, from farmworkers to service employees to care workers.</p>
         </div>
       </div>
 
@@ -1011,10 +1013,26 @@
       </div>
 
       <div class="issue-item">
-        <div class="issue-tag">Child &amp; Family Wellbeing</div>
+        <div class="issue-tag">Wages &amp; Labor</div>
         <div>
-          <h4>Affordable Child Care Statewide</h4>
-          <p>Quality, affordable child care is the economic infrastructure that families need to work and thrive. We are working to make it a reality — not just for those who can afford it, but for everyone.</p>
+          <h4>Fair Wages for Hawaiʻi's Workers</h4>
+          <p>A living wage isn't radical — it's a baseline. We support legislation that ensures every worker across our islands can afford to live here, from farmworkers to service employees to care workers.</p>
+        </div>
+      </div>
+
+      <div class="issue-item">
+        <div class="issue-tag">Transportation Equity</div>
+        <div>
+          <h4>Safer Streets &amp; Affordable Transit</h4>
+          <p>Getting where you need to go shouldn't be a barrier to opportunity. We advocate for safe, accessible, and affordable transportation so every resident can reach jobs, school, and care — regardless of whether they drive.</p>
+        </div>
+      </div>
+
+      <div class="issue-item">
+        <div class="issue-tag">Taxes &amp; Budget</div>
+        <div>
+          <h4>A Fairer Tax Code for a Thriving Hawaiʻi</h4>
+          <p>Hawaiʻi's tax system asks too much of those who have the least. We push for tax relief for low- and middle-income families and for the wealthy to pay their fair share — so we can fund the public investments our communities need.</p>
         </div>
       </div>
     </div>
@@ -1061,16 +1079,32 @@
   <!-- ══════════════════════════════════
        FOOTER
   ══════════════════════════════════ -->
-  <footer class="site-footer">
-    <div class="footer-name">Hawaiʻi Appleseed Center for Law &amp; Economic Justice</div>
-    <nav class="footer-nav">
-      <a href="our-mission.html">About</a>
-      <a href="issues.html">Our Work</a>
-      <a href="publications.html">Data &amp; Research</a>
-      <a href="#">News</a>
-      <a href="mailto:info@hiappleseed.org">Contact</a>
-      <a href="#give">Donate</a>
-    </nav>
+  <footer class="px-footer">
+    <div class="px-foot-grid">
+      <div>
+        <h4>Hawaiʻi Appleseed</h4>
+        <p>Advancing economic justice for and with the people of Hawaiʻi.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="our-mission.html">Our Mission</a>
+        <a href="our-story.html">Our Story</a>
+        <a href="our-team.html">Our Team</a>
+        <a href="board-of-directors.html">Board</a>
+        <a href="issues.html">Issues</a>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <a href="https://hiappleseed.org/blog" target="_blank" rel="noopener">News</a>
+        <a href="publications.html">Research</a>
+        <a href="support.html">Donate</a>
+        <a href="https://hiappleseed.org" target="_blank" rel="noopener">Main Website</a>
+      </div>
+    </div>
+    <div class="px-foot-bottom">
+      <span>© 2026 Hawaiʻi Appleseed Center for Law &amp; Economic Justice</span>
+      <span>733 Bishop St, Honolulu, HI</span>
+    </div>
   </footer>
 
   <!-- Scroll-reveal (rec B): fade/slide sections in on first view; once-only; respects reduced motion. -->
