@@ -295,30 +295,50 @@
        SECTION 3 — ISSUE AREAS OVERVIEW (all five)
     ───────────────────────────────────── */
     .ha-home__issues { background:var(--white); padding:7rem 8%; }
-    .ha-home__issue-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+    /* 6-col base so 5 cards lay out as a centered 3 + 2 (each card spans 2). */
+    .ha-home__issue-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:1.5rem; counter-reset:issue; }
     .ha-home__issue-card {
       --accent:var(--deep-teal);
+      counter-increment:issue; grid-column:span 2;
       position:relative;display:flex;flex-direction:column;
-      background:var(--white);border:1px solid var(--ash-light);border-radius:4px;
-      padding:2.5rem 2rem;text-decoration:none;overflow:hidden;
-      transition:background .35s ease, border-color .35s ease, transform .25s ease;
+      background:var(--white);border:1px solid var(--ash-light);border-radius:18px;
+      padding:2.4rem 2rem 2rem;text-decoration:none;overflow:hidden;
+      box-shadow:0 1px 2px rgba(47,62,70,.04);
+      transition:background .35s ease, border-color .35s ease, box-shadow .4s var(--ease-out), transform .25s ease;
     }
+    .ha-home__issue-card:nth-child(4){ grid-column:2 / span 2; }   /* centre the second row */
     .ha-home__issue-card[data-accent="slate"] { --accent:var(--dark-slate); }
+    /* faint area number, top-right */
+    .ha-home__issue-num{
+      position:absolute; top:1.6rem; right:1.7rem;
+      font-family:'Manrope',sans-serif; font-weight:700; font-size:.95rem; letter-spacing:.04em;
+      color:var(--ash);
+      color:color-mix(in srgb, var(--accent) 32%, var(--ash));
+      transition:color .35s ease, transform .45s var(--ease-out);
+    }
+    .ha-home__issue-num::before{ content:counter(issue,decimal-leading-zero); }
     .ha-home__issue-card::after {
-      content:'';position:absolute;left:0;bottom:0;height:3px;width:0;
-      background:var(--accent);transition:width .4s ease;
+      content:'';position:absolute;left:0;bottom:0;height:3px;width:0;z-index:1;
+      background:var(--accent);transition:width .5s var(--ease-out);
     }
-    .ha-home__issue-card:hover { background:var(--cream); border-color:var(--accent); }
+    .ha-home__issue-card:hover { background:var(--cream); border-color:var(--accent); box-shadow:0 18px 40px rgba(47,62,70,.14); }
     .ha-home__issue-card:hover::after { width:100%; }
+    .ha-home__issue-card:hover .ha-home__issue-num{ color:var(--accent); transform:translateY(-2px); }
     .ha-home__issue-icon {
-      display:inline-flex;width:50px;height:50px;align-items:center;justify-content:center;
-      background:var(--ash-light);border-radius:8px;color:var(--accent);margin-bottom:1.4rem;
+      display:inline-flex;width:56px;height:56px;align-items:center;justify-content:center;
+      background:var(--ash-light);
+      background:color-mix(in srgb, var(--accent) 13%, var(--white));
+      border-radius:15px;color:var(--accent);margin-bottom:1.4rem;
+      transition:background .35s var(--ease-out), color .35s ease, transform .45s var(--ease-out);
     }
-    .ha-home__issue-icon svg { width:26px; height:26px; }
+    .ha-home__issue-icon svg { width:27px; height:27px; transition:transform .45s var(--ease-out); }
+    .ha-home__issue-card:hover .ha-home__issue-icon{ background:var(--accent); color:#fff; transform:translateY(-3px) scale(1.07); }
+    .ha-home__issue-card:hover .ha-home__issue-icon svg{ transform:scale(1.05); }
     .ha-home__issue-card h3 {
-      font-family:'Manrope',sans-serif;font-weight:500;font-size:1.5rem;
-      color:var(--charcoal);margin-bottom:0.6rem;line-height:1.2;
+      font-family:'Manrope',sans-serif;font-weight:600;font-size:1.5rem;
+      color:var(--charcoal);margin-bottom:0.6rem;line-height:1.2;transition:color .3s ease;
     }
+    .ha-home__issue-card:hover h3{ color:var(--accent); }
     .ha-home__issue-card p {
       font-family:'Poppins',sans-serif;font-size:0.9rem;line-height:1.65;
       color:var(--deep-teal);margin-bottom:1.4rem;flex:1;
@@ -475,7 +495,7 @@
        transition-delay (which otherwise lagged every card after the first). */
     @media (hover:hover) and (pointer:fine){
       .ha-home__issue-card.tilt-on {
-        box-shadow:0 12px 28px rgba(47,62,70,.12);
+        box-shadow:0 18px 40px rgba(47,62,70,.16);
         will-change:transform; z-index:2;
       }
     }
@@ -563,6 +583,7 @@
       .ha-home__issue-grid,
       .ha-home__latest-grid,
       .ha-home__involve-grid { grid-template-columns:repeat(2,1fr); }
+      .ha-home__issue-card, .ha-home__issue-card:nth-child(4){ grid-column:auto; }
       .hero-inner { padding:0 6%; }
     }
     @media (max-width: 700px) {
@@ -809,6 +830,7 @@
 
     <div class="ha-home__issue-grid reveal-group">
       <a class="ha-home__issue-card" data-accent="teal-deep" href="food-security.html">
+        <span class="ha-home__issue-num" aria-hidden="true"></span>
         <span class="ha-home__issue-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M10 13c0-3.3 2.2-5.5 4.3-5.5S18.6 9.7 18.6 13"/>
@@ -824,6 +846,7 @@
       </a>
 
       <a class="ha-home__issue-card" data-accent="charcoal" href="housing.html">
+        <span class="ha-home__issue-num" aria-hidden="true"></span>
         <span class="ha-home__issue-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 15l12-9 12 9v12a2 2 0 01-2 2H6a2 2 0 01-2-2V15z"/>
@@ -836,6 +859,7 @@
       </a>
 
       <a class="ha-home__issue-card" data-accent="slate" href="wages-labor.html">
+        <span class="ha-home__issue-num" aria-hidden="true"></span>
         <span class="ha-home__issue-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 11h20v17H6z"/>
@@ -850,6 +874,7 @@
       </a>
 
       <a class="ha-home__issue-card" data-accent="teal-deep" href="transportation.html">
+        <span class="ha-home__issue-num" aria-hidden="true"></span>
         <span class="ha-home__issue-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <rect x="4" y="6" width="24" height="15" rx="3"/>
@@ -866,6 +891,7 @@
       </a>
 
       <a class="ha-home__issue-card" data-accent="charcoal" href="taxes-budget.html">
+        <span class="ha-home__issue-num" aria-hidden="true"></span>
         <span class="ha-home__issue-icon" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 27h24"/>
