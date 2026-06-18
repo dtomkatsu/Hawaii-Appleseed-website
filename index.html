@@ -145,6 +145,23 @@
     .way-link::after { content:'→'; }
     .way-link:hover { gap:1rem; }
 
+    /* "Our Work" heading: italic-teal accent + word-by-word reveal on scroll
+       (scoped to this section; the other .ways-header is untouched). */
+    .ha-home__issues .ways-header.reveal{ opacity:1; transform:none; }   /* children animate, not the block */
+    .ha-home__issues .ways-header .section-label{
+      opacity:0; transform:translateY(10px);
+      transition:opacity .5s var(--ease-out), transform .5s var(--ease-out);
+    }
+    .ha-home__issues .ways-header.is-in .section-label{ opacity:1; transform:none; }
+    .ha-home__issues .section-title em{
+      font-family:'Poppins',sans-serif; font-style:italic; font-weight:400; color:var(--deep-teal);
+    }
+    .ha-home__issues .section-title .ha-ways-w{
+      display:inline-block; opacity:0; transform:translateY(.5em);
+      transition:opacity .55s var(--ease-out), transform .55s var(--ease-out);
+    }
+    .ha-home__issues .ways-header.is-in .section-title .ha-ways-w{ opacity:1; transform:none; }
+
     /* ─────────────────────────────────────
        SECTION 1 — HERO (full-screen video)
     ───────────────────────────────────── */
@@ -584,7 +601,8 @@
         animation-duration:.01ms!important; animation-iteration-count:1!important;
         transition-duration:.01ms!important; scroll-behavior:auto!important;
       }
-      .reveal, .reveal-group > *{ opacity:1!important; transform:none!important; }
+      .reveal, .reveal-group > *,
+      .ha-ways-w, .ha-home__issues .ways-header .section-label{ opacity:1!important; transform:none!important; }
       .ha-home__hero-photo{ animation:none!important; transform:none!important; }
     }
 
@@ -618,7 +636,7 @@
     }
   </style>
   <!-- Fail-safe: if JS is off, reveal elements stay visible. -->
-  <noscript><style>.reveal,.reveal-group>*{opacity:1!important;transform:none!important}</style></noscript>
+  <noscript><style>.reveal,.reveal-group>*,.ha-ways-w,.ha-home__issues .ways-header .section-label{opacity:1!important;transform:none!important}</style></noscript>
 <style>
 /* Taller header to match hiappleseed.org (~174px) - desktop only; mobile stays compact */
 @media (min-width:701px){
@@ -839,7 +857,7 @@
   <section class="ha-home__issues" id="issues">
     <div class="ways-header reveal">
       <div class="section-label">Our Work</div>
-      <h2 class="section-title">Five areas where policy<br>can change everyday life.</h2>
+      <h2 class="section-title"><span class="ha-ways-w" style="transition-delay:.08s">Five</span> <span class="ha-ways-w" style="transition-delay:.14s">areas</span> <span class="ha-ways-w" style="transition-delay:.20s">where</span> <span class="ha-ways-w" style="transition-delay:.26s">policy</span><br><span class="ha-ways-w" style="transition-delay:.32s">can</span> <span class="ha-ways-w" style="transition-delay:.38s">change</span> <em><span class="ha-ways-w" style="transition-delay:.44s">everyday</span> <span class="ha-ways-w" style="transition-delay:.50s">life.</span></em></h2>
     </div>
 
     <div class="ha-home__issue-grid reveal-group">
