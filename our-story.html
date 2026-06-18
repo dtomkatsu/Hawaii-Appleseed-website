@@ -82,6 +82,35 @@
   .px-spacer-top{height:112px;}
 }
 </style>
+<style id="px-mobile-nav">
+.px-burger{display:none;flex:none;background:none;border:0;cursor:pointer;padding:8px;margin-left:2px;}
+.px-burger span{display:block;width:22px;height:2px;background:#2F3E46;border-radius:2px;transition:transform .25s ease,opacity .2s ease;}
+.px-burger span+span{margin-top:5px;}
+.px-nav.is-open .px-burger span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.px-nav.is-open .px-burger span:nth-child(2){opacity:0;}
+.px-nav.is-open .px-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+@media (max-width:899px){
+  .px-nav{padding-left:18px;padding-right:18px;gap:10px;}
+  .px-burger{display:block;}
+  .px-nav .px-social,.px-nav .px-donate-btn,.px-nav .px-brand-tag{display:none;}
+  .px-nav .px-links{
+    display:flex;flex-direction:column;align-items:stretch;gap:0;
+    position:absolute;top:100%;left:0;right:0;
+    background:#fff;border-top:1px solid rgba(53,79,82,.12);
+    box-shadow:0 16px 30px rgba(47,62,70,.14);
+    padding:4px 20px 16px;
+    max-height:0;overflow:hidden;opacity:0;visibility:hidden;
+    transition:max-height .3s ease,opacity .25s ease,visibility .25s ease;
+  }
+  .px-nav.is-open .px-links{max-height:82vh;overflow-y:auto;opacity:1;visibility:visible;}
+  .px-nav .px-links>a,.px-nav .px-dropdown{width:100%;}
+  .px-nav .px-links>a{padding:13px 2px;border-bottom:1px solid rgba(53,79,82,.08);font-size:15px;}
+  .px-nav .px-dropdown-trigger{padding:13px 2px;font-size:15px;width:100%;border-bottom:1px solid rgba(53,79,82,.08);justify-content:space-between;}
+  .px-nav .px-dropdown{position:static;}
+  .px-nav .px-dropdown-menu{position:static;transform:none;box-shadow:none;border:0;padding:0 0 6px 14px;min-width:0;}
+  .px-nav .px-dropdown-menu a{padding:9px 4px;white-space:normal;}
+}
+</style>
 </head>
 <body>
 
@@ -130,6 +159,7 @@
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 7.5a3 3 0 00-2-2C18 5 12 5 12 5s-6 0-8 .5a3 3 0 00-2 2C2 9.5 2 12 2 12s0 2.5.1 4.5a3 3 0 002 2C6 19 12 19 12 19s6 0 8-.5a3 3 0 002-2c.1-2 .1-4.5.1-4.5s0-2.5-.1-4.5zM10 15V9l5 3-5 3z"/></svg>
     </div>
     <a class="px-donate-btn" href="support.html">Donate</a>
+    <button class="px-burger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
@@ -1627,6 +1657,13 @@
   document.addEventListener('click',function(){
     document.querySelectorAll('.px-dropdown').forEach(function(d){d.classList.remove('is-open');var b=d.querySelector('.px-dropdown-trigger');if(b)b.setAttribute('aria-expanded','false');});
   });
+})();
+</script>
+<script id="px-mobile-nav-js">
+(function(){var n=document.querySelector('.px-nav'),b=n&&n.querySelector('.px-burger');if(!n||!b)return;
+b.addEventListener('click',function(e){e.stopPropagation();var o=n.classList.toggle('is-open');b.setAttribute('aria-expanded',o);});
+n.querySelectorAll('.px-links a').forEach(function(a){a.addEventListener('click',function(){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');});});
+document.addEventListener('click',function(e){if(!n.contains(e.target)){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');}});
 })();
 </script>
 </body>
