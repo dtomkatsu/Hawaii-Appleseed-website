@@ -299,7 +299,12 @@
       content:""; position:absolute; left:-2%; right:-2%; top:-76px; height:78px;
       background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 1440 78'><path d='M0 78 L0 50 C 380 4 720 60 1040 34 C 1240 18 1360 30 1440 42 L1440 78 Z' fill='%2384A98C'/></svg>") no-repeat center bottom; background-size:100% 100%;
       pointer-events:none;
+      /* on load, the curve rises up from the bottom of the screen into its
+         resting poke-out position beneath the hero */
+      will-change:transform;
+      animation:missionWaveRise 1.3s var(--ease-out) .35s both;
     }
+    @keyframes missionWaveRise{ from{ transform:translateY(96px); } to{ transform:translateY(0); } }
     /* faint sprout watermark for depth (parallaxes behind the text) */
     .ha-home__mission-mark{
       position:absolute; left:50%; top:50%; width:min(52vw,400px); height:auto;
@@ -618,6 +623,7 @@
       }
       .reveal, .reveal-group > *,
       .ha-ways-w, .ha-home__issues .ways-header .section-label{ opacity:1!important; transform:none!important; }
+      .ha-home__mission::before{ transform:none!important; }
       .ha-home__hero-photo{ animation:none!important; transform:none!important; }
     }
 
