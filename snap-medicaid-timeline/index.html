@@ -1519,12 +1519,13 @@
                         stack.appendChild(snapThird);
 
                         snapGroup.appendChild(stack);
+                        snapGroup.dataset.detail = '1';
                     } else if (snapItem.secondCard) {
                         const snapSecond = document.createElement('div');
                         snapSecond.className = 'timeline-card second-card snap-card';
                         snapSecond.innerHTML = snapItem.secondCard;
                         snapGroup.appendChild(snapSecond);
-                        snapGroup.style.minHeight = '350px';
+                        snapGroup.dataset.detail = '1';
                     }
 
                     itemDiv.appendChild(snapGroup);
@@ -1533,6 +1534,17 @@
                 container.appendChild(itemDiv);
                 itemElements.push(itemDiv);
             });
+
+            // Detail panels (secondCard/thirdCard) are absolutely positioned, so they
+            // don't add height to their group. When several SNAP cards share a date they
+            // stack in the same item, so each group must reserve room for its own panel
+            // or the panels overlap. Desktop only — on mobile (<=768px) panels are in-flow.
+            if (window.innerWidth > 768) {
+                container.querySelectorAll('[data-detail]').forEach(function (g) {
+                    var d = g.querySelector(':scope > .stacked-cards, :scope > .second-card');
+                    if (d) g.style.minHeight = (d.offsetHeight + 24) + 'px';
+                });
+            }
 
             setTimeout(updateScrollProgress, 100);
         }
