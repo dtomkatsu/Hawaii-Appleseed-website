@@ -9,17 +9,27 @@
 <body>
 <div id="snap-medicaid-timeline">
 <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
         :root {
             --primary: #2c3e50;
             --bg: #ffffff;
             --card-bg: #ffffff;
             --path-color: #bdc3c7;
             
+            /* Brand fonts */
+            --font-head: 'Manrope', 'Arial', sans-serif;
+            --font-body: 'Poppins', 'Arial', sans-serif;
+
             /* Theme Colors */
             --accent-medicaid: #c0392b;
-            --accent-snap: #27ae60;
+            --accent-snap: #1d8a4e;
+            --accent-snap-bright: #239654;
             --accent: var(--accent-medicaid);
-            --accent-light: rgba(192, 57, 43, 0.85);
+            --accent-light: #d04634;
+
+            /* Layered elevation (tinted toward Charcoal, not flat black) */
+            --shadow-card: 0 1px 2px rgba(28,37,46,.06), 0 4px 8px rgba(28,37,46,.06), 0 12px 28px rgba(28,37,46,.08);
+            --shadow-card-hover: 0 2px 4px rgba(28,37,46,.08), 0 8px 16px rgba(28,37,46,.10), 0 22px 48px rgba(28,37,46,.14);
         }
 
         * {
@@ -29,13 +39,63 @@
         }
 
         #snap-medicaid-timeline {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: var(--font-body);
             background: var(--bg);
             color: var(--primary);
             overflow-x: hidden;
             position: relative;
-            padding: 40px 0;
+            padding: 0 0 40px;
             min-height: 100vh;
+        }
+
+        /* --- Modern refresh: brand fonts on display elements --- */
+        #snap-medicaid-timeline .timeline-card h3,
+        #snap-medicaid-timeline .year-indicator,
+        #snap-medicaid-timeline .timeline-card .date,
+        #snap-medicaid-timeline .toggle-btn,
+        #snap-medicaid-timeline .source-tag,
+        #snap-medicaid-timeline .section-label,
+        #snap-medicaid-timeline .total-cost-label,
+        #snap-medicaid-timeline .total-cost-amount {
+            font-family: var(--font-head);
+        }
+        /* Manrope has no true italic on Google Fonts - keep emphasis on Poppins italic */
+        #snap-medicaid-timeline em,
+        #snap-medicaid-timeline i {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-weight: 500;
+        }
+        /* Unified uppercase eyebrow/label treatment */
+        #snap-medicaid-timeline .source-tag,
+        #snap-medicaid-timeline .section-label,
+        #snap-medicaid-timeline .total-cost-label {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        /* Keyboard focus (was absent) */
+        #snap-medicaid-timeline :is(button, .mini-dot, .timeline-dot, .snap-timeline-dot, .total-cost-medicaid, .total-cost-snap):focus-visible {
+            outline: 3px solid var(--primary);
+            outline-offset: 3px;
+            border-radius: 6px;
+        }
+        #snap-medicaid-timeline :focus:not(:focus-visible) {
+            outline: none;
+        }
+        /* Respect reduced-motion (was absent) */
+        @media (prefers-reduced-motion: reduce) {
+            #snap-medicaid-timeline *,
+            #snap-medicaid-timeline *::before,
+            #snap-medicaid-timeline *::after {
+                transition-duration: .01ms !important;
+                animation-duration: .01ms !important;
+                scroll-behavior: auto !important;
+            }
+            #snap-medicaid-timeline .timeline-card,
+            #snap-medicaid-timeline .timeline-card.second-card {
+                transform: none !important;
+            }
         }
 
         /* Header */
@@ -225,7 +285,7 @@
         /* === 2D TIMELINE === */
         
         .timeline-container {
-            padding-top: 80px;
+            padding-top: clamp(48px, 7vw, 80px);
             padding-bottom: 100px;
             position: relative;
         }
@@ -233,7 +293,7 @@
         .timeline-line-container {
             position: absolute;
             left: 50%;
-            top: 80px;
+            top: clamp(48px, 7vw, 80px);
             bottom: 100px;
             width: 6px;
             margin-left: -3px;
@@ -364,7 +424,8 @@
             background: var(--card-bg);
             padding: 30px;
             border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(28,37,46,.06);
             border-left: 6px solid var(--accent);
             opacity: 0.3;
             transform: translateX(-20px);
@@ -382,9 +443,14 @@
             transform: translateX(0);
         }
 
-        .timeline-card.visible:hover {
-            transform: translateY(-4px) scale(1.01);
-            box-shadow: 0 18px 55px rgba(0,0,0,0.16);
+        @media (hover: hover) {
+            .timeline-card.visible:hover {
+                transform: translateY(-6px);
+                box-shadow: var(--shadow-card-hover);
+            }
+        }
+        .timeline-card.visible:active {
+            transform: translateY(-1px);
         }
 
         .timeline-card.second-card {
@@ -420,9 +486,14 @@
             transform: translateX(0);
         }
 
-        .timeline-card.second-card.visible:hover {
-            transform: translateY(-4px) scale(1.01);
-            box-shadow: 0 0 30px rgba(192,57,43,0.55), 0 20px 50px rgba(0,0,0,0.25);
+        @media (hover: hover) {
+            .timeline-card.second-card.visible:hover {
+                transform: translateY(-6px);
+                box-shadow: var(--shadow-card-hover), 0 0 26px rgba(192,57,43,0.45);
+            }
+            .timeline-card.second-card.snap-card.visible:hover {
+                box-shadow: var(--shadow-card-hover), 0 0 26px rgba(29,138,78,0.45);
+            }
         }
 
         /* Stacked cards container (holds second + third cards) */
@@ -545,6 +616,11 @@
         .after-section {
             background: #fdf0ef;
             border-left: 4px solid var(--accent);
+        }
+
+        .timeline-card.snap-card .after-section {
+            background: #eef7f1;
+            border-left-color: var(--accent-snap);
         }
 
         .before-section .section-label,
@@ -683,6 +759,11 @@
                 font-size: 0.95rem;
             }
 
+            /* Keep SNAP cards green on mobile (the rule above forces red via !important) */
+            .timeline-card.snap-card {
+                border-left-color: var(--accent-snap) !important;
+            }
+
             .timeline-card.second-card {
                 width: calc(100% - 80px) !important;
                 margin-left: 70px !important;
@@ -739,7 +820,7 @@
         .snap-parallel-line {
             position: absolute;
             left: 50%;
-            top: 80px;
+            top: clamp(48px, 7vw, 80px);
             bottom: 100px;
             width: 4px;
             margin-left: 20px;
@@ -1009,7 +1090,7 @@
 
         /* SNAP second card accent */
         .timeline-card.second-card.snap-card {
-            background: linear-gradient(135deg, var(--accent-snap) 0%, #2ecc71 100%);
+            background: linear-gradient(135deg, var(--accent-snap) 0%, var(--accent-snap-bright) 100%);
             border: none;
         }
 
@@ -1023,9 +1104,10 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 300px;
-            font-weight: 900;
-            color: rgba(0, 0, 0, 0.03);
+            font-size: clamp(7rem, 22vw, 18rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: rgba(44, 62, 80, 0.06);
             z-index: 0;
             pointer-events: none;
             user-select: none;
@@ -1035,9 +1117,6 @@
         }
 
         @media (max-width: 768px) {
-            #snap-medicaid-timeline .year-indicator {
-                font-size: 110px;
-            }
             /* Hover-only tooltip: never triggers on touch, and its fixed
                200px box extends the horizontal overflow — hide on mobile. */
             .school-tooltip .tooltip-text {
@@ -1061,7 +1140,7 @@
         </div>
     </div>
 
-    <div class="year-indicator" id="year-indicator">2025</div>
+    <div class="year-indicator" id="year-indicator" aria-hidden="true">2025</div>
     
     <div class="timeline-container" id="timeline-container">
         <div class="total-cost-medicaid" onclick="setActiveTimeline('medicaid')">
@@ -1280,7 +1359,7 @@
                 
                 window.scrollTo({
                     top: targetScroll,
-                    behavior: 'smooth'
+                    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
                 });
             }
         }
