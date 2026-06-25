@@ -904,49 +904,51 @@
         .total-cost-snap {
             position: absolute;
             top: 0;
-            padding: 14px 24px;
+            padding: 13px 24px;
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: 16px;
             text-align: center;
             font-weight: 700;
             z-index: 10;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 2px 0 rgba(255,255,255,0.3), inset 0 -2px 0 rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.45);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
         }
 
         .total-cost-medicaid:hover {
             transform: translateX(-100%) translateY(-2px);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.25), inset 0 2px 0 rgba(255,255,255,0.35), inset 0 -2px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 14px 34px rgba(192,57,43,0.40);
         }
 
         .total-cost-snap:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.25), inset 0 2px 0 rgba(255,255,255,0.35), inset 0 -2px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 14px 34px rgba(29,138,78,0.40);
         }
 
         .total-cost-medicaid:active {
             transform: translateX(-100%) translateY(0px);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15), inset 0 -1px 0 rgba(255,255,255,0.2), inset 0 2px 0 rgba(0,0,0,0.1);
+            box-shadow: 0 6px 16px rgba(192,57,43,0.30);
         }
 
         .total-cost-snap:active {
             transform: translateY(0px);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15), inset 0 -1px 0 rgba(255,255,255,0.2), inset 0 2px 0 rgba(0,0,0,0.1);
+            box-shadow: 0 6px 16px rgba(29,138,78,0.30);
         }
 
         .total-cost-medicaid {
             left: calc(50% - 10px);
             transform: translateX(-100%);
-            background: var(--accent);
+            background: rgba(192,57,43,0.90);
             color: white;
-            border: 3px solid var(--accent);
+            box-shadow: 0 10px 28px rgba(192,57,43,0.32);
         }
 
         .total-cost-snap {
             left: calc(50% + 54px);
-            background: var(--accent-snap);
+            background: rgba(29,138,78,0.90);
             color: white;
-            border: 3px solid var(--accent-snap);
+            box-shadow: 0 10px 28px rgba(29,138,78,0.32);
         }
 
         .total-cost-label {
@@ -960,9 +962,14 @@
 
         .total-cost-amount {
             font-size: 1.3rem;
-            font-weight: 900;
-            letter-spacing: 0.5px;
+            font-weight: 800;
+            letter-spacing: -0.01em;
             line-height: 1.2;
+        }
+
+        .total-cost-amount .tc-per {
+            opacity: 0.7;
+            font-weight: 600;
         }
 
         .timeline-container.snap-active .total-cost-medicaid {
@@ -985,7 +992,7 @@
             }
             .total-cost-medicaid:hover {
                 transform: none !important;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 2px 0 rgba(255,255,255,0.3), inset 0 -2px 0 rgba(0,0,0,0.15);
+                box-shadow: 0 10px 28px rgba(192,57,43,0.32);
             }
             .total-cost-snap {
                 left: auto;
@@ -998,7 +1005,7 @@
             }
             .total-cost-snap:hover {
                 transform: none !important;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 2px 0 rgba(255,255,255,0.3), inset 0 -2px 0 rgba(0,0,0,0.15);
+                box-shadow: 0 10px 28px rgba(29,138,78,0.32);
             }
             .total-cost-label {
                 font-size: 0.58rem;
@@ -1145,11 +1152,11 @@
     <div class="timeline-container" id="timeline-container">
         <div class="total-cost-medicaid" onclick="setActiveTimeline('medicaid')">
             <div class="total-cost-label">Total Cost</div>
-            <div class="total-cost-amount">$330M – $550M/yr</div>
+            <div class="total-cost-amount">$330M – $550M<span class="tc-per">/yr</span></div>
         </div>
         <div class="total-cost-snap" onclick="setActiveTimeline('snap')">
             <div class="total-cost-label">Total Cost</div>
-            <div class="total-cost-amount">$52M – $156M/yr</div>
+            <div class="total-cost-amount">$52M – $156M<span class="tc-per">/yr</span></div>
         </div>
         <div class="timeline-line-container" id="medicaid-line">
             <div class="timeline-line-bg"></div>
