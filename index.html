@@ -208,17 +208,25 @@
       padding:7rem 1.5rem 3rem; padding-left:clamp(20px,7vw,104px);
       transform-style:preserve-3d; }
     .hero-headline { transform-style:preserve-3d; }
+    .hero-eyebrow{
+      font-family:'Manrope',sans-serif;font-weight:700;
+      font-size:clamp(.72rem,1.1vw,.82rem);letter-spacing:.2em;text-transform:uppercase;
+      color:var(--teal);margin-bottom:1.15rem;
+      animation:heroFade .8s ease .12s both;
+    }
     .hero-body { margin-top:2.5rem; transform-style:preserve-3d; }
     .ha-home__hero h1 {
-      font-family:'Manrope',sans-serif;font-weight:300;
+      font-family:'Manrope',sans-serif;font-weight:400;
       /* Tall; tuned so it wraps to four lines across desktop widths. */
-      font-size:clamp(2.5rem, 5vw, 5rem);line-height:1.08;
+      font-size:clamp(2.5rem, 5vw, 5rem);line-height:1.08;letter-spacing:-0.012em;
       color:var(--white);margin-bottom:0;
+      text-shadow:0 2px 28px rgba(18,26,30,0.32);
     }
-    .ha-home__hero h1 em { font-family:'Poppins',sans-serif; font-style:italic; color:var(--teal); }
+    .ha-home__hero h1 em { font-family:'Poppins',sans-serif; font-style:italic; color:var(--teal); text-shadow:0 2px 22px rgba(132,169,140,0.45); }
     .hero-sub {
       font-family:'Poppins',sans-serif;font-size:1.05rem;font-weight:300;line-height:1.75;
       color:rgba(255,255,255,0.7);max-width:540px;margin-bottom:2.25rem;
+      animation:heroFade .8s ease .8s both;
     }
     .hero-actions { display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
 
@@ -822,10 +830,12 @@
   <section class="ha-home__hero">
     <div class="hero-inner">
       <div class="hero-headline">
+        <div class="hero-eyebrow">Economic Justice for Hawaiʻi</div>
         <h1><span class="w" style="animation-delay:.24s">Building</span> <span class="w" style="animation-delay:.30s">a</span> <span class="w" style="animation-delay:.36s">Hawaiʻi</span> <span class="w" style="animation-delay:.42s">where</span> <span class="w" style="animation-delay:.48s">every</span> <span class="w" style="animation-delay:.54s">family</span> <span class="w" style="animation-delay:.60s">can</span> <span class="w" style="animation-delay:.66s"><em>thrive</em>.</span></h1>
       </div>
 
       <div class="hero-body">
+        <p class="hero-sub">We advance economic justice for and with the people of Hawaiʻi — through research, advocacy, and policy that expands real economic opportunity across the islands.</p>
         <div class="hero-actions">
           <a href="support.html" class="btn btn-solid">Support Our Work</a>
           <a href="issues.html" class="btn btn-ghost">Explore the Issues<span class="btn-arr">→</span></a>
