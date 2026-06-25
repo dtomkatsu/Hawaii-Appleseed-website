@@ -169,8 +169,9 @@
       min-height:100vh;
       /* Left-side background — the video lives in the curved viewport on the right. */
       background:
-        radial-gradient(55% 65% at 12% 18%, rgba(132,169,140,0.22) 0%, transparent 62%),
-        linear-gradient(140deg, #26333c 0%, var(--charcoal) 46%, var(--dark-slate) 100%);
+        radial-gradient(58% 70% at 6% 10%, rgba(132,169,140,0.30) 0%, transparent 56%),
+        radial-gradient(80% 92% at 100% 112%, rgba(15,21,25,0.55) 0%, transparent 58%),
+        linear-gradient(144deg, #2a3942 0%, var(--charcoal) 44%, var(--dark-slate) 100%);
       display:block;
       position:relative;overflow:hidden;
     }
@@ -208,13 +209,7 @@
       padding:7rem 1.5rem 3rem; padding-left:clamp(20px,7vw,104px);
       transform-style:preserve-3d; }
     .hero-headline { transform-style:preserve-3d; }
-    .hero-eyebrow{
-      font-family:'Manrope',sans-serif;font-weight:700;
-      font-size:clamp(.72rem,1.1vw,.82rem);letter-spacing:.2em;text-transform:uppercase;
-      color:var(--teal);margin-bottom:1.15rem;
-      animation:heroFade .8s ease .12s both;
-    }
-    .hero-body { margin-top:2.5rem; transform-style:preserve-3d; }
+    .hero-body { margin-top:2rem; transform-style:preserve-3d; }
     .ha-home__hero h1 {
       font-family:'Manrope',sans-serif;font-weight:400;
       /* Tall; tuned so it wraps to four lines across desktop widths. */
@@ -222,11 +217,17 @@
       color:var(--white);margin-bottom:0;
       text-shadow:0 2px 28px rgba(18,26,30,0.32);
     }
-    .ha-home__hero h1 em { font-family:'Poppins',sans-serif; font-style:italic; color:var(--teal); text-shadow:0 2px 22px rgba(132,169,140,0.45); }
+    .ha-home__hero h1 em {
+      font-family:'Poppins',sans-serif; font-style:italic; color:var(--teal);
+      text-shadow:0 2px 22px rgba(132,169,140,0.45);
+      background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 16' preserveAspectRatio='none'%3E%3Cpath d='M4 11 C 46 4 92 14 132 8 C 165 3.5 186 5 197 10' fill='none' stroke='%2384A98C' stroke-width='4.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left bottom / 0% 0.14em;
+      padding-bottom:.1em;
+      animation:thriveUnderline .7s var(--ease-out) 1.05s both;
+    }
+    @keyframes thriveUnderline { from { background-size:0% 0.14em; } to { background-size:100% 0.14em; } }
     .hero-sub {
       font-family:'Poppins',sans-serif;font-size:1.05rem;font-weight:300;line-height:1.75;
       color:rgba(255,255,255,0.7);max-width:540px;margin-bottom:2.25rem;
-      animation:heroFade .8s ease .8s both;
     }
     .hero-actions { display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
 
@@ -563,7 +564,10 @@
     }
 
     /* Hero CTA buttons: sliding arrow + a snappy transform for the magnetic tilt (JS). */
-    .ha-home__hero .hero-actions .btn{ transition:transform .14s ease, background .28s ease, border-color .28s ease, color .28s ease; will-change:transform; }
+    .ha-home__hero .hero-actions .btn{ border-radius:7px; transition:transform .18s var(--ease-out), background .28s ease, border-color .28s ease, color .28s ease, box-shadow .3s var(--ease-out); will-change:transform; }
+    .ha-home__hero .btn-solid:hover{ background:var(--teal); transform:translateY(-2px); box-shadow:0 12px 28px rgba(132,169,140,.34); }
+    .ha-home__hero .btn-ghost{ border-color:rgba(255,255,255,.34); }
+    .ha-home__hero .btn-ghost:hover{ background:rgba(255,255,255,.07); border-color:var(--teal); color:var(--teal); transform:translateY(-2px); }
     .ha-home__hero .btn-arr{ display:inline-block; margin-left:.45em; transition:transform .25s ease; }
     .ha-home__hero .btn-ghost:hover .btn-arr{ transform:translateX(5px); }
 
@@ -830,12 +834,10 @@
   <section class="ha-home__hero">
     <div class="hero-inner">
       <div class="hero-headline">
-        <div class="hero-eyebrow">Economic Justice for Hawaiʻi</div>
         <h1><span class="w" style="animation-delay:.24s">Building</span> <span class="w" style="animation-delay:.30s">a</span> <span class="w" style="animation-delay:.36s">Hawaiʻi</span> <span class="w" style="animation-delay:.42s">where</span> <span class="w" style="animation-delay:.48s">every</span> <span class="w" style="animation-delay:.54s">family</span> <span class="w" style="animation-delay:.60s">can</span> <span class="w" style="animation-delay:.66s"><em>thrive</em>.</span></h1>
       </div>
 
       <div class="hero-body">
-        <p class="hero-sub">We advance economic justice for and with the people of Hawaiʻi — through research, advocacy, and policy that expands real economic opportunity across the islands.</p>
         <div class="hero-actions">
           <a href="support.html" class="btn btn-solid">Support Our Work</a>
           <a href="issues.html" class="btn btn-ghost">Explore the Issues<span class="btn-arr">→</span></a>
