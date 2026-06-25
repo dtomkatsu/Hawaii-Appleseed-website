@@ -221,8 +221,6 @@
       color:rgba(255,255,255,0.7);max-width:540px;margin-bottom:2.25rem;
     }
     .hero-actions { display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
-    /* Scroll cue set just to the right of the Explore button. */
-    .hero-actions .ha-home__hero-cue{ margin-left:2.5rem; }
 
     /* ── Curved video viewport (right) — United Way hero, mirrored ──
        Default (stacked, mobile): a full-width band beneath the text.
@@ -727,18 +725,6 @@
   .ha-home__latest-skel .sk-line.w70{ width:70%; }
   @keyframes skShimmer{ to{ transform:translateX(100%); } }
 
-  /* 5 — Hero scroll cue */
-  .ha-home__hero-cue{
-    position:relative;z-index:2;
-    display:flex;flex-direction:column;align-items:center;gap:7px;
-    color:rgba(255,255,255,.62);
-    font:600 .6rem/1 'Manrope',sans-serif;letter-spacing:.22em;text-transform:uppercase;
-    pointer-events:none;transition:opacity .5s ease;animation:heroFade .8s ease 1.25s both;
-  }
-  .ha-home__hero-cue.is-hidden{ opacity:0; }
-  .ha-home__hero-cue svg{ width:22px;height:22px;animation:cueBounce 2s var(--ease-out) infinite; }
-  @keyframes cueBounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(6px); } }
-  @media (max-width:700px){ .hero-actions .ha-home__hero-cue{ margin:.6rem 0 0; } }
 </style>
 <style id="px-mobile-nav">
 .px-burger{display:none;flex:none;background:none;border:0;cursor:pointer;padding:8px;margin-left:2px;}
@@ -843,11 +829,6 @@
         <div class="hero-actions">
           <a href="support.html" class="btn btn-solid">Support Our Work</a>
           <a href="issues.html" class="btn btn-ghost">Explore the Issues<span class="btn-arr">→</span></a>
-          <!-- Tier-1: scroll cue, set beside the Explore button -->
-          <div class="ha-home__hero-cue" aria-hidden="true">
-            <span>Scroll</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
         </div>
       </div>
     </div>
@@ -1468,7 +1449,6 @@
   (function(){
     var bar = document.querySelector('.px-scroll-progress');
     var nav = document.querySelector('.px-nav');
-    var cue = document.querySelector('.ha-home__hero-cue');
     var ticking = false;
     function update(){
       ticking = false;
@@ -1478,7 +1458,6 @@
       var p = Math.min(Math.max(scrolled / max, 0), 1);
       if(bar) bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
       if(nav) nav.classList.toggle('is-scrolled', scrolled > 12);
-      if(cue) cue.classList.toggle('is-hidden', scrolled > 40);
     }
     function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
     window.addEventListener('scroll', onScroll, {passive:true});
