@@ -519,8 +519,13 @@
       text-align: center;
       margin: 0 0 22px;
     }
-    .bloomerang-widget { min-height: 120px; }
+    .bloomerang-widget { min-height: 120px; text-align: center; }
     .bloomerang-widget img { max-width: 100%; height: auto; }
+    /* Center the Bloomerang-injected button whether it renders inline-block or block */
+    .bloomerang-widget a,
+    .bloomerang-widget button,
+    .bloomerang-widget input[type="submit"],
+    .bloomerang-widget input[type="button"] { margin-left: auto; margin-right: auto; }
     @media (max-width: 700px) {
       .donate-embed { margin-top: 36px; padding: 22px 16px; }
     }
