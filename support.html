@@ -494,6 +494,37 @@
       color: var(--charcoal);
     }
 
+    /* Bloomerang embedded donation form */
+    .donate-embed {
+      max-width: 760px;
+      margin: 52px auto 0;
+      background: #fff;
+      border-radius: 16px;
+      padding: 34px clamp(18px, 4vw, 40px);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.20);
+      scroll-margin-top: 96px;
+    }
+    .donate-embed-title {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.35rem, 1.1rem + 1vw, 1.85rem);
+      color: var(--charcoal);
+      text-align: center;
+      margin: 0 0 6px;
+    }
+    .donate-embed-sub {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      color: #5b6b63;
+      text-align: center;
+      margin: 0 0 22px;
+    }
+    .bloomerang-widget { min-height: 120px; }
+    .bloomerang-widget img { max-width: 100%; height: auto; }
+    @media (max-width: 700px) {
+      .donate-embed { margin-top: 36px; padding: 22px 16px; }
+    }
+
     /* ─────────────────────────────────────
        POLICY PRIORITIES
     ───────────────────────────────────── */
@@ -885,7 +916,7 @@
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-8h3l.5-4H13V7.5c0-1.2.3-2 2-2H17V2h-3c-3 0-5 1.8-5 5v3H6v4h3v8h4z"/></svg>
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 7.5a3 3 0 00-2-2C18 5 12 5 12 5s-6 0-8 .5a3 3 0 00-2 2C2 9.5 2 12 2 12s0 2.5.1 4.5a3 3 0 002 2C6 19 12 19 12 19s6 0 8-.5a3 3 0 002-2c.1-2 .1-4.5.1-4.5s0-2.5-.1-4.5zM10 15V9l5 3-5 3z"/></svg>
       </div>
-      <a class="px-donate-btn" href="#give">Donate</a>
+      <a class="px-donate-btn" href="#donate-form">Donate</a>
     <button class="px-burger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -980,7 +1011,7 @@
         <span class="giving-freq">/ month</span>
         <div class="giving-tier">The Seedling</div>
         <p class="giving-desc">Funds community education materials and public-facing policy resources used by families across the islands.</p>
-        <a href="#" class="giving-btn">Give $10 / mo</a>
+        <a href="#donate-form" class="giving-btn">Give $10 / mo</a>
       </div>
 
       <div class="giving-card featured">
@@ -989,7 +1020,7 @@
         <span class="giving-freq">/ month</span>
         <div class="giving-tier">The Advocate</div>
         <p class="giving-desc">Sustains our legislative advocacy — testimony preparation, lawmaker engagement, and community mobilization during session.</p>
-        <a href="#" class="giving-btn">Give $50 / mo</a>
+        <a href="#donate-form" class="giving-btn">Give $50 / mo</a>
       </div>
 
       <div class="giving-card">
@@ -997,7 +1028,7 @@
         <span class="giving-freq">/ month</span>
         <div class="giving-tier">The Champion</div>
         <p class="giving-desc">Supports our legal research capacity and the in-depth policy reports that drive systemic, lasting change.</p>
-        <a href="#" class="giving-btn">Give $150 / mo</a>
+        <a href="#donate-form" class="giving-btn">Give $150 / mo</a>
       </div>
 
       <div class="giving-card">
@@ -1005,9 +1036,18 @@
         <span class="giving-freq">Your amount</span>
         <div class="giving-tier">The Community</div>
         <p class="giving-desc">Give what you can. One-time or recurring — every gift matters and every dollar goes directly to our work.</p>
-        <a href="#" class="giving-btn">Choose Amount</a>
+        <a href="#donate-form" class="giving-btn">Choose Amount</a>
       </div>
     </div>
+
+      <!-- Bloomerang embedded donation form -->
+      <div class="donate-embed reveal" id="donate-form">
+        <h3 class="donate-embed-title">Make your gift</h3>
+        <p class="donate-embed-sub">Secure donation processing by Bloomerang &mdash; give once or monthly.</p>
+        <div class="bloomerang-widget">
+          <script src="https://s3-us-west-2.amazonaws.com/bloomerang-public-cdn/hawaiiappleseedcenterforlawandeconomicjustice/.widget-js/52224.js" type="text/javascript"></script>
+        </div>
+      </div>
   </section>
 
   <!-- ══════════════════════════════════
