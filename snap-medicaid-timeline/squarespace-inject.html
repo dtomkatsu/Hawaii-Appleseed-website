@@ -1009,10 +1009,10 @@
             pointer-events: none;
         }
 
+        /* Hide the inactive track's detail panels so they neither show faintly nor
+           reserve/overlap layout space (mirrors how SNAP panels hide in Medicaid view). */
         .timeline-container.snap-active .timeline-card.second-card.medicaid-card {
-            opacity: 0.1 !important;
-            filter: grayscale(1);
-            pointer-events: none;
+            display: none !important;
         }
 
         /* SNAP cards hidden by default */
@@ -1340,6 +1340,21 @@
             }
         }
 
+        // Detail panels (secondCard/thirdCard) are position:absolute, so they don't add
+        // height to their group. Reserve room equal to the *visible* panel for each group,
+        // recomputed per active track (a hidden panel measures 0). Desktop only.
+        function equalizeDetailHeights() {
+            const isDesktop = window.innerWidth > 768;
+            document.querySelectorAll('#snap-medicaid-timeline [data-detail]').forEach(function (g) {
+                g.style.minHeight = '';
+                if (!isDesktop) return;
+                const d = g.querySelector(':scope > .stacked-cards, :scope > .second-card');
+                if (d && d.offsetParent !== null) {
+                    g.style.minHeight = (Math.ceil(d.getBoundingClientRect().height) + 24) + 'px';
+                }
+            });
+        }
+
         function scrollToItem(index) {
             if (itemElements[index]) {
                 const rect = itemElements[index].getBoundingClientRect();
@@ -1359,6 +1374,7 @@
             const content = btn.nextElementSibling;
             content.classList.toggle('open');
             btn.textContent = content.classList.contains('open') ? 'Less' : 'More';
+            setTimeout(equalizeDetailHeights, 450);
         }
 
         function setActiveTimeline(timeline) {
@@ -1376,7 +1392,12 @@
             
             document.getElementById('btn-medicaid').classList.toggle('active', timeline === 'medicaid');
             document.getElementById('btn-snap').classList.toggle('active', timeline === 'snap');
-            
+
+            // Re-reserve panel room for the now-visible track. The toggled track's panels
+            // were display:none and need a layout pass before they measure correctly, so run
+            // after the next paint (double rAF) plus a timeout fallback for late layout.
+            requestAnimationFrame(function () { requestAnimationFrame(equalizeDetailHeights); });
+            setTimeout(equalizeDetailHeights, 200);
             updateScrollProgress();
         }
 
@@ -1529,11 +1550,13 @@
                         stack.appendChild(thirdCard);
 
                         medGroup.appendChild(stack);
+                        medGroup.dataset.detail = '1';
                     } else if (medItem.secondCard) {
                         const secondCard = document.createElement('div');
                         secondCard.className = 'timeline-card second-card medicaid-card';
                         secondCard.innerHTML = medItem.secondCard;
                         medGroup.appendChild(secondCard);
+                        medGroup.dataset.detail = '1';
                     }
 
                     itemDiv.appendChild(medGroup);
@@ -1605,18 +1628,13 @@
                 itemElements.push(itemDiv);
             });
 
-            // Detail panels (secondCard/thirdCard) are absolutely positioned, so they
-            // don't add height to their group. When several SNAP cards share a date they
-            // stack in the same item, so each group must reserve room for its own panel
-            // or the panels overlap. Desktop only &#8212; on mobile (<=768px) panels are in-flow.
-            if (window.innerWidth > 768) {
-                container.querySelectorAll('[data-detail]').forEach(function (g) {
-                    var d = g.querySelector(':scope > .stacked-cards, :scope > .second-card');
-                    if (d) g.style.minHeight = (d.offsetHeight + 24) + 'px';
-                });
-            }
+            // Reserve room for absolutely-positioned detail panels (see equalizeDetailHeights).
+            // Re-run once fonts load (text height shifts) and shortly after, then again on
+            // every track switch / resize.
+            equalizeDetailHeights();
+            document.fonts.ready.then(equalizeDetailHeights);
 
-            setTimeout(updateScrollProgress, 100);
+            setTimeout(function () { equalizeDetailHeights(); updateScrollProgress(); }, 120);
         }
 
         // Initialize
