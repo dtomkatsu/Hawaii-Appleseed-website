@@ -301,14 +301,10 @@
        SECTION 2 — MISSION BAND
     ───────────────────────────────────── */
     .ha-home__mission { position:relative; background:var(--teal); padding:4rem 8% 3.5rem; text-align:center; }
-    /* organic curved top edge — the teal rises up out of the hero landscape */
-    .ha-home__mission::before{
-      content:""; position:absolute; left:-2%; right:-2%; top:-76px; height:78px;
-      background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 1440 78'><path d='M0 78 L0 50 C 380 4 720 60 1040 34 C 1240 18 1360 30 1440 42 L1440 78 Z' fill='%2384A98C'/></svg>") no-repeat center bottom; background-size:100% 100%;
-      pointer-events:none;
-      /* on load, the curve rises up from the bottom of the screen into its
-         resting poke-out position beneath the hero */
-      will-change:transform;
+    /* organic watercolor top edge — layered teal washes rise out of the hero */
+    .ha-home__mission-wave{
+      position:absolute; left:-2%; right:-2%; top:-104px; height:108px;
+      pointer-events:none; z-index:0; display:block; will-change:transform;
       animation:missionWaveRise 1.3s var(--ease-out) .35s both;
     }
     @keyframes missionWaveRise{ from{ transform:translateY(96px); } to{ transform:translateY(0); } }
@@ -637,7 +633,7 @@
       }
       .reveal, .reveal-group > *,
       .ha-ways-w, .ha-home__issues .ways-header .section-label{ opacity:1!important; transform:none!important; }
-      .ha-home__mission::before{ transform:none!important; }
+      .ha-home__mission-wave{ transform:none!important; }
       .ha-home__hero-photo{ animation:none!important; transform:none!important; }
     }
 
@@ -862,6 +858,19 @@
 
   <!-- ══════════════════ SECTION 2 — MISSION BAND ══════════════════ -->
   <section class="ha-home__mission">
+    <svg class="ha-home__mission-wave" viewBox="0 0 1440 108" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="hmWave" x="-6%" y="-50%" width="112%" height="210%"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.018" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G"/></filter>
+        <filter id="hmGrain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 0.16 0 0 0 0 0.25 0 0 0 0 0.21 0 0 0 0.5 0"/></filter>
+      </defs>
+      <g filter="url(#hmWave)">
+        <path fill="#84A98C" opacity="0.26" d="M0 130 L0 28 C 300 14 560 38 820 24 C 1080 10 1300 32 1440 22 L1440 130 Z"/>
+        <path fill="#84A98C" opacity="0.42" d="M0 130 L0 40 C 280 26 560 50 820 36 C 1080 22 1320 44 1440 34 L1440 130 Z"/>
+        <path fill="#84A98C" opacity="0.6" d="M0 130 L0 52 C 320 38 580 62 840 48 C 1080 34 1300 56 1440 46 L1440 130 Z"/>
+        <path fill="#84A98C" d="M0 130 L0 62 C 300 48 560 72 820 58 C 1080 44 1300 66 1440 54 L1440 130 Z"/>
+      </g>
+      <rect x="0" y="24" width="1440" height="106" filter="url(#hmGrain)" opacity="0.08"/>
+    </svg>
     <svg class="ha-home__mission-mark" viewBox="0 0 200 122" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
       <path d="M100 120 C100 84 100 62 100 30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
       <path d="M100 56 C70 56 44 40 28 14 C64 6 92 24 100 56 Z" fill="currentColor"/>
