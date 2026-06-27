@@ -220,8 +220,8 @@
     .ha-home__hero h1 em {
       font-family:'Poppins',sans-serif; font-style:italic; color:var(--teal);
       text-shadow:0 2px 22px rgba(132,169,140,0.45);
-      background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 226 34' preserveAspectRatio='none'%3E%3Cpath d='M8 26 C 58 18 116 30 166 23 C 198 19 216 22 220 25' fill='none' stroke='%2384A98C' stroke-width='4.5' stroke-linecap='round'/%3E%3Cg transform='translate(68,24) rotate(-46) scale(0.9)'%3E%3Cpath d='M0 0 C 4 -5 11 -5 15 0 C 11 5 4 5 0 0 Z' fill='%2384A98C'/%3E%3C/g%3E%3Cg transform='translate(150,22) rotate(-34) scale(0.9)'%3E%3Cpath d='M0 0 C 4 -5 11 -5 15 0 C 11 5 4 5 0 0 Z' fill='%2384A98C'/%3E%3C/g%3E%3C/svg%3E") no-repeat left bottom / 0% 0.42em;
-      padding-bottom:.22em;
+      background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 226 34' preserveAspectRatio='none'%3E%3Cpath d='M8 26 C 58 18 116 30 166 23 C 198 19 216 22 220 25' fill='none' stroke='%2384A98C' stroke-width='4' stroke-linecap='round'/%3E%3Cg transform='translate(62,24) rotate(-48) scale(0.95)'%3E%3Cpath d='M0 0 L 3 0' stroke='%2384A98C' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpath d='M3 0 C 7 -3 13 -4 20 0 C 13 4 7 3 3 0 Z' fill='%2384A98C' fill-opacity='0.78'/%3E%3Cpath d='M5 0 Q 12 0.6 19 0' fill='none' stroke='%2333453a' stroke-width='0.7' opacity='0.32'/%3E%3C/g%3E%3Cg transform='translate(150,22) rotate(-32) scale(0.8)'%3E%3Cpath d='M0 0 L 3 0' stroke='%2384A98C' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpath d='M3 0 C 7 -3 13 -4 20 0 C 13 4 7 3 3 0 Z' fill='%2384A98C' fill-opacity='0.78'/%3E%3Cpath d='M5 0 Q 12 0.6 19 0' fill='none' stroke='%2333453a' stroke-width='0.7' opacity='0.32'/%3E%3C/g%3E%3C/svg%3E") no-repeat left bottom / 0% 0.42em;
+      padding-bottom:.26em;
       animation:thriveUnderline .7s var(--ease-out) 1.05s both;
     }
     @keyframes thriveUnderline { from { background-size:0% 0.42em; } to { background-size:100% 0.42em; } }
@@ -574,12 +574,12 @@
     /* Cursor-parallax DEPTH + tilt — desktop pointer, motion-allowed only (perspective would
        scale the translateZ layers where there's no tilt to justify it). */
     @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion: no-preference){
-      .ha-home__hero { perspective:1100px; }
+      .ha-home__hero { perspective:980px; }
       .ha-home__hero .hero-inner { transform-style:preserve-3d; transition:transform .3s ease; will-change:transform; }
       .ha-home__hero .eyebrow      { transform:translateZ(8px); }
-      .ha-home__hero h1            { transform:translateZ(40px); }
+      .ha-home__hero h1            { transform:translateZ(54px); }
       .ha-home__hero .hero-sub     { transform:translateZ(22px); }
-      .ha-home__hero .hero-actions { transform:translateZ(14px); }
+      .ha-home__hero .hero-actions { transform:translateZ(22px); }
     }
 
     /* ─────────────────────────────────────
@@ -1423,7 +1423,7 @@
       var r = hero.getBoundingClientRect();
       var px = (e.clientX - r.left)/r.width - 0.5;
       var py = (e.clientY - r.top)/r.height - 0.5;
-      inner.style.transform = 'rotateY('+(px*4).toFixed(2)+'deg) rotateX('+(-py*4).toFixed(2)+'deg)';
+      inner.style.transform = 'rotateY('+(px*5.6).toFixed(2)+'deg) rotateX('+(-py*5.6).toFixed(2)+'deg)';
     });
     hero.addEventListener('pointerleave', function(){ inner.style.transform = ''; });
     hero.querySelectorAll('.hero-actions .btn').forEach(function(btn){
