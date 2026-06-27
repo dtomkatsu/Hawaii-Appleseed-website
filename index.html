@@ -300,7 +300,22 @@
     /* ─────────────────────────────────────
        SECTION 2 — MISSION BAND
     ───────────────────────────────────── */
-    .ha-home__mission { position:relative; background:var(--teal); padding:4rem 8% 3.5rem; text-align:center; }
+    .ha-home__mission { position:relative; padding:4rem 8% 3.5rem; text-align:center;
+      background:
+        radial-gradient(ellipse 58% 70% at 50% 42%, rgba(216,230,219,.16) 0%, transparent 62%),
+        linear-gradient(180deg, var(--teal) 0%, var(--teal) 24%, #77987f 100%); }
+    /* drifting caustic light behind the text — translucent overlay, slow position drift */
+    .ha-home__mission::before{
+      content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+      background:
+        radial-gradient(34% 50% at 24% 34%, rgba(216,230,219,.22), transparent 60%),
+        radial-gradient(40% 46% at 73% 62%, rgba(216,230,219,.18), transparent 60%),
+        radial-gradient(28% 42% at 50% 84%, rgba(216,230,219,.14), transparent 60%);
+      background-size:200% 200%, 220% 220%, 180% 180%; background-repeat:no-repeat;
+      animation:missionCaustics 18s ease-in-out infinite;
+    }
+    @keyframes missionCaustics{ 0%,100%{ background-position:0% 0%,100% 0%,50% 100%; } 50%{ background-position:30% 45%,60% 65%,35% 55%; } }
+    @media (prefers-reduced-motion: reduce){ .ha-home__mission::before{ animation:none; } }
     /* organic watercolor top edge — layered teal washes rise out of the hero */
     .ha-home__mission-wave{
       position:absolute; left:-2%; right:-2%; top:-104px; height:108px;
