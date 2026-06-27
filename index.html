@@ -334,6 +334,10 @@
     .ha-home__mission h2 em::after{ content:""; position:absolute; left:0; right:0; bottom:-.04em; height:2px;
       background:var(--dark-slate); transform:scaleX(0); transform-origin:left; transition:transform .7s var(--ease-out) .3s; }
     .ha-home__mission h2.is-in em::after{ transform:scaleX(1); }
+    /* gentle liquid float — each word drifts on a slow traveling wave */
+    .ha-home__mission h2 .wv{ display:inline-block; animation:missionFloat 4.5s ease-in-out infinite; will-change:transform; }
+    @keyframes missionFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-4px); } }
+    @media (prefers-reduced-motion: reduce){ .ha-home__mission h2 .wv{ animation:none; } }
 
     /* ─────────────────────────────────────
        SECTION 3 — ISSUE AREAS OVERVIEW (all five)
@@ -864,7 +868,7 @@
       <path d="M100 50 C128 50 152 35 168 12 C134 5 108 21 100 50 Z" fill="currentColor"/>
       <circle cx="100" cy="62" r="4" fill="currentColor"/>
     </svg>
-    <h2 class="reveal"><span class="ln">Advancing Economic Justice</span> <span class="ln"><em>for and with</em></span> <span class="ln">the people of Hawaiʻi.</span></h2>
+    <h2 class="reveal"><span class="ln"><span class="wv" style="animation-delay:0s">Advancing</span> <span class="wv" style="animation-delay:.13s">Economic</span> <span class="wv" style="animation-delay:.26s">Justice</span></span> <span class="ln"><em><span class="wv" style="animation-delay:.39s">for</span> <span class="wv" style="animation-delay:.52s">and</span> <span class="wv" style="animation-delay:.65s">with</span></em></span> <span class="ln"><span class="wv" style="animation-delay:.78s">the</span> <span class="wv" style="animation-delay:.91s">people</span> <span class="wv" style="animation-delay:1.04s">of</span> <span class="wv" style="animation-delay:1.17s">Hawaiʻi.</span></span></h2>
   </section>
 
   <!-- ══════════════════ SECTION 3 — ISSUE AREAS ══════════════════ -->
