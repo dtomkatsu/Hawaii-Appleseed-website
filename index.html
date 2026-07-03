@@ -296,11 +296,63 @@
       .ha-home__hero-arc-wrap{ -webkit-clip-path:none !important; clip-path:none !important; }
       .ha-home__hero-media{ filter:none; }
     }
+    /* Hero video (YouTube) sits above the photo/canvas fallback in the clipped
+       viewport. Fades in only once the player is actually playing, so the
+       rainbow poster covers the brief YouTube load. */
+    .ha-home__hero-media .ha-home__hero-video{
+      z-index:1; overflow:hidden; background:var(--dark-slate);
+      opacity:0; transition:opacity .6s ease;
+    }
+    .ha-home__hero-media .ha-home__hero-video.is-playing{ opacity:1; }
+    /* The IFrame API replaces #hero-yt with an <iframe>; JS sizes it to COVER
+       the wrapper. Center it and disable pointer events so hovering never
+       surfaces YouTube's UI. */
+    .ha-home__hero-media .ha-home__hero-video iframe{
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      border:0; pointer-events:none;
+    }
+    /* Watermark "tap for sound" button — frosted pill in the video's lower-right.
+       Hidden until the video actually loads (so nothing dangles if it 404s).
+       Collapses to an icon-only mute toggle once sound is on. */
+    .ha-home__hero-audio{
+      position:absolute; z-index:3; right:16px; bottom:16px;
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.5rem .8rem;
+      font-family:'Manrope',sans-serif; font-size:.8rem; font-weight:600; letter-spacing:.01em;
+      color:var(--white);
+      background:rgba(24,34,39,0.46);
+      -webkit-backdrop-filter:blur(8px) saturate(1.2); backdrop-filter:blur(8px) saturate(1.2);
+      border:1px solid rgba(255,255,255,0.28); border-radius:999px;
+      cursor:pointer; box-shadow:0 2px 12px rgba(18,26,30,0.28);
+      opacity:0; visibility:hidden;
+      transition:background .2s ease, transform .2s ease, opacity .35s ease;
+    }
+    .ha-home__hero-audio.is-visible{ opacity:1; visibility:visible; }
+    .ha-home__hero-audio:hover{ background:rgba(24,34,39,0.64); transform:translateY(-1px); }
+    .ha-home__hero-audio:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+    .ha-home__hero-audio svg{ width:18px; height:18px; display:block; flex:none; }
+    .ha-home__hero-audio .icon-on{ display:none; }
+    .ha-home__hero-audio.is-on .icon-muted{ display:none; }
+    .ha-home__hero-audio.is-on .icon-on{ display:block; }
+    .ha-home__hero-audio.is-on .ha-home__hero-audio-label{ display:none; }
+    @media (max-width:700px){
+      .ha-home__hero-audio{ right:12px; bottom:12px; font-size:.75rem; padding:.45rem .7rem; }
+    }
+    /* Gentle ring pulse while still muted, so "tap for sound" gets noticed. */
+    @media (prefers-reduced-motion:no-preference){
+      .ha-home__hero-audio.is-visible:not(.is-on){ animation:haAudioPulse 2.6s ease-in-out 1s 3; }
+    }
+    @keyframes haAudioPulse{
+      0%,100%{ box-shadow:0 2px 12px rgba(18,26,30,0.28); }
+      50%{ box-shadow:0 2px 12px rgba(18,26,30,0.28), 0 0 0 6px rgba(132,169,140,0.30); }
+    }
 
     /* ─────────────────────────────────────
        SECTION 2 — MISSION BAND
     ───────────────────────────────────── */
-    .ha-home__mission { position:relative; padding:2rem 8% 2rem; text-align:center;
+    /* overflow-x:clip (not hidden) keeps the waves' vertical overhang visible
+       while stopping their ±2% horizontal bleed from widening the page. */
+    .ha-home__mission { position:relative; overflow-x:clip; padding:2rem 8% 2rem; text-align:center;
       background:
         radial-gradient(ellipse 58% 70% at 50% 42%, rgba(216,230,219,.16) 0%, transparent 62%),
         linear-gradient(180deg, var(--teal) 0%, var(--teal) 24%, #77987f 100%); }
@@ -318,13 +370,13 @@
     @media (prefers-reduced-motion: reduce){ .ha-home__mission::before{ animation:none; } }
     /* organic watercolor top edge — layered teal washes rise out of the hero */
     .ha-home__mission-wave{
-      position:absolute; left:-2%; right:-2%; top:-104px; height:108px;
+      position:absolute; left:-2%; right:-2%; width:104%; top:-104px; height:108px;
       pointer-events:none; z-index:0; display:block; will-change:transform;
       animation:missionWaveRise 1.3s var(--ease-out) .35s both;
     }
     /* mirrored watercolor bottom edge — teal washes bleed down into the white below */
     .ha-home__mission-wave-btm{
-      position:absolute; left:-2%; right:-2%; bottom:-104px; height:108px;
+      position:absolute; left:-2%; right:-2%; width:104%; bottom:-104px; height:108px;
       transform:scaleY(-1); pointer-events:none; z-index:1; display:block;
     }
     @keyframes missionWaveRise{ from{ transform:translateY(96px); } to{ transform:translateY(0); } }
@@ -873,6 +925,24 @@
     <div class="ha-home__hero-media">
       <img class="ha-home__hero-photo" src="assets/story/hero-rainbow.webp" alt="" aria-hidden="true">
       <canvas class="ha-home__hero-canvas" aria-hidden="true"></canvas>
+      <!-- Hero video: YouTube embed via the IFrame API. Autoplays MUTED (browser
+           autoplay policy) and loops; the watermark button opts the user into
+           sound through the API. The API replaces this div with an <iframe>,
+           sized by JS to COVER the viewport. Photo/canvas beneath are the
+           fallback shown until (and if) the player loads. Set the video id in
+           the hero-video script below (HERO_YT_ID). -->
+      <div class="ha-home__hero-video" aria-hidden="true"><div id="hero-yt"></div></div>
+      <button class="ha-home__hero-audio" type="button" aria-label="Turn on sound">
+        <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+        <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+        <span class="ha-home__hero-audio-label">Tap for sound</span>
+      </button>
     </div>
   </section>
 
@@ -1244,6 +1314,10 @@
     var canvas = document.querySelector('.ha-home__hero-canvas');
     var photo = hero && hero.querySelector('.ha-home__hero-photo');
     if(!hero || !canvas || !photo) return;
+    // A hero <video> takes over the media slot; skip the WebGL living-photo so
+    // we don't burn GPU/battery rendering behind an opaque video. The photo
+    // stays beneath as the poster/fallback if the video never loads.
+    if(hero.querySelector('.ha-home__hero-video')) return;
 
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var mqM = window.matchMedia ? window.matchMedia('(max-width:700px)') : { matches:false };
@@ -1390,6 +1464,91 @@
     else if(mqM.addListener) mqM.addListener(onMq);
 
     start();
+  })();
+  </script>
+
+  <!-- Hero video: YouTube muted autoplay + watermark "tap for sound" toggle.
+       ▶ Set HERO_YT_ID to your YouTube video id (the part after watch?v=). -->
+  <script>
+  (function(){
+    var HERO_YT_ID = 'acQkwn2yhiI';   // "About Hawaii Appleseed"
+
+    var media = document.querySelector('.ha-home__hero-media');
+    var wrap  = media && media.querySelector('.ha-home__hero-video');
+    var mount = document.getElementById('hero-yt');
+    var btn   = media && media.querySelector('.ha-home__hero-audio');
+    if(!wrap || !mount || !btn) return;
+    if(!HERO_YT_ID || HERO_YT_ID === 'HERO_YT_ID_HERE') return;  // no id yet → poster stays
+
+    var player, soundOn = false;
+
+    // Size the injected 16:9 iframe to COVER the (non-16:9) hero viewport.
+    function cover(){
+      var iframe = wrap.querySelector('iframe');
+      if(!iframe) return;
+      var w = wrap.offsetWidth, h = wrap.offsetHeight;
+      if(!w || !h) return;
+      var AR = 16/9;
+      if(w / h > AR){ iframe.style.width = w + 'px';  iframe.style.height = Math.ceil(w / AR) + 'px'; }
+      else          { iframe.style.height = h + 'px'; iframe.style.width  = Math.ceil(h * AR) + 'px'; }
+    }
+
+    function createPlayer(){
+      if(player) return;
+      player = new YT.Player('hero-yt', {
+        videoId: HERO_YT_ID,
+        host: 'https://www.youtube-nocookie.com',   // no cookies until playback
+        playerVars: {
+          autoplay:1, mute:1, controls:0, loop:1, playlist:HERO_YT_ID,
+          playsinline:1, modestbranding:1, rel:0, iv_load_policy:3,
+          disablekb:1, fs:0, cc_load_policy:0
+        },
+        events: {
+          onReady: function(e){ e.target.mute(); e.target.playVideo(); cover(); btn.classList.add('is-visible'); },
+          onStateChange: function(e){ if(e.data === YT.PlayerState.PLAYING){ wrap.classList.add('is-playing'); cover(); } }
+        }
+      });
+    }
+
+    // Load the IFrame API once, then build the player.
+    if(window.YT && window.YT.Player){ createPlayer(); }
+    else {
+      var prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function(){ if(typeof prev === 'function') prev(); createPlayer(); };
+      if(!document.querySelector('script[src*="youtube.com/iframe_api"]')){
+        var tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        document.head.appendChild(tag);
+      }
+    }
+
+    btn.addEventListener('click', function(){
+      if(!player || !player.unMute) return;
+      soundOn = !soundOn;
+      if(soundOn){ player.unMute(); player.setVolume(100); player.playVideo(); }
+      else { player.mute(); }
+      btn.classList.toggle('is-on', soundOn);
+      btn.setAttribute('aria-label', soundOn ? 'Mute video' : 'Turn on sound');
+    });
+
+    // Mobile fallback: some mobile players hold even muted autoplay until a
+    // gesture. Any touch/scroll/tap kicks playback (still muted); listeners
+    // stay armed until playback actually succeeds, then detach.
+    function removeKick(){
+      window.removeEventListener('touchstart', gestureKick);
+      window.removeEventListener('scroll', gestureKick);
+      window.removeEventListener('pointerdown', gestureKick);
+    }
+    function gestureKick(){
+      if(!player || !player.getPlayerState || !window.YT) return;
+      if(player.getPlayerState() === YT.PlayerState.PLAYING){ removeKick(); return; }
+      if(!soundOn){ player.mute(); player.playVideo(); }
+    }
+    window.addEventListener('touchstart', gestureKick, {passive:true});
+    window.addEventListener('scroll', gestureKick, {passive:true});
+    window.addEventListener('pointerdown', gestureKick, {passive:true});
+
+    window.addEventListener('resize', cover, {passive:true});
   })();
   </script>
 
