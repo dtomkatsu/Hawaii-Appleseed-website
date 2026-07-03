@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MOCK D3 v2 (framed split) — Hawaiʻi Appleseed</title>
+  <title>MOCK D3 v3 (framed split) — Hawaiʻi Appleseed</title>
   <meta name="description" content="Hawaiʻi Appleseed Center for Law &amp; Economic Justice — advancing economic justice for and with the people of Hawaiʻi." />
 
   <!-- Brand fonts (per Appleseed brand guide): Manrope for headings / display, Poppins for body and italic editorial accents. -->
@@ -255,17 +255,16 @@
     .ha-home__hero-media .ha-home__hero-video{ z-index:0; }
     .ha-home__hero-arc{ display:none; }
     @media (min-width:1081px){
-      .hero-inner{ width:44%; max-width:680px; padding-right:2rem; }
-      /* ── MOCK D3 v2: framed split ──
-         Full 16:9 film at half the display width, right of the text,
-         vertically centered so text and video are BOTH fully on screen
-         at page open. Frame effect: a thin teal outline frame offset to
-         the upper-right that drifts gently, plus a teal-tinted glow —
-         layered, alive, but not competing with the footage. */
+      .hero-inner{ width:42%; max-width:680px; padding-right:2rem; }
+      /* ── MOCK D3 v3: framed split, 54vw video + switchable frames ──
+         Full 16:9 film at 54% of the display, right of the text, all of
+         it (and the text) on screen at page open. Four frame styles,
+         switchable via body[data-frame] and the mock-only pill at the
+         bottom of the page: outline / mat / ring / brackets. */
       .ha-home__hero-media,
       .ha-home__hero-arc-wrap{
         position:absolute; top:calc(50% + 2rem); right:3vw; bottom:auto;
-        width:min(50vw, calc((100svh - 200px) * 16 / 9));
+        width:min(54vw, calc((100svh - 200px) * 16 / 9));
         aspect-ratio:16/9; height:auto;
         border-radius:16px;
       }
@@ -278,16 +277,60 @@
           -18px 24px 60px rgba(132,169,140,.22);
         animation:heroMediaFade 1s var(--ease-out) both;
       }
-      .ha-home__hero-arc-wrap{
-        z-index:1; overflow:visible;
-        border:2px solid var(--teal);
-        background:transparent;
-        opacity:.85;
+      .ha-home__hero-media .ha-home__hero-ctrls{ bottom:16px; }
+      .ha-home__hero-arc-wrap{ overflow:visible; background:transparent; }
+
+      /* Frame 1 — outline: thin teal frame offset up-right, slow drift */
+      body[data-frame="outline"] .ha-home__hero-arc-wrap{
+        z-index:1; border:2px solid var(--teal); opacity:.85;
         transform:translate(18px, calc(-50% - 18px));
         animation:heroMediaFade 1.2s var(--ease-out) .15s both, haFrameDrift 9s ease-in-out infinite;
       }
-      .ha-home__hero-arc{ display:none; }
-      .ha-home__hero-media .ha-home__hero-ctrls{ bottom:16px; }
+      body[data-frame="outline"] .ha-home__hero-arc{ display:none; }
+
+      /* Frame 2 — mat: two stacked solid panels behind, layered-paper */
+      body[data-frame="mat"] .ha-home__hero-arc-wrap{
+        z-index:1; opacity:.95;
+        background:linear-gradient(176deg, var(--deep-teal) 0%, var(--teal) 100%);
+        transform:translate(-18px, calc(-50% + 18px));
+        animation:heroMediaFade 1.2s var(--ease-out) .15s both;
+      }
+      body[data-frame="mat"] .ha-home__hero-arc{
+        display:block; position:absolute; inset:0; border-radius:inherit;
+        background:rgba(216,230,219,.4);
+        transform:translate(-16px, 16px);
+      }
+
+      /* Frame 3 — ring: crisp teal rim + halo glow hugging the card */
+      body[data-frame="ring"] .ha-home__hero-arc-wrap{ display:none; }
+      body[data-frame="ring"] .ha-home__hero-media{
+        border:3px solid var(--teal);
+        box-shadow:
+          0 18px 48px rgba(15,21,25,.5),
+          -14px 20px 56px rgba(132,169,140,.38),
+          0 0 0 9px rgba(132,169,140,.13);
+      }
+
+      /* Frame 4 — brackets: teal corner brackets, gallery style */
+      body[data-frame="brackets"] .ha-home__hero-arc-wrap{
+        z-index:3; border:0; pointer-events:none;
+        transform:translateY(-50%);
+      }
+      body[data-frame="brackets"] .ha-home__hero-arc-wrap::before,
+      body[data-frame="brackets"] .ha-home__hero-arc-wrap::after{
+        content:''; position:absolute; width:76px; height:76px;
+      }
+      body[data-frame="brackets"] .ha-home__hero-arc-wrap::before{
+        top:-13px; right:-13px;
+        border-top:3px solid var(--teal); border-right:3px solid var(--teal);
+        border-top-right-radius:22px;
+      }
+      body[data-frame="brackets"] .ha-home__hero-arc-wrap::after{
+        bottom:-13px; left:-13px;
+        border-bottom:3px solid var(--teal); border-left:3px solid var(--teal);
+        border-bottom-left-radius:22px;
+      }
+      body[data-frame="brackets"] .ha-home__hero-arc{ display:none; }
     }
     @keyframes haFrameDrift{
       0%,100%{ transform:translate(18px, calc(-50% - 18px)); }
@@ -871,9 +914,33 @@
 }
 </style>
 </head>
-<body>
+<body data-frame="mat">
   <!-- MOCK ONLY: Option C preview; not for production -->
-  <div style="position:fixed;left:14px;bottom:14px;z-index:9999;background:#13343b;color:#fff;font:600 12px 'Manrope',Arial,sans-serif;padding:8px 14px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.35);pointer-events:none;">Mock D3 v2 &mdash; framed split</div>
+  <div style="position:fixed;left:14px;bottom:14px;z-index:9999;background:#13343b;color:#fff;font:600 12px 'Manrope',Arial,sans-serif;padding:8px 14px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.35);pointer-events:none;">Mock D3 v3 &mdash; framed split</div>
+  <!-- MOCK ONLY: frame-style switcher -->
+  <div id="frame-switch" style="position:fixed;left:50%;transform:translateX(-50%);bottom:14px;z-index:9999;display:flex;gap:6px;align-items:center;background:rgba(19,52,59,.88);padding:6px 10px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.35);font-family:'Manrope',Arial,sans-serif;">
+    <span style="color:rgba(255,255,255,.7);font-size:11px;font-weight:600;margin-right:2px;">Frame:</span>
+    <button data-f="outline" type="button">Outline</button>
+    <button data-f="mat" type="button">Mat</button>
+    <button data-f="ring" type="button">Ring</button>
+    <button data-f="brackets" type="button">Brackets</button>
+  </div>
+  <script>
+  (function(){
+    var btns = document.querySelectorAll('#frame-switch button');
+    function paint(){
+      btns.forEach(function(b){
+        var on = document.body.dataset.frame === b.dataset.f;
+        b.style.cssText = 'font:600 11px Manrope,Arial,sans-serif;padding:4px 11px;border-radius:999px;cursor:pointer;border:1px solid rgba(255,255,255,.35);' +
+          (on ? 'background:#84a98c;color:#13343b;' : 'background:transparent;color:#fff;');
+      });
+    }
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){ document.body.dataset.frame = b.dataset.f; paint(); });
+    });
+    paint();
+  })();
+  </script>
 
   <!-- Tier-1: scroll progress indicator -->
   <div class="px-scroll-progress" aria-hidden="true"></div>
