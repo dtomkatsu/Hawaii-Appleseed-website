@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MOCK C (arc + full-frame) — Hawaiʻi Appleseed</title>
+  <meta name="description" content="Hawaiʻi Appleseed Center for Law &amp; Economic Justice — advancing economic justice for and with the people of Hawaiʻi." />
+
+  <!-- Brand fonts (per Appleseed brand guide): Manrope for headings / display, Poppins for body and italic editorial accents. -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Brand palette — Hawaiʻi Appleseed Brand Guide (Ash/Teal/Slate/Charcoal). */
+      --teal:       #84A98C;   /* Muted Teal — primary brand color */
+      --deep-teal:  #52796F;
+      --dark-slate: #354F52;
+      --charcoal:   #2F3E46;
+      --ash:        #CAD2C5;
+      --ash-light:  #E8EDE6;
+      --cream:      #F4F7F5;
+      --white:      #FFFFFF;
+
+      /* Motion tokens (shared system) */
+      --ease-out: cubic-bezier(.22, .61, .36, 1);
+      --dur-fast: .2s;
+      --dur-base: .4s;
+      --dur-slow: .6s;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', system-ui, -apple-system, Arial, sans-serif;
+      background: var(--white);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* Anchor targets clear the fixed nav. */
+    section[id] { scroll-margin-top: 124px; }
+
+    /* ─────────────────────────────────────
+       SHARED CHROME (announce + nav) — mirrors support.html / our-mission.html
+    ───────────────────────────────────── */
+    .px-announce{
+      background:#2F3E46;color:#fff;
+      font:500 13px/1.4 'Poppins',sans-serif;letter-spacing:.01em;
+      padding:10px 18px;text-align:center;
+      position:fixed;top:0;left:0;right:0;z-index:50;
+    }
+    .px-announce a{color:#fff;text-decoration:underline}
+    .px-announce .x{position:absolute;right:14px;top:50%;transform:translateY(-50%);opacity:.7;cursor:pointer}
+    .px-nav{
+      background:#fff;border-bottom:1px solid rgba(53,79,82,.15);
+      padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px;
+      position:fixed;top:38px;left:0;right:0;z-index:49;
+      font-family:'Poppins',sans-serif;
+    }
+    .px-nav .px-brand{display:flex;align-items:center;gap:12px;flex:none;}
+    .px-nav .px-brand-mark{width:40px;height:40px;flex:none;}
+    .px-nav .px-brand-mark svg{width:100%;height:100%;display:block;}
+    .px-nav .px-brand-text{line-height:1;}
+    .px-nav .px-brand-name{font-family:'Poppins',sans-serif;font-weight:700;letter-spacing:.14em;font-size:18px;color:#52796F;}
+    .px-nav .px-brand-tag{font-family:'Poppins',sans-serif;font-size:9px;letter-spacing:.26em;color:#52796F;margin-top:3px;}
+    .px-nav .px-links{display:none;gap:20px;font-size:14px;font-weight:500;color:#2F3E46;flex:1;justify-content:flex-end;align-items:center;flex-wrap:nowrap;white-space:nowrap;}
+    .px-nav .px-links a{color:inherit;text-decoration:none;}
+    .px-nav .px-links a:hover{color:#52796F}
+    .px-nav .px-links a.active{color:#52796F;font-weight:600;}
+    @media (min-width:900px){ .px-nav .px-links{display:flex} }
+
+    .px-dropdown{position:relative;}
+    .px-dropdown-trigger{background:none;border:none;cursor:pointer;padding:0;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;color:#2F3E46;display:flex;align-items:center;gap:5px;line-height:1;}
+    .px-dropdown-trigger:hover,.px-dropdown-trigger.active{color:#52796F;}
+    .px-dropdown-trigger.active{font-weight:600;}
+    .px-chevron{font-size:9px;transition:transform .2s;display:inline-block;margin-top:1px;}
+    .px-dropdown.is-open .px-chevron{transform:rotate(180deg);}
+    .px-dropdown-menu{display:none;position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid rgba(53,79,82,.12);border-radius:3px;box-shadow:0 8px 24px rgba(47,62,70,.12);min-width:170px;z-index:100;padding:6px 0;}
+    .px-dropdown.is-open .px-dropdown-menu{display:block;}
+    .px-dropdown-menu a{display:block;padding:9px 18px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;color:#2F3E46;text-decoration:none;white-space:nowrap;transition:background .15s,color .15s;}
+    .px-dropdown-menu a:hover{background:rgba(132,169,140,.1);color:#52796F;}
+    .px-dropdown-menu a.active{color:#52796F;font-weight:600;}
+    .px-nav-right{display:flex;align-items:center;gap:14px;flex:none;}
+    .px-social{display:flex;gap:10px;color:#2F3E46;}
+    .px-social svg{width:16px;height:16px;}
+    .px-donate-btn{background:#2F3E46;color:#fff;padding:9px 20px;font-family:'Poppins',sans-serif;font-weight:500;font-size:14px;border-radius:2px;text-decoration:none;}
+    .px-donate-btn:hover{background:#52796F;}
+
+    /* ─────────────────────────────────────
+       SHARED PRIMITIVES (from support.html)
+    ───────────────────────────────────── */
+    .btn {
+      display:inline-block;font-family:'Manrope',sans-serif;font-size:0.82rem;font-weight:600;
+      letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;
+      padding:0.95rem 2rem;cursor:pointer;border:none;transition:all 0.28s ease;
+    }
+    .btn-solid { background:var(--teal); color:var(--charcoal); }
+    .btn-solid:hover { background:var(--ash); }
+    .btn-ghost { background:transparent; color:var(--white); border:1px solid rgba(255,255,255,0.28); }
+    .btn-ghost:hover { border-color:var(--teal); color:var(--teal); }
+    .btn-dark { background:var(--charcoal); color:var(--white); }
+    .btn-dark:hover { background:var(--dark-slate); }
+
+    /* Touch press feedback (rec E) — hover never fires on touch. */
+    a, button { -webkit-tap-highlight-color: transparent; }
+    .btn:active { transform: scale(.97); }
+    .ha-home__issue-card:active,
+    .ha-home__involve-card:active,
+    .ha-home__latest-card:active,
+    .ha-home__dash:active { transform: scale(.99); }
+    .way-link:active { opacity: .65; }
+
+    .eyebrow {
+      font-family:'Manrope',sans-serif;font-size:0.7rem;font-weight:600;
+      letter-spacing:0.28em;text-transform:uppercase;color:var(--teal);
+      display:flex;align-items:center;gap:0.85rem;margin-bottom:2rem;
+    }
+    .eyebrow::before { content:''; width:36px; height:1px; background:var(--teal); flex-shrink:0; }
+
+    .section-label {
+      font-family:'Manrope',sans-serif;font-size:0.68rem;font-weight:600;
+      letter-spacing:0.28em;text-transform:uppercase;color:var(--teal);
+      display:flex;align-items:center;gap:0.85rem;margin-bottom:1.1rem;
+    }
+    .section-label::before { content:''; width:28px; height:1px; background:var(--teal); }
+    .section-label.light { color:rgba(202,210,197,0.72); }
+    .section-label.light::before { background:rgba(202,210,197,0.5); }
+
+    .section-title {
+      font-family:'Manrope',sans-serif;font-weight:300;
+      font-size:clamp(2.2rem, 4vw, 3.5rem);line-height:1.15;color:var(--charcoal);
+    }
+    .section-title.on-dark { color:var(--white); }
+
+    .ways-header { display:flex; flex-direction:column; margin-bottom:4rem; }
+
+    .way-link {
+      font-family:'Manrope',sans-serif;font-size:0.72rem;font-weight:600;
+      letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);
+      text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:gap 0.3s ease;
+    }
+    .way-link::after { content:'→'; }
+    .way-link:hover { gap:1rem; }
+
+    /* "Our Work" heading: italic-teal accent + word-by-word reveal on scroll
+       (scoped to this section; the other .ways-header is untouched). */
+    .ha-home__issues .ways-header.reveal{ opacity:1; transform:none; }   /* children animate, not the block */
+    .ha-home__issues .ways-header .section-label{
+      opacity:0; transform:translateY(10px);
+      transition:opacity .5s var(--ease-out), transform .5s var(--ease-out);
+    }
+    .ha-home__issues .ways-header.is-in .section-label{ opacity:1; transform:none; }
+    .ha-home__issues .section-title em{
+      font-family:'Poppins',sans-serif; font-style:italic; font-weight:400; color:var(--deep-teal);
+    }
+    .ha-home__issues .section-title .ha-ways-w{
+      display:inline-block; opacity:0; transform:translateY(.5em);
+      transition:opacity .55s var(--ease-out), transform .55s var(--ease-out);
+    }
+    .ha-home__issues .ways-header.is-in .section-title .ha-ways-w{ opacity:1; transform:none; }
+
+    /* ─────────────────────────────────────
+       SECTION 1 — HERO (full-screen video)
+    ───────────────────────────────────── */
+    .ha-home__hero {
+      /* 86svh (was 100vh): a shorter hero makes the curved video pane less
+         tall-and-narrow, so much less of the 16:9 frame is cropped away. */
+      min-height:86vh; min-height:86svh;
+      /* Left-side background — the video lives in the curved viewport on the right. */
+      background:
+        radial-gradient(58% 70% at 6% 10%, rgba(132,169,140,0.30) 0%, transparent 56%),
+        radial-gradient(80% 92% at 100% 112%, rgba(15,21,25,0.55) 0%, transparent 58%),
+        linear-gradient(144deg, #2a3942 0%, var(--charcoal) 44%, var(--dark-slate) 100%);
+      display:block;
+      position:relative;overflow:hidden;
+    }
+    /* z0: gradient fallback — shows if the video/poster ever fail to load. */
+    .ha-home__hero::before {
+      content:'';position:absolute;inset:0;z-index:0;
+      background:
+        radial-gradient(ellipse 70% 55% at 75% 35%, rgba(132,169,140,0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 70% at 8% 85%,  rgba(82,121,111,0.14)  0%, transparent 55%);
+    }
+    /* z0a: the rainbow photo — always present; the universal fallback if WebGL is off. */
+    .ha-home__hero-photo {
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;z-index:0;
+      animation: haKenburns 26s ease-in-out infinite alternate;  /* subtle drift (fallback path) */
+    }
+    @keyframes haKenburns { from { transform:scale(1.02); } to { transform:scale(1.09); } }
+    @media (max-width:700px){ .ha-home__hero-photo{ animation:none; } }  /* save mobile battery */
+    /* z0b: WebGL "living photo" layer — same image, animated; fades in over the photo (desktop). */
+    .ha-home__hero-canvas {
+      position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;
+      opacity:0;transition:opacity 1.2s ease;pointer-events:none;
+    }
+    .ha-home__hero-canvas.is-ready { opacity:1; }
+    .ha-home__hero-scrim {
+      position:absolute;inset:0;z-index:1;
+      background:linear-gradient(180deg, rgba(47,62,70,0.58) 0%, rgba(47,62,70,0.32) 45%, rgba(47,62,70,0.74) 100%);
+    }
+    /* Hero content fills one viewport: a tall headline, with the subhead +
+       actions pulled up right beneath it (no stranded second screen). The
+       whole group is vertically centered below the fixed nav. */
+    .hero-inner { position:relative; z-index:2; max-width:680px;
+      min-height:86vh; min-height:86svh;
+      display:flex; flex-direction:column; justify-content:center;
+      padding:7rem 1.5rem 3rem; padding-left:clamp(20px,7vw,104px);
+      transform-style:preserve-3d; }
+    .hero-headline { transform-style:preserve-3d; }
+    .hero-body { margin-top:2rem; transform-style:preserve-3d; }
+    .ha-home__hero h1 {
+      font-family:'Manrope',sans-serif;font-weight:400;
+      /* Tall; tuned so it wraps to four lines across desktop widths. */
+      font-size:clamp(2.5rem, 5vw, 5rem);line-height:1.08;letter-spacing:-0.012em;
+      color:var(--white);margin-bottom:0;
+      text-shadow:0 2px 28px rgba(18,26,30,0.32);
+    }
+    .ha-home__hero h1 em {
+      font-family:'Poppins',sans-serif; font-style:italic; color:var(--teal);
+      text-shadow:0 2px 22px rgba(132,169,140,0.45);
+      background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 226 34' preserveAspectRatio='none'%3E%3Cpath d='M8 26 C 58 18 116 30 166 23 C 198 19 216 22 220 25' fill='none' stroke='%2384A98C' stroke-width='4' stroke-linecap='round'/%3E%3Cg transform='translate(62,24) rotate(-48) scale(0.95)'%3E%3Cpath d='M0 0 L 3 0' stroke='%2384A98C' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpath d='M3 0 C 7 -3 13 -4 20 0 C 13 4 7 3 3 0 Z' fill='%2384A98C' fill-opacity='0.78'/%3E%3Cpath d='M5 0 Q 12 0.6 19 0' fill='none' stroke='%2333453a' stroke-width='0.7' opacity='0.32'/%3E%3C/g%3E%3Cg transform='translate(150,22) rotate(-32) scale(0.8)'%3E%3Cpath d='M0 0 L 3 0' stroke='%2384A98C' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpath d='M3 0 C 7 -3 13 -4 20 0 C 13 4 7 3 3 0 Z' fill='%2384A98C' fill-opacity='0.78'/%3E%3Cpath d='M5 0 Q 12 0.6 19 0' fill='none' stroke='%2333453a' stroke-width='0.7' opacity='0.32'/%3E%3C/g%3E%3C/svg%3E") no-repeat left bottom / 0% 0.42em;
+      padding-bottom:.26em;
+      animation:thriveUnderline .7s var(--ease-out) 1.05s both;
+    }
+    @keyframes thriveUnderline { from { background-size:0% 0.42em; } to { background-size:100% 0.42em; } }
+    .hero-sub {
+      font-family:'Poppins',sans-serif;font-size:1.05rem;font-weight:300;line-height:1.75;
+      color:rgba(255,255,255,0.7);max-width:540px;margin-bottom:2.25rem;
+    }
+    .hero-actions { display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+
+    /* ── Curved video viewport (right) — United Way hero, mirrored ──
+       Default (stacked, mobile): a full-width band beneath the text.
+       Desktop: absolute on the right with a big arc carved into its left edge. */
+    .ha-home__hero-media{
+      position:relative; width:100%; height:44vh; z-index:1;
+      background:var(--dark-slate); overflow:hidden;
+    }
+    /* Stacked (mobile) band: exact 16:9 so the full video frame is visible.
+       The 44vh height above stays as the fallback for older browsers. */
+    @supports (aspect-ratio: 16/9){
+      @media (max-width:980px){
+        .ha-home__hero-media{ height:auto; aspect-ratio:16/9; }
+      }
+    }
+    .ha-home__hero-media .ha-home__hero-photo,
+    .ha-home__hero-media .ha-home__hero-canvas,
+    .ha-home__hero-media .ha-home__hero-video{
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    }
+    .ha-home__hero-media .ha-home__hero-video{ z-index:0; }
+    .ha-home__hero-arc{ display:none; }
+    @media (min-width:981px){
+      .hero-inner{ width:42%; max-width:680px; padding-right:2.5rem; }
+      /* ── MOCK C: arc + full-frame compromise ──
+         The pane keeps the arc-carved left edge and bleeds to the right
+         viewport edge like production, but the box itself is exactly 16:9
+         so cover() never scale-crops the video. Only the two left corners
+         that the curve carves away are hidden (~9% of the frame). Centered
+         with top:50% + translateY (NOT top/bottom stretch: with both insets
+         set, stretch wins and aspect-ratio is ignored); the curve-breath
+         animation is dropped since it would clobber the centering
+         transform. Slim hero-background bands remain above and below. */
+      .ha-home__hero-media,
+      .ha-home__hero-arc-wrap{
+        position:absolute; top:50%; right:0; bottom:auto;
+        width:62%; aspect-ratio:16/9; height:auto;
+        transform:translateY(-50%);
+      }
+      .ha-home__hero-media{
+        z-index:2; overflow:hidden;
+        -webkit-clip-path:url(#heroArc); clip-path:url(#heroArc);
+        filter:drop-shadow(-8px 0 24px rgba(132,169,140,.32));
+        animation:heroMediaFade 1s var(--ease-out) both;
+      }
+      /* Seam wrapper: wipes the separating line in from the top on load. The clip is
+         expanded on the other three sides (negative insets) so it never crops the rim,
+         which is translated left/down and breathes horizontally. */
+      .ha-home__hero-arc-wrap{
+        z-index:1;
+        -webkit-clip-path:inset(-50px -50px -50px -50px); clip-path:inset(-50px -50px -50px -50px);
+        animation:heroSeamWipe 1.15s var(--ease-out) .12s both;
+      }
+      /* Teal rim offset behind the viewport — a band parallel to the semicircular curve. */
+      .ha-home__hero-arc{
+        display:block; position:absolute; inset:0; transform-origin:right center;
+        -webkit-clip-path:url(#heroArc); clip-path:url(#heroArc);
+        transform:translate(-22px,18px);
+        background:linear-gradient(176deg, var(--deep-teal) 0%, var(--teal) 50%, var(--deep-teal) 100%);
+        animation:heroArcBreath 13s ease-in-out infinite;
+      }
+      /* Pane bottom sits well above the mission wave — button hugs the
+         corner. (Selector depth beats the later base bottom:68px rule.) */
+      .ha-home__hero-media .ha-home__hero-audio{ bottom:16px; }
+    }
+    @media (max-width:980px){
+      .ha-home__hero{ min-height:auto; }
+      .hero-inner{ min-height:auto; padding-top:8.5rem; padding-bottom:2.4rem; }
+    }
+    /* Curve-accent animations (desktop split only): a soft fade in, then a very
+       subtle horizontal "breathing" that gently swells the curve and settles. */
+    @keyframes heroMediaFade{ from{ opacity:0; } to{ opacity:1; } }
+    @keyframes heroCurveBreath{ 0%,100%{ transform:scaleX(1); } 50%{ transform:scaleX(1.022); } }
+    @keyframes heroArcBreath{
+      0%,100%{ transform:translate(-22px,18px) scaleX(1); }
+      50%{ transform:translate(-24px,18px) scaleX(1.024); }
+    }
+    /* Separating line wipes in from the top (sides/bottom expanded so the rim isn't cropped). */
+    @keyframes heroSeamWipe{
+      from{ -webkit-clip-path:inset(-50px -50px 100% -50px); clip-path:inset(-50px -50px 100% -50px); }
+      to{ -webkit-clip-path:inset(-50px -50px -50px -50px); clip-path:inset(-50px -50px -50px -50px); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .ha-home__hero-media, .ha-home__hero-arc, .ha-home__hero-arc-wrap{ animation:none !important; }
+      .ha-home__hero-arc-wrap{ -webkit-clip-path:none !important; clip-path:none !important; }
+      .ha-home__hero-media{ filter:none; }
+    }
+    /* Hero video (YouTube) sits above the photo/canvas fallback in the clipped
+       viewport. Fades in only once the player is actually playing, so the
+       rainbow poster covers the brief YouTube load. */
+    .ha-home__hero-media .ha-home__hero-video{
+      z-index:1; overflow:hidden; background:var(--dark-slate);
+      opacity:0; transition:opacity .6s ease;
+    }
+    .ha-home__hero-media .ha-home__hero-video.is-playing{ opacity:1; }
+    /* The IFrame API replaces #hero-yt with an <iframe>; JS sizes it to COVER
+       the wrapper. Center it and disable pointer events so hovering never
+       surfaces YouTube's UI. */
+    .ha-home__hero-media .ha-home__hero-video iframe{
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      border:0; pointer-events:none;
+    }
+    /* Watermark "tap for sound" button — frosted pill in the video's lower-right.
+       Hidden until the video actually loads (so nothing dangles if it 404s).
+       Collapses to an icon-only mute toggle once sound is on. */
+    .ha-home__hero-audio{
+      /* bottom offset clears the mission wave's 48px overhang, which paints
+         above the hero and was swallowing the button at bottom:16px */
+      position:absolute; z-index:3; right:16px; bottom:68px;
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.5rem .8rem;
+      font-family:'Manrope',sans-serif; font-size:.8rem; font-weight:600; letter-spacing:.01em;
+      color:var(--white);
+      background:rgba(24,34,39,0.46);
+      -webkit-backdrop-filter:blur(8px) saturate(1.2); backdrop-filter:blur(8px) saturate(1.2);
+      border:1px solid rgba(255,255,255,0.28); border-radius:999px;
+      cursor:pointer; box-shadow:0 2px 12px rgba(18,26,30,0.28);
+      opacity:0; visibility:hidden;
+      transition:background .2s ease, transform .2s ease, opacity .35s ease;
+    }
+    .ha-home__hero-audio.is-visible{ opacity:1; visibility:visible; }
+    .ha-home__hero-audio:hover{ background:rgba(24,34,39,0.64); transform:translateY(-1px); }
+    .ha-home__hero-audio:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+    .ha-home__hero-audio svg{ width:18px; height:18px; display:block; flex:none; }
+    .ha-home__hero-audio .icon-on{ display:none; }
+    .ha-home__hero-audio.is-on .icon-muted{ display:none; }
+    .ha-home__hero-audio.is-on .icon-on{ display:block; }
+    .ha-home__hero-audio.is-on .ha-home__hero-audio-label{ display:none; }
+    @media (max-width:700px){
+      .ha-home__hero-audio{ right:12px; bottom:60px; font-size:.75rem; padding:.45rem .7rem; }
+    }
+    /* Gentle ring pulse while still muted, so "tap for sound" gets noticed. */
+    @media (prefers-reduced-motion:no-preference){
+      .ha-home__hero-audio.is-visible:not(.is-on){ animation:haAudioPulse 2.6s ease-in-out 1s 3; }
+    }
+    @keyframes haAudioPulse{
+      0%,100%{ box-shadow:0 2px 12px rgba(18,26,30,0.28); }
+      50%{ box-shadow:0 2px 12px rgba(18,26,30,0.28), 0 0 0 6px rgba(132,169,140,0.30); }
+    }
+
+    /* ─────────────────────────────────────
+       SECTION 2 — MISSION BAND
+    ───────────────────────────────────── */
+    /* overflow-x:clip (not hidden) keeps the waves' vertical overhang visible
+       while stopping their ±2% horizontal bleed from widening the page. */
+    .ha-home__mission { position:relative; overflow-x:clip; padding:2rem 8% 2rem; text-align:center;
+      background:
+        radial-gradient(ellipse 58% 70% at 50% 42%, rgba(216,230,219,.16) 0%, transparent 62%),
+        linear-gradient(180deg, var(--teal) 0%, var(--teal) 24%, #77987f 100%); }
+    /* drifting caustic light behind the text — translucent overlay, slow position drift */
+    .ha-home__mission::before{
+      content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+      background:
+        radial-gradient(34% 50% at 24% 34%, rgba(216,230,219,.22), transparent 60%),
+        radial-gradient(40% 46% at 73% 62%, rgba(216,230,219,.18), transparent 60%),
+        radial-gradient(28% 42% at 50% 84%, rgba(216,230,219,.14), transparent 60%);
+      background-size:200% 200%, 220% 220%, 180% 180%; background-repeat:no-repeat;
+      animation:missionCaustics 18s ease-in-out infinite;
+    }
+    @keyframes missionCaustics{ 0%,100%{ background-position:0% 0%,100% 0%,50% 100%; } 50%{ background-position:30% 45%,60% 65%,35% 55%; } }
+    @media (prefers-reduced-motion: reduce){ .ha-home__mission::before{ animation:none; } }
+    /* organic watercolor top edge — layered teal washes rise out of the hero */
+    .ha-home__mission-wave{
+      position:absolute; left:-2%; right:-2%; width:104%; top:-48px; height:52px;
+      pointer-events:none; z-index:0; display:block; will-change:transform;
+      animation:missionWaveRise 1.3s var(--ease-out) .35s both;
+    }
+    /* mirrored watercolor bottom edge — teal washes bleed down into the white below */
+    .ha-home__mission-wave-btm{
+      position:absolute; left:-2%; right:-2%; width:104%; bottom:-48px; height:52px;
+      transform:scaleY(-1); pointer-events:none; z-index:1; display:block;
+    }
+    @keyframes missionWaveRise{ from{ transform:translateY(44px); } to{ transform:translateY(0); } }
+    /* faint sprout watermark for depth (parallaxes behind the text) */
+    .ha-home__mission-mark{
+      position:absolute; left:50%; top:50%; width:min(52vw,400px); height:auto;
+      transform:translate(-50%,-50%); color:var(--deep-teal); opacity:.14;
+      pointer-events:none; z-index:0; will-change:transform;
+    }
+    .ha-home__mission h2 {
+      position:relative; z-index:1;
+      font-family:'Manrope',sans-serif;font-weight:400;
+      font-size:clamp(2rem, 3.6vw, 3rem);line-height:1.22;color:var(--charcoal);
+      max-width:26ch;margin:0 auto;
+    }
+    .ha-home__mission h2.reveal{ opacity:1; transform:none; }       /* h2 stays put; lines animate in */
+    .ha-home__mission h2 .ln{ display:inline-block; opacity:0; transform:translateY(20px);
+      transition:opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+    .ha-home__mission h2.is-in .ln{ opacity:1; transform:none; }
+    .ha-home__mission h2.is-in .ln:nth-child(2){ transition-delay:.12s; }
+    .ha-home__mission h2.is-in .ln:nth-child(3){ transition-delay:.24s; }
+    .ha-home__mission h2 em { font-family:'Poppins',sans-serif; font-style:italic; color:var(--dark-slate); position:relative; }
+    .ha-home__mission h2 em::after{ content:""; position:absolute; left:0; right:0; bottom:-.04em; height:2px;
+      background:var(--dark-slate); transform:scaleX(0); transform-origin:left; transition:transform .7s var(--ease-out) .3s; }
+    .ha-home__mission h2.is-in em::after{ transform:scaleX(1); }
+    /* gentle liquid float — each word drifts on a slow traveling wave */
+    .ha-home__mission h2 .wv{ display:inline-block; animation:missionFloat 4.5s ease-in-out infinite; will-change:transform; }
+    @keyframes missionFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-4px); } }
+    @media (prefers-reduced-motion: reduce){ .ha-home__mission h2 .wv{ animation:none; } }
+
+    /* ─────────────────────────────────────
+       SECTION 3 — ISSUE AREAS OVERVIEW (all five)
+    ───────────────────────────────────── */
+    .ha-home__issues { background:var(--white); padding:7rem 8%; }
+    /* 6-col base so 5 cards lay out as a centered 3 + 2 (each card spans 2). */
+    .ha-home__issue-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:1.5rem; }
+    .ha-home__issue-card {
+      --accent:var(--deep-teal);
+      grid-column:span 2;
+      position:relative;display:flex;flex-direction:column;
+      background:var(--white);border:1px solid var(--ash-light);border-radius:18px;
+      padding:2.4rem 2rem 2rem;text-decoration:none;overflow:hidden;
+      box-shadow:0 1px 2px rgba(47,62,70,.04);
+      transition:background .35s ease, border-color .35s ease, box-shadow .4s var(--ease-out), transform .25s ease;
+    }
+    .ha-home__issue-card:nth-child(4){ grid-column:2 / span 2; }   /* centre the second row */
+    .ha-home__issue-card[data-accent="slate"] { --accent:var(--dark-slate); }
+    .ha-home__issue-card::after {
+      content:'';position:absolute;left:0;bottom:0;height:3px;width:0;z-index:1;
+      background:var(--accent);transition:width .5s var(--ease-out);
+    }
+    .ha-home__issue-card:hover { background:var(--cream); border-color:var(--accent); box-shadow:0 18px 40px rgba(47,62,70,.14); }
+    .ha-home__issue-card:hover::after { width:100%; }
+    .ha-home__issue-icon {
+      display:inline-flex;width:56px;height:56px;align-items:center;justify-content:center;
+      background:var(--ash-light);
+      background:color-mix(in srgb, var(--accent) 13%, var(--white));
+      border-radius:15px;color:var(--accent);margin-bottom:1.4rem;
+      transition:background .35s var(--ease-out), color .35s ease, transform .45s var(--ease-out);
+    }
+    .ha-home__issue-icon svg { width:27px; height:27px; transition:transform .45s var(--ease-out); }
+    .ha-home__issue-card:hover .ha-home__issue-icon{ background:var(--accent); color:#fff; transform:translateY(-3px) scale(1.07); }
+    .ha-home__issue-card:hover .ha-home__issue-icon svg{ transform:scale(1.05); }
+    .ha-home__issue-card h3 {
+      font-family:'Manrope',sans-serif;font-weight:600;font-size:1.5rem;
+      color:var(--charcoal);margin-bottom:0.6rem;line-height:1.2;transition:color .3s ease;
+    }
+    .ha-home__issue-card:hover h3{ color:var(--accent); }
+    .ha-home__issue-card p {
+      font-family:'Poppins',sans-serif;font-size:0.9rem;line-height:1.65;
+      color:var(--deep-teal);margin-bottom:1.4rem;flex:1;
+    }
+    .ha-home__issue-card .way-link { color:var(--accent); }
+
+    /* ─────────────────────────────────────
+       SECTION 4 — IMPACT / DATA FEATURE
+    ───────────────────────────────────── */
+    .ha-home__impact { background:var(--charcoal); padding:7rem 8%; position:relative; overflow:hidden; }
+    .ha-home__impact::before, .ha-home__impact::after {
+      content:'';position:absolute;border-radius:50%;border:1px solid rgba(132,169,140,0.08);
+    }
+    .ha-home__impact::before { width:560px;height:560px;top:-180px;right:-180px; }
+    .ha-home__impact::after  { width:380px;height:380px;bottom:-80px;left:-80px; }
+    .ha-home__impact-head { position:relative; z-index:1; margin-bottom:1rem; }
+    .ha-home__impact-sub {
+      position:relative;z-index:1;font-family:'Poppins',sans-serif;font-size:1rem;font-weight:300;
+      line-height:1.8;color:rgba(255,255,255,0.55);max-width:560px;margin:0 0 3.5rem;
+    }
+    .ha-home__impact-grid {
+      display:grid;grid-template-columns:1fr 1.25fr;gap:4rem;align-items:center;
+      position:relative;z-index:1;
+    }
+    .ha-home__stats { display:grid; grid-template-columns:1fr 1fr; gap:2.6rem 2rem; }
+    .ha-home__stat-num {
+      font-family:'Manrope',sans-serif;font-weight:800;
+      font-size:clamp(2.6rem, 4vw, 3.6rem);line-height:1;letter-spacing:-0.03em;
+      color:var(--ash);display:block;margin-bottom:0.4rem;
+    }
+    .ha-home__stat-lbl {
+      font-family:'Manrope',sans-serif;font-size:0.7rem;font-weight:600;
+      letter-spacing:0.16em;text-transform:uppercase;color:rgba(202,210,197,0.72);
+    }
+    .ha-home__dash {
+      display:block;border:1px solid rgba(132,169,140,0.25);border-radius:4px;overflow:hidden;
+      transition:border-color .3s ease, transform .3s ease;
+    }
+    .ha-home__dash:hover { border-color:rgba(132,169,140,0.55); transform:translateY(-3px); }
+    .ha-home__dash img { width:100%; display:block; }
+    .ha-home__dash-cta {
+      display:block;text-align:center;padding:1rem;background:var(--teal);color:var(--charcoal);
+      font-family:'Manrope',sans-serif;font-weight:600;font-size:0.76rem;letter-spacing:0.1em;text-transform:uppercase;
+    }
+    .ha-home__dash:hover .ha-home__dash-cta { background:var(--ash); }
+
+    /* ─────────────────────────────────────
+       SECTION 5 — STORY / WHO WE ARE
+    ───────────────────────────────────── */
+    .ha-home__story { background:var(--cream); padding:7rem 8%; }
+    .ha-home__story-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+    .ha-home__story-media img {
+      width:100%;height:100%;object-fit:cover;border-radius:4px;aspect-ratio:4/3;display:block;
+    }
+    .ha-home__story-text p {
+      font-family:'Poppins',sans-serif;font-size:1rem;line-height:1.85;
+      color:var(--deep-teal);margin:1.5rem 0 2rem;max-width:48ch;
+    }
+
+    /* ─────────────────────────────────────
+       SECTION 6 — LATEST FROM HAWAIʻI APPLESEED
+    ───────────────────────────────────── */
+    .ha-home__latest { background:var(--white); padding:7rem 8%; }
+    .ha-home__latest-head {
+      display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;
+      flex-wrap:wrap;margin-bottom:3rem;
+    }
+    .ha-home__latest-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+    .ha-home__latest-card {
+      display:flex;flex-direction:column;background:var(--white);
+      border:1px solid var(--ash-light);border-radius:4px;overflow:hidden;text-decoration:none;
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .ha-home__latest-card:hover { transform:translateY(-4px); box-shadow:0 14px 36px rgba(47,62,70,0.1); }
+    .ha-home__latest-thumb { aspect-ratio:16/10; overflow:hidden; background:var(--ash-light); }
+    .ha-home__latest-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+    .ha-home__latest-body { display:flex; flex-direction:column; flex:1; padding:1.6rem 1.5rem 1.8rem; }
+    .ha-home__latest-meta { display:flex; align-items:center; gap:0.75rem; margin-bottom:0.8rem; flex-wrap:wrap; }
+    .ha-home__latest-cat {
+      font-family:'Manrope',sans-serif;font-size:0.65rem;font-weight:600;
+      letter-spacing:0.14em;text-transform:uppercase;color:var(--deep-teal);
+    }
+    .ha-home__latest-date { font-family:'Manrope',sans-serif;font-size:0.7rem;color:rgba(47,62,70,0.5); }
+    .ha-home__latest-card h3 {
+      font-family:'Manrope',sans-serif;font-weight:500;font-size:1.2rem;line-height:1.25;
+      color:var(--charcoal);margin-bottom:0.6rem;
+    }
+    .ha-home__latest-card p {
+      font-family:'Poppins',sans-serif;font-size:0.85rem;line-height:1.6;
+      color:var(--deep-teal);margin-bottom:1.2rem;flex:1;
+    }
+    .ha-home__latest-loading {
+      grid-column:1 / -1;padding:1.5rem 0;font-family:'Poppins',sans-serif;
+      font-size:0.92rem;color:var(--deep-teal);
+    }
+    .ha-home__latest-loading a { color:var(--deep-teal); }
+
+    /* ─────────────────────────────────────
+       SECTION 7 — GET INVOLVED
+    ───────────────────────────────────── */
+    .ha-home__involve { background:var(--dark-slate); padding:7rem 8%; }
+    .ha-home__involve-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
+    .ha-home__involve-card {
+      position:relative;display:flex;flex-direction:column;
+      border:1px solid rgba(132,169,140,0.22);border-radius:4px;padding:2.6rem 2rem;
+      text-decoration:none;transition:background .35s ease, border-color .35s ease;
+    }
+    .ha-home__involve-card::before {
+      content:'';position:absolute;top:0;left:0;right:0;height:2px;background:transparent;transition:background .35s ease;
+    }
+    .ha-home__involve-card:hover { background:rgba(132,169,140,0.08); border-color:rgba(132,169,140,0.5); }
+    .ha-home__involve-card:hover::before { background:var(--teal); }
+    .ha-home__involve-num {
+      font-family:'Manrope',sans-serif;font-weight:300;font-size:2.6rem;
+      color:rgba(202,210,197,0.6);line-height:1;margin-bottom:1rem;
+    }
+    .ha-home__involve-card h3 {
+      font-family:'Manrope',sans-serif;font-weight:500;font-size:1.5rem;
+      color:var(--white);margin-bottom:0.7rem;
+    }
+    .ha-home__involve-card p {
+      font-family:'Poppins',sans-serif;font-size:0.9rem;line-height:1.7;
+      color:rgba(255,255,255,0.55);margin-bottom:1.4rem;flex:1;
+    }
+    .ha-home__involve-card .way-link { color:var(--teal); }
+
+    /* ─────────────────────────────────────
+       SECTION 8 — FOOTER (px-footer pattern)
+    ───────────────────────────────────── */
+    .px-footer {
+      background:#2F3E46;color:#CAD2C5;padding:60px 28px 40px;
+      font-family:'Poppins',sans-serif;font-size:14px;line-height:1.7;
+    }
+    .px-footer .px-foot-grid { display:grid; grid-template-columns:1fr; gap:32px; max-width:1200px; margin:0 auto 40px; }
+    @media (min-width:760px){ .px-footer .px-foot-grid { grid-template-columns:2fr 1fr 1fr; } }
+    .px-footer h4 {
+      font-family:'Manrope',sans-serif;font-weight:700;color:#fff;margin:0 0 12px;
+      font-size:14px;letter-spacing:.04em;text-transform:uppercase;
+    }
+    .px-footer p { color:#CAD2C5; margin:0 0 16px; font-size:13px; line-height:1.7; max-width:34ch; }
+    .px-footer a { color:#CAD2C5; text-decoration:none; display:block; margin-bottom:6px; }
+    .px-footer a:hover { color:#84A98C; }
+    .px-foot-bottom {
+      max-width:1200px;margin:0 auto;padding-top:24px;border-top:1px solid rgba(202,210,197,.18);
+      display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:12px;
+    }
+
+    /* ─────────────────────────────────────
+       3D ENHANCEMENTS — desktop pointer only; disabled on touch + reduced motion (JS-gated)
+    ───────────────────────────────────── */
+    /* Issue cards: cursor-tracked 3D tilt. Each card carries its OWN perspective() in the
+       transform (set in JS) so every card tilts uniformly regardless of grid position, and
+       the transition is set inline so it overrides the reveal-group's staggered
+       transition-delay (which otherwise lagged every card after the first). */
+    @media (hover:hover) and (pointer:fine){
+      .ha-home__issue-card.tilt-on {
+        box-shadow:0 18px 40px rgba(47,62,70,.16);
+        will-change:transform; z-index:2;
+      }
+    }
+    /* Impact section: decorative rings drift on scroll (transform driven by JS-set --p-ring*). */
+    .ha-home__impact::before { transform:translate3d(0, var(--p-ring1, 0px), 0); will-change:transform; }
+    .ha-home__impact::after  { transform:translate3d(0, var(--p-ring2, 0px), 0); will-change:transform; }
+
+    /* ─────────────────────────────────────
+       ANIMATION
+    ───────────────────────────────────── */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes heroFade { from { opacity:0; } to { opacity:1; } }
+    @keyframes heroWordUp { from { opacity:0; transform:translateY(26px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes thriveLeaf { to { transform:scale(1) rotate(0); } }
+
+    /* Hero entrance: eyebrow/sub/actions fade in (opacity only, so the 3D depth survives);
+       the headline rises word-by-word (per-word delays set in the markup). */
+    .ha-home__hero .eyebrow      { animation:heroFade .7s ease .12s both; }
+    .ha-home__hero .hero-sub     { animation:heroFade .8s ease .72s both; }
+    .ha-home__hero .hero-actions { animation:heroFade .8s ease .85s both; }
+    .ha-home__hero h1 .w         { display:inline-block; animation:heroWordUp .6s cubic-bezier(.22,.61,.36,1) both; }
+
+    /* "thrive" — a small teal leaf unfurls at the top-right of the word on load. */
+    .ha-home__hero h1 em { position:relative; }
+    .ha-home__hero h1 em::after{
+      content:""; position:absolute; right:-.54em; top:.04em; width:.42em; height:.62em;
+      background-color:var(--teal); pointer-events:none;
+      -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 40'><path d='M12 40 C3 28 3 12 12 0 C21 12 21 28 12 40 Z' fill='%23000'/></svg>") no-repeat center/contain;
+              mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 40'><path d='M12 40 C3 28 3 12 12 0 C21 12 21 28 12 40 Z' fill='%23000'/></svg>") no-repeat center/contain;
+      transform:scale(0) rotate(-28deg); transform-origin:bottom left;
+      animation:thriveLeaf .7s cubic-bezier(.22,.61,.36,1) 1.0s both;
+    }
+
+    /* Hero CTA buttons: sliding arrow + a snappy transform for the magnetic tilt (JS). */
+    .ha-home__hero .hero-actions .btn{ border-radius:7px; transition:transform .18s var(--ease-out), background .28s ease, border-color .28s ease, color .28s ease, box-shadow .3s var(--ease-out); will-change:transform; }
+    .ha-home__hero .btn-solid:hover{ background:var(--teal); transform:translateY(-2px); box-shadow:0 12px 28px rgba(132,169,140,.34); }
+    .ha-home__hero .btn-ghost{ border-color:rgba(255,255,255,.34); }
+    .ha-home__hero .btn-ghost:hover{ background:rgba(255,255,255,.07); border-color:var(--teal); color:var(--teal); transform:translateY(-2px); }
+    .ha-home__hero .btn-arr{ display:inline-block; margin-left:.45em; transition:transform .25s ease; }
+    .ha-home__hero .btn-ghost:hover .btn-arr{ transform:translateX(5px); }
+
+    /* Cursor-parallax DEPTH + tilt — desktop pointer, motion-allowed only (perspective would
+       scale the translateZ layers where there's no tilt to justify it). */
+    @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion: no-preference){
+      .ha-home__hero { perspective:980px; }
+      .ha-home__hero .hero-inner { transform-style:preserve-3d; transition:transform .3s ease; will-change:transform; }
+      .ha-home__hero .eyebrow      { transform:translateZ(8px); }
+      .ha-home__hero h1            { transform:translateZ(54px); }
+      .ha-home__hero .hero-sub     { transform:translateZ(22px); }
+      .ha-home__hero .hero-actions { transform:translateZ(22px); }
+    }
+
+    /* ─────────────────────────────────────
+       SCROLL-REVEAL (rec B) — GPU-only (opacity + translateY), reveals once.
+       Hidden by default; <noscript> + reduced-motion force visible.
+    ───────────────────────────────────── */
+    .reveal { opacity:0; transform:translateY(18px);
+      transition:opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+    .reveal.is-in { opacity:1; transform:none; }
+    /* staggered group — direct children cascade in */
+    .reveal-group > * { opacity:0; transform:translateY(18px);
+      transition:opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+    .reveal-group.is-in > * { opacity:1; transform:none; }
+    .reveal-group.is-in > *:nth-child(2){ transition-delay:.07s; }
+    .reveal-group.is-in > *:nth-child(3){ transition-delay:.14s; }
+    .reveal-group.is-in > *:nth-child(4){ transition-delay:.21s; }
+    .reveal-group.is-in > *:nth-child(5){ transition-delay:.28s; }
+    .reveal-group.is-in > *:nth-child(6){ transition-delay:.35s; }
+
+    /* ── "Five areas" cards: spring-up entrance + self-drawing icons ── */
+    /* B — richer entrance: rise + slight scale with a soft overshoot */
+    .ha-home__issue-grid.reveal-group > *{
+      transform:translateY(32px) scale(.94);
+      transition:opacity .55s var(--ease-out), transform .7s cubic-bezier(.34,1.32,.5,1);
+    }
+    .ha-home__issue-grid.reveal-group.is-in > *{ transform:none; }
+    /* A — icons draw themselves in (JS sets each shape's dash to its own length; the dash
+       is applied instantly, then the reveal transitions the offset back to 0 = "drawing"). */
+    .ha-home__issue-grid.is-in .ha-home__issue-icon svg [data-draw]{
+      stroke-dashoffset:0 !important;
+      transition:stroke-dashoffset .9s var(--ease-out) .15s;
+    }
+    .ha-home__issue-grid.is-in > *:nth-child(2) .ha-home__issue-icon svg [data-draw]{ transition-delay:.22s; }
+    .ha-home__issue-grid.is-in > *:nth-child(3) .ha-home__issue-icon svg [data-draw]{ transition-delay:.29s; }
+    .ha-home__issue-grid.is-in > *:nth-child(4) .ha-home__issue-icon svg [data-draw]{ transition-delay:.36s; }
+    .ha-home__issue-grid.is-in > *:nth-child(5) .ha-home__issue-icon svg [data-draw]{ transition-delay:.43s; }
+    /* A — themed hover motion: the tax bars grow from their baseline */
+    .ha-home__issue-card[href="taxes-budget.html"] .ha-home__issue-icon rect{
+      transform-box:fill-box; transform-origin:50% 100%;
+      transition:transform .45s var(--ease-out);
+    }
+    .ha-home__issue-card[href="taxes-budget.html"]:hover .ha-home__issue-icon rect{ transform:scaleY(1.16); }
+
+    /* ─────────────────────────────────────
+       REDUCED MOTION (rec A) — honor the OS setting site-wide.
+    ───────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce){
+      *, *::before, *::after{
+        animation-duration:.01ms!important; animation-iteration-count:1!important;
+        transition-duration:.01ms!important; scroll-behavior:auto!important;
+      }
+      .reveal, .reveal-group > *,
+      .ha-ways-w, .ha-home__issues .ways-header .section-label{ opacity:1!important; transform:none!important; }
+      .ha-home__mission-wave{ transform:none!important; }
+      .ha-home__hero-photo{ animation:none!important; transform:none!important; }
+    }
+
+    /* ─────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────── */
+    @media (max-width: 900px) {
+      .ha-home__impact-grid,
+      .ha-home__story-grid { grid-template-columns:1fr; gap:3rem; }
+      .ha-home__issue-grid,
+      .ha-home__latest-grid,
+      .ha-home__involve-grid { grid-template-columns:repeat(2,1fr); }
+      .ha-home__issue-card, .ha-home__issue-card:nth-child(4){ grid-column:auto; }
+      .hero-inner { padding:0 6%; }
+    }
+    @media (max-width: 700px) {
+      .hero-inner { padding-top:7.5rem; padding-bottom:2.5rem; }
+      .ha-home__hero h1 { font-size:clamp(3.4rem, 13vw, 5rem); }
+      .ha-home__issues,
+      .ha-home__impact,
+      .ha-home__story,
+      .ha-home__latest,
+      .ha-home__involve { padding:4rem 6%; }
+      .ha-home__mission { padding:3rem 6%; }
+      .ha-home__issue-grid,
+      .ha-home__latest-grid,
+      .ha-home__involve-grid,
+      .ha-home__stats { grid-template-columns:1fr; }
+      .ways-header { margin-bottom:2.5rem; }
+      .ha-home__story-media img { aspect-ratio:16/10; }
+    }
+  </style>
+  <!-- Fail-safe: if JS is off, reveal elements stay visible. -->
+  <noscript><style>.reveal,.reveal-group>*,.ha-ways-w,.ha-home__issues .ways-header .section-label{opacity:1!important;transform:none!important}</style></noscript>
+<style>
+/* Taller header to match hiappleseed.org (~174px) - desktop only; mobile stays compact */
+@media (min-width:701px){
+  .px-nav{padding-top:14px;padding-bottom:14px;}
+  .px-nav .px-brand-mark{width:40px;height:40px;}
+  .px-nav .px-brand-name{font-size:20px;}
+  section[id]{scroll-margin-top:116px;}
+}
+</style>
+
+<!-- ─────────────────────────────────────
+     TIER-1 POLISH (additive): scroll progress · glass nav · card spotlight +
+     per-card accents · latest thumb-zoom & skeletons · hero scroll cue.
+     All behind the page's existing reduced-motion / hover gates.
+───────────────────────────────────── -->
+<style>
+  /* 1 — Scroll progress bar (sits over the announce bar) */
+  .px-scroll-progress{
+    position:fixed;left:0;top:0;height:3px;width:100%;z-index:60;
+    transform:scaleX(0);transform-origin:0 50%;will-change:transform;pointer-events:none;
+    background:linear-gradient(90deg,var(--teal),var(--deep-teal));
+  }
+
+  /* 2 — Glass nav once the page scrolls */
+  .px-nav{transition:padding .3s var(--ease-out), background .3s var(--ease-out), box-shadow .3s var(--ease-out);}
+  .px-nav.is-scrolled{
+    background:rgba(255,255,255,.82);
+    -webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);
+    box-shadow:0 6px 26px rgba(47,62,70,.09);
+  }
+  @media (min-width:701px){
+    .px-nav.is-scrolled{padding-top:10px;padding-bottom:10px;}
+    .px-nav.is-scrolled .px-brand-mark{width:42px;height:42px;}
+  }
+
+  /* 3 — Issue-card cursor spotlight + per-card accent tint */
+  .ha-home__issue-card[data-accent="charcoal"]{ --accent:var(--charcoal); }
+  .ha-home__issue-card::before{
+    content:'';position:absolute;inset:0;z-index:0;border-radius:inherit;
+    opacity:0;pointer-events:none;transition:opacity .35s ease;
+    background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),
+      color-mix(in srgb, var(--accent) 8%, transparent), transparent 64%);
+  }
+  .ha-home__issue-card:hover::before{ opacity:1; }
+  /* keep card content above the glow layer */
+  .ha-home__issue-card > *{ position:relative; z-index:1; }
+
+  /* 4 — Latest: thumbnail zoom on hover + skeleton shimmer loaders */
+  .ha-home__latest-thumb img{ transition:transform .5s var(--ease-out); }
+  .ha-home__latest-card:hover .ha-home__latest-thumb img{ transform:scale(1.06); }
+
+  .ha-home__latest-skel{
+    display:flex;flex-direction:column;background:var(--white);
+    border:1px solid var(--ash-light);border-radius:4px;overflow:hidden;
+  }
+  .ha-home__latest-skel .sk{ position:relative;overflow:hidden;background:var(--ash-light); }
+  .ha-home__latest-skel .sk::after{
+    content:'';position:absolute;inset:0;transform:translateX(-100%);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);
+    animation:skShimmer 1.4s ease-in-out infinite;
+  }
+  .ha-home__latest-skel .sk-thumb{ aspect-ratio:16/10; }
+  .ha-home__latest-skel .sk-body{ padding:1.6rem 1.5rem 1.8rem;display:flex;flex-direction:column;gap:.7rem; }
+  .ha-home__latest-skel .sk-line{ height:12px;border-radius:3px; }
+  .ha-home__latest-skel .sk-line.w40{ width:40%; }
+  .ha-home__latest-skel .sk-line.w90{ width:90%;height:18px; }
+  .ha-home__latest-skel .sk-line.w70{ width:70%; }
+  @keyframes skShimmer{ to{ transform:translateX(100%); } }
+
+</style>
+<style id="px-mobile-nav">
+.px-burger{display:none;flex:none;background:none;border:0;cursor:pointer;padding:8px;margin-left:2px;}
+.px-burger span{display:block;width:22px;height:2px;background:#2F3E46;border-radius:2px;transition:transform .25s ease,opacity .2s ease;}
+.px-burger span+span{margin-top:5px;}
+.px-nav.is-open .px-burger span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.px-nav.is-open .px-burger span:nth-child(2){opacity:0;}
+.px-nav.is-open .px-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+@media (max-width:899px){
+  .px-nav{padding-left:18px;padding-right:18px;gap:10px;}
+  .px-burger{display:block;}
+  .px-nav .px-social,.px-nav .px-donate-btn,.px-nav .px-brand-tag{display:none;}
+  .px-nav .px-links{
+    display:flex;flex-direction:column;align-items:stretch;gap:0;
+    position:absolute;top:100%;left:0;right:0;
+    background:#fff;border-top:1px solid rgba(53,79,82,.12);
+    box-shadow:0 16px 30px rgba(47,62,70,.14);
+    padding:4px 20px 16px;
+    max-height:0;overflow:hidden;opacity:0;visibility:hidden;
+    transition:max-height .3s ease,opacity .25s ease,visibility .25s ease;
+  }
+  .px-nav.is-open .px-links{max-height:82vh;overflow-y:auto;opacity:1;visibility:visible;}
+  .px-nav .px-links>a,.px-nav .px-dropdown{width:100%;}
+  .px-nav .px-links>a{padding:13px 2px;border-bottom:1px solid rgba(53,79,82,.08);font-size:15px;}
+  .px-nav .px-dropdown-trigger{padding:13px 2px;font-size:15px;width:100%;border-bottom:1px solid rgba(53,79,82,.08);justify-content:space-between;}
+  .px-nav .px-dropdown{position:static;}
+  .px-nav .px-dropdown-menu{position:static;transform:none;box-shadow:none;border:0;padding:0 0 6px 14px;min-width:0;}
+  .px-nav .px-dropdown-menu a{padding:9px 4px;white-space:normal;}
+}
+</style>
+</head>
+<body>
+  <!-- MOCK ONLY: Option C preview; not for production -->
+  <div style="position:fixed;left:14px;bottom:14px;z-index:9999;background:#13343b;color:#fff;font:600 12px 'Manrope',Arial,sans-serif;padding:8px 14px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.35);pointer-events:none;">Mock C &mdash; arc + full-frame</div>
+
+  <!-- Tier-1: scroll progress indicator -->
+  <div class="px-scroll-progress" aria-hidden="true"></div>
+
+  <!-- PREVIEW-ONLY: announce bar -->
+  <div class="px-announce">
+    New Data Tool: <a href="#">Hawaiʻi Budget Bill Draft Tracker</a>
+    <span class="x">×</span>
+  </div>
+
+  <!-- PREVIEW-ONLY: nav -->
+  <nav class="px-nav">
+    <div class="px-brand">
+      <div class="px-brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none">
+          <path d="M32 54c0-12 6-20 16-22-2 12-8 20-16 22z" fill="#52796F"/>
+          <path d="M32 54c0-12-6-20-16-22 2 12 8 20 16 22z" fill="#84A98C" opacity=".85"/>
+          <path d="M32 54c-1-10 2-18 8-24" stroke="#2F3E46" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+          <ellipse cx="32" cy="56" rx="10" ry="3" fill="#2F3E46" opacity=".15"/>
+        </svg>
+      </div>
+      <div class="px-brand-text">
+        <div class="px-brand-name">HAWAIʻI APPLESEED</div>
+        <div class="px-brand-tag">CENTER FOR LAW &amp; ECONOMIC JUSTICE</div>
+      </div>
+    </div>
+    <div class="px-links">
+      <a href="index.html" class="active">Home</a>
+      <div class="px-dropdown">
+        <button class="px-dropdown-trigger" aria-haspopup="true" aria-expanded="false">About <span class="px-chevron" aria-hidden="true">▾</span></button>
+        <div class="px-dropdown-menu">
+          <a href="our-mission.html">Our Mission</a>
+          <a href="our-story.html">Our Story</a>
+          <a href="our-team.html">Our Team</a>
+          <a href="board-of-directors.html">Board</a>
+        </div>
+      </div>
+      <a href="issues.html">Issues</a>
+      <a href="in-the-news.html">News</a>
+      <a href="publications.html">Research</a>
+      <a href="support.html">Donate</a>
+    </div>
+    <div class="px-nav-right">
+      <div class="px-social" aria-label="Social">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-8h3l.5-4H13V7.5c0-1.2.3-2 2-2H17V2h-3c-3 0-5 1.8-5 5v3H6v4h3v8h4z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 7.5a3 3 0 00-2-2C18 5 12 5 12 5s-6 0-8 .5a3 3 0 00-2 2C2 9.5 2 12 2 12s0 2.5.1 4.5a3 3 0 002 2C6 19 12 19 12 19s6 0 8-.5a3 3 0 002-2c.1-2 .1-4.5.1-4.5s0-2.5-.1-4.5zM10 15V9l5 3-5 3z"/></svg>
+      </div>
+      <a class="px-donate-btn" href="https://crm.bloomerang.co/HostedDonation?WidgetId=52224&amp;ApiKey=pub_719d1ab5-5621-11f1-9ea1-06612d4c9559" target="_blank" rel="noopener">Donate</a>
+    <button class="px-burger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- ══════════════════ SECTION 1 — HERO ══════════════════ -->
+  <!-- Arc that carves the left edge of the video viewport (objectBoundingBox, so it scales).
+       Two cubics form a rounded, near-semicircular bulge on the left edge. -->
+  <svg id="heroArcSvg" width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
+    <clipPath id="heroArc" clipPathUnits="objectBoundingBox">
+      <path d="M0.40,0 L1,0 L1,1 L0.40,1 C0.1791,1 0,0.7761 0,0.5 C0,0.2239 0.1791,0 0.40,0 Z"/>
+    </clipPath>
+  </defs></svg>
+
+  <section class="ha-home__hero">
+    <div class="hero-inner">
+      <div class="hero-headline">
+        <h1><span class="w" style="animation-delay:.24s">Building</span> <span class="w" style="animation-delay:.30s">a</span> <span class="w" style="animation-delay:.36s">Hawaiʻi</span> <span class="w" style="animation-delay:.42s">where</span> <span class="w" style="animation-delay:.48s">every</span> <span class="w" style="animation-delay:.54s">family</span> <span class="w" style="animation-delay:.60s">can</span> <span class="w" style="animation-delay:.66s"><em>thrive</em>.</span></h1>
+      </div>
+
+      <div class="hero-body">
+        <div class="hero-actions">
+          <a href="support.html" class="btn btn-solid">Support Our Work</a>
+          <a href="issues.html" class="btn btn-ghost">Explore the Issues<span class="btn-arr">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Curved video viewport. Placeholder = the rainbow "living photo"; when the hero
+         video is ready, drop a <video class="ha-home__hero-video" autoplay muted loop
+         playsinline poster="assets/story/hero-rainbow.webp"><source src="…mp4"></video>
+         inside .ha-home__hero-media and it will be clipped by the same arc. -->
+    <div class="ha-home__hero-arc-wrap" aria-hidden="true"><div class="ha-home__hero-arc"></div></div>
+    <div class="ha-home__hero-media">
+      <img class="ha-home__hero-photo" src="assets/story/hero-rainbow.webp" alt="" aria-hidden="true">
+      <canvas class="ha-home__hero-canvas" aria-hidden="true"></canvas>
+      <!-- Hero video: YouTube embed via the IFrame API. Autoplays MUTED (browser
+           autoplay policy) and loops; the watermark button opts the user into
+           sound through the API. The API replaces this div with an <iframe>,
+           sized by JS to COVER the viewport. Photo/canvas beneath are the
+           fallback shown until (and if) the player loads. Set the video id in
+           the hero-video script below (HERO_YT_ID). -->
+      <div class="ha-home__hero-video" aria-hidden="true"><div id="hero-yt"></div></div>
+      <button class="ha-home__hero-audio" type="button" aria-label="Turn on sound">
+        <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+        <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+        <span class="ha-home__hero-audio-label">Tap for sound</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════ SECTION 2 — MISSION BAND ══════════════════ -->
+  <section class="ha-home__mission">
+    <svg class="ha-home__mission-wave" viewBox="0 0 1440 108" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="hmWave" x="-6%" y="-50%" width="112%" height="210%"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.018" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="12" xChannelSelector="R" yChannelSelector="G"/></filter>
+        <filter id="hmGrain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 0.16 0 0 0 0 0.25 0 0 0 0 0.21 0 0 0 0.5 0"/></filter>
+      </defs>
+      <g filter="url(#hmWave)">
+        <path fill="#84A98C" opacity="0.26" d="M0 130 L0 28 C 300 14 560 38 820 24 C 1080 10 1300 32 1440 22 L1440 130 Z"/>
+        <path fill="#84A98C" opacity="0.42" d="M0 130 L0 40 C 280 26 560 50 820 36 C 1080 22 1320 44 1440 34 L1440 130 Z"/>
+        <path fill="#84A98C" opacity="0.6" d="M0 130 L0 52 C 320 38 580 62 840 48 C 1080 34 1300 56 1440 46 L1440 130 Z"/>
+        <path fill="#84A98C" d="M0 130 L0 62 C 300 48 560 72 820 58 C 1080 44 1300 66 1440 54 L1440 130 Z"/>
+      </g>
+      <rect x="0" y="24" width="1440" height="106" filter="url(#hmGrain)" opacity="0.08"/>
+    </svg>
+    <svg class="ha-home__mission-mark" viewBox="0 0 200 122" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 120 C100 84 100 62 100 30" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path d="M100 56 C70 56 44 40 28 14 C64 6 92 24 100 56 Z" fill="currentColor"/>
+      <path d="M100 50 C128 50 152 35 168 12 C134 5 108 21 100 50 Z" fill="currentColor"/>
+      <circle cx="100" cy="62" r="4" fill="currentColor"/>
+    </svg>
+    <h2 class="reveal"><span class="ln"><span class="wv" style="animation-delay:0s">Advancing</span> <span class="wv" style="animation-delay:.13s">Economic</span> <span class="wv" style="animation-delay:.26s">Justice</span></span> <span class="ln"><em><span class="wv" style="animation-delay:.39s">for</span> <span class="wv" style="animation-delay:.52s">and</span> <span class="wv" style="animation-delay:.65s">with</span></em></span> <span class="ln"><span class="wv" style="animation-delay:.78s">the</span> <span class="wv" style="animation-delay:.91s">people</span> <span class="wv" style="animation-delay:1.04s">of</span> <span class="wv" style="animation-delay:1.17s">Hawaiʻi.</span></span></h2>
+    <svg class="ha-home__mission-wave-btm" viewBox="0 0 1440 108" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <g filter="url(#hmWave)">
+        <path fill="#84A98C" opacity="0.26" d="M0 130 L0 28 C 300 14 560 38 820 24 C 1080 10 1300 32 1440 22 L1440 130 Z"/>
+        <path fill="#84A98C" opacity="0.42" d="M0 130 L0 40 C 280 26 560 50 820 36 C 1080 22 1320 44 1440 34 L1440 130 Z"/>
+        <path fill="#84A98C" opacity="0.6" d="M0 130 L0 52 C 320 38 580 62 840 48 C 1080 34 1300 56 1440 46 L1440 130 Z"/>
+        <path fill="#84A98C" d="M0 130 L0 62 C 300 48 560 72 820 58 C 1080 44 1300 66 1440 54 L1440 130 Z"/>
+      </g>
+      <rect x="0" y="24" width="1440" height="106" filter="url(#hmGrain)" opacity="0.08"/>
+    </svg>
+  </section>
+
+  <!-- ══════════════════ SECTION 3 — ISSUE AREAS ══════════════════ -->
+  <section class="ha-home__issues" id="issues">
+    <div class="ways-header reveal">
+      <div class="section-label">Our Work</div>
+      <h2 class="section-title"><span class="ha-ways-w" style="transition-delay:.08s">Five</span> <span class="ha-ways-w" style="transition-delay:.14s">areas</span> <span class="ha-ways-w" style="transition-delay:.20s">where</span> <span class="ha-ways-w" style="transition-delay:.26s">policy</span><br><span class="ha-ways-w" style="transition-delay:.32s">can</span> <span class="ha-ways-w" style="transition-delay:.38s">change</span> <em><span class="ha-ways-w" style="transition-delay:.44s">everyday</span> <span class="ha-ways-w" style="transition-delay:.50s">life.</span></em></h2>
+    </div>
+
+    <div class="ha-home__issue-grid reveal-group">
+      <a class="ha-home__issue-card" data-accent="teal-deep" href="food-security.html">
+        <span class="ha-home__issue-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13c0-3.3 2.2-5.5 4.3-5.5S18.6 9.7 18.6 13"/>
+            <path d="M17 13c0-2.6 1.8-4.3 3.6-4.3S24.2 10.4 24.2 13"/>
+            <path d="M4.5 13h23"/>
+            <path d="M6.3 13l2 10.5a2 2 0 0 0 2 1.7h11.4a2 2 0 0 0 2-1.7l2-10.5"/>
+            <path d="M11.5 13.8l.9 10.4M16 13.8v10.4M20.5 13.8l-.9 10.4"/>
+          </svg>
+        </span>
+        <h3>Food Security</h3>
+        <p>Healthy, accessible food for every Hawaiʻi family.</p>
+        <span class="way-link">Explore</span>
+      </a>
+
+      <a class="ha-home__issue-card" data-accent="charcoal" href="housing.html">
+        <span class="ha-home__issue-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 15l12-9 12 9v12a2 2 0 01-2 2H6a2 2 0 01-2-2V15z"/>
+            <path d="M12 29V19h8v10"/>
+          </svg>
+        </span>
+        <h3>Affordable Housing</h3>
+        <p>Homes Hawaiʻi's families can actually afford.</p>
+        <span class="way-link">Explore</span>
+      </a>
+
+      <a class="ha-home__issue-card" data-accent="slate" href="wages-labor.html">
+        <span class="ha-home__issue-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 11h20v17H6z"/>
+            <path d="M12 11V7a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v4"/>
+            <path d="M6 18h20"/>
+            <circle cx="16" cy="18" r="1.5"/>
+          </svg>
+        </span>
+        <h3>Wages &amp; Labor</h3>
+        <p>Pay and protections that match the cost of living here.</p>
+        <span class="way-link">Explore</span>
+      </a>
+
+      <a class="ha-home__issue-card" data-accent="teal-deep" href="transportation.html">
+        <span class="ha-home__issue-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="6" width="24" height="15" rx="3"/>
+            <path d="M4 12.5h24"/>
+            <path d="M10 6.5v6M16 6.5v6M22 6.5v6"/>
+            <path d="M5.5 17.5h2.5M24 17.5h2.5"/>
+            <circle cx="11" cy="23.5" r="2.3"/>
+            <circle cx="21" cy="23.5" r="2.3"/>
+          </svg>
+        </span>
+        <h3>Transportation</h3>
+        <p>Safer streets, smarter transit, lower costs.</p>
+        <span class="way-link">Explore</span>
+      </a>
+
+      <a class="ha-home__issue-card" data-accent="charcoal" href="taxes-budget.html">
+        <span class="ha-home__issue-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 27h24"/>
+            <rect x="7" y="19" width="4" height="8"/>
+            <rect x="14" y="13" width="4" height="14"/>
+            <rect x="21" y="8" width="4" height="19"/>
+            <path d="M7 15l7-4 7 3 4-7"/>
+          </svg>
+        </span>
+        <h3>Taxes &amp; Budget</h3>
+        <p>A fairer tax code for a thriving Hawaiʻi.</p>
+        <span class="way-link">Explore</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════ LATEST / RESEARCH (moved: directly below Issues) ══════════════════ -->
+  <section class="ha-home__latest" id="latest">
+    <div class="ha-home__latest-head reveal">
+      <div>
+        <div class="section-label">Latest</div>
+        <h2 class="section-title">Latest from Hawaiʻi Appleseed.</h2>
+      </div>
+      <a href="publications.html" class="btn btn-dark">View All Research</a>
+    </div>
+    <div class="ha-home__latest-grid reveal-group" id="ha-home-latest-grid" role="list">
+      <div class="ha-home__latest-skel" aria-hidden="true"><div class="sk sk-thumb"></div><div class="sk-body"><div class="sk sk-line w40"></div><div class="sk sk-line w90"></div><div class="sk sk-line w70"></div></div></div>
+      <div class="ha-home__latest-skel" aria-hidden="true"><div class="sk sk-thumb"></div><div class="sk-body"><div class="sk sk-line w40"></div><div class="sk sk-line w90"></div><div class="sk sk-line w70"></div></div></div>
+      <div class="ha-home__latest-skel" aria-hidden="true"><div class="sk sk-thumb"></div><div class="sk-body"><div class="sk sk-line w40"></div><div class="sk sk-line w90"></div><div class="sk sk-line w70"></div></div></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ SECTION 4 — IMPACT / DATA ══════════════════ -->
+  <section class="ha-home__impact" id="data">
+    <div class="ha-home__impact-head reveal">
+      <div class="section-label light">Interactive Tool</div>
+      <h2 class="section-title on-dark">Follow the money, in real time.</h2>
+    </div>
+    <p class="ha-home__impact-sub reveal">
+      Our Hawaiʻi Budget Tracker compares the Governor's budget proposal against the House and Senate versions — program by program, department by department — across all 700+ state programs.
+    </p>
+
+    <div class="ha-home__impact-grid reveal-group">
+      <div class="ha-home__stats">
+        <div class="ha-home__stat"><span class="ha-home__stat-num" data-count="20" data-suffix="+">20+</span><span class="ha-home__stat-lbl">Years of advocacy</span></div>
+        <div class="ha-home__stat"><span class="ha-home__stat-num" data-count="50" data-suffix="+">50+</span><span class="ha-home__stat-lbl">Legislative wins</span></div>
+        <div class="ha-home__stat"><span class="ha-home__stat-num" data-count="500" data-suffix="K+">500K+</span><span class="ha-home__stat-lbl">Residents reached</span></div>
+        <div class="ha-home__stat"><span class="ha-home__stat-num" data-count="5" data-suffix="">5</span><span class="ha-home__stat-lbl">Issue areas</span></div>
+      </div>
+
+      <a class="ha-home__dash" href="https://hiappleseed.org/hibudget" target="_blank" rel="noopener">
+        <img src="assets/data/hawaii-budget-tracker.png" alt="Hawaiʻi Appleseed Budget Tracker" loading="lazy">
+        <span class="ha-home__dash-cta">Explore the Budget Tracker →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════ SECTION 5 — STORY ══════════════════ -->
+  <section class="ha-home__story" id="story">
+    <div class="ha-home__story-grid reveal-group">
+      <div class="ha-home__story-media">
+        <img src="assets/story/04-current-pilina-builders.webp" alt="Hawaiʻi Appleseed staff and community partners" loading="lazy">
+      </div>
+      <div class="ha-home__story-text">
+        <div class="section-label">Who We Are</div>
+        <h2 class="section-title">Rooted in Hawaiʻi.</h2>
+        <p>For over two decades, Hawaiʻi Appleseed has used a combination of policy advocacy and community engagement to take on the root causes of poverty and inequality.</p>
+        <a href="our-story.html" class="btn btn-dark">Read Our Story</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════ SECTION 7 — GET INVOLVED ══════════════════ -->
+  <section class="ha-home__involve" id="get-involved">
+    <div class="ways-header reveal">
+      <div class="section-label light">Get Involved</div>
+      <h2 class="section-title on-dark">Justice takes all of us.</h2>
+    </div>
+    <div class="ha-home__involve-grid reveal-group">
+      <a class="ha-home__involve-card" href="support.html#give">
+        <span class="ha-home__involve-num">01</span>
+        <h3>Give</h3>
+        <p>Your gift funds the research, advocacy, and legal work that moves policy for Hawaiʻi's families.</p>
+        <span class="way-link">Donate</span>
+      </a>
+      <a class="ha-home__involve-card" href="issues.html">
+        <span class="ha-home__involve-num">02</span>
+        <h3>Take Action</h3>
+        <p>Add your voice. Follow the issues, contact lawmakers, and help build the public pressure that wins.</p>
+        <span class="way-link">Advocate</span>
+      </a>
+      <a class="ha-home__involve-card" href="support.html#connect">
+        <span class="ha-home__involve-num">03</span>
+        <h3>Stay Informed</h3>
+        <p>Get our newsletter and action alerts, and be the first to know when your engagement matters most.</p>
+        <span class="way-link">Subscribe</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════ SECTION 8 — FOOTER ══════════════════ -->
+  <footer class="px-footer">
+    <div class="px-foot-grid">
+      <div>
+        <h4>Hawaiʻi Appleseed</h4>
+        <p>Advancing economic justice for and with the people of Hawaiʻi.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="our-mission.html">Our Mission</a>
+        <a href="our-story.html">Our Story</a>
+        <a href="our-team.html">Our Team</a>
+        <a href="board-of-directors.html">Board</a>
+        <a href="issues.html">Issues</a>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <a href="in-the-news.html">News</a>
+        <a href="publications.html">Research</a>
+        <a href="support.html">Donate</a>
+        <a href="https://hiappleseed.org" target="_blank" rel="noopener">Main Website</a>
+      </div>
+    </div>
+    <div class="px-foot-bottom">
+      <span>© 2026 Hawaiʻi Appleseed Center for Law &amp; Economic Justice</span>
+      <span>733 Bishop St, Honolulu, HI</span>
+    </div>
+  </footer>
+
+  <!-- "Five areas" icons: prime each SVG shape's stroke dash to its own length so it can
+       draw itself in when the card reveals. Skipped under reduced motion (icons stay solid). -->
+  <script>
+  (function(){
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.querySelectorAll('.ha-home__issue-icon svg').forEach(function(svg){
+      svg.querySelectorAll('path,rect,circle,line,polyline,polygon').forEach(function(el){
+        if(!el.getTotalLength) return;
+        var len = 0; try { len = el.getTotalLength(); } catch(e){}
+        if(!len) return;
+        len = Math.ceil(len);
+        el.style.strokeDasharray = len;
+        el.style.strokeDashoffset = len;
+        el.setAttribute('data-draw','');
+      });
+    });
+  })();
+  </script>
+
+  <!-- Scroll-reveal (rec B): fade/slide sections in on first view; once-only; respects reduced motion. -->
+  <script>
+  (function(){
+    var nodes = [].slice.call(document.querySelectorAll('.reveal, .reveal-group'));
+    if(!nodes.length) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce || !('IntersectionObserver' in window)){
+      nodes.forEach(function(n){ n.classList.add('is-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+    nodes.forEach(function(n){ io.observe(n); });
+  })();
+  </script>
+
+  <!-- PREVIEW-ONLY: announce close + nav dropdown -->
+  <script>
+    document.querySelector('.px-announce .x')?.addEventListener('click', e => {
+      e.target.closest('.px-announce').style.display = 'none';
+    });
+  </script>
+  <script>
+  (function(){
+    document.querySelectorAll('.px-dropdown').forEach(function(d){
+      var btn=d.querySelector('.px-dropdown-trigger');
+      btn.addEventListener('click',function(e){e.stopPropagation();var o=d.classList.toggle('is-open');btn.setAttribute('aria-expanded',o);});
+    });
+    document.addEventListener('click',function(){
+      document.querySelectorAll('.px-dropdown').forEach(function(d){d.classList.remove('is-open');var b=d.querySelector('.px-dropdown-trigger');if(b)b.setAttribute('aria-expanded','false');});
+    });
+  })();
+  </script>
+
+  <!-- Latest publications loader (reads publications.json, newest 3). -->
+  <script>
+  (function(){
+    var grid = document.getElementById('ha-home-latest-grid');
+    if(!grid) return;
+    function stripHtml(h){ var d=document.createElement('div'); d.innerHTML=h||''; return (d.textContent||'').trim(); }
+    function fmtDate(ms){ try { return new Date(ms).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}); } catch(e){ return ''; } }
+    function card(it){
+      var url = it.fullUrl ? ('https://hiappleseed.org'+it.fullUrl) : '#';
+      var cat = (it.categories && it.categories[0]) || 'Research';
+      var thumb = it.assetUrl
+        ? '<div class="ha-home__latest-thumb"><img src="'+it.assetUrl+'?format=500w" alt="" loading="lazy"></div>'
+        : '<div class="ha-home__latest-thumb"></div>';
+      var ex = stripHtml(it.excerpt);
+      if(ex.length > 120) ex = ex.slice(0,120).replace(/\s+\S*$/,'') + '…';
+      return '<a class="ha-home__latest-card" role="listitem" href="'+url+'" target="_blank" rel="noopener">'
+        + thumb
+        + '<div class="ha-home__latest-body">'
+        + '<div class="ha-home__latest-meta"><span class="ha-home__latest-cat">'+cat+'</span>'
+        + '<span class="ha-home__latest-date">'+fmtDate(it.publishOn)+'</span></div>'
+        + '<h3>'+ (it.title || 'Untitled') +'</h3>'
+        + (ex ? '<p>'+ex+'</p>' : '')
+        + '<span class="way-link">Read more</span>'
+        + '</div></a>';
+    }
+    fetch('publications.json')
+      .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
+      .then(function(d){
+        var items = (d.items || []).slice().sort(function(a,b){ return b.publishOn - a.publishOn; }).slice(0,3);
+        if(!items.length){ throw new Error('empty'); }
+        grid.innerHTML = items.map(card).join('');
+      })
+      .catch(function(){
+        grid.innerHTML = '<div class="ha-home__latest-loading">See our latest research on the <a href="publications.html">publications page</a>.</div>';
+      });
+  })();
+  </script>
+
+  <!-- Stat count-up (rec F): animates [data-count] numbers when scrolled into view; respects reduced motion. -->
+  <script>
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var nums = [].slice.call(document.querySelectorAll('[data-count]'));
+    if(!nums.length) return;
+    function fmt(v, s){ return v.toLocaleString('en-US') + (s || ''); }
+    function run(el){
+      var target = parseFloat(el.getAttribute('data-count')) || 0;
+      var suffix = el.getAttribute('data-suffix') || '';
+      var dur = 1200, start = null;
+      function step(ts){
+        if(!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(Math.round(target * eased), suffix);
+        if(p < 1){ requestAnimationFrame(step); } else { el.textContent = fmt(target, suffix); }
+      }
+      requestAnimationFrame(step);
+    }
+    if(reduce || !('IntersectionObserver' in window)){
+      nums.forEach(function(el){ el.textContent = fmt(parseFloat(el.getAttribute('data-count')) || 0, el.getAttribute('data-suffix') || ''); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ run(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.4 });
+    nums.forEach(function(el){ io.observe(el); });
+  })();
+  </script>
+
+  <!-- ─────────────────────────────────────────────────────────────
+       3D / WebGL ENHANCEMENTS (no dependencies)
+       1) Hero "living photo": WebGL layer over the rainbow image — slow drift,
+          pointer parallax, subtle shimmer, teal light bloom. Desktop only; the
+          plain <img> is the fallback for mobile / reduced-motion / no-WebGL.
+       2) Issue cards: cursor-tracked 3D tilt (desktop pointer only).
+       3) Impact section: decorative rings parallax on scroll.
+       All paths honor prefers-reduced-motion and pause when off-screen / tab hidden.
+  ───────────────────────────────────────────────────────────────── -->
+  <script>
+  (function(){
+    var hero = document.querySelector('.ha-home__hero');
+    var canvas = document.querySelector('.ha-home__hero-canvas');
+    var photo = hero && hero.querySelector('.ha-home__hero-photo');
+    if(!hero || !canvas || !photo) return;
+    // A hero <video> takes over the media slot; skip the WebGL living-photo so
+    // we don't burn GPU/battery rendering behind an opaque video. The photo
+    // stays beneath as the poster/fallback if the video never loads.
+    if(hero.querySelector('.ha-home__hero-video')) return;
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var mqM = window.matchMedia ? window.matchMedia('(max-width:700px)') : { matches:false };
+    function enabled(){ return !reduce && !mqM.matches; }
+
+    var FRAG = [
+      'precision highp float;',
+      'varying vec2 vUv;',
+      'uniform vec2 uRes; uniform vec2 uImg; uniform float uTime; uniform vec2 uPointer; uniform sampler2D uTex;',
+      'float hash(vec2 p){ p=fract(p*vec2(123.34,345.45)); p+=dot(p,p+34.345); return fract(p.x*p.y); }',
+      'float noise(vec2 p){ vec2 i=floor(p),f=fract(p); float a=hash(i),b=hash(i+vec2(1.0,0.0)),c=hash(i+vec2(0.0,1.0)),d=hash(i+vec2(1.0,1.0)); vec2 u=f*f*(3.0-2.0*f); return mix(mix(a,b,u.x),mix(c,d,u.x),u.y); }',
+      'float fbm(vec2 p){ float v=0.0,a=0.5; for(int i=0;i<4;i++){ v+=a*noise(p); p*=1.9; a*=0.5; } return v; }',
+      'const vec3 TEAL=vec3(0.518,0.663,0.549);',
+      'const vec3 CHARCOAL=vec3(0.184,0.243,0.275);',
+      'void main(){',
+      '  vec2 uv=vUv;',
+      '  float ra=uRes.x/uRes.y, ia=uImg.x/uImg.y;',
+      '  vec2 cuv=uv;',
+      '  if(ra>ia) cuv.y=(uv.y-0.5)*(ia/ra)+0.5; else cuv.x=(uv.x-0.5)*(ra/ia)+0.5;',
+      '  float zoom=1.06+0.025*sin(uTime*0.06);',
+      '  cuv=(cuv-0.5)/zoom+0.5;',
+      '  cuv+=uPointer*vec2(0.012,0.010);',
+      '  vec2 w=vec2(fbm(cuv*3.0+uTime*0.05), fbm(cuv*3.0-uTime*0.04));',
+      '  cuv+=(w-0.5)*0.006;',
+      '  vec3 col=texture2D(uTex, clamp(cuv,0.001,0.999)).rgb;',
+      '  vec2 p=(gl_FragCoord.xy-0.5*uRes)/uRes.y;',
+      '  vec2 gp=vec2(0.45*sin(uTime*0.08), 0.25+0.10*cos(uTime*0.07))+uPointer*0.05;',
+      '  float glow=exp(-3.0*length(p-gp));',
+      '  col+=TEAL*glow*0.10;',
+      '  float vig=smoothstep(1.25,0.25,length(p*vec2(0.9,1.0)));',
+      '  col=mix(col, mix(CHARCOAL,col,0.5), (1.0-vig)*0.35);',
+      '  gl_FragColor=vec4(col,1.0);',
+      '}'
+    ].join('\n');
+    var VERT = 'attribute vec2 aPos; varying vec2 vUv; void main(){ vUv=aPos*0.5+0.5; gl_Position=vec4(aPos,0.0,1.0); }';
+
+    var gl=null, U={}, tex=null, imgW=1, imgH=1;
+    var inited=false, ready=false, running=false, inView=true, rafId=null;
+    var elapsed=0, last=0, tpx=0, tpy=0, px=0, py=0;
+
+    function compile(type, src){ var s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); return gl.getShaderParameter(s,gl.COMPILE_STATUS)?s:null; }
+
+    function initGL(){
+      try { gl = canvas.getContext('webgl',{antialias:false,alpha:true,premultipliedAlpha:false,powerPreference:'low-power'}) || canvas.getContext('experimental-webgl'); } catch(e){ gl=null; }
+      if(!gl) return false;
+      var vs=compile(gl.VERTEX_SHADER,VERT), fs=compile(gl.FRAGMENT_SHADER,FRAG);
+      if(!vs||!fs) return false;
+      var prog=gl.createProgram(); gl.attachShader(prog,vs); gl.attachShader(prog,fs); gl.linkProgram(prog);
+      if(!gl.getProgramParameter(prog,gl.LINK_STATUS)) return false;
+      gl.useProgram(prog);
+      var buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+      gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1, 3,-1, -1,3]),gl.STATIC_DRAW);
+      var aPos=gl.getAttribLocation(prog,'aPos'); gl.enableVertexAttribArray(aPos); gl.vertexAttribPointer(aPos,2,gl.FLOAT,false,0,0);
+      U.res=gl.getUniformLocation(prog,'uRes'); U.img=gl.getUniformLocation(prog,'uImg');
+      U.time=gl.getUniformLocation(prog,'uTime'); U.pointer=gl.getUniformLocation(prog,'uPointer');
+      U.tex=gl.getUniformLocation(prog,'uTex'); gl.uniform1i(U.tex,0);
+      return true;
+    }
+
+    function makeTexture(image){
+      imgW=image.naturalWidth||image.width||1; imgH=image.naturalHeight||image.height||1;
+      tex=gl.createTexture(); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D,tex);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
+      try { gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,image); } catch(e){ return false; }
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+      return true;
+    }
+
+    function withImage(cb){
+      if(photo.complete && photo.naturalWidth){ cb(photo); return; }
+      photo.addEventListener('load', function(){ cb(photo); }, {once:true});
+      photo.addEventListener('error', function(){ cb(null); }, {once:true});
+    }
+
+    function resize(){
+      var dpr=Math.min(window.devicePixelRatio||1, 1.5);
+      var w=Math.max(1,Math.round(hero.clientWidth*dpr)), h=Math.max(1,Math.round(hero.clientHeight*dpr));
+      if(canvas.width!==w||canvas.height!==h){ canvas.width=w; canvas.height=h; }
+      if(gl) gl.viewport(0,0,w,h);
+    }
+
+    function draw(t){
+      if(!gl) return;
+      gl.uniform2f(U.res, canvas.width, canvas.height);
+      gl.uniform2f(U.img, imgW, imgH);
+      gl.uniform1f(U.time, t);
+      gl.uniform2f(U.pointer, px, py);
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.drawArrays(gl.TRIANGLES,0,3);
+    }
+
+    function loop(now){
+      if(!running) return;
+      if(!last) last=now;
+      elapsed += Math.min((now-last)/1000, 0.05); last=now;
+      px+=(tpx-px)*0.045; py+=(tpy-py)*0.045;
+      draw(elapsed);
+      rafId=requestAnimationFrame(loop);
+    }
+
+    function ensureInit(cb){
+      if(inited){ cb(true); return; }
+      if(!initGL()){ cb(false); return; }
+      withImage(function(im){
+        if(!im || !makeTexture(im)){ cb(false); return; }
+        inited=true; cb(true);
+      });
+    }
+
+    function start(){
+      if(!enabled() || running) return;
+      ensureInit(function(ok){
+        if(!ok) return;            // WebGL/texture failed → plain <img> remains
+        resize();
+        if(!running){ running=true; last=0; rafId=requestAnimationFrame(loop); }
+        if(!ready){ ready=true; canvas.classList.add('is-ready'); }
+      });
+    }
+    function stop(){ running=false; if(rafId) cancelAnimationFrame(rafId); rafId=null; }
+
+    window.addEventListener('pointermove', function(e){
+      tpx=(e.clientX/window.innerWidth)*2-1;
+      tpy=-((e.clientY/window.innerHeight)*2-1);
+    }, {passive:true});
+
+    window.addEventListener('resize', function(){ resize(); }, {passive:true});
+
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden) stop(); else if(inView) start();
+    });
+
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){
+        inView = es[0].isIntersecting;
+        if(!inView) stop(); else if(!document.hidden) start();
+      }, {threshold:0.01}).observe(hero);
+    }
+
+    var onMq = function(){ if(enabled()) start(); else { stop(); canvas.classList.remove('is-ready'); ready=false; } };
+    if(mqM.addEventListener) mqM.addEventListener('change', onMq);
+    else if(mqM.addListener) mqM.addListener(onMq);
+
+    start();
+  })();
+  </script>
+
+  <!-- Hero video: YouTube muted autoplay + watermark "tap for sound" toggle.
+       ▶ Set HERO_YT_ID to your YouTube video id (the part after watch?v=). -->
+  <script>
+  (function(){
+    var HERO_YT_ID = 'acQkwn2yhiI';   // "About Hawaii Appleseed"
+
+    var media = document.querySelector('.ha-home__hero-media');
+    var wrap  = media && media.querySelector('.ha-home__hero-video');
+    var mount = document.getElementById('hero-yt');
+    var btn   = media && media.querySelector('.ha-home__hero-audio');
+    if(!wrap || !mount || !btn) return;
+    if(!HERO_YT_ID || HERO_YT_ID === 'HERO_YT_ID_HERE') return;  // no id yet → poster stays
+
+    var player, soundOn = false;
+
+    // Size the injected 16:9 iframe to COVER the (non-16:9) hero viewport.
+    function cover(){
+      var iframe = wrap.querySelector('iframe');
+      if(!iframe) return;
+      var w = wrap.offsetWidth, h = wrap.offsetHeight;
+      if(!w || !h) return;
+      var AR = 16/9;
+      if(w / h > AR){ iframe.style.width = w + 'px';  iframe.style.height = Math.ceil(w / AR) + 'px'; }
+      else          { iframe.style.height = h + 'px'; iframe.style.width  = Math.ceil(h * AR) + 'px'; }
+    }
+
+    function createPlayer(opts){
+      if(player) return;
+      opts = opts || {};
+      var startAt = opts.startAt || 0;
+      var withSound = !!opts.withSound;
+      // (Re)create the mount div — YT.Player replaces it with the iframe, and
+      // destroy() removes the iframe without restoring the div.
+      var m = document.getElementById('hero-yt');
+      if(!m){
+        m = document.createElement('div');
+        m.id = 'hero-yt';
+        wrap.insertBefore(m, wrap.firstChild);
+      }
+      player = new YT.Player('hero-yt', {
+        videoId: HERO_YT_ID,
+        host: 'https://www.youtube-nocookie.com',   // no cookies until playback
+        playerVars: {
+          autoplay:1, mute:withSound ? 0 : 1, start:startAt,
+          controls:0, loop:1, playlist:HERO_YT_ID,
+          playsinline:1, modestbranding:1, rel:0, iv_load_policy:3,
+          disablekb:1, fs:0, cc_load_policy:0
+        },
+        events: {
+          onReady: function(e){
+            if(withSound){ e.target.unMute(); e.target.setVolume(100); }
+            else { e.target.mute(); }
+            e.target.playVideo(); cover(); btn.classList.add('is-visible');
+          },
+          onStateChange: function(e){ if(e.data === YT.PlayerState.PLAYING){ wrap.classList.add('is-playing'); cover(); } }
+        }
+      });
+    }
+
+    // Load the IFrame API once, then build the player.
+    if(window.YT && window.YT.Player){ createPlayer(); }
+    else {
+      var prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function(){ if(typeof prev === 'function') prev(); createPlayer(); };
+      if(!document.querySelector('script[src*="youtube.com/iframe_api"]')){
+        var tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        document.head.appendChild(tag);
+      }
+    }
+
+    // Some browsers (Safari especially) silently refuse unmuting a cross-
+    // origin iframe from the parent page. Rebuild the player unmuted at the
+    // same timestamp — allowed, since it happens inside the user's click.
+    function rebuildWithSound(){
+      var t = 0;
+      try { t = Math.max(0, Math.floor(player.getCurrentTime() || 0)); } catch(err){}
+      try { player.destroy(); } catch(err){}
+      player = null;
+      createPlayer({ startAt: t, withSound: true });
+    }
+
+    btn.addEventListener('click', function(){
+      if(!player || !player.unMute) return;
+      soundOn = !soundOn;
+      if(soundOn){
+        player.unMute(); player.setVolume(100); player.playVideo();
+        // Verify the unmute stuck; if the browser refused, rebuild unmuted.
+        setTimeout(function(){
+          if(!soundOn || !player || !player.isMuted) return;
+          var stuckMuted = false;
+          try { stuckMuted = player.isMuted() || player.getPlayerState() !== YT.PlayerState.PLAYING; } catch(err){}
+          if(stuckMuted) rebuildWithSound();
+        }, 600);
+      }
+      else { player.mute(); }
+      btn.classList.toggle('is-on', soundOn);
+      btn.setAttribute('aria-label', soundOn ? 'Mute video' : 'Turn on sound');
+    });
+
+    // Keep-alive: browsers and YouTube pause background embeds (tab switch,
+    // low-power mode, occlusion) and with the player chrome disabled there is
+    // no way to resume it by hand. Any gesture — or returning to the tab —
+    // resumes playback. Listeners stay armed for the life of the page.
+    function ensurePlaying(){
+      if(!player || !player.getPlayerState || !window.YT) return;
+      var s;
+      try { s = player.getPlayerState(); } catch(err){ return; }
+      if(s === YT.PlayerState.PLAYING || s === YT.PlayerState.BUFFERING) return;
+      try {
+        if(!soundOn) player.mute();
+        player.playVideo();
+      } catch(err){}
+    }
+    window.addEventListener('touchstart', ensurePlaying, {passive:true});
+    window.addEventListener('scroll', ensurePlaying, {passive:true});
+    window.addEventListener('pointerdown', ensurePlaying, {passive:true});
+    document.addEventListener('visibilitychange', function(){
+      if(!document.hidden) ensurePlaying();
+    });
+
+    window.addEventListener('resize', cover, {passive:true});
+  })();
+  </script>
+
+  <!-- Issue cards: cursor-tracked 3D tilt (desktop pointer devices only). -->
+  <script>
+  (function(){
+    var fine = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!fine || reduce) return;
+    var MAX = 4.5; // degrees
+    document.querySelectorAll('.ha-home__issue-card').forEach(function(card){
+      card.addEventListener('pointermove', function(e){
+        var r = card.getBoundingClientRect();
+        var dx = (e.clientX - r.left)/r.width - 0.5;
+        var dy = (e.clientY - r.top)/r.height - 0.5;
+        // cursor spotlight position (px within the card)
+        card.style.setProperty('--mx', (e.clientX - r.left).toFixed(1) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top).toFixed(1) + 'px');
+        card.classList.add('tilt-on');
+        card.style.transition = 'transform .1s ease, background .35s ease, border-color .35s ease';
+        card.style.transform = 'perspective(760px) rotateX('+(-dy*MAX).toFixed(2)+'deg) rotateY('+(dx*MAX).toFixed(2)+'deg) translateZ(6px) scale(1.012)';
+      });
+      card.addEventListener('pointerleave', function(){
+        card.classList.remove('tilt-on');
+        card.style.transform = '';
+      });
+    });
+  })();
+  </script>
+
+  <!-- Impact section: decorative rings parallax gently on scroll. -->
+  <script>
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce) return;
+    var section = document.querySelector('.ha-home__impact');
+    if(!section) return;
+    var ticking=false, active=false;
+    function update(){
+      ticking=false;
+      var r = section.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var prog = (vh/2 - (r.top + r.height/2)) / (vh/2 + r.height/2);
+      if(prog<-1) prog=-1; if(prog>1) prog=1;
+      section.style.setProperty('--p-ring1', (prog*-46).toFixed(1)+'px');
+      section.style.setProperty('--p-ring2', (prog*60).toFixed(1)+'px');
+    }
+    function onScroll(){ if(!ticking){ ticking=true; requestAnimationFrame(update); } }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){
+        var vis = es[0].isIntersecting;
+        if(vis && !active){ active=true; window.addEventListener('scroll', onScroll, {passive:true}); update(); }
+        else if(!vis && active){ active=false; window.removeEventListener('scroll', onScroll); }
+      }, {rootMargin:'120px 0px 120px 0px'}).observe(section);
+    } else {
+      window.addEventListener('scroll', onScroll, {passive:true}); update();
+    }
+    window.addEventListener('resize', function(){ if(active) update(); }, {passive:true});
+  })();
+  </script>
+
+  <!-- Hero: cursor-parallax depth/tilt on the text + magnetic 3D-tilt CTA buttons.
+       Desktop pointer only; reduced-motion and touch get the calm static hero. -->
+  <script>
+  (function(){
+    var fine = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!fine || reduce) return;
+    var hero = document.querySelector('.ha-home__hero');
+    var inner = hero && hero.querySelector('.hero-inner');
+    if(!hero || !inner) return;
+    hero.addEventListener('pointermove', function(e){
+      var r = hero.getBoundingClientRect();
+      var px = (e.clientX - r.left)/r.width - 0.5;
+      var py = (e.clientY - r.top)/r.height - 0.5;
+      inner.style.transform = 'rotateY('+(px*5.6).toFixed(2)+'deg) rotateX('+(-py*5.6).toFixed(2)+'deg)';
+    });
+    hero.addEventListener('pointerleave', function(){ inner.style.transform = ''; });
+    hero.querySelectorAll('.hero-actions .btn').forEach(function(btn){
+      btn.addEventListener('pointermove', function(e){
+        var r = btn.getBoundingClientRect();
+        var nx = (e.clientX - (r.left + r.width/2)) / (r.width/2);    // -1..1
+        var ny = (e.clientY - (r.top + r.height/2)) / (r.height/2);
+        btn.style.transform = 'perspective(600px) translate('+(nx*6).toFixed(1)+'px,'+(ny*6).toFixed(1)+'px) rotateX('+(-ny*7).toFixed(1)+'deg) rotateY('+(nx*9).toFixed(1)+'deg) scale(1.04)';
+      });
+      btn.addEventListener('pointerleave', function(){ btn.style.transform = ''; });
+    });
+
+    // Mission band: faint sprout watermark + statement parallax on different planes.
+    var mission = document.querySelector('.ha-home__mission');
+    var mark = mission && mission.querySelector('.ha-home__mission-mark');
+    var mh2 = mission && mission.querySelector('h2');
+    if (mission && mark){
+      mission.addEventListener('pointermove', function(e){
+        var r = mission.getBoundingClientRect();
+        var px = (e.clientX - r.left)/r.width - 0.5;
+        var py = (e.clientY - r.top)/r.height - 0.5;
+        mark.style.transform = 'translate(calc(-50% + '+(px*-26).toFixed(1)+'px), calc(-50% + '+(py*-16).toFixed(1)+'px))';
+        if (mh2) mh2.style.transform = 'translate('+(px*6).toFixed(1)+'px,'+(py*4).toFixed(1)+'px)';
+      });
+      mission.addEventListener('pointerleave', function(){
+        mark.style.transform = 'translate(-50%,-50%)';
+        if (mh2) mh2.style.transform = '';
+      });
+    }
+  })();
+  </script>
+
+  <!-- Tier-1: scroll progress bar, glass nav on scroll, hero scroll-cue auto-hide. -->
+  <script>
+  (function(){
+    var bar = document.querySelector('.px-scroll-progress');
+    var nav = document.querySelector('.px-nav');
+    var ticking = false;
+    function update(){
+      ticking = false;
+      var doc = document.documentElement;
+      var scrolled = window.pageYOffset || doc.scrollTop || 0;
+      var max = (doc.scrollHeight - window.innerHeight) || 1;
+      var p = Math.min(Math.max(scrolled / max, 0), 1);
+      if(bar) bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+      if(nav) nav.classList.toggle('is-scrolled', scrolled > 12);
+    }
+    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll, {passive:true});
+    update();
+  })();
+  </script>
+
+<script id="px-mobile-nav-js">
+(function(){var n=document.querySelector('.px-nav'),b=n&&n.querySelector('.px-burger');if(!n||!b)return;
+b.addEventListener('click',function(e){e.stopPropagation();var o=n.classList.toggle('is-open');b.setAttribute('aria-expanded',o);});
+n.querySelectorAll('.px-links a').forEach(function(a){a.addEventListener('click',function(){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');});});
+document.addEventListener('click',function(e){if(!n.contains(e.target)){n.classList.remove('is-open');b.setAttribute('aria-expanded','false');}});
+})();
+</script>
+
+</body>
+</html>
