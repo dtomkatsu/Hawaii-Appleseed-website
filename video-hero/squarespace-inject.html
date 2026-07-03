@@ -1,0 +1,154 @@
+<!-- Hawaii Appleseed - homepage video hero for Squarespace.
+     Paste this entire file into a Code Block (Edit page > + > Code).
+     Self-contained: scoped styles, YouTube IFrame API, muted autoplay,
+     watermark tap-for-sound toggle. Video: "About Hawaii Appleseed". -->
+<div id="ha-video-hero">
+<style>
+  #ha-video-hero{
+    /* Scoped tokens (brand palette) */
+    --ha-vh-charcoal:#2f3e46;
+    --ha-vh-teal:#84a98c;
+    --ha-vh-white:#ffffff;
+    position:relative;
+    width:100%;
+    margin:0 auto;
+  }
+  #ha-video-hero .ha-vh-frame{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    background:var(--ha-vh-charcoal) url('https://i.ytimg.com/vi/acQkwn2yhiI/maxresdefault.jpg') center/cover no-repeat;
+    border-radius:12px;
+    overflow:hidden;
+  }
+  /* Fallback for older browsers without aspect-ratio support */
+  @supports not (aspect-ratio:16/9){
+    #ha-video-hero .ha-vh-frame{ height:0; padding-bottom:56.25%; }
+  }
+  #ha-video-hero .ha-vh-frame iframe{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    border:0;
+    opacity:0; transition:opacity .6s ease;
+    pointer-events:none;   /* keep YouTube's own UI out of reach */
+  }
+  #ha-video-hero .ha-vh-frame.is-playing iframe{ opacity:1; }
+  #ha-video-hero .ha-vh-audio{
+    position:absolute; z-index:3; right:16px; bottom:16px;
+    display:inline-flex; align-items:center; gap:.5rem;
+    padding:.5rem .8rem;
+    font-family:'Manrope','Arial',sans-serif;
+    font-size:.8rem; font-weight:600; letter-spacing:.01em;
+    color:var(--ha-vh-white);
+    background:rgba(24,34,39,0.46);
+    -webkit-backdrop-filter:blur(8px) saturate(1.2); backdrop-filter:blur(8px) saturate(1.2);
+    border:1px solid rgba(255,255,255,0.28); border-radius:999px;
+    cursor:pointer; box-shadow:0 2px 12px rgba(18,26,30,0.28);
+    opacity:0; visibility:hidden;
+    transition:background .2s ease, transform .2s ease, opacity .35s ease;
+  }
+  #ha-video-hero .ha-vh-audio.is-visible{ opacity:1; visibility:visible; }
+  #ha-video-hero .ha-vh-audio:hover{ background:rgba(24,34,39,0.64); transform:translateY(-1px); }
+  #ha-video-hero .ha-vh-audio:focus-visible{ outline:2px solid var(--ha-vh-teal); outline-offset:2px; }
+  #ha-video-hero .ha-vh-audio svg{ width:18px; height:18px; display:block; flex:none; }
+  #ha-video-hero .ha-vh-audio .ha-vh-icon-on{ display:none; }
+  #ha-video-hero .ha-vh-audio.is-on .ha-vh-icon-muted{ display:none; }
+  #ha-video-hero .ha-vh-audio.is-on .ha-vh-icon-on{ display:block; }
+  #ha-video-hero .ha-vh-audio.is-on .ha-vh-audio-label{ display:none; }
+  @media (max-width:700px){
+    #ha-video-hero .ha-vh-frame{ border-radius:8px; }
+    #ha-video-hero .ha-vh-audio{ right:12px; bottom:12px; font-size:.75rem; padding:.45rem .7rem; }
+  }
+  /* Gentle ring pulse while still muted, so the button gets noticed */
+  @media (prefers-reduced-motion:no-preference){
+    #ha-video-hero .ha-vh-audio.is-visible:not(.is-on){ animation:haVhPulse 2.6s ease-in-out 1s 3; }
+  }
+  @keyframes haVhPulse{
+    0%,100%{ box-shadow:0 2px 12px rgba(18,26,30,0.28); }
+    50%{ box-shadow:0 2px 12px rgba(18,26,30,0.28), 0 0 0 6px rgba(132,169,140,0.30); }
+  }
+</style>
+
+<div class="ha-vh-frame">
+  <div id="ha-vh-player"></div>
+  <button class="ha-vh-audio" type="button" aria-label="Turn on sound">
+    <svg class="ha-vh-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+      <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+    </svg>
+    <svg class="ha-vh-icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+    </svg>
+    <span class="ha-vh-audio-label">Tap for sound</span>
+  </button>
+</div>
+
+<script>
+(function(){
+  var VIDEO_ID = 'acQkwn2yhiI';   // "About Hawaii Appleseed"
+
+  var root = document.getElementById('ha-video-hero');
+  var frame = root && root.querySelector('.ha-vh-frame');
+  var btn = root && root.querySelector('.ha-vh-audio');
+  if(!root || !frame || !btn) return;
+
+  var player, soundOn = false;
+
+  function createPlayer(){
+    if(player) return;
+    player = new YT.Player('ha-vh-player', {
+      videoId: VIDEO_ID,
+      host: 'https://www.youtube-nocookie.com',
+      playerVars: {
+        autoplay:1, mute:1, controls:0, loop:1, playlist:VIDEO_ID,
+        playsinline:1, modestbranding:1, rel:0, iv_load_policy:3,
+        disablekb:1, fs:0, cc_load_policy:0
+      },
+      events: {
+        onReady: function(e){ e.target.mute(); e.target.playVideo(); btn.classList.add('is-visible'); },
+        onStateChange: function(e){ if(e.data === YT.PlayerState.PLAYING){ frame.classList.add('is-playing'); } }
+      }
+    });
+  }
+
+  // Load the IFrame API once (coexists with any other YT embeds on the page).
+  if(window.YT && window.YT.Player){ createPlayer(); }
+  else {
+    var prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function(){ if(typeof prev === 'function') prev(); createPlayer(); };
+    if(!document.querySelector('script[src*="youtube.com/iframe_api"]')){
+      var tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+    }
+  }
+
+  btn.addEventListener('click', function(){
+    if(!player || !player.unMute) return;
+    soundOn = !soundOn;
+    if(soundOn){ player.unMute(); player.setVolume(100); player.playVideo(); }
+    else { player.mute(); }
+    btn.classList.toggle('is-on', soundOn);
+    btn.setAttribute('aria-label', soundOn ? 'Mute video' : 'Turn on sound');
+  });
+
+  // Some mobile players hold even muted autoplay until a gesture. Any
+  // touch/scroll/tap kicks playback (still muted); listeners stay armed
+  // until playback actually succeeds, then detach.
+  function removeKick(){
+    window.removeEventListener('touchstart', gestureKick);
+    window.removeEventListener('scroll', gestureKick);
+    window.removeEventListener('pointerdown', gestureKick);
+  }
+  function gestureKick(){
+    if(!player || !player.getPlayerState || !window.YT) return;
+    if(player.getPlayerState() === YT.PlayerState.PLAYING){ removeKick(); return; }
+    if(!soundOn){ player.mute(); player.playVideo(); }
+  }
+  window.addEventListener('touchstart', gestureKick, {passive:true});
+  window.addEventListener('scroll', gestureKick, {passive:true});
+  window.addEventListener('pointerdown', gestureKick, {passive:true});
+})();
+</script>
+</div>
