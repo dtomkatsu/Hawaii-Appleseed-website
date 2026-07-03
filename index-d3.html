@@ -260,7 +260,7 @@
          Full 16:9 film at 54% of the display, right of the text, all of
          it (and the text) on screen at page open. Four frame styles,
          switchable via body[data-frame] and the mock-only pill at the
-         bottom of the page: outline / mat / ring / brackets. */
+         bottom of the page: outline / mat / ring / wash. */
       .ha-home__hero-media,
       .ha-home__hero-arc-wrap{
         position:absolute; top:calc(50% + 2rem); right:3vw; bottom:auto;
@@ -311,30 +311,25 @@
           0 0 0 9px rgba(132,169,140,.13);
       }
 
-      /* Frame 4 — brackets: teal corner brackets, gallery style */
-      body[data-frame="brackets"] .ha-home__hero-arc-wrap{
-        z-index:3; border:0; pointer-events:none;
-        transform:translateY(-50%);
+      /* Frame 4 — wash: soft watercolor teal glow bleeding out from
+         behind the card, echoing the site's wave washes. Organic, no
+         hard edges; breathes slowly. */
+      body[data-frame="wash"] .ha-home__hero-arc-wrap{
+        z-index:1; border:0; border-radius:50%;
+        background:radial-gradient(58% 58% at 42% 58%, rgba(132,169,140,.6) 0%, rgba(82,121,111,.28) 55%, transparent 78%);
+        filter:blur(26px);
+        transform:translateY(calc(-50% + 8px)) scale(1.22);
+        animation:heroMediaFade 1.4s var(--ease-out) .1s both, haWashPulse 12s ease-in-out 1.5s infinite;
       }
-      body[data-frame="brackets"] .ha-home__hero-arc-wrap::before,
-      body[data-frame="brackets"] .ha-home__hero-arc-wrap::after{
-        content:''; position:absolute; width:76px; height:76px;
-      }
-      body[data-frame="brackets"] .ha-home__hero-arc-wrap::before{
-        top:-13px; right:-13px;
-        border-top:3px solid var(--teal); border-right:3px solid var(--teal);
-        border-top-right-radius:22px;
-      }
-      body[data-frame="brackets"] .ha-home__hero-arc-wrap::after{
-        bottom:-13px; left:-13px;
-        border-bottom:3px solid var(--teal); border-left:3px solid var(--teal);
-        border-bottom-left-radius:22px;
-      }
-      body[data-frame="brackets"] .ha-home__hero-arc{ display:none; }
+      body[data-frame="wash"] .ha-home__hero-arc{ display:none; }
     }
     @keyframes haFrameDrift{
       0%,100%{ transform:translate(18px, calc(-50% - 18px)); }
       50%{ transform:translate(25px, calc(-50% - 25px)); }
+    }
+    @keyframes haWashPulse{
+      0%,100%{ opacity:1; }
+      50%{ opacity:.55; }
     }
     @media (max-width:1080px){
       .ha-home__hero{ min-height:auto; }
@@ -914,7 +909,7 @@
 }
 </style>
 </head>
-<body data-frame="mat">
+<body data-frame="wash">
   <!-- MOCK ONLY: Option C preview; not for production -->
   <div style="position:fixed;left:14px;bottom:14px;z-index:9999;background:#13343b;color:#fff;font:600 12px 'Manrope',Arial,sans-serif;padding:8px 14px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.35);pointer-events:none;">Mock D3 v3 &mdash; framed split</div>
   <!-- MOCK ONLY: frame-style switcher -->
@@ -923,7 +918,7 @@
     <button data-f="outline" type="button">Outline</button>
     <button data-f="mat" type="button">Mat</button>
     <button data-f="ring" type="button">Ring</button>
-    <button data-f="brackets" type="button">Brackets</button>
+    <button data-f="wash" type="button">Wash</button>
   </div>
   <script>
   (function(){
