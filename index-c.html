@@ -266,18 +266,24 @@
          captions stay readable. Centered with top:50% + translateY. */
       .ha-home__hero-media,
       .ha-home__hero-arc-wrap{
-        position:absolute; top:50%; right:0; bottom:auto;
+        /* Bottom-anchored: the video's bottom edge sits exactly where the
+           mission wave begins, so the wave washes over it — no floating
+           band or stray line below. Curve on the top-left only; the
+           bottom edge runs straight into the wave. */
+        position:absolute; top:auto; right:0; bottom:0;
         width:62%; aspect-ratio:16/9; height:auto;
-        transform:translateY(-50%);
-        border-radius:28.125% 0 0 28.125% / 50% 0 0 50%;
+        border-radius:28.125% 0 0 0 / 50% 0 0 0;
       }
       .ha-home__hero-media{
         z-index:2; overflow:hidden;
-        filter:drop-shadow(-8px 0 24px rgba(132,169,140,.32));
+        /* teal glow along the curve + a downward shadow to seat the pane
+           (no rim strip below — that read as a stray line) */
+        filter:drop-shadow(-8px 0 24px rgba(132,169,140,.32)) drop-shadow(0 16px 32px rgba(15,21,25,.45));
         animation:heroMediaFade 1s var(--ease-out) both;
       }
-      /* Teal rim: same pill silhouette peeking out below-left, echoing
-         the production arc accent. */
+      /* Teal rim: crescent hugging ONLY the pill curve (left-only offset —
+         a vertical offset pokes out under the pane's long bottom edge and
+         reads as a stray line). */
       .ha-home__hero-arc-wrap{
         z-index:1;
         animation:heroSeamWipe 1.15s var(--ease-out) .12s both;
@@ -285,12 +291,12 @@
       .ha-home__hero-arc{
         display:block; position:absolute; inset:0;
         border-radius:inherit;
-        transform:translate(-20px,16px);
+        transform:translateX(-20px);
         background:linear-gradient(176deg, var(--deep-teal) 0%, var(--teal) 50%, var(--deep-teal) 100%);
       }
-      /* Pane bottom sits well above the mission wave — controls hug the
-         corner. (Selector depth beats the later base offset rule.) */
-      .ha-home__hero-media .ha-home__hero-ctrls{ bottom:16px; }
+      /* The wave washes over the pane's bottom 48px — keep the controls
+         just above it. (Selector depth beats the later base offset rule.) */
+      .ha-home__hero-media .ha-home__hero-ctrls{ bottom:64px; }
     }
     @media (max-width:1080px){
       .ha-home__hero{ min-height:auto; }
