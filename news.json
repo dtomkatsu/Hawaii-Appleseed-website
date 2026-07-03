@@ -1,6 +1,79 @@
 {
   "blog": [
     {
+      "id": "6a46f9f3b5c4b03bbfb6c0f1",
+      "title": "Safe streets for all: Why Hawai\u02bbi can\u2019t wait another year for pedestrian safety progress ",
+      "excerpt": "<p style=\"white-space:pre-wrap;\" data-rte-preserve-empty=\"true\">Hawai\u02bbi\u2019s pedestrians are in crisis. Fatalities are rising, our most dangerous intersections remain unfixed, and the people most affected continue to bear the heaviest burden.</p>",
+      "fullUrl": "/blog/safe-streets-for-all-hawaii-pedestrian-safety-progress",
+      "publishOn": 1783015222792,
+      "categories": [
+        "Transportation Equity"
+      ],
+      "tags": [
+        "Multi-Modal Transportation",
+        "Transportation",
+        "Transportation Costs",
+        "Transportation Equity",
+        "Transportation Funding",
+        "Transportation Infrastructure",
+        "Transportation Policy",
+        "Transportation Sector",
+        "Transportation System",
+        "Public Transportation",
+        "Mobility",
+        "Mobility Needs",
+        "Accessibility",
+        "Accessible Pedestrian Signals",
+        "APS",
+        "Leading Pedestrian Intervals",
+        "LPI",
+        "Pedestrian",
+        "Pedestrian Head Start",
+        "Pedestrian Infrastructure",
+        "Pedestrian Safety",
+        "Public Safety",
+        "Traffic Safety",
+        "Traffic",
+        "Traffic Deaths",
+        "Public Health",
+        "Public Health Crisis",
+        "Community Health",
+        "Community Investment",
+        "Community Planning",
+        "Urban Planning",
+        "Vehicle Travel",
+        "Hawaii State Legislature",
+        "Legislation",
+        "Legislative Agenda",
+        "Legislative Appropriation",
+        "Legislative Branch",
+        "Legislative Process",
+        "Legislative Session",
+        "Legislative Session 2026",
+        "Public Policy",
+        "State Policy",
+        "State Government",
+        "State Budget",
+        "Government",
+        "Government Budget",
+        "Government Funding",
+        "State Law",
+        "Fund Our Future",
+        "People First",
+        "Systems Change",
+        "Vulnerable Populations",
+        "Keiki Health",
+        "Kupuna Health",
+        "Persons With Disabilities",
+        "Americans With Disabilities Act",
+        "Quality of Life",
+        "Standard of Living"
+      ],
+      "author": {
+        "displayName": "Malia Boksanski"
+      }
+    },
+    {
       "id": "6a1f315cf602316e6ae24df1",
       "title": "Summer streets pilot, e-bike rules headline Hawai\u02bbi\u2019s modest transportation wins",
       "excerpt": "<p style=\"white-space:pre-wrap;\" data-rte-preserve-empty=\"true\">Progress on transportation equity comes in layers\u2014a pilot program here, a clear legal definition there, a coalition that grows a little stronger each session.&nbsp;</p>",
@@ -73611,5 +73684,5 @@
       "outlet": "Honolulu Advertiser"
     }
   ],
-  "lastSynced": 1782982158981
+  "lastSynced": 1783068940739
 }
