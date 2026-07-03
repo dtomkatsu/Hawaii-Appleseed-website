@@ -166,7 +166,9 @@
        SECTION 1 — HERO (full-screen video)
     ───────────────────────────────────── */
     .ha-home__hero {
-      min-height:100vh;
+      /* 86svh (was 100vh): a shorter hero makes the curved video pane less
+         tall-and-narrow, so much less of the 16:9 frame is cropped away. */
+      min-height:86vh; min-height:86svh;
       /* Left-side background — the video lives in the curved viewport on the right. */
       background:
         radial-gradient(58% 70% at 6% 10%, rgba(132,169,140,0.30) 0%, transparent 56%),
@@ -204,7 +206,7 @@
        actions pulled up right beneath it (no stranded second screen). The
        whole group is vertically centered below the fixed nav. */
     .hero-inner { position:relative; z-index:2; max-width:680px;
-      min-height:100vh; min-height:100svh;
+      min-height:86vh; min-height:86svh;
       display:flex; flex-direction:column; justify-content:center;
       padding:7rem 1.5rem 3rem; padding-left:clamp(20px,7vw,104px);
       transform-style:preserve-3d; }
@@ -238,6 +240,13 @@
       position:relative; width:100%; height:44vh; z-index:1;
       background:var(--dark-slate); overflow:hidden;
     }
+    /* Stacked (mobile) band: exact 16:9 so the full video frame is visible.
+       The 44vh height above stays as the fallback for older browsers. */
+    @supports (aspect-ratio: 16/9){
+      @media (max-width:980px){
+        .ha-home__hero-media{ height:auto; aspect-ratio:16/9; }
+      }
+    }
     .ha-home__hero-media .ha-home__hero-photo,
     .ha-home__hero-media .ha-home__hero-canvas,
     .ha-home__hero-media .ha-home__hero-video{
@@ -246,10 +255,11 @@
     .ha-home__hero-media .ha-home__hero-video{ z-index:0; }
     .ha-home__hero-arc{ display:none; }
     @media (min-width:981px){
-      .hero-inner{ width:46%; max-width:680px; padding-right:2.5rem; }
+      .hero-inner{ width:42%; max-width:680px; padding-right:2.5rem; }
       .ha-home__hero-media,
       .ha-home__hero-arc-wrap{
-        position:absolute; top:0; right:0; bottom:0; height:auto; width:53%;
+        /* 58% (was 53%): wider pane → closer to the video's 16:9, less crop */
+        position:absolute; top:0; right:0; bottom:0; height:auto; width:58%;
       }
       .ha-home__hero-media{
         z-index:2; overflow:hidden; transform-origin:right center;
@@ -315,7 +325,9 @@
        Hidden until the video actually loads (so nothing dangles if it 404s).
        Collapses to an icon-only mute toggle once sound is on. */
     .ha-home__hero-audio{
-      position:absolute; z-index:3; right:16px; bottom:16px;
+      /* bottom offset clears the mission wave's 48px overhang, which paints
+         above the hero and was swallowing the button at bottom:16px */
+      position:absolute; z-index:3; right:16px; bottom:68px;
       display:inline-flex; align-items:center; gap:.5rem;
       padding:.5rem .8rem;
       font-family:'Manrope',sans-serif; font-size:.8rem; font-weight:600; letter-spacing:.01em;
@@ -336,7 +348,7 @@
     .ha-home__hero-audio.is-on .icon-on{ display:block; }
     .ha-home__hero-audio.is-on .ha-home__hero-audio-label{ display:none; }
     @media (max-width:700px){
-      .ha-home__hero-audio{ right:12px; bottom:12px; font-size:.75rem; padding:.45rem .7rem; }
+      .ha-home__hero-audio{ right:12px; bottom:60px; font-size:.75rem; padding:.45rem .7rem; }
     }
     /* Gentle ring pulse while still muted, so "tap for sound" gets noticed. */
     @media (prefers-reduced-motion:no-preference){
@@ -370,16 +382,16 @@
     @media (prefers-reduced-motion: reduce){ .ha-home__mission::before{ animation:none; } }
     /* organic watercolor top edge — layered teal washes rise out of the hero */
     .ha-home__mission-wave{
-      position:absolute; left:-2%; right:-2%; width:104%; top:-104px; height:108px;
+      position:absolute; left:-2%; right:-2%; width:104%; top:-48px; height:52px;
       pointer-events:none; z-index:0; display:block; will-change:transform;
       animation:missionWaveRise 1.3s var(--ease-out) .35s both;
     }
     /* mirrored watercolor bottom edge — teal washes bleed down into the white below */
     .ha-home__mission-wave-btm{
-      position:absolute; left:-2%; right:-2%; width:104%; bottom:-104px; height:108px;
+      position:absolute; left:-2%; right:-2%; width:104%; bottom:-48px; height:52px;
       transform:scaleY(-1); pointer-events:none; z-index:1; display:block;
     }
-    @keyframes missionWaveRise{ from{ transform:translateY(96px); } to{ transform:translateY(0); } }
+    @keyframes missionWaveRise{ from{ transform:translateY(44px); } to{ transform:translateY(0); } }
     /* faint sprout watermark for depth (parallaxes behind the text) */
     .ha-home__mission-mark{
       position:absolute; left:50%; top:50%; width:min(52vw,400px); height:auto;
