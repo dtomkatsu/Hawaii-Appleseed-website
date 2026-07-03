@@ -1493,18 +1493,34 @@
       else          { iframe.style.height = h + 'px'; iframe.style.width  = Math.ceil(h * AR) + 'px'; }
     }
 
-    function createPlayer(){
+    function createPlayer(opts){
       if(player) return;
+      opts = opts || {};
+      var startAt = opts.startAt || 0;
+      var withSound = !!opts.withSound;
+      // (Re)create the mount div — YT.Player replaces it with the iframe, and
+      // destroy() removes the iframe without restoring the div.
+      var m = document.getElementById('hero-yt');
+      if(!m){
+        m = document.createElement('div');
+        m.id = 'hero-yt';
+        wrap.insertBefore(m, wrap.firstChild);
+      }
       player = new YT.Player('hero-yt', {
         videoId: HERO_YT_ID,
         host: 'https://www.youtube-nocookie.com',   // no cookies until playback
         playerVars: {
-          autoplay:1, mute:1, controls:0, loop:1, playlist:HERO_YT_ID,
+          autoplay:1, mute:withSound ? 0 : 1, start:startAt,
+          controls:0, loop:1, playlist:HERO_YT_ID,
           playsinline:1, modestbranding:1, rel:0, iv_load_policy:3,
           disablekb:1, fs:0, cc_load_policy:0
         },
         events: {
-          onReady: function(e){ e.target.mute(); e.target.playVideo(); cover(); btn.classList.add('is-visible'); },
+          onReady: function(e){
+            if(withSound){ e.target.unMute(); e.target.setVolume(100); }
+            else { e.target.mute(); }
+            e.target.playVideo(); cover(); btn.classList.add('is-visible');
+          },
           onStateChange: function(e){ if(e.data === YT.PlayerState.PLAYING){ wrap.classList.add('is-playing'); cover(); } }
         }
       });
@@ -1522,31 +1538,55 @@
       }
     }
 
+    // Some browsers (Safari especially) silently refuse unmuting a cross-
+    // origin iframe from the parent page. Rebuild the player unmuted at the
+    // same timestamp — allowed, since it happens inside the user's click.
+    function rebuildWithSound(){
+      var t = 0;
+      try { t = Math.max(0, Math.floor(player.getCurrentTime() || 0)); } catch(err){}
+      try { player.destroy(); } catch(err){}
+      player = null;
+      createPlayer({ startAt: t, withSound: true });
+    }
+
     btn.addEventListener('click', function(){
       if(!player || !player.unMute) return;
       soundOn = !soundOn;
-      if(soundOn){ player.unMute(); player.setVolume(100); player.playVideo(); }
+      if(soundOn){
+        player.unMute(); player.setVolume(100); player.playVideo();
+        // Verify the unmute stuck; if the browser refused, rebuild unmuted.
+        setTimeout(function(){
+          if(!soundOn || !player || !player.isMuted) return;
+          var stuckMuted = false;
+          try { stuckMuted = player.isMuted() || player.getPlayerState() !== YT.PlayerState.PLAYING; } catch(err){}
+          if(stuckMuted) rebuildWithSound();
+        }, 600);
+      }
       else { player.mute(); }
       btn.classList.toggle('is-on', soundOn);
       btn.setAttribute('aria-label', soundOn ? 'Mute video' : 'Turn on sound');
     });
 
-    // Mobile fallback: some mobile players hold even muted autoplay until a
-    // gesture. Any touch/scroll/tap kicks playback (still muted); listeners
-    // stay armed until playback actually succeeds, then detach.
-    function removeKick(){
-      window.removeEventListener('touchstart', gestureKick);
-      window.removeEventListener('scroll', gestureKick);
-      window.removeEventListener('pointerdown', gestureKick);
-    }
-    function gestureKick(){
+    // Keep-alive: browsers and YouTube pause background embeds (tab switch,
+    // low-power mode, occlusion) and with the player chrome disabled there is
+    // no way to resume it by hand. Any gesture — or returning to the tab —
+    // resumes playback. Listeners stay armed for the life of the page.
+    function ensurePlaying(){
       if(!player || !player.getPlayerState || !window.YT) return;
-      if(player.getPlayerState() === YT.PlayerState.PLAYING){ removeKick(); return; }
-      if(!soundOn){ player.mute(); player.playVideo(); }
+      var s;
+      try { s = player.getPlayerState(); } catch(err){ return; }
+      if(s === YT.PlayerState.PLAYING || s === YT.PlayerState.BUFFERING) return;
+      try {
+        if(!soundOn) player.mute();
+        player.playVideo();
+      } catch(err){}
     }
-    window.addEventListener('touchstart', gestureKick, {passive:true});
-    window.addEventListener('scroll', gestureKick, {passive:true});
-    window.addEventListener('pointerdown', gestureKick, {passive:true});
+    window.addEventListener('touchstart', ensurePlaying, {passive:true});
+    window.addEventListener('scroll', ensurePlaying, {passive:true});
+    window.addEventListener('pointerdown', ensurePlaying, {passive:true});
+    document.addEventListener('visibilitychange', function(){
+      if(!document.hidden) ensurePlaying();
+    });
 
     window.addEventListener('resize', cover, {passive:true});
   })();
