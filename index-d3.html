@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MOCK D3 (refined split card) — Hawaiʻi Appleseed</title>
+  <title>MOCK D3 v2 (framed split) — Hawaiʻi Appleseed</title>
   <meta name="description" content="Hawaiʻi Appleseed Center for Law &amp; Economic Justice — advancing economic justice for and with the people of Hawaiʻi." />
 
   <!-- Brand fonts (per Appleseed brand guide): Manrope for headings / display, Poppins for body and italic editorial accents. -->
@@ -255,24 +255,43 @@
     .ha-home__hero-media .ha-home__hero-video{ z-index:0; }
     .ha-home__hero-arc{ display:none; }
     @media (min-width:1081px){
-      .hero-inner{ width:42%; max-width:680px; padding-right:2.5rem; }
-      /* ── MOCK D3: refined split card ──
-         Text left, the full 16:9 film in a clean rounded card on the
-         right — vertically centered, quiet single shadow, no teal echo,
-         no curves fighting the rectangle. Width is capped so the card
-         always fits inside the hero on short/wide screens. */
-      .ha-home__hero-media{
-        position:absolute; top:calc(50% + 2rem); right:3.5vw; bottom:auto;
-        width:min(52%, calc((86svh - 12rem) * 16 / 9));
+      .hero-inner{ width:44%; max-width:680px; padding-right:2rem; }
+      /* ── MOCK D3 v2: framed split ──
+         Full 16:9 film at half the display width, right of the text,
+         vertically centered so text and video are BOTH fully on screen
+         at page open. Frame effect: a thin teal outline frame offset to
+         the upper-right that drifts gently, plus a teal-tinted glow —
+         layered, alive, but not competing with the footage. */
+      .ha-home__hero-media,
+      .ha-home__hero-arc-wrap{
+        position:absolute; top:calc(50% + 2rem); right:3vw; bottom:auto;
+        width:min(50vw, calc((100svh - 200px) * 16 / 9));
         aspect-ratio:16/9; height:auto;
+        border-radius:16px;
+      }
+      .ha-home__hero-media{
         transform:translateY(-50%);
         z-index:2; overflow:hidden;
-        border-radius:20px;
-        box-shadow:0 18px 48px rgba(15,21,25,.45);
+        box-shadow:
+          0 18px 48px rgba(15,21,25,.5),
+          0 0 0 1px rgba(255,255,255,.06),
+          -18px 24px 60px rgba(132,169,140,.22);
         animation:heroMediaFade 1s var(--ease-out) both;
       }
+      .ha-home__hero-arc-wrap{
+        z-index:1; overflow:visible;
+        border:2px solid var(--teal);
+        background:transparent;
+        opacity:.85;
+        transform:translate(18px, calc(-50% - 18px));
+        animation:heroMediaFade 1.2s var(--ease-out) .15s both, haFrameDrift 9s ease-in-out infinite;
+      }
+      .ha-home__hero-arc{ display:none; }
       .ha-home__hero-media .ha-home__hero-ctrls{ bottom:16px; }
-      .ha-home__hero-arc-wrap, .ha-home__hero-arc{ display:none; }
+    }
+    @keyframes haFrameDrift{
+      0%,100%{ transform:translate(18px, calc(-50% - 18px)); }
+      50%{ transform:translate(25px, calc(-50% - 25px)); }
     }
     @media (max-width:1080px){
       .ha-home__hero{ min-height:auto; }
@@ -854,7 +873,7 @@
 </head>
 <body>
   <!-- MOCK ONLY: Option C preview; not for production -->
-  <div style="position:fixed;left:14px;bottom:14px;z-index:9999;background:#13343b;color:#fff;font:600 12px 'Manrope',Arial,sans-serif;padding:8px 14px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.35);pointer-events:none;">Mock D3 &mdash; refined split card</div>
+  <div style="position:fixed;left:14px;bottom:14px;z-index:9999;background:#13343b;color:#fff;font:600 12px 'Manrope',Arial,sans-serif;padding:8px 14px;border-radius:999px;box-shadow:0 2px 10px rgba(0,0,0,.35);pointer-events:none;">Mock D3 v2 &mdash; framed split</div>
 
   <!-- Tier-1: scroll progress indicator -->
   <div class="px-scroll-progress" aria-hidden="true"></div>
