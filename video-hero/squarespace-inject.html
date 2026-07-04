@@ -18,8 +18,14 @@
     width:100%;
     aspect-ratio:16/9;
     background:var(--ha-vh-charcoal) url('https://i.ytimg.com/vi/acQkwn2yhiI/maxresdefault.jpg') center/cover no-repeat;
-    border-radius:12px;
+    border-radius:16px;
     overflow:hidden;
+    /* Ring frame (matches the homepage hero): crisp teal rim + halo glow */
+    border:3px solid var(--ha-vh-teal);
+    box-shadow:
+      0 18px 48px rgba(15,21,25,0.5),
+      -14px 20px 56px rgba(132,169,140,0.38),
+      0 0 0 9px rgba(132,169,140,0.13);
   }
   /* Fallback for older browsers without aspect-ratio support */
   @supports not (aspect-ratio:16/9){
@@ -33,8 +39,17 @@
     pointer-events:none;   /* keep YouTube's own UI out of reach */
   }
   #ha-video-hero .ha-vh-frame.is-playing iframe{ opacity:1; }
-  #ha-video-hero .ha-vh-audio{
+  /* Watermark controls cluster - pause + sound, frosted pills in the
+     video's lower-right. Hidden until the player is ready. */
+  #ha-video-hero .ha-vh-ctrls{
     position:absolute; z-index:3; right:16px; bottom:16px;
+    display:flex; align-items:center; gap:8px;
+    opacity:0; visibility:hidden;
+    transition:opacity .35s ease;
+  }
+  #ha-video-hero .ha-vh-ctrls.is-visible{ opacity:1; visibility:visible; }
+  #ha-video-hero .ha-vh-audio,
+  #ha-video-hero .ha-vh-pause{
     display:inline-flex; align-items:center; gap:.5rem;
     padding:.5rem .8rem;
     font-family:'Manrope','Arial',sans-serif;
@@ -44,24 +59,28 @@
     -webkit-backdrop-filter:blur(8px) saturate(1.2); backdrop-filter:blur(8px) saturate(1.2);
     border:1px solid rgba(255,255,255,0.28); border-radius:999px;
     cursor:pointer; box-shadow:0 2px 12px rgba(18,26,30,0.28);
-    opacity:0; visibility:hidden;
-    transition:background .2s ease, transform .2s ease, opacity .35s ease;
+    transition:background .2s ease, transform .2s ease;
   }
-  #ha-video-hero .ha-vh-audio.is-visible{ opacity:1; visibility:visible; }
-  #ha-video-hero .ha-vh-audio:hover{ background:rgba(24,34,39,0.64); transform:translateY(-1px); }
-  #ha-video-hero .ha-vh-audio:focus-visible{ outline:2px solid var(--ha-vh-teal); outline-offset:2px; }
-  #ha-video-hero .ha-vh-audio svg{ width:18px; height:18px; display:block; flex:none; }
+  #ha-video-hero .ha-vh-pause{ padding:.5rem .55rem; }
+  #ha-video-hero .ha-vh-audio:hover, #ha-video-hero .ha-vh-pause:hover{ background:rgba(24,34,39,0.64); transform:translateY(-1px); }
+  #ha-video-hero .ha-vh-audio:focus-visible, #ha-video-hero .ha-vh-pause:focus-visible{ outline:2px solid var(--ha-vh-teal); outline-offset:2px; }
+  #ha-video-hero .ha-vh-audio svg, #ha-video-hero .ha-vh-pause svg{ width:18px; height:18px; display:block; flex:none; }
   #ha-video-hero .ha-vh-audio .ha-vh-icon-on{ display:none; }
   #ha-video-hero .ha-vh-audio.is-on .ha-vh-icon-muted{ display:none; }
   #ha-video-hero .ha-vh-audio.is-on .ha-vh-icon-on{ display:block; }
   #ha-video-hero .ha-vh-audio.is-on .ha-vh-audio-label{ display:none; }
+  #ha-video-hero .ha-vh-pause .ha-vh-icon-play{ display:none; }
+  #ha-video-hero .ha-vh-pause.is-paused .ha-vh-icon-pause{ display:none; }
+  #ha-video-hero .ha-vh-pause.is-paused .ha-vh-icon-play{ display:block; }
   @media (max-width:700px){
-    #ha-video-hero .ha-vh-frame{ border-radius:8px; }
-    #ha-video-hero .ha-vh-audio{ right:12px; bottom:12px; font-size:.75rem; padding:.45rem .7rem; }
+    #ha-video-hero .ha-vh-frame{ border-radius:12px; border-width:2px; }
+    #ha-video-hero .ha-vh-ctrls{ right:12px; bottom:12px; gap:6px; }
+    #ha-video-hero .ha-vh-audio{ font-size:.75rem; padding:.45rem .7rem; }
+    #ha-video-hero .ha-vh-pause{ padding:.45rem .5rem; }
   }
   /* Gentle ring pulse while still muted, so the button gets noticed */
   @media (prefers-reduced-motion:no-preference){
-    #ha-video-hero .ha-vh-audio.is-visible:not(.is-on){ animation:haVhPulse 2.6s ease-in-out 1s 3; }
+    #ha-video-hero .ha-vh-ctrls.is-visible .ha-vh-audio:not(.is-on){ animation:haVhPulse 2.6s ease-in-out 1s 3; }
   }
   @keyframes haVhPulse{
     0%,100%{ box-shadow:0 2px 12px rgba(18,26,30,0.28); }
@@ -71,17 +90,27 @@
 
 <div class="ha-vh-frame">
   <div id="ha-vh-player"></div>
-  <button class="ha-vh-audio" type="button" aria-label="Turn on sound">
-    <svg class="ha-vh-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-      <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
-    </svg>
-    <svg class="ha-vh-icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-    </svg>
-    <span class="ha-vh-audio-label">Tap for sound</span>
-  </button>
+  <div class="ha-vh-ctrls">
+    <button class="ha-vh-pause" type="button" aria-label="Pause video">
+      <svg class="ha-vh-icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="9" y1="5" x2="9" y2="19"/><line x1="15" y1="5" x2="15" y2="19"/>
+      </svg>
+      <svg class="ha-vh-icon-play" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polygon points="7 4 20 12 7 20 7 4"/>
+      </svg>
+    </button>
+    <button class="ha-vh-audio" type="button" aria-label="Turn on sound">
+      <svg class="ha-vh-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+      </svg>
+      <svg class="ha-vh-icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+      </svg>
+      <span class="ha-vh-audio-label">Tap for sound</span>
+    </button>
+  </div>
 </div>
 
 <script>
@@ -90,10 +119,13 @@
 
   var root = document.getElementById('ha-video-hero');
   var frame = root && root.querySelector('.ha-vh-frame');
+  var ctrls = root && root.querySelector('.ha-vh-ctrls');
   var btn = root && root.querySelector('.ha-vh-audio');
-  if(!root || !frame || !btn) return;
+  var pauseBtn = root && root.querySelector('.ha-vh-pause');
+  if(!root || !frame || !btn || !ctrls || !pauseBtn) return;
 
-  var player, soundOn = false;
+  // userPaused: the visitor pressed pause - the keep-alive must respect it.
+  var player, soundOn = false, userPaused = false;
 
   function createPlayer(opts){
     if(player) return;
@@ -121,9 +153,18 @@
         onReady: function(e){
           if(withSound){ e.target.unMute(); e.target.setVolume(100); }
           else { e.target.mute(); }
-          e.target.playVideo(); btn.classList.add('is-visible');
+          e.target.playVideo(); ctrls.classList.add('is-visible');
         },
-        onStateChange: function(e){ if(e.data === YT.PlayerState.PLAYING){ frame.classList.add('is-playing'); } }
+        onStateChange: function(e){
+          if(e.data === YT.PlayerState.PLAYING){ frame.classList.add('is-playing'); }
+          // Keep the pause icon honest, but only on definitive states -
+          // a BUFFERING blip must not flip it mid-pause.
+          if(e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.PAUSED){
+            var paused = e.data === YT.PlayerState.PAUSED;
+            pauseBtn.classList.toggle('is-paused', paused);
+            pauseBtn.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
+          }
+        }
       }
     });
   }
@@ -167,13 +208,28 @@
     else { player.mute(); }
     btn.classList.toggle('is-on', soundOn);
     btn.setAttribute('aria-label', soundOn ? 'Mute video' : 'Turn on sound');
+    // Turning sound on implies the visitor wants it playing.
+    if(soundOn) userPaused = false;
+  });
+
+  pauseBtn.addEventListener('click', function(){
+    if(!player || !player.getPlayerState) return;
+    var playing = player.getPlayerState() === YT.PlayerState.PLAYING;
+    userPaused = playing;
+    if(playing){ player.pauseVideo(); }
+    else { player.playVideo(); }
+    // onStateChange syncs the icon, but flip it immediately for snap.
+    pauseBtn.classList.toggle('is-paused', playing);
+    pauseBtn.setAttribute('aria-label', playing ? 'Play video' : 'Pause video');
   });
 
   // Keep-alive: browsers and YouTube pause background embeds (tab switch,
   // low-power mode, occlusion) and with the player chrome disabled there is
   // no way to resume it by hand. Any gesture - or returning to the tab -
-  // resumes playback. Listeners stay armed for the life of the page.
+  // resumes playback, unless the visitor pressed pause themselves.
+  // Listeners stay armed for the life of the page.
   function ensurePlaying(){
+    if(userPaused) return;
     if(!player || !player.getPlayerState || !window.YT) return;
     var s;
     try { s = player.getPlayerState(); } catch(err){ return; }
