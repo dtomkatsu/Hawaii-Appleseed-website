@@ -313,6 +313,11 @@
        buttons, center play) entirely. Our own play button sits on top.
        Declared after is-playing so it wins when both classes are set. */
     .ha-home__hero-media .ha-home__hero-video.is-paused{ opacity:0; }
+    /* Transparent click layer over the video (above the iframe, below the
+       control buttons at z-index 3): clicking the video toggles play/pause. */
+    .ha-home__hero-media .ha-home__hero-clickcatch{
+      position:absolute; inset:0; z-index:2; cursor:pointer;
+    }
     /* The IFrame API replaces #hero-yt with an <iframe>; JS sizes it to COVER
        the wrapper. Center it and disable pointer events so hovering never
        surfaces YouTube's UI. */
@@ -953,6 +958,9 @@
            fallback shown until (and if) the player loads. Set the video id in
            the hero-video script below (HERO_YT_ID). -->
       <div class="ha-home__hero-video" aria-hidden="true"><div id="hero-yt"></div></div>
+      <!-- Transparent click layer: clicking anywhere on the video toggles
+           play/pause. Sits above the iframe, below the control buttons. -->
+      <div class="ha-home__hero-clickcatch" aria-hidden="true"></div>
       <div class="ha-home__hero-ctrls">
         <button class="ha-home__hero-pause" type="button" aria-label="Pause video">
           <svg class="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1510,6 +1518,7 @@
     var ctrls = media && media.querySelector('.ha-home__hero-ctrls');
     var btn   = media && media.querySelector('.ha-home__hero-audio');
     var pauseBtn = media && media.querySelector('.ha-home__hero-pause');
+    var clickCatch = media && media.querySelector('.ha-home__hero-clickcatch');
     if(!wrap || !mount || !btn || !ctrls || !pauseBtn) return;
     if(!HERO_YT_ID || HERO_YT_ID === 'HERO_YT_ID_HERE') return;  // no id yet → poster stays
 
@@ -1615,7 +1624,8 @@
       if(soundOn) userPaused = false;
     });
 
-    pauseBtn.addEventListener('click', function(){
+    // Toggle play/pause. Shared by the pause button and the click layer.
+    function togglePlayback(){
       if(!player || !player.getPlayerState) return;
       var playing = player.getPlayerState() === YT.PlayerState.PLAYING;
       userPaused = playing;
@@ -1626,7 +1636,10 @@
       pauseBtn.classList.toggle('is-paused', playing);
       pauseBtn.setAttribute('aria-label', playing ? 'Play video' : 'Pause video');
       wrap.classList.toggle('is-paused', playing);
-    });
+    }
+    pauseBtn.addEventListener('click', togglePlayback);
+    // Clicking anywhere on the video (not the buttons) toggles play/pause.
+    if(clickCatch) clickCatch.addEventListener('click', togglePlayback);
 
     // Keep-alive: browsers and YouTube pause background embeds (tab switch,
     // low-power mode, occlusion) and with the player chrome disabled there is
