@@ -308,6 +308,11 @@
       opacity:0; transition:opacity .6s ease;
     }
     .ha-home__hero-media .ha-home__hero-video.is-playing{ opacity:1; }
+    /* When paused, fade the whole player out to reveal the still poster
+       behind it — this hides YouTube's paused overlay (copy-link, skip
+       buttons, center play) entirely. Our own play button sits on top.
+       Declared after is-playing so it wins when both classes are set. */
+    .ha-home__hero-media .ha-home__hero-video.is-paused{ opacity:0; }
     /* The IFrame API replaces #hero-yt with an <iframe>; JS sizes it to COVER
        the wrapper. Center it and disable pointer events so hovering never
        surfaces YouTube's UI. */
@@ -1551,13 +1556,16 @@
             e.target.playVideo(); cover(); ctrls.classList.add('is-visible');
           },
           onStateChange: function(e){
-            if(e.data === YT.PlayerState.PLAYING){ wrap.classList.add('is-playing'); cover(); }
-            // Keep the pause icon honest, but only on definitive states —
-            // a BUFFERING blip must not flip it mid-pause.
+            if(e.data === YT.PlayerState.PLAYING){ wrap.classList.add('is-playing'); wrap.classList.remove('is-paused'); cover(); }
+            // Keep the pause icon + poster honest, but only on definitive
+            // states — a BUFFERING blip must not flip them mid-pause.
             if(e.data === YT.PlayerState.PLAYING || e.data === YT.PlayerState.PAUSED){
               var paused = e.data === YT.PlayerState.PAUSED;
               pauseBtn.classList.toggle('is-paused', paused);
               pauseBtn.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
+              // Fade the player out when paused so YouTube's paused overlay
+              // (copy-link, skip, center play) is hidden behind the poster.
+              wrap.classList.toggle('is-paused', paused);
             }
           }
         }
@@ -1613,9 +1621,11 @@
       userPaused = playing;
       if(playing){ player.pauseVideo(); }
       else { player.playVideo(); }
-      // onStateChange syncs the icon, but flip it immediately for snap.
+      // onStateChange syncs these, but flip them immediately for snap:
+      // icon, and the poster fade that hides YouTube's paused overlay.
       pauseBtn.classList.toggle('is-paused', playing);
       pauseBtn.setAttribute('aria-label', playing ? 'Play video' : 'Pause video');
+      wrap.classList.toggle('is-paused', playing);
     });
 
     // Keep-alive: browsers and YouTube pause background embeds (tab switch,
