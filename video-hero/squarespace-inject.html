@@ -1,18 +1,72 @@
-<!-- Hawaii Appleseed - homepage video hero for Squarespace.
-     Paste this entire file into a Code Block (Edit page > + > Code).
-     Self-contained: scoped styles, YouTube IFrame API, muted autoplay,
-     watermark tap-for-sound toggle. Video: "About Hawaii Appleseed". -->
+<!-- Hawaii Appleseed - homepage hero for Squarespace (mirror of the
+     GitHub Pages homepage hero). Paste this entire file into a Code
+     Block (Edit page > + > Code). Self-contained: scoped styles, brand
+     fonts, headline with thrive underline + logo sprout, CTAs, and the
+     ring-framed YouTube video with muted autoplay, tap-for-sound,
+     pause/play, and click-to-pause. Video: "About Hawaii Appleseed". -->
 <div id="ha-video-hero">
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Poppins:ital,wght@0,300;0,500;1,500&display=swap');
   #ha-video-hero{
     /* Scoped tokens (brand palette) */
     --ha-vh-charcoal:#2f3e46;
+    --ha-vh-slate:#22303a;
     --ha-vh-teal:#84a98c;
+    --ha-vh-deep-teal:#52796f;
     --ha-vh-white:#ffffff;
     position:relative;
     width:100%;
     margin:0 auto;
+    border-radius:20px;
+    overflow:hidden;
+    background:
+      radial-gradient(58% 70% at 6% 10%, rgba(132,169,140,0.30) 0%, transparent 56%),
+      linear-gradient(144deg, #2a3942 0%, var(--ha-vh-charcoal) 44%, var(--ha-vh-slate) 100%);
+    padding:clamp(28px, 5vw, 56px);
   }
+  #ha-video-hero .ha-vh-inner{
+    display:grid; grid-template-columns:1fr; gap:28px; align-items:center;
+  }
+  @media (min-width:900px){
+    #ha-video-hero .ha-vh-inner{ grid-template-columns:2fr 3fr; gap:clamp(28px, 4vw, 56px); }
+  }
+  #ha-video-hero .ha-vh-headline{
+    font-family:'Manrope','Arial',sans-serif; font-weight:400;
+    font-size:clamp(1.9rem, 3.6vw, 3.2rem); line-height:1.14; letter-spacing:-0.012em;
+    color:var(--ha-vh-white); margin:0 0 1.4rem;
+    text-shadow:0 2px 28px rgba(18,26,30,0.32);
+  }
+  #ha-video-hero .ha-vh-headline em{
+    font-family:'Poppins','Arial',sans-serif; font-style:italic; font-weight:500;
+    color:var(--ha-vh-teal); position:relative;
+    text-shadow:0 2px 22px rgba(132,169,140,0.45);
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 226 34' preserveAspectRatio='none'%3E%3Cpath d='M8 26 C 58 18 116 30 166 23 C 198 19 216 22 220 25' fill='none' stroke='%2384A98C' stroke-width='4' stroke-linecap='round'/%3E%3Cg transform='translate(62,24) rotate(-48) scale(0.95)'%3E%3Cpath d='M0 0 L 3 0' stroke='%2384A98C' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpath d='M3 0 C 7 -3 13 -4 20 0 C 13 4 7 3 3 0 Z' fill='%2384A98C' fill-opacity='0.78'/%3E%3Cpath d='M5 0 Q 12 0.6 19 0' fill='none' stroke='%2333453a' stroke-width='0.7' opacity='0.32'/%3E%3C/g%3E%3Cg transform='translate(150,22) rotate(-32) scale(0.8)'%3E%3Cpath d='M0 0 L 3 0' stroke='%2384A98C' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpath d='M3 0 C 7 -3 13 -4 20 0 C 13 4 7 3 3 0 Z' fill='%2384A98C' fill-opacity='0.78'/%3E%3Cpath d='M5 0 Q 12 0.6 19 0' fill='none' stroke='%2333453a' stroke-width='0.7' opacity='0.32'/%3E%3C/g%3E%3C/svg%3E") no-repeat left bottom / 100% 0.42em;
+    padding-bottom:.1em;
+  }
+  /* Two-leaf sprout above the period - echoes the Appleseed logo mark */
+  #ha-video-hero .ha-vh-headline em::after{
+    content:""; position:absolute; right:-.66em; top:-.04em; width:.58em; height:.62em;
+    background-color:var(--ha-vh-teal); pointer-events:none;
+    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 30'><path d='M14 28 C 14 20 14 14 14 8' stroke='%23000' stroke-width='1.8' fill='none' stroke-linecap='round'/><path d='M14 12 C 6 11 3 5 7 1 C 12 3 15 7 14 12 Z' fill='%23000'/><path d='M14 16 C 21 15 25 10 22 5 C 17 7 14 11 14 16 Z' fill='%23000' fill-opacity='0.75'/></svg>") no-repeat center/contain;
+            mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 30'><path d='M14 28 C 14 20 14 14 14 8' stroke='%23000' stroke-width='1.8' fill='none' stroke-linecap='round'/><path d='M14 12 C 6 11 3 5 7 1 C 12 3 15 7 14 12 Z' fill='%23000'/><path d='M14 16 C 21 15 25 10 22 5 C 17 7 14 11 14 16 Z' fill='%23000' fill-opacity='0.75'/></svg>") no-repeat center/contain;
+  }
+  #ha-video-hero .ha-vh-actions{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  #ha-video-hero .ha-vh-btn{
+    display:inline-block; text-decoration:none;
+    font-family:'Manrope','Arial',sans-serif; font-weight:600; font-size:.85rem;
+    letter-spacing:.06em; text-transform:uppercase;
+    padding:.85rem 1.5rem; border-radius:7px;
+    transition:background .25s ease, color .25s ease, border-color .25s ease, transform .18s ease;
+  }
+  #ha-video-hero .ha-vh-btn:hover{ transform:translateY(-1px); }
+  #ha-video-hero .ha-vh-btn-solid{
+    background:var(--ha-vh-teal); color:#13343b; border:1px solid var(--ha-vh-teal);
+  }
+  #ha-video-hero .ha-vh-btn-solid:hover{ background:#95b89c; }
+  #ha-video-hero .ha-vh-btn-ghost{
+    background:transparent; color:var(--ha-vh-white); border:1px solid rgba(255,255,255,0.45);
+  }
+  #ha-video-hero .ha-vh-btn-ghost:hover{ border-color:var(--ha-vh-white); }
   #ha-video-hero .ha-vh-frame{
     position:relative;
     width:100%;
@@ -82,10 +136,12 @@
   #ha-video-hero .ha-vh-pause.is-paused .ha-vh-icon-pause{ display:none; }
   #ha-video-hero .ha-vh-pause.is-paused .ha-vh-icon-play{ display:block; }
   @media (max-width:700px){
+    #ha-video-hero{ border-radius:14px; }
     #ha-video-hero .ha-vh-frame{ border-radius:12px; border-width:2px; }
     #ha-video-hero .ha-vh-ctrls{ right:12px; bottom:12px; gap:6px; }
     #ha-video-hero .ha-vh-audio{ font-size:.75rem; padding:.45rem .7rem; }
     #ha-video-hero .ha-vh-pause{ padding:.45rem .5rem; }
+    #ha-video-hero .ha-vh-btn{ padding:.75rem 1.2rem; font-size:.8rem; }
   }
   /* Gentle ring pulse while still muted, so the button gets noticed */
   @media (prefers-reduced-motion:no-preference){
@@ -97,31 +153,40 @@
   }
 </style>
 
-<div class="ha-vh-frame">
-  <div id="ha-vh-player"></div>
-  <!-- Transparent click layer: clicking the video toggles play/pause.
-       Above the iframe, below the control buttons. -->
-  <div class="ha-vh-clickcatch" aria-hidden="true"></div>
-  <div class="ha-vh-ctrls">
-    <button class="ha-vh-pause" type="button" aria-label="Pause video">
-      <svg class="ha-vh-icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <line x1="9" y1="5" x2="9" y2="19"/><line x1="15" y1="5" x2="15" y2="19"/>
-      </svg>
-      <svg class="ha-vh-icon-play" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polygon points="7 4 20 12 7 20 7 4"/>
-      </svg>
-    </button>
-    <button class="ha-vh-audio" type="button" aria-label="Turn on sound">
-      <svg class="ha-vh-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-        <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
-      </svg>
-      <svg class="ha-vh-icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-      </svg>
-      <span class="ha-vh-audio-label">Tap for sound</span>
-    </button>
+<div class="ha-vh-inner">
+  <div class="ha-vh-copy">
+    <h2 class="ha-vh-headline">Building a Hawai&#699;i where every family can <em>thrive</em>.</h2>
+    <div class="ha-vh-actions">
+      <a class="ha-vh-btn ha-vh-btn-solid" href="/donate">Support Our Work</a>
+      <a class="ha-vh-btn ha-vh-btn-ghost" href="/issues">Explore the Issues &#8594;</a>
+    </div>
+  </div>
+  <div class="ha-vh-frame">
+    <div id="ha-vh-player"></div>
+    <!-- Transparent click layer: clicking the video toggles play/pause.
+         Above the iframe, below the control buttons. -->
+    <div class="ha-vh-clickcatch" aria-hidden="true"></div>
+    <div class="ha-vh-ctrls">
+      <button class="ha-vh-pause" type="button" aria-label="Pause video">
+        <svg class="ha-vh-icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="9" y1="5" x2="9" y2="19"/><line x1="15" y1="5" x2="15" y2="19"/>
+        </svg>
+        <svg class="ha-vh-icon-play" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="7 4 20 12 7 20 7 4"/>
+        </svg>
+      </button>
+      <button class="ha-vh-audio" type="button" aria-label="Turn on sound">
+        <svg class="ha-vh-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+        <svg class="ha-vh-icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+        <span class="ha-vh-audio-label">Tap for sound</span>
+      </button>
+    </div>
   </div>
 </div>
 
