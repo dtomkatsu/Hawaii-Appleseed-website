@@ -169,11 +169,15 @@
       /* 86svh (was 100vh): a shorter hero makes the curved video pane less
          tall-and-narrow, so much less of the 16:9 frame is cropped away. */
       min-height:86vh; min-height:86svh;
-      /* Left-side background — the video lives in the curved viewport on the right. */
+      /* Lifted a full step from the original charcoal stack: brighter teal
+         ambience top-left, the heavy near-black vignette halved, a soft
+         radiance behind the video, and the base gradient raised so the
+         hero reads airy-dark rather than black. */
       background:
-        radial-gradient(58% 70% at 6% 10%, rgba(132,169,140,0.30) 0%, transparent 56%),
-        radial-gradient(80% 92% at 100% 112%, rgba(15,21,25,0.55) 0%, transparent 58%),
-        linear-gradient(144deg, #2a3942 0%, var(--charcoal) 44%, var(--dark-slate) 100%);
+        radial-gradient(64% 74% at 6% 10%, rgba(132,169,140,0.42) 0%, transparent 58%),
+        radial-gradient(50% 60% at 72% 42%, rgba(132,169,140,0.14) 0%, transparent 65%),
+        radial-gradient(80% 92% at 100% 112%, rgba(15,21,25,0.22) 0%, transparent 58%),
+        linear-gradient(144deg, #35474f 0%, #3b4e54 44%, #40595a 100%);
       display:block;
       position:relative;overflow:hidden;
     }
@@ -181,8 +185,8 @@
     .ha-home__hero::before {
       content:'';position:absolute;inset:0;z-index:0;
       background:
-        radial-gradient(ellipse 70% 55% at 75% 35%, rgba(132,169,140,0.18) 0%, transparent 65%),
-        radial-gradient(ellipse 45% 70% at 8% 85%,  rgba(82,121,111,0.14)  0%, transparent 55%);
+        radial-gradient(ellipse 70% 55% at 75% 35%, rgba(132,169,140,0.26) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 70% at 8% 85%,  rgba(82,121,111,0.20)  0%, transparent 55%);
     }
     /* z0a: the rainbow photo — always present; the universal fallback if WebGL is off. */
     .ha-home__hero-photo {
@@ -378,22 +382,15 @@
     ───────────────────────────────────── */
     /* overflow-x:clip (not hidden) keeps the waves' vertical overhang visible
        while stopping their ±2% horizontal bleed from widening the page. */
-    .ha-home__mission { position:relative; overflow-x:clip; padding:2rem 8% 2rem; text-align:center;
+    /* Deep tide: the band stays in the hero's dark world (deep sea-teal
+       bridging charcoal into the teal family), so dark flows into dark and
+       the sage moment happens exactly once — as the exit wave below. The
+       old drifting caustics are gone; a single still glow centers the
+       statement instead. */
+    .ha-home__mission { position:relative; overflow-x:clip; padding:3rem 8%; text-align:center;
       background:
-        radial-gradient(ellipse 58% 70% at 50% 42%, rgba(216,230,219,.16) 0%, transparent 62%),
-        linear-gradient(180deg, var(--teal) 0%, var(--teal) 24%, #77987f 100%); }
-    /* drifting caustic light behind the text — translucent overlay, slow position drift */
-    .ha-home__mission::before{
-      content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-      background:
-        radial-gradient(34% 50% at 24% 34%, rgba(216,230,219,.22), transparent 60%),
-        radial-gradient(40% 46% at 73% 62%, rgba(216,230,219,.18), transparent 60%),
-        radial-gradient(28% 42% at 50% 84%, rgba(216,230,219,.14), transparent 60%);
-      background-size:200% 200%, 220% 220%, 180% 180%; background-repeat:no-repeat;
-      animation:missionCaustics 18s ease-in-out infinite;
-    }
-    @keyframes missionCaustics{ 0%,100%{ background-position:0% 0%,100% 0%,50% 100%; } 50%{ background-position:30% 45%,60% 65%,35% 55%; } }
-    @media (prefers-reduced-motion: reduce){ .ha-home__mission::before{ animation:none; } }
+        radial-gradient(ellipse 58% 70% at 50% 32%, rgba(132,169,140,.12) 0%, transparent 62%),
+        linear-gradient(180deg, #31434b 0%, #37504d 52%, #3c554f 100%); }
     /* organic watercolor top edge — layered teal washes rise out of the hero */
     .ha-home__mission-wave{
       position:absolute; left:-2%; right:-2%; width:104%; top:-48px; height:52px;
@@ -409,14 +406,15 @@
     /* faint sprout watermark for depth (parallaxes behind the text) */
     .ha-home__mission-mark{
       position:absolute; left:50%; top:50%; width:min(52vw,400px); height:auto;
-      transform:translate(-50%,-50%); color:var(--deep-teal); opacity:.14;
+      transform:translate(-50%,-50%); color:var(--teal); opacity:.08;
       pointer-events:none; z-index:0; will-change:transform;
     }
     .ha-home__mission h2 {
       position:relative; z-index:1;
       font-family:'Manrope',sans-serif;font-weight:400;
-      font-size:clamp(2rem, 3.6vw, 3rem);line-height:1.22;color:var(--charcoal);
+      font-size:clamp(2rem, 3.6vw, 3rem);line-height:1.22;color:#ecf2ec;
       max-width:26ch;margin:0 auto;
+      text-shadow:0 2px 24px rgba(18,26,30,0.25);
     }
     .ha-home__mission h2.reveal{ opacity:1; transform:none; }       /* h2 stays put; lines animate in */
     .ha-home__mission h2 .ln{ display:inline-block; opacity:0; transform:translateY(20px);
@@ -424,9 +422,9 @@
     .ha-home__mission h2.is-in .ln{ opacity:1; transform:none; }
     .ha-home__mission h2.is-in .ln:nth-child(2){ transition-delay:.12s; }
     .ha-home__mission h2.is-in .ln:nth-child(3){ transition-delay:.24s; }
-    .ha-home__mission h2 em { font-family:'Poppins',sans-serif; font-style:italic; color:var(--dark-slate); position:relative; }
+    .ha-home__mission h2 em { font-family:'Poppins',sans-serif; font-style:italic; color:var(--teal); position:relative; }
     .ha-home__mission h2 em::after{ content:""; position:absolute; left:0; right:0; bottom:-.04em; height:2px;
-      background:var(--dark-slate); transform:scaleX(0); transform-origin:left; transition:transform .7s var(--ease-out) .3s; }
+      background:var(--teal); transform:scaleX(0); transform-origin:left; transition:transform .7s var(--ease-out) .3s; }
     .ha-home__mission h2.is-in em::after{ transform:scaleX(1); }
     /* gentle liquid float — each word drifts on a slow traveling wave */
     .ha-home__mission h2 .wv{ display:inline-block; animation:missionFloat 4.5s ease-in-out infinite; will-change:transform; }
@@ -995,10 +993,10 @@
         <filter id="hmGrain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 0.16 0 0 0 0 0.25 0 0 0 0 0.21 0 0 0 0.5 0"/></filter>
       </defs>
       <g filter="url(#hmWave)">
-        <path fill="#84A98C" opacity="0.26" d="M0 130 L0 28 C 300 14 560 38 820 24 C 1080 10 1300 32 1440 22 L1440 130 Z"/>
-        <path fill="#84A98C" opacity="0.42" d="M0 130 L0 40 C 280 26 560 50 820 36 C 1080 22 1320 44 1440 34 L1440 130 Z"/>
-        <path fill="#84A98C" opacity="0.6" d="M0 130 L0 52 C 320 38 580 62 840 48 C 1080 34 1300 56 1440 46 L1440 130 Z"/>
-        <path fill="#84A98C" d="M0 130 L0 62 C 300 48 560 72 820 58 C 1080 44 1300 66 1440 54 L1440 130 Z"/>
+        <path fill="#37504D" opacity="0.26" d="M0 130 L0 28 C 300 14 560 38 820 24 C 1080 10 1300 32 1440 22 L1440 130 Z"/>
+        <path fill="#37504D" opacity="0.42" d="M0 130 L0 40 C 280 26 560 50 820 36 C 1080 22 1320 44 1440 34 L1440 130 Z"/>
+        <path fill="#37504D" opacity="0.6" d="M0 130 L0 52 C 320 38 580 62 840 48 C 1080 34 1300 56 1440 46 L1440 130 Z"/>
+        <path fill="#37504D" d="M0 130 L0 62 C 300 48 560 72 820 58 C 1080 44 1300 66 1440 54 L1440 130 Z"/>
       </g>
       <rect x="0" y="24" width="1440" height="106" filter="url(#hmGrain)" opacity="0.08"/>
     </svg>
