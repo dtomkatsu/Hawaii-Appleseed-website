@@ -223,7 +223,7 @@
       font-family:'Poppins',sans-serif; font-style:italic; color:var(--teal);
       text-shadow:0 2px 22px rgba(132,169,140,0.45);
       background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 226 34' preserveAspectRatio='none'%3E%3Cpath d='M8 26 C 58 18 116 30 166 23 C 198 19 216 22 220 25' fill='none' stroke='%2384A98C' stroke-width='4' stroke-linecap='round'/%3E%3Cg transform='translate(62,24) rotate(-48) scale(0.95)'%3E%3Cpath d='M0 0 L 3 0' stroke='%2384A98C' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpath d='M3 0 C 7 -3 13 -4 20 0 C 13 4 7 3 3 0 Z' fill='%2384A98C' fill-opacity='0.78'/%3E%3Cpath d='M5 0 Q 12 0.6 19 0' fill='none' stroke='%2333453a' stroke-width='0.7' opacity='0.32'/%3E%3C/g%3E%3Cg transform='translate(150,22) rotate(-32) scale(0.8)'%3E%3Cpath d='M0 0 L 3 0' stroke='%2384A98C' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpath d='M3 0 C 7 -3 13 -4 20 0 C 13 4 7 3 3 0 Z' fill='%2384A98C' fill-opacity='0.78'/%3E%3Cpath d='M5 0 Q 12 0.6 19 0' fill='none' stroke='%2333453a' stroke-width='0.7' opacity='0.32'/%3E%3C/g%3E%3C/svg%3E") no-repeat left bottom / 0% 0.42em;
-      padding-bottom:.26em;
+      padding-bottom:.1em;
       animation:thriveUnderline .7s var(--ease-out) 1.05s both;
     }
     @keyframes thriveUnderline { from { background-size:0% 0.42em; } to { background-size:100% 0.42em; } }
@@ -650,13 +650,15 @@
     .ha-home__hero .hero-actions { animation:heroFade .8s ease .85s both; }
     .ha-home__hero h1 .w         { display:inline-block; animation:heroWordUp .6s cubic-bezier(.22,.61,.36,1) both; }
 
-    /* "thrive" — a small teal leaf unfurls at the top-right of the word on load. */
+    /* "thrive" — a two-leaf sprout (echoing the Appleseed logo mark)
+       unfurls at the top-right of the word on load. The second blade sits
+       at 75% alpha in the mask for a touch of depth. */
     .ha-home__hero h1 em { position:relative; }
     .ha-home__hero h1 em::after{
-      content:""; position:absolute; right:-.54em; top:.04em; width:.42em; height:.62em;
+      content:""; position:absolute; right:-.66em; top:-.04em; width:.58em; height:.62em;
       background-color:var(--teal); pointer-events:none;
-      -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 40'><path d='M12 40 C3 28 3 12 12 0 C21 12 21 28 12 40 Z' fill='%23000'/></svg>") no-repeat center/contain;
-              mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 40'><path d='M12 40 C3 28 3 12 12 0 C21 12 21 28 12 40 Z' fill='%23000'/></svg>") no-repeat center/contain;
+      -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 30'><path d='M14 28 C 14 20 14 14 14 8' stroke='%23000' stroke-width='1.8' fill='none' stroke-linecap='round'/><path d='M14 12 C 6 11 3 5 7 1 C 12 3 15 7 14 12 Z' fill='%23000'/><path d='M14 16 C 21 15 25 10 22 5 C 17 7 14 11 14 16 Z' fill='%23000' fill-opacity='0.75'/></svg>") no-repeat center/contain;
+              mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 30'><path d='M14 28 C 14 20 14 14 14 8' stroke='%23000' stroke-width='1.8' fill='none' stroke-linecap='round'/><path d='M14 12 C 6 11 3 5 7 1 C 12 3 15 7 14 12 Z' fill='%23000'/><path d='M14 16 C 21 15 25 10 22 5 C 17 7 14 11 14 16 Z' fill='%23000' fill-opacity='0.75'/></svg>") no-repeat center/contain;
       transform:scale(0) rotate(-28deg); transform-origin:bottom left;
       animation:thriveLeaf .7s cubic-bezier(.22,.61,.36,1) 1.0s both;
     }
