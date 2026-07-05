@@ -166,9 +166,10 @@
        SECTION 1 — HERO (full-screen video)
     ───────────────────────────────────── */
     .ha-home__hero {
-      /* 86svh (was 100vh): a shorter hero makes the curved video pane less
-         tall-and-narrow, so much less of the 16:9 frame is cropped away. */
-      min-height:86vh; min-height:86svh;
+      /* 92svh: tall enough that the vertically-centered film pane clears the
+         fixed nav above and the mission wave below on wide/short (laptop)
+         viewports, where a 54vw film would otherwise crowd both. */
+      min-height:92vh; min-height:92svh;
       /* Lifted a full step from the original charcoal stack: brighter teal
          ambience top-left, the heavy near-black vignette halved, a soft
          radiance behind the video, and the base gradient raised so the
@@ -210,7 +211,7 @@
        actions pulled up right beneath it (no stranded second screen). The
        whole group is vertically centered below the fixed nav. */
     .hero-inner { position:relative; z-index:2; max-width:680px;
-      min-height:86vh; min-height:86svh;
+      min-height:92vh; min-height:92svh;
       display:flex; flex-direction:column; justify-content:center;
       padding:7rem 1.5rem 3rem; padding-left:clamp(20px,7vw,104px);
       transform-style:preserve-3d; }
@@ -266,8 +267,11 @@
          all on screen at page open. Ring frame: a crisp teal rim hugging
          the card, with a teal halo glow beneath. */
       .ha-home__hero-media{
-        position:absolute; top:calc(50% + 2rem); right:3vw; bottom:auto;
-        width:min(54vw, calc((100svh - 200px) * 16 / 9));
+        position:absolute; top:calc(50% + 1.5rem); right:3vw; bottom:auto;
+        /* Height capped against the hero (92svh) minus room for the nav and
+           the mission wave, so on short/wide viewports the film shrinks to
+           fit rather than lapping either edge. */
+        width:min(54vw, calc((92svh - 250px) * 16 / 9));
         aspect-ratio:16/9; height:auto;
         transform:translateY(-50%);
         z-index:2; overflow:hidden;
@@ -402,7 +406,7 @@
        that a tall wave would lap the video pane, so narrower windows and
        stacked layouts keep the compact 48px overhang. */
     @media (min-width:1200px){
-      .ha-home__mission-wave{ --mw-rise:64px; top:-72px; height:76px; }
+      .ha-home__mission-wave{ --mw-rise:56px; top:-60px; height:64px; }
     }
     /* mirrored watercolor bottom edge — the band's teal melts out while
        sage crests feather down into the white below (same grammar as the
