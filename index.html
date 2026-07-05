@@ -383,15 +383,16 @@
     /* overflow-x:clip (not hidden) keeps the waves' vertical overhang visible
        while stopping their ±2% horizontal bleed from widening the page. */
     /* Deep tide: the band stays in the hero's dark world (deep sea-teal
-       bridging charcoal into the teal family), so dark flows into dark and
-       the sage moment happens exactly once — as the exit wave below. The
-       old drifting caustics are gone; a single still glow centers the
-       statement instead. */
+       bridging charcoal into the teal family). The entry wave's translucent
+       crests are light sage — a luminous surf line between hero and band —
+       while its solid base stays deep teal, so the wave still dissolves
+       into the dark with no hard edge. The old drifting caustics are gone;
+       a single still glow centers the statement instead. */
     .ha-home__mission { position:relative; overflow-x:clip; padding:3rem 8%; text-align:center;
       background:
         radial-gradient(ellipse 58% 70% at 50% 32%, rgba(132,169,140,.12) 0%, transparent 62%),
         linear-gradient(180deg, #31434b 0%, #37504d 52%, #3c554f 100%); }
-    /* organic watercolor top edge — layered teal washes rise out of the hero */
+    /* organic watercolor top edge — sage crests over a deep-teal base rise out of the hero */
     .ha-home__mission-wave{
       position:absolute; left:-2%; right:-2%; width:104%; top:-48px; height:52px;
       pointer-events:none; z-index:0; display:block; will-change:transform;
@@ -993,9 +994,9 @@
         <filter id="hmGrain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 0.16 0 0 0 0 0.25 0 0 0 0 0.21 0 0 0 0.5 0"/></filter>
       </defs>
       <g filter="url(#hmWave)">
-        <path fill="#37504D" opacity="0.26" d="M0 130 L0 28 C 300 14 560 38 820 24 C 1080 10 1300 32 1440 22 L1440 130 Z"/>
-        <path fill="#37504D" opacity="0.42" d="M0 130 L0 40 C 280 26 560 50 820 36 C 1080 22 1320 44 1440 34 L1440 130 Z"/>
-        <path fill="#37504D" opacity="0.6" d="M0 130 L0 52 C 320 38 580 62 840 48 C 1080 34 1300 56 1440 46 L1440 130 Z"/>
+        <path fill="#84A98C" opacity="0.26" d="M0 130 L0 28 C 300 14 560 38 820 24 C 1080 10 1300 32 1440 22 L1440 130 Z"/>
+        <path fill="#84A98C" opacity="0.42" d="M0 130 L0 40 C 280 26 560 50 820 36 C 1080 22 1320 44 1440 34 L1440 130 Z"/>
+        <path fill="#84A98C" opacity="0.6" d="M0 130 L0 52 C 320 38 580 62 840 48 C 1080 34 1300 56 1440 46 L1440 130 Z"/>
         <path fill="#37504D" d="M0 130 L0 62 C 300 48 560 72 820 58 C 1080 44 1300 66 1440 54 L1440 130 Z"/>
       </g>
       <rect x="0" y="24" width="1440" height="106" filter="url(#hmGrain)" opacity="0.08"/>
