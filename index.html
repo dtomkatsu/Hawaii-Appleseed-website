@@ -382,28 +382,33 @@
     ───────────────────────────────────── */
     /* overflow-x:clip (not hidden) keeps the waves' vertical overhang visible
        while stopping their ±2% horizontal bleed from widening the page. */
-    /* Deep tide: the band stays in the hero's dark world (deep sea-teal
-       bridging charcoal into the teal family). The entry wave's translucent
-       crests are light sage — a luminous surf line between hero and band —
-       while its solid base stays deep teal, so the wave still dissolves
-       into the dark with no hard edge. The old drifting caustics are gone;
-       a single still glow centers the statement instead. */
+    /* Lifted tide: the band sits in the brand deep-teal family — lighter
+       than the hero so the page doesn't read as one dark mass. The entry
+       wave's translucent crests are bright sage (full-height on desktop,
+       rising into view on load) while its solid base matches the band top,
+       so the wave still dissolves in with no hard edge. */
     .ha-home__mission { position:relative; overflow-x:clip; padding:3rem 8%; text-align:center;
       background:
-        radial-gradient(ellipse 58% 70% at 50% 32%, rgba(132,169,140,.12) 0%, transparent 62%),
-        linear-gradient(180deg, #31434b 0%, #37504d 52%, #3c554f 100%); }
+        radial-gradient(ellipse 58% 70% at 50% 32%, rgba(202,210,197,.14) 0%, transparent 62%),
+        linear-gradient(180deg, #46635C 0%, #52796F 52%, #587F73 100%); }
     /* organic watercolor top edge — sage crests over a deep-teal base rise out of the hero */
     .ha-home__mission-wave{
       position:absolute; left:-2%; right:-2%; width:104%; top:-48px; height:52px;
       pointer-events:none; z-index:0; display:block; will-change:transform;
       animation:missionWaveRise 1.3s var(--ease-out) .35s both;
     }
+    /* desktop: the wave returns to its original full height and long
+       rise — the bright surf pop on page open. Stacked layouts keep the
+       48px overhang so the edge-to-edge video and its controls stay clear. */
+    @media (min-width:901px){
+      .ha-home__mission-wave{ --mw-rise:96px; top:-104px; height:108px; }
+    }
     /* mirrored watercolor bottom edge — teal washes bleed down into the white below */
     .ha-home__mission-wave-btm{
       position:absolute; left:-2%; right:-2%; width:104%; bottom:-48px; height:52px;
       transform:scaleY(-1); pointer-events:none; z-index:1; display:block;
     }
-    @keyframes missionWaveRise{ from{ transform:translateY(44px); } to{ transform:translateY(0); } }
+    @keyframes missionWaveRise{ from{ transform:translateY(var(--mw-rise,44px)); } to{ transform:translateY(0); } }
     /* faint sprout watermark for depth (parallaxes behind the text) */
     .ha-home__mission-mark{
       position:absolute; left:50%; top:50%; width:min(52vw,400px); height:auto;
@@ -423,9 +428,9 @@
     .ha-home__mission h2.is-in .ln{ opacity:1; transform:none; }
     .ha-home__mission h2.is-in .ln:nth-child(2){ transition-delay:.12s; }
     .ha-home__mission h2.is-in .ln:nth-child(3){ transition-delay:.24s; }
-    .ha-home__mission h2 em { font-family:'Poppins',sans-serif; font-style:italic; color:var(--teal); position:relative; }
+    .ha-home__mission h2 em { font-family:'Poppins',sans-serif; font-style:italic; color:var(--ash); position:relative; }
     .ha-home__mission h2 em::after{ content:""; position:absolute; left:0; right:0; bottom:-.04em; height:2px;
-      background:var(--teal); transform:scaleX(0); transform-origin:left; transition:transform .7s var(--ease-out) .3s; }
+      background:var(--ash); transform:scaleX(0); transform-origin:left; transition:transform .7s var(--ease-out) .3s; }
     .ha-home__mission h2.is-in em::after{ transform:scaleX(1); }
     /* gentle liquid float — each word drifts on a slow traveling wave */
     .ha-home__mission h2 .wv{ display:inline-block; animation:missionFloat 4.5s ease-in-out infinite; will-change:transform; }
@@ -997,7 +1002,7 @@
         <path fill="#84A98C" opacity="0.26" d="M0 130 L0 28 C 300 14 560 38 820 24 C 1080 10 1300 32 1440 22 L1440 130 Z"/>
         <path fill="#84A98C" opacity="0.42" d="M0 130 L0 40 C 280 26 560 50 820 36 C 1080 22 1320 44 1440 34 L1440 130 Z"/>
         <path fill="#84A98C" opacity="0.6" d="M0 130 L0 52 C 320 38 580 62 840 48 C 1080 34 1300 56 1440 46 L1440 130 Z"/>
-        <path fill="#37504D" d="M0 130 L0 62 C 300 48 560 72 820 58 C 1080 44 1300 66 1440 54 L1440 130 Z"/>
+        <path fill="#46635C" d="M0 130 L0 62 C 300 48 560 72 820 58 C 1080 44 1300 66 1440 54 L1440 130 Z"/>
       </g>
       <rect x="0" y="24" width="1440" height="106" filter="url(#hmGrain)" opacity="0.08"/>
     </svg>
