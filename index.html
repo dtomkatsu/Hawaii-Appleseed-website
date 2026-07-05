@@ -397,13 +397,16 @@
       pointer-events:none; z-index:0; display:block; will-change:transform;
       animation:missionWaveRise 1.3s var(--ease-out) .35s both;
     }
-    /* desktop: the wave returns to its original full height and long
-       rise — the bright surf pop on page open. Stacked layouts keep the
-       48px overhang so the edge-to-edge video and its controls stay clear. */
-    @media (min-width:901px){
-      .ha-home__mission-wave{ --mw-rise:96px; top:-104px; height:108px; }
+    /* wide desktop only: a taller wave with a long rise — the bright surf
+       pop on page open. Below 1200px the hero-to-band gap shrinks enough
+       that a tall wave would lap the video pane, so narrower windows and
+       stacked layouts keep the compact 48px overhang. */
+    @media (min-width:1200px){
+      .ha-home__mission-wave{ --mw-rise:64px; top:-72px; height:76px; }
     }
-    /* mirrored watercolor bottom edge — teal washes bleed down into the white below */
+    /* mirrored watercolor bottom edge — the band's teal melts out while
+       sage crests feather down into the white below (same grammar as the
+       entry wave: solid = band color, crests = sage accent) */
     .ha-home__mission-wave-btm{
       position:absolute; left:-2%; right:-2%; width:104%; bottom:-48px; height:52px;
       transform:scaleY(-1); pointer-events:none; z-index:1; display:block;
@@ -1018,7 +1021,7 @@
         <path fill="#84A98C" opacity="0.26" d="M0 130 L0 28 C 300 14 560 38 820 24 C 1080 10 1300 32 1440 22 L1440 130 Z"/>
         <path fill="#84A98C" opacity="0.42" d="M0 130 L0 40 C 280 26 560 50 820 36 C 1080 22 1320 44 1440 34 L1440 130 Z"/>
         <path fill="#84A98C" opacity="0.6" d="M0 130 L0 52 C 320 38 580 62 840 48 C 1080 34 1300 56 1440 46 L1440 130 Z"/>
-        <path fill="#84A98C" d="M0 130 L0 62 C 300 48 560 72 820 58 C 1080 44 1300 66 1440 54 L1440 130 Z"/>
+        <path fill="#587F73" d="M0 130 L0 62 C 300 48 560 72 820 58 C 1080 44 1300 66 1440 54 L1440 130 Z"/>
       </g>
       <rect x="0" y="24" width="1440" height="106" filter="url(#hmGrain)" opacity="0.08"/>
     </svg>
