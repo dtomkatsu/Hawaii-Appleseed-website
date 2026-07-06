@@ -157,24 +157,18 @@ def build_homepage(lines):
     css_end = max(i for i in range(body_i) if "</style>" in lines[i])
     css = "\n".join(lines[css_start:css_end + 1])
 
-    # Markup: swap the full-screen split hero (which clips inside a
-    # Squarespace container — its video is position:absolute at 54vw) for
-    # the purpose-built video-hero card, then the mission band onward
-    # through the last content section (footer chrome excluded).
+    # Markup: the real hero (big headline + 3D parallax) through the last
+    # content section, footer chrome excluded. The clipping that once forced
+    # a swap to the simpler video-hero card was the ID-specificity reset
+    # zeroing the hero's padding — now fixed with :where() below — plus a
+    # container-fit override appended to the CSS.
     hero_i = _find(lines, '<section class="ha-home__hero"')
-    mission_i = _find(lines, '<section class="ha-home__mission"', hero_i)
-    footer_i = _find(lines, 'class="px-footer"', mission_i)
-
-    vh = read("video-hero/squarespace-inject.html")
-    vh_start = _find(vh, '<div id="ha-video-hero">')
-    vh_end = max(i for i, l in enumerate(vh) if "</div>" in l)
-    video_hero = "\n".join(vh[vh_start:vh_end + 1])
-
-    rest = lines[mission_i:footer_i]
-    while rest and (not rest[-1].strip()
-                    or rest[-1].strip().startswith("<!--")):
-        rest.pop()
-    markup = video_hero + "\n" + "\n".join(rest)
+    footer_i = _find(lines, 'class="px-footer"', hero_i)
+    markup_lines = lines[hero_i:footer_i]
+    while markup_lines and (not markup_lines[-1].strip()
+                            or markup_lines[-1].strip().startswith("<!--")):
+        markup_lines.pop()
+    markup = "\n".join(markup_lines)
 
     # Scripts: everything between </footer> and </body> (behaviour scripts;
     # the two chrome scripts are null-guarded no-ops).
