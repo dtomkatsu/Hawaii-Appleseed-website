@@ -338,11 +338,21 @@
        offset (stacked layouts) clears the mission wave's 48px overhang;
        the desktop block tightens it to 16px since the pane floats clear. */
     .ha-home__hero-ctrls{
-      position:absolute; z-index:3; right:16px; bottom:68px;
+      position:absolute; z-index:3; left:16px; bottom:68px;
       display:flex; align-items:center; gap:8px;
       opacity:0; visibility:hidden;
       transition:opacity .35s ease;
     }
+    /* Thin seek scrubber pinned to the video's bottom edge — click or drag
+       to scrub. Sits above the click-catch (z4>z2) so it seeks, not toggles. */
+    .ha-home__hero-scrub{
+      position:absolute; left:0; right:0; bottom:0; z-index:4; height:5px;
+      background:rgba(255,255,255,0.22); cursor:pointer;
+      opacity:0; visibility:hidden; transition:opacity .35s ease, height .12s ease;
+    }
+    .ha-home__hero-scrub.is-visible{ opacity:1; visibility:visible; }
+    .ha-home__hero-scrub:hover{ height:9px; }
+    .ha-home__hero-scrub-fill{ height:100%; width:0%; background:var(--teal); transition:width .2s linear; }
     .ha-home__hero-ctrls.is-visible{ opacity:1; visibility:visible; }
     .ha-home__hero-audio,
     .ha-home__hero-pause{
@@ -368,7 +378,7 @@
     .ha-home__hero-pause.is-paused .icon-pause{ display:none; }
     .ha-home__hero-pause.is-paused .icon-play{ display:block; }
     @media (max-width:700px){
-      .ha-home__hero-ctrls{ right:12px; bottom:60px; gap:6px; }
+      .ha-home__hero-ctrls{ left:12px; bottom:60px; gap:6px; }
       .ha-home__hero-audio{ font-size:.75rem; padding:.45rem .7rem; }
       .ha-home__hero-pause{ padding:.45rem .5rem; }
     }
@@ -988,6 +998,7 @@
           <span class="ha-home__hero-audio-label">Tap for sound</span>
         </button>
       </div>
+      <div class="ha-home__hero-scrub" role="slider" aria-label="Seek video" tabindex="-1"><div class="ha-home__hero-scrub-fill"></div></div>
     </div>
   </section>
 
@@ -1517,6 +1528,8 @@
     var btn   = media && media.querySelector('.ha-home__hero-audio');
     var pauseBtn = media && media.querySelector('.ha-home__hero-pause');
     var clickCatch = media && media.querySelector('.ha-home__hero-clickcatch');
+    var scrub = media && media.querySelector('.ha-home__hero-scrub');
+    var scrubFill = scrub && scrub.querySelector('.ha-home__hero-scrub-fill');
     if(!wrap || !mount || !btn || !ctrls || !pauseBtn) return;
     if(!HERO_YT_ID || HERO_YT_ID === 'HERO_YT_ID_HERE') return;  // no id yet → poster stays
 
@@ -1561,6 +1574,8 @@
             if(withSound){ e.target.unMute(); e.target.setVolume(100); }
             else { e.target.mute(); }
             e.target.playVideo(); cover(); ctrls.classList.add('is-visible');
+            if(scrub) scrub.classList.add('is-visible');
+            startScrubTimer();
           },
           onStateChange: function(e){
             if(e.data === YT.PlayerState.PLAYING){ wrap.classList.add('is-playing'); wrap.classList.remove('is-paused'); cover(); }
@@ -1638,6 +1653,36 @@
     pauseBtn.addEventListener('click', togglePlayback);
     // Clicking anywhere on the video (not the buttons) toggles play/pause.
     if(clickCatch) clickCatch.addEventListener('click', togglePlayback);
+
+    // ── Seek scrubber: poll progress, click/drag the bottom bar to seek. ──
+    var scrubTimer = null;
+    function updateScrub(){
+      if(!scrubFill || !player || !player.getDuration) return;
+      var d, c;
+      try { d = player.getDuration() || 0; c = player.getCurrentTime() || 0; } catch(err){ return; }
+      if(d > 0) scrubFill.style.width = Math.max(0, Math.min(100, (c / d) * 100)) + '%';
+    }
+    function startScrubTimer(){ if(!scrubTimer) scrubTimer = setInterval(updateScrub, 250); }
+    function seekFromEvent(e){
+      if(!scrub || !player || !player.seekTo) return;
+      var rect = scrub.getBoundingClientRect();
+      var cx = (e.clientX != null) ? e.clientX : (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+      var frac = Math.max(0, Math.min(1, (cx - rect.left) / rect.width));
+      var d = 0;
+      try { d = player.getDuration() || 0; } catch(err){}
+      if(d > 0){ player.seekTo(frac * d, true); if(scrubFill) scrubFill.style.width = (frac * 100) + '%'; }
+    }
+    if(scrub){
+      var scrubbing = false;
+      scrub.addEventListener('pointerdown', function(e){
+        scrubbing = true; e.stopPropagation(); e.preventDefault();
+        seekFromEvent(e);
+        try { scrub.setPointerCapture(e.pointerId); } catch(err){}
+      });
+      scrub.addEventListener('pointermove', function(e){ if(scrubbing) seekFromEvent(e); });
+      scrub.addEventListener('pointerup',   function(){ scrubbing = false; });
+      scrub.addEventListener('click', function(e){ e.stopPropagation(); });  // seek, don't toggle play
+    }
 
     // Keep-alive: browsers and YouTube pause background embeds (tab switch,
     // low-power mode, occlusion) and with the player chrome disabled there is

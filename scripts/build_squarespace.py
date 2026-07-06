@@ -205,10 +205,24 @@ def build_homepage(lines):
         "#ha-home-embed a, #ha-home-embed button { -webkit-tap-highlight-color: transparent; }",
     )
 
-    note = ("the hero here is the self-contained video-hero card (the "
-            "full-screen split hero from index.html clips inside a Squarespace "
-            "container, so it is swapped out automatically); everything below "
-            "the hero is the live homepage")
+    # Squarespace-fit override (appended so it wins the cascade). The hero's
+    # 92svh height + 7rem top padding assume a fixed nav overlapping its top
+    # (as on GitHub Pages). A Squarespace section has no such overlap, so that
+    # space reads as a big gap under the header — trim the height and top pad.
+    # NOTE: css includes its own <style>…</style> tags, so the override must
+    # live in its OWN <style> block or it lands outside any stylesheet.
+    css += (
+        "\n<style>\n"
+        "/* --- Squarespace-fit hero (no fixed-nav overlap here) --- */\n"
+        "#ha-home-embed .ha-home__hero, #ha-home-embed .hero-inner "
+        "{ min-height: 80svh !important; }\n"
+        "#ha-home-embed .hero-inner { padding-top: 2.5rem !important; }\n"
+        "</style>\n"
+    )
+
+    note = ("the real homepage hero (big headline + parallax) with a "
+            "Squarespace-fit height override; everything below is the live "
+            "homepage. Video controls sit bottom-left with a seek scrubber.")
     return (
         header("Home", note)
         + "<!-- BEGIN ha-home -->\n"
