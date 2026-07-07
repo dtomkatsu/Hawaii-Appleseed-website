@@ -88,6 +88,43 @@ STICKY_BAR_OVERRIDE = (
 )
 
 
+# Internal cross-page links (href="food-security.html", "issues.html", …)
+# point at our source filenames, which don't exist as Squarespace pages —
+# the live site uses its own slugs. Confirmed against the real site
+# (hiappleseed.org) and from the user directly. Query strings and #anchors
+# on the original href are preserved (e.g. "support.html#give" ->
+# "/support#give", "publications.html?cat=X" -> "/publications?cat=X").
+INTERNAL_LINK_MAP = {
+    "index.html":               "/",
+    "issues.html":               "/issues",
+    "our-mission.html":          "/our-mission",
+    "our-mission-light.html":    "/our-mission",
+    "our-story.html":            "/our-history",
+    "our-story-light.html":      "/our-history",
+    "our-team.html":             "/our-team",
+    "board-of-directors.html":   "/board-of-directors",
+    "publications.html":         "/publications",
+    "in-the-news.html":          "/in-the-news",
+    "support.html":              "/support",
+    "taxes-budget.html":         "/taxes-budget",
+    "food-security.html":        "/food-equity",
+    "housing.html":              "/affordable-housing",
+    "transportation.html":       "/transportation-equity",
+    "wages-labor.html":          "/wages-labor",
+}
+
+
+def remap_internal_links(html):
+    """href="food-security.html?cat=X#foo" -> href="/food-equity?cat=X#foo" """
+    names = "|".join(re.escape(k) for k in INTERNAL_LINK_MAP)
+    pattern = r'href="(' + names + r')((?:[?#][^"]*)?)"'
+    return re.sub(
+        pattern,
+        lambda m: 'href="' + INTERNAL_LINK_MAP[m.group(1)] + m.group(2) + '"',
+        html,
+    )
+
+
 def absolutize_assets(html):
     """Rewrite relative resource paths to absolute Pages URLs:
       • src/url()/href to assets/…  (images, etc.)
@@ -95,8 +132,9 @@ def absolutize_assets(html):
         news.json — which otherwise 404 against the Squarespace domain and
         collapse the section to its fallback text. GitHub Pages serves these
         with Access-Control-Allow-Origin:* so the cross-origin fetch works.
-    Internal .html page links are deliberately left alone (they should map to
-    Squarespace pages, not the Pages preview)."""
+    Internal .html page links are handled separately by
+    remap_internal_links(), below, since they map to real Squarespace
+    page slugs rather than the Pages preview."""
     html = re.sub(r"""(["'(])(?:\./)?(assets/)""",
                   lambda m: m.group(1) + ASSET_BASE + m.group(2), html)
     html = re.sub(r"""(["'])((?:publications|news)\.json)(["'])""",
@@ -297,14 +335,15 @@ def main():
     for src, slug, page, note in MARKER_PAGES:
         block = extract_marker(read(src), slug)
         out_name = src  # keep the same stem so the mapping is obvious
-        body = entity_encode(absolutize_assets(
+        body = entity_encode(remap_internal_links(absolutize_assets(
             header(page, note) + "\n".join(block).strip()
-            + STICKY_BAR_OVERRIDE))
+            + STICKY_BAR_OVERRIDE)))
         with open(os.path.join(OUT, out_name), "w", encoding="utf-8") as f:
             f.write(body)
         manifest.append((out_name, page, len(body)))
 
-    home = entity_encode(absolutize_assets(build_homepage(read("index.html"))))
+    home = entity_encode(remap_internal_links(
+        absolutize_assets(build_homepage(read("index.html")))))
     with open(os.path.join(OUT, "index.html"), "w", encoding="utf-8") as f:
         f.write(home)
     manifest.append(("index.html", "Home", len(home)))
