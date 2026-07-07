@@ -157,6 +157,7 @@ MARKER_PAGES = [
     ("transportation.html",     "ha-transit",      "Transportation",  ""),
     ("wages-labor.html",        "ha-wages",        "Wages & Labor",   ""),
     ("publications.html",       "ha-publications", "Publications",    ""),
+    ("in-the-news.html",        "ha-news",         "In the News",     ""),
 ]
 
 

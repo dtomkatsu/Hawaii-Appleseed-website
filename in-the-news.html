@@ -81,40 +81,6 @@
 }
 </style>
 
-<style>
-  .ha-news{max-width:1180px;margin:0 auto;padding:0 28px 80px;}
-  @media (max-width:700px){ .ha-news{padding:0 20px 56px;} }
-  .ha-news__hero{padding:36px 0 8px;}
-  .ha-news__eyebrow{font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#52796F;display:flex;align-items:center;gap:12px;}
-  .ha-news__eyebrow::before{content:"";width:40px;height:1px;background:#84A98C;}
-  .ha-news__title{font-family:'Manrope',sans-serif;font-weight:300;font-size:clamp(2.4rem,5vw,3.6rem);color:#2F3E46;margin:14px 0 10px;}
-  .ha-news__lede{font-size:1.02rem;line-height:1.7;color:#52796F;max-width:60ch;margin:0;}
-  .ha-news__toolbar{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;margin:30px 0 8px;}
-  .ha-news__search{flex:1;min-width:220px;max-width:360px;padding:11px 16px;border:1px solid #CAD2C5;border-radius:4px;font-family:'Poppins',sans-serif;font-size:14px;color:#2F3E46;background:#fff;}
-  .ha-news__search:focus{outline:2px solid #84A98C;outline-offset:1px;border-color:#84A98C;}
-  .ha-news__filters{display:flex;flex-wrap:wrap;gap:8px;}
-  .ha-news__pill{font-family:'Manrope',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:7px 14px;border:1px solid #CAD2C5;border-radius:999px;background:#fff;color:#354F52;cursor:pointer;transition:background .2s,color .2s,border-color .2s;}
-  .ha-news__pill:hover{border-color:#84A98C;color:#52796F;}
-  .ha-news__pill.is-active{background:#52796F;border-color:#52796F;color:#fff;}
-  .ha-news__count{font-size:13px;color:#52796F;margin:14px 0 18px;}
-  .ha-news__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;}
-  .ha-news__card{display:flex;flex-direction:column;background:#fff;border:1px solid #E8EDE6;border-radius:6px;padding:22px 22px 20px;transition:border-color .25s,box-shadow .25s,transform .25s;}
-  .ha-news__card:hover{border-color:#84A98C;box-shadow:0 10px 26px rgba(47,62,70,.08);transform:translateY(-2px);}
-  .ha-news__src{display:flex;align-items:center;gap:8px;font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#52796F;margin-bottom:12px;}
-  .ha-news__tag{background:#84A98C;color:#fff;border-radius:3px;padding:2px 7px;font-size:10px;letter-spacing:.1em;}
-  .ha-news__card h3{font-family:'Manrope',sans-serif;font-weight:600;font-size:1.08rem;line-height:1.34;color:#2F3E46;margin:0 0 10px;}
-  .ha-news__excerpt{font-size:.92rem;line-height:1.6;color:#52796F;margin:0 0 16px;flex:1;}
-  .ha-news__meta{font-size:12px;color:#7d8f86;margin-bottom:14px;}
-  .ha-news__link{font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;color:#52796F;text-decoration:none;display:inline-flex;align-items:center;gap:7px;margin-top:auto;}
-  .ha-news__link:hover{color:#2F3E46;}
-  .ha-news__link svg{width:13px;height:13px;}
-  .ha-news__more-wrap{text-align:center;margin:36px 0 8px;}
-  .ha-news__more{font-family:'Manrope',sans-serif;font-weight:600;font-size:14px;letter-spacing:.04em;color:#2F3E46;background:#fff;border:1px solid #354F52;border-radius:3px;padding:13px 30px;cursor:pointer;transition:background .2s,color .2s;}
-  .ha-news__more:hover{background:#2F3E46;color:#fff;}
-  .ha-news__more[hidden]{display:none;}
-  .ha-news__synced{text-align:center;font-size:12px;color:#9aa89f;margin-top:22px;}
-  .ha-news__empty{padding:40px 0;text-align:center;color:#52796F;}
-</style>
 <style id="px-mobile-nav">
 .px-burger{display:none;flex:none;background:none;border:0;cursor:pointer;padding:8px;margin-left:2px;}
 .px-burger span{display:block;width:22px;height:2px;background:#2F3E46;border-radius:2px;transition:transform .25s ease,opacity .2s ease;}
@@ -198,6 +164,46 @@
 
 <div class="px-spacer-top"></div>
 
+<!-- ============================================================
+     BEGIN ha-news
+     Copy everything below this comment (up to END ha-news)
+     into a Squarespace Code Block on the In the News page.
+     ============================================================ -->
+<style>
+  .ha-news{max-width:1180px;margin:0 auto;padding:0 28px 80px;}
+  @media (max-width:700px){ .ha-news{padding:0 20px 56px;} }
+  .ha-news__hero{padding:36px 0 8px;}
+  .ha-news__eyebrow{font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#52796F;display:flex;align-items:center;gap:12px;}
+  .ha-news__eyebrow::before{content:"";width:40px;height:1px;background:#84A98C;}
+  .ha-news__title{font-family:'Manrope',sans-serif;font-weight:300;font-size:clamp(2.4rem,5vw,3.6rem);color:#2F3E46;margin:14px 0 10px;}
+  .ha-news__lede{font-size:1.02rem;line-height:1.7;color:#52796F;max-width:60ch;margin:0;}
+  .ha-news__toolbar{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;margin:30px 0 8px;}
+  .ha-news__search{flex:1;min-width:220px;max-width:360px;padding:11px 16px;border:1px solid #CAD2C5;border-radius:4px;font-family:'Poppins',sans-serif;font-size:14px;color:#2F3E46;background:#fff;}
+  .ha-news__search:focus{outline:2px solid #84A98C;outline-offset:1px;border-color:#84A98C;}
+  .ha-news__filters{display:flex;flex-wrap:wrap;gap:8px;}
+  .ha-news__pill{font-family:'Manrope',sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:7px 14px;border:1px solid #CAD2C5;border-radius:999px;background:#fff;color:#354F52;cursor:pointer;transition:background .2s,color .2s,border-color .2s;}
+  .ha-news__pill:hover{border-color:#84A98C;color:#52796F;}
+  .ha-news__pill.is-active{background:#52796F;border-color:#52796F;color:#fff;}
+  .ha-news__count{font-size:13px;color:#52796F;margin:14px 0 18px;}
+  .ha-news__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;}
+  .ha-news__card{display:flex;flex-direction:column;background:#fff;border:1px solid #E8EDE6;border-radius:6px;padding:22px 22px 20px;transition:border-color .25s,box-shadow .25s,transform .25s;}
+  .ha-news__card:hover{border-color:#84A98C;box-shadow:0 10px 26px rgba(47,62,70,.08);transform:translateY(-2px);}
+  .ha-news__src{display:flex;align-items:center;gap:8px;font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#52796F;margin-bottom:12px;}
+  .ha-news__tag{background:#84A98C;color:#fff;border-radius:3px;padding:2px 7px;font-size:10px;letter-spacing:.1em;}
+  .ha-news__card h3{font-family:'Manrope',sans-serif;font-weight:600;font-size:1.08rem;line-height:1.34;color:#2F3E46;margin:0 0 10px;}
+  .ha-news__excerpt{font-size:.92rem;line-height:1.6;color:#52796F;margin:0 0 16px;flex:1;}
+  .ha-news__meta{font-size:12px;color:#7d8f86;margin-bottom:14px;}
+  .ha-news__link{font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;color:#52796F;text-decoration:none;display:inline-flex;align-items:center;gap:7px;margin-top:auto;}
+  .ha-news__link:hover{color:#2F3E46;}
+  .ha-news__link svg{width:13px;height:13px;}
+  .ha-news__more-wrap{text-align:center;margin:36px 0 8px;}
+  .ha-news__more{font-family:'Manrope',sans-serif;font-weight:600;font-size:14px;letter-spacing:.04em;color:#2F3E46;background:#fff;border:1px solid #354F52;border-radius:3px;padding:13px 30px;cursor:pointer;transition:background .2s,color .2s;}
+  .ha-news__more:hover{background:#2F3E46;color:#fff;}
+  .ha-news__more[hidden]{display:none;}
+  .ha-news__synced{text-align:center;font-size:12px;color:#9aa89f;margin-top:22px;}
+  .ha-news__empty{padding:40px 0;text-align:center;color:#52796F;}
+</style>
+
 <main class="ha-news">
   <header class="ha-news__hero">
     <div class="ha-news__eyebrow">Media</div>
@@ -214,34 +220,6 @@
   <div class="ha-news__more-wrap"><button id="ha-news-more" class="ha-news__more" type="button" hidden>Load more</button></div>
   <p class="ha-news__synced" id="ha-news-synced"></p>
 </main>
-
-<footer class="px-footer">
-    <div class="px-foot-grid">
-      <div>
-        <h4>Hawaiʻi Appleseed</h4>
-        <p>Advancing economic justice for and with the people of Hawaiʻi.</p>
-      </div>
-      <div>
-        <h4>Explore</h4>
-        <a href="our-mission.html">Our Mission</a>
-        <a href="our-story.html">Our Story</a>
-        <a href="our-team.html">Our Team</a>
-        <a href="board-of-directors.html">Board</a>
-        <a href="issues.html">Issues</a>
-      </div>
-      <div>
-        <h4>Connect</h4>
-        <a href="in-the-news.html">News</a>
-        <a href="publications.html">Research</a>
-        <a href="support.html">Donate</a>
-        <a href="https://hiappleseed.org" target="_blank" rel="noopener">Main Website</a>
-      </div>
-    </div>
-    <div class="px-foot-bottom">
-      <span>© 2026 Hawaiʻi Appleseed Center for Law &amp; Economic Justice</span>
-      <span>733 Bishop St, Honolulu, HI</span>
-    </div>
-  </footer>
 
 <script>
 (function(){
@@ -302,6 +280,35 @@
   }).catch(function(){grid.innerHTML='<p class="ha-news__empty">Unable to load coverage right now. Visit <a href="https://hiappleseed.org/in-the-news" target="_blank" rel="noopener">hiappleseed.org/in-the-news</a>.</p>';});
 })();
 </script>
+<!-- END ha-news -->
+
+<footer class="px-footer">
+    <div class="px-foot-grid">
+      <div>
+        <h4>Hawaiʻi Appleseed</h4>
+        <p>Advancing economic justice for and with the people of Hawaiʻi.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="our-mission.html">Our Mission</a>
+        <a href="our-story.html">Our Story</a>
+        <a href="our-team.html">Our Team</a>
+        <a href="board-of-directors.html">Board</a>
+        <a href="issues.html">Issues</a>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <a href="in-the-news.html">News</a>
+        <a href="publications.html">Research</a>
+        <a href="support.html">Donate</a>
+        <a href="https://hiappleseed.org" target="_blank" rel="noopener">Main Website</a>
+      </div>
+    </div>
+    <div class="px-foot-bottom">
+      <span>© 2026 Hawaiʻi Appleseed Center for Law &amp; Economic Justice</span>
+      <span>733 Bishop St, Honolulu, HI</span>
+    </div>
+  </footer>
 
 <script id="px-mobile-nav-js">
 (function(){var n=document.querySelector('.px-nav'),b=n&&n.querySelector('.px-burger');if(!n||!b)return;
