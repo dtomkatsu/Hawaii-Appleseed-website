@@ -76,6 +76,32 @@
   font-weight: 600 !important;
 }
 
+/* 4b. "About" dropdown — confirmed live: Squarespace renders folder-type
+   nav items (About) as a <button class="header-nav-folder-title">, not an
+   <a>, so rule #4 above never matched it — that's why About looked
+   unaffected. Its submenu links (Our Mission, Our History, Our Team, Board)
+   use a different class too (.header-nav-folder-content a). Styling both,
+   plus a bold+teal state while the dropdown is open (mirrors .px-dropdown-
+   trigger.active in the mockup) via the button's own aria-expanded state. */
+.header-nav-folder-title {
+  color: #2F3E46 !important;
+  font-weight: 500 !important;
+}
+.header-nav-folder-title:hover {
+  color: #52796F !important;
+}
+.header-nav-folder-title[aria-expanded="true"] {
+  color: #52796F !important;
+  font-weight: 600 !important;
+}
+.header-nav-folder-content a {
+  color: #2F3E46 !important;
+  font-weight: 500 !important;
+}
+.header-nav-folder-content a:hover {
+  color: #52796F !important;
+}
+
 /* 5. Notice bar (announcement bar) — matches the mockup's .px-announce:
    Charcoal background, white text/link. Standard Squarespace 7.1
    announcement-bar selectors — same caveat as #4 if it doesn't take. */
