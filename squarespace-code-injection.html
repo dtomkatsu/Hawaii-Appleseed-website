@@ -9,9 +9,17 @@
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
 <style>
-/* Logo — force the size. min-height overrides any lingering max-height cap
-   (per CSS spec), so the logo can't be clamped smaller. width:auto keeps the
-   horizontal wordmark's aspect ratio. */
+/* Logo — force the size AND release Squarespace's cap on the <a> wrapper.
+   site.css sets `.header-title-logo a { display:inline-block; max-height:35px }`
+   (30px when shrunk). Since only the img was resized to 48px, the taller image
+   overflowed BELOW the 35px inline-block anchor — that's what made the logo sit
+   too low. Sizing the anchor to match (48px, display:block) makes the whole
+   logo box 48px so it centers with the nav. */
+.header-title-logo a {
+  display: block !important;
+  height: 48px !important;
+  max-height: none !important;
+}
 .header-title-logo img {
   height: 48px !important;
   min-height: 48px !important;

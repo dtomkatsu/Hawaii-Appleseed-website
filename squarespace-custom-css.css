@@ -16,6 +16,11 @@
    NOTE: if the wordmark still looks small at 48px, the PNG likely has
    transparent padding baked around the art — that needs a re-cropped image,
    no CSS can fix it. */
+.header-title-logo a {
+  display: block !important;
+  height: 48px !important;
+  max-height: none !important;   /* release site.css's max-height:35px on the <a> */
+}
 .header-title-logo img {
   height: 48px !important;
   min-height: 48px !important;
