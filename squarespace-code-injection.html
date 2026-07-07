@@ -1,0 +1,27 @@
+<!-- =====================================================================
+     Site-wide Code Injection for hiappleseed.org (Squarespace 7.1).
+     Location: Settings > Advanced > Code Injection > HEADER.
+     This is SEPARATE from Design > Custom CSS (see squarespace-custom-css.css).
+     Both inject on every page; keep the logo size in sync between them (or
+     manage it in only one place) so they don't fight.
+     ===================================================================== -->
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<style>
+/* Logo — force the size. min-height overrides any lingering max-height cap
+   (per CSS spec), so the logo can't be clamped smaller. width:auto keeps the
+   horizontal wordmark's aspect ratio. */
+.header-title-logo img {
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  width: auto !important;
+}
+
+/* Header vertical padding (unchanged from the original injection) */
+.header .header-title-nav-wrapper {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+</style>
