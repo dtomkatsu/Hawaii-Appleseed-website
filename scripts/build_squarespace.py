@@ -493,9 +493,18 @@ def build_homepage(lines):
     css += (
         "\n<style>\n"
         "/* --- Squarespace-fit hero (no fixed-nav overlap here) --- */\n"
-        "#ha-home-embed .ha-home__hero, #ha-home-embed .hero-inner "
-        "{ min-height: 80svh !important; }\n"
-        "#ha-home-embed .hero-inner { padding-top: 2.5rem !important; }\n"
+        "/* Desktop split hero: trim the 92svh/7rem (both sized for a fixed\n"
+        "   nav overlapping the top) so there's less gap under the header. */\n"
+        "@media (min-width:1081px){\n"
+        "  #ha-home-embed .ha-home__hero, #ha-home-embed .hero-inner "
+        "{ min-height: 72svh !important; }\n"
+        "  #ha-home-embed .hero-inner { padding-top: 1.25rem !important; }\n"
+        "}\n"
+        "/* Stacked layout keeps the source's min-height:auto; only trim its\n"
+        "   8.5rem top pad (that too was to clear the GitHub fixed nav). */\n"
+        "@media (max-width:1080px){\n"
+        "  #ha-home-embed .hero-inner { padding-top: 2.5rem !important; }\n"
+        "}\n"
         "</style>\n"
     )
 
