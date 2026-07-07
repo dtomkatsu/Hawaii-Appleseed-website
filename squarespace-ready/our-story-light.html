@@ -735,20 +735,35 @@
    nav as a sticky overlay (see build_squarespace.py). */
 .ha-progress { display: none !important; }
 .ha-issues, .ha-tax, .ha-food, .ha-housing, .ha-transit, .ha-wages { overflow: clip !important; }
+/* absolute at FIRST PAINT so the (invisible) bar contributes zero
+   flow height from the very first frame \2014  the script below converts
+   it to sticky + negative margin, which also nets to zero flow, so
+   the conversion causes no layout shift. (When this was sticky from
+   the start, the bar's 49-92px flow height was in the first paint
+   and everything below it visibly snapped UP once the script's
+   negative margin landed.) */
 .ha-nav-bar, [class*="__stuck-bar"] {
-  position: sticky !important; top: 0 !important;
-  left: auto !important; right: auto !important;
+  position: absolute !important; top: 0 !important;
+  left: 0 !important; right: 0 !important;
 }
 </style>
 <script>
 (function(){
-  // Sticky overlay: cancel the bar's flow height so it overlays the
-  // hero top while hidden (no gap); resync when the pills wrap.
+  // Convert absolute -> sticky overlay. Both states occupy zero net
+  // flow space (absolute: out of flow; sticky: height cancelled by
+  // the negative margin), and the switch happens inside one
+  // synchronous pass \u2014 no paint can interleave \u2014 so there is no
+  // layout shift at any point. ResizeObserver resyncs the margin
+  // when the pills wrap at narrow widths.
   document.querySelectorAll('.ha-nav-bar, [class*="__stuck-bar"]').forEach(function(bar){
-    var sync = function(){ bar.style.marginBottom = -bar.offsetHeight + 'px'; };
+    var sync = function(){ bar.style.setProperty('margin-bottom', -bar.offsetHeight + 'px', 'important'); };
+    bar.style.setProperty('position', 'sticky', 'important');
+    bar.style.setProperty('top', '0', 'important');
+    bar.style.setProperty('left', 'auto', 'important');
+    bar.style.setProperty('right', 'auto', 'important');
+    sync();
     if (window.ResizeObserver) new ResizeObserver(sync).observe(bar);
     window.addEventListener('resize', sync);
-    sync();
   });
 })();
 </script>
