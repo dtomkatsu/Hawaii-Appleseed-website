@@ -377,10 +377,27 @@
     .ha-home__hero-pause .icon-play{ display:none; }
     .ha-home__hero-pause.is-paused .icon-pause{ display:none; }
     .ha-home__hero-pause.is-paused .icon-play{ display:block; }
+    /* "Watch on YouTube" — frosted pill in the video's top-right, matching the
+       lower-left controls. Always visible (it's a plain link fallback). */
+    .ha-home__hero-open{
+      position:absolute; z-index:3; top:16px; right:16px;
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:.5rem .55rem;
+      color:var(--white);
+      background:rgba(24,34,39,0.46);
+      -webkit-backdrop-filter:blur(8px) saturate(1.2); backdrop-filter:blur(8px) saturate(1.2);
+      border:1px solid rgba(255,255,255,0.28); border-radius:999px;
+      box-shadow:0 2px 12px rgba(18,26,30,0.28);
+      transition:background .2s ease, transform .2s ease;
+    }
+    .ha-home__hero-open:hover{ background:rgba(24,34,39,0.64); transform:translateY(-1px); }
+    .ha-home__hero-open:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+    .ha-home__hero-open svg{ width:18px; height:18px; display:block; flex:none; }
     @media (max-width:700px){
       .ha-home__hero-ctrls{ left:12px; bottom:60px; gap:6px; }
       .ha-home__hero-audio{ font-size:.75rem; padding:.45rem .7rem; }
       .ha-home__hero-pause{ padding:.45rem .5rem; }
+      .ha-home__hero-open{ top:12px; right:12px; padding:.45rem .5rem; }
     }
     /* Gentle ring pulse while still muted, so "tap for sound" gets noticed. */
     @media (prefers-reduced-motion:no-preference){
@@ -977,6 +994,13 @@
       <!-- Transparent click layer: clicking anywhere on the video toggles
            play/pause. Sits above the iframe, below the control buttons. -->
       <div class="ha-home__hero-clickcatch" aria-hidden="true"></div>
+      <!-- Open the full video on YouTube in a new tab. A real <a>, so it works
+           even if the embedded player is blocked (doubles as a fallback). -->
+      <a class="ha-home__hero-open" href="https://www.youtube.com/watch?v=acQkwn2yhiI" target="_blank" rel="noopener" aria-label="Watch this video on YouTube (opens in a new tab)" title="Watch on YouTube">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        </svg>
+      </a>
       <div class="ha-home__hero-ctrls">
         <button class="ha-home__hero-pause" type="button" aria-label="Pause video">
           <svg class="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
