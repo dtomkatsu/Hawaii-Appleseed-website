@@ -152,6 +152,34 @@
 #footer-sections .sqs-svg-icon--wrapper:hover {
   background-color: #84A98C !important;
 }
+/* The wrapper background-color above only covers ONE of Squarespace's two
+   icon rendering paths. Pulled their actual SVG sprite: each icon is TWO
+   layered shapes — .sqs-use--icon (glyph) and .sqs-use--mask (badge/shape)
+   — colored via `fill:var(--social-links-block-main-icon-color)` and
+   `fill:var(--social-links-block-secondary-icon-color)` depending on which
+   icon style (solid/outline/etc.) is active on this block. Forcing fill
+   directly on both, redundant with the background-color rule above, so
+   this works regardless of which rendering path is actually live. */
+#footer-sections .sqs-use--mask {
+  fill: #CAD2C5 !important;
+}
+#footer-sections .sqs-use--icon {
+  fill: #2F3E46 !important;
+}
+#footer-sections .sqs-svg-icon--wrapper:hover .sqs-use--mask {
+  fill: #84A98C !important;
+}
+
+/* 7. Footer logo — it's a flat raster PNG (hawaii-appleseed-logo-v2.png,
+   dark navy/charcoal artwork), so its color can't be changed by any CSS
+   `color` property — only a filter can touch pixel color. Confirmed it's
+   the only <img> in the footer, so this is safely scoped. brightness(0)
+   flattens all ink to black, invert(1) flips that to white, so the dark
+   logo reads clearly against the new dark Charcoal footer instead of
+   nearly disappearing into it. */
+#footer-sections img {
+  filter: brightness(0) invert(1) !important;
+}
 
 
 /* Homepage hero: drop the video off the navbar without moving the headline */
