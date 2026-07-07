@@ -2300,3 +2300,26 @@
   }
 })();
 </script>
+<style>
+/* Squarespace-fit: fixed-position bars can't anchor to the viewport
+   inside a code block. Hide the progress line; rebuild the pill/tab
+   nav as a sticky overlay (see build_squarespace.py). */
+.ha-progress { display: none !important; }
+.ha-issues, .ha-tax, .ha-food, .ha-housing, .ha-transit, .ha-wages { overflow: clip !important; }
+.ha-nav-bar, [class*="__stuck-bar"] {
+  position: sticky !important; top: 0 !important;
+  left: auto !important; right: auto !important;
+}
+</style>
+<script>
+(function(){
+  // Sticky overlay: cancel the bar's flow height so it overlays the
+  // hero top while hidden (no gap); resync when the pills wrap.
+  document.querySelectorAll('.ha-nav-bar, [class*="__stuck-bar"]').forEach(function(bar){
+    var sync = function(){ bar.style.marginBottom = -bar.offsetHeight + 'px'; };
+    if (window.ResizeObserver) new ResizeObserver(sync).observe(bar);
+    window.addEventListener('resize', sync);
+    sync();
+  });
+})();
+</script>

@@ -34,6 +34,60 @@ OUT = os.path.join(ROOT, "squarespace-ready")
 ASSET_BASE = "https://dtomkatsu.github.io/Hawaii-Appleseed-website/"
 
 
+# The issue pages carry fixed-position scroll enhancements — a scroll
+# progress bar and a sticky pill/tab nav pinned at top:107px (below the
+# GitHub site's fixed nav). position:fixed can't anchor to the viewport
+# inside a code block (transformed section wrappers capture it, and there
+# is no fixed site nav at 107px). Rebuild the nav as position:sticky
+# (code-block-safe) anchored at top:0, collapsing to 0 height until its
+# reveal-on-scroll class fires so it leaves no gap in the flow. The thin
+# scroll-progress line has no sticky equivalent, so it stays hidden. Class
+# names exist only on the issue pages, so this is a no-op elsewhere.
+# How the sticky rebuild works (verified in-browser):
+#   1. The page roots use overflow-x:hidden, which forces overflow-y:auto —
+#      a scroll container that traps position:sticky (it anchors to the root
+#      instead of the viewport and never engages). overflow:clip clips the
+#      same way WITHOUT creating a scroll container.
+#   2. The bar becomes position:sticky top:0 (its markup is already the
+#      first child of the page-root section, so it can stick for the whole
+#      page).
+#   3. A tiny script gives the bar a negative bottom margin equal to its
+#      height, so it occupies ZERO net flow space — while hidden (opacity 0,
+#      the original reveal state) it overlays the hero top with no gap, and
+#      the page's existing IntersectionObserver reveal keeps working as
+#      designed. ResizeObserver keeps the margin in sync when pills wrap.
+# The thin scroll-progress line has no sticky equivalent and stays hidden.
+STICKY_BAR_OVERRIDE = (
+    "\n<style>\n"
+    "/* Squarespace-fit: fixed-position bars can't anchor to the viewport\n"
+    "   inside a code block. Hide the progress line; rebuild the pill/tab\n"
+    "   nav as a sticky overlay (see build_squarespace.py). */\n"
+    ".ha-progress { display: none !important; }\n"
+    ".ha-issues, .ha-tax, .ha-food, .ha-housing, .ha-transit, .ha-wages "
+    "{ overflow: clip !important; }\n"
+    ".ha-nav-bar, [class*=\"__stuck-bar\"] {\n"
+    "  position: sticky !important; top: 0 !important;\n"
+    "  left: auto !important; right: auto !important;\n"
+    "}\n"
+    "</style>\n"
+    "<script>\n"
+    "(function(){\n"
+    "  // Sticky overlay: cancel the bar's flow height so it overlays the\n"
+    "  // hero top while hidden (no gap); resync when the pills wrap.\n"
+    "  document.querySelectorAll('.ha-nav-bar, [class*=\"__stuck-bar\"]')"
+    ".forEach(function(bar){\n"
+    "    var sync = function(){ "
+    "bar.style.marginBottom = -bar.offsetHeight + 'px'; };\n"
+    "    if (window.ResizeObserver) "
+    "new ResizeObserver(sync).observe(bar);\n"
+    "    window.addEventListener('resize', sync);\n"
+    "    sync();\n"
+    "  });\n"
+    "})();\n"
+    "</script>\n"
+)
+
+
 def absolutize_assets(html):
     """Rewrite relative resource paths to absolute Pages URLs:
       • src/url()/href to assets/…  (images, etc.)
@@ -244,7 +298,8 @@ def main():
         block = extract_marker(read(src), slug)
         out_name = src  # keep the same stem so the mapping is obvious
         body = entity_encode(absolutize_assets(
-            header(page, note) + "\n".join(block).strip() + "\n"))
+            header(page, note) + "\n".join(block).strip()
+            + STICKY_BAR_OVERRIDE))
         with open(os.path.join(OUT, out_name), "w", encoding="utf-8") as f:
             f.write(body)
         manifest.append((out_name, page, len(body)))
