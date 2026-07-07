@@ -404,6 +404,24 @@ def build_support(lines):
     )
     css = scope_css_selectors(css, "ha-support-embed")
 
+    # Full-bleed breakout on mobile (same fix as the homepage): Squarespace
+    # pads the code block's content column on mobile, leaving side gutters.
+    # The source page is already edge-to-edge, so pull the wrapper out to the
+    # full viewport width to counter that padding. Mobile-only: desktop spans
+    # full width already, and 100vw there can add a scrollbar.
+    css += (
+        "\n<style>\n"
+        "@media (max-width:1080px){\n"
+        "  #ha-support-embed{\n"
+        "    width: 100vw !important;\n"
+        "    max-width: 100vw !important;\n"
+        "    margin-left: calc(50% - 50vw) !important;\n"
+        "    margin-right: calc(50% - 50vw) !important;\n"
+        "  }\n"
+        "}\n"
+        "</style>\n"
+    )
+
     note = ("this page predates the .ha-xxx namespacing convention (plain "
             "global classes like .hero/.btn/.form) — every CSS selector is "
             "auto-scoped under #ha-support-embed by the builder so it can't "

@@ -621,69 +621,6 @@
     }
 
     /* ─────────────────────────────────────
-       STAY CONNECTED / NEWSLETTER
-    ───────────────────────────────────── */
-    .connect-section {
-      padding: 7rem 8%;
-      background: var(--white);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: start;
-      border-top: 1px solid var(--ash-light);
-    }
-
-    .connect-text h2 {
-      font-family: 'Manrope', sans-serif;
-      font-size: clamp(2rem, 3.2vw, 2.8rem);
-      font-weight: 300;
-      color: var(--charcoal);
-      line-height: 1.2;
-      margin-bottom: 1.2rem;
-    }
-    .connect-text h2 em { font-style: italic; color: var(--teal); }
-
-    .connect-text p {
-      font-size: 0.92rem;
-      line-height: 1.8;
-      color: var(--deep-teal);
-      font-weight: 400;
-      margin-bottom: 1.5rem;
-    }
-
-    .connect-note {
-      font-size: 0.78rem;
-      color: var(--deep-teal);
-      opacity: 0.6;
-      letter-spacing: 0.02em;
-    }
-
-    .form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-    }
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.9rem;
-    }
-    .form input {
-      padding: 0.95rem 1.15rem;
-      border: 1px solid var(--ash);
-      background: var(--cream);
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.88rem;
-      color: var(--charcoal);
-      outline: none;
-      transition: border-color 0.25s;
-      width: 100%;
-    }
-    .form input:focus { border-color: var(--teal); }
-    .form input::placeholder { color: rgba(47,62,70,0.4); }
-    .form .btn { width: 100%; text-align: center; margin-top: 0.3rem; }
-
-    /* ─────────────────────────────────────
        FOOTER (mockup's own — kept per design)
     ───────────────────────────────────── */
     .site-footer {
@@ -764,8 +701,7 @@
     ───────────────────────────────────── */
     @media (max-width: 900px) {
       .mission-band,
-      .policy-header,
-      .connect-section { grid-template-columns: 1fr; gap: 3rem; }
+      .policy-header { grid-template-columns: 1fr; gap: 3rem; }
       .ways-grid        { grid-template-columns: 1fr; }
       .giving-grid      { grid-template-columns: 1fr 1fr; }
       .hero-inner       { padding: 8rem 6% 4rem; }
@@ -775,7 +711,6 @@
 
     @media (max-width: 560px) {
       .giving-grid      { grid-template-columns: 1fr; }
-      .form-row         { grid-template-columns: 1fr; }
       .site-footer      { flex-direction: column; gap: 1.5rem; text-align: center; }
       .footer-nav       { flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
     }
@@ -953,7 +888,7 @@
         <span class="way-num">03</span>
         <h3>Spread the Word</h3>
         <p>Follow us, share our research, and talk to your neighbors and colleagues about the issues shaping life in Hawaiʻi. When more people understand what's at stake, more people show up — and that changes everything.</p>
-        <a href="#connect" class="way-link">Stay Connected</a>
+        <a href="https://hiappleseed.org" target="_blank" rel="noopener" class="way-link">Visit Our Website</a>
       </div>
 
       <div class="way-card">
@@ -1080,31 +1015,6 @@
       </blockquote>
       <div class="voice-rule"></div>
       <p class="voice-attr">Hawaiʻi Appleseed Center for Law &amp; Economic Justice</p>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════
-       STAY CONNECTED / NEWSLETTER
-  ══════════════════════════════════ -->
-  <section class="connect-section reveal-group" id="connect">
-    <div class="connect-text">
-      <div class="section-label">Stay Informed</div>
-      <h2>Stay rooted in <em>what matters.</em></h2>
-      <p>Sign up for our newsletter and action alerts. We'll keep you informed on the issues, the legislation, and the moments when your engagement — a call to a lawmaker, a shared report, a word to a neighbor — makes the biggest difference.</p>
-      <p>This is how community moves policy. One person at a time.</p>
-      <span class="connect-note">We respect your inbox. Unsubscribe at any time.</span>
-    </div>
-
-    <div>
-      <form class="form" onsubmit="return false;">
-        <div class="form-row">
-          <input type="text" placeholder="First Name" />
-          <input type="text" placeholder="Last Name" />
-        </div>
-        <input type="email" placeholder="Email Address" />
-        <input type="text" placeholder="Island / Community (optional)" />
-        <button type="submit" class="btn btn-solid">Subscribe to Updates</button>
-      </form>
     </div>
   </section>
 

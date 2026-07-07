@@ -617,69 +617,6 @@
     }
 
     /* \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 
-       STAY CONNECTED / NEWSLETTER
-    \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500  */
-    #ha-support-embed .connect-section{
-      padding: 7rem 8%;
-      background: var(--white);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: start;
-      border-top: 1px solid var(--ash-light);
-    }
-
-    #ha-support-embed .connect-text h2{
-      font-family: 'Manrope', sans-serif;
-      font-size: clamp(2rem, 3.2vw, 2.8rem);
-      font-weight: 300;
-      color: var(--charcoal);
-      line-height: 1.2;
-      margin-bottom: 1.2rem;
-    }
-    #ha-support-embed .connect-text h2 em{ font-style: italic; color: var(--teal); }
-
-    #ha-support-embed .connect-text p{
-      font-size: 0.92rem;
-      line-height: 1.8;
-      color: var(--deep-teal);
-      font-weight: 400;
-      margin-bottom: 1.5rem;
-    }
-
-    #ha-support-embed .connect-note{
-      font-size: 0.78rem;
-      color: var(--deep-teal);
-      opacity: 0.6;
-      letter-spacing: 0.02em;
-    }
-
-    #ha-support-embed .form{
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-    }
-    #ha-support-embed .form-row{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.9rem;
-    }
-    #ha-support-embed .form input{
-      padding: 0.95rem 1.15rem;
-      border: 1px solid var(--ash);
-      background: var(--cream);
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.88rem;
-      color: var(--charcoal);
-      outline: none;
-      transition: border-color 0.25s;
-      width: 100%;
-    }
-    #ha-support-embed .form input:focus{ border-color: var(--teal); }
-    #ha-support-embed .form input::placeholder{ color: rgba(47,62,70,0.4); }
-    #ha-support-embed .form .btn{ width: 100%; text-align: center; margin-top: 0.3rem; }
-
-    /* \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 
        FOOTER (mockup's own \2014  kept per design)
     \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500  */
     #ha-support-embed .site-footer{
@@ -759,7 +696,7 @@
        RESPONSIVE
     \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500  */
     @media (max-width: 900px) {
-      #ha-support-embed .mission-band, #ha-support-embed .policy-header, #ha-support-embed .connect-section{ grid-template-columns: 1fr; gap: 3rem; }
+      #ha-support-embed .mission-band, #ha-support-embed .policy-header{ grid-template-columns: 1fr; gap: 3rem; }
       #ha-support-embed .ways-grid{ grid-template-columns: 1fr; }
       #ha-support-embed .giving-grid{ grid-template-columns: 1fr 1fr; }
       #ha-support-embed .hero-inner{ padding: 8rem 6% 4rem; }
@@ -769,7 +706,6 @@
 
     @media (max-width: 560px) {
       #ha-support-embed .giving-grid{ grid-template-columns: 1fr; }
-      #ha-support-embed .form-row{ grid-template-columns: 1fr; }
       #ha-support-embed .site-footer{ flex-direction: column; gap: 1.5rem; text-align: center; }
       #ha-support-embed .footer-nav{ flex-wrap: wrap; justify-content: center; gap: 1.2rem; }
     }
@@ -833,6 +769,17 @@
   #ha-support-embed .px-nav .px-dropdown-menu a{padding:9px 4px;white-space:normal;}
 }
 </style>
+<style>
+@media (max-width:1080px){
+  #ha-support-embed{
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+  }
+}
+</style>
+
   <section class="hero">
     <!-- Seedling as atmospheric bg element -->
     <img class="hero-seedling"
@@ -892,7 +839,7 @@
         <span class="way-num">03</span>
         <h3>Spread the Word</h3>
         <p>Follow us, share our research, and talk to your neighbors and colleagues about the issues shaping life in Hawai&#699;i. When more people understand what's at stake, more people show up &#8212; and that changes everything.</p>
-        <a href="#connect" class="way-link">Stay Connected</a>
+        <a href="https://hiappleseed.org" target="_blank" rel="noopener" class="way-link">Visit Our Website</a>
       </div>
 
       <div class="way-card">
@@ -1019,31 +966,6 @@
       </blockquote>
       <div class="voice-rule"></div>
       <p class="voice-attr">Hawai&#699;i Appleseed Center for Law &amp; Economic Justice</p>
-    </div>
-  </section>
-
-  <!-- &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;
-       STAY CONNECTED / NEWSLETTER
-  &#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552; -->
-  <section class="connect-section reveal-group" id="connect">
-    <div class="connect-text">
-      <div class="section-label">Stay Informed</div>
-      <h2>Stay rooted in <em>what matters.</em></h2>
-      <p>Sign up for our newsletter and action alerts. We'll keep you informed on the issues, the legislation, and the moments when your engagement &#8212; a call to a lawmaker, a shared report, a word to a neighbor &#8212; makes the biggest difference.</p>
-      <p>This is how community moves policy. One person at a time.</p>
-      <span class="connect-note">We respect your inbox. Unsubscribe at any time.</span>
-    </div>
-
-    <div>
-      <form class="form" onsubmit="return false;">
-        <div class="form-row">
-          <input type="text" placeholder="First Name" />
-          <input type="text" placeholder="Last Name" />
-        </div>
-        <input type="email" placeholder="Email Address" />
-        <input type="text" placeholder="Island / Community (optional)" />
-        <button type="submit" class="btn btn-solid">Subscribe to Updates</button>
-      </form>
     </div>
   </section>
 
