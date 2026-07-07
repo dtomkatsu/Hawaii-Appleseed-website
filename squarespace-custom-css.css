@@ -8,8 +8,20 @@
 
 /* ---------- Compact header ---------- */
 
-/* 1. Logo */
-.header-title-logo img { max-height: 48px !important; }
+/* 1. Logo — force height, not just cap it. Squarespace's own logo-scale
+   control sets an explicit (smaller) height inline on the img; max-height
+   alone is a ceiling and can't grow past that, which is why earlier bumps
+   barely showed. height:auto on the container guards against it clipping
+   a now-taller image if it had a fixed height matching the old logo size. */
+.header-title-logo img {
+  height: 48px !important;
+  max-height: 48px !important;
+  width: auto !important;
+}
+.header-title-logo {
+  height: auto !important;
+  max-height: none !important;
+}
 
 /* 2. Header vertical padding (was 2.2vw) */
 .header .header-announcement-bar-wrapper {
