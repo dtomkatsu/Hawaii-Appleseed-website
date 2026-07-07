@@ -8,13 +8,17 @@
 
 /* ---------- Compact header ---------- */
 
-/* 1. Logo — force height, not just cap it. Squarespace's own logo-scale
-   control sets an explicit (smaller) height inline on the img; max-height
-   alone is a ceiling and can't grow past that, which is why earlier bumps
-   barely showed. height:auto on the container guards against it clipping
-   a now-taller image if it had a fixed height matching the old logo size. */
+/* 1. Logo — the live logo is a HORIZONTAL wordmark PNG, and the site still
+   carries a competing `.header-title-logo img { max-height:35px !important }`
+   rule that re-clamps any plain height/max-height we set. Per CSS spec,
+   min-height WINS over a conflicting max-height, so min-height is what
+   actually forces the logo taller regardless of that lingering 35px cap.
+   NOTE: if the wordmark still looks small at 48px, the PNG likely has
+   transparent padding baked around the art — that needs a re-cropped image,
+   no CSS can fix it. */
 .header-title-logo img {
   height: 48px !important;
+  min-height: 48px !important;
   max-height: 48px !important;
   width: auto !important;
 }
