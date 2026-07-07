@@ -9,7 +9,7 @@
 /* ---------- Compact header ---------- */
 
 /* 1. Logo */
-.header-title-logo img { max-height: 38px !important; }
+.header-title-logo img { max-height: 48px !important; }
 
 /* 2. Header vertical padding (was 2.2vw) */
 .header .header-announcement-bar-wrapper {
@@ -21,11 +21,40 @@
   padding-bottom: 0.9vw !important;
 }
 
-/* 3. Donate button */
+/* 3. Donate button — size + brand color, matching the mockup's
+   .px-donate-btn (index.html): Charcoal fill, white text, Deep Teal hover. */
 .header-actions-action--cta .sqs-button-element--primary {
   font-size: 0.95rem !important;
   padding: 0.6em 1.35em !important;
   line-height: 1.1 !important;
+  background-color: #2F3E46 !important;
+  border-color: #2F3E46 !important;
+  color: #fff !important;
+}
+.header-actions-action--cta .sqs-button-element--primary:hover {
+  background-color: #52796F !important;
+  border-color: #52796F !important;
+}
+
+/* 4. Nav link text — matches the mockup's .px-links (Charcoal, Deep Teal
+   hover). Standard Squarespace 7.1 header-nav selector — if this doesn't
+   visibly change the live nav, inspect a nav link and send the real class. */
+.header-nav-item:not(.header-actions-action--cta) a {
+  color: #2F3E46 !important;
+}
+.header-nav-item:not(.header-actions-action--cta) a:hover {
+  color: #52796F !important;
+}
+
+/* 5. Notice bar (announcement bar) — matches the mockup's .px-announce:
+   Charcoal background, white text/link. Standard Squarespace 7.1
+   announcement-bar selectors — same caveat as #4 if it doesn't take. */
+.header-announcement-bar-wrapper .sqs-announcement-bar {
+  background-color: #2F3E46 !important;
+}
+.sqs-announcement-bar-text,
+.sqs-announcement-bar-text a {
+  color: #fff !important;
 }
 
 
