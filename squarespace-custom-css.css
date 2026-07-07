@@ -113,6 +113,46 @@
   color: #fff !important;
 }
 
+/* 6. Footer — RESTYLE the existing native Squarespace footer (Fluid
+   Engine) rather than replace it. Pulled the live footer's actual markup:
+   it already has real content (logo, address, nav links, Donate/Subscribe,
+   social icons, copyright) that a full HTML replacement would have
+   duplicated — that's what caused the "two footers stacked" bug. The
+   Fluid Engine blocks each get a unique auto-generated class per block
+   instance (e.g. .fe-block-6866c7ad...) that shifts if blocks are ever
+   rearranged, so this targets the STABLE #footer-sections id + Squarespace's
+   own stable content/component classes instead — matches the mockup's
+   .px-footer palette (Charcoal bg, sage/Ash text, Teal link hover) without
+   depending on fragile per-block classes.
+   NOTE: if you rearrange footer blocks in the editor this should keep
+   working, since none of these selectors reference block-instance classes. */
+#footer-sections,
+#footer-sections .page-section,
+#footer-sections .section-background {
+  background-color: #2F3E46 !important;
+}
+#footer-sections p,
+#footer-sections span:not(.sqs-svg-icon--social *) {
+  color: #CAD2C5 !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+#footer-sections a:not(.sqs-svg-icon--wrapper) {
+  color: #CAD2C5 !important;
+  font-family: 'Poppins', sans-serif !important;
+  text-decoration: none !important;
+}
+#footer-sections a:not(.sqs-svg-icon--wrapper):hover {
+  color: #84A98C !important;
+}
+/* Social icons are a CSS mask (background-color clipped by an SVG mask),
+   not a filled/stroked SVG — confirmed from site.css. */
+#footer-sections .sqs-svg-icon--wrapper {
+  background-color: #CAD2C5 !important;
+}
+#footer-sections .sqs-svg-icon--wrapper:hover {
+  background-color: #84A98C !important;
+}
+
 
 /* Homepage hero: drop the video off the navbar without moving the headline */
 @media (min-width: 900px) {
