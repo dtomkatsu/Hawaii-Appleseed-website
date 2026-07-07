@@ -2382,3 +2382,19 @@
   });
 })();
 </script>
+
+<style>
+/* Squarespace-fit: counter the code block's mobile content-column
+   padding by breaking the page wrapper out to 100vw. Mobile-only \2014 
+   desktop already spans full width. */
+@media (max-width:1080px){
+  .ha-mission, .ha-story, .ha-issues, .ha-team, .ha-board,
+  .ha-tax, .ha-food, .ha-housing, .ha-transit, .ha-wages,
+  .ha-pub, .ha-news {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+  }
+}
+</style>

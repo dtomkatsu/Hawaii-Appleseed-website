@@ -103,6 +103,35 @@ STICKY_BAR_OVERRIDE = (
 )
 
 
+# Squarespace pads the code block's content column on mobile (<=1080px),
+# leaving side gutters even though every page's own layout is already
+# edge-to-edge — same root cause as the homepage and support page (see
+# build_homepage()/build_support()). Pull each marker page's top-level
+# wrapper out to the full viewport width on mobile only; desktop already
+# spans full width, and 100vw there can add a scrollbar. One shared block
+# lists every marker page's root wrapper class (confirmed each one already
+# has box-sizing:border-box with no padding of its own — padding lives on
+# inner .ha-wrap/section containers, so this can't cause overflow). A class
+# absent from a given page is simply a no-op there, same as STICKY_BAR_OVERRIDE.
+FULL_BLEED_OVERRIDE = (
+    "\n<style>\n"
+    "/* Squarespace-fit: counter the code block's mobile content-column\n"
+    "   padding by breaking the page wrapper out to 100vw. Mobile-only —\n"
+    "   desktop already spans full width. */\n"
+    "@media (max-width:1080px){\n"
+    "  .ha-mission, .ha-story, .ha-issues, .ha-team, .ha-board,\n"
+    "  .ha-tax, .ha-food, .ha-housing, .ha-transit, .ha-wages,\n"
+    "  .ha-pub, .ha-news {\n"
+    "    width: 100vw !important;\n"
+    "    max-width: 100vw !important;\n"
+    "    margin-left: calc(50% - 50vw) !important;\n"
+    "    margin-right: calc(50% - 50vw) !important;\n"
+    "  }\n"
+    "}\n"
+    "</style>\n"
+)
+
+
 # Internal cross-page links (href="food-security.html", "issues.html", …)
 # point at our source filenames, which don't exist as Squarespace pages —
 # the live site uses its own slugs. Confirmed against the real site
@@ -572,7 +601,7 @@ def main():
         out_name = src  # keep the same stem so the mapping is obvious
         body = entity_encode(remap_internal_links(absolutize_assets(
             header(page, note) + "\n".join(block).strip()
-            + STICKY_BAR_OVERRIDE)))
+            + STICKY_BAR_OVERRIDE + FULL_BLEED_OVERRIDE)))
         with open(os.path.join(OUT, out_name), "w", encoding="utf-8") as f:
             f.write(body)
         manifest.append((out_name, page, len(body)))
