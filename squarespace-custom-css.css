@@ -57,14 +57,23 @@
   border-color: #52796F !important;
 }
 
-/* 4. Nav link text — matches the mockup's .px-links (Charcoal, Deep Teal
-   hover). Standard Squarespace 7.1 header-nav selector — if this doesn't
-   visibly change the live nav, inspect a nav link and send the real class. */
+/* 4. Nav link text — matches the mockup's .px-links: Charcoal, weight 500;
+   Deep Teal on hover (weight unchanged); the active/current page gets Deep
+   Teal + weight 600, matching .px-links a.active. Confirmed live: Squarespace's
+   nav font-weight falls back to `var(--body-font-font-weight)` (the site's
+   body-text weight) since Navigation typography isn't customized — that's
+   why the nav read lighter than the mockup's 500/600. header-nav-item--active
+   is the real live class for the current page (confirmed from page HTML). */
 .header-nav-item:not(.header-actions-action--cta) a {
   color: #2F3E46 !important;
+  font-weight: 500 !important;
 }
 .header-nav-item:not(.header-actions-action--cta) a:hover {
   color: #52796F !important;
+}
+.header-nav-item--active:not(.header-actions-action--cta) a {
+  color: #52796F !important;
+  font-weight: 600 !important;
 }
 
 /* 5. Notice bar (announcement bar) — matches the mockup's .px-announce:
