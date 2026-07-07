@@ -235,6 +235,177 @@ def _find(lines, needle, start=0):
     return next(i for i in range(start, len(lines)) if needle in lines[i])
 
 
+def scope_css_selectors(css, wrapper_id):
+    """Prefix every top-level CSS selector with '#wrapper_id ' so a page
+    built with unscoped generic classes (.hero, .btn, .form, .section-title,
+    …) can't collide with the Squarespace template or other injected pages
+    reusing those same common names.
+
+    A brace-depth-aware scan (not a full CSS parser, but enough for this
+    codebase's hand-written, non-pathological CSS) so nested content is
+    handled correctly:
+      • Text immediately before a '{' is a selector (or an at-rule like
+        '@media (...)') — prefix it, UNLESS:
+          - it's an at-rule ('@media', '@keyframes', '@supports', …) —
+            passed through untouched, and if it's '@keyframes' every
+            selector inside its body (0%, 50%, from, to) is also left
+            alone until that body's closing brace.
+          - it's exactly ':root' — left alone, so custom properties stay
+            on the true document root and inherit normally into scoped
+            descendants.
+          - it already starts with the wrapper id (idempotent — rules
+            already scoped by an earlier literal replace aren't doubled).
+      • Multiple comma-separated selectors are each prefixed individually.
+      • /* comment */ spans are passed through untouched and do NOT enter
+        the selector buffer — a comment sitting directly before a rule
+        (no brace in between, e.g. a "/* ANIMATIONS */" banner before
+        "@keyframes fadeUp") would otherwise get glued onto that rule's
+        selector text, so "@keyframes fadeUp".strip().startswith("@")
+        silently fails (the combined string starts with the comment's
+        "/*" instead) and the whole keyframes body gets misprefixed.
+    """
+    out = []
+    buf = []
+    depth = 0
+    keyframes_depth = None  # depth level whose body is a @keyframes block
+
+    def flush_as_selector():
+        text = "".join(buf)
+        stripped = text.strip()
+        if not stripped:
+            return text
+        if stripped.startswith("@"):
+            return text
+        if keyframes_depth is not None and depth >= keyframes_depth:
+            return text
+        if stripped == ":root":
+            return text
+        parts = [p.strip() for p in text.split(",")]
+        scoped = []
+        for p in parts:
+            if not p:
+                continue
+            if p.startswith("#" + wrapper_id):
+                scoped.append(p)
+            else:
+                scoped.append("#" + wrapper_id + " " + p)
+        # Preserve original leading whitespace/newlines for readability.
+        leading_ws = text[:len(text) - len(text.lstrip())]
+        return leading_ws + ", ".join(scoped)
+
+    i = 0
+    n = len(css)
+    while i < n:
+        ch = css[i]
+        if ch == "/" and i + 1 < n and css[i + 1] == "*":
+            end = css.find("*/", i + 2)
+            end = (end + 2) if end != -1 else n
+            # Flush whatever selector text had accumulated before the
+            # comment as plain output (no brace follows it here, so it
+            # isn't a rule to prefix — just carried text, e.g. blank
+            # lines between rules), then emit the comment untouched.
+            out.append("".join(buf))
+            buf = []
+            out.append(css[i:end])
+            i = end
+            continue
+        if ch == "{":
+            selector_text = flush_as_selector()
+            was_at_rule = selector_text.strip().startswith("@")
+            out.append(selector_text)
+            out.append("{")
+            depth += 1
+            if was_at_rule and selector_text.strip().startswith("@keyframes"):
+                keyframes_depth = depth
+            buf = []
+        elif ch == "}":
+            out.append("".join(buf))
+            out.append("}")
+            if keyframes_depth is not None and depth == keyframes_depth:
+                keyframes_depth = None
+            depth = max(0, depth - 1)
+            buf = []
+        else:
+            buf.append(ch)
+        i += 1
+    out.append("".join(buf))
+    return "".join(out)
+
+
+def build_support(lines):
+    """support.html (Donate/Support page) predates the .ha-xxx namespacing
+    convention: it's written like a standalone mockup with plain global
+    classes (.hero, .btn, .mission-band, .form, …) and the same 6 kinds of
+    global resets the homepage had. Assemble a scoped injection the same
+    way as build_homepage(), but since almost EVERY selector here is
+    unscoped (not just 6 known rules), use scope_css_selectors() to prefix
+    all of them under #ha-support-embed rather than hand-listing each one.
+    """
+    body_i = _find(lines, "<body")
+
+    f_pre = _find(lines, 'rel="preconnect" href="https://fonts.gstatic.com"')
+    f_css = _find(lines, "fonts.googleapis.com/css2")
+    fonts = "\n".join([lines[f_pre], lines[f_css]])
+
+    css_start = _find(lines, "<style>")
+    css_end = max(i for i in range(body_i) if "</style>" in lines[i])
+    css = "\n".join(lines[css_start:css_end + 1])
+
+    hero_i = _find(lines, '<section class="hero">')
+    footer_i = _find(lines, 'class="px-footer"', hero_i)
+    markup_lines = lines[hero_i:footer_i]
+    while markup_lines and (not markup_lines[-1].strip()
+                            or markup_lines[-1].strip().startswith("<!--")):
+        markup_lines.pop()
+    markup = "\n".join(markup_lines)
+
+    footer_close = _find(lines, "</footer>", footer_i)
+    scripts_start = _find(lines, "<script", footer_close)
+    body_close = _find(lines, "</body>")
+    scripts = "\n".join(lines[scripts_start:body_close])
+
+    # Scope the CSS: the two universal (*) resets get :where() (zero
+    # specificity — matches the homepage fix), the few single-element
+    # global rules just get element-swapped to the wrapper id, and EVERY
+    # remaining selector (.hero, .btn, .mission-band, …) is prefixed by
+    # the brace-depth scanner above.
+    css = css.replace(
+        "*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }",
+        ":where(#ha-support-embed, #ha-support-embed *, #ha-support-embed *::before, #ha-support-embed *::after) { box-sizing: border-box; margin: 0; padding: 0; }",
+    )
+    css = css.replace(
+        "*, *::before, *::after{",
+        ":where(#ha-support-embed *, #ha-support-embed *::before, #ha-support-embed *::after){",
+    )
+    css = css.replace("html { scroll-behavior: smooth; }", "")
+    css = re.sub(r"(?m)^(\s*)body\s*\{", r"\1#ha-support-embed {", css, count=1)
+    css = css.replace(
+        "section[id] { scroll-margin-top: 124px; }",
+        "#ha-support-embed section[id] { scroll-margin-top: 124px; }",
+    )
+    css = css.replace(
+        "a, button { -webkit-tap-highlight-color: transparent; }",
+        "#ha-support-embed a, #ha-support-embed button { -webkit-tap-highlight-color: transparent; }",
+    )
+    css = scope_css_selectors(css, "ha-support-embed")
+
+    note = ("this page predates the .ha-xxx namespacing convention (plain "
+            "global classes like .hero/.btn/.form) — every CSS selector is "
+            "auto-scoped under #ha-support-embed by the builder so it can't "
+            "collide with the Squarespace template or other pages")
+    return (
+        header("Support / Donate", note)
+        + "<!-- BEGIN ha-support -->\n"
+        + '<div id="ha-support-embed">\n'
+        + fonts + "\n"
+        + css + "\n"
+        + markup + "\n"
+        + scripts + "\n"
+        + "</div>\n"
+        + "<!-- END ha-support -->\n"
+    )
+
+
 def build_homepage(lines):
     # Locate everything by content landmarks (not line numbers) so the
     # script survives edits to index.html.
@@ -348,6 +519,12 @@ def main():
     with open(os.path.join(OUT, "index.html"), "w", encoding="utf-8") as f:
         f.write(home)
     manifest.append(("index.html", "Home", len(home)))
+
+    support = entity_encode(remap_internal_links(
+        absolutize_assets(build_support(read("support.html")))))
+    with open(os.path.join(OUT, "support.html"), "w", encoding="utf-8") as f:
+        f.write(support)
+    manifest.append(("support.html", "Support / Donate", len(support)))
 
     print("Wrote %d files to squarespace-ready/:" % len(manifest))
     for name, page, size in manifest:
