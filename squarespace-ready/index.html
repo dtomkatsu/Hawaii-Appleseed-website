@@ -884,19 +884,19 @@
 <style>
 /* --- Squarespace-fit hero (no fixed-nav overlap here) --- */
 /* Desktop split hero: 80svh (92svh assumed a fixed nav overlapping
-   the top). The film's height cap MUST match this hero height \2014 
-   the source caps it against 92svh, so with a shorter hero a 54vw
-   film outgrows the box on wide screens: it crowds the hero top
-   and the mission wave (60px overhang) laps its bottom edge.
-   Cap = 80svh - 230px so the centered film always keeps >=99px
-   below (wave needs 60). top offset 0.5rem (was 1.5) shifts the
-   film slightly UP: a touch less top whitespace, more wave gap. */
+   the top). The film's height cap reserves only 150px so that on
+   wide+tall screens 54vw wins the min() and the film renders full
+   size; the cap binds ONLY on short viewports, shrinking the film
+   there so the mission wave (60px overhang) never laps it. offset
+   -0.6rem nudges the film UP: less top whitespace, more wave gap.
+   Verified 1999x960 -> full 54vw, 30px wave clear; 1999x760 ->
+   cap active, 25px clear, no overlap. */
 @media (min-width:1081px){
   #ha-home-embed .ha-home__hero, #ha-home-embed .hero-inner { min-height: 80svh !important; }
   #ha-home-embed .hero-inner { padding-top: 1.25rem !important; }
   #ha-home-embed .ha-home__hero-media {
-    top: calc(50% + 0.5rem) !important;
-    width: min(54vw, calc((80svh - 230px) * 16 / 9)) !important;
+    top: calc(50% - 0.6rem) !important;
+    width: min(54vw, calc((80svh - 150px) * 16 / 9)) !important;
   }
 }
 /* Stacked layout keeps the source's min-height:auto; only trim its
