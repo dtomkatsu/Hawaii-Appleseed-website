@@ -170,16 +170,14 @@
   fill: #84A98C !important;
 }
 
-/* 7. Footer logo — it's a flat raster PNG (hawaii-appleseed-logo-v2.png,
-   dark navy/charcoal artwork), so its color can't be changed by any CSS
-   `color` property — only a filter can touch pixel color. Confirmed it's
-   the only <img> in the footer, so this is safely scoped. brightness(0)
-   flattens all ink to black, invert(1) flips that to white, so the dark
-   logo reads clearly against the new dark Charcoal footer instead of
-   nearly disappearing into it. */
-#footer-sections img {
-  filter: brightness(0) invert(1) !important;
-}
+/* 7. Footer logo — handled by UPLOADING a white logo (see
+   assets/appleseed-footer-logo-white.png), NOT by CSS. The footer logo is a
+   transparent-background raster PNG with legacy sage-green ink; a CSS
+   `filter: brightness(0) invert(1)` recolor made it render blank (black on
+   the dark footer) in Squarespace's image pipeline, so we recolor the
+   source image to white instead. Upload it in the footer's Image block.
+   No filter rule here on purpose — a filter would double-process the new
+   white logo. */
 
 
 /* Homepage hero: drop the video off the navbar without moving the headline */
