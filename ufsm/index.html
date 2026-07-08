@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
     <style>
         :root {
             --ufsm-charcoal: #4A4A4A;
@@ -532,6 +534,31 @@
         /* footer credit */
         .ufsm-credit { text-align: center; padding: 30px 24px 50px; color: var(--ufsm-muted); font-size: 0.85rem; }
 
+        /* Download-as-PDF button (secondary action inside the green CTA) */
+        .ufsm-btn--pdf {
+            background: transparent; color: #fff; border: 2px solid rgba(255, 255, 255, 0.85);
+            cursor: pointer; margin-left: 12px; padding: 12px 26px; font-size: 1rem;
+            display: inline-flex; align-items: center; gap: 9px; vertical-align: middle;
+        }
+        .ufsm-btn--pdf:hover { background: rgba(255, 255, 255, 0.14); }
+        .ufsm-btn--pdf:disabled { opacity: 0.6; cursor: progress; transform: none; box-shadow: none; }
+        .ufsm-btn--pdf svg { display: block; }
+
+        /* ===== PDF export capture state (html2canvas) ===== */
+        /* Force every reveal to its final, visible state — nothing prints blank. */
+        .ufsm-pdf-capture .ufsm-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+        .ufsm-pdf-capture .ufsm-reasons-kicker,
+        .ufsm-pdf-capture .ufsm-reasons-head .ufsm-rh-line,
+        .ufsm-pdf-capture .ufsm-reasons-2col .ufsm-reason { opacity: 1 !important; animation: none !important; }
+        .ufsm-pdf-capture .ufsm-gap-fill,
+        .ufsm-pdf-capture .ufsm-lever-fill,
+        .ufsm-pdf-capture .ufsm-gauge-arc { transition: none !important; }
+        /* html2canvas can't rasterize clip-path — render the Legislature timeline
+           chevrons as clean rounded bars (keeps the horizontal grid layout). */
+        .ufsm-pdf-capture .ufsm-tl-chev,
+        .ufsm-pdf-capture .ufsm-tl-chev.col1 { clip-path: none !important; border-radius: 8px; }
+        .ufsm-pdf-capture #ufsm-pdf-btn { display: none !important; }
+
         /* ===== Desktop ===== */
         @media (min-width: 768px) {
             .ufsm-section-title { font-size: 3.1rem; }
@@ -886,6 +913,10 @@
                 <h3>Hungry keiki can't learn.</h3>
                 <p>Universal free school meals are a proven, fundable way to make sure every Hawaiʻi student is fed and ready to learn.</p>
                 <a class="ufsm-btn" href="https://hiappleseed.org/universal-free-school-meals" target="_blank" rel="noopener">Learn more at hiappleseed.org</a>
+                <button type="button" id="ufsm-pdf-btn" class="ufsm-btn ufsm-btn--pdf">
+                    <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+                    <span>Download as PDF</span>
+                </button>
                 <div class="ufsm-cta-tag">#Meals4AllHI</div>
             </div>
         </div>
@@ -1134,6 +1165,91 @@
                 });
             }, 1200);
         });
+
+        /* ---------- Download as PDF (html2canvas → jsPDF, exactly 2 pages) ---------- */
+        // Force every scroll-revealed section + both charts to their final rendered
+        // state so nothing captures blank (learned the hard way testing headlessly).
+        function forceFinalState() {
+            document.querySelectorAll('.ufsm-reveal').forEach(function (e) { e.classList.add('active'); });
+            initPie();
+            initBar();
+            animateFills(document);
+            var arc = document.getElementById('ufsm-gauge-arc');
+            var num = document.getElementById('ufsm-gauge-num');
+            if (arc) { var len = arc.getTotalLength(); arc.style.strokeDasharray = len; arc.style.strokeDashoffset = len * (1 - 0.34); }
+            if (num) num.textContent = '34%';
+        }
+
+        var pdfBtn = document.getElementById('ufsm-pdf-btn');
+        if (pdfBtn) {
+            pdfBtn.addEventListener('click', function () {
+                if (typeof html2canvas === 'undefined' || !window.jspdf) {
+                    alert('PDF tools are still loading — please try again in a second.');
+                    return;
+                }
+                var label = pdfBtn.querySelector('span');
+                var orig = label ? label.textContent : '';
+                pdfBtn.disabled = true;
+                if (label) label.textContent = 'Generating…';
+                document.body.classList.add('ufsm-pdf-capture');
+                forceFinalState();
+
+                var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+                fontsReady.then(function () {
+                    // let Chart.js finish its rAF draw + the forced states settle
+                    return new Promise(function (res) { setTimeout(res, 450); });
+                }).then(function () {
+                    return html2canvas(document.body, {
+                        scale: 2,
+                        backgroundColor: '#ffffff',
+                        useCORS: true,
+                        windowWidth: document.documentElement.clientWidth,
+                        width: document.body.scrollWidth,
+                        height: document.body.scrollHeight,
+                        scrollX: 0,
+                        scrollY: 0
+                    });
+                }).then(function (canvas) {
+                    var jsPDF = window.jspdf.jsPDF;
+                    var scale = 2, cw = canvas.width, chh = canvas.height, cssW = cw / scale;
+
+                    // Split at the band boundary nearest the vertical midpoint (content density).
+                    var sections = document.querySelectorAll('body > section, body > header');
+                    var total = document.body.scrollHeight, best = 1, bestDiff = Infinity;
+                    for (var i = 1; i < sections.length; i++) {
+                        var t = sections[i].getBoundingClientRect().top + window.scrollY;
+                        var d = Math.abs(t - total / 2);
+                        if (d < bestDiff) { bestDiff = d; best = i; }
+                    }
+                    var splitCss = sections[best].getBoundingClientRect().top + window.scrollY;
+                    var splitPx = Math.max(1, Math.min(chh - 1, Math.round(splitCss * scale)));
+
+                    var pageW = 612; // 8.5in Letter width in pt; full-bleed, natural height per page
+                    var ptPerPx = pageW / cssW;
+                    var slices = [[0, splitPx], [splitPx, chh]];
+                    var pdf = null;
+                    slices.forEach(function (s, idx) {
+                        var y0 = s[0], y1 = s[1], sh = y1 - y0;
+                        var tmp = document.createElement('canvas');
+                        tmp.width = cw; tmp.height = sh;
+                        tmp.getContext('2d').drawImage(canvas, 0, y0, cw, sh, 0, 0, cw, sh);
+                        var img = tmp.toDataURL('image/jpeg', 0.95);
+                        var pageH = (sh / scale) * ptPerPx;
+                        if (idx === 0) { pdf = new jsPDF({ unit: 'pt', format: [pageW, pageH], orientation: 'portrait' }); }
+                        else { pdf.addPage([pageW, pageH], 'portrait'); }
+                        pdf.addImage(img, 'JPEG', 0, 0, pageW, pageH);
+                    });
+                    pdf.save('Hawaii-Appleseed-UFSM.pdf');
+                }).catch(function (err) {
+                    console.error('UFSM PDF export failed:', err);
+                    alert('Sorry — PDF generation failed. See the console for details.');
+                }).finally(function () {
+                    document.body.classList.remove('ufsm-pdf-capture');
+                    pdfBtn.disabled = false;
+                    if (label) label.textContent = orig || 'Download as PDF';
+                });
+            });
+        }
     })();
     </script>
 </body>
