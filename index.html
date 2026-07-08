@@ -531,13 +531,16 @@
       width:100%;   /* unchanged on mobile — a literal half-width card would be illegibly small there */
     }
     @media (min-width:701px){
-      /* ~half the old full-width (820px) preview, centered. A percentage
-         max-width didn't reliably cap this as a grid item with a
-         percentage-width img child (browser sizing quirk, silently masked
-         by .ha-home__impact's own overflow:hidden) — an explicit px width,
-         gated behind this breakpoint so mobile keeps width:100%, sidesteps
-         it entirely. */
-      .ha-home__dash{ width:410px; margin:0 auto; }
+      /* ~half the old full-width (820px) preview. LEFT-aligned (not centered)
+         so it shares the same left edge as the heading + .ha-home__impact-sub
+         (max-width:560px, also left-aligned) above it — centering within the
+         820px grid box left it visually adrift, disconnected from the text
+         column it belongs under. An explicit px width, gated behind this
+         breakpoint so mobile keeps width:100%, sidesteps a browser sizing
+         quirk where percentage max-width didn't reliably cap a grid item
+         with a percentage-width img child (silently masked by
+         .ha-home__impact's own overflow:hidden). */
+      .ha-home__dash{ width:410px; }
     }
     .ha-home__dash:hover { border-color:rgba(132,169,140,0.55); transform:translateY(-3px); }
     .ha-home__dash img { width:100%; display:block; }
