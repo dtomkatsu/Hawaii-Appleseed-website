@@ -614,20 +614,18 @@
 
   /* ===== FIVE — combined scrollytelling (practices ↔ fronts) ===== */
   .ha-mission .ha-five{position:relative;}
-  .ha-mission .ha-five-track{
-    position:relative;
-    /* Track length tunes the scrub speed. Extra height adds a "settle" buffer at the
-       end so the eyebrow is still readable before the sticky stage releases. */
-    height:260vh;
-  }
+  /* Phases are now CLICK-driven (‹ › arrows + the phase labels), not scroll-
+     scrubbed. The track was 260vh of sticky scroll-jacking, which read as a
+     stuck page — nothing signalled it was a control. It's now an ordinary
+     section: no extra height, no sticky stage. The JS still drives the same
+     continuous 0..1 scrub value (so every crossfade / word stagger / icon
+     morph is preserved) — it just tweens it on click instead of on scroll. */
+  .ha-mission .ha-five-track{ position:relative; height:auto; }
   .ha-mission .ha-five-stage{
-    position:sticky;top:0;
-    height:100vh;min-height:680px;
-    display:flex;align-items:flex-start;
-    /* Pin the header a fixed distance below the fixed announce+nav instead of
-       centering: center + a large pad stacked into a dead band on tall screens
-       and clipped the eyebrow above the fold on short ones. */
-    padding-top:118px;
+    position:relative;
+    height:auto;min-height:0;
+    display:block;
+    padding:104px 0 112px;
     overflow:hidden;isolation:isolate;
   }
   .ha-mission .ha-five-bg{position:absolute;inset:0;z-index:-2;}
@@ -775,9 +773,17 @@
     padding:20px 18px;border-radius:6px;min-height:160px;
     transition:background .35s, border-color .35s, transform .35s;
     overflow:hidden;
+    /* the cards are <a>s (each links to its Issue page) — strip link chrome
+       so they still read as cards, and lift slightly on hover to advertise
+       that they're now clickable */
+    display:block;text-decoration:none;color:inherit;
   }
   .ha-mission .ha-five-body-c .ha-focus-card:hover{
     border-color:var(--ha-teal);
+    transform:translateY(-2px);
+  }
+  .ha-mission .ha-five-body-c .ha-focus-card:focus-visible{
+    outline:2px solid var(--ha-teal-deep);outline-offset:2px;
   }
   /* Paired morph (View-Transitions-API-style, scroll-driven):
      each .ha-focus-card carries data-pair="N" matching the value-card in
@@ -902,20 +908,47 @@
      short teal-deep underline and full accent color so it reads as "you are
      here" — and rhymes with the heading's accent noun — instead of competing
      with the eyebrow as a second kicker. */
+  /* Nav row: ‹ arrows › flanking the phase stepper. */
+  .ha-mission .ha-five-nav{
+    display:flex;align-items:center;gap:12px;margin-top:10px;
+  }
+  .ha-mission .ha-five-arrow{
+    flex:none;display:inline-flex;align-items:center;justify-content:center;
+    width:30px;height:30px;padding:0;
+    background:none;border:1px solid var(--ha-rule);border-radius:50%;
+    color:var(--ha-teal-deep);cursor:pointer;
+    transition:border-color .25s, background .25s, color .25s, opacity .25s;
+  }
+  .ha-mission .ha-five-arrow svg{width:15px;height:15px;display:block;}
+  .ha-mission .ha-five-arrow:hover:not(:disabled){
+    border-color:var(--ha-teal);background:var(--ha-teal);color:#fff;
+  }
+  .ha-mission .ha-five-arrow:focus-visible{
+    outline:2px solid var(--ha-teal-deep);outline-offset:2px;
+  }
+  .ha-mission .ha-five-arrow:disabled{
+    opacity:.3;cursor:default;
+  }
   .ha-mission .ha-five-phases{
     display:flex;align-items:center;gap:9px;
-    margin-top:10px;
     font-family:'Poppins',sans-serif;
     font-size:10px;font-weight:600;
     letter-spacing:.16em;text-transform:uppercase;
     color:var(--ha-slate);
   }
+  /* .ha-five-phase is a <button> now — strip the UA chrome, keep the look. */
   .ha-mission .ha-five-phase{
     opacity:.34;
-    padding-bottom:3px;border-bottom:2px solid transparent;
+    padding:0 0 3px;border:0;border-bottom:2px solid transparent;
+    background:none;cursor:pointer;
+    font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit;
     transition:opacity .35s cubic-bezier(.22,.61,.36,1),
                color .35s cubic-bezier(.22,.61,.36,1),
                border-color .35s cubic-bezier(.22,.61,.36,1);
+  }
+  .ha-mission .ha-five-phase:hover{ opacity:.7; }
+  .ha-mission .ha-five-phase:focus-visible{
+    outline:2px solid var(--ha-teal-deep);outline-offset:3px;
   }
   .ha-mission .ha-five-phase.is-active{
     opacity:1;color:var(--ha-teal-deep);
@@ -924,6 +957,8 @@
   .ha-mission .ha-five-phase-sep{
     opacity:.32;color:var(--ha-slate);
   }
+  /* ≤700px renders all three phases stacked, so the control is meaningless */
+  @media (max-width:700px){ .ha-mission .ha-five-nav{display:none;} }
 
   /* ===== Persistent shell chassis (desktop scrolly only) =====
      Five empty boxes that render once and never change. Sit underneath
@@ -1232,12 +1267,24 @@
                recede to .25. -->
           <div class="ha-five-eb-stack">
             <span class="ha-eyebrow ha-five-eb ha-five-eb-a">How We Work</span>
-            <div class="ha-five-phases" aria-hidden="true">
-              <span class="ha-five-phase ha-five-phase-a is-active">Practices</span>
-              <span class="ha-five-phase-sep">·</span>
-              <span class="ha-five-phase ha-five-phase-b">Values</span>
-              <span class="ha-five-phase-sep">·</span>
-              <span class="ha-five-phase ha-five-phase-c">Focus Areas</span>
+            <!-- Phase nav: ‹ › arrows flank the three phase labels, which are
+                 themselves buttons (jump straight to a phase). Replaces the old
+                 scroll-scrub, which read as a stuck page rather than a control.
+                 Hidden ≤700px, where all three phases render stacked. -->
+            <div class="ha-five-nav">
+              <button type="button" class="ha-five-arrow ha-five-prev" aria-label="Previous section" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <div class="ha-five-phases" role="tablist" aria-label="How we work">
+                <button type="button" class="ha-five-phase ha-five-phase-a is-active" role="tab" aria-selected="true" data-i="0">Practices</button>
+                <span class="ha-five-phase-sep" aria-hidden="true">·</span>
+                <button type="button" class="ha-five-phase ha-five-phase-b" role="tab" aria-selected="false" tabindex="-1" data-i="1">Values</button>
+                <span class="ha-five-phase-sep" aria-hidden="true">·</span>
+                <button type="button" class="ha-five-phase ha-five-phase-c" role="tab" aria-selected="false" tabindex="-1" data-i="2">Focus Areas</button>
+              </div>
+              <button type="button" class="ha-five-arrow ha-five-next" aria-label="Next section">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
             </div>
           </div>
 
@@ -1331,27 +1378,30 @@
 
             <div class="ha-five-body ha-five-body-c" aria-hidden="true">
               <p class="ha-section-lead" aria-hidden="true"></p>
+              <!-- Each focus area links to its Issue deep-dive page. The builder's
+                   INTERNAL_LINK_MAP remaps these to the live Squarespace slugs
+                   (housing.html -> /affordable-housing, etc.). -->
               <div class="ha-focus-grid">
-                <div class="ha-focus-card is-in" data-pair="1">
+                <a class="ha-focus-card is-in" data-pair="1" href="housing.html">
                   <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><path d="M3 12L12 4l9 8M5 10v10h14V10"/></svg></div>
                   <h3>Affordable Housing</h3>
-                </div>
-                <div class="ha-focus-card is-in" data-pair="2">
+                </a>
+                <a class="ha-focus-card is-in" data-pair="2" href="food-security.html">
                   <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><path d="M12 3c-3 5-3 9 0 12s3-7 0-12zM6 21h12"/></svg></div>
                   <h3>Food Equity</h3>
-                </div>
-                <div class="ha-focus-card is-in" data-pair="3">
+                </a>
+                <a class="ha-focus-card is-in" data-pair="3" href="wages-labor.html">
                   <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div>
                   <h3>Wages &amp; Labor</h3>
-                </div>
-                <div class="ha-focus-card is-in" data-pair="4">
+                </a>
+                <a class="ha-focus-card is-in" data-pair="4" href="transportation.html">
                   <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M6 15V9h12v6M3 9h18"/></svg></div>
                   <h3>Transportation Equity</h3>
-                </div>
-                <div class="ha-focus-card is-in" data-pair="5">
+                </a>
+                <a class="ha-focus-card is-in" data-pair="5" href="taxes-budget.html">
                   <div class="ha-focus-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10l7-5 7 5v11"/></svg></div>
                   <h3>Taxes &amp; Budget</h3>
-                </div>
+                </a>
               </div>
             </div>
           </div>
@@ -1367,11 +1417,14 @@
       <div class="ha-eyebrow on-dark" style="justify-content:center;">Stand With Us</div>
       <h2>Join us in building a <em>more just</em> Hawaiʻi.</h2>
       <div class="ha-cta-row">
-        <a class="ha-btn ha-btn-primary" href="#">
+        <!-- Both were href="#", which just jumped to the top of the page.
+             support.html is remapped to /support by the builder; Subscribe has
+             no source page, so it points at the live /subscribe collection. -->
+        <a class="ha-btn ha-btn-primary" href="support.html">
           Support Our Work
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
-        <a class="ha-btn ha-btn-ghost" href="#">Subscribe</a>
+        <a class="ha-btn ha-btn-ghost" href="https://hiappleseed.org/subscribe">Subscribe</a>
       </div>
     </div>
   </section>
@@ -1542,17 +1595,10 @@
     //   B: fronts     (slate bg)   — settled 0.40 ≤ p ≤ 0.55
     //   T2: B → C                  — p 0.55 .. 0.82
     //   C: values     (ash bg)     — settled p ≥ 0.82
-    let ticking = false;
-    function update(){
-      ticking = false;
-      if (mobileMQ.matches || reduceMQ.matches){ resetToA(); return; }
-
-      const rect = track.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const total = rect.height - vh;
-      if (total <= 0) return;
-      const p = clamp(-rect.top, 0, total) / total; // 0..1
-
+    //
+    // p is no longer read from scroll position — render(p) is called by the
+    // click tween below with the settled value for the requested phase.
+    function render(p){
       // ----- Eyebrows ----- (eb-b/eb-c are guarded — they were removed
       // from the DOM when the "Our Values" and "What We Focus On" labels
       // were stripped. Without the guards, a null deref here aborts the
@@ -1632,13 +1678,83 @@
       if (phaseLabelB) phaseLabelB.classList.toggle('is-active', phaseB);
       if (phaseLabelC) phaseLabelC.classList.toggle('is-active', phaseC);
     }
-    function onScroll(){
-      if (!ticking){ ticking = true; requestAnimationFrame(update); }
+
+    // ===== Click-driven phase controller =====
+    // Each phase maps to the scrub value where that phase is fully SETTLED —
+    // picked against the timings above: A before any transition starts, B in
+    // the 0.40–0.55 window where its eyebrow/bg are at full, and C at 1.0 so
+    // the last focus icon's morph (starts 0.58 + 4×0.04, runs 0.18) completes.
+    const PHASE_P = [0, 0.48, 1];
+    const nav      = five.querySelector('.ha-five-nav');
+    const prevBtn  = five.querySelector('.ha-five-prev');
+    const nextBtn  = five.querySelector('.ha-five-next');
+    const phaseBtns= Array.from(five.querySelectorAll('.ha-five-phase'));
+    const bodiesEl = five.querySelector('.ha-five-bodies');
+    let idx = 0, cur = 0, rafId = 0;
+
+    // The three bodies are absolutely positioned in one slot, so they no
+    // longer give .ha-five-bodies any height now that the stage isn't a
+    // fixed-height sticky viewport. Reserve the tallest body's height.
+    function sizeBodies(){
+      if (!bodiesEl) return;
+      if (mobileMQ.matches){ bodiesEl.style.minHeight = ''; return; }
+      let max = 0;
+      [bodyA, bodyB, bodyC].forEach(b => { if (b) max = Math.max(max, b.scrollHeight); });
+      if (max > 0) bodiesEl.style.minHeight = max + 'px';
     }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    if (mobileMQ.addEventListener) mobileMQ.addEventListener('change', onScroll);
-    update();
+
+    function syncNav(){
+      phaseBtns.forEach((b, i) => {
+        const on = i === idx;
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+        b.tabIndex = on ? 0 : -1;
+      });
+      if (prevBtn) prevBtn.disabled = idx === 0;
+      if (nextBtn) nextBtn.disabled = idx === PHASE_P.length - 1;
+    }
+
+    // Tween cur -> PHASE_P[i], calling render each frame. Reduced motion (and
+    // the initial paint) jump straight to the target.
+    function goTo(i, animate){
+      i = clamp(i, 0, PHASE_P.length - 1);
+      idx = i;
+      syncNav();
+      const from = cur, to = PHASE_P[i];
+      if (rafId){ cancelAnimationFrame(rafId); rafId = 0; }
+      if (!animate || reduceMQ.matches || from === to){ cur = to; render(cur); return; }
+      const DUR = 760, t0 = performance.now();
+      const ease = t => 1 - Math.pow(1 - t, 3);
+      rafId = requestAnimationFrame(function step(now){
+        const t = Math.min((now - t0) / DUR, 1);
+        cur = from + (to - from) * ease(t);
+        render(cur);
+        rafId = t < 1 ? requestAnimationFrame(step) : 0;
+      });
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => goTo(idx - 1, true));
+    if (nextBtn) nextBtn.addEventListener('click', () => goTo(idx + 1, true));
+    phaseBtns.forEach((b, i) => b.addEventListener('click', () => goTo(i, true)));
+    // Roving-tabindex arrow keys across the tablist.
+    if (nav) nav.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      if (!phaseBtns.includes(document.activeElement)) return;
+      e.preventDefault();
+      const n = clamp(idx + (e.key === 'ArrowRight' ? 1 : -1), 0, PHASE_P.length - 1);
+      goTo(n, true);
+      phaseBtns[n].focus();
+    });
+
+    // Mobile stacks all three phases (CSS), so bail to the static baseline.
+    function applyMode(){
+      if (mobileMQ.matches){ resetToA(); if (bodiesEl) bodiesEl.style.minHeight = ''; return; }
+      sizeBodies();
+      goTo(idx, false);
+    }
+    window.addEventListener('resize', applyMode, { passive: true });
+    window.addEventListener('load', sizeBodies);
+    if (mobileMQ.addEventListener) mobileMQ.addEventListener('change', applyMode);
+    applyMode();
   })();
 })();
 </script>
