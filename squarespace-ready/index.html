@@ -466,7 +466,7 @@
     /* \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 
        SECTION 3 \2014  ISSUE AREAS OVERVIEW (all five)
     \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500  */
-    .ha-home__issues { background:var(--white); padding:7rem 8%; }
+    .ha-home__issues { background:var(--white); padding:5.5rem 8%; }
     /* 6-col base so 5 cards lay out as a centered 3 + 2 (each card spans 2). */
     .ha-home__issue-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:1.5rem; }
     .ha-home__issue-card {
@@ -510,7 +510,7 @@
     /* \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 
        SECTION 4 \2014  IMPACT / DATA FEATURE
     \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500  */
-    .ha-home__impact { background:var(--charcoal); padding:7rem 8%; position:relative; overflow:hidden; }
+    .ha-home__impact { background:var(--charcoal); padding:5.5rem 8%; position:relative; overflow:hidden; }
     .ha-home__impact::before, .ha-home__impact::after {
       content:'';position:absolute;border-radius:50%;border:1px solid rgba(132,169,140,0.08);
     }
@@ -528,6 +528,16 @@
     .ha-home__dash {
       display:block;border:1px solid rgba(132,169,140,0.25);border-radius:4px;overflow:hidden;
       transition:border-color .3s ease, transform .3s ease;
+      width:100%;   /* unchanged on mobile \2014  a literal half-width card would be illegibly small there */
+    }
+    @media (min-width:701px){
+      /* ~half the old full-width (820px) preview, centered. A percentage
+         max-width didn't reliably cap this as a grid item with a
+         percentage-width img child (browser sizing quirk, silently masked
+         by .ha-home__impact's own overflow:hidden) \2014  an explicit px width,
+         gated behind this breakpoint so mobile keeps width:100%, sidesteps
+         it entirely. */
+      .ha-home__dash{ width:410px; margin:0 auto; }
     }
     .ha-home__dash:hover { border-color:rgba(132,169,140,0.55); transform:translateY(-3px); }
     .ha-home__dash img { width:100%; display:block; }
@@ -540,7 +550,7 @@
     /* \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 
        SECTION 5 \2014  STORY / WHO WE ARE
     \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500  */
-    .ha-home__story { background:var(--cream); padding:7rem 8%; }
+    .ha-home__story { background:var(--cream); padding:5.5rem 8%; }
     .ha-home__story-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
     .ha-home__story-media img {
       width:100%;height:100%;object-fit:cover;border-radius:4px;aspect-ratio:4/3;display:block;
@@ -553,7 +563,7 @@
     /* \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 
        SECTION 6 \2014  LATEST FROM HAWAI\2bb I APPLESEED
     \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500  */
-    .ha-home__latest { background:var(--ash-light); padding:7rem 8%; }
+    .ha-home__latest { background:var(--ash-light); padding:5.5rem 8%; }
     .ha-home__latest-head {
       display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;
       flex-wrap:wrap;margin-bottom:3rem;
@@ -591,7 +601,7 @@
     /* \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 
        SECTION 7 \2014  GET INVOLVED
     \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500  */
-    .ha-home__involve { background:var(--dark-slate); padding:7rem 8%; }
+    .ha-home__involve { background:var(--dark-slate); padding:5.5rem 8%; }
     .ha-home__involve-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
     .ha-home__involve-card {
       position:relative;display:flex;flex-direction:column;
@@ -801,7 +811,7 @@
       .ha-home__impact,
       .ha-home__story,
       .ha-home__latest,
-      .ha-home__involve { padding:4rem 6%; }
+      .ha-home__involve { padding:3.25rem 6%; }
       .ha-home__mission { padding:3rem 6%; }
       .ha-home__issue-grid,
       .ha-home__latest-grid,
