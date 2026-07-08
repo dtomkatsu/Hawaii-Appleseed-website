@@ -700,6 +700,32 @@
       .ha-home__hero h1            { transform:translateZ(54px); }
       .ha-home__hero .hero-sub     { transform:translateZ(22px); }
       .ha-home__hero .hero-actions { transform:translateZ(22px); }
+
+      /* Film pane 3D — counter-tilt + drifting light halo (desktop split only;
+         the hero parallax script drives both). The pane leans ~1.3° OPPOSITE
+         the text plane's tilt — two planes shearing against each other is what
+         sells the depth — while a soft teal halo behind it drifts away from
+         the cursor like a moving light source. Static fallback (touch /
+         reduced motion / no JS): the unchanged box-shadow glow. */
+      .ha-home__hero .ha-home__hero-media{ transition:transform .28s ease-out; will-change:transform; }
+      .ha-home__hero-halo{
+        position:absolute; z-index:1; pointer-events:none; display:none;
+        border-radius:36px;
+        background:radial-gradient(closest-side, rgba(132,169,140,.34), rgba(132,169,140,.10) 55%, transparent 78%);
+        filter:blur(30px);
+        transition:transform .34s ease-out;
+        will-change:transform;
+      }
+      @media (min-width:1081px){
+        /* the dynamic halo carries the teal light — calm the static glow so
+           the two don't stack into over-bloom */
+        .ha-home__hero-media.has-halo{
+          box-shadow:
+            0 18px 48px rgba(15,21,25,.5),
+            -14px 20px 56px rgba(132,169,140,.20),
+            0 0 0 9px rgba(132,169,140,.13);
+        }
+      }
     }
 
     /* ─────────────────────────────────────
@@ -1739,13 +1765,54 @@
     var hero = document.querySelector('.ha-home__hero');
     var inner = hero && hero.querySelector('.hero-inner');
     if(!hero || !inner) return;
+
+    // Film pane counter-tilt + drifting light halo — desktop split layout only
+    // (below 1081px the pane is stacked, unpositioned, with no translateY base,
+    // so the transforms below would break it). The halo is a blurred teal
+    // radial BEHIND the pane (z1 < pane's z2), sized/positioned from the
+    // pane's box; note the pane's visual position = offsetTop - height/2
+    // because of its translateY(-50%) centering.
+    var media = hero.querySelector('.ha-home__hero-media');
+    var split = window.matchMedia('(min-width:1081px)');
+    var halo = null;
+    function syncHalo(){
+      if(!halo || !media) return;
+      if(!split.matches){ halo.style.display = 'none'; return; }
+      var w = media.offsetWidth, h = media.offsetHeight;
+      halo.style.display = 'block';
+      halo.style.width  = Math.round(w*1.06) + 'px';
+      halo.style.height = Math.round(h*1.10) + 'px';
+      halo.style.left   = Math.round(media.offsetLeft - w*0.03) + 'px';
+      halo.style.top    = Math.round(media.offsetTop - h*0.5 - h*0.05) + 'px';
+    }
+    if(media){
+      halo = document.createElement('div');
+      halo.className = 'ha-home__hero-halo';
+      halo.setAttribute('aria-hidden','true');
+      hero.insertBefore(halo, media);
+      media.classList.add('has-halo');
+      syncHalo();
+      window.addEventListener('resize', syncHalo);
+      window.addEventListener('load', syncHalo);
+      setTimeout(syncHalo, 1200);   // resync once fonts/layout settle
+    }
+
     hero.addEventListener('pointermove', function(e){
       var r = hero.getBoundingClientRect();
       var px = (e.clientX - r.left)/r.width - 0.5;
       var py = (e.clientY - r.top)/r.height - 0.5;
       inner.style.transform = 'rotateY('+(px*5.6).toFixed(2)+'deg) rotateX('+(-py*5.6).toFixed(2)+'deg)';
+      if(media && split.matches){
+        // opposite signs + ~half the angle of the text plane
+        media.style.transform = 'translateY(-50%) rotateY('+(-px*2.6).toFixed(2)+'deg) rotateX('+(py*2.6).toFixed(2)+'deg)';
+        if(halo) halo.style.transform = 'translate('+(-px*30).toFixed(1)+'px,'+(-py*22).toFixed(1)+'px)';
+      }
     });
-    hero.addEventListener('pointerleave', function(){ inner.style.transform = ''; });
+    hero.addEventListener('pointerleave', function(){
+      inner.style.transform = '';
+      if(media){ media.style.transform = ''; }
+      if(halo){ halo.style.transform = ''; }
+    });
     hero.querySelectorAll('.hero-actions .btn').forEach(function(btn){
       btn.addEventListener('pointermove', function(e){
         var r = btn.getBoundingClientRect();
