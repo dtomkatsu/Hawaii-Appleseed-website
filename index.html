@@ -354,20 +354,26 @@
     .ha-home__hero-scrub:hover{ height:9px; }
     .ha-home__hero-scrub-fill{ height:100%; width:0%; background:var(--teal); transition:width .2s linear; }
     .ha-home__hero-ctrls.is-visible{ opacity:1; visibility:visible; }
+    /* Watermark-like by default: dimmed pill (opacity + lighter background/
+       border/shadow alpha) so the controls read as unobtrusive overlays
+       rather than competing UI, while staying clearly legible. Brightens
+       to full opacity on hover/focus for interactive affordance. */
     .ha-home__hero-audio,
     .ha-home__hero-pause{
       display:inline-flex; align-items:center; gap:.5rem;
       padding:.5rem .8rem;
       font-family:'Manrope',sans-serif; font-size:.8rem; font-weight:600; letter-spacing:.01em;
       color:var(--white);
-      background:rgba(24,34,39,0.46);
+      background:rgba(24,34,39,0.32);
       -webkit-backdrop-filter:blur(8px) saturate(1.2); backdrop-filter:blur(8px) saturate(1.2);
-      border:1px solid rgba(255,255,255,0.28); border-radius:999px;
-      cursor:pointer; box-shadow:0 2px 12px rgba(18,26,30,0.28);
-      transition:background .2s ease, transform .2s ease;
+      border:1px solid rgba(255,255,255,0.18); border-radius:999px;
+      cursor:pointer; box-shadow:0 2px 12px rgba(18,26,30,0.16);
+      opacity:.66;
+      transition:background .2s ease, transform .2s ease, opacity .2s ease;
     }
     .ha-home__hero-pause, .ha-home__hero-audio{ padding:.5rem .55rem; }
-    .ha-home__hero-audio:hover, .ha-home__hero-pause:hover{ background:rgba(24,34,39,0.64); transform:translateY(-1px); }
+    .ha-home__hero-audio:hover, .ha-home__hero-pause:hover{ background:rgba(24,34,39,0.55); transform:translateY(-1px); opacity:1; }
+    .ha-home__hero-audio:focus-visible, .ha-home__hero-pause:focus-visible{ opacity:1; }
     .ha-home__hero-audio:focus-visible, .ha-home__hero-pause:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
     .ha-home__hero-audio svg, .ha-home__hero-pause svg{ width:18px; height:18px; display:block; flex:none; }
     .ha-home__hero-audio .icon-on{ display:none; }
@@ -378,20 +384,24 @@
     .ha-home__hero-pause.is-paused .icon-pause{ display:none; }
     .ha-home__hero-pause.is-paused .icon-play{ display:block; }
     /* "Watch on YouTube" — frosted pill in the video's top-right, matching the
-       lower-left controls. Always visible (it's a plain link fallback). */
+       lower-left controls. Always visible (it's a plain link fallback).
+       Dimmed to a watermark-like opacity by default (still clearly legible),
+       brightening to full on hover/focus for interactive affordance —
+       matches the pause/audio controls below. */
     .ha-home__hero-open{
       position:absolute; z-index:3; top:16px; right:16px;
       display:inline-flex; align-items:center; justify-content:center;
       padding:.5rem .55rem;
       color:var(--white);
-      background:rgba(24,34,39,0.46);
+      background:rgba(24,34,39,0.32);
       -webkit-backdrop-filter:blur(8px) saturate(1.2); backdrop-filter:blur(8px) saturate(1.2);
-      border:1px solid rgba(255,255,255,0.28); border-radius:999px;
-      box-shadow:0 2px 12px rgba(18,26,30,0.28);
-      transition:background .2s ease, transform .2s ease;
+      border:1px solid rgba(255,255,255,0.18); border-radius:999px;
+      box-shadow:0 2px 12px rgba(18,26,30,0.16);
+      opacity:.66;
+      transition:background .2s ease, transform .2s ease, opacity .2s ease;
     }
-    .ha-home__hero-open:hover{ background:rgba(24,34,39,0.64); transform:translateY(-1px); }
-    .ha-home__hero-open:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+    .ha-home__hero-open:hover{ background:rgba(24,34,39,0.55); transform:translateY(-1px); opacity:1; }
+    .ha-home__hero-open:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; opacity:1; }
     .ha-home__hero-open svg{ width:18px; height:18px; display:block; flex:none; }
     @media (max-width:700px){
       /* Pin to the actual bottom-left corner. The old 60px lifted them to
