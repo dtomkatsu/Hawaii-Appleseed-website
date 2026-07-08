@@ -5,6 +5,21 @@
      HOW: Taxes & Budget page > Edit > add a Code Block > paste ALL of this >
           make sure "Display Source" is OFF > Save.
      ===================================================================== -->
+<!-- Accordion (Policy details / Show more) styles. These lived OUTSIDE the
+     BEGIN/END markers, so the builder never shipped them: on Squarespace the
+     chevrons rendered at default SVG size and the panels were permanently
+     open (no 0fr collapse, no toggle JS). Keep them inside the markers. -->
+<style id="ha-acc-css">
+.ha-acc-btn{display:inline-flex;align-items:center;gap:7px;margin-top:10px;background:none;border:0;cursor:pointer;font-family:'Manrope',sans-serif;font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#52796F;padding:6px 0;}
+.ha-acc-btn:hover{color:#2F3E46;}
+.ha-acc-chev{width:13px;height:13px;flex:none;transition:transform .25s ease;}
+.ha-acc-btn[aria-expanded="true"] .ha-acc-chev{transform:rotate(180deg);}
+.ha-acc-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s ease;}
+.ha-acc-btn[aria-expanded="true"]+.ha-acc-panel{grid-template-rows:1fr;}
+.ha-acc-panel>.ha-acc-inner{overflow:hidden;min-height:0;}
+@media (prefers-reduced-motion:reduce){.ha-acc-panel{transition:none;}}
+</style>
+
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap">
 
@@ -520,7 +535,7 @@
   color:var(--ha-teal-deep); font-weight:800;
 }
 
-/* ===== Opportunities panel ===== */
+/* ===== Priorities panel ===== */
 .ha-tax__opps {
   max-width:1200px; margin:0 auto;
   padding:56px 36px;
@@ -1517,7 +1532,7 @@
   <!-- Sticky tab bar (appears when main tab bar scrolls out) -->
   <div class="ha-tax__stuck-bar" role="tablist" aria-label="Section (sticky)">
     <button class="ha-tax__stuck-tab active" data-panel="overview" role="tab" aria-selected="true">Overview</button>
-    <button class="ha-tax__stuck-tab" data-panel="opportunities" role="tab" aria-selected="false">Opportunities</button>
+    <button class="ha-tax__stuck-tab" data-panel="priorities" role="tab" aria-selected="false">Priorities</button>
   </div>
 
   <!-- ===================================
@@ -1533,7 +1548,7 @@
       <svg viewBox="0 0 14 14"><path d="M9 2l-5 5 5 5"/></svg>
       Back to Issues
     </a>
-    <a class="ha-tax__hero-subscribe" href="https://www.quorum.us/grassroots-action/signup/Hawaii-Appleseed-Center-for-Law-and-Economic-Justice/" target="_blank" rel="noopener" aria-label="Get email alerts">
+    <a class="ha-tax__hero-subscribe" href="https://hiappleseed.quorum.us/campaign/taxfairnesshisubscribe/" target="_blank" rel="noopener" aria-label="Get email alerts">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><polyline points="22,6 12,13 2,6"/></svg>
       Get alerts
     </a>
@@ -1550,7 +1565,7 @@
       <div class="ha-tax__tabs" role="tablist" aria-label="Section">
         <span class="ha-tax__tabs-indicator" aria-hidden="true"></span>
         <button class="ha-tax__tab active" data-panel="overview" role="tab" aria-selected="true" aria-controls="ha-tax-panel-overview">Overview</button>
-        <button class="ha-tax__tab" data-panel="opportunities" role="tab" aria-selected="false" aria-controls="ha-tax-panel-opportunities">Opportunities</button>
+        <button class="ha-tax__tab" data-panel="priorities" role="tab" aria-selected="false" aria-controls="ha-tax-panel-priorities">Priorities</button>
       </div>
       <a class="ha-tax__bar-pill" href="#ha-tax-research-news">
         Research &amp; News
@@ -1561,7 +1576,7 @@
   </div><!-- /.ha-tax__top -->
 
   <!-- ===================================
-       DRAWER &#8212; Vision / Overview / Opportunities panels
+       DRAWER &#8212; Vision / Overview / Priorities panels
        =================================== -->
   <div class="ha-tax__panels">
 
@@ -1825,11 +1840,11 @@
     </div>
   </section><!-- /#ha-tax-panel-overview -->
 
-  <!-- =========== OPPORTUNITIES PANEL =========== -->
-  <section class="ha-tax__panel" id="ha-tax-panel-opportunities" role="tabpanel" hidden>
+  <!-- =========== PRIORITIES PANEL =========== -->
+  <section class="ha-tax__panel" id="ha-tax-panel-priorities" role="tabpanel" hidden>
     <div class="ha-tax__opps">
     <div class="ha-tax__opps-head">
-      <div class="ha-tax__eyebrow">2026 Legislative Priorities</div>
+      <div class="ha-tax__eyebrow">Legislative Priorities</div>
       <h2 class="ha-tax__h2">The ultra-wealthy should pay their fair share</h2>
       <div class="ha-tax__h2-rule"></div>
       <p class="ha-tax__lede">
@@ -1974,7 +1989,7 @@
         Close
       </button>
     </div>
-  </section><!-- /#ha-tax-panel-opportunities -->
+  </section><!-- /#ha-tax-panel-priorities -->
 
   </div><!-- /.ha-tax__panels -->
 
@@ -2025,7 +2040,7 @@
       <h2 id="ha-tax-cta-heading">Build a fairer Hawai&#699;i with us.</h2>
       <p>Sign up for email alerts on bills moving at the Capitol, read our SB 3125 FAQ or the Budget Primer, or reach out to your legislator &#8212; every voice helps shape a more equitable tax code.</p>
       <div class="ha-tax__cta-actions">
-        <a class="ha-tax__cta-btn ha-tax__cta-btn--primary" href="https://www.quorum.us/grassroots-action/signup/Hawaii-Appleseed-Center-for-Law-and-Economic-Justice/" target="_blank" rel="noopener">Get email alerts</a>
+        <a class="ha-tax__cta-btn ha-tax__cta-btn--primary" href="https://hiappleseed.quorum.us/campaign/taxfairnesshisubscribe/" target="_blank" rel="noopener">Get email alerts</a>
         <a class="ha-tax__cta-btn ha-tax__cta-btn--ghost" href="tax-fairness/faq_squarespace.html">Read the SB 3125 FAQ</a>
         <a class="ha-tax__cta-btn ha-tax__cta-btn--ghost" href="https://hiappleseed.org/publications/hawaii-budget-primer-fy202526" target="_blank" rel="noopener">Read the Budget Primer</a>
       </div>
@@ -2274,7 +2289,7 @@
     const indicator = document.querySelector('.ha-tax__tabs-indicator');
     if (!tabs.length || !panels.length) return;
 
-    const VALID_TABS = ['overview', 'opportunities'];
+    const VALID_TABS = ['overview', 'priorities'];
     let pieInitialized = false;
 
     function setTab(name, opts) {
@@ -2471,6 +2486,11 @@
     initTabs(); loadPubs(); loadNews();
   }
 })();
+</script>
+
+
+<script id="ha-acc-js">
+document.addEventListener('click',function(e){var b=e.target.closest('.ha-acc-btn');if(!b)return;b.setAttribute('aria-expanded',b.getAttribute('aria-expanded')==='true'?'false':'true');});
 </script>
 <style>
 /* Squarespace-fit: fixed-position bars can't anchor to the viewport
