@@ -150,17 +150,20 @@
   }
   /* The rail is a living VINE: the fill/progress gradient is masked to a flowing
      ribbon (a repeating SVG wave), so the growing line reads as a climbing stem
-     rather than a straight bar. Refined ~\b1 1.6px sway over a 160px wavelength;
-     dots are 18px wide so the vine still passes "on" them. */
+     rather than a straight bar. A pronounced organic meander (~\b1 7px over a
+     150px wavelength) makes it read as a proper vine/root. The element is 30px
+     wide with left:1px so its center stays at 16px, aligned with the 18px dots
+     (the swing stays inside the dot radius, so the vine still threads "on"
+     each node). */
   .ha-story .rail::before{
-    content:""; position:absolute; left:9px; top:8px; bottom:8px;
-    width:14px;
+    content:""; position:absolute; left:1px; top:8px; bottom:8px;
+    width:30px;
     background:
       linear-gradient(180deg, var(--ha-teal-deep) 0%, var(--ha-teal) 100%)
         top / 100% var(--rail-progress, 0%) no-repeat,
       var(--ha-ash);
-    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 160'><path d='M7 0 C8.6 38 8.6 51 7 80 C5.4 109 5.4 122 7 160' stroke='%23000' stroke-width='3.6' fill='none' stroke-linecap='round'/></svg>") center top / 14px 160px repeat-y;
-            mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 160'><path d='M7 0 C8.6 38 8.6 51 7 80 C5.4 109 5.4 122 7 160' stroke='%23000' stroke-width='3.6' fill='none' stroke-linecap='round'/></svg>") center top / 14px 160px repeat-y;
+    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 150'><path d='M15 0 C24 25 23 43 15 60 C7 77 6 96 15 113 C22 127 22 140 15 150' stroke='%23000' stroke-width='3.8' fill='none' stroke-linecap='round'/></svg>") center top / 30px 150px repeat-y;
+            mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 150'><path d='M15 0 C24 25 23 43 15 60 C7 77 6 96 15 113 C22 127 22 140 15 150' stroke='%23000' stroke-width='3.8' fill='none' stroke-linecap='round'/></svg>") center top / 30px 150px repeat-y;
   }
 
   .ha-story .milestone{
