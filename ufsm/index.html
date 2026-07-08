@@ -267,6 +267,34 @@
         }
         .ufsm-gauge-arc { transition: stroke-dashoffset 1.4s ease-out; }
 
+        /* ===== "Who is still left out?" ===== */
+        .ufsm-lo-title {
+            text-transform: uppercase; letter-spacing: 4px;
+            color: var(--ufsm-green); text-align: center;
+        }
+        .ufsm-lo-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 40px; }
+        .ufsm-lo-card { position: relative; text-align: center; padding: 8px 12px; }
+        .ufsm-lo-head {
+            display: flex; align-items: center; justify-content: center; gap: 14px;
+            margin-bottom: 18px; min-height: 58px;
+        }
+        .ufsm-lo-icon { flex: 0 0 auto; color: var(--ufsm-green); }
+        .ufsm-lo-icon svg { display: block; width: 52px; height: 52px; }
+        .ufsm-lo-card h3 {
+            font-size: 1.42rem; line-height: 1.12; margin: 0; text-align: left;
+            color: var(--ufsm-charcoal);
+        }
+        .ufsm-lo-card p { margin: 0 0 16px; color: var(--ufsm-ink); font-size: 1rem; }
+        .ufsm-lo-card p:last-child { margin-bottom: 0; }
+        .ufsm-lo-viz { margin: 6px auto 18px; max-width: 260px; }
+        .ufsm-lo-viz svg { display: block; width: 100%; height: auto; overflow: visible; }
+        .ufsm-lo-gnum {
+            font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 2.4rem;
+            fill: var(--ufsm-green-deep);
+        }
+        .ufsm-lo-donut-lbl { font-family: 'Poppins', sans-serif; font-size: 13px; fill: var(--ufsm-charcoal); }
+        .ufsm-lo-donut-lbl.b { font-weight: 700; }
+
         /* ===== ACCORDION (5 reasons / dropdowns) ===== */
         .ufsm-accordion { max-width: 860px; margin: 0 auto; }
         .ufsm-acc-item { border-radius: 14px; background: #fff; box-shadow: 0 4px 18px rgba(63,74,74,0.07); margin-bottom: 14px; overflow: hidden; }
@@ -358,42 +386,73 @@
         .ufsm-table .total td { font-weight: 800; color: var(--ufsm-charcoal); border-top: 2px solid var(--ufsm-green-tint); }
         .ufsm-table td.num { font-variant-numeric: tabular-nums; }
 
-        /* ===== Phased step timeline ===== */
-        /* Green chevron-arrow process flow (matches the PDF) */
-        .ufsm-flow { display: flex; gap: 5px; align-items: stretch; margin-top: 10px; }
-        .ufsm-flow-step { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
-        .ufsm-flow-chev {
-            position: relative;
-            color: #fff; text-align: center; padding: 20px 14px 20px 28px;
-            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%, 20px 50%);
+        /* ===== Progress-at-the-legislature timeline ===== */
+        /* Hairline seam so the gray band doesn't merge into the (also gray) hero below it. */
+        .ufsm-progress-sec { border-bottom: 1px solid rgba(74, 74, 74, 0.10); }
+        .ufsm-progress-title { text-transform: uppercase; letter-spacing: -0.5px; }
+        .ufsm-progress-sub {
+            font-family: 'Manrope', sans-serif; font-weight: 700;
+            color: var(--ufsm-green-deep);
+            font-size: 1.24rem; line-height: 1.34; max-width: 960px; margin: 6px 0 0;
         }
-        .ufsm-flow-chev > span { position: relative; z-index: 1; }
-        /* "proposed / not yet committed" phase: subtle diagonal hatch overlay */
-        .ufsm-flow-step--proposed .ufsm-flow-chev::after {
-            content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-            background: repeating-linear-gradient(45deg, transparent 0 8px, rgba(255, 255, 255, 0.28) 8px 10px);
+        .ufsm-tl {
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            column-gap: 6px; margin-top: 44px;
         }
-        .ufsm-flow-step:first-child .ufsm-flow-chev {
-            padding-left: 18px;
-            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%);
-        }
-        .ufsm-flow-chev .yr { display: block; font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 1.3rem; line-height: 1.05; }
-        .ufsm-flow-chev .ph { display: block; font-size: 0.82rem; font-weight: 600; opacity: 0.96; margin-top: 4px; }
-        .ufsm-flow-step:nth-child(1) .ufsm-flow-chev { background: var(--ufsm-green-deep); }
-        .ufsm-flow-step:nth-child(2) .ufsm-flow-chev { background: var(--ufsm-green); }
-        .ufsm-flow-step:nth-child(3) .ufsm-flow-chev { background: var(--ufsm-green-bright); }
-        .ufsm-flow-step:nth-child(4) .ufsm-flow-chev { background: var(--ufsm-green-light); }
+        .ufsm-tl .col1 { grid-column: 1; }
+        .ufsm-tl .col2 { grid-column: 2; }
+        .ufsm-tl .col3 { grid-column: 3; }
+        .ufsm-tl .col4 { grid-column: 4; }
+        .ufsm-tl .col5 { grid-column: 5; }
 
-        .ufsm-flow-amt { text-align: center; position: relative; }
-        .ufsm-flow-amt--top { padding-bottom: 24px; }
-        .ufsm-flow-amt--bot { padding-top: 24px; }
-        .ufsm-flow-amt--top.pin::before { content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 2px; height: 15px; background: var(--ufsm-green); }
-        .ufsm-flow-amt--top.pin::after { content: ""; position: absolute; bottom: 11px; left: 50%; transform: translateX(-50%); width: 9px; height: 9px; border-radius: 50%; background: #fff; border: 2px solid var(--ufsm-green); }
-        .ufsm-flow-amt--bot.pin::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 2px; height: 15px; background: var(--ufsm-green); }
-        .ufsm-flow-amt--bot.pin::after { content: ""; position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 9px; height: 9px; border-radius: 50%; background: #fff; border: 2px solid var(--ufsm-green); }
-        .ufsm-flow-amt .v { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 1.35rem; color: var(--ufsm-charcoal); line-height: 1.1; }
-        .ufsm-flow-amt .v.alt { color: var(--ufsm-green); }
-        .ufsm-flow-amt .lbl { display: block; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ufsm-muted); margin-top: 3px; }
+        /* Group brackets (row 1): a ⊓ rule with a centered label cut into it */
+        .ufsm-tl-bracket {
+            grid-row: 1; position: relative;
+            height: 15px; margin: 0 8px 18px;
+            border: 2px solid; border-bottom: none;
+        }
+        .ufsm-tl-bracket span {
+            position: absolute; top: -0.72em; left: 50%; transform: translateX(-50%);
+            background: var(--ufsm-band); padding: 0 15px;
+            font-family: 'Manrope', sans-serif; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.5px; font-size: 1.34rem; line-height: 1; white-space: nowrap;
+        }
+        .ufsm-tl-bracket--law  { grid-column: 1 / span 3; border-color: #ACA8A9; }
+        .ufsm-tl-bracket--law span  { color: #837E7F; }
+        .ufsm-tl-bracket--goal { grid-column: 4 / span 2; border-color: var(--ufsm-charcoal); }
+        .ufsm-tl-bracket--goal span { color: var(--ufsm-charcoal); }
+
+        /* Chevron arrows (row 2) */
+        .ufsm-tl-chev {
+            grid-row: 2; min-width: 0;
+            display: flex; flex-direction: column; justify-content: center;
+            color: #fff; text-align: center; padding: 20px 12px 20px 26px;
+            clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 50%, calc(100% - 18px) 100%, 0 100%, 18px 50%);
+        }
+        .ufsm-tl-chev.col1 {
+            padding-left: 18px;
+            clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 50%, calc(100% - 18px) 100%, 0 100%);
+        }
+        .ufsm-tl-chev .yr { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 1.28rem; line-height: 1.05; }
+        .ufsm-tl-chev .ph { font-size: 0.8rem; font-weight: 600; opacity: 0.96; margin-top: 4px; }
+        .ufsm-tl-law  { background: var(--ufsm-green); }
+        .ufsm-tl-goal { background: var(--ufsm-green-deep); }
+
+        /* Household-income amounts (row 3), with a connector dot to the chevron */
+        .ufsm-tl-amt { grid-row: 3; position: relative; text-align: center; padding-top: 28px; }
+        .ufsm-tl-amt::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 2px; height: 15px; background: var(--ufsm-green-deep); }
+        .ufsm-tl-amt::after  { content: ""; position: absolute; top: 9px; left: 50%; transform: translateX(-50%); width: 10px; height: 10px; border-radius: 50%; background: #fff; border: 2px solid var(--ufsm-green-deep); }
+        .ufsm-tl-amt .v { font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 1.34rem; color: var(--ufsm-charcoal); white-space: nowrap; }
+        .ufsm-tl-amt .v small { font-weight: 600; font-size: 0.62em; color: var(--ufsm-muted); }
+
+        /* Right-hand caption under the OUR GOAL group */
+        .ufsm-tl-caption {
+            grid-row: 3; grid-column: 4 / span 2; align-self: center;
+            text-align: right; padding: 28px 6px 0 12px;
+            font-family: 'Manrope', sans-serif; font-weight: 700; color: #837E7F;
+            font-size: 1.06rem; line-height: 1.28;
+        }
+        .ufsm-tl-caption small { display: block; font-weight: 600; font-size: 0.9em; }
 
         .ufsm-note { text-align: center; font-size: 0.9rem; color: var(--ufsm-muted); font-style: italic; max-width: 680px; margin: 30px auto 0; }
 
@@ -478,7 +537,7 @@
             .ufsm-section-title { font-size: 3.1rem; }
             .ufsm-hero h1 { font-size: 4.6rem; }
             .ufsm-hero h1 .ufsm-hero-sub { font-size: 3rem; }
-            .ufsm-why-grid { grid-template-columns: repeat(3, 1fr); gap: 40px; }
+            .ufsm-why-grid { grid-template-columns: repeat(2, 1fr); gap: 48px; max-width: 900px; margin: 0 auto; }
             .ufsm-cost-grid { grid-template-columns: 1fr 1fr; }
             .ufsm-levers { grid-template-columns: repeat(3, 1fr); }
             .ufsm-fund-title { font-size: 3.4rem; }
@@ -490,7 +549,14 @@
             .ufsm-reasons-head { font-size: 3.7rem; }
             /* dotted green vertical dividers between the Why columns */
             .ufsm-why-card + .ufsm-why-card::before {
-                content: ""; position: absolute; left: -20px; top: 6px; bottom: 6px; width: 5px;
+                content: ""; position: absolute; left: -26px; top: 6px; bottom: 6px; width: 5px;
+                background-image: radial-gradient(circle, var(--ufsm-green) 2.2px, transparent 2.6px);
+                background-size: 5px 18px; background-repeat: repeat-y;
+            }
+            /* "Who is still left out?" — 3 columns with the same dotted dividers */
+            .ufsm-lo-grid { grid-template-columns: repeat(3, 1fr); gap: 56px; }
+            .ufsm-lo-card + .ufsm-lo-card::before {
+                content: ""; position: absolute; left: -30px; top: 4px; bottom: 4px; width: 5px;
                 background-image: radial-gradient(circle, var(--ufsm-green) 2.2px, transparent 2.6px);
                 background-size: 5px 18px; background-repeat: repeat-y;
             }
@@ -501,16 +567,24 @@
             .ufsm-hero h1 .ufsm-hero-sub { font-size: 1.7rem; }
             .ufsm-hero-art svg { width: 150px; height: 150px; }
             .ufsm-acc-panel-inner { padding-left: 24px; }
-            /* chevron flow stacks into flat bars on mobile */
-            .ufsm-flow { flex-direction: column; gap: 8px; }
-            .ufsm-flow-chev,
-            .ufsm-flow-step:first-child .ufsm-flow-chev {
-                clip-path: none; border-radius: 10px; padding: 16px 18px;
+            /* Legislature timeline stacks vertically on mobile */
+            .ufsm-tl { grid-template-columns: 1fr; column-gap: 0; margin-top: 26px; }
+            .ufsm-tl > * { grid-column: 1 !important; grid-row: auto !important; }
+            .ufsm-tl-bracket { height: auto; border: none; margin: 22px 0 8px; }
+            .ufsm-tl-bracket span {
+                position: static; transform: none; background: none;
+                border-left: 4px solid currentColor; padding: 0 0 0 10px;
             }
-            .ufsm-flow-amt--top { padding-bottom: 8px; }
-            .ufsm-flow-amt--bot { padding-top: 8px; }
-            .ufsm-flow-amt--top.pin::before, .ufsm-flow-amt--top.pin::after,
-            .ufsm-flow-amt--bot.pin::before, .ufsm-flow-amt--bot.pin::after { display: none; }
+            .ufsm-tl-chev, .ufsm-tl-chev.col1 {
+                clip-path: none !important; border-radius: 10px;
+                padding: 14px 18px !important;
+                flex-direction: row; justify-content: space-between; align-items: baseline;
+                gap: 12px; text-align: left;
+            }
+            .ufsm-tl-chev .ph { margin-top: 0; }
+            .ufsm-tl-amt { text-align: left; padding: 4px 0 8px 20px; }
+            .ufsm-tl-amt::before, .ufsm-tl-amt::after { display: none; }
+            .ufsm-tl-caption { text-align: left; padding: 10px 0 0; }
         }
     </style>
 </head>
@@ -626,30 +700,27 @@
     </section>
 
     <!-- ===== ESTIMATED COSTS — phased-in ===== -->
-    <section class="ufsm-full-width ufsm-bg-green ufsm-reveal">
+    <section class="ufsm-full-width ufsm-bg-band ufsm-reveal ufsm-progress-sec">
         <div class="ufsm-container">
-            <div class="ufsm-eyebrow">The Path Forward</div>
-            <h2 class="ufsm-section-title">A 3-year phased-in approach</h2>
-            <p class="ufsm-section-intro">A phased approach toward free school meals for every public school student. Amounts above each phase are the cost at current participation; below, with a 10% participation increase.</p>
+            <h2 class="ufsm-section-title ufsm-progress-title">Progress at the Legislature</h2>
+            <p class="ufsm-progress-sub">Act 139 (SB 1300) passed during the 2025 legislative session, expanding the income threshold for free school meals to those earning below 300% of the federal poverty level, and eliminating the reduced-price category.</p>
 
-            <div class="ufsm-flow">
-                <div class="ufsm-flow-step">
-                    <div class="ufsm-flow-amt ufsm-flow-amt--top pin"><span class="v">$563,751</span></div>
-                    <div class="ufsm-flow-chev"><span class="yr">SY 25&ndash;26</span><span class="ph">Reduced price only</span></div>
-                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v alt">$620,126</span></div>
-                </div>
-                <div class="ufsm-flow-step">
-                    <div class="ufsm-flow-amt ufsm-flow-amt--top pin"><span class="v">$3,304,347</span></div>
-                    <div class="ufsm-flow-chev"><span class="yr">SY 26&ndash;27</span><span class="ph">300% FPL</span></div>
-                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v alt">$3,634,781</span></div>
-                </div>
-                <div class="ufsm-flow-step ufsm-flow-step--proposed">
-                    <div class="ufsm-flow-amt ufsm-flow-amt--top pin"><span class="v">$20,479,277</span></div>
-                    <div class="ufsm-flow-chev"><span class="yr">SY 27&ndash;28</span><span class="ph">Free for all*</span></div>
-                    <div class="ufsm-flow-amt ufsm-flow-amt--bot pin"><span class="v alt">$22,527,204</span></div>
-                </div>
+            <div class="ufsm-tl">
+                <!-- NEW LAW group -->
+                <div class="ufsm-tl-bracket ufsm-tl-bracket--law"><span>New Law</span></div>
+                <div class="ufsm-tl-chev ufsm-tl-law col1"><span class="yr">SY 24&ndash;25</span><span class="ph">Old threshold</span></div>
+                <div class="ufsm-tl-amt col1"><span class="v">$46,644<small>/yr</small></span></div>
+                <div class="ufsm-tl-chev ufsm-tl-law col2"><span class="yr">SY 25&ndash;26</span><span class="ph">Reduced price only</span></div>
+                <div class="ufsm-tl-amt col2"><span class="v">$68,413<small>/yr</small></span></div>
+                <div class="ufsm-tl-chev ufsm-tl-law col3"><span class="yr">SY 26&ndash;27</span><span class="ph">300% FPL</span></div>
+                <div class="ufsm-tl-amt col3"><span class="v">~$113,851<small>/yr</small></span></div>
+
+                <!-- OUR GOAL group -->
+                <div class="ufsm-tl-bracket ufsm-tl-bracket--goal"><span>Our Goal</span></div>
+                <div class="ufsm-tl-chev ufsm-tl-goal col4"><span class="yr">SY 27&ndash;28</span><span class="ph">Free for all</span></div>
+                <div class="ufsm-tl-chev ufsm-tl-goal col5"><span class="yr">SY 29&ndash;30</span><span class="ph">Free for all</span></div>
+                <div class="ufsm-tl-caption">Household income to qualify for free meals <small>(family of 4)</small></div>
             </div>
-            <p class="ufsm-note">*The HIDOE has only committed up to phase 2 (300% FPL) so far.</p>
         </div>
     </section>
 
@@ -683,30 +754,7 @@
             <p class="ufsm-section-intro">Struggling Hawaiʻi households still have to pay for school meals, eligible families fall through the cracks, and teachers cover the gap out of pocket.</p>
 
             <div class="ufsm-why-grid">
-                <!-- Card 1: eligibility thresholds -->
-                <div class="ufsm-why-card">
-                    <h3>Strict eligibility thresholds</h3>
-                    <div class="ufsm-people">
-                        <svg class="ufsm-person on" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4.2"/><path d="M3.5 22c0-5 3.8-8.5 8.5-8.5s8.5 3.5 8.5 8.5z"/></svg>
-                        <svg class="ufsm-person on" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4.2"/><path d="M3.5 22c0-5 3.8-8.5 8.5-8.5s8.5 3.5 8.5 8.5z"/></svg>
-                        <svg class="ufsm-person off" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4.2"/><path d="M3.5 22c0-5 3.8-8.5 8.5-8.5s8.5 3.5 8.5 8.5z"/></svg>
-                    </div>
-                    <div class="ufsm-bigstat">2 out of 3</div>
-                    <p>struggling Hawaiʻi households still have to pay for school meals.<span class="ufsm-fn" tabindex="0" data-tip="American Community Survey, U.S. Census Bureau, Age by Ratio of Income to Poverty Level in the Past 12 Months.">1</span></p>
-                    <div class="ufsm-gap">
-                        <div class="ufsm-gap-row">
-                            <div class="ufsm-gap-label"><span>Income to qualify for free lunch</span><span>$47K</span></div>
-                            <div class="ufsm-gap-track"><div class="ufsm-gap-fill qualify" data-target="42%">$47K</div></div>
-                        </div>
-                        <div class="ufsm-gap-row">
-                            <div class="ufsm-gap-label"><span>Income a family of 4 needs to survive</span><span>$107K</span></div>
-                            <div class="ufsm-gap-track"><div class="ufsm-gap-fill survive" data-target="100%">$107K</div></div>
-                        </div>
-                    </div>
-                    <p>A family of four making $47,000 doesn't qualify for free lunch<span class="ufsm-fn" tabindex="0" data-tip="Hawaiʻi Public Schools, Free and Reduced Price Meals Program, 2024.">2</span> &mdash; yet Hawaiʻi's cost of living requires that same family to make over $107,000 just to survive.<span class="ufsm-fn" tabindex="0" data-tip="United For ALICE, An Update On Financial Hardship in Hawaiʻi, 2024.">3</span></p>
-                </div>
-
-                <!-- Card 2: missed applications + gauge -->
+                <!-- Card 1: missed applications + gauge -->
                 <div class="ufsm-why-card">
                     <h3>Missed school meal applications</h3>
                     <div class="ufsm-gauge-wrap" data-anim="gauge">
@@ -720,7 +768,7 @@
                     <p>Language barriers, problems providing income records, and fear of disclosing information can prevent families from completing the application accurately &mdash; or at all.</p>
                 </div>
 
-                <!-- Card 3: teachers -->
+                <!-- Card 2: teachers -->
                 <div class="ufsm-why-card">
                     <h3>Teachers are affected, too</h3>
                     <div class="ufsm-quotemark" aria-hidden="true">&ldquo;</div>
@@ -742,6 +790,92 @@
             <div class="ufsm-chart-caption">Household income to qualify for free meals (family of 4), by school year. Dashed line = ALICE survival budget ($107,796).</div>
 
             <p class="ufsm-note">SB 1300 only covers up to SY 26&ndash;27; see <em>The Path Forward</em> above for the full phase-in schedule and costs.</p>
+        </div>
+    </section>
+
+    <!-- ===== WHO IS STILL LEFT OUT ===== -->
+    <section class="ufsm-full-width ufsm-bg-light ufsm-reveal">
+        <div class="ufsm-container">
+            <h2 class="ufsm-section-title ufsm-lo-title">Who is still left out?</h2>
+
+            <div class="ufsm-lo-grid">
+                <!-- Keiki just over the line -->
+                <div class="ufsm-lo-card">
+                    <div class="ufsm-lo-head">
+                        <span class="ufsm-lo-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M13.5 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11A1.5 1.5 0 0 0 19 19.5V8.5z"/>
+                                <path d="M13.5 3v5.5H19"/>
+                                <path d="M8.5 12.5h4M8.5 16h6"/>
+                                <path d="M15.7 12.2l2.6 2.6-3.4 1 .8-3.6z"/>
+                            </svg>
+                        </span>
+                        <h3>Keiki just<br>over the line</h3>
+                    </div>
+                    <p>The income cutoff creates a cliff that will still leave many ALICE families behind.</p>
+                    <div class="ufsm-lo-viz">
+                        <svg viewBox="0 0 200 132" role="img" aria-label="An income cliff rising sharply near the cutoff.">
+                            <line x1="10" y1="32" x2="190" y2="32" stroke="#E1E4DE" stroke-width="1.5"/>
+                            <line x1="10" y1="60" x2="190" y2="60" stroke="#E1E4DE" stroke-width="1.5"/>
+                            <line x1="10" y1="88" x2="190" y2="88" stroke="#E1E4DE" stroke-width="1.5"/>
+                            <line x1="10" y1="116" x2="190" y2="116" stroke="#E1E4DE" stroke-width="1.5"/>
+                            <path d="M22 116 L22 104 L78 96 L134 70 L186 30 L186 116 Z" fill="var(--ufsm-green-light)"/>
+                        </svg>
+                    </div>
+                    <p>Even a small change in income for ALICE families near the threshold could mean the difference between qualifying for free meals and bearing their full cost.</p>
+                </div>
+
+                <!-- Public charter school students -->
+                <div class="ufsm-lo-card">
+                    <div class="ufsm-lo-head">
+                        <span class="ufsm-lo-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="10" cy="7.5" r="3.3"/>
+                                <path d="M4 20c0-3.4 2.7-6 6-6 1.3 0 2.5.4 3.5 1.1"/>
+                                <circle cx="17.5" cy="17" r="4"/>
+                                <path d="M16 15.5l3 3M19 15.5l-3 3"/>
+                            </svg>
+                        </span>
+                        <h3>Public charter<br>school students</h3>
+                    </div>
+                    <p>Public charter schools were not included in the passage of Act 139.</p>
+                    <div class="ufsm-lo-viz">
+                        <svg viewBox="0 0 230 182" role="img" aria-label="Native Hawaiian students: 37 percent at public charter schools versus 63 percent others.">
+                            <circle cx="84" cy="104" r="42" fill="none" stroke="var(--ufsm-green-light)" stroke-width="18"/>
+                            <circle cx="84" cy="104" r="42" fill="none" stroke="var(--ufsm-green-deep)" stroke-width="18" stroke-dasharray="97.6 263.9" transform="rotate(-90 84 104)"/>
+                            <text x="169" y="58" text-anchor="middle" class="ufsm-lo-donut-lbl" font-size="13">Native Hawaiian</text>
+                            <text x="169" y="80" text-anchor="middle" class="ufsm-lo-donut-lbl b" font-size="16">37%</text>
+                            <text x="24" y="132" text-anchor="middle" class="ufsm-lo-donut-lbl b" font-size="16">63%</text>
+                        </svg>
+                    </div>
+                    <p>They serve the largest percentage of Native Hawaiian students in the public school system&mdash;14 percent more than HIDOE schools.</p>
+                </div>
+
+                <!-- Keiki who fall through the cracks -->
+                <div class="ufsm-lo-card">
+                    <div class="ufsm-lo-head">
+                        <span class="ufsm-lo-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="14.5" cy="5" r="2.2"/>
+                                <path d="M13.5 8.5l-2.4 3.4 3 2.4-1.6 4.9"/>
+                                <path d="M11.1 11.9l-3.4-1"/>
+                                <path d="M15.6 14.3l3 1.4"/>
+                                <path d="M3 9.5h3M2.5 13.5h3M4 17.5h2.5"/>
+                            </svg>
+                        </span>
+                        <h3>Keiki who fall<br>through the cracks</h3>
+                    </div>
+                    <p>Income thresholds will never fully capture the population they are intended to cover because of the burden of paperwork, applications, even stigma, and lack of public education.</p>
+                    <div class="ufsm-lo-viz">
+                        <svg viewBox="0 0 200 128" role="img" aria-label="34 percent of denied students were actually eligible.">
+                            <path d="M16 110 A 84 84 0 0 1 184 110" fill="none" stroke="#E3EADF" stroke-width="18" stroke-linecap="round"/>
+                            <path d="M16 110 A 84 84 0 0 1 184 110" fill="none" stroke="var(--ufsm-green-deep)" stroke-width="18" stroke-linecap="round" stroke-dasharray="89.7 263.9"/>
+                            <text x="100" y="104" text-anchor="middle" class="ufsm-lo-gnum" font-size="38">34%</text>
+                        </svg>
+                    </div>
+                    <p>Of students nationally who were denied free or reduced-price meals were actually eligible to receive them.</p>
+                </div>
+            </div>
         </div>
     </section>
 
