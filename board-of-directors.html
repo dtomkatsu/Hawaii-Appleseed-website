@@ -343,10 +343,22 @@
   .ha-board .ha-member.is-open .ha-bio-more p{
     opacity:.92;transform:translateY(0) scale(1);filter:blur(0);
   }
-  .ha-board .ha-member.is-open .ha-bio-more p:nth-child(1){transition-delay:.15s;}
-  .ha-board .ha-member.is-open .ha-bio-more p:nth-child(2){transition-delay:.28s;}
-  .ha-board .ha-member.is-open .ha-bio-more p:nth-child(3){transition-delay:.40s;}
-  .ha-board .ha-member.is-open .ha-bio-more p:nth-child(4){transition-delay:.52s;}
+  /* President twin. Without it his paragraphs kept the collapsed reveal state
+     (blur(2px), scale(.99), translateY(8px)) — and because
+     `.ha-president-inner .ha-bio-more p` separately sets opacity:.85, they
+     stayed VISIBLE but blurry rather than hidden. Keeps .85 (ash on the dark
+     president panel) instead of the .92 used on the light member cards. */
+  .ha-board .ha-president-inner.is-open .ha-bio-more p{
+    opacity:.85;transform:translateY(0) scale(1);filter:blur(0);
+  }
+  .ha-board .ha-member.is-open .ha-bio-more p:nth-child(1),
+  .ha-board .ha-president-inner.is-open .ha-bio-more p:nth-child(1){transition-delay:.15s;}
+  .ha-board .ha-member.is-open .ha-bio-more p:nth-child(2),
+  .ha-board .ha-president-inner.is-open .ha-bio-more p:nth-child(2){transition-delay:.28s;}
+  .ha-board .ha-member.is-open .ha-bio-more p:nth-child(3),
+  .ha-board .ha-president-inner.is-open .ha-bio-more p:nth-child(3){transition-delay:.40s;}
+  .ha-board .ha-member.is-open .ha-bio-more p:nth-child(4),
+  .ha-board .ha-president-inner.is-open .ha-bio-more p:nth-child(4){transition-delay:.52s;}
 
   /* Read More button */
   .ha-board .ha-read{
