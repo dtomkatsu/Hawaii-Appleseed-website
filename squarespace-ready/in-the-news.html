@@ -38,22 +38,59 @@
   .ha-news__more[hidden]{display:none;}
   .ha-news__synced{text-align:center;font-size:12px;color:#9aa89f;margin-top:22px;}
   .ha-news__empty{padding:40px 0;text-align:center;color:#52796F;}
+  /* Sub-sections (Press Releases / Blog / In the News) on the Media hub */
+  .ha-news__section{margin-top:56px;}
+  .ha-news__section:first-of-type{margin-top:40px;}
+  .ha-news__section[hidden]{display:none;}
+  .ha-news__section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid #E8EDE6;}
+  .ha-news__section-title{font-family:'Manrope',sans-serif;font-weight:600;font-size:1.6rem;color:#2F3E46;margin:0;}
+  .ha-news__viewall{font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;color:#52796F;text-decoration:none;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;}
+  .ha-news__viewall:hover{color:#2F3E46;}
+  .ha-news__viewall svg{width:13px;height:13px;}
+  .ha-news__date{color:#7d8f86;font-weight:600;}
 </style>
 
 <main class="ha-news">
   <header class="ha-news__hero">
     <div class="ha-news__eyebrow">Media</div>
-    <h1 class="ha-news__title">In the News</h1>
-    <p class="ha-news__lede">Hawai&#699;i Appleseed in the press &#8212; coverage of our research, advocacy, and the issues shaping a more just Hawai&#699;i. This page mirrors <a href="https://hiappleseed.org/in-the-news" target="_blank" rel="noopener" style="color:#52796F;">hiappleseed.org/in-the-news</a> and refreshes automatically.</p>
+    <h1 class="ha-news__title">News &amp; Media</h1>
+    <p class="ha-news__lede">Press releases, blog posts, and news coverage of Hawai&#699;i Appleseed's research and advocacy. This page mirrors <a href="https://hiappleseed.org" target="_blank" rel="noopener" style="color:#52796F;">hiappleseed.org</a> and refreshes automatically.</p>
   </header>
 
-  <div class="ha-news__toolbar">
-    <input id="ha-news-search" class="ha-news__search" type="search" placeholder="Search coverage&#8230;" autocomplete="off" aria-label="Search news">
-    <div class="ha-news__filters" id="ha-news-filters" role="group" aria-label="Filter by topic"></div>
-  </div>
-  <p class="ha-news__count" id="ha-news-count">&nbsp;</p>
-  <div class="ha-news__grid" id="ha-news-grid"></div>
-  <div class="ha-news__more-wrap"><button id="ha-news-more" class="ha-news__more" type="button" hidden>Load more</button></div>
+  <!-- Press Releases &#8212; newest 3, links to the full collection. Hidden until
+       news.json.press_releases loads (populated by the script below). -->
+  <section class="ha-news__section" id="ha-pr-section" hidden>
+    <div class="ha-news__section-head">
+      <h2 class="ha-news__section-title">Press Releases</h2>
+      <a class="ha-news__viewall" href="https://hiappleseed.org/press-releases" target="_blank" rel="noopener">View all press releases <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
+    </div>
+    <div class="ha-news__grid" id="ha-pr-grid"></div>
+  </section>
+
+  <!-- From the Blog &#8212; newest 3, links to the full blog. -->
+  <section class="ha-news__section" id="ha-blog-section" hidden>
+    <div class="ha-news__section-head">
+      <h2 class="ha-news__section-title">From the Blog</h2>
+      <a class="ha-news__viewall" href="https://hiappleseed.org/blog" target="_blank" rel="noopener">View all posts <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
+    </div>
+    <div class="ha-news__grid" id="ha-blog-grid"></div>
+  </section>
+
+  <!-- In the News &#8212; the full, searchable press-mention archive. -->
+  <section class="ha-news__section">
+    <div class="ha-news__section-head">
+      <h2 class="ha-news__section-title">In the News</h2>
+      <a class="ha-news__viewall" href="https://hiappleseed.org/in-the-news" target="_blank" rel="noopener">View on hiappleseed.org <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
+    </div>
+    <div class="ha-news__toolbar">
+      <input id="ha-news-search" class="ha-news__search" type="search" placeholder="Search coverage&#8230;" autocomplete="off" aria-label="Search news">
+      <div class="ha-news__filters" id="ha-news-filters" role="group" aria-label="Filter by topic"></div>
+    </div>
+    <p class="ha-news__count" id="ha-news-count">&nbsp;</p>
+    <div class="ha-news__grid" id="ha-news-grid"></div>
+    <div class="ha-news__more-wrap"><button id="ha-news-more" class="ha-news__more" type="button" hidden>Load more</button></div>
+  </section>
+
   <p class="ha-news__synced" id="ha-news-synced"></p>
 </main>
 
@@ -85,6 +122,30 @@
         ' <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>'+
       '</article>';
   }
+  // Blog posts + press releases are internal Squarespace collection items:
+  // they link to hiappleseed.org + fullUrl (no external sourceUrl).
+  function postCard(p, tag){
+    var url=p.fullUrl?'https://hiappleseed.org'+p.fullUrl:'#';
+    var cat=(p.categories&&p.categories[0])||'';
+    var ex=strip(p.excerpt); if(ex.length>170) ex=ex.slice(0,167)+'\u2026';
+    return '<article class="ha-news__card">'+
+      '<div class="ha-news__src"><span class="ha-news__tag">'+esc(tag)+'</span>'+(cat?esc(cat):'<span class="ha-news__date">'+fmtDate(p.publishOn)+'</span>')+'</div>'+
+      '<h3>'+esc(strip(p.title))+'</h3>'+
+      (ex?'<p class="ha-news__excerpt">'+esc(ex)+'</p>':'')+
+      '<div class="ha-news__meta">'+fmtDate(p.publishOn)+'</div>'+
+      '<a class="ha-news__link" href="'+url+'" target="_blank" rel="noopener">Read more'+
+        ' <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>'+
+      '</article>';
+  }
+  // Populate a highlight section with the newest LIMIT items; hide the whole
+  // section (heading + link) if the source list is empty/missing.
+  function renderSection(gridId, sectionId, items, tag, LIMIT){
+    var grid=document.getElementById(gridId), section=document.getElementById(sectionId);
+    items=(items||[]).slice().sort(function(a,b){return (b.publishOn||0)-(a.publishOn||0);});
+    if(!items.length){ if(section) section.hidden=true; return; }
+    if(section) section.hidden=false;
+    grid.innerHTML=items.slice(0,LIMIT).map(function(p){return postCard(p,tag);}).join('');
+  }
   function applyFilters(){
     view=all.filter(function(p){
       if(topic && !((p.categories||[]).indexOf(topic)>-1)) return false;
@@ -111,7 +172,10 @@
 
   fetch('https://dtomkatsu.github.io/Hawaii-Appleseed-website/news.json').then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
     all=(d.press||[]).slice().sort(function(a,b){return (b.publishOn||0)-(a.publishOn||0);});
-    if(d.lastSynced) syncedEl.textContent='Last updated '+fmtDate(d.lastSynced)+' \u00b7 synced from hiappleseed.org/in-the-news';
+    // Highlight sections: newest 3 of each, auto-mirrored from the same feed.
+    renderSection('ha-pr-grid','ha-pr-section',(d.press_releases||[]),'Press Release',3);
+    renderSection('ha-blog-grid','ha-blog-section',(d.blog||[]),'Blog',3);
+    if(d.lastSynced) syncedEl.textContent='Last updated '+fmtDate(d.lastSynced)+' \u00b7 synced automatically from hiappleseed.org';
     buildFilters(); applyFilters();
   }).catch(function(){grid.innerHTML='<p class="ha-news__empty">Unable to load coverage right now. Visit <a href="https://hiappleseed.org/in-the-news" target="_blank" rel="noopener">hiappleseed.org/in-the-news</a>.</p>';});
 })();

@@ -19,8 +19,9 @@ import urllib.parse
 import urllib.request
 
 SOURCES = {
-    "blog":  "https://hiappleseed.org/blog?format=json",
-    "press": "https://hiappleseed.org/in-the-news?format=json",
+    "blog":           "https://hiappleseed.org/blog?format=json",
+    "press":          "https://hiappleseed.org/in-the-news?format=json",
+    "press_releases": "https://hiappleseed.org/press-releases?format=json",
 }
 OUT_PATH = os.path.join(os.path.dirname(__file__), "..", "news.json")
 
@@ -158,7 +159,9 @@ def slim_press(item):
     }
 
 
-SLIMMERS = {"blog": slim_blog, "press": slim_press}
+# Press releases are a Squarespace blog-type collection (internal content
+# with fullUrl, no external sourceUrl), so they slim the same way as blog.
+SLIMMERS = {"blog": slim_blog, "press": slim_press, "press_releases": slim_blog}
 
 
 def fetch_all(name, source_url):
@@ -199,7 +202,8 @@ def main():
         json.dump(output, f, indent=2)
 
     print(
-        f"Wrote {len(output['blog'])} blog posts and {len(output['press'])} press mentions to {out_path}"
+        f"Wrote {len(output['blog'])} blog posts, {len(output['press'])} press "
+        f"mentions, and {len(output['press_releases'])} press releases to {out_path}"
     )
 
 
