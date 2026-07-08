@@ -159,7 +159,11 @@
     grid-template-rows:0fr;
     transition:grid-template-rows .65s cubic-bezier(.22,.61,.36,1);
   }
-  .ha-board .ha-member.is-open .ha-bio-more{grid-template-rows:1fr;}
+  /* The Board President sits in .ha-president-inner, not an .ha-member article,
+     so every .ha-member.is-open rule below needs a president twin \2014  otherwise
+     his Read More toggles aria-expanded but never expands. */
+  .ha-board .ha-member.is-open .ha-bio-more,
+  .ha-board .ha-president-inner.is-open .ha-bio-more{grid-template-rows:1fr;}
   .ha-board .ha-bio-more-inner{
     min-height:0;overflow:hidden;
   }
@@ -197,12 +201,14 @@
     transition:width .5s cubic-bezier(.22,.61,.36,1);
   }
   .ha-board .ha-read:hover::after,
-  .ha-board .ha-member.is-open .ha-read::after{width:100%;}
+  .ha-board .ha-member.is-open .ha-read::after,
+  .ha-board .ha-president-inner.is-open .ha-read::after{width:100%;}
   .ha-board .ha-read .icon{
     display:inline-block;width:14px;height:14px;
     transition:transform .5s cubic-bezier(.22,.61,.36,1);
   }
-  .ha-board .ha-member.is-open .ha-read .icon{transform:rotate(180deg);}
+  .ha-board .ha-member.is-open .ha-read .icon,
+  .ha-board .ha-president-inner.is-open .ha-read .icon{transform:rotate(180deg);}
   .ha-board .ha-read:focus-visible{outline:2px solid var(--ha-teal);outline-offset:4px;border-radius:2px;}
   .ha-board .ha-read .label{display:inline-block;}
 
@@ -476,7 +482,10 @@
       <h2>Build a more equitable Hawai&#699;i with us.</h2>
       <p>Our board of directors guides Hawai&#699;i Appleseed's mission and strategy. We welcome partners, volunteers, and supporters who share our vision.</p>
       <div class="ha-cta-actions">
-        <a class="ha-btn ha-btn-primary" href="/support">Donate</a>
+        <!-- Donate pointed at /support (the "ways to give" page), not the actual
+             donation form. There is no /donate page (404) &#8212; the real destination
+             is the Bloomerang hosted form, same as the nav's Donate button. -->
+        <a class="ha-btn ha-btn-primary" href="https://crm.bloomerang.co/HostedDonation?WidgetId=52224&amp;ApiKey=pub_719d1ab5-5621-11f1-9ea1-06612d4c9559" target="_blank" rel="noopener">Donate</a>
         <a class="ha-btn ha-btn-ghost" href="/our-team">Meet our team</a>
       </div>
     </div>
@@ -512,9 +521,14 @@
   }
 
   // === Read More toggle ===
+  // The Board President's card is .ha-president-inner, not an .ha-member
+  // article, so closest('.ha-member') returned null for him and the next line
+  // threw \u2014 his bio set aria-expanded but never opened. Match either container
+  // and bail safely if neither is found.
   root.querySelectorAll('.ha-read').forEach(function(btn){
     btn.addEventListener('click', function(){
-      var member = btn.closest('.ha-member');
+      var member = btn.closest('.ha-member, .ha-president-inner');
+      if (!member) return;
       var expanded = btn.getAttribute('aria-expanded') === 'true';
       var next = !expanded;
       btn.setAttribute('aria-expanded', String(next));

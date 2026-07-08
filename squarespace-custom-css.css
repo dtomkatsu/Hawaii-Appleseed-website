@@ -179,6 +179,19 @@
    No filter rule here on purpose — a filter would double-process the new
    white logo. */
 
+/* 8. Kill the empty white band between each injected page and the footer.
+   Squarespace gives every page-section's .content-wrapper vertical padding
+   (site.css: `section-height--small > .content-wrapper{padding:3.3vmax 0}`).
+   Our injected pages already end in their own closing section (CTA, etc.),
+   so that trailing padding renders as an empty band above the footer.
+   Verified the gap is 0px in the source — it's purely the section padding.
+   Only the BOTTOM is zeroed (top padding still clears the header), and it's
+   scoped to #page (the content <main>) so #footer-sections is untouched.
+   :has() targets only sections that actually contain one of our code blocks. */
+#page .page-section:has(.sqs-block-code) > .content-wrapper {
+  padding-bottom: 0 !important;
+}
+
 
 /* Homepage hero: drop the video off the navbar without moving the headline */
 @media (min-width: 900px) {
