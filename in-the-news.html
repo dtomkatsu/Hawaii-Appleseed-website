@@ -231,13 +231,19 @@
     <div class="ha-news__grid" id="ha-pr-grid"></div>
   </section>
 
-  <!-- From the Blog — newest 3, links to the full blog. -->
+  <!-- From the Blog — searchable/filterable, same toolbar as In the News. -->
   <section class="ha-news__section" id="ha-blog-section" hidden>
     <div class="ha-news__section-head">
       <h2 class="ha-news__section-title">From the Blog</h2>
       <a class="ha-news__viewall" href="https://hiappleseed.org/blog" target="_blank" rel="noopener">View all posts <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
     </div>
+    <div class="ha-news__toolbar">
+      <input id="ha-blog-search" class="ha-news__search" type="search" placeholder="Search the blog…" autocomplete="off" aria-label="Search blog posts">
+      <div class="ha-news__filters" id="ha-blog-filters" role="group" aria-label="Filter by topic"></div>
+    </div>
+    <p class="ha-news__count" id="ha-blog-count">&nbsp;</p>
     <div class="ha-news__grid" id="ha-blog-grid"></div>
+    <div class="ha-news__more-wrap"><button id="ha-blog-more" class="ha-news__more" type="button" hidden>Load more</button></div>
   </section>
 
   <!-- In the News — the full, searchable press-mention archive. -->
@@ -260,14 +266,9 @@
 
 <script>
 (function(){
-  var PAGE=24, all=[], view=[], shown=0, topic=null, q='';
   var TOPICS=['Affordable Housing','Food Equity','Wages & Labor','Transportation Equity','Taxes & Budget'];
-  var grid=document.getElementById('ha-news-grid'),
-      countEl=document.getElementById('ha-news-count'),
-      moreBtn=document.getElementById('ha-news-more'),
-      searchEl=document.getElementById('ha-news-search'),
-      filtersEl=document.getElementById('ha-news-filters'),
-      syncedEl=document.getElementById('ha-news-synced');
+  var syncedEl=document.getElementById('ha-news-synced'),
+      errFallbackGrid=document.getElementById('ha-news-grid');
 
   function strip(h){var d=document.createElement('div');d.innerHTML=h||'';return (d.textContent||'').replace(/\s+/g,' ').trim();}
   function fmtDate(ms){if(!ms)return '';var d=new Date(ms);return d.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});}
@@ -310,38 +311,76 @@
     if(section) section.hidden=false;
     grid.innerHTML=items.slice(0,LIMIT).map(function(p){return postCard(p,tag);}).join('');
   }
-  function applyFilters(){
-    view=all.filter(function(p){
-      if(topic && !((p.categories||[]).indexOf(topic)>-1)) return false;
-      if(q){var hay=(strip(p.title)+' '+(p.outlet||'')+' '+strip(p.excerpt)).toLowerCase(); if(hay.indexOf(q)<0) return false;}
-      return true;
-    });
-    shown=0; grid.innerHTML=''; render();
+
+  // A full searchable/filterable feed (toolbar + pill filters + "Load
+  // more" pagination) — powers both the In the News archive and the
+  // Blog section with the same behavior, just different DOM ids /
+  // card renderer / search fields.
+  function makeFeed(opts){
+    var PAGE=24, all=[], view=[], shown=0, topic=null, q='';
+    var grid=document.getElementById(opts.gridId),
+        countEl=document.getElementById(opts.countId),
+        moreBtn=document.getElementById(opts.moreId),
+        searchEl=document.getElementById(opts.searchId),
+        filtersEl=document.getElementById(opts.filtersId),
+        section=opts.sectionId?document.getElementById(opts.sectionId):null;
+
+    function applyFilters(){
+      view=all.filter(function(p){
+        if(topic && !((p.categories||[]).indexOf(topic)>-1)) return false;
+        if(q){var hay=opts.searchHay(p).toLowerCase(); if(hay.indexOf(q)<0) return false;}
+        return true;
+      });
+      shown=0; grid.innerHTML=''; render();
+    }
+    function render(){
+      var next=view.slice(shown,shown+PAGE);
+      grid.insertAdjacentHTML('beforeend', next.map(opts.card).join(''));
+      shown+=next.length;
+      moreBtn.hidden = shown>=view.length;
+      countEl.textContent = view.length? (view.length+' '+(view.length>1?opts.nounPlural:opts.noun)+(topic?' · '+topic:'')) : '';
+      if(!view.length) grid.innerHTML='<p class="ha-news__empty">'+opts.emptyText+'</p>';
+    }
+    function buildFilters(){
+      var mk=function(label,val){var b=document.createElement('button');b.className='ha-news__pill'+(val===topic?' is-active':'');b.textContent=label;b.onclick=function(){topic=val;[].forEach.call(filtersEl.children,function(c){c.classList.remove('is-active');});b.classList.add('is-active');applyFilters();};return b;};
+      filtersEl.appendChild(mk('All',null));
+      TOPICS.forEach(function(t){filtersEl.appendChild(mk(t,t));});
+    }
+    moreBtn.addEventListener('click',render);
+    var t; searchEl.addEventListener('input',function(){clearTimeout(t);t=setTimeout(function(){q=searchEl.value.trim().toLowerCase();applyFilters();},200);});
+    buildFilters();
+
+    return {
+      setData: function(items){
+        all=(items||[]).slice().sort(function(a,b){return (b.publishOn||0)-(a.publishOn||0);});
+        if(section) section.hidden = all.length===0;
+        applyFilters();
+      }
+    };
   }
-  function render(){
-    var next=view.slice(shown,shown+PAGE);
-    grid.insertAdjacentHTML('beforeend', next.map(card).join(''));
-    shown+=next.length;
-    moreBtn.hidden = shown>=view.length;
-    countEl.textContent = view.length? (view.length+' article'+(view.length>1?'s':'')+(topic?' · '+topic:'')) : '';
-    if(!view.length) grid.innerHTML='<p class="ha-news__empty">No coverage matches your filters.</p>';
-  }
-  function buildFilters(){
-    var mk=function(label,val){var b=document.createElement('button');b.className='ha-news__pill'+(val===topic?' is-active':'');b.textContent=label;b.onclick=function(){topic=val;[].forEach.call(filtersEl.children,function(c){c.classList.remove('is-active');});b.classList.add('is-active');applyFilters();};return b;};
-    filtersEl.appendChild(mk('All',null));
-    TOPICS.forEach(function(t){filtersEl.appendChild(mk(t,t));});
-  }
-  moreBtn.addEventListener('click',render);
-  var t; searchEl.addEventListener('input',function(){clearTimeout(t);t=setTimeout(function(){q=searchEl.value.trim().toLowerCase();applyFilters();},200);});
+
+  var newsFeed = makeFeed({
+    gridId:'ha-news-grid', countId:'ha-news-count', moreId:'ha-news-more',
+    searchId:'ha-news-search', filtersId:'ha-news-filters',
+    card:card, noun:'article', nounPlural:'articles',
+    searchHay:function(p){return strip(p.title)+' '+(p.outlet||'')+' '+strip(p.excerpt);},
+    emptyText:'No coverage matches your filters.'
+  });
+  var blogFeed = makeFeed({
+    gridId:'ha-blog-grid', countId:'ha-blog-count', moreId:'ha-blog-more',
+    searchId:'ha-blog-search', filtersId:'ha-blog-filters', sectionId:'ha-blog-section',
+    card:function(p){return postCard(p,'Blog');}, noun:'post', nounPlural:'posts',
+    searchHay:function(p){return strip(p.title)+' '+strip(p.excerpt);},
+    emptyText:'No posts match your filters.'
+  });
 
   fetch('news.json').then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
-    all=(d.press||[]).slice().sort(function(a,b){return (b.publishOn||0)-(a.publishOn||0);});
-    // Highlight sections: newest 3 of each, auto-mirrored from the same feed.
+    newsFeed.setData(d.press);
+    blogFeed.setData(d.blog);
+    // Press Releases stays a small "newest 3" highlight (no search/filter).
     renderSection('ha-pr-grid','ha-pr-section',(d.press_releases||[]),'Press Release',3);
-    renderSection('ha-blog-grid','ha-blog-section',(d.blog||[]),'Blog',3);
     if(d.lastSynced) syncedEl.textContent='Last updated '+fmtDate(d.lastSynced)+' · synced automatically from hiappleseed.org';
-    buildFilters(); applyFilters();
-  }).catch(function(){grid.innerHTML='<p class="ha-news__empty">Unable to load coverage right now. Visit <a href="https://hiappleseed.org/in-the-news" target="_blank" rel="noopener">hiappleseed.org/in-the-news</a>.</p>';});
+  }).catch(function(){errFallbackGrid.innerHTML='<p class="ha-news__empty">Unable to load coverage right now. Visit <a href="https://hiappleseed.org/in-the-news" target="_blank" rel="noopener">hiappleseed.org/in-the-news</a>.</p>';});
 })();
 </script>
 <!-- END ha-news -->
