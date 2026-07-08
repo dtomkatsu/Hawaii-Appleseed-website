@@ -1675,7 +1675,7 @@
       <h2>Pay and protections that match the cost of <em>living here</em>.</h2>
       <div class="ha-wages__vision-rule"></div>
       <p>
-        More than half of Hawai&#x02BB;i&rsquo;s households live <span class="ha-term" tabindex="0">paycheck to paycheck<span class="ha-term-tip" role="tooltip"><strong>Paycheck to paycheck</strong> &#8212; little or no savings to absorb an unexpected expense &#8212; one financial shock away from crisis.</span></span> &mdash; one financial hardship away from slipping into poverty. The causes are many, but here in Hawai&#x02BB;i they are driven by our high cost of basic needs (housing, health care, food) combined with the growing share of low-wage, low-opportunity jobs.
+        More than half of Hawai&#x02BB;i&rsquo;s households live <span class="ha-term" tabindex="0">paycheck to paycheck<span class="ha-term-tip" role="tooltip"><strong>Paycheck to paycheck</strong> &#8212; little or no savings to absorb an unexpected expense; one financial shock away from crisis.</span></span>; one financial hardship away from slipping into poverty. But the cost of living keeps rising and the gaps our safety net is meant to close keep widening.
       </p>
       <blockquote class="ha-wages__vision-pullquote">
         If you work hard and play by the rules, you should be able to afford a decent life and a roof over your head. That is not a radical idea. It is the bare minimum.
@@ -1899,7 +1899,7 @@
           <li>
             <strong>Direct cash for new families</strong>
             Guaranteed, no-strings income for mothers through their baby&rsquo;s first year &mdash; proven in Michigan to cut evictions, food insecurity, and maternal depression.
-            <a href="rxkids/" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-weight:700;color:#52796F;text-decoration:none;border-bottom:2px solid #52796F;padding-bottom:1px;">Explore the RxKids Hawai&#x02BB;i proposal &rarr;</a>
+            <a href="https://dtomkatsu.github.io/Hawaii-Appleseed-website/rxkids/" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-weight:700;color:#52796F;text-decoration:none;border-bottom:2px solid #52796F;padding-bottom:1px;">Explore the RxKids Hawai&#x02BB;i proposal &rarr;</a>
           </li>
         </ul></div></div>
         <div class="ha-wages__priority-stat">
@@ -2350,6 +2350,12 @@
       }
     }
     applyHash();
+    // On a fresh load there is usually no #hash, so applyHash() never calls
+    // setTab() \u2014 yet the default panel is already `active` in the markup. Any
+    // one-time init that lives inside setTab (the Chart.js pie, the stat
+    // count-ups) therefore never ran. Drive the default tab explicitly.
+    const _h = (location.hash || '').replace(/^#/, '');
+    if (VALID_TABS.indexOf(_h) === -1) setTab(VALID_TABS[0], { silent: true });
     window.addEventListener('hashchange', applyHash);
 
     // Re-sync the scrollable tab pill once fonts/layout settle (mobile deep-link)

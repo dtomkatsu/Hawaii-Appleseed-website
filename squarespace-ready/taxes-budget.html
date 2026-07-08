@@ -5,6 +5,11 @@
      HOW: Taxes & Budget page > Edit > add a Code Block > paste ALL of this >
           make sure "Display Source" is OFF > Save.
      ===================================================================== -->
+<!-- Chart.js. This lived in <head>, OUTSIDE the BEGIN/END markers, so the
+     builder never shipped it: the pie's init code (inside the markers) ran with
+     `Chart` undefined and the canvas stayed blank on Squarespace. -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+
 <!-- Accordion (Policy details / Show more) styles. These lived OUTSIDE the
      BEGIN/END markers, so the builder never shipped them: on Squarespace the
      chevrons rendered at default SVG size and the panels were permanently
@@ -2083,7 +2088,7 @@
       <p>Sign up for email alerts on bills moving at the Capitol, read our SB 3125 FAQ or the Budget Primer, or reach out to your legislator &#8212; every voice helps shape a more equitable tax code.</p>
       <div class="ha-tax__cta-actions">
         <a class="ha-tax__cta-btn ha-tax__cta-btn--primary" href="https://hiappleseed.quorum.us/campaign/taxfairnesshisubscribe/" target="_blank" rel="noopener">Get email alerts</a>
-        <a class="ha-tax__cta-btn ha-tax__cta-btn--ghost" href="tax-fairness/faq_squarespace.html">Read the SB 3125 FAQ</a>
+        <a class="ha-tax__cta-btn ha-tax__cta-btn--ghost" href="https://dtomkatsu.github.io/Hawaii-Appleseed-website/tax-fairness/faq_squarespace.html">Read the SB 3125 FAQ</a>
         <a class="ha-tax__cta-btn ha-tax__cta-btn--ghost" href="https://hiappleseed.org/publications/hawaii-budget-primer-fy202526" target="_blank" rel="noopener">Read the Budget Primer</a>
       </div>
     </div>
@@ -2415,7 +2420,19 @@
         else p.setAttribute('hidden', '');
       });
       if (name === 'overview' && !pieInitialized) {
-        requestAnimationFrame(() => { initPie(); pieInitialized = true; });
+        // Only latch pieInitialized on SUCCESS. The old code set it right after
+        // calling initPie(), so if Chart.js wasn't ready yet initPie() returned
+        // early, the flag latched anyway, and the pie could never be retried \u2014
+        // the canvas stayed blank forever. Retry once on window load too.
+        const tryPie = () => {
+          if (pieInitialized) return true;
+          if (typeof Chart === 'undefined') return false;
+          try { initPie(); pieInitialized = true; return true; }
+          catch (err) { console.error('[ha-tax] initPie failed:', err); return false; }
+        };
+        requestAnimationFrame(() => {
+          if (!tryPie()) window.addEventListener('load', tryPie, { once: true });
+        });
       }
       if (name === 'overview') {
         runCountUps();
@@ -2503,6 +2520,12 @@
       }
     }
     applyHash();
+    // On a fresh load there is usually no #hash, so applyHash() never calls
+    // setTab() \u2014 yet the default panel is already `active` in the markup. Any
+    // one-time init that lives inside setTab (the Chart.js pie, the stat
+    // count-ups) therefore never ran. Drive the default tab explicitly.
+    const _h = (location.hash || '').replace(/^#/, '');
+    if (VALID_TABS.indexOf(_h) === -1) setTab(VALID_TABS[0], { silent: true });
     window.addEventListener('hashchange', applyHash);
 
     // Re-sync the scrollable tab pill once fonts/layout settle (mobile deep-link)
@@ -2569,6 +2592,28 @@
       document.fonts.ready.then(positionIndicator);
     }
   }
+
+  // ===== Pie bootstrap =====
+  // initPie() previously ran ONLY from setTab('overview'), which never fires on
+  // a fresh load (applyHash() only calls setTab when a valid #hash is present,
+  // and the overview panel is already `active` in the markup). Chart.js was also
+  // never shipped (its <script> sat outside the BEGIN/END markers). Both are
+  // fixed, but drive the pie directly here too so it can't silently regress:
+  // idempotent (Chart.getChart guard), retries while Chart.js is still loading.
+  (function ensurePie(){
+    const c = document.getElementById('ha-tax-pie');
+    if (!c) return;
+    const go = () => {
+      if (typeof Chart === 'undefined') return false;
+      if (Chart.getChart(c)) return true;              // already built
+      try { initPie(); return true; }
+      catch (err) { console.error('[ha-tax] initPie failed:', err); return true; }
+    };
+    if (go()) return;
+    window.addEventListener('load', go, { once: true });
+    let tries = 0;
+    const iv = setInterval(() => { if (go() || ++tries > 50) clearInterval(iv); }, 100);
+  })();
 
   // ===== Init =====
   if (document.readyState === 'loading') {

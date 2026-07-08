@@ -173,9 +173,11 @@ def remap_internal_links(html):
 # the issue pages with bare relative hrefs (href="ufsm/"). A relative href
 # resolves against the Squarespace page slug once pasted — "/food-equity" +
 # "ufsm/" -> "/food-equity/ufsm/" -> 404, which is exactly why the UFSM
-# dashboard link was dead. (The "Explore the Tax Fairness Coalition" link had
-# the same latent bug.) Absolutize them to the Pages host, like assets/.
-PAGES_SUBSITES = ("ufsm", "tax-fairness")
+# dashboard link was dead. Same latent bug hit the "Explore the Tax Fairness
+# Coalition" link, the "Read the SB 3125 FAQ" link
+# (tax-fairness/faq_squarespace.html) and the RxKids link (rxkids/).
+# Absolutize the whole path to the Pages host, like assets/.
+PAGES_SUBSITES = ("ufsm", "tax-fairness", "rxkids")
 
 
 def absolutize_assets(html):
@@ -196,8 +198,11 @@ def absolutize_assets(html):
                   lambda m: m.group(1) + ASSET_BASE + m.group(2) + m.group(3),
                   html)
     subsites = "|".join(re.escape(s) for s in PAGES_SUBSITES)
-    html = re.sub(r'href="(?:\./)?(' + subsites + r')/"',
-                  lambda m: 'href="' + ASSET_BASE + m.group(1) + '/"', html)
+    # Match the whole relative path, not just the bare dir, so deeper links
+    # like tax-fairness/faq_squarespace.html are absolutized too. Already-
+    # absolute hrefs start with a scheme and can't match.
+    html = re.sub(r'href="(?:\./)?((?:' + subsites + r')/[^"]*)"',
+                  lambda m: 'href="' + ASSET_BASE + m.group(1) + '"', html)
     return html
 
 # (source file, marker slug, Squarespace page name, note)

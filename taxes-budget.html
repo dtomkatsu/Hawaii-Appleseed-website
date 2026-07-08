@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap">
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 
 <style>
 /* ============================================================
@@ -185,6 +184,11 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
      Copy everything below this comment (up to END ha-tax)
      into a Squarespace Code Block on the Taxes & Budget page.
      ============================================================ -->
+
+<!-- Chart.js. This lived in <head>, OUTSIDE the BEGIN/END markers, so the
+     builder never shipped it: the pie's init code (inside the markers) ran with
+     `Chart` undefined and the canvas stayed blank on Squarespace. -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 
 <!-- Accordion (Policy details / Show more) styles. These lived OUTSIDE the
      BEGIN/END markers, so the builder never shipped them: on Squarespace the
@@ -2596,7 +2600,19 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
         else p.setAttribute('hidden', '');
       });
       if (name === 'overview' && !pieInitialized) {
-        requestAnimationFrame(() => { initPie(); pieInitialized = true; });
+        // Only latch pieInitialized on SUCCESS. The old code set it right after
+        // calling initPie(), so if Chart.js wasn't ready yet initPie() returned
+        // early, the flag latched anyway, and the pie could never be retried —
+        // the canvas stayed blank forever. Retry once on window load too.
+        const tryPie = () => {
+          if (pieInitialized) return true;
+          if (typeof Chart === 'undefined') return false;
+          try { initPie(); pieInitialized = true; return true; }
+          catch (err) { console.error('[ha-tax] initPie failed:', err); return false; }
+        };
+        requestAnimationFrame(() => {
+          if (!tryPie()) window.addEventListener('load', tryPie, { once: true });
+        });
       }
       if (name === 'overview') {
         runCountUps();
@@ -2684,6 +2700,12 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       }
     }
     applyHash();
+    // On a fresh load there is usually no #hash, so applyHash() never calls
+    // setTab() — yet the default panel is already `active` in the markup. Any
+    // one-time init that lives inside setTab (the Chart.js pie, the stat
+    // count-ups) therefore never ran. Drive the default tab explicitly.
+    const _h = (location.hash || '').replace(/^#/, '');
+    if (VALID_TABS.indexOf(_h) === -1) setTab(VALID_TABS[0], { silent: true });
     window.addEventListener('hashchange', applyHash);
 
     // Re-sync the scrollable tab pill once fonts/layout settle (mobile deep-link)
@@ -2750,6 +2772,28 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
       document.fonts.ready.then(positionIndicator);
     }
   }
+
+  // ===== Pie bootstrap =====
+  // initPie() previously ran ONLY from setTab('overview'), which never fires on
+  // a fresh load (applyHash() only calls setTab when a valid #hash is present,
+  // and the overview panel is already `active` in the markup). Chart.js was also
+  // never shipped (its <script> sat outside the BEGIN/END markers). Both are
+  // fixed, but drive the pie directly here too so it can't silently regress:
+  // idempotent (Chart.getChart guard), retries while Chart.js is still loading.
+  (function ensurePie(){
+    const c = document.getElementById('ha-tax-pie');
+    if (!c) return;
+    const go = () => {
+      if (typeof Chart === 'undefined') return false;
+      if (Chart.getChart(c)) return true;              // already built
+      try { initPie(); return true; }
+      catch (err) { console.error('[ha-tax] initPie failed:', err); return true; }
+    };
+    if (go()) return;
+    window.addEventListener('load', go, { once: true });
+    let tries = 0;
+    const iv = setInterval(() => { if (go() || ++tries > 50) clearInterval(iv); }, 100);
+  })();
 
   // ===== Init =====
   if (document.readyState === 'loading') {

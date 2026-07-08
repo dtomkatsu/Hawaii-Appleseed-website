@@ -2372,6 +2372,12 @@
       }
     }
     applyHash();
+    // On a fresh load there is usually no #hash, so applyHash() never calls
+    // setTab() \u2014 yet the default panel is already `active` in the markup. Any
+    // one-time init that lives inside setTab (the Chart.js pie, the stat
+    // count-ups) therefore never ran. Drive the default tab explicitly.
+    const _h = (location.hash || '').replace(/^#/, '');
+    if (VALID_TABS.indexOf(_h) === -1) setTab(VALID_TABS[0], { silent: true });
     window.addEventListener('hashchange', applyHash);
 
     // Re-sync the scrollable tab pill once fonts/layout settle (mobile deep-link)

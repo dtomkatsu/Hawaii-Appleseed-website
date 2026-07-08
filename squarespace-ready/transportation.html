@@ -1785,7 +1785,7 @@
         </div>
         <div class="ha-transit__service-body">
           <p class="ha-transit__service-title">People who walk</p>
-          <p class="ha-transit__service-cost">349 / 100K cited</p>
+          <p class="ha-transit__service-cost">349 cited per 100K residents</p>
           <p class="ha-transit__service-desc">Hawai&#x02BB;i issues jaywalking tickets at 58&times; the rate of Washington state &mdash; disproportionately impacting the lower-income, k&#363;puna, keiki, and disabled residents who walk out of necessity.</p>
           <span class="ha-transit__service-pc">A cycle of debt, not safety</span>
         </div>
@@ -1883,7 +1883,7 @@
           </li>
         </ul></div></div>
         <div class="ha-transit__priority-stat">
-          <div class="ha-transit__priority-stat-num">349 / 100K</div>
+          <div class="ha-transit__priority-stat-num">349 per 100K residents</div>
           <div class="ha-transit__priority-stat-label">Hawai&#x02BB;i jaywalking citation rate &mdash; <strong>58&times;</strong> Washington state&rsquo;s</div>
         </div>
         <blockquote class="ha-transit__priority-quote">
@@ -2365,6 +2365,12 @@
       }
     }
     applyHash();
+    // On a fresh load there is usually no #hash, so applyHash() never calls
+    // setTab() \u2014 yet the default panel is already `active` in the markup. Any
+    // one-time init that lives inside setTab (the Chart.js pie, the stat
+    // count-ups) therefore never ran. Drive the default tab explicitly.
+    const _h = (location.hash || '').replace(/^#/, '');
+    if (VALID_TABS.indexOf(_h) === -1) setTab(VALID_TABS[0], { silent: true });
     window.addEventListener('hashchange', applyHash);
 
     // Re-sync the scrollable tab pill once fonts/layout settle (mobile deep-link)
