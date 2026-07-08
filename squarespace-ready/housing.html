@@ -1553,6 +1553,48 @@
   .ha-housing__cta-actions { flex-direction:column; width:100%; align-items:stretch; }
   .ha-housing a.ha-housing__cta-btn { justify-content:center; }
 }
+
+/* ===== Explore other issues \2014  cross-issue nav (mirrored on all 5 pages) ===== */
+.ha-housing__more { background:var(--ha-bg); padding:72px 28px 80px; border-top:1px solid var(--ha-rule); }
+.ha-housing__more-inner { max-width:1180px; margin:0 auto; }
+.ha-housing__more-eyebrow {
+  display:inline-block; font-family:'Poppins',sans-serif; font-size:11px; font-weight:600;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--ha-teal-deep); margin-bottom:10px;
+}
+.ha-housing__more h2 {
+  font-family:'Manrope',sans-serif; font-weight:700; font-size:clamp(24px,2.6vw,34px);
+  line-height:1.15; letter-spacing:-.02em; color:var(--ha-charcoal); margin:0;
+}
+.ha-housing__more-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+  list-style:none; padding:0; margin:30px 0 0;
+}
+@media (max-width:1000px) { .ha-housing__more-grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:600px)  { .ha-housing__more-grid { grid-template-columns:1fr; } }
+.ha-housing__more-card {
+  display:flex; flex-direction:column; gap:8px; height:100%;
+  padding:20px 20px 18px; background:var(--ha-white);
+  border:1px solid var(--ha-rule); border-radius:8px;
+  text-decoration:none; color:inherit;
+  transition:border-color .25s, transform .25s, box-shadow .25s;
+}
+.ha-housing__more-card:hover {
+  border-color:var(--ha-teal); transform:translateY(-2px);
+  box-shadow:0 10px 26px rgba(47,62,70,.08);
+}
+.ha-housing__more-card:focus-visible { outline:2px solid var(--ha-teal-deep); outline-offset:3px; }
+.ha-housing__more-name {
+  font-family:'Manrope',sans-serif; font-weight:700; font-size:16px;
+  line-height:1.3; color:var(--ha-charcoal);
+}
+.ha-housing__more-desc { font-size:13.5px; line-height:1.55; color:var(--ha-teal-deep); flex:1; margin:0; }
+.ha-housing__more-go {
+  display:inline-flex; align-items:center; gap:6px; margin-top:4px;
+  font-family:'Manrope',sans-serif; font-weight:600; font-size:12.5px;
+  letter-spacing:.04em; color:var(--ha-teal-deep);
+}
+.ha-housing__more-card:hover .ha-housing__more-go { color:var(--ha-charcoal); gap:9px; }
+.ha-housing__more-go svg { width:13px; height:13px; transition:transform .25s; }
 </style>
 
 <section class="ha-housing">
@@ -1988,6 +2030,55 @@
       </div>
     </div>
   </section>
+
+  <!-- Explore other issues &#8212; quick nav to the other four issue pages, so a
+       reader who finishes one issue can move straight to another. Same-tab
+       (unlike the Issues landing links) since this IS the cross-issue menu. -->
+  <section class="ha-housing__more" aria-labelledby="ha-housing-more-heading">
+    <div class="ha-housing__more-inner">
+      <span class="ha-housing__more-eyebrow">Explore another issue</span>
+      <h2 id="ha-housing-more-heading">Our work is connected.</h2>
+      <ul class="ha-housing__more-grid">
+        <li>
+          <a class="ha-housing__more-card" href="/food-equity">
+            <span class="ha-housing__more-name">Food Equity</span>
+            <p class="ha-housing__more-desc">Healthy, culturally rooted food for every Hawai&#x02BB;i family.</p>
+            <span class="ha-housing__more-go">Explore
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="ha-housing__more-card" href="/transportation-equity">
+            <span class="ha-housing__more-name">Transportation Equity</span>
+            <p class="ha-housing__more-desc">Safer streets, smarter transit, lower costs.</p>
+            <span class="ha-housing__more-go">Explore
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="ha-housing__more-card" href="/taxes-budget">
+            <span class="ha-housing__more-name">Taxes &amp; Budget</span>
+            <p class="ha-housing__more-desc">A fairer tax code for a thriving Hawai&#x02BB;i.</p>
+            <span class="ha-housing__more-go">Explore
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="ha-housing__more-card" href="/wages-labor">
+            <span class="ha-housing__more-name">Wages &amp; Labor</span>
+            <p class="ha-housing__more-desc">Pay and protections that match the cost of living here.</p>
+            <span class="ha-housing__more-go">Explore
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 7h12M8 2l5 5-5 5"/></svg>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
 
 </section>
 
