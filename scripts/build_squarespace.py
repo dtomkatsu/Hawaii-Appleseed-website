@@ -169,6 +169,15 @@ def remap_internal_links(html):
     )
 
 
+# Sub-sites that live in THIS repo and are served by GitHub Pages, linked from
+# the issue pages with bare relative hrefs (href="ufsm/"). A relative href
+# resolves against the Squarespace page slug once pasted — "/food-equity" +
+# "ufsm/" -> "/food-equity/ufsm/" -> 404, which is exactly why the UFSM
+# dashboard link was dead. (The "Explore the Tax Fairness Coalition" link had
+# the same latent bug.) Absolutize them to the Pages host, like assets/.
+PAGES_SUBSITES = ("ufsm", "tax-fairness")
+
+
 def absolutize_assets(html):
     """Rewrite relative resource paths to absolute Pages URLs:
       • src/url()/href to assets/…  (images, etc.)
@@ -176,6 +185,8 @@ def absolutize_assets(html):
         news.json — which otherwise 404 against the Squarespace domain and
         collapse the section to its fallback text. GitHub Pages serves these
         with Access-Control-Allow-Origin:* so the cross-origin fetch works.
+      • href="<subsite>/" links to repo-hosted sub-sites (see PAGES_SUBSITES),
+        which would otherwise resolve against the Squarespace page slug.
     Internal .html page links are handled separately by
     remap_internal_links(), below, since they map to real Squarespace
     page slugs rather than the Pages preview."""
@@ -184,6 +195,9 @@ def absolutize_assets(html):
     html = re.sub(r"""(["'])((?:publications|news)\.json)(["'])""",
                   lambda m: m.group(1) + ASSET_BASE + m.group(2) + m.group(3),
                   html)
+    subsites = "|".join(re.escape(s) for s in PAGES_SUBSITES)
+    html = re.sub(r'href="(?:\./)?(' + subsites + r')/"',
+                  lambda m: 'href="' + ASSET_BASE + m.group(1) + '/"', html)
     return html
 
 # (source file, marker slug, Squarespace page name, note)

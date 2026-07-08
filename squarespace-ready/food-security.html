@@ -5,6 +5,22 @@
      HOW: Food Security page > Edit > add a Code Block > paste ALL of this >
           make sure "Display Source" is OFF > Save.
      ===================================================================== -->
+<!-- Glossary tooltip styles. These lived OUTSIDE the BEGIN/END markers, so
+     the builder never shipped them. Without .ha-term-tip{position:absolute;
+     opacity:0}, every tooltip rendered as inline text right after its term &#8212;
+     which is what produced "SNAPSNAP", "cost-burdenedCost-burdened",
+     "fare-freeFare-free" and "paycheckPaycheck to paycheck" on the live site.
+     Keep them inside the markers. -->
+<style id="ha-term-css">
+.ha-term{position:relative;display:inline;border-bottom:1px dotted #52796F;cursor:help;color:inherit;font-style:inherit;}
+.ha-term:focus{outline:2px solid #84A98C;outline-offset:2px;border-radius:2px;}
+.ha-term-tip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(4px);z-index:80;width:250px;max-width:76vw;background:#2F3E46;color:#fff;padding:10px 14px;border-radius:6px;font-family:'Poppins',sans-serif;font-style:normal;font-weight:400;font-size:12.5px;letter-spacing:.01em;line-height:1.5;text-align:left;text-transform:none;opacity:0;pointer-events:none;box-shadow:0 10px 26px rgba(47,62,70,.28);transition:opacity .2s,transform .2s;white-space:normal;}
+.ha-term-tip::after{content:"";position:absolute;bottom:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:#2F3E46;}
+.ha-term:hover .ha-term-tip,.ha-term:focus .ha-term-tip{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+.ha-term-tip strong{color:#84A98C;font-weight:700;}
+@media (max-width:700px){.ha-term-tip{width:210px;font-size:12px;}}
+</style>
+
 <!-- Accordion (Policy details / Show more) styles. These lived OUTSIDE the
      BEGIN/END markers, so the builder never shipped them: on Squarespace the
      chevrons rendered at default SVG size and the panels were permanently
@@ -1660,7 +1676,7 @@
       <h2>Food is a human right, <em>not a privilege</em>.</h2>
       <div class="ha-food__vision-rule"></div>
       <p>
-        Equity in our food system means everyone in Hawai&#x02BB;i has access to healthy, affordable, and culturally meaningful food. But it means more than access. It means Hawai&#x02BB;i&rsquo;s farmers have access to land, just wages, and sustainable practices. It demands community control over food systems &mdash; so the people who eat the food shape the policies that produce it.
+        Equity in our food system means everyone in Hawai&#x02BB;i has access to healthy, affordable, and culturally meaningful food. It means Hawai&#x02BB;i&rsquo;s farmers have access to land, just wages, and sustainable practices. But it means more than access. It demands community control over food systems &mdash; so the people who eat the food shape the policies that produce it.
       </p>
       <blockquote class="ha-food__vision-pullquote">
         This is not a failure of resources. It is a failure of policy.
@@ -1776,7 +1792,7 @@
         <div class="ha-food__service-body">
           <p class="ha-food__service-title">Local farmers</p>
           <p class="ha-food__service-cost">Land &amp; wage access</p>
-          <p class="ha-food__service-desc">Food equity means farmers have land, fair wages, and sustainable practices &mdash; not just consumers having access to food.</p>
+          <p class="ha-food__service-desc">Food equity means farmers have land, fair wages, and sustainable practices.</p>
           <span class="ha-food__service-pc">~90% of food still imported</span>
         </div>
       </div>
@@ -1842,7 +1858,7 @@
         </blockquote>
         <div class="ha-food__priority-bills">
           <a class="ha-food__priority-bill" href="https://www.capitol.hawaii.gov/session/measure_indiv.aspx?billtype=HB&billnumber=2008&year=2026" target="_blank" rel="noopener">HB 2008 &#8594;</a>
-          <a class="ha-food__priority-bill" href="ufsm/">UFSM data dashboard &#8594;</a>
+          <a class="ha-food__priority-bill" href="https://dtomkatsu.github.io/Hawaii-Appleseed-website/ufsm/">UFSM data dashboard &#8594;</a>
         </div>
       </article>
 
