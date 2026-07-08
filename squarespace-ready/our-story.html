@@ -1194,11 +1194,21 @@
     sprig.innerHTML = html;
     m.classList.add('has-sprig');
     m.insertBefore(sprig, m.firstChild);
-    // a sparse vine tendril in the gap toward the next node
+    // a sparse vine sprig in the gap toward the next node. Drawn as a
+    // DEFINITIVE leaf (the old long-tail + small-blob silhouette read as,
+    // well, not a leaf): short stalk, lanceolate main blade \u2014 pointed tip,
+    // widest at the middle, light center vein \u2014 plus a small second
+    // leaflet off the stalk so the silhouette can't read as head-and-tail.
+    // Blade fills use currentColor so the era.dark recolor keeps working.
     var tendril = document.createElement('span');
     tendril.className = 'vine-tendril';
     tendril.setAttribute('aria-hidden', 'true');
-    tendril.innerHTML = '<svg viewBox="0 0 26 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 38 C15 32 9 26 12 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M12 16 C6 12 4 6 8 1 C14 4 16 11 12 16 Z" fill="currentColor"/></svg>';
+    tendril.innerHTML = '<svg viewBox="0 0 26 38" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+      '<path d="M24 38 C21 33 18 28 15 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' +
+      '<path d="M20.5 31 C25 28 26.5 23 25 18.5 C20.5 21.5 19 27 20.5 31 Z" fill="currentColor" opacity=".85"/>' +
+      '<path d="M15 22 C6 19 1.5 11 4 3 C12 5 17 14 15 22 Z" fill="currentColor"/>' +
+      '<path d="M13.6 19.6 C9.5 15.5 6.8 10.5 5.2 5.6" stroke="#EEF3EC" stroke-width="1" stroke-opacity=".5" stroke-linecap="round"/>' +
+      '</svg>';
     m.appendChild(tendril);
     if (reduce) m.classList.add('has-bloomed');   // reduced motion: present + grown, no unfurl
   });
