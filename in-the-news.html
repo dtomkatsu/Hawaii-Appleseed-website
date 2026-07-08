@@ -186,7 +186,10 @@
   .ha-news__pill.is-active{background:#52796F;border-color:#52796F;color:#fff;}
   .ha-news__count{font-size:13px;color:#52796F;margin:14px 0 18px;}
   .ha-news__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;}
-  .ha-news__card{display:flex;flex-direction:column;background:#fff;border:1px solid #E8EDE6;border-radius:6px;padding:22px 22px 20px;transition:border-color .25s,box-shadow .25s,transform .25s;}
+  /* The whole card is a link (user request: "click anywhere in the box").
+     Rendered as an <a>, so the inner "Read more" is a <span>, not a nested <a>. */
+  .ha-news__card{display:flex;flex-direction:column;background:#fff;border:1px solid #E8EDE6;border-radius:6px;padding:22px 22px 20px;transition:border-color .25s,box-shadow .25s,transform .25s;text-decoration:none;color:inherit;cursor:pointer;}
+  .ha-news__card:focus-visible{outline:2px solid #52796F;outline-offset:3px;}
   .ha-news__card:hover{border-color:#84A98C;box-shadow:0 10px 26px rgba(47,62,70,.08);transform:translateY(-2px);}
   .ha-news__src{display:flex;align-items:center;gap:8px;font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#52796F;margin-bottom:12px;}
   .ha-news__tag{background:#84A98C;color:#fff;border-radius:3px;padding:2px 7px;font-size:10px;letter-spacing:.1em;}
@@ -218,17 +221,22 @@
   <header class="ha-news__hero">
     <div class="ha-news__eyebrow">Media</div>
     <h1 class="ha-news__title">News &amp; Media</h1>
-    <p class="ha-news__lede">Press releases, blog posts, and news coverage of Hawaiʻi Appleseed's research and advocacy. This page mirrors <a href="https://hiappleseed.org" target="_blank" rel="noopener" style="color:#52796F;">hiappleseed.org</a> and refreshes automatically.</p>
+    <p class="ha-news__lede">News coverage, blog posts, and press releases from Hawaiʻi Appleseed's research and advocacy.</p>
   </header>
 
-  <!-- Press Releases — newest 3, links to the full collection. Hidden until
-       news.json.press_releases loads (populated by the script below). -->
-  <section class="ha-news__section" id="ha-pr-section" hidden>
+  <!-- In the News — the full, searchable press-mention archive. -->
+  <section class="ha-news__section">
     <div class="ha-news__section-head">
-      <h2 class="ha-news__section-title">Press Releases</h2>
-      <a class="ha-news__viewall" href="https://hiappleseed.org/press-releases" target="_blank" rel="noopener">View all press releases <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
+      <h2 class="ha-news__section-title">In the News</h2>
+      <a class="ha-news__viewall" href="https://hiappleseed.org/in-the-news" target="_blank" rel="noopener">View on hiappleseed.org <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
     </div>
-    <div class="ha-news__grid" id="ha-pr-grid"></div>
+    <div class="ha-news__toolbar">
+      <input id="ha-news-search" class="ha-news__search" type="search" placeholder="Search coverage…" autocomplete="off" aria-label="Search news">
+      <div class="ha-news__filters" id="ha-news-filters" role="group" aria-label="Filter by topic"></div>
+    </div>
+    <p class="ha-news__count" id="ha-news-count">&nbsp;</p>
+    <div class="ha-news__grid" id="ha-news-grid"></div>
+    <div class="ha-news__more-wrap"><button id="ha-news-more" class="ha-news__more" type="button" hidden>Load more</button></div>
   </section>
 
   <!-- From the Blog — searchable/filterable, same toolbar as In the News. -->
@@ -246,19 +254,19 @@
     <div class="ha-news__more-wrap"><button id="ha-blog-more" class="ha-news__more" type="button" hidden>Load more</button></div>
   </section>
 
-  <!-- In the News — the full, searchable press-mention archive. -->
-  <section class="ha-news__section">
+  <!-- Press Releases — searchable/filterable, same toolbar as the other two. -->
+  <section class="ha-news__section" id="ha-pr-section" hidden>
     <div class="ha-news__section-head">
-      <h2 class="ha-news__section-title">In the News</h2>
-      <a class="ha-news__viewall" href="https://hiappleseed.org/in-the-news" target="_blank" rel="noopener">View on hiappleseed.org <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
+      <h2 class="ha-news__section-title">Press Releases</h2>
+      <a class="ha-news__viewall" href="https://hiappleseed.org/press-releases" target="_blank" rel="noopener">View all press releases <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
     </div>
     <div class="ha-news__toolbar">
-      <input id="ha-news-search" class="ha-news__search" type="search" placeholder="Search coverage…" autocomplete="off" aria-label="Search news">
-      <div class="ha-news__filters" id="ha-news-filters" role="group" aria-label="Filter by topic"></div>
+      <input id="ha-pr-search" class="ha-news__search" type="search" placeholder="Search press releases…" autocomplete="off" aria-label="Search press releases">
+      <div class="ha-news__filters" id="ha-pr-filters" role="group" aria-label="Filter by topic"></div>
     </div>
-    <p class="ha-news__count" id="ha-news-count">&nbsp;</p>
-    <div class="ha-news__grid" id="ha-news-grid"></div>
-    <div class="ha-news__more-wrap"><button id="ha-news-more" class="ha-news__more" type="button" hidden>Load more</button></div>
+    <p class="ha-news__count" id="ha-pr-count">&nbsp;</p>
+    <div class="ha-news__grid" id="ha-pr-grid"></div>
+    <div class="ha-news__more-wrap"><button id="ha-pr-more" class="ha-news__more" type="button" hidden>Load more</button></div>
   </section>
 
   <p class="ha-news__synced" id="ha-news-synced"></p>
@@ -278,14 +286,14 @@
     var outlet=p.outlet||strip(p.author&&p.author.bio)||'Press';
     var url=p.sourceUrl||(p.fullUrl?'https://hiappleseed.org'+p.fullUrl:'#');
     var ex=strip(p.excerpt); if(ex.length>180) ex=ex.slice(0,177)+'…';
-    return '<article class="ha-news__card">'+
+    return '<a class="ha-news__card" href="'+url+'" target="_blank" rel="noopener">'+
       '<div class="ha-news__src"><span class="ha-news__tag">Press</span>'+esc(outlet)+'</div>'+
       '<h3>'+esc(strip(p.title))+'</h3>'+
       (ex?'<p class="ha-news__excerpt">'+esc(ex)+'</p>':'')+
       '<div class="ha-news__meta">'+fmtDate(p.publishOn)+'</div>'+
-      '<a class="ha-news__link" href="'+url+'" target="_blank" rel="noopener">Read on '+esc(outlet)+
-        ' <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>'+
-      '</article>';
+      '<span class="ha-news__link">Read on '+esc(outlet)+
+        ' <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></span>'+
+      '</a>';
   }
   // Blog posts + press releases are internal Squarespace collection items:
   // they link to hiappleseed.org + fullUrl (no external sourceUrl).
@@ -293,23 +301,14 @@
     var url=p.fullUrl?'https://hiappleseed.org'+p.fullUrl:'#';
     var cat=(p.categories&&p.categories[0])||'';
     var ex=strip(p.excerpt); if(ex.length>170) ex=ex.slice(0,167)+'…';
-    return '<article class="ha-news__card">'+
+    return '<a class="ha-news__card" href="'+url+'" target="_blank" rel="noopener">'+
       '<div class="ha-news__src"><span class="ha-news__tag">'+esc(tag)+'</span>'+(cat?esc(cat):'<span class="ha-news__date">'+fmtDate(p.publishOn)+'</span>')+'</div>'+
       '<h3>'+esc(strip(p.title))+'</h3>'+
       (ex?'<p class="ha-news__excerpt">'+esc(ex)+'</p>':'')+
       '<div class="ha-news__meta">'+fmtDate(p.publishOn)+'</div>'+
-      '<a class="ha-news__link" href="'+url+'" target="_blank" rel="noopener">Read more'+
-        ' <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>'+
-      '</article>';
-  }
-  // Populate a highlight section with the newest LIMIT items; hide the whole
-  // section (heading + link) if the source list is empty/missing.
-  function renderSection(gridId, sectionId, items, tag, LIMIT){
-    var grid=document.getElementById(gridId), section=document.getElementById(sectionId);
-    items=(items||[]).slice().sort(function(a,b){return (b.publishOn||0)-(a.publishOn||0);});
-    if(!items.length){ if(section) section.hidden=true; return; }
-    if(section) section.hidden=false;
-    grid.innerHTML=items.slice(0,LIMIT).map(function(p){return postCard(p,tag);}).join('');
+      '<span class="ha-news__link">Read more'+
+        ' <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></span>'+
+      '</a>';
   }
 
   // A full searchable/filterable feed (toolbar + pill filters + "Load
@@ -376,13 +375,21 @@
     searchHay:function(p){return strip(p.title)+' '+strip(p.excerpt);},
     emptyText:'No posts match your filters.'
   });
+  // Press releases use the same five issue-area categories as the other feeds,
+  // so they share TOPICS and the same search/filter/pagination behavior.
+  var prFeed = makeFeed({
+    gridId:'ha-pr-grid', countId:'ha-pr-count', moreId:'ha-pr-more',
+    searchId:'ha-pr-search', filtersId:'ha-pr-filters', sectionId:'ha-pr-section',
+    card:function(p){return postCard(p,'Press Release');}, noun:'press release', nounPlural:'press releases',
+    searchHay:function(p){return strip(p.title)+' '+strip(p.excerpt);},
+    emptyText:'No press releases match your filters.'
+  });
 
   fetch('news.json').then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
     newsFeed.setData(d.press);
     blogFeed.setData(d.blog);
-    // Press Releases stays a small "newest 3" highlight (no search/filter).
-    renderSection('ha-pr-grid','ha-pr-section',(d.press_releases||[]),'Press Release',3);
-    if(d.lastSynced) syncedEl.textContent='Last updated '+fmtDate(d.lastSynced)+' · synced automatically from hiappleseed.org';
+    prFeed.setData(d.press_releases);
+    if(d.lastSynced) syncedEl.textContent='Last updated '+fmtDate(d.lastSynced);
   }).catch(function(){errFallbackGrid.innerHTML='<p class="ha-news__empty">Unable to load coverage right now. Visit <a href="https://hiappleseed.org/in-the-news" target="_blank" rel="noopener">hiappleseed.org/in-the-news</a>.</p>';});
 })();
 </script>
