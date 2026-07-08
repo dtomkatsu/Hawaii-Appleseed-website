@@ -320,10 +320,14 @@
   }
   /* The rail is a living VINE: the fill/progress gradient is masked to a flowing
      ribbon (a repeating SVG wave), so the growing line reads as a climbing stem
-     rather than a straight bar. The wave is a smooth sine: two symmetric humps
-     per 180px, with control points placed for C1 continuity at EVERY junction
-     — the mid-crossing AND the tile seam — so there are no kinks where the
-     pattern repeats. ~±6px actual amplitude reads as a gentle, natural vine.
+     rather than a straight bar. The wave is an ORGANIC meander, not a uniform
+     sine: four humps of varied heights (110/85/95/70) per 360px tile, each with
+     amplitude proportional to its height (A = 0.065·h → 7.2/5.5/6.2/4.6) — the
+     proportionality is what keeps every junction AND the tile seam C1-continuous
+     (tangents match exactly), while the irregular rhythm reads as natural growth
+     instead of a metronomic zigzag. Control points sit at 0.32·h from each end.
+     NOTE: the growing-tip tracker in the scroll JS (RAIL_HUMPS) mirrors these
+     numbers — keep them in sync if the wave changes.
      The element is 30px wide with left:1px so its center stays at 16px, aligned
      with the 18px dots (the swing stays inside the dot radius, so the vine still
      threads "on" each node). */
@@ -334,8 +338,8 @@
       linear-gradient(180deg, var(--ha-teal-deep) 0%, var(--ha-teal) 100%)
         top / 100% var(--rail-progress, 0%) no-repeat,
       var(--ha-ash);
-    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 180'><path d='M15 0 C23 28.8 23 61.2 15 90 C7 118.8 7 151.2 15 180' stroke='%23000' stroke-width='3.8' fill='none' stroke-linecap='round'/></svg>") center top / 30px 180px repeat-y;
-            mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 180'><path d='M15 0 C23 28.8 23 61.2 15 90 C7 118.8 7 151.2 15 180' stroke='%23000' stroke-width='3.8' fill='none' stroke-linecap='round'/></svg>") center top / 30px 180px repeat-y;
+    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 360'><path d='M15 0 C22.2 35.2 22.2 74.8 15 110 C9.5 137.2 9.5 167.8 15 195 C21.2 225.4 21.2 259.6 15 290 C10.4 312.4 10.4 337.6 15 360' stroke='%23000' stroke-width='3.8' fill='none' stroke-linecap='round'/></svg>") center top / 30px 360px repeat-y;
+            mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 360'><path d='M15 0 C22.2 35.2 22.2 74.8 15 110 C9.5 137.2 9.5 167.8 15 195 C21.2 225.4 21.2 259.6 15 290 C10.4 312.4 10.4 337.6 15 360' stroke='%23000' stroke-width='3.8' fill='none' stroke-linecap='round'/></svg>") center top / 30px 360px repeat-y;
   }
 
   .ha-story .milestone{
@@ -628,9 +632,17 @@
   }
 
   /* Living rail — a luminous "growing tip" rides the --rail-progress fill.
-     Its glow is multiplied by --rail-mood, so the light FALTERS over loss milestones. */
+     Its glow is multiplied by --rail-mood, so the light FALTERS over loss milestones.
+     --rail-sway (set by the scroll JS from the same hump table as the vine mask)
+     slides the tip horizontally so it stays ON the meandering line instead of
+     hovering beside the bends; --rail-tip-y pins it to the exact fill edge
+     (the fill % is of the inset ::before, not the full rail, so a bare % here
+     drifted a few px). Base left is 9px so the tip's center (9+7=16) matches
+     the vine center. */
   .ha-story .rail::after{
-    content:""; position:absolute; left:8px; top:var(--rail-progress, 0%);
+    content:""; position:absolute;
+    left:calc(9px + var(--rail-sway, 0px));
+    top:var(--rail-tip-y, var(--rail-progress, 0%));
     width:14px; height:14px; border-radius:50%;
     background:radial-gradient(circle, var(--ha-teal) 0%, var(--ha-teal) 34%, rgba(132,169,140,0) 72%);
     box-shadow:0 0 14px 4px rgba(132,169,140,.5);
@@ -642,8 +654,8 @@
 
   /* WIN — an expressive leaf unfurls beside the dot (a visible victory). */
   .ha-story .milestone[data-register="win"]::after{
-    content:""; position:absolute; left:-36px; top:0;
-    width:18px; height:18px;
+    content:""; position:absolute; left:-36px; top:-2px;
+    width:22px; height:22px;
     background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 23C12 14 16 8 23 6c-1 10-7 15-11 17z' fill='%2384A98C'/><path d='M12 23C12 14 8 8 1 6c1 10 7 15 11 17z' fill='%2352796F'/></svg>") center/contain no-repeat;
     transform-origin:left bottom; transform:scale(.2) rotate(-12deg); opacity:0;
     transition:transform .6s cubic-bezier(.22,.61,.36,1), opacity .5s ease;
@@ -675,7 +687,7 @@
   }
   .ha-story .has-sprig[data-register="win"]::after{ display:none; }  /* the sprig replaces the single win leaf */
   .ha-story .sprig .leaf{
-    position:absolute; left:0; bottom:0; width:13px; height:20px; margin-left:-6.5px;
+    position:absolute; left:0; bottom:0; width:16px; height:24px; margin-left:-8px;
     /* Logo-style leaf: rounded teardrop, soft tip, subtle center vein (matches the
        Hawaiʻi Appleseed sprout mark). Uniform sage for a calmer, on-brand look. */
     background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36'><path d='M12 2 C19 9 21 22 13 33 C12.5 33.8 11.5 33.8 11 33 C3 22 5 9 12 2 Z' fill='%2384A98C'/><path d='M12 7 C11.6 16 11.8 26 12.4 31' stroke='%23eef3ec' stroke-width='1' stroke-opacity='.5' fill='none' stroke-linecap='round'/></svg>") center/contain no-repeat;
@@ -686,10 +698,10 @@
   }
   .ha-story .milestone.has-bloomed .sprig .leaf{
     transform: rotate(var(--a,0deg)) rotateX(var(--rx,0deg)) translateZ(var(--tz,0px)) scale(var(--leaf-scale,1));
-    opacity: calc(0.8 * var(--rail-mood, 1));
+    opacity: calc(0.92 * var(--rail-mood, 1));
   }
-  .ha-story .sprig--build .leaf{ width:10px; height:15px; }
-  .ha-story .milestone.has-bloomed .sprig--build .leaf{ opacity: calc(0.55 * var(--rail-mood, 1)); }
+  .ha-story .sprig--build .leaf{ width:12px; height:18px; }
+  .ha-story .milestone.has-bloomed .sprig--build .leaf{ opacity: calc(0.7 * var(--rail-mood, 1)); }
   /* leaves are image-based now, so lift them a touch on dark eras instead of recolouring */
   .ha-story .era.dark .sprig .leaf{ filter:brightness(1.14); }
   /* per-era maturity: later eras grow a touch fuller */
@@ -711,14 +723,14 @@
   /* Vine tendrils — sparse curls/leaflets sprouting along the stem BETWEEN nodes
      (smaller than the node sprigs so milestones stay the focus). Desktop only. */
   .ha-story .vine-tendril{
-    position:absolute; left:-58px; bottom:24px; width:26px; height:38px;
+    position:absolute; left:-60px; bottom:24px; width:30px; height:44px;
     color:var(--ha-teal-deep); pointer-events:none; z-index:0;
     transform-origin:bottom right; transform:scale(.2); opacity:0;
     transition:transform .7s cubic-bezier(.22,.61,.36,1), opacity .55s ease;
   }
   .ha-story .vine-tendril svg{ width:100%; height:100%; display:block; }
   .ha-story .milestone:nth-child(even) .vine-tendril{ bottom:42px; }   /* stagger up the gap */
-  .ha-story .milestone.has-bloomed .vine-tendril{ transform:scale(.82); opacity:calc(.42 * var(--rail-mood, 1)); }
+  .ha-story .milestone.has-bloomed .vine-tendril{ transform:scale(.92); opacity:calc(.58 * var(--rail-mood, 1)); }
   .ha-story .era.dark .vine-tendril{ color:var(--ha-teal); }
   @media (max-width:600px){ .ha-story .vine-tendril{ display:none; } }
 
@@ -1173,6 +1185,11 @@
   const closingEl   = ROOT.querySelector('.closing');
   const railLosses  = rails.map(function(r){ return Array.from(r.querySelectorAll('.milestone[data-register="loss"]')); });
   const railMood    = rails.map(function(){ return 1; });
+  // Vine meander humps [startY, height, amplitude] per 360px mask tile —
+  // MUST mirror the .rail::before mask SVG (see its comment). Negative A = left.
+  const RAIL_HUMPS  = [[0, 110, 7.2], [110, 85, -5.5], [195, 95, 6.2], [290, 70, -4.6]];
+  // ≤600px drops the vine mask for a straight line — no sway there.
+  const vineOn      = window.matchMedia('(min-width: 601px)');
 
   function fadeOpacity(r, vh) {
     if (r.bottom <= 0 || r.top >= vh) return 0;
@@ -1216,6 +1233,23 @@
       if (r.height <= 0) continue;
       const p = Math.max(0, Math.min(1, (fillLine - r.top) / r.height));
       rail.style.setProperty('--rail-progress', (p * 100).toFixed(2) + '%');
+      // Keep the growing tip ON the meandering vine: the fill is a % of the
+      // inset ::before (top/bottom 8px), so compute the fill edge in rail px
+      // (--rail-tip-y), then evaluate the vine's horizontal offset at that
+      // height (--rail-sway) from the same hump table as the mask SVG
+      // (RAIL_HUMPS — keep in sync with the .rail::before mask). Each hump is
+      // a cubic with x(t) = 3·A·t(1−t); t≈linear in y (max ~1% off, invisible).
+      const yTip = 8 + p * (r.height - 16);
+      rail.style.setProperty('--rail-tip-y', yTip.toFixed(1) + 'px');
+      let sway = 0;
+      if (vineOn.matches) {
+        const ym = (yTip - 8) % 360;
+        for (let h = 0; h < RAIL_HUMPS.length; h++) {
+          const [y0, hh, A] = RAIL_HUMPS[h];
+          if (ym >= y0 && ym < y0 + hh) { const t = (ym - y0) / hh; sway = 3 * A * t * (1 - t); break; }
+        }
+      }
+      rail.style.setProperty('--rail-sway', sway.toFixed(2) + 'px');
       rail.classList.toggle('rail-lit', p > 0.001 && p < 0.999);
       // --rail-mood: the growing-tip light + celebratory marks FALTER while the reading
       // line is over a loss milestone (Lahaina, COVID) — the page holds its breath.
