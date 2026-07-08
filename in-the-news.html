@@ -317,7 +317,9 @@
   // Blog section with the same behavior, just different DOM ids /
   // card renderer / search fields.
   function makeFeed(opts){
-    var PAGE=24, all=[], view=[], shown=0, topic=null, q='';
+    // Unexpanded state shows just INITIAL_PAGE; each "Load more" click
+    // after that reveals a full PAGE at a time.
+    var INITIAL_PAGE=6, PAGE=24, all=[], view=[], shown=0, topic=null, q='';
     var grid=document.getElementById(opts.gridId),
         countEl=document.getElementById(opts.countId),
         moreBtn=document.getElementById(opts.moreId),
@@ -334,7 +336,8 @@
       shown=0; grid.innerHTML=''; render();
     }
     function render(){
-      var next=view.slice(shown,shown+PAGE);
+      var pageSize = shown===0 ? INITIAL_PAGE : PAGE;
+      var next=view.slice(shown,shown+pageSize);
       grid.insertAdjacentHTML('beforeend', next.map(opts.card).join(''));
       shown+=next.length;
       moreBtn.hidden = shown>=view.length;
