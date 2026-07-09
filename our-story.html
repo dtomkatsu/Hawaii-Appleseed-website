@@ -245,6 +245,12 @@
     margin-right:.08em;vertical-align:-0.1em;
   }
   .ha-story .hero-quote .accent{color:var(--ha-teal)}
+  .ha-story .ha-story-inline-link{
+    color:inherit;text-decoration:underline;text-decoration-color:var(--ha-teal);
+    text-underline-offset:2px;transition:text-decoration-color .18s ease;
+  }
+  .ha-story .ha-story-inline-link:hover,
+  .ha-story .ha-story-inline-link:focus{text-decoration-color:currentColor;}
   .ha-story .hero-meta{
     margin-top:44px;display:flex;flex-wrap:wrap;gap:40px 72px;
     color:var(--ha-ash);font-family:'Poppins',sans-serif;font-size:14px;
@@ -897,7 +903,7 @@
       <article class="milestone" data-fade data-register="build">
         <div class="year">2004 · Origin</div>
         <h3>A new firm, founded to fight inequality.</h3>
-        <p>The organization was founded in 2004 under the name <strong>Lawyers for Equal Justice</strong> by a group of attorneys and advocates concerned about the persistent realities of poverty and inequality in Hawaiʻi. Their mission was to use legal tools to address systemic issues and ensure that low-income and marginalized communities had access to justice.</p>
+        <p>The organization was founded in 2004 under the name <strong><a href="https://hiappleseed.org/lej" target="_blank" rel="noopener" class="ha-story-inline-link">Lawyers for Equal Justice</a></strong> by a group of attorneys and advocates concerned about the persistent realities of poverty and inequality in Hawaiʻi. Their mission was to use legal tools to address systemic issues and ensure that low-income and marginalized communities had access to justice.</p>
         <p>Veteran civil rights attorney <strong>Victor Geminiani</strong> led the early work, focused squarely on housing rights, public benefits, and economic security.</p>
       </article>
 
