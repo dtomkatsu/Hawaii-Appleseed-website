@@ -412,7 +412,15 @@ def build_support(lines):
 
     css_start = _find(lines, "<style>")
     css_end = max(i for i in range(body_i) if "</style>" in lines[i])
-    css = "\n".join(lines[css_start:css_end + 1])
+    # Exclude the <style>/</style> tag lines themselves from what gets fed to
+    # scope_css_selectors() below — its brace-depth scanner treats all text
+    # before a rule's "{" as that rule's selector, so a leading "<style>"
+    # line gets glued onto the first real selector (":root" no longer
+    # matches its exact-string special-case) and prefixed right along with
+    # it, leaving the literal characters "#ha-support-embed <style>" as
+    # stray visible text in front of a still-otherwise-working style block.
+    # Re-added after scoping, below.
+    css = "\n".join(lines[css_start + 1:css_end])
 
     hero_i = _find(lines, '<section class="hero">')
     footer_i = _find(lines, 'class="px-footer"', hero_i)
@@ -450,7 +458,7 @@ def build_support(lines):
         "a, button { -webkit-tap-highlight-color: transparent; }",
         "#ha-support-embed a, #ha-support-embed button { -webkit-tap-highlight-color: transparent; }",
     )
-    css = scope_css_selectors(css, "ha-support-embed")
+    css = "<style>\n" + scope_css_selectors(css, "ha-support-embed") + "\n</style>"
 
     # Full-bleed breakout on mobile (same fix as the homepage): Squarespace
     # pads the code block's content column on mobile, leaving side gutters.
@@ -484,6 +492,110 @@ def build_support(lines):
         + scripts + "\n"
         + "</div>\n"
         + "<!-- END ha-support -->\n"
+    )
+
+
+def build_ufsm(lines):
+    """ufsm/index.html is a standalone page under ufsm/ — not marker-based,
+    and normally served on its own via GitHub Pages (see PAGES_SUBSITES).
+    It predates the .ha-xxx namespacing convention (global :root/*/body/
+    h1-h4 selectors), so scope it under #ha-ufsm-embed with
+    scope_css_selectors(), the same recipe as build_homepage()/build_support().
+
+    Two UFSM-specific fixes on top of the standard scoping:
+
+    1. .ufsm-pdf-fab is position:fixed, which can't anchor to the viewport
+       inside a Squarespace Code Block (same root cause as
+       STICKY_BAR_OVERRIDE above). Override it to position:sticky as a
+       DIRECT child of #ha-ufsm-embed (so its sticky containing block spans
+       the whole embedded page, keeping it pinned through the full scroll),
+       right-aligned via margin-left:auto instead of right:18px. This
+       reserves ~50px of one-time flow height at the very top of the
+       content instead of floating from pixel zero — a minor visual
+       tradeoff for something that actually works in a code block.
+
+    2. ufsm/index.html's PDF-export script toggles the .ufsm-pdf-capture
+       class directly ON its capture root (#ha-ufsm-embed when present,
+       document.body in the standalone deploy — see its `captureRoot`
+       variable), not on some deeper element. scope_css_selectors() would
+       otherwise turn `.ufsm-pdf-capture X` into the DESCENDANT selector
+       `#ha-ufsm-embed .ufsm-pdf-capture X`, which can never match (the
+       class lands ON #ha-ufsm-embed itself, not a descendant of it). Pre-
+       rewrite those rules to the compound form
+       `#ha-ufsm-embed.ufsm-pdf-capture X` before scoping runs;
+       scope_css_selectors() treats anything already starting with the
+       wrapper id as pre-scoped and leaves it alone.
+    """
+    body_i = _find(lines, "<body")
+
+    f_start = _find(lines, 'rel="preconnect" href="https://fonts.googleapis.com"')
+    f_end = _find(lines, "jspdf@")
+    fonts = "\n".join(lines[f_start:f_end + 1])
+
+    css_start = _find(lines, "<style>")
+    css_end = max(i for i in range(body_i) if "</style>" in lines[i])
+    # Exclude the <style>/</style> tag lines themselves — see the matching
+    # comment in build_support() for why (scope_css_selectors()'s brace
+    # scanner would otherwise glue a leading "<style>" onto ":root" and
+    # stop it from matching that exact-string special-case, leaving stray
+    # "#ha-ufsm-embed <style>" text visible on the page). Re-added below.
+    css = "\n".join(lines[css_start + 1:css_end])
+    css = css.replace(".ufsm-pdf-capture ", "#ha-ufsm-embed.ufsm-pdf-capture ")
+
+    button_i = _find(lines, 'id="ufsm-pdf-btn"')
+    markup_start = max(i for i in range(body_i, button_i + 1) if "<button" in lines[i])
+    scripts_start = _find(lines, "<script>", markup_start)
+    markup_lines = lines[markup_start:scripts_start]
+    while markup_lines and not markup_lines[-1].strip():
+        markup_lines.pop()
+    markup = "\n".join(markup_lines)
+
+    body_close = _find(lines, "</body>")
+    scripts = "\n".join(lines[scripts_start:body_close])
+
+    css = css.replace(
+        "*, *::before, *::after { box-sizing: border-box; }",
+        "#ha-ufsm-embed, #ha-ufsm-embed *, #ha-ufsm-embed *::before, #ha-ufsm-embed *::after { box-sizing: border-box; }",
+    )
+    css = css.replace("* { box-sizing: border-box; }",
+                       "#ha-ufsm-embed *, #ha-ufsm-embed *::before, #ha-ufsm-embed *::after { box-sizing: border-box; }")
+    css = re.sub(r"(?m)^(\s*)body\s*\{", r"\1#ha-ufsm-embed {", css, count=1)
+    css = css.replace("overflow-x: hidden;", "overflow: clip;")
+    css = "<style>\n" + scope_css_selectors(css, "ha-ufsm-embed") + "\n</style>"
+
+    css += (
+        "\n<style>\n"
+        "/* Squarespace-fit: position:fixed can't anchor to the viewport inside\n"
+        "   a code block. Rebuild the Download-PDF pill as a sticky, direct\n"
+        "   child of #ha-ufsm-embed (its containing block spans the whole\n"
+        "   embedded page, so it stays pinned through the full scroll) instead\n"
+        "   of fixed at a hard-coded viewport offset. */\n"
+        "#ha-ufsm-embed .ufsm-pdf-fab{\n"
+        "  position: sticky !important; top: 12px !important; right: auto !important;\n"
+        "  display: block !important; width: fit-content !important;\n"
+        "  margin: 12px 18px 0 auto !important;\n"
+        "}\n"
+        "@media (max-width:767px){\n"
+        "  #ha-ufsm-embed .ufsm-pdf-fab{ margin: 10px 12px 0 auto !important; }\n"
+        "}\n"
+        "</style>\n"
+    )
+
+    note = ("standalone GitHub Pages subsite (ufsm/) — predates the .ha-xxx "
+            "namespacing convention (global :root/*/body/h1-h4 selectors), "
+            "auto-scoped under #ha-ufsm-embed by the builder; the floating "
+            "Download-PDF button is rebuilt as a sticky element since "
+            "position:fixed can't anchor to the viewport in a code block")
+    return (
+        header("Universal Free School Meals (UFSM)", note)
+        + "<!-- BEGIN ha-ufsm -->\n"
+        + '<div id="ha-ufsm-embed">\n'
+        + fonts + "\n"
+        + css + "\n"
+        + markup + "\n"
+        + scripts + "\n"
+        + "</div>\n"
+        + "<!-- END ha-ufsm -->\n"
     )
 
 
@@ -636,6 +748,12 @@ def main():
     with open(os.path.join(OUT, "support.html"), "w", encoding="utf-8") as f:
         f.write(support)
     manifest.append(("support.html", "Support / Donate", len(support)))
+
+    ufsm = entity_encode(remap_internal_links(
+        absolutize_assets(build_ufsm(read("ufsm/index.html")))))
+    with open(os.path.join(OUT, "ufsm.html"), "w", encoding="utf-8") as f:
+        f.write(ufsm)
+    manifest.append(("ufsm.html", "Universal Free School Meals (UFSM)", len(ufsm)))
 
     print("Wrote %d files to squarespace-ready/:" % len(manifest))
     for name, page, size in manifest:
