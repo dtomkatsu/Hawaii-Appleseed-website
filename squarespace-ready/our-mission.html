@@ -361,6 +361,7 @@
      was position:absolute to support the now-defunct eb crossfade. */
   .ha-mission .ha-five-eb{
     position:relative;will-change:opacity;
+    font-size:16px;letter-spacing:.24em;
   }
   .ha-mission .ha-five-eb-b{opacity:0;}
 
@@ -617,26 +618,27 @@
   }
   .ha-mission .ha-five-arrow{
     flex:none;display:inline-flex;align-items:center;justify-content:center;
-    width:30px;height:30px;padding:0;
-    background:none;border:1px solid var(--ha-rule);border-radius:50%;
+    width:42px;height:42px;padding:0;
+    background:rgba(132,169,140,.14);border:1.5px solid var(--ha-teal);border-radius:50%;
     color:var(--ha-teal-deep);cursor:pointer;
-    transition:border-color .25s, background .25s, color .25s, opacity .25s;
+    transition:border-color .25s, background .25s, color .25s, opacity .25s, transform .2s;
   }
-  .ha-mission .ha-five-arrow svg{width:15px;height:15px;display:block;}
+  .ha-mission .ha-five-arrow svg{width:20px;height:20px;display:block;stroke-width:2.4;}
   .ha-mission .ha-five-arrow:hover:not(:disabled){
-    border-color:var(--ha-teal);background:var(--ha-teal);color:#fff;
+    border-color:var(--ha-teal-deep);background:var(--ha-teal-deep);color:#fff;
+    transform:translateY(-1px);
   }
   .ha-mission .ha-five-arrow:focus-visible{
     outline:2px solid var(--ha-teal-deep);outline-offset:2px;
   }
   .ha-mission .ha-five-arrow:disabled{
-    opacity:.3;cursor:default;
+    opacity:.3;cursor:default;transform:none;
   }
   .ha-mission .ha-five-phases{
-    display:flex;align-items:center;gap:9px;
+    display:flex;align-items:center;gap:12px;
     font-family:'Poppins',sans-serif;
-    font-size:10px;font-weight:600;
-    letter-spacing:.16em;text-transform:uppercase;
+    font-size:14px;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;
     color:var(--ha-slate);
   }
   /* .ha-five-phase is a <button> now \2014  strip the UA chrome, keep the look. */
@@ -820,6 +822,8 @@
     /* Smaller eyebrow on mobile to keep it from dominating */
     .ha-mission .ha-eyebrow{ font-size:11px; letter-spacing:.24em; gap:10px; }
     .ha-mission .ha-eyebrow::before{ width:32px; }
+    /* "How We Work" stays a step larger than other eyebrows even on mobile */
+    .ha-mission .ha-five-eb{ font-size:14px; letter-spacing:.2em; }
 
     /* Tighter step numbering column */
     .ha-mission .ha-step{ grid-template-columns:48px 1fr; gap:16px; padding:20px 0; }
