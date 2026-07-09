@@ -179,6 +179,20 @@
    No filter rule here on purpose — a filter would double-process the new
    white logo. */
 
+/* 7b. Footer logo SIZING — the wordmark lives in a Fluid Engine image block.
+   On phones that block's grid cell (grid-row:1/7) is ~199px tall, far taller
+   than the 4.5:1 wordmark, and Squarespace's default object-fit:cover then
+   scales the logo UP to fill that height — so it renders blown-up and cropped
+   on both sides (fine on desktop, where the cell aspect matches the logo).
+   Forcing object-fit:contain makes the logo always render at its true
+   proportions regardless of the cell's height. Scoped to stable Squarespace
+   content classes (no fragile per-block .fe-block-* ids). */
+#footer-sections .sqs-image-content img,
+#footer-sections .fluid-image-container img {
+  object-fit: contain !important;
+  object-position: 50% 50% !important;
+}
+
 /* 8. Kill the empty white band between each injected page and the footer.
    Squarespace gives every page-section's .content-wrapper vertical padding
    (site.css: `section-height--small > .content-wrapper{padding:3.3vmax 0}`).
