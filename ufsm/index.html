@@ -534,15 +534,24 @@
         /* footer credit */
         .ufsm-credit { text-align: center; padding: 30px 24px 50px; color: var(--ufsm-muted); font-size: 0.85rem; }
 
-        /* Download-as-PDF button (secondary action inside the green CTA) */
-        .ufsm-btn--pdf {
-            background: transparent; color: #fff; border: 2px solid rgba(255, 255, 255, 0.85);
-            cursor: pointer; margin-left: 12px; padding: 12px 26px; font-size: 1rem;
-            display: inline-flex; align-items: center; gap: 9px; vertical-align: middle;
+        /* Download-as-PDF button — semi-transparent pill, fixed top-right, stays put on scroll */
+        .ufsm-pdf-fab {
+            position: fixed; top: 18px; right: 18px; z-index: 500;
+            background: rgba(74, 74, 74, 0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            color: #fff; border: 1.5px solid rgba(255, 255, 255, 0.55); border-radius: 30px;
+            font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 0.92rem;
+            cursor: pointer; padding: 10px 20px;
+            display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+            transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .ufsm-btn--pdf:hover { background: rgba(255, 255, 255, 0.14); }
-        .ufsm-btn--pdf:disabled { opacity: 0.6; cursor: progress; transform: none; box-shadow: none; }
-        .ufsm-btn--pdf svg { display: block; }
+        .ufsm-pdf-fab:hover { background: rgba(74, 74, 74, 0.72); transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22); }
+        .ufsm-pdf-fab:disabled { opacity: 0.65; cursor: progress; transform: none; }
+        .ufsm-pdf-fab svg { display: block; flex: 0 0 auto; }
+        @media (max-width: 767px) {
+            .ufsm-pdf-fab { top: 12px; right: 12px; padding: 9px 12px; }
+            .ufsm-pdf-fab .ufsm-pdf-fab-label { display: none; }
+        }
 
         /* ===== PDF export capture state (html2canvas) ===== */
         /* Force every reveal to its final, visible state — nothing prints blank. */
@@ -616,6 +625,11 @@
     </style>
 </head>
 <body>
+
+    <button type="button" id="ufsm-pdf-btn" class="ufsm-pdf-fab" aria-label="Download this page as a PDF">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        <span class="ufsm-pdf-fab-label">Download PDF</span>
+    </button>
 
     <!-- ===== 5 BIG REASONS ===== -->
     <section class="ufsm-full-width ufsm-bg-light ufsm-reveal">
@@ -913,10 +927,6 @@
                 <h3>Hungry keiki can't learn.</h3>
                 <p>Universal free school meals are a proven, fundable way to make sure every Hawaiʻi student is fed and ready to learn.</p>
                 <a class="ufsm-btn" href="https://hiappleseed.org/universal-free-school-meals" target="_blank" rel="noopener">Learn more at hiappleseed.org</a>
-                <button type="button" id="ufsm-pdf-btn" class="ufsm-btn ufsm-btn--pdf">
-                    <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="M8 11l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-                    <span>Download as PDF</span>
-                </button>
                 <div class="ufsm-cta-tag">#Meals4AllHI</div>
             </div>
         </div>
