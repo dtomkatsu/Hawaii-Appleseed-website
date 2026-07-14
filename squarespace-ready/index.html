@@ -1182,8 +1182,16 @@
          the exterior stroke + glow show; anything overlapping the film is hidden
          behind the opaque video. Draws itself around on hover (.is-drawn). 16:9
          viewBox matches the pane's fixed aspect &#8594; no corner distortion. -->
-    <svg class="ha-home__hero-trace" viewBox="0 0 320 180" preserveAspectRatio="none" aria-hidden="true">
-      <rect x="2" y="2" width="316" height="176" rx="9" ry="9" pathLength="1"/>
+    <!-- Belt-and-braces vs the mobile "black box": inline display:none +
+         fill="none" ATTRIBUTES mean this SVG cannot render (as a full-width
+         black-filled rect &#8212; SVG's default fill) even if the CSS guards are
+         lost (e.g. a stale Squarespace paste, which is exactly how the bug
+         resurfaced in July 2026). Desktop JS (syncHalo) overrides the inline
+         display with style.display='block'; the hover CSS supplies the
+         stroke, and CSS fill:none outranks the attribute, so the ring is
+         unchanged. -->
+    <svg class="ha-home__hero-trace" style="display:none" viewBox="0 0 320 180" preserveAspectRatio="none" aria-hidden="true">
+      <rect x="2" y="2" width="316" height="176" rx="9" ry="9" pathLength="1" fill="none"/>
     </svg>
   </section>
 
