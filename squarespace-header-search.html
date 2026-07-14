@@ -1,0 +1,92 @@
+<!-- ===================================================================
+     Hawaiʻi Appleseed — header search (Squarespace-native).
+     PASTE INTO: Settings → Advanced → Code Injection → FOOTER.
+     One injection, whole site. Adds a magnifier to the header (right of
+     Donate on desktop, a field in the burger menu on mobile) that sends
+     the visitor to Squarespace's own /search?q= results page — so there
+     is NO index to build, host, or keep in sync; it always reflects live
+     site content. Self-heals via MutationObserver if the header re-renders.
+     =================================================================== -->
+<style>
+  /* desktop: icon that expands to an input, sitting right of Donate */
+  .ha-hdr-search{display:inline-flex;align-items:center;position:relative;}
+  .ha-hdr-search__box{width:0;overflow:hidden;transition:width .28s cubic-bezier(.22,.61,.36,1);}
+  .ha-hdr-search.is-open .ha-hdr-search__box{width:190px;margin-right:6px;}
+  .ha-hdr-search__input{width:100%;box-sizing:border-box;padding:7px 12px;border:1px solid rgba(0,0,0,.28);
+    border-radius:3px;background:#fff;color:#2F3E46;font:inherit;font-size:14px;opacity:0;transition:opacity .18s ease;}
+  .ha-hdr-search.is-open .ha-hdr-search__input{opacity:1;}
+  .ha-hdr-search__input:focus{outline:2px solid #84A98C;outline-offset:1px;border-color:#84A98C;}
+  .ha-hdr-search__toggle{background:none;border:0;cursor:pointer;padding:6px;margin:0;display:inline-flex;
+    align-items:center;color:currentColor;line-height:0;}
+  .ha-hdr-search__toggle svg{width:20px;height:20px;display:block;}
+  .ha-hdr-search__toggle:hover{opacity:.7;}
+
+  /* mobile: field prepended to the burger menu */
+  .ha-hdr-search-mobile{display:flex;align-items:center;gap:8px;padding:14px 0;margin-bottom:6px;
+    border-bottom:1px solid rgba(0,0,0,.12);color:currentColor;}
+  .ha-hdr-search-mobile svg{width:22px;height:22px;flex:none;}
+  .ha-hdr-search-mobile input{flex:1;min-width:0;padding:10px 12px;border:1px solid rgba(0,0,0,.28);
+    border-radius:3px;background:#fff;color:#2F3E46;font:inherit;font-size:16px;}
+
+  @media (prefers-reduced-motion:reduce){.ha-hdr-search__box,.ha-hdr-search__input{transition:none;}}
+</style>
+<script>
+(function(){
+  'use strict';
+  var SEARCH = '/search?q=';
+  var MAG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20.5 20.5l-4-4"></path></svg>';
+
+  function go(q){ q=(q||'').trim(); if(q) window.location.assign(SEARCH + encodeURIComponent(q)); }
+
+  function addDesktop(actions){
+    if(actions.querySelector('.ha-hdr-search')) return;            // idempotent
+    var wrap=document.createElement('div');
+    wrap.className='header-actions-action ha-hdr-search';           // inherit Squarespace action spacing
+    wrap.setAttribute('role','search');
+    // box BEFORE toggle so the input expands leftward (toward Donate); magnifier stays at the edge
+    wrap.innerHTML='<div class="ha-hdr-search__box"><input type="search" class="ha-hdr-search__input" '
+      +'placeholder="Search…" aria-label="Search the site" autocomplete="off" enterkeyhint="search"></div>'
+      +'<button type="button" class="ha-hdr-search__toggle" aria-label="Search" aria-expanded="false">'+MAG+'</button>';
+    actions.appendChild(wrap);
+    var toggle=wrap.querySelector('.ha-hdr-search__toggle'), input=wrap.querySelector('.ha-hdr-search__input');
+    function close(){ wrap.classList.remove('is-open'); toggle.setAttribute('aria-expanded','false'); }
+    toggle.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation();
+      if(wrap.classList.contains('is-open')){ input.value.trim() ? go(input.value) : close(); }
+      else { wrap.classList.add('is-open'); toggle.setAttribute('aria-expanded','true'); setTimeout(function(){input.focus();},20); }
+    });
+    input.addEventListener('keydown', function(e){
+      if(e.key==='Enter'){ e.preventDefault(); go(input.value); }
+      else if(e.key==='Escape'){ input.value=''; close(); toggle.focus(); }
+    });
+    document.addEventListener('click', function(e){ if(!wrap.contains(e.target)) close(); });
+  }
+
+  function addMobile(list){
+    if(list.querySelector('.ha-hdr-search-mobile')) return;         // idempotent
+    var el=document.createElement('div');
+    el.className='ha-hdr-search-mobile';
+    el.innerHTML=MAG+'<input type="search" placeholder="Search…" aria-label="Search the site" autocomplete="off" enterkeyhint="search">';
+    list.insertBefore(el, list.firstChild);
+    var input=el.querySelector('input');
+    input.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); go(input.value); } });
+  }
+
+  function inject(){
+    document.querySelectorAll('.header-display-desktop .header-actions--right').forEach(addDesktop);
+    var list=document.querySelector('.header-menu-nav-list');
+    if(list) addMobile(list);
+  }
+
+  function boot(){
+    inject();
+    // Squarespace can re-render the header (responsive switch, editor, ajax
+    // templates). Re-run inject() when #header mutates; inject() is idempotent
+    // so it no-ops once the search elements are present.
+    var target=document.getElementById('header')||document.body, t;
+    new MutationObserver(function(){ clearTimeout(t); t=setTimeout(inject,150); })
+      .observe(target,{childList:true,subtree:true});
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
+})();
+</script>
