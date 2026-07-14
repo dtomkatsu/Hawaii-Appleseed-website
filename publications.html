@@ -382,6 +382,10 @@ body { font-family:'Poppins',system-ui,-apple-system,Arial,sans-serif; color:#2F
 @media (max-width:700px) {
   .ha-pub__data-card-title { font-size:22px; }
   .ha-pub__data-card-link { padding:10px 18px; font-size:13.5px; }
+  /* Body padding wasn't reduced for mobile like every other card type on this
+     page (.ha-pub__card-body, .ha-focus-card, etc. all drop to ~18-20px) —
+     left at the desktop 24px it ate extra width on the narrowest screens. */
+  .ha-pub__data-card-body { padding:18px 18px 20px; }
 }
 
 /* ===== Filter / search toolbar ===== */

@@ -662,8 +662,8 @@
   .ha-mission .ha-five-phase-sep{
     opacity:.32;color:var(--ha-slate);
   }
-  /* \2264 700px renders all three phases stacked, so the control is meaningless */
-  @media (max-width:700px){ .ha-mission .ha-five-nav{display:none;} }
+  /* \2264 700px keeps the \2039  \203a  arrow nav \2014  the section becomes a one-phase-at-a-time
+     carousel there (see the mobile block below), so the control drives it. */
 
   /* ===== Persistent shell chassis (desktop scrolly only) =====
      Five empty boxes that render once and never change. Sit underneath
@@ -853,77 +853,82 @@
     .ha-mission .ha-hero::before{ width:380px; height:380px; top:-120px; right:-120px; }
     .ha-mission .ha-hero::after{ width:340px; height:340px; bottom:-180px; left:-100px; }
 
-    /* ===== FIVE \2014  disable scrolly on mobile, render as two stacked sections ===== */
+    /* ===== FIVE \2014  mobile carousel =====
+       Instead of the old long stacked list (which read as overlapping panels),
+       mobile now uses the SAME \2039  \203a  arrow nav as desktop: one phase shown at a
+       time, fading in on each switch. The JS runs the same phase controller on
+       mobile; a .is-p{0,1,2} class on .ha-five (set in syncNav) drives the
+       heading tail + which body is visible. */
     .ha-mission .ha-five-track{height:auto;}
     .ha-mission .ha-five-stage{
       position:static;height:auto;min-height:0;
-      display:block;overflow:visible;padding:64px 0 0;
+      display:block;overflow:visible;padding:64px 0 72px;
     }
     .ha-mission .ha-five-bg-white,
-    .ha-mission .ha-five-bg-slate{display:none;}
+    .ha-mission .ha-five-bg-slate,
+    .ha-mission .ha-five-bg-ash{display:none;}
     .ha-mission .ha-five-dots{display:none;}
 
-    /* Eyebrow row: drop absolute, show only eb-a (eb-b is shown by mobile-break) */
-    .ha-mission .ha-five-eb-stack{height:auto;min-height:0;margin-bottom:14px;}
+    /* Eyebrow row flows normally */
+    .ha-mission .ha-five-eb-stack{height:auto;min-height:0;margin-bottom:16px;}
     .ha-mission .ha-five-eb{position:static;}
     .ha-mission .ha-five-eb-b{display:none;}
 
-    /* Main heading: drop absolute, show only tail-a (tail-b is shown by mobile-break) */
-    .ha-mission .ha-five-h{font-size:28px;line-height:1.1;margin:0 0 28px;}
+    /* --- Arrow nav (shown on mobile) --- */
+    .ha-mission .ha-five-nav{
+      display:flex;width:100%;gap:14px;margin-top:16px;
+      align-items:center;justify-content:space-between;
+    }
+    .ha-mission .ha-five-phases{flex:1;min-width:0;justify-content:center;gap:0;}
+    /* Only the active phase label shows \2014  it reads as a status indicator, so
+       it's non-interactive; the arrows are the control. */
+    .ha-mission .ha-five-phase{
+      display:none;pointer-events:none;
+      font-size:13px;letter-spacing:.16em;text-align:center;padding-bottom:2px;
+    }
+    .ha-mission .ha-five-phase.is-active{display:inline-block;}
+    .ha-mission .ha-five-phase-sep{display:none;}
+    .ha-mission .ha-five-arrow{width:44px;height:44px;}
+
+    /* Heading: single line; tail swaps with the active phase */
+    .ha-mission .ha-five-h{font-size:28px;line-height:1.1;margin:0 0 26px;}
     .ha-mission .ha-five-tail-stack{position:static;display:block;}
-    .ha-mission .ha-five-tail-b{display:none;}
-    .ha-mission .ha-five-tail-a{display:block;}
+    .ha-mission .ha-five-tail{position:static;display:none;}
+    .ha-mission .ha-five.is-p0 .ha-five-tail-a{display:block;}
+    .ha-mission .ha-five.is-p1 .ha-five-tail-b{display:block;}
+    .ha-mission .ha-five.is-p2 .ha-five-tail-c{display:block;}
     .ha-mission .ha-five-tail .ha-w{opacity:1;transform:none;}
 
-    /* Bodies: drop absolute, normal flow */
+    /* Bodies: single-slot carousel \2014  only the active phase renders, fading in */
     .ha-mission .ha-five-bodies{position:static;min-height:0;display:block;}
-    .ha-mission .ha-five-body{position:static;opacity:1;transform:none;display:block;}
-
-    /* Mobile-only break: introduces panel B (values, ash background) between body-a and body-b */
-    .ha-mission .ha-five-mobile-break{
-      display:block;
-      background:#F2F4F0;
-      margin:48px -20px 0;
-      padding:48px 20px 8px;
+    .ha-mission .ha-five-body{
+      position:static;transform:none;display:none;
+      margin:0;padding:0;background:transparent;
     }
-    /* Desktop-only shared-box spacer \2014  not needed in the stacked mobile layout */
+    .ha-mission .ha-five-body.is-active{
+      display:block;opacity:1;
+      animation:haFiveMobileIn .4s cubic-bezier(.22,.61,.36,1);
+    }
+    @keyframes haFiveMobileIn{
+      from{opacity:0;transform:translateY(10px);}
+      to{opacity:1;transform:none;}
+    }
+
+    /* Hide the desktop shell chassis, the stacked-layout break headings, and
+       the shared-box spacer \2014  none apply to the carousel. */
+    .ha-mission .ha-five-shells{display:none;}
+    .ha-mission .ha-five-mobile-break,
+    .ha-mission .ha-five-mobile-break-c{display:none;}
     .ha-mission .ha-five-lead-spacer{display:none;}
+
+    /* Single-column card grids */
+    .ha-mission .ha-five-body-a .ha-steps{grid-template-columns:1fr;gap:10px;}
+    .ha-mission .ha-five-body-b .ha-values-grid{grid-template-columns:1fr;gap:10px;}
+    .ha-mission .ha-five-body-c .ha-focus-grid{grid-template-columns:1fr;gap:10px;}
     .ha-mission .ha-five-body-a .ha-step,
     .ha-mission .ha-five-body-b .ha-value-card,
     .ha-mission .ha-five-body-c .ha-focus-card{min-height:0;}
-    .ha-mission .ha-five-body-a .ha-steps{grid-template-columns:1fr;gap:10px;}
     .ha-mission .ha-five-body-c .ha-section-lead{min-height:0;margin-bottom:20px;}
-    .ha-mission .ha-five-mobile-break .ha-eyebrow{
-      display:inline-flex;margin-bottom:14px;
-    }
-    .ha-mission .ha-five-mobile-break .ha-five-h{
-      color:var(--ha-charcoal);font-size:28px;line-height:1.1;margin:0;
-    }
-    .ha-mission .ha-five-body-b{
-      background:#F2F4F0;
-      margin:0 -20px;padding:24px 20px 48px;
-    }
-    .ha-mission .ha-five-body-b .ha-values-grid{grid-template-columns:1fr;gap:10px;}
-
-    /* Mobile-only break + body for panel C (fronts, slate background) */
-    .ha-mission .ha-five-mobile-break-c{
-      display:block;
-      background:#EBF0ED;color:var(--ha-charcoal);
-      margin:0 -20px;
-      padding:48px 20px 8px;
-    }
-    .ha-mission .ha-five-mobile-break-c .ha-eyebrow{
-      display:inline-flex;margin-bottom:14px;
-    }
-    .ha-mission .ha-five-mobile-break-c .ha-five-h{
-      color:var(--ha-charcoal);font-size:28px;line-height:1.1;margin:0;
-    }
-    .ha-mission .ha-five-body-c{
-      background:#EBF0ED;color:var(--ha-charcoal);
-      margin:0 -20px;padding:24px 20px 48px;
-      transform:none;
-    }
-    .ha-mission .ha-five-body-c .ha-focus-grid{grid-template-columns:1fr;gap:10px;}
   }
 
   /* ===== Reduced motion ===== */
@@ -949,7 +954,7 @@
   </section>
 
   <!-- ============= FIVE (combined APPROACH + FOCUS scrollytelling) ============= -->
-  <section class="ha-five">
+  <section class="ha-five is-p0">
     <div class="ha-five-track">
       <div class="ha-five-stage">
         <!-- Background plates: white (base), slate (mid), ash (final) -->
@@ -1418,6 +1423,11 @@
       });
       if (prevBtn) prevBtn.disabled = idx === 0;
       if (nextBtn) nextBtn.disabled = idx === PHASE_P.length - 1;
+      // Phase class on the section \u2014 drives the mobile carousel (heading tail +
+      // which body is visible switch off this, immediately on click).
+      five.classList.toggle('is-p0', idx === 0);
+      five.classList.toggle('is-p1', idx === 1);
+      five.classList.toggle('is-p2', idx === 2);
     }
 
     // Tween cur -> PHASE_P[i], calling render each frame. Reduced motion (and
@@ -1428,7 +1438,10 @@
       syncNav();
       const from = cur, to = PHASE_P[i];
       if (rafId){ cancelAnimationFrame(rafId); rafId = 0; }
-      if (!animate || reduceMQ.matches || from === to){ cur = to; render(cur); return; }
+      // Mobile shows one body at a time (display swap), so the desktop scrub
+      // tween would flash mid-phase \u2014 jump straight there and let the CSS
+      // fade-in animate the newly-active body instead.
+      if (!animate || reduceMQ.matches || mobileMQ.matches || from === to){ cur = to; render(cur); return; }
       const DUR = 760, t0 = performance.now();
       const ease = t => 1 - Math.pow(1 - t, 3);
       rafId = requestAnimationFrame(function step(now){
@@ -1452,9 +1465,10 @@
       phaseBtns[n].focus();
     });
 
-    // Mobile stacks all three phases (CSS), so bail to the static baseline.
+    // Same phase controller drives both desktop and the mobile carousel.
+    // sizeBodies() reserves the tallest-body height on desktop (absolute
+    // overlap) and clears it on mobile (bodies flow one at a time).
     function applyMode(){
-      if (mobileMQ.matches){ resetToA(); if (bodiesEl) bodiesEl.style.minHeight = ''; return; }
       sizeBodies();
       goTo(idx, false);
     }

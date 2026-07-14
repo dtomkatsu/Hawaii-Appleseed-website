@@ -118,7 +118,10 @@
     aspect-ratio:4/5;object-fit:cover;
     border-radius:6px;
     box-shadow:0 24px 60px rgba(0,0,0,.45);
+    opacity:0;
+    transition:opacity .6s cubic-bezier(.22,.61,.36,1);
   }
+  .ha-team .ha-ed-photo img.is-loaded{opacity:1;}
   /* Decorative offset frame behind the photo */
   .ha-team .ha-ed-photo::after{
     content:"";position:absolute;inset:0;
@@ -677,6 +680,20 @@
     }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
 
     root.querySelectorAll('.ha-ed, [data-fade]').forEach(function(el){ io.observe(el); });
+  }
+
+  // ED photo: fade in only once actually decoded, so it doesn't pop in
+  // choppily mid-download/decode.
+  var edImg = root.querySelector('.ha-ed-photo img');
+  if (edImg) {
+    if (reduce) {
+      edImg.classList.add('is-loaded');
+    } else if (edImg.complete) {
+      edImg.classList.add('is-loaded');
+    } else {
+      edImg.addEventListener('load', function(){ edImg.classList.add('is-loaded'); });
+      edImg.addEventListener('error', function(){ edImg.classList.add('is-loaded'); });
+    }
   }
 
   // === ED Learn More toggle ===
