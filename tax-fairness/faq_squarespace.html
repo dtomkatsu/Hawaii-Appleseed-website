@@ -506,6 +506,16 @@
     .tfc-faq-dval { font-size: 0.8rem; }
     .tfc-faq-axis { padding: 0 56px 0 100px; font-size: 0.72rem; }
     .tfc-faq-stat .num { font-size: 1.55rem; }
+    /* Stat cards at 375px: the 2-col grid leaves ~98px of usable width inside a
+       card, which longer values ("+$7,051") overrun — .num can't wrap, so it
+       spills over the card's border. Trimming the padding buys the few px they
+       need without shrinking the type. */
+    .tfc-faq-stat { padding: 18px 16px; }
+    /* The spotlight's own 28px of side padding squeezes its nested 2-col stats
+       down to ~69px of usable width — nowhere near enough for "≈$40M/yr", which
+       overflowed by 50px. Stack them full-width instead. */
+    .tfc-faq-spot { padding: 22px 18px; }
+    .tfc-faq-spot .tfc-faq-stats { grid-template-columns: 1fr; }
     .tfc-faq-nav { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 6px; }
     .tfc-faq-nav a { white-space: nowrap; font-size: 0.76rem; padding: 6px 11px; }
     .tfc-faq-tldr { font-size: 0.9rem; padding: 14px 16px; }
