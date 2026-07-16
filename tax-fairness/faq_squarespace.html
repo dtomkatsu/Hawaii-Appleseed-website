@@ -105,6 +105,45 @@
 .tfc-faq .tfc-faq-hero p { color: #cdddf0 !important; }
 .tfc-faq .tfc-faq-hero .tfc-faq-kicker { color: #e3eefb !important; background: rgba(255,255,255,.10) !important; }
 
+/* ---------- Hero top row: kicker + PDF button ---------- */
+/* z-index lifts the row above .tfc-faq-hero::after (the sheen overlay), which
+   paints later in DOM order; it is pointer-events:none, so this is belt-and-braces. */
+.tfc-faq-hero-top {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+/* Glass pill matching the kicker. Every visual property is !important because
+   Squarespace themes style bare <button> elements aggressively. */
+.tfc-faq .tfc-faq-pdf {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 9px 16px !important;
+    margin: 0 !important;
+    border-radius: 999px !important;
+    background: rgba(255,255,255,.12) !important;
+    border: 1px solid rgba(255,255,255,.28) !important;
+    color: #ffffff !important;
+    font-family: inherit !important;
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: background .15s ease, border-color .15s ease, transform .1s ease;
+}
+.tfc-faq .tfc-faq-pdf:hover { background: rgba(255,255,255,.22) !important; border-color: rgba(255,255,255,.48) !important; }
+.tfc-faq .tfc-faq-pdf:active { transform: translateY(1px); }
+.tfc-faq .tfc-faq-pdf:focus-visible { outline: 2px solid #9fd0ff; outline-offset: 2px; }
+.tfc-faq .tfc-faq-pdf svg { width: 15px; height: 15px; flex: 0 0 auto; }
+
 /* ---------- Section card ---------- */
 .tfc-faq-section {
     background: #fff;
@@ -419,29 +458,6 @@
 /* ---------- Footer ---------- */
 .tfc-faq-footer { text-align: center; color: var(--muted); font-size: 0.88rem; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); line-height: 1.55; }
 
-/* ---------- Print ---------- */
-@media print {
-    .tfc-faq { max-width: 100%; padding: 0; color: #000; scroll-behavior: auto; }
-    .tfc-faq-nav { display: none !important; }
-    .tfc-faq-hero, .tfc-faq-kicker, .tfc-faq-qnum, .tfc-faq-bar, .tfc-faq-dbar,
-    .tfc-faq-zero, .sdot, .tfc-faq-stat::before, .tfc-faq-tl-step::after,
-    .tfc-faq-spot-icon, .tfc-faq-dval, .tfc-faq-table thead th {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    .tfc-faq-hero { box-shadow: none; border-radius: 12px; padding: 28px 30px; }
-    .tfc-faq-section { box-shadow: none; border: 1px solid var(--line); margin-top: 16px; }
-    .tfc-faq-stat, .tfc-faq-spot, .tfc-faq-chart, .tfc-faq-callout, .tfc-faq-doe,
-    .tfc-faq-tldr, .tfc-faq-table tr, .tfc-faq-dbar-row, .tfc-faq-bar-row,
-    .tfc-faq-tl-step { break-inside: avoid; page-break-inside: avoid; }
-    .tfc-faq-section { break-inside: auto; }
-    .tfc-faq-bar, .tfc-faq-dbar { transition: none !important; }
-    .tfc-faq-sources a { border-color: var(--line-strong); }
-    /* Always show the spotlight detail in print */
-    .tfc-faq-spot-more { display: none !important; }
-    .tfc-faq-spot-detail { max-height: none !important; overflow: visible !important; }
-}
-
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
     .tfc-faq { scroll-behavior: auto; }
@@ -514,13 +530,102 @@
 .Header-nav .Header-nav-item:hover {
     color: #16314e !important;
 }
+
+/* ============================================================
+   Print / "Download PDF"  — MUST STAY LAST IN THIS STYLESHEET
+   ------------------------------------------------------------
+   The PDF is just the browser's own print-to-PDF, so these rules are
+   exactly what the reader gets: same palette, same cards, same charts —
+   paginated, with the navigation stripped. Text stays selectable, links
+   stay live, and no external PDF library is needed (Squarespace's CSP
+   would likely block one anyway).
+
+   Why last: the print column is only ~740px wide on US Letter at the
+   @page margins below, and narrower still if the reader picks 1in
+   margins — which makes `@media (max-width:700px)` above match DURING
+   printing. Equal specificity means source order decides, so this block
+   has to come after the responsive block or the mobile rules silently
+   override the print layout. Don't move it up.
+   ============================================================ */
+@page { margin: 12mm 10mm; }
+
+@media print {
+    /* Squarespace chrome: when this injected page is printed, the site header,
+       announcement bar, footer and cookie banner would otherwise land in the PDF.
+       These are stock Squarespace 7.1 selectors; any that don't match are no-ops.
+       Safe because all of our own markup is namespaced .tfc-*. */
+    #header, .header, .Header, .Header--bottom,
+    .sqs-announcement-bar-dropzone, #announcement-bar-dropzone,
+    #footer-sections, .Footer, footer#footer,
+    #sqs-cookie-banner-v2, .sqs-cookie-banner-v2,
+    .sqs-mobile-nav-toggle, .Mobile-bar, #sidecarNav, .Header-nav {
+        display: none !important;
+    }
+
+    /* Force every background/gradient/swatch to render, rather than Chrome's
+       default of dropping them to save ink — this is what keeps the navy hero,
+       the chart bars and the table header their real colors. */
+    .tfc-faq, .tfc-faq *, .tfc-faq *::before, .tfc-faq *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .tfc-faq { max-width: 100% !important; padding: 0 !important; color: var(--ink); scroll-behavior: auto; }
+    /* Page furniture that means nothing on paper. The button needs the same
+       two-class specificity as its own display:inline-flex !important rule
+       above — a bare .tfc-faq-pdf loses the cascade and prints the button. */
+    .tfc-faq-nav { display: none !important; }
+    .tfc-faq .tfc-faq-pdf { display: none !important; }
+
+    .tfc-faq-hero { box-shadow: none; border-radius: 12px; padding: 28px 30px; break-inside: avoid; }
+    .tfc-faq-section { box-shadow: none; border: 1px solid var(--line); margin-top: 16px; break-inside: auto; }
+    /* Don't strand a heading alone at the foot of a page. */
+    .tfc-faq-qhead { break-after: avoid; page-break-after: avoid; }
+    .tfc-faq-chart-title, .tfc-faq-chart-sub { break-after: avoid; page-break-after: avoid; }
+    .tfc-faq-stat, .tfc-faq-spot, .tfc-faq-chart, .tfc-faq-callout, .tfc-faq-doe,
+    .tfc-faq-tldr, .tfc-faq-table tr, .tfc-faq-dbar-row, .tfc-faq-bar-row,
+    .tfc-faq-tl-step, .tfc-faq-sources { break-inside: avoid; page-break-inside: avoid; }
+    .tfc-faq-table-scroll { overflow: visible !important; }
+    .tfc-faq-bar, .tfc-faq-dbar { transition: none !important; }
+    .tfc-faq-sources a { border-color: var(--line-strong); }
+    /* Always show the spotlight detail in print */
+    .tfc-faq-spot-more { display: none !important; }
+    .tfc-faq-spot-detail { max-height: none !important; overflow: visible !important; }
+
+    /* Keep the full desktop table in the PDF even when the print column falls
+       under the 700px breakpoint, rather than the stacked-card phone layout.
+       Mirrors (and must outrank) the responsive block above. */
+    .tfc-faq-table { min-width: 0 !important; }
+    .tfc-faq-table thead {
+        display: table-header-group !important;   /* repeat header across pages */
+        position: static !important;
+        width: auto !important; height: auto !important;
+        overflow: visible !important; clip: auto !important;
+    }
+    .tfc-faq-table tr { display: table-row !important; padding: 0 !important; border-left: none !important; }
+    .tfc-faq-table td { display: table-cell !important; }
+    .tfc-faq-table td[data-label]::before { content: none !important; }
+}
 </style>
 
 <div class="tfc-faq">
 
     <!-- ===================== HERO ===================== -->
     <div class="tfc-faq-hero">
-        <span class="tfc-faq-kicker"><span class="dot"></span>Signed into law &middot; Act 24, 2026</span>
+        <div class="tfc-faq-hero-top">
+            <span class="tfc-faq-kicker"><span class="dot"></span>Signed into law &middot; Act 24, 2026</span>
+            <!-- Opens the browser's print dialog, where "Save as PDF" is the default
+                 destination in Chrome/Edge. The @media print block below is what makes
+                 the result look like the page. -->
+            <button class="tfc-faq-pdf" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Download PDF</span>
+            </button>
+        </div>
         <h1>SB 3125: Frequently Asked Questions</h1>
     </div>
 
@@ -594,7 +699,7 @@
         <div class="tfc-faq-does">
             <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Preserves the 2024 income-tax cuts</strong> for joint filers earning under about $350,000 and single filers under about $175,000.</div></div>
             <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Lets tax cuts for the very highest-income households fall away</strong> and creates a new top income-tax bracket around <strong>13 percent</strong> for single filers above $500,000 and joint filers above $1 million.</div></div>
-            <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Phases out or caps several expensive tax credits</strong> &mdash; especially in renewable energy and high-tech &mdash; to help close the budget gap.</div></div>
+            <div class="tfc-faq-doe"><div class="tick">&#10003;</div><div class="txt"><strong>Phases out or caps several expensive tax credits</strong> &mdash; such as renewable energy and high-tech.</div></div>
         </div>
         <div class="tfc-faq-callout">
             <span class="tag">Reported by Civil Beat</span>
@@ -818,6 +923,34 @@
     }
     // Ensure bars are filled before printing (a fresh print may skip scroll animation).
     window.addEventListener('beforeprint', fillAll);
+
+    // "Download PDF" -> the browser's print-to-PDF. Chrome/Edge default the
+    // destination to "Save as PDF"; the @media print block styles the result.
+    // We don't rasterize via a PDF library on purpose: printing keeps the text
+    // selectable, the links live, the type sharp, and adds no external script
+    // (which Squarespace's CSP could block anyway).
+    var pdfBtn = document.querySelector('.tfc-faq .tfc-faq-pdf');
+    if (pdfBtn) {
+        pdfBtn.addEventListener('click', function () {
+            // Fill bars up front: Safari doesn't fire `beforeprint`, and any chart
+            // never scrolled into view would otherwise print at zero width.
+            fillAll();
+            // Browsers seed the PDF filename from document.title, so borrow it for
+            // the duration of the dialog and put the page's own title back after.
+            var prevTitle = document.title;
+            document.title = 'SB-3125-FAQ-Hawaii-Tax-Fairness-Coalition';
+            var restored = false;
+            function restore() {
+                if (restored) return;
+                restored = true;
+                document.title = prevTitle;
+                window.removeEventListener('afterprint', restore);
+            }
+            window.addEventListener('afterprint', restore);
+            setTimeout(restore, 60000);   // fallback if afterprint never fires
+            window.print();
+        });
+    }
 
     // Spotlight "More detail" expand/collapse
     document.querySelectorAll('.tfc-faq-spot-more').forEach(function (btn) {
