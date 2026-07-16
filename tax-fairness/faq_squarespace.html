@@ -480,6 +480,40 @@
 .tfc-faq-nav a:hover .qn { color: #bcd0ec; }
 .tfc-faq-section { scroll-margin-top: 96px; }
 
+/* ---------- Section rhythm: separating the parts within a section ----------
+   Paragraphs INSIDE .tfc-faq-body sit 14px apart, while the boundaries BETWEEN
+   a section's major parts sat at only 18–26px — a ratio of ~1.8x, too close to
+   read as a real break, so a chart title arrived looking like just another
+   paragraph. One step for every boundary, at ~2.4x the paragraph gap, fixes the
+   ratio and evens out the rhythm (Q3 in particular ran 0px then 42px).
+
+   Everything here is scoped with the CHILD combinator on purpose: the spotlight
+   nests its own .tfc-faq-chart / .tfc-faq-stats / .tfc-faq-note, and those keep
+   their tighter internal spacing rather than inheriting the section step. */
+.tfc-faq-section > * + * { margin-top: 34px; }
+/* The parts' own bottom margins would collapse against the step above and win
+   wherever they're larger; zero them so the step is the single source of truth. */
+.tfc-faq-section > .tfc-faq-chart,
+.tfc-faq-section > .tfc-faq-stats,
+.tfc-faq-section > .tfc-faq-does,
+.tfc-faq-section > .tfc-faq-spot,
+.tfc-faq-section > .tfc-faq-table-wrap { margin-bottom: 0; }
+
+/* Hairline on the boundary — only between parts that bring no edge of their own.
+   Deliberately excluded: .tfc-faq-body (the question head above it already rules
+   off), the boxed parts (callout / spotlight / table / badge) which self-separate
+   via their border and background, .tfc-faq-note (supplies its own border-top),
+   and .tfc-faq-sources (follows the boxed callout). Ruling those would double up. */
+.tfc-faq-section > * + .tfc-faq-chart,
+.tfc-faq-section > * + .tfc-faq-stats,
+.tfc-faq-section > * + .tfc-faq-does {
+    border-top: 1px solid var(--line);
+    /* Split either side of the rule — the rule itself carries the signal, so it
+       needs less air below it than an unruled boundary needs in total. */
+    margin-top: 30px;
+    padding-top: 26px;
+}
+
 /* ---------- Footer ---------- */
 .tfc-faq-footer { text-align: center; color: var(--muted); font-size: 0.88rem; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); line-height: 1.55; }
 
@@ -516,6 +550,13 @@
        overflowed by 50px. Stack them full-width instead. */
     .tfc-faq-spot { padding: 22px 18px; }
     .tfc-faq-spot .tfc-faq-stats { grid-template-columns: 1fr; }
+    /* Tighter section rhythm on a narrow column — the 34/30+26 step above is
+       tuned for the desktop measure and wastes a lot of screen at 375px. The
+       ratio against the 14px paragraph gap still holds. */
+    .tfc-faq-section > * + * { margin-top: 26px; }
+    .tfc-faq-section > * + .tfc-faq-chart,
+    .tfc-faq-section > * + .tfc-faq-stats,
+    .tfc-faq-section > * + .tfc-faq-does { margin-top: 24px; padding-top: 20px; }
     .tfc-faq-nav { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 6px; }
     .tfc-faq-nav a { white-space: nowrap; font-size: 0.76rem; padding: 6px 11px; }
     .tfc-faq-tldr { font-size: 0.9rem; padding: 14px 16px; }
@@ -755,10 +796,13 @@
             <p>The charts below show how SB 3125's <strong>income-tax-bracket changes</strong> affect residents at different income levels, compared with today's tax law and fully phased in by 2031. Nearly everyone keeps a tax cut &mdash; while the top 1%, who would have received the largest Act 46 windfall, instead pays more.</p>
         </div>
 
-        <div class="tfc-faq-cbadge">Income-tax brackets only &mdash; excludes RETITC &amp; other tax-credit changes</div>
-
-        <!-- Chart A: diverging $ change -->
+        <!-- Chart A: diverging $ change. The caveat pill lives INSIDE the chart
+             because it qualifies this chart specifically — as a section-level
+             sibling it read as floating between the prose and the chart, and it
+             can't carry the section's part-boundary rule (it's inline-flex, so a
+             border would stop at the pill instead of spanning the column). -->
         <div class="tfc-faq-chart">
+            <div class="tfc-faq-cbadge">Income-tax brackets only &mdash; excludes RETITC &amp; other tax-credit changes</div>
             <div class="tfc-faq-chart-title">Average annual tax change by income group, 2031</div>
             <div class="tfc-faq-chart-sub">Change vs. current law, once fully phased in</div>
             <div class="tfc-faq-bars" id="tfc-faq-chartA">
@@ -929,7 +973,7 @@
             </div>
         </div>
         <!-- Fiscal context -->
-        <div class="tfc-faq-callout navy" style="margin-top:22px;">
+        <div class="tfc-faq-callout navy">
             <span class="tag">Fiscal &amp; policy context</span>
             <div>The Governor's office describes Act 24 as a response to a projected nearly <strong>$3 billion</strong> revenue shortfall tied partly to federal changes. Revenue is raised mainly by paring back business and investment tax credits rather than the income-tax relief for low- and middle-income residents &mdash; the law preserves the <strong>vast majority of Act 46 bracket relief</strong> while protecting programs like SNAP and healthcare.</div>
         </div>
