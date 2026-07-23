@@ -1,6 +1,79 @@
 {
   "blog": [
     {
+      "id": "6a61189d66274255da23ce12",
+      "title": "When safety becomes exclusion: The hidden cost of building codes",
+      "excerpt": "<p style=\"white-space:pre-wrap;\" data-rte-preserve-empty=\"true\">The code that claims to make buildings safer also quietly makes the densest, most affordable housing types the hardest and most expensive to build.</p>",
+      "fullUrl": "/blog/when-safety-becomes-exclusion-hidden-cost-building-codes",
+      "publishOn": 1784732408674,
+      "categories": [
+        "Affordable Housing"
+      ],
+      "tags": [
+        "Affordable Housing",
+        "Crowded Housing",
+        "Housing",
+        "Housing Costs",
+        "Housing Crisis",
+        "Housing Demand",
+        "Housing Development",
+        "Housing Ecosystem",
+        "Housing Finance",
+        "Housing Insecurity",
+        "Housing Justice",
+        "Housing Market",
+        "Housing Policy",
+        "Housing Regulations",
+        "Housing Shortage",
+        "Housing Solutions",
+        "Housing Stability",
+        "Housing Stock",
+        "Housing Supply",
+        "Housing System",
+        "Cost of Living",
+        "Cost Burdened",
+        "Low Wages",
+        "Low-Income",
+        "Housing Wage",
+        "Income Gap",
+        "Income Inequality",
+        "Systemic Inequality",
+        "Systemic Poverty",
+        "Systemic Racism",
+        "Quality of Life",
+        "Standard of Living",
+        "Building Codes",
+        "Regulation",
+        "Special Interests",
+        "Lobbying",
+        "Corporate Control",
+        "Building Trades",
+        "Trade Groups",
+        "Industry",
+        "Construction Costs",
+        "Construction Industry",
+        "Developer",
+        "Development",
+        "Government",
+        "Government Funding",
+        "Government Investment",
+        "Government Obligations",
+        "Government Programs",
+        "Government Spending",
+        "Slumlord",
+        "Public Policy",
+        "Policy",
+        "Public Health",
+        "Public Safety",
+        "Hawaii State Legislature",
+        "Legislation",
+        "Honolulu City Council"
+      ],
+      "author": {
+        "displayName": "Arjuna Heim"
+      }
+    },
+    {
       "id": "6a56d8694af1bf321899cfc9",
       "title": "Under pressure: Hawai\u02bbi\u2019s budget troubles demand action",
       "excerpt": "<p style=\"white-space:pre-wrap;\" data-rte-preserve-empty=\"true\">The state is confronting a growing list of challenges that could throw our budget\u2014and the programs and services within it\u2014into disarray. Now more than ever, we need to preserve funding for Hawai\u02bbi\u2019s working families.</p>",
@@ -80966,5 +81039,5 @@
       }
     }
   ],
-  "lastSynced": 1784674529115
+  "lastSynced": 1784770002830
 }
