@@ -11,10 +11,12 @@ lastSynced.
 Run locally or via the GitHub Action in
 .github/workflows/sync-publications.yml.
 """
+import http.client
 import json
 import os
 import re
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -102,10 +104,40 @@ def derive_outlet(item):
     return "Press"
 
 
-def fetch_page(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.load(r)
+# Transient errors worth retrying: Squarespace occasionally returns a
+# truncated chunked response (IncompleteRead / "invalid literal for int()
+# with base 16") or drops the connection. These are intermittent, so a
+# short backoff-and-retry clears them rather than failing the whole run.
+_RETRYABLE = (
+    http.client.IncompleteRead,
+    http.client.HTTPException,
+    urllib.error.URLError,
+    ConnectionError,
+    TimeoutError,
+    # ValueError also covers json.JSONDecodeError from a partial body and the
+    # "invalid literal for int() with base 16" chunk-size error.
+    ValueError,
+)
+
+
+def fetch_page(url, retries=4, backoff=2.0):
+    last_err = None
+    for attempt in range(1, retries + 1):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                # Read the full body first so a truncated chunked response
+                # raises here (retryable) rather than mid-parse.
+                body = r.read()
+            return json.loads(body)
+        except _RETRYABLE as e:
+            last_err = e
+            if attempt < retries:
+                wait = backoff * attempt
+                print(f"  fetch failed ({type(e).__name__}: {e}); "
+                      f"retry {attempt}/{retries - 1} in {wait:.0f}s")
+                time.sleep(wait)
+    raise RuntimeError(f"fetch_page failed after {retries} attempts: {url}") from last_err
 
 
 def slim_blog(item):
